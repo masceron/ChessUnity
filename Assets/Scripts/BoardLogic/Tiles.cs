@@ -5,7 +5,9 @@ namespace BoardLogic
     public class Tiles : MonoBehaviour
     {
         public Tile[][] BoardTiles;
+        public int maxTileNum;
         public Material tileMat;
+        public bool[][] BoardMask;
     
         public void GenerateTile(float tileSize, int row, int col, bool active)
         {
@@ -40,12 +42,60 @@ namespace BoardLogic
         }
         public void Activate(int x, int y)
          {
-             BoardTiles[x][y].gameObject.layer = LayerMask.NameToLayer("Tile");
+             BoardTiles[x][y].Activate();
          }
 
         public void Deactivate(int x, int y)
         {
-            BoardTiles[x][y].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+            BoardTiles[x][y].Deactivate();
+        }
+
+        public void ExpansionStart()
+        {
+            for (var i = 0; i < maxTileNum; i++)
+            {
+                for (var j = 0; j < maxTileNum; j++)
+                {
+                    if (!BoardMask[i][j])
+                    {
+                        BoardTiles[i][j].MarkAsExpandable();
+                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Tile");
+                    }
+                    else
+                    {
+                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                    }
+                }
+            }
+        }
+
+        public void ExpansionEnd()
+        {
+            for (var i = 0; i < maxTileNum; i++)
+            {
+                for (var j = 0; j < maxTileNum; j++)
+                {
+                    if (!BoardMask[i][j])
+                    {
+                        BoardTiles[i][j].UnmarkAsExpandable();
+                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                    }
+                    else
+                    {
+                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Tile");
+                    }
+                }
+            }
+        }
+
+        public void SelectExpand(Vector2Int select)
+        {
+            BoardTiles[select.x][select.y].Select(true);
+        }
+
+        public void UnSelectExpand(Vector2Int select)
+        {
+            BoardTiles[select.x][select.y].Unselect(true);
         }
     }
     

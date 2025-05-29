@@ -32,7 +32,6 @@ namespace BoardLogic
             active = false;
             _moving = true;
             _desired = new Vector3((posX + 0.5f) * size, -23.0f, (posY + 0.5f) * size);
-            _board.Deactivate(posX, posY);
         }
 
         // Update is called once per frame
@@ -41,11 +40,11 @@ namespace BoardLogic
             if (!_moving) return;
         
             if (_desired != transform.position)
-                transform.position = Vector3.MoveTowards(transform.position, _desired, 40 * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, _desired, 15 * Time.deltaTime);
             else
             {
                 _moving = false;
-                if (active) _board.Activate(posX, posY);
+                if (active) _board.ActivateTile(posX, posY);
             }
         }
     }

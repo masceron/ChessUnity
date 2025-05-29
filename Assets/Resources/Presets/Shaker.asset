@@ -16,6 +16,6 @@ MonoBehaviour:
   strength: 0.2
   roughness: 5
   fadeIn: 0.2
-  fadeOut: 3
+  fadeOut: 2.5
   positionInfluence: {x: 0.5, y: 0.5, z: 0.5}
   rotationInfluence: {x: 0.5, y: 0.5, z: 0.5}

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Common;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 
@@ -29,12 +31,15 @@ namespace BoardLogic
 
         [SerializeField] private GameObject cameraObject;
 
+        private MyCamera _camera;
+
         private void Awake()
         {
             _selecting = -Vector2Int.one;
             _piecePrefabs = new GameObject[2][];
             _piecePrefabs[0] = prefabsWhite;
             _piecePrefabs[1] = prefabsBlack;
+            _camera = cameraObject.GetComponent<MyCamera>();
 
             GenerateTiles(1.5f);
             SpawnAllPieces();
@@ -54,6 +59,8 @@ namespace BoardLogic
         
             _tiles = new GameObject("Tiles").AddComponent<Tiles>();
             _tiles.transform.parent = transform;
+            _tiles.maxTileNum = MaxTileNum;
+            _tiles.BoardMask = _boardMask;
             _tiles.BoardTiles = new Tile[MaxTileNum][];
             _tiles.tileMat = tileMat;
 
@@ -82,7 +89,7 @@ namespace BoardLogic
 
         }
 
-        public void Select(int x, int y)
+        private void SelectMove(int x, int y)
         {
             var selected = new Vector2Int(x, y);
 
@@ -90,33 +97,33 @@ namespace BoardLogic
             {
                 if (!_pieces.PiecesArr[x][y]) return;
                 _selecting = selected;
-                _tiles.BoardTiles[_selecting.x][_selecting.y].GetComponent<Tile>().Select();
-                _pieces.PiecesArr[_selecting.x][_selecting.y].GetComponent<Piece>().Select();
+                _tiles.BoardTiles[_selecting.x][_selecting.y].Select(false);
+                _pieces.PiecesArr[_selecting.x][_selecting.y].Select();
             }
             else
             {
                 if (selected == _selecting)
                 {
-                    _pieces.PiecesArr[_selecting.x][_selecting.y].GetComponent<Piece>().Unselect();
-                    _tiles.BoardTiles[_selecting.x][_selecting.y].GetComponent<Tile>().Unselect();
+                    _pieces.PiecesArr[_selecting.x][_selecting.y].Unselect();
+                    _tiles.BoardTiles[_selecting.x][_selecting.y].Unselect(false);
                     _selecting = -Vector2Int.one;
                     return;
                 }
 
                 var fx = _selecting.x;
                 var fy = _selecting.y;
-                var pieceOnSrc = _pieces.PiecesArr[fx][fy].GetComponent<Piece>();
+                var pieceOnSrc = _pieces.PiecesArr[fx][fy];
                 var pieceOnDest = _pieces.PiecesArr[x][y];
-                _tiles.BoardTiles[fx][fy].GetComponent<Tile>().Unselect();
-                _pieces.PiecesArr[fx][fy].GetComponent<Piece>().Unselect();
+                _tiles.BoardTiles[fx][fy].Unselect(false);
+                _pieces.PiecesArr[fx][fy].Unselect();
                 _selecting = -Vector2Int.one;
             
                 if (pieceOnDest)
                 {
-                    if (pieceOnSrc.side == pieceOnDest.GetComponent<Piece>().side)
+                    if (pieceOnSrc.side == pieceOnDest.side)
                     {
-                        _tiles.BoardTiles[x][y].GetComponent<Tile>().Select();
-                        _pieces.PiecesArr[x][y].GetComponent<Piece>().Select();
+                        _tiles.BoardTiles[x][y].Select(false);
+                        _pieces.PiecesArr[x][y].Select();
                         _selecting = new Vector2Int(x, y);
                         return;
                     }
@@ -124,6 +131,19 @@ namespace BoardLogic
                 Move(pieceOnSrc, pieceOnDest, fx, fy, x, y);
             
             }
+        }
+
+        public void Select(int x, int y)
+        {
+            if (!_choosingExpansion)
+            {
+                SelectMove(x, y);
+            }
+            else
+            {
+                SelectExpansion(x, y);
+            }
+            
         }
 
         private void Move(Piece pieceOnSrc, Piece pieceOnDest, int fx, int fy, int x, int y)
@@ -163,7 +183,15 @@ namespace BoardLogic
             }
         }
 
-        public void Activate(int x, int y)
+        private void Activate(int x, int y)
+        {
+            _tiles.BoardTiles[x][y].Unselect(false);
+            
+            _pillars.Activate(x, y);
+            _camera.Shake();
+        }
+
+        public void ActivateTile(int x, int y)
         {
             _tiles.Activate(x, y);
             _boardMask[x][y] = true;
@@ -172,7 +200,51 @@ namespace BoardLogic
         public void Deactivate(int x, int y)
         {
             _tiles.Deactivate(x, y);
+            _pillars.Deactivate(x, y);
             _boardMask[x][y] = false;
+            _camera.Shake();
+        }
+
+        private bool _choosingExpansion;
+        private List<Vector2Int> _expandingTiles;
+        private void Update()
+        {
+            if (!Input.GetKeyDown(KeyCode.LeftShift)) return;
+            
+            if (!_choosingExpansion)
+            {
+                _expandingTiles = new List<Vector2Int>();
+                _choosingExpansion = true;
+                _tiles.ExpansionStart();
+                return;
+            }
+
+            if (_expandingTiles.Count > 0)
+            {
+                foreach (var pos in _expandingTiles)
+                {
+                    Activate(pos.x, pos.y);
+                }
+            }
+            _choosingExpansion = false;
+            _expandingTiles.Clear();
+            _tiles.ExpansionEnd();
+        }
+
+        private void SelectExpansion(int x, int y)
+        {
+            var selected = new Vector2Int(x, y);
+            if (!_expandingTiles.Contains(selected))
+            {
+                if (_expandingTiles.Count >= 3) return;
+                _expandingTiles.Add(selected);
+                _tiles.SelectExpand(selected);
+            }
+            else
+            {
+                _expandingTiles.Remove(selected);
+                _tiles.UnSelectExpand(selected);
+            }
         }
     }
 }
