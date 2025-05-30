@@ -4,35 +4,44 @@ namespace BoardLogic
 {
     public class Pillar : MonoBehaviour
     {
-        public int maxTileNum;
-        public int posX;
-        public int posY;
-        public bool active;
-        public float size;
+        private int _maxTileNum;
+        private int _posX;
+        private int _posY;
+        private bool _active;
+        private float _size;
         private Vector3 _desired;
         private bool _moving;
         private Board _board;
+
+        public void Set(int row, int col, bool active)
+        {
+            _posX = row;
+            _posY = col;
+            _active = active;
+        }
     
         private void Start()
         {
             _board = transform.parent.parent.GetComponent<Board>();
+            _size = _board.TileSize;
             transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
-            transform.position = active ? new Vector3((posX + 0.5f) * size, -12.53f, (posY + 0.5f) * size) : new Vector3((posX + 0.5f) * size, -23.0f, (posY + 0.5f) * size);
+            transform.position = _active ? new Vector3((_posX + 0.5f) * _size, -12.53f, (_posY + 0.5f) * _size) : new Vector3((_posX + 0.5f) * _size, -23.0f, (_posY + 0.5f) * _size);
             _desired = transform.position;
+            _maxTileNum = _board.maxTileNum;
         }
 
         public void Activate()
         {
-            active = true;
+            _active = true;
             _moving = true;
-            _desired = new Vector3((posX + 0.5f) * size, -12.53f, (posY + 0.5f) * size);
+            _desired = new Vector3((_posX + 0.5f) * _size, -12.53f, (_posY + 0.5f) * _size);
         }
 
         public void Deactivate()
         {
-            active = false;
+            _active = false;
             _moving = true;
-            _desired = new Vector3((posX + 0.5f) * size, -23.0f, (posY + 0.5f) * size);
+            _desired = new Vector3((_posX + 0.5f) * _size, -23.0f, (_posY + 0.5f) * _size);
         }
 
         // Update is called once per frame
@@ -45,7 +54,7 @@ namespace BoardLogic
             else
             {
                 _moving = false;
-                if (active) _board.ActivateTile(posX * maxTileNum + posY);
+                if (_active) _board.ActivateTile(_posX * _maxTileNum + _posY);
             }
         }
     }

@@ -9,23 +9,15 @@ namespace BoardLogic
     public class Board : MonoBehaviour
     {
         private const int TileNum = 8;
-        private const int MaxTileNum = 12;
-    
-        [SerializeField] private Material tileMat;
-        private bool[] _boardMask;
-        private Tiles _tiles;
-    
-        private GameObject[][] _piecePrefabs;
+        public int maxTileNum = 12;
         
+        private Tiles _tiles;
         private Pillars _pillars;
+        private Pieces _pieces;
     
         [SerializeField] private TextAsset startpos;
-    
-        [SerializeField] private GameObject[] prefabsWhite;
-        [SerializeField] private GameObject[] prefabsBlack;
-        [SerializeField] private GameObject[] pillarPrefabs;
 
-        private Pieces _pieces;
+        public readonly float TileSize = 1.5f;
 
         private int _selecting;
 
@@ -38,45 +30,35 @@ namespace BoardLogic
             _selecting = -1;
             _camera = cameraObject.GetComponent<MyCamera>();
 
-            GenerateTiles(1.5f);
+            MakeBlockers();
+            GenerateTiles();
             SpawnAllPieces();
         }
     
-        private void GenerateTiles(float tileSize)
+        private void GenerateTiles()
         {
-            const int offset = (MaxTileNum - TileNum) / 2;
-            const int end = MaxTileNum - offset - 1;
-            
-            _boardMask = new bool[MaxTileNum * MaxTileNum];
+            var offset = (maxTileNum - TileNum) / 2;
+            var end = maxTileNum - offset - 1;
 
-            _pillars = new GameObject("Pillars").AddComponent<Pillars>();
+            _pillars = transform.Find("Pillars").GetComponent<Pillars>();
             _pillars.transform.parent = transform;
-            _pillars.pillarsComponents = new Pillar[MaxTileNum * MaxTileNum];
-            _pillars.pillarPrefabs = pillarPrefabs;
-            _pillars.maxTileNum = MaxTileNum;
         
-            _tiles = new GameObject("Tiles").AddComponent<Tiles>();
+            _tiles = transform.Find("Tiles").GetComponent<Tiles>();
             _tiles.transform.parent = transform;
-            _tiles.maxTileNum = MaxTileNum;
-            _tiles.boardMask = _boardMask;
-            _tiles.boardTiles = new Tile[MaxTileNum * MaxTileNum];
-            _tiles.tileMat = tileMat;
 
-            for (var i = 0; i < MaxTileNum; i++)
+            for (var i = 0; i < maxTileNum; i++)
             {
-                for (var j = 0; j < MaxTileNum; j++)
+                for (var j = 0; j < maxTileNum; j++)
                 {
-                    if (i is >= offset and <= end && j is >= offset and <= end)
+                    if (i >= offset && i <= end && j >= offset && j <= end)
                     {
-                        _tiles.GenerateTile(tileSize, i, j, true);
-                        _pillars.CreatePillar(tileSize, i, j, true);
-                        _boardMask[i * MaxTileNum + j] = true;
+                        _tiles.GenerateTile(i, j, true);
+                        _pillars.CreatePillar(i, j, true);
                     }
                     else
                     {
-                        _tiles.GenerateTile(tileSize, i, j, false);
-                        _boardMask[i * MaxTileNum + j] = false;
-                        _pillars.CreatePillar(tileSize, i, j, false);
+                        _tiles.GenerateTile(i, j, false);
+                        _pillars.CreatePillar(i, j, false);
                     }
                 }
             }
@@ -87,34 +69,34 @@ namespace BoardLogic
         {
             if (_selecting == -1)
             {
-                if (!_pieces.piecesArr[selected]) return;
+                if (!_pieces.Get(selected)) return;
                 _selecting = selected;
-                _tiles.boardTiles[_selecting].Select(false);
-                _pieces.piecesArr[_selecting].Select();
+                _tiles.Select(_selecting, false);
+                _pieces.Select(_selecting);
             }
             else
             {
                 if (selected == _selecting)
                 {
-                    _pieces.piecesArr[_selecting].Unselect();
-                    _tiles.boardTiles[_selecting].Unselect(false);
+                    _pieces.Unselect(_selecting);
+                    _tiles.UnSelect(_selecting, false);
                     _selecting = -1;
                     return;
                 }
 
                 var old = _selecting;
-                var pieceOnSrc = _pieces.piecesArr[_selecting];
-                var pieceOnDest = _pieces.piecesArr[selected];
-                _tiles.boardTiles[_selecting].Unselect(false);
-                _pieces.piecesArr[_selecting].Unselect();
+                var pieceOnSrc = _pieces.Get(_selecting);
+                var pieceOnDest = _pieces.Get(selected);
+                _tiles.UnSelect(_selecting, false);
+                _pieces.Unselect(_selecting);
                 _selecting = -1;
             
                 if (pieceOnDest)
                 {
-                    if (pieceOnSrc.side == pieceOnDest.side)
+                    if (pieceOnSrc.Side() == pieceOnDest.Side())
                     {
-                        _tiles.boardTiles[selected].Select(false);
-                        _pieces.piecesArr[selected].Select();
+                        _tiles.Select(_selecting, false);
+                        _pieces.Select(selected);
                         _selecting = selected;
                         return;
                     }
@@ -126,7 +108,7 @@ namespace BoardLogic
 
         public void Select(int row, int col)
         {
-            var index = row * MaxTileNum + col;
+            var index = row * maxTileNum + col;
             if (!_choosingExpansion)
             {
                 SelectMove(index);
@@ -140,34 +122,27 @@ namespace BoardLogic
 
         private void Move(Piece pieceOnSrc, Piece pieceOnDest, int from, int to)
         {
-            _pieces.piecesArr[from] = null;
+            _pieces.Set(from, null);
         
             if (pieceOnDest)
             {
                 Destroy(pieceOnDest.gameObject);
             }
-            _pieces.piecesArr[to] = pieceOnSrc;
+            _pieces.Set(to, pieceOnSrc);
             
-            pieceOnSrc.Move(to / MaxTileNum, to % MaxTileNum);
+            pieceOnSrc.Move(to / maxTileNum, to % maxTileNum);
         
         }
 
         private void SpawnAllPieces()
         {
-            _piecePrefabs = new GameObject[2][];
-            _piecePrefabs[0] = prefabsWhite;
-            _piecePrefabs[1] = prefabsBlack;
+            _pieces = transform.Find("Pieces").GetComponent<Pieces>();
             
-            _pieces = new GameObject("Pieces").AddComponent<Pieces>();
-            _pieces.piecesArr = new Piece[MaxTileNum * MaxTileNum];
-            _pieces.PiecePrefabs = _piecePrefabs;
-            _pieces.maxTileNum = MaxTileNum;
-            
-            for (var i = 0; i < MaxTileNum; i++)
+            for (var i = 0; i < maxTileNum; i++)
             {
-                for (var j = 0; j < MaxTileNum; j++)
+                for (var j = 0; j < maxTileNum; j++)
                 {
-                    _pieces.piecesArr[i * MaxTileNum + j] = null;
+                    _pieces.Set(i * maxTileNum + j, null);
                 }
             }
 
@@ -175,13 +150,13 @@ namespace BoardLogic
         
             foreach (var piece in pieces.pieces)
             {
-                _pieces.SpawnPiece((Side)piece.side, (PieceType)piece.piece, piece.pos[0], piece.pos[1]);
+                _pieces.SpawnPiece((PieceSide)piece.side, (PieceType)piece.piece, piece.pos[0], piece.pos[1]);
             }
         }
 
         private void Activate(int index)
         {
-            _tiles.boardTiles[index].Unselect(false);
+            _tiles.Select(index, false);
             
             _pillars.Activate(index);
             _camera.Shake();
@@ -190,17 +165,36 @@ namespace BoardLogic
         public void ActivateTile(int index)
         {
             _tiles.Activate(index);
-            _boardMask[index] = true;
         }
 
         public void Deactivate(int row, int col)
         {
-            var index = row * MaxTileNum + col;
+            var index = row * maxTileNum + col;
             
             _tiles.Deactivate(index);
             _pillars.Deactivate(index);
-            _boardMask[index] = false;
             _camera.Shake();
+        }
+
+
+        private Blockers _blockers;
+
+        private void MakeBlockers()
+        {
+            _blockers = transform.Find("Blockers").GetComponent<Blockers>();
+        }
+        public void Block(int row, int col)
+        {
+            var index = row * maxTileNum + col;
+            _tiles.Block(index);
+            _blockers.Block(row, col, index);
+        }
+
+        public void Unblock(int row, int col)
+        {
+            var index = row * maxTileNum + col;
+            _tiles.Unblock(index);
+            _blockers.Unblock(index);
         }
 
         private bool _choosingExpansion;
@@ -225,7 +219,6 @@ namespace BoardLogic
                 }
             }
             _choosingExpansion = false;
-            _expandingTiles.Clear();
             _tiles.ExpansionEnd();
         }
 
@@ -235,12 +228,12 @@ namespace BoardLogic
             {
                 if (_expandingTiles.Count >= 3) return;
                 _expandingTiles.Add(selected);
-                _tiles.SelectExpand(selected);
+                _tiles.Select(selected, true);
             }
             else
             {
                 _expandingTiles.Remove(selected);
-                _tiles.UnSelectExpand(selected);
+                _tiles.UnSelect(selected, true);
             }
         }
     }

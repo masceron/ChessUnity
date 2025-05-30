@@ -6,34 +6,36 @@ namespace BoardLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Pillars : MonoBehaviour
     {
-        public Pillar[] pillarsComponents;
-        public GameObject[] pillarPrefabs;
-        public int maxTileNum;
-    
-        public void CreatePillar(float tileSize, int row, int col, bool active)
+        private Pillar[] _pillarsComponents;
+        [SerializeField] private GameObject[] pillarPrefabs;
+        private int _maxTileNum;
+
+        private void Awake()
+        {
+            _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
+            _pillarsComponents = new Pillar[_maxTileNum * _maxTileNum];
+        }
+
+        public void CreatePillar(int row, int col, bool active)
         {
             var pillar = Instantiate((row + col) % 2 == 0 ? pillarPrefabs[0] : pillarPrefabs[1], transform);
             pillar.name = $"Pillar {row}, {col}";
             pillar.transform.parent = transform;
             var script = pillar.AddComponent<Pillar>();
-            script.posX = row;
-            script.posY = col;
-            script.size = tileSize;
-            script.maxTileNum = maxTileNum;
-            script.active = active;
+            script.Set(row, col, active);
             pillar.AddComponent<BoxCollider>();
 
-            pillarsComponents[row * maxTileNum + col] = script;
+            _pillarsComponents[row * _maxTileNum + col] = script;
         }
 
         public void Activate(int index)
         {
-            pillarsComponents[index].Activate();
+            _pillarsComponents[index].Activate();
         }
 
         public void Deactivate(int index)
         {
-            pillarsComponents[index].Deactivate();
+            _pillarsComponents[index].Deactivate();
         }
     }
 }

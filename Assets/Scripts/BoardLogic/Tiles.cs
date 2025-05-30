@@ -4,29 +4,37 @@ namespace BoardLogic
 {
     public class Tiles : MonoBehaviour
     {
-        public Tile[] boardTiles;
-        public int maxTileNum;
-        public Material tileMat;
-        public bool[] boardMask;
-    
-        public void GenerateTile(float tileSize, int row, int col, bool active)
+        private Tile[] _boardTiles;
+        private int _maxTileNum;
+        [SerializeField] private Material tileMat;
+        private bool[] _boardMask;
+        private float _tileSize;
+
+        private void Awake()
+        {
+            _tileSize = transform.parent.GetComponent<Board>().TileSize;
+            _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
+            _boardTiles = new Tile[_maxTileNum * _maxTileNum];
+            _boardMask = new bool[_maxTileNum * _maxTileNum];
+        }
+
+        public void GenerateTile(int row, int col, bool active)
         {
             var tile = new GameObject($"Tile {row}, {col}");
 
             var mesh = new Mesh();
             var script = tile.AddComponent<Tile>();
             script.transform.parent = transform;
-            script.x = row;
-            script.y = col;
+            script.Set(row, col);
 
             tile.AddComponent<MeshFilter>().mesh = mesh;
             tile.AddComponent<MeshRenderer>().material = tileMat;
 
             var vertices = new Vector3[4];
-            vertices[0] = new Vector3(row * tileSize, 0, col * tileSize);
-            vertices[1] = new Vector3(row * tileSize, 0, (col + 1) * tileSize);
-            vertices[2] = new Vector3((row + 1) * tileSize, 0, col * tileSize);
-            vertices[3] = new Vector3((row + 1) * tileSize, 0, (col + 1) * tileSize);
+            vertices[0] = new Vector3(row * _tileSize, 0, col * _tileSize);
+            vertices[1] = new Vector3(row * _tileSize, 0, (col + 1) * _tileSize);
+            vertices[2] = new Vector3((row + 1) * _tileSize, 0, col * _tileSize);
+            vertices[3] = new Vector3((row + 1) * _tileSize, 0, (col + 1) * _tileSize);
 
             var triangles = new[] { 0, 1, 2, 1, 3, 2 };
 
@@ -38,34 +46,37 @@ namespace BoardLogic
             tile.GetComponent<BoxCollider>().isTrigger = true;
             tile.layer = LayerMask.NameToLayer(active ? "Tile" : "Ignore Raycast");
 
-            boardTiles[row * maxTileNum + col] = script;
+            _boardMask[row * _maxTileNum + col] = active;
+            _boardTiles[row * _maxTileNum + col] = script;
         }
         public void Activate(int index)
          {
-             boardTiles[index].Activate();
+             _boardTiles[index].Activate();
+             _boardMask[index] = true;
          }
 
         public void Deactivate(int index)
         {
-            boardTiles[index].Deactivate();
+            _boardTiles[index].Deactivate();
+            _boardMask[index] = false;
         }
 
         public void ExpansionStart()
         {
-            for (var i = 0; i < maxTileNum; i++)
+            for (var i = 0; i < _maxTileNum; i++)
             {
-                var row = i * maxTileNum;
-                for (var j = 0; j < maxTileNum; j++)
+                var row = i * _maxTileNum;
+                for (var j = 0; j < _maxTileNum; j++)
                 {
                     var index = row + j;
-                    if (!boardMask[index])
+                    if (!_boardMask[index])
                     {
-                        boardTiles[index].MarkAsExpandable();
-                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
+                        _boardTiles[index].MarkAsExpandable();
+                        _boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
                     }
                     else
                     {
-                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                        _boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     }
                 }
             }
@@ -73,33 +84,43 @@ namespace BoardLogic
 
         public void ExpansionEnd()
         {
-            for (var i = 0; i < maxTileNum; i++)
+            for (var i = 0; i < _maxTileNum; i++)
             {
-                var row = i * maxTileNum;
-                for (var j = 0; j < maxTileNum; j++)
+                var row = i * _maxTileNum;
+                for (var j = 0; j < _maxTileNum; j++)
                 {
                     var index = row + j;
-                    if (!boardMask[index])
+                    if (!_boardMask[index])
                     {
-                        boardTiles[index].UnmarkAsExpandable();
-                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                        _boardTiles[index].UnmarkAsExpandable();
+                        _boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     }
                     else
                     {
-                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
+                        _boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
                     }
                 }
             }
         }
 
-        public void SelectExpand(int select)
+        public void Select(int select, bool expand)
         {
-            boardTiles[select].Select(true);
+            _boardTiles[select].Select(expand);
         }
 
-        public void UnSelectExpand(int select)
+        public void UnSelect(int select, bool expand)
         {
-            boardTiles[select].Unselect(true);
+            _boardTiles[select].Unselect(expand);
+        }
+        
+        public void Block(int index)
+        {
+            _boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        }
+
+        public void Unblock(int index)
+        {
+            _boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
         }
     }
     

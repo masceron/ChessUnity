@@ -7,7 +7,7 @@ namespace BoardLogic
         Pawn, Knight, Bishop, Rook, Queen, King
     }
 
-    public enum Side {
+    public enum PieceSide {
         White, Black
     }
 
@@ -28,19 +28,35 @@ namespace BoardLogic
 
     public class Piece : MonoBehaviour
     {
-        public PieceType type;
-        public Side side;
+        private PieceType _type;
+        private PieceSide _side;
         private Vector3 _desired;
         private bool _moving;
         private Outline _outline;
         private bool _selected;
+
+        public void Set(PieceType type, PieceSide side)
+        {
+            _type = type;
+            _side = side;
+        }
+
+        public PieceType Type()
+        {
+            return _type;
+        }
+
+        public PieceSide Side()
+        {
+            return _side;
+        }
     
         public Vector2Int position;
     
         private void Start()
         {
             _outline = transform.GetComponent<Outline>();
-            _outline.OutlineColor = side == Side.White ? Color.black : Color.white;
+            _outline.OutlineColor = _side == PieceSide.White ? Color.black : Color.white;
             _outline.OutlineWidth = 3f;
             _outline.enabled = false;
         

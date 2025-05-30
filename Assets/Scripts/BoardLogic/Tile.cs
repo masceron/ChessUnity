@@ -13,8 +13,14 @@ namespace BoardLogic
         private bool _selected;
         private bool _expand;
         private Board _board;
-        public int x;
-        public int y;
+        private int _x;
+        private int _y;
+
+        public void Set(int row, int col)
+        {
+            _x = row;
+            _y = col;
+        }
 
         private void Start()
         {
@@ -42,13 +48,19 @@ namespace BoardLogic
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
+            switch (eventData.button)
             {
-                _board.Select(x, y);
-            }
-            else if (eventData.button == PointerEventData.InputButton.Right)
-            {
-                _board.Deactivate(x, y);
+                case PointerEventData.InputButton.Left:
+                    _board.Select(_x, _y);
+                    break;
+                case PointerEventData.InputButton.Right:
+                    _board.Deactivate(_x, _y);
+                    break;
+                case PointerEventData.InputButton.Middle:
+                    _board.Block(_x, _y);
+                    break;
+                default:
+                    return;
             }
         }
 
