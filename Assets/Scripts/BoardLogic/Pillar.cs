@@ -4,6 +4,7 @@ namespace BoardLogic
 {
     public class Pillar : MonoBehaviour
     {
+        public int maxTileNum;
         public int posX;
         public int posY;
         public bool active;
@@ -44,7 +45,7 @@ namespace BoardLogic
             else
             {
                 _moving = false;
-                if (active) _board.ActivateTile(posX, posY);
+                if (active) _board.ActivateTile(posX * maxTileNum + posY);
             }
         }
     }

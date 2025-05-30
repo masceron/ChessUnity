@@ -6,8 +6,9 @@ namespace BoardLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Pillars : MonoBehaviour
     {
-        public Pillar[][] PillarsComponents;
+        public Pillar[] pillarsComponents;
         public GameObject[] pillarPrefabs;
+        public int maxTileNum;
     
         public void CreatePillar(float tileSize, int row, int col, bool active)
         {
@@ -18,20 +19,21 @@ namespace BoardLogic
             script.posX = row;
             script.posY = col;
             script.size = tileSize;
+            script.maxTileNum = maxTileNum;
             script.active = active;
             pillar.AddComponent<BoxCollider>();
 
-            PillarsComponents[row][col] = script;
+            pillarsComponents[row * maxTileNum + col] = script;
         }
 
-        public void Activate(int x, int y)
+        public void Activate(int index)
         {
-            PillarsComponents[x][y].Activate();
+            pillarsComponents[index].Activate();
         }
 
-        public void Deactivate(int x, int y)
+        public void Deactivate(int index)
         {
-            PillarsComponents[x][y].Deactivate();
+            pillarsComponents[index].Deactivate();
         }
     }
 }

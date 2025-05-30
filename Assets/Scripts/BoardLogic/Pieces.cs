@@ -4,8 +4,9 @@ namespace BoardLogic
 {
     public class Pieces : MonoBehaviour
     {
-        public Piece[][] PiecesArr;
+        public Piece[] piecesArr;
         public GameObject[][] PiecePrefabs;
+        public int maxTileNum;
         
         public void SpawnPiece(Side side, PieceType piece, int x, int y)
         {
@@ -14,7 +15,7 @@ namespace BoardLogic
             p.side = side;
             p.position = new Vector2Int(x, y);
 
-            PiecesArr[x][y] = p;
+            piecesArr[x * maxTileNum + y] = p;
         }
     }
     

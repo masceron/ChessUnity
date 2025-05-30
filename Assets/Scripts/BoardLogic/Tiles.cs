@@ -4,10 +4,10 @@ namespace BoardLogic
 {
     public class Tiles : MonoBehaviour
     {
-        public Tile[][] BoardTiles;
+        public Tile[] boardTiles;
         public int maxTileNum;
         public Material tileMat;
-        public bool[][] BoardMask;
+        public bool[] boardMask;
     
         public void GenerateTile(float tileSize, int row, int col, bool active)
         {
@@ -38,32 +38,34 @@ namespace BoardLogic
             tile.GetComponent<BoxCollider>().isTrigger = true;
             tile.layer = LayerMask.NameToLayer(active ? "Tile" : "Ignore Raycast");
 
-            BoardTiles[row][col] = script;
+            boardTiles[row * maxTileNum + col] = script;
         }
-        public void Activate(int x, int y)
+        public void Activate(int index)
          {
-             BoardTiles[x][y].Activate();
+             boardTiles[index].Activate();
          }
 
-        public void Deactivate(int x, int y)
+        public void Deactivate(int index)
         {
-            BoardTiles[x][y].Deactivate();
+            boardTiles[index].Deactivate();
         }
 
         public void ExpansionStart()
         {
             for (var i = 0; i < maxTileNum; i++)
             {
+                var row = i * maxTileNum;
                 for (var j = 0; j < maxTileNum; j++)
                 {
-                    if (!BoardMask[i][j])
+                    var index = row + j;
+                    if (!boardMask[index])
                     {
-                        BoardTiles[i][j].MarkAsExpandable();
-                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Tile");
+                        boardTiles[index].MarkAsExpandable();
+                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
                     }
                     else
                     {
-                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     }
                 }
             }
@@ -73,29 +75,31 @@ namespace BoardLogic
         {
             for (var i = 0; i < maxTileNum; i++)
             {
+                var row = i * maxTileNum;
                 for (var j = 0; j < maxTileNum; j++)
                 {
-                    if (!BoardMask[i][j])
+                    var index = row + j;
+                    if (!boardMask[index])
                     {
-                        BoardTiles[i][j].UnmarkAsExpandable();
-                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+                        boardTiles[index].UnmarkAsExpandable();
+                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                     }
                     else
                     {
-                        BoardTiles[i][j].gameObject.layer = LayerMask.NameToLayer("Tile");
+                        boardTiles[index].gameObject.layer = LayerMask.NameToLayer("Tile");
                     }
                 }
             }
         }
 
-        public void SelectExpand(Vector2Int select)
+        public void SelectExpand(int select)
         {
-            BoardTiles[select.x][select.y].Select(true);
+            boardTiles[select].Select(true);
         }
 
-        public void UnSelectExpand(Vector2Int select)
+        public void UnSelectExpand(int select)
         {
-            BoardTiles[select.x][select.y].Unselect(true);
+            boardTiles[select].Unselect(true);
         }
     }
     

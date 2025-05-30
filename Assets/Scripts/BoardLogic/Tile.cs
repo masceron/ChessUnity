@@ -42,7 +42,14 @@ namespace BoardLogic
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _board.Select(x, y);
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                _board.Select(x, y);
+            }
+            else if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                _board.Deactivate(x, y);
+            }
         }
 
         public void Activate()
