@@ -9,7 +9,7 @@ namespace BoardLogic
         
         [SerializeField] private GameObject blockerPrefab;
 
-        private void Awake()
+        public void Init()
         {
             _blockers = new Dictionary<int, Blocker>();
         }

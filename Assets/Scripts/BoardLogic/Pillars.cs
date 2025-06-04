@@ -10,7 +10,7 @@ namespace BoardLogic
         [SerializeField] private GameObject[] pillarPrefabs;
         private int _maxTileNum;
 
-        private void Awake()
+        public void Init()
         {
             _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
             _pillarsComponents = new Pillar[_maxTileNum * _maxTileNum];

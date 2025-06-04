@@ -10,7 +10,7 @@ namespace BoardLogic
         private bool[] _boardMask;
         private float _tileSize;
 
-        private void Awake()
+        public void Init()
         {
             _tileSize = transform.parent.GetComponent<Board>().TileSize;
             _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
@@ -45,7 +45,7 @@ namespace BoardLogic
             tile.AddComponent<BoxCollider>();
             tile.GetComponent<BoxCollider>().isTrigger = true;
             tile.layer = LayerMask.NameToLayer(active ? "Tile" : "Ignore Raycast");
-
+            
             _boardMask[row * _maxTileNum + col] = active;
             _boardTiles[row * _maxTileNum + col] = script;
         }

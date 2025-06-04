@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Common;
+using Core;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
 
@@ -33,6 +34,7 @@ namespace BoardLogic
             MakeBlockers();
             GenerateTiles();
             SpawnAllPieces();
+            SetupEngine();
         }
     
         private void GenerateTiles()
@@ -42,9 +44,11 @@ namespace BoardLogic
 
             _pillars = transform.Find("Pillars").GetComponent<Pillars>();
             _pillars.transform.parent = transform;
+            _pillars.Init();
         
             _tiles = transform.Find("Tiles").GetComponent<Tiles>();
             _tiles.transform.parent = transform;
+            _tiles.Init();
 
             for (var i = 0; i < maxTileNum; i++)
             {
@@ -137,6 +141,7 @@ namespace BoardLogic
         private void SpawnAllPieces()
         {
             _pieces = transform.Find("Pieces").GetComponent<Pieces>();
+            _pieces.Init();
             
             for (var i = 0; i < maxTileNum; i++)
             {
@@ -182,6 +187,7 @@ namespace BoardLogic
         private void MakeBlockers()
         {
             _blockers = transform.Find("Blockers").GetComponent<Blockers>();
+            _blockers.Init();
         }
         public void Block(int row, int col)
         {
@@ -235,6 +241,13 @@ namespace BoardLogic
                 _expandingTiles.Remove(selected);
                 _tiles.UnSelect(selected, true);
             }
+        }
+
+        private Internal _internal;
+
+        private void SetupEngine()
+        {
+            _internal = new Internal();
         }
     }
 }

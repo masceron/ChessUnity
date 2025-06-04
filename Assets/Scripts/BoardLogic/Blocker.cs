@@ -23,7 +23,7 @@ namespace BoardLogic
 
         private void Update()
         {
-            transform.Rotate(0f, 10 * Time.deltaTime, 0f);
+            transform.Rotate(0f, 35 * Time.deltaTime, 0f);
         }
     }
 }

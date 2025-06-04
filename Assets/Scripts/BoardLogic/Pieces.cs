@@ -11,12 +11,12 @@ namespace BoardLogic
         [SerializeField] private GameObject[] prefabsWhite;
         [SerializeField] private GameObject[] prefabsBlack;
 
-        private void Awake()
+        public void Init()
         {
             _piecePrefabs = new GameObject[2][];
             _piecePrefabs[0] = prefabsWhite;
             _piecePrefabs[1] = prefabsBlack;
-            _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
+            _maxTileNum = 12;
             _piecesArr = new Piece[_maxTileNum * _maxTileNum];
         }
 
