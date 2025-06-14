@@ -8,12 +8,15 @@ namespace BoardLogic
     {
         private Pillar[] _pillarsComponents;
         [SerializeField] private GameObject[] pillarPrefabs;
-        private int _maxTileNum;
+        private int _maxTileNumX;
+        private int _maxTileNumY;
 
         public void Init()
         {
-            _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
-            _pillarsComponents = new Pillar[_maxTileNum * _maxTileNum];
+            _maxTileNumX = transform.parent.GetComponent<Board>().MaxTileNumX;
+            _maxTileNumY = transform.parent.GetComponent<Board>().MaxTileNumY;
+            
+            _pillarsComponents = new Pillar[_maxTileNumX * _maxTileNumY];
         }
 
         public void CreatePillar(int row, int col, bool active)
@@ -25,7 +28,7 @@ namespace BoardLogic
             script.Set(row, col, active);
             pillar.AddComponent<BoxCollider>();
 
-            _pillarsComponents[row * _maxTileNum + col] = script;
+            _pillarsComponents[row * _maxTileNumY + col] = script;
         }
 
         public void Activate(int index)

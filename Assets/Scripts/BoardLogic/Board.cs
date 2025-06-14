@@ -10,7 +10,8 @@ namespace BoardLogic
     public class Board : MonoBehaviour
     {
         private const int TileNum = 8;
-        public int maxTileNum = 12;
+        public readonly int MaxTileNumX = 8;
+        public readonly int MaxTileNumY = 12;
         
         private Tiles _tiles;
         private Pillars _pillars;
@@ -39,8 +40,10 @@ namespace BoardLogic
     
         private void GenerateTiles()
         {
-            var offset = (maxTileNum - TileNum) / 2;
-            var end = maxTileNum - offset - 1;
+            var offsetX = (MaxTileNumX - TileNum) / 2;
+            var offsetY = (MaxTileNumY - TileNum) / 2;
+            var endX = MaxTileNumX - offsetX - 1;
+            var endY = MaxTileNumY - offsetY - 1;
 
             _pillars = transform.Find("Pillars").GetComponent<Pillars>();
             _pillars.transform.parent = transform;
@@ -50,11 +53,11 @@ namespace BoardLogic
             _tiles.transform.parent = transform;
             _tiles.Init();
 
-            for (var i = 0; i < maxTileNum; i++)
+            for (var i = 0; i < MaxTileNumX; i++)
             {
-                for (var j = 0; j < maxTileNum; j++)
+                for (var j = 0; j < MaxTileNumY; j++)
                 {
-                    if (i >= offset && i <= end && j >= offset && j <= end)
+                    if (i >= offsetX && i <= endX && j >= offsetY && j <= endY)
                     {
                         _tiles.GenerateTile(i, j, true);
                         _pillars.CreatePillar(i, j, true);
@@ -112,7 +115,7 @@ namespace BoardLogic
 
         public void Select(int row, int col)
         {
-            var index = row * maxTileNum + col;
+            var index = row * MaxTileNumY + col;
             if (!_choosingExpansion)
             {
                 SelectMove(index);
@@ -134,20 +137,20 @@ namespace BoardLogic
             }
             _pieces.Set(to, pieceOnSrc);
             
-            pieceOnSrc.Move(to / maxTileNum, to % maxTileNum);
+            pieceOnSrc.Move(to / MaxTileNumY, to % MaxTileNumY);
         
         }
 
         private void SpawnAllPieces()
         {
             _pieces = transform.Find("Pieces").GetComponent<Pieces>();
-            _pieces.Init();
+            _pieces.Init(MaxTileNumX, MaxTileNumY);
             
-            for (var i = 0; i < maxTileNum; i++)
+            for (var i = 0; i < MaxTileNumX; i++)
             {
-                for (var j = 0; j < maxTileNum; j++)
+                for (var j = 0; j < MaxTileNumY; j++)
                 {
-                    _pieces.Set(i * maxTileNum + j, null);
+                    _pieces.Set(i * MaxTileNumY + j, null);
                 }
             }
 
@@ -174,7 +177,7 @@ namespace BoardLogic
 
         public void Deactivate(int row, int col)
         {
-            var index = row * maxTileNum + col;
+            var index = row * MaxTileNumY + col;
             
             _tiles.Deactivate(index);
             _pillars.Deactivate(index);
@@ -191,14 +194,14 @@ namespace BoardLogic
         }
         public void Block(int row, int col)
         {
-            var index = row * maxTileNum + col;
+            var index = row * MaxTileNumY + col;
             _tiles.Block(index);
             _blockers.Block(row, col, index);
         }
 
         public void Unblock(int row, int col)
         {
-            var index = row * maxTileNum + col;
+            var index = row * MaxTileNumY + col;
             _tiles.Unblock(index);
             _blockers.Unblock(index);
         }

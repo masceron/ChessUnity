@@ -6,18 +6,20 @@ namespace BoardLogic
     {
         private Piece[] _piecesArr;
         private GameObject[][] _piecePrefabs;
-        private int _maxTileNum;
+        private int _maxTileNumX;
+        private int _maxTileNumY;
         
         [SerializeField] private GameObject[] prefabsWhite;
         [SerializeField] private GameObject[] prefabsBlack;
 
-        public void Init()
+        public void Init(int maxX, int maxY)
         {
+            _maxTileNumX = maxX;
+            _maxTileNumY = maxY;
             _piecePrefabs = new GameObject[2][];
             _piecePrefabs[0] = prefabsWhite;
             _piecePrefabs[1] = prefabsBlack;
-            _maxTileNum = 12;
-            _piecesArr = new Piece[_maxTileNum * _maxTileNum];
+            _piecesArr = new Piece[_maxTileNumX * _maxTileNumY];
         }
 
         public void Select(int index)
@@ -46,7 +48,7 @@ namespace BoardLogic
             p.Set(piece, pieceSide);
             p.position = new Vector2Int(x, y);
 
-            _piecesArr[x * _maxTileNum + y] = p;
+            _piecesArr[x * _maxTileNumY + y] = p;
         }
     }
     

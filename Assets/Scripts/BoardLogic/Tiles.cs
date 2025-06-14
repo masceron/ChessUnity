@@ -5,7 +5,8 @@ namespace BoardLogic
     public class Tiles : MonoBehaviour
     {
         private Tile[] _boardTiles;
-        private int _maxTileNum;
+        private int _maxTileNumX;
+        private int _maxTileNumY;
         [SerializeField] private Material tileMat;
         private bool[] _boardMask;
         private float _tileSize;
@@ -13,9 +14,11 @@ namespace BoardLogic
         public void Init()
         {
             _tileSize = transform.parent.GetComponent<Board>().TileSize;
-            _maxTileNum = transform.parent.GetComponent<Board>().maxTileNum;
-            _boardTiles = new Tile[_maxTileNum * _maxTileNum];
-            _boardMask = new bool[_maxTileNum * _maxTileNum];
+            _maxTileNumX = transform.parent.GetComponent<Board>().MaxTileNumX;
+            _maxTileNumY = transform.parent.GetComponent<Board>().MaxTileNumY;
+            
+            _boardTiles = new Tile[_maxTileNumX * _maxTileNumY];
+            _boardMask = new bool[_maxTileNumX * _maxTileNumY];
         }
 
         public void GenerateTile(int row, int col, bool active)
@@ -46,8 +49,8 @@ namespace BoardLogic
             tile.GetComponent<BoxCollider>().isTrigger = true;
             tile.layer = LayerMask.NameToLayer(active ? "Tile" : "Ignore Raycast");
             
-            _boardMask[row * _maxTileNum + col] = active;
-            _boardTiles[row * _maxTileNum + col] = script;
+            _boardMask[row * _maxTileNumY + col] = active;
+            _boardTiles[row * _maxTileNumY + col] = script;
         }
         public void Activate(int index)
          {
@@ -63,10 +66,10 @@ namespace BoardLogic
 
         public void ExpansionStart()
         {
-            for (var i = 0; i < _maxTileNum; i++)
+            for (var i = 0; i < _maxTileNumX; i++)
             {
-                var row = i * _maxTileNum;
-                for (var j = 0; j < _maxTileNum; j++)
+                var row = i * _maxTileNumY;
+                for (var j = 0; j < _maxTileNumY; j++)
                 {
                     var index = row + j;
                     if (!_boardMask[index])
@@ -84,10 +87,10 @@ namespace BoardLogic
 
         public void ExpansionEnd()
         {
-            for (var i = 0; i < _maxTileNum; i++)
+            for (var i = 0; i < _maxTileNumX; i++)
             {
-                var row = i * _maxTileNum;
-                for (var j = 0; j < _maxTileNum; j++)
+                var row = i * _maxTileNumY;
+                for (var j = 0; j < _maxTileNumY; j++)
                 {
                     var index = row + j;
                     if (!_boardMask[index])

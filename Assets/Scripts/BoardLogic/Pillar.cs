@@ -4,7 +4,9 @@ namespace BoardLogic
 {
     public class Pillar : MonoBehaviour
     {
-        private int _maxTileNum;
+        private int _maxTileNumX;
+        private int _maxTileNumY;
+        
         private int _posX;
         private int _posY;
         private bool _active;
@@ -27,7 +29,8 @@ namespace BoardLogic
             transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
             transform.position = _active ? new Vector3((_posX + 0.5f) * _size, -12.53f, (_posY + 0.5f) * _size) : new Vector3((_posX + 0.5f) * _size, -23.0f, (_posY + 0.5f) * _size);
             _desired = transform.position;
-            _maxTileNum = _board.maxTileNum;
+            _maxTileNumX = _board.MaxTileNumX;
+            _maxTileNumY = _board.MaxTileNumY;
         }
 
         public void Activate()
@@ -54,7 +57,7 @@ namespace BoardLogic
             else
             {
                 _moving = false;
-                if (_active) _board.ActivateTile(_posX * _maxTileNum + _posY);
+                if (_active) _board.ActivateTile(_posX * _maxTileNumY + _posY);
             }
         }
     }
