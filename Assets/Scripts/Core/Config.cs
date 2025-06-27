@@ -1,39 +1,46 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Core
 {
-    public class Config: ScriptableObject
+    public struct PieceConfig
     {
-        public static PieceType[] boardConfig = new[]
-        {
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Brook, PieceType.BKnight, PieceType.BBishop, PieceType.Bqueen, PieceType.Bking, PieceType.BBishop, PieceType.BKnight, PieceType.Brook, PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.BPawn, PieceType.BPawn,   PieceType.BPawn,   PieceType.BBishop,  PieceType.BBishop, PieceType.BPawn,   PieceType.BPawn,   PieceType.BPawn, PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.WPawn, PieceType.WKnight,   PieceType.WPawn,   PieceType.WPawn,  PieceType.WPawn, PieceType.WPawn,   PieceType.WKnight,   PieceType.WPawn, PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Wrook, PieceType.WKnight, PieceType.WBishop, PieceType.Wqueen, PieceType.Wking, PieceType.WBishop, PieceType.WKnight, PieceType.Wrook, PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-            PieceType.Nil, PieceType.Nil, PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,    PieceType.Nil,   PieceType.Nil,     PieceType.Nil,     PieceType.Nil,   PieceType.Nil, PieceType.Nil,
-        };
+        public PieceType Type;
+        public Color Color;
+        public byte Index;
 
-        public static bool[] boardActive = new[]
+        public PieceConfig(PieceType t, Color c, byte i)
         {
-            false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, true, true, true, true, true, true, true, true, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false,
-            false, false, false, false, false, false, false, false, false, false, false, false
+            Type = t;
+            Color = c;
+            Index = i;
+        }
+    }
+    public static class Config
+    {
+        public static readonly List<PieceConfig> pieceConfig = new()
+        {
+            new PieceConfig(PieceType.Velkaris, Color.White, 25),
+            new PieceConfig(PieceType.Velkaris, Color.White, 52),
+            new PieceConfig(PieceType.Velkaris, Color.Black, 53),
+            new PieceConfig(PieceType.Velkaris, Color.Black, 65),
+        };
+        
+        
+        
+        public static readonly byte[] boardActive = {
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
         };
     }
 }

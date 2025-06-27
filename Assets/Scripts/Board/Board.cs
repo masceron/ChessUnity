@@ -3,6 +3,7 @@ using Board.Tile;
 using Core;
 using Unity.IL2CPP.CompilerServices;
 using UnityEngine;
+using Color = Core.Color;
 
 namespace Board
 {
@@ -11,7 +12,6 @@ namespace Board
     {
         private const int MaxFile = 12;
         private const int MaxRank = 12; 
-        private const int TypeofPieces = 5;
         
         [SerializeField] private Piece.PieceManager pieceManager;
         [SerializeField] private TileManager tileManager;
@@ -19,20 +19,20 @@ namespace Board
 
         private void ManagersSetup()
         {
-            InteractionManager.Init(MaxRank, MaxFile, pieceManager, gameState);
+            InteractionManager.Init(MaxRank, MaxFile, tileManager, pieceManager, gameState);
         }
 
         private void InstantiateGameState()
         {
-            gameState = new GameState(MaxRank, MaxFile, TypeofPieces);
+            gameState = new GameState(MaxRank, MaxFile, Config.pieceConfig, Config.boardActive, Color.White);
         }
 
-        private void InstantiateBoard(bool[] active)
+        private void InstantiateBoard(byte[] active)
         {
             tileManager.Spawn(MaxRank, MaxFile, active);
         }
 
-        private void InstantiatePieces(PieceType[] config)
+        private void InstantiatePieces(PieceData[] config)
         {
             pieceManager.Spawn(MaxRank, MaxFile, config);
         }
@@ -41,8 +41,8 @@ namespace Board
         {
             InstantiateGameState();
             ManagersSetup();
-            InstantiateBoard(Config.boardActive);
-            InstantiatePieces(Config.boardConfig);
+            InstantiateBoard(gameState.Position.active_board);
+            InstantiatePieces(gameState.Position.main_board);
         }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Board.Interaction
 {
-    public class Selection : MonoBehaviour
+    public class Marker : MonoBehaviour
     {
         void Update()
         {

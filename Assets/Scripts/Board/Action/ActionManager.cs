@@ -9,11 +9,10 @@ namespace Board.Action
         public static void Execute(GameState gameState, IAction action)
         {
             var move = action.MakeEncodedMove();
-            
-            if (gameState.IsLegal(move))
-            {
-                action.ApplyAction();
-            }
+
+            if (!gameState.IsLegal(move)) return;
+            gameState.Execute(move);
+            action.ApplyAction();
         }
     }
 }
