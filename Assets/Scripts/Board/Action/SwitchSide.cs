@@ -1,22 +1,28 @@
-﻿using Core;
+﻿using System;
+using Board.Interaction;
+using Core;
 
 namespace Board.Action
 {
-    public class SwitchSide: IAction
+    public class SwitchSide: Action
     {
-        public void ApplyAction()
+        public SwitchSide()
         {
+            From = 0;
+            To = 0;
             
-        }
-
-        public Move MakeEncodedMove()
-        {
-            return new Move
+            Move = new Move
             {
                 from = 0,
                 to = 0,
                 flag = MoveFlag.SwitchSide
             };
+        }
+        public override void ApplyAction()
+        {
+            InteractionManager.UnmarkPiece(InteractionManager.selectingPiece);
+            InteractionManager.selectingPiece = -1;
+            return;
         }
     }
 }

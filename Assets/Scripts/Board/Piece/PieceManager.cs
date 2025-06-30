@@ -25,15 +25,13 @@ namespace Board.Piece
             _maxRank = maxRank;
             pieces = new Piece[maxRank * maxFile];
             
-            for (int i = 0; i < maxRank * maxFile; i++)
+            for (var i = 0; i < maxRank * maxFile; i++)
             {
+                if (config[i] == null) continue;
                 switch (config[i].Type)
                 {
                     case PieceType.Velkaris:
-                        SpawnPiece(i, config[i].Color, 0, PieceType.Velkaris, Color.White, new Velkaris());
-                        break;
-                    case PieceType.Nil:
-                        pieces[i] = null;
+                        SpawnPiece(i, config[i].Color, 0, PieceType.Velkaris, new Velkaris());
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -41,12 +39,13 @@ namespace Board.Piece
             }
         }
 
-        private void SpawnPiece(int pos, Color side, int typeAsFab, PieceType typeAsEnum, Color c, IPieceLogic l)
+        private void SpawnPiece(int pos, Color side, int typeAsFab, PieceType typeAsEnum, IPieceLogic l)
         {
-            var p = Instantiate(side == Color.White ? whitePiecePrefabs[typeAsFab] : blackPiecePrefabs[typeAsFab]).AddComponent<Piece>();
+            var prefab = side == Color.White ? whitePiecePrefabs[typeAsFab] : blackPiecePrefabs[typeAsFab];
+            var p = Instantiate(prefab).AddComponent<Piece>();
             p.transform.parent = transform;
             pieces[pos] = p;
-            p.Spawn(pos / _maxRank, pos % _maxFile, typeAsEnum, c, l);
+            p.Spawn(pos / _maxRank, pos % _maxFile, typeAsEnum, side, l, prefab);
         }
         
         public Piece GetPiece(int pos)
@@ -58,6 +57,7 @@ namespace Board.Piece
         {
             pieces[to] = pieces[from];
             pieces[from] = null;
+            pieces[to].Move(to / _maxFile, to % _maxFile);
         }
     }
 }

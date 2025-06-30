@@ -4,24 +4,24 @@ using UnityEngine;
 
 namespace Board.Action
 {
-    public class NormalCapture: Action
+    public class VelkarisKill: Action
     {
-        public NormalCapture(int f, int t)
+        public VelkarisKill(int f, int t)
         {
             From = f;
             To = t;
-            
             Move = new Move
-            { 
-                from = (byte)From,
-                to = (byte)To,
-                flag = MoveFlag.NormalCapture
+            {
+                from = (byte)f,
+                to = (byte)t,
+                flag = MoveFlag.VelkarisKill
             };
         }
         public override void ApplyAction()
         {
             Object.Destroy(InteractionManager.pieceManager.GetPiece(To).gameObject);
-            InteractionManager.pieceManager.Move(From, To);
+            
+            ActionManager.Execute(InteractionManager.gameState, new SwitchSide());
         }
     }
 }

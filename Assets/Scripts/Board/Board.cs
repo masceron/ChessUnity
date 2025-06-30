@@ -1,3 +1,4 @@
+using Board.Action;
 using Board.Interaction;
 using Board.Tile;
 using Core;
@@ -24,7 +25,7 @@ namespace Board
 
         private void InstantiateGameState()
         {
-            gameState = new GameState(MaxRank, MaxFile, Config.pieceConfig, Config.boardActive, Color.White);
+            gameState = new GameState(MaxRank, MaxFile, Config.pieceConfig, Config.boardActive, Color.Black, Color.Black);
         }
 
         private void InstantiateBoard(byte[] active)
@@ -43,6 +44,26 @@ namespace Board
             ManagersSetup();
             InstantiateBoard(gameState.Position.active_board);
             InstantiatePieces(gameState.Position.main_board);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                gameState.OurSide = gameState.OurSide == Color.White ? Color.Black : Color.White;
+                ActionManager.Execute(gameState, new SwitchSide());
+                Debug.Log(gameState.Position.side_to_move);
+            }
+            else if (Input.GetKeyDown(KeyCode.F))
+            {
+                if (InteractionManager.selectingPiece == -1) return;
+                var des = InteractionManager.ActionToTake.Find(action => action.Move.flag == MoveFlag.VelkarisKill);
+                if (des != null)
+                {
+                    ActionManager.Execute(gameState, des);
+                }
+            }
+            
         }
     }
 }

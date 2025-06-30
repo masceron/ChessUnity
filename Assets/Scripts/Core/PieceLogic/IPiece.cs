@@ -5,6 +5,6 @@ namespace Core.PieceLogic
 {
     public interface IPieceLogic
     { 
-        public List<IAction> MoveToMake(int from);
+        public List<Action> MoveToMake(int from);
     }
 }

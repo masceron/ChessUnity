@@ -2,9 +2,11 @@
 
 namespace Board.Action
 {
-    public interface IAction
+    public abstract class Action
     {
-        void ApplyAction();
-        Move MakeEncodedMove();
+        public Move Move;
+        public int From;
+        public int To;
+        public abstract void ApplyAction();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 namespace Core
 {
@@ -20,17 +19,12 @@ namespace Core
     {
         public static readonly List<PieceConfig> pieceConfig = new()
         {
-            new PieceConfig(PieceType.Velkaris, Color.White, 25),
-            new PieceConfig(PieceType.Velkaris, Color.White, 52),
-            new PieceConfig(PieceType.Velkaris, Color.Black, 53),
-            new PieceConfig(PieceType.Velkaris, Color.Black, 65),
+            new PieceConfig(PieceType.Velkaris, Color.White, 140),
+           // new PieceConfig(PieceType.Velkaris, Color.White, 26),
+            new PieceConfig(PieceType.Velkaris, Color.Black, 101)
         };
         
-        
-        
         public static readonly byte[] boardActive = {
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -39,8 +33,10 @@ namespace Core
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         };
     }
 }
