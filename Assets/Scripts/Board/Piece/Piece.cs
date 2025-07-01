@@ -14,7 +14,7 @@ namespace Board.Piece
         public Color side;
         public PieceType type;
         public IPieceLogic logic;
-        public void Spawn(int r, int f, PieceType t, Color s, IPieceLogic l)
+        public void Spawn(int r, int f, PieceType t, Color s, IPieceLogic l, GameObject p)
         {
             rank = r;
             file = f;
@@ -22,8 +22,7 @@ namespace Board.Piece
             side = s;
             logic = l;
 
-            transform.position = new Vector3(rank, 1, file);
-            transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
+            transform.position = new Vector3(rank, p.transform.position.y, file);
         }
         
         public void Move(int rankTo, int fileTo)
@@ -31,7 +30,7 @@ namespace Board.Piece
             rank = rankTo;
             file = fileTo;
             
-            transform.position = new Vector3(rank, 1, file);
+            transform.position = new Vector3(rank, transform.position.y, file);
         }
     }
 }

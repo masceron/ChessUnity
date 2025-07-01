@@ -11,84 +11,83 @@ namespace Board.Interaction
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class InteractionManager
     {
-        private static bool _selectPieceLock;
-        private static int _selectingPiece;
+        public static bool selectPieceLock;
+        public static int selectingPiece;
         public static int maxRank;
         public static int maxFile;
+        public static int boardSize;
         public static PieceManager pieceManager;
         public static TileManager tileManager;
         public static GameState gameState;
+        
+        private static Action.Action _pendingMove = null;
 
         public static void Init(int r, int f, TileManager t, PieceManager p, GameState g)
         {
-            _selectingPiece = -1;
+            selectingPiece = -1;
             maxRank = r;
             maxFile = f;
             tileManager = t;
             pieceManager = p;
             gameState = g;
+            boardSize = r * f;
         }
         
         public static void Select(int rank, int file)
         {
-            if (_selectPieceLock) return;
+            if (selectPieceLock) return;
             
-            
-            if (_selectingPiece == -1)
+            if (selectingPiece == -1)
             {
                 var selected = rank * maxFile + file;
-                var p = pieceManager.GetPiece(selected);
-                if (p == null || p.side != gameState.OurSide) return;
-                    _selectingPiece = selected;
-                    MarkPiece(selected);
+                var p = gameState.Position.main_board[selected];
+                if (p == null || p.Color != gameState.OurSide) return;
+                selectingPiece = selected;
+                MarkPiece(selected);
                 
             }
             else
             {
                 var selected = rank * maxFile + file;
-                if (selected == _selectingPiece)
+                if (selected == selectingPiece)
                 {
                     UnmarkPiece(selected);
-                    _selectingPiece = -1;
+                    selectingPiece = -1;
                 }
                 else
                 {
-                    var p = pieceManager.GetPiece(selected);
-                    if (p != null)
+                    //Just a normal capture or quiet move
+                    if (_pendingMove == null)
                     {
-                        if (p.side == gameState.OurSide)
+                        var action = ActionToTake.Find(x => x.To == selected);
+                        if (action != null)
                         {
-                            UnmarkPiece(_selectingPiece);
-                            _selectingPiece = selected;
-                            MarkPiece(selected);
+                            ActionManager.Execute(gameState, action);
                         }
-                    }
-                    else
-                    {
-                        ActionManager.Execute(gameState, new NormalMove(_selectingPiece, selected, pieceManager, maxFile));
-                        UnmarkPiece(_selectingPiece);
-                        _selectingPiece = -1;
+                        UnmarkPiece(selectingPiece);
+                        selectingPiece = -1;
                     }
                 }
             }
         }
 
-        private static List<IAction> _actionToTake = new();
+        public static List<Action.Action> ActionToTake = new();
         private static void MarkPiece(int pos)
         {
             tileManager.Select(pos);
-            _actionToTake = pieceManager.GetPiece(pos).logic.MoveToMake(pos);
+            ActionToTake = pieceManager.GetPiece(pos).logic.MoveToMake(pos);
 
-            foreach (var encoded in _actionToTake.Select(action => action.MakeEncodedMove()).Where(encoded => encoded.flag == MoveFlag.NormalMove))
+            foreach (var encoded in ActionToTake.Select(action => action.Move).Where(encoded => encoded.flag is MoveFlag.NormalMove or MoveFlag.NormalCapture))
             {
                 tileManager.MarkAsMoveable(encoded.to);
             }
         }
 
-        private static void UnmarkPiece(int pos)
+        public static void UnmarkPiece(int pos)
         {
+            if (pos == -1) return;
             tileManager.Unmark(pos);
-            foreach (var encoded in _actionToTake.Select(action => action.MakeEncodedMove()).Where(encoded => encoded.flag == MoveFlag.NormalMove))
+            foreach (var encoded in ActionToTake.Select(action => action.Move).Where(encoded => encoded.flag is MoveFlag.NormalMove or MoveFlag.NormalCapture))
             {
                 tileManager.Unmark(encoded.to);
             }

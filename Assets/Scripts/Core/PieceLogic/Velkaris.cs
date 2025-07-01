@@ -6,7 +6,7 @@ namespace Core.PieceLogic
 {
     public class Velkaris: IPieceLogic
     {
-        private readonly int[][] adjacent = {
+        private static readonly int[][] Adjacent = {
             new[] {-1, -1},
             new[] {-1, 0},
             new[] {-1, 1},
@@ -17,7 +17,7 @@ namespace Core.PieceLogic
             new[] {0, -1},
         };
         
-        private readonly int[][] next = {
+        private static readonly int[][] Next = {
             new[] {-2, -2},
             new[] {-2, 0},
             new[] {-2, 2},
@@ -28,7 +28,7 @@ namespace Core.PieceLogic
             new[] {0, -2},
         };
 
-        private readonly int[][] knightSlides =
+        private static readonly int[][] KnightSlides =
         {
             new[] {-2, -1},
             new[] {-2, 1},
@@ -39,7 +39,7 @@ namespace Core.PieceLogic
             new[] {1, -2},
             new[] {-1, -2},
         };
-        private bool[] StraightSlide(List<IAction> list, int from, GameState gameState)
+        private static bool[] StraightSlide(List<Action> list, int from, GameState gameState)
         {
             var block = new bool[8];
             var board = gameState.Position.main_board;
@@ -50,23 +50,23 @@ namespace Core.PieceLogic
 
             for (var i = 0; i < 8; i++)
             {
-                var toRank = rank + adjacent[i][0];
-                var toFile = file + adjacent[i][1];
+                var toRank = rank + Adjacent[i][0];
+                var toFile = file + Adjacent[i][1];
                 var to = toRank * maxFile + toFile;
                 
                 if (toRank < 0 || toRank >= maxRank || toFile < 0 || toFile >= maxFile || gameState.Position.active_board[to] == 0) continue;
                 
-                if (board[to].Type == PieceType.Nil)
+                if (board[to] == null)
                 {
                     list.Add(new NormalMove(from, to, InteractionManager.pieceManager, InteractionManager.maxFile));
                     block[i] = false;
                     
-                    var to2Rank = rank + next[i][0];
-                    var to2File = file + next[i][1];
+                    var to2Rank = rank + Next[i][0];
+                    var to2File = file + Next[i][1];
                     var to2 = to2Rank * maxFile + to2File;
                     
                     if (to2Rank < 0 || to2Rank >= maxRank || to2File < 0 || to2File >= maxFile || gameState.Position.active_board[to2] == 0) continue;
-                    if (board[to2].Type == PieceType.Nil)
+                    if (board[to2] == null)
                     {
                         list.Add(new NormalMove(from, to2, InteractionManager.pieceManager,
                             InteractionManager.maxFile));
@@ -88,7 +88,7 @@ namespace Core.PieceLogic
             return block;
         }
 
-        private void KnightSlide(List<IAction> list, int from, GameState gameState, bool[] block)
+        private static void KnightSlide(List<Action> list, int from, GameState gameState, bool[] block)
         {
             var board = gameState.Position.main_board;
             var maxFile = InteractionManager.maxFile;
@@ -98,15 +98,15 @@ namespace Core.PieceLogic
             
             for (var i = 0; i < 8; i++)
             {
-                var toRank = rank + knightSlides[i][0];
-                var toFile = file + knightSlides[i][1];
+                var toRank = rank + KnightSlides[i][0];
+                var toFile = file + KnightSlides[i][1];
                 var to = toRank * maxFile + toFile;
                 
                 if (toRank < 0 || toRank >= maxRank || toFile < 0 || toFile >= maxFile || gameState.Position.active_board[to] == 0) continue;
                 
                 if (block[i] && block[i < 7 ? i + 1 : 0]) continue;
                 
-                if (board[to].Type == PieceType.Nil)
+                if (board[to] == null)
                 {
                     list.Add(new NormalMove(from, to, InteractionManager.pieceManager, InteractionManager.maxFile));
                 }
@@ -119,11 +119,29 @@ namespace Core.PieceLogic
                 }
             }
         }
-        public List<IAction> MoveToMake(int from)
+
+        private static void Kill(List<Action> list, int from, GameState gameState)
         {
-            var list = new List<IAction>();
+            for (var i = 0; i < InteractionManager.boardSize; i++)
+            {
+                var p = gameState.Position.main_board[i];
+                if (p == null) continue;
+                if (p.Effects.Contains(Effect.VelkarisMarked) && p.Color != gameState.OurSide)
+                {
+                    list.Add(new VelkarisKill(from, i));
+                }
+            }
+        }
+        public List<Action> MoveToMake(int from)
+        {
             var gameState = InteractionManager.gameState;
+            var piece = gameState.Position.main_board[from];
+            var list = new List<Action>();
             KnightSlide(list, from, gameState, StraightSlide(list, from, gameState));
+            if (piece.SkillCooldown == 0)
+            {
+                Kill(list, from, gameState);
+            }
             
             return list;
         }
