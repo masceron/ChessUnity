@@ -1,3 +1,4 @@
+using System.Collections;
 using Board.Action;
 using Board.Interaction;
 using Board.Tile;
@@ -25,10 +26,10 @@ namespace Board
 
         private void InstantiateGameState()
         {
-            gameState = new GameState(MaxRank, MaxFile, Config.pieceConfig, Config.boardActive, Color.Black, Color.Black);
+            gameState = new GameState(MaxRank, MaxFile, Config.PieceConfig, Config.BoardActive, Color.Black, Color.Black);
         }
 
-        private void InstantiateBoard(byte[] active)
+        private void InstantiateBoard(BitArray active)
         {
             tileManager.Spawn(MaxRank, MaxFile, active);
         }
@@ -42,8 +43,8 @@ namespace Board
         {
             InstantiateGameState();
             ManagersSetup();
-            InstantiateBoard(gameState.Position.active_board);
-            InstantiatePieces(gameState.Position.main_board);
+            InstantiateBoard(gameState.ActiveBoard);
+            InstantiatePieces(gameState.MainBoard);
         }
 
         private void Update()
@@ -52,12 +53,12 @@ namespace Board
             {
                 gameState.OurSide = gameState.OurSide == Color.White ? Color.Black : Color.White;
                 ActionManager.Execute(gameState, new SwitchSide());
-                Debug.Log(gameState.Position.side_to_move);
+                Debug.Log(gameState.SideToMove);
             }
             else if (Input.GetKeyDown(KeyCode.F))
             {
-                if (InteractionManager.selectingPiece == -1) return;
-                var des = InteractionManager.ActionToTake.Find(action => action.Move.flag == MoveFlag.VelkarisKill);
+                if (InteractionManager.SelectingPiece == -1) return;
+                var des = InteractionManager.ActionToTake.Find(action => action.GetType() == typeof(VelkarisKill));
                 if (des != null)
                 {
                     ActionManager.Execute(gameState, des);

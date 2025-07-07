@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Board.Action;
-using UnityEngine;
 
 namespace Core.Triggers
 {
@@ -27,31 +26,31 @@ namespace Core.Triggers
             }
         }
 
-        public VelkarisMarker(PieceData p, GameState state) : base(state, p)
+        public VelkarisMarker(GameState state, PieceData p) : base(state, p)
         {
             rows = new int[2];
             TriggerRows(p.Pos, p.Color);
         }
         
-        public override bool CallTrigger(PieceData movedPiece, Move lastMove)
+        public override bool CallTrigger(PieceData movedPiece)
         {
-            if (movedPiece == null) return false;
+            if (movedPiece == null || !GameState.LastMove.DoesMoveChangePos()) return false;
             
             if (movedPiece == Piece)
             {
-                TriggerRows(lastMove.to, Piece.Color);
+                TriggerRows(GameState.LastMove.To, Piece.Color);
                 return false;
             }
             
-            if (!lastMove.DoesMoveChangePos() || GameState.Position.side_to_move == Piece.Color) return false;
+            if (GameState.SideToMove == Piece.Color) return false;
 
-            var rowMovedTo = lastMove.to / GameState.MaxFile;
+            var rowMovedTo = GameState.LastMove.To / GameState.MaxFile;
             
             if (!rows.Contains(rowMovedTo))
             {
                 return false;
             }
-            ActionManager.Execute(GameState, new VelkarisMark(Piece.Pos, lastMove.to));
+            ActionManager.Execute(GameState, new VelkarisMark(Piece.Pos, GameState.LastMove.To));
 
             return true;
         }

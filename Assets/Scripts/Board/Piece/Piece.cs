@@ -13,8 +13,8 @@ namespace Board.Piece
         private int file;
         public Color side;
         public PieceType type;
-        public IPieceLogic logic;
-        public void Spawn(int r, int f, PieceType t, Color s, IPieceLogic l, GameObject p)
+        public PieceLogic logic;
+        public void Spawn(int r, int f, PieceType t, Color s, PieceLogic l, GameObject p)
         {
             rank = r;
             file = f;

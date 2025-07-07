@@ -6,22 +6,32 @@ namespace Board.Action
 {
     public class NormalCapture: Action
     {
-        public NormalCapture(int f, int t)
+        public NormalCapture(ushort f, ushort t)
         {
             From = f;
             To = t;
-            
-            Move = new Move
-            { 
-                from = (byte)From,
-                to = (byte)To,
-                flag = MoveFlag.NormalCapture
-            };
         }
-        public override void ApplyAction()
+        public override void ApplyAction(GameState state)
         {
-            Object.Destroy(InteractionManager.pieceManager.GetPiece(To).gameObject);
-            InteractionManager.pieceManager.Move(From, To);
+            Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
+            InteractionManager.PieceManager.Move(From, To);
+            ModifyGameState(state);
+        }
+
+        public override void ModifyGameState(GameState state)
+        {
+            var pieceAffected = state.MainBoard[From];
+            var pieceToMove = state.MainBoard[From];
+            state.RemoveTrigger(pieceAffected);
+            state.MainBoard[To] = pieceToMove;
+            state.MainBoard[To].Pos = To;
+            state.MainBoard[From] = null;
+            state.LastMove = this;
+        }
+
+        public override bool DoesMoveChangePos()
+        {
+            return true;
         }
     }
 }

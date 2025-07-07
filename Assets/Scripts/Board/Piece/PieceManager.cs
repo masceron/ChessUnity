@@ -16,13 +16,13 @@ namespace Board.Piece
         [SerializeField] private GameObject[] blackPiecePrefabs;
         
         
-        private int _maxFile;
-        private int _maxRank;
+        private int maxFile;
+        private int maxRank;
     
-        public void Spawn(int maxRank, int maxFile, PieceData[] config)
+        public void Spawn(int r, int f, PieceData[] config)
         {
-            _maxFile = maxFile;
-            _maxRank = maxRank;
+            maxFile = r;
+            maxRank = f;
             pieces = new Piece[maxRank * maxFile];
             
             for (var i = 0; i < maxRank * maxFile; i++)
@@ -31,7 +31,10 @@ namespace Board.Piece
                 switch (config[i].Type)
                 {
                     case PieceType.Velkaris:
-                        SpawnPiece(i, config[i].Color, 0, PieceType.Velkaris, new Velkaris());
+                        SpawnPiece(i, 0, PieceType.Velkaris, new Velkaris(config[i]), config[i]);
+                        break;
+                    case PieceType.GuidingSiren:
+                        SpawnPiece(i, 1, PieceType.GuidingSiren, new GuidingSiren(config[i]), config[i]);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -39,13 +42,13 @@ namespace Board.Piece
             }
         }
 
-        private void SpawnPiece(int pos, Color side, int typeAsFab, PieceType typeAsEnum, IPieceLogic l)
+        private void SpawnPiece(int pos, int typeAsFab, PieceType typeAsEnum, PieceLogic l, PieceData data)
         {
-            var prefab = side == Color.White ? whitePiecePrefabs[typeAsFab] : blackPiecePrefabs[typeAsFab];
+            var prefab = data.Color == Color.White ? whitePiecePrefabs[typeAsFab] : blackPiecePrefabs[typeAsFab];
             var p = Instantiate(prefab).AddComponent<Piece>();
             p.transform.parent = transform;
             pieces[pos] = p;
-            p.Spawn(pos / _maxRank, pos % _maxFile, typeAsEnum, side, l, prefab);
+            p.Spawn(pos / maxRank, pos % maxFile, typeAsEnum, data.Color, l, prefab);
         }
         
         public Piece GetPiece(int pos)
@@ -57,7 +60,7 @@ namespace Board.Piece
         {
             pieces[to] = pieces[from];
             pieces[from] = null;
-            pieces[to].Move(to / _maxFile, to % _maxFile);
+            pieces[to].Move(to / maxFile, to % maxFile);
         }
     }
 }

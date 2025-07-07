@@ -8,9 +8,7 @@ namespace Board.Action
     {
         public static void Execute(GameState gameState, Action action)
         {
-            if (!gameState.IsLegal(action.Move)) return;
-            gameState.Execute(action.Move);
-            action.ApplyAction();
+            action.ApplyAction(gameState);
         }
     }
 }

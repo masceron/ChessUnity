@@ -1,4 +1,6 @@
-﻿namespace Core.Triggers
+﻿using Board.Action;
+
+namespace Core.Triggers
 {
     public abstract class Trigger
     {
@@ -11,6 +13,6 @@
             Piece = p;
         }
 
-        public abstract bool CallTrigger(PieceData movedPiece, Move lastMove);
+        public abstract bool CallTrigger(PieceData movedPiece);
     }
 }

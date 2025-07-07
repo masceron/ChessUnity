@@ -8,20 +8,29 @@ namespace Board.Action
     {
         public VelkarisKill(int f, int t)
         {
-            From = f;
-            To = t;
-            Move = new Move
-            {
-                from = (byte)f,
-                to = (byte)t,
-                flag = MoveFlag.VelkarisKill
-            };
+            From = (ushort)f;
+            To = (ushort)t;
         }
-        public override void ApplyAction()
+
+        public override void ApplyAction(GameState state)
         {
-            Object.Destroy(InteractionManager.pieceManager.GetPiece(To).gameObject);
+            Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
+            ActionManager.Execute(InteractionManager.GameState, new SwitchSide());
             
-            ActionManager.Execute(InteractionManager.gameState, new SwitchSide());
+            ModifyGameState(state);
+        }
+
+        public override void ModifyGameState(GameState state)
+        {
+            state.RemoveTrigger(state.MainBoard[To]);
+            state.MainBoard[To] = null;
+            state.MainBoard[From].SkillCooldown = -1;
+            state.LastMove = this;
+        }
+
+        public override bool DoesMoveChangePos()
+        {
+            return false;
         }
     }
 }

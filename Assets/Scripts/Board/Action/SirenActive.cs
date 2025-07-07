@@ -1,33 +1,34 @@
 ﻿using Core;
-using UnityEngine;
 
 namespace Board.Action
 {
-    public class VelkarisMark: Action
+    public class SirenActive: Action
     {
-        public VelkarisMark(int f, int t)
+        public SirenActive(int c, int f, int t)
         {
+            Caller = (ushort)c;
             From = (ushort)f;
             To = (ushort)t;
         }
-
         public override void ApplyAction(GameState state)
         {
-            Debug.Log("Velkaris marked " + To);
+            
             
             ModifyGameState(state);
         }
 
         public override void ModifyGameState(GameState state)
         {
-            state.MainBoard[To].Effects.Add(new Effect(EffectType.VelkarisMarked, -1));
-            state.MainBoard[From].SkillCooldown = -1;
+            state.MainBoard[To] = state.MainBoard[From];
+            state.MainBoard[To].Pos = To;
+            state.MainBoard[From] = null;
+            state.MainBoard[Caller].SkillCooldown = 12;
             state.LastMove = this;
         }
 
         public override bool DoesMoveChangePos()
         {
-            return false;
+            return true;
         }
     }
 }

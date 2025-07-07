@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Board.Action
 {
-    public class VelkarisMark: Action
+    public class SirenDebuff: Action
     {
-        public VelkarisMark(int f, int t)
+        public SirenDebuff(int f, int t)
         {
             From = (ushort)f;
             To = (ushort)t;
@@ -13,21 +13,20 @@ namespace Board.Action
 
         public override void ApplyAction(GameState state)
         {
-            Debug.Log("Velkaris marked " + To);
+            Debug.Log("Siren Debuffed " + To);
             
             ModifyGameState(state);
         }
 
         public override void ModifyGameState(GameState state)
         {
-            state.MainBoard[To].Effects.Add(new Effect(EffectType.VelkarisMarked, -1));
-            state.MainBoard[From].SkillCooldown = -1;
+            state.MainBoard[To].Effects.Add(new Effect(EffectType.SlowOne, 1));
             state.LastMove = this;
         }
 
         public override bool DoesMoveChangePos()
         {
-            return false;
+            return true;
         }
     }
 }

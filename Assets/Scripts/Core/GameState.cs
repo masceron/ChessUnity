@@ -1,16 +1,18 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
+using Board.Action;
 using Core.Triggers;
 using Unity.IL2CPP.CompilerServices;
+using Action = Board.Action.Action;
 
 namespace Core
 {
     public enum PieceType: sbyte
     {
         Velkaris,
-        
+        GuidingSiren
     }
     
     public enum Color: byte
@@ -18,22 +20,42 @@ namespace Core
         White, Black
     }
 
-    public enum MoveFlag : byte
-    {
-        SwitchSide,
-        NormalMove,
-        NormalCapture,
-        VelkarisMark,
-        VelkarisKill
-    }
-
-    public enum Effect : byte
+    public enum EffectType : byte
     {
         None,
         Shield,
         Evasion,
         HardenedShield,
         VelkarisMarked,
+        SlowOne,
+        Controlled
+    }
+
+    public struct Effect : IEquatable<Effect>
+    {
+        public readonly EffectType EffectType;
+        public sbyte Duration;
+
+        public Effect(EffectType e, sbyte d)
+        {
+            EffectType = e;
+            Duration = d;
+        }
+
+        public bool Equals(Effect other)
+        {
+            return EffectType == other.EffectType;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Effect other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return (int)EffectType;
+        }
     }
 
     public struct TriggerElement : IEquatable<TriggerElement>, IComparable<TriggerElement>
@@ -64,78 +86,68 @@ namespace Core
     
     public class PieceData
     {
-        public byte Pos;
+        public ushort Pos;
         public readonly PieceType Type;
         public readonly Color Color;
         public sbyte SkillCooldown = -1;
-        public readonly List<Effect> Effects = new();
+        public readonly List<Effect> Effects;
         public readonly List<TriggerElement> Triggers = new();
         
-        public PieceData(PieceType type, Color color, byte pos)
+        public PieceData(PieceType type, Color color, ushort pos, List<Effect> effects)
         {
             Type = type;
             Color = color;
             Pos = pos;
-        }
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct Position
-    {
-        public PieceData[] main_board;
-        public byte[] active_board;
-        public Color side_to_move;
-        public ushort ply;
-        public List<TriggerElement> triggers;
-    }
-    
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public struct Move
-    {
-        public byte from;
-        public byte to;
-        public MoveFlag flag;
-
-        public bool DoesMoveChangePos()
-        {
-            return flag is MoveFlag.NormalCapture or MoveFlag.NormalMove;
+            Effects = effects;
         }
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GameState
     {
-        public Position Position;
         public Color OurSide;
         public readonly int MaxRank;
         public readonly int MaxFile;
-
+        public readonly int MaxPos;
+        public static readonly Effect SlowOne = new Effect(EffectType.SlowOne, 0);
+        
+        public readonly PieceData[] MainBoard;
+        public readonly BitArray ActiveBoard;
+        public Color SideToMove;
+        public ushort Ply;
+        private readonly List<TriggerElement> triggers;
+        public Action LastMove;
+        
         public GameState(int maxRank, int maxFile, List<PieceConfig> configs, byte[] ac, Color side, Color ourSide)
         {
             OurSide = ourSide;
             MaxFile = maxFile;
             MaxRank = maxRank;
-            
-            Position = new Position
+            MaxPos = MaxRank * MaxFile;
+            LastMove = new SwitchSide();
+
+            MainBoard = new PieceData[maxRank * maxFile];
+            ActiveBoard = new BitArray(maxRank * maxFile);
+            triggers = new List<TriggerElement>();
+            SideToMove = side;
+
+            for (var i = 0; i < ac.Length; i++)
             {
-                main_board = new PieceData[maxRank * maxFile],
-                active_board = new byte[maxRank * maxFile],
-                triggers = new List<TriggerElement>(),
-                side_to_move = side
-            };
-            Array.Copy(ac, Position.active_board, maxRank * maxFile);
+                if (ac[i] == 0) ActiveBoard[i] = false;
+                else ActiveBoard[i] = true;
+            }
 
             foreach (var piece in configs)
             {
-                var p = new PieceData(piece.Type, piece.Color, piece.Index);
-                Position.main_board[piece.Index] = p;
-                MakeTrigger(p, Position.triggers, this);
+                var p = new PieceData(piece.Type, piece.Color, piece.Index, piece.Effects);
+                MainBoard[piece.Index] = p;
+                MakeTrigger(p);
             }
             
-            Position.triggers.Sort((a, b) => b.CompareTo(a));
+            triggers.Sort((a, b) => b.CompareTo(a));
         }
 
-        private static void MakeTrigger(PieceData piece, List<TriggerElement> triggers, GameState state)
+        private void MakeTrigger(PieceData piece)
         {
             TriggerElement trigger;
             switch (piece.Type)
@@ -143,8 +155,15 @@ namespace Core
                 case PieceType.Velkaris:
                     trigger = new TriggerElement
                     {
-                        Trigger = new VelkarisMarker(piece, state),
+                        Trigger = new VelkarisMarker(this, piece),
                         Priority = 0
+                    };
+                    break;
+                case PieceType.GuidingSiren:
+                    trigger = new TriggerElement()
+                    {
+                        Trigger = new SirenDebuffer(this, piece),
+                        Priority = 2
                     };
                     break;
                 default:
@@ -154,64 +173,40 @@ namespace Core
             piece.Triggers.Add(trigger);
         }
 
-        public bool IsLegal(Move move)
-        {
-            return true;
-        }
-
-        private static void RemoveTrigger(PieceData piece, List<TriggerElement> list)
+        public void RemoveTrigger(PieceData piece)
         {
             foreach (var toRemove in piece.Triggers)
             {
-                list.Remove(toRemove);
+                triggers.Remove(toRemove);
             }
         }
 
-        public int Execute(Move move)
+        public void EndTurn(PieceData pieceToMove)
         {
-            var flag = move.flag;
-            var from = move.from;
-            var to = move.to;
-            var pieceToMove = Position.main_board[from];
-            var pieceAffected = Position.main_board[to];
-            switch (flag)
+            foreach (var piece in MainBoard)
             {
-                case MoveFlag.SwitchSide:
-                    Position.side_to_move = Position.side_to_move == Color.White ? Color.Black : Color.White;
-                    break;
-                case MoveFlag.NormalMove:
-                    Position.main_board[to] = pieceToMove;
-                    Position.main_board[to].Pos = to;
-                    Position.main_board[from] = null;
-                    break;
-                case MoveFlag.NormalCapture:
-                    RemoveTrigger(pieceAffected, Position.triggers);
-                    Position.main_board[to] = pieceToMove;
-                    Position.main_board[to].Pos = to;
-                    Position.main_board[from] = null;
-                    break;
-                case MoveFlag.VelkarisKill:
-                    RemoveTrigger(pieceAffected, Position.triggers);
-                    Position.main_board[to] = null;
-                    pieceToMove.SkillCooldown = -1;
-                    break;
-                case MoveFlag.VelkarisMark:
-                    Position.main_board[to].Effects.Add(Effect.VelkarisMarked);
-                    pieceToMove.SkillCooldown = 0;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                if (piece == null) continue;
 
-            var triggerToRemove = Position.triggers.Where(trigger => trigger.Trigger.CallTrigger(pieceToMove, move)).ToList();
+                piece.Effects.RemoveAll(e => e.Duration == 0);
+
+                if (piece.SkillCooldown > 0) piece.SkillCooldown -= 1;
+                
+                for (var i = 0; i < piece.Effects.Count; i++)
+                {
+                    var eff = piece.Effects[i];
+                    if (eff.Duration < 0) continue;
+                    eff.Duration -= 1;
+                    piece.Effects[i] = eff;
+                }
+            }
+            
+            var triggerToRemove = triggers.Where(trigger => trigger.Trigger.CallTrigger(pieceToMove)).ToList();
 
             foreach (var trigger in triggerToRemove)
             {
                 trigger.Trigger.Piece.Triggers.Remove(trigger);
-                Position.triggers.Remove(trigger);
+                triggers.Remove(trigger);
             }
-
-            return 0;
-        } 
+        }
     }
 }

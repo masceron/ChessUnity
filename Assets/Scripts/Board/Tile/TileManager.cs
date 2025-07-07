@@ -1,3 +1,4 @@
+using System.Collections;
 using Board.Interaction;
 using UnityEngine;
 using Unity.IL2CPP.CompilerServices;
@@ -31,7 +32,7 @@ namespace Board.Tile
             selections[pos] = sel.AddComponent<Marker>();
         }
 
-        public void Spawn(int maxRank, int maxFile, byte[] active)
+        public void Spawn(int maxRank, int maxFile, BitArray active)
         {
             _maxRank = maxRank;
             _maxFile = maxFile;
@@ -49,7 +50,7 @@ namespace Board.Tile
                     
                     var tile = new GameObject(i + " " + j).AddComponent<Tile>();
                     tile.transform.parent = transform;
-                    if (active[index] != 0)
+                    if (active[index])
                         tile.Spawn(i, j, floorPrefabs[(i + j) % 2], true);
                     else tile.Spawn(i, j, floorPrefabs[2], false);
 
