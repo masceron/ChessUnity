@@ -20,7 +20,8 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
-            state.MainBoard[To].Effects.Add(new Effect(EffectType.VelkarisMarked, -1));
+            state.LastMovedPiece = state.MainBoard[From];
+            state.MainBoard[To].Effects.Add(new Effect(EffectType.VelkarisMarked, -1, 1));
             state.MainBoard[From].SkillCooldown = -1;
             state.LastMove = this;
         }

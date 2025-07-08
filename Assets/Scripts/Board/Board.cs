@@ -53,7 +53,6 @@ namespace Board
             {
                 gameState.OurSide = gameState.OurSide == Color.White ? Color.Black : Color.White;
                 ActionManager.Execute(gameState, new SwitchSide());
-                Debug.Log(gameState.SideToMove);
             }
             else if (Input.GetKeyDown(KeyCode.F))
             {

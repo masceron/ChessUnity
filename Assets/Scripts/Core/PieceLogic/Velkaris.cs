@@ -136,7 +136,7 @@ namespace Core.PieceLogic
             }
         }
 
-        private static readonly Effect Marked = new(EffectType.VelkarisMarked, -1);
+        private static readonly Effect Marked = new(EffectType.VelkarisMarked, -1, 1);
 
         private static void Kill(List<Action> list, int from, GameState gameState)
         {
@@ -159,7 +159,7 @@ namespace Core.PieceLogic
             var piece = gameState.MainBoard[from];
             var list = new List<Action>();
             
-            var range = Math.Max(Range - (Piece.Effects.Contains(GameState.SlowOne) ? 1 : 0), 0);
+            var range = Math.Max(Range - (Piece.Effects.Contains(GameState.Slow) ? 1 : 0), 0);
             
             var blocker = StraightSlide(list, from, gameState, range);
             KnightSlide(list, from, gameState, blocker, range);

@@ -13,6 +13,6 @@ namespace Core.Triggers
             Piece = p;
         }
 
-        public abstract bool CallTrigger(PieceData movedPiece);
+        public abstract bool CallTrigger();
     }
 }

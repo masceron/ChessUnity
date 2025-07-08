@@ -20,13 +20,14 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
-            state.MainBoard[To].Effects.Add(new Effect(EffectType.SlowOne, 1));
+            state.LastMovedPiece = state.MainBoard[From];
+            state.MainBoard[To].Effects.Add(new Effect(EffectType.Slow, 1, 1));
             state.LastMove = this;
         }
 
         public override bool DoesMoveChangePos()
         {
-            return true;
+            return false;
         }
     }
 }

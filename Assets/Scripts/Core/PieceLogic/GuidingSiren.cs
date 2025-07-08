@@ -12,7 +12,7 @@ namespace Core.PieceLogic
         
         public GuidingSiren(PieceData p) : base(p) {}
 
-        private static void MakeMove(PieceData piece, List<Action> list, int rank, int file, int curr, int maxRange, GameState gameState)
+        private void MakeMove(List<Action> list, int rank, int file, int curr, int maxRange, GameState gameState)
         {
             if (rank < 0 || rank >= gameState.MaxRank || file < 0 || file >= gameState.MaxFile) return;
             
@@ -23,17 +23,16 @@ namespace Core.PieceLogic
             if (p == null)
             {
                 if (curr <= maxRange)
-                    list.Add(new NormalMove(piece.Pos, pos, InteractionManager.PieceManager, gameState.MaxFile));
+                    list.Add(new NormalMove(Piece.Pos, pos, InteractionManager.PieceManager, gameState.MaxFile));
             }
-            else if (p.Color != piece.Color)
+            else if (p.Color != Piece.Color)
             {
-                list.Add(new NormalCapture(piece.Pos, (ushort)pos));
+                list.Add(new NormalCapture(Piece.Pos, (ushort)pos));
             }
         }
 
-        private static void SirenActive(int from, List<Action> list, int rank, int file, GameState state)
+        private void SirenActive(List<Action> list, int rank, int file, GameState state)
         {
-            var piece = state.MainBoard[from];
             for (var i = -6; i <= 6; i++)
             {
                 var rankOff = rank + i;
@@ -44,7 +43,7 @@ namespace Core.PieceLogic
                     if (fileOff < 0 || fileOff >= state.MaxFile) continue;
                     var pos = rankOff * state.MaxFile + fileOff;
                     var pieceAt = state.MainBoard[pos];
-                    if (pieceAt != null && pieceAt.Color != piece.Color)
+                    if (pieceAt != null && pieceAt.Color != Piece.Color)
                     {
                         
                     }
@@ -56,28 +55,27 @@ namespace Core.PieceLogic
         public override List<Action> MoveToMake(int from)
         {
             var gameState = InteractionManager.GameState;
-            var range = Math.Max(0, Range - (Piece.Effects.Contains(GameState.SlowOne) ? 1 : 0));
+            var range = Math.Max(0, Range - (Piece.Effects.Contains(GameState.Slow) ? 1 : 0));
             var rank = Piece.Pos / gameState.MaxFile;
             var file = Piece.Pos % gameState.MaxFile;
-            var piece = gameState.MainBoard[from];
             
             var list = new List<Action>();
             
             for (var i = 1; i <= Range; i++)
             {
-                MakeMove(piece, list, rank + i, file, i, range, gameState);
-                MakeMove(piece, list, rank - i, file, i, range, gameState);
-                MakeMove(piece, list, rank, file + i, i, range, gameState);
-                MakeMove(piece, list, rank, file - i, i, range, gameState);
-                MakeMove(piece, list, rank + i, file + i, i, range, gameState);
-                MakeMove(piece, list, rank - i, file + i, i, range, gameState);
-                MakeMove(piece, list, rank + i, file - i, i, range, gameState);
-                MakeMove(piece, list, rank - i, file - i, i, range, gameState);
+                MakeMove(list, rank + i, file, i, range, gameState);
+                MakeMove(list, rank - i, file, i, range, gameState);
+                MakeMove(list, rank, file + i, i, range, gameState);
+                MakeMove(list, rank, file - i, i, range, gameState);
+                MakeMove(list, rank + i, file + i, i, range, gameState);
+                MakeMove(list, rank - i, file + i, i, range, gameState);
+                MakeMove(list, rank + i, file - i, i, range, gameState);
+                MakeMove(list, rank - i, file - i, i, range, gameState);
             }
 
             if (Piece.SkillCooldown == 0)
             {
-                SirenActive(from, list, rank, file, gameState);
+                SirenActive(list, rank, file, gameState);
             }
 
             return list;

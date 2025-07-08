@@ -25,6 +25,7 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
+            state.LastMovedPiece = state.MainBoard[From];
             state.MainBoard[To] = state.MainBoard[From];
             state.MainBoard[To].Pos = To;
             state.MainBoard[From] = null;

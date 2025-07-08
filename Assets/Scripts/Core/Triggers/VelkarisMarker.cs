@@ -32,11 +32,11 @@ namespace Core.Triggers
             TriggerRows(p.Pos, p.Color);
         }
         
-        public override bool CallTrigger(PieceData movedPiece)
+        public override bool CallTrigger()
         {
-            if (movedPiece == null || !GameState.LastMove.DoesMoveChangePos()) return false;
+            if (GameState.LastMovedPiece == null || !GameState.LastMove.DoesMoveChangePos()) return false;
             
-            if (movedPiece == Piece)
+            if (GameState.LastMovedPiece == Piece)
             {
                 TriggerRows(GameState.LastMove.To, Piece.Color);
                 return false;

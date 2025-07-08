@@ -27,7 +27,7 @@ namespace Core
         Evasion,
         HardenedShield,
         VelkarisMarked,
-        SlowOne,
+        Slow,
         Controlled
     }
 
@@ -35,11 +35,13 @@ namespace Core
     {
         public readonly EffectType EffectType;
         public sbyte Duration;
+        public byte Strength;
 
-        public Effect(EffectType e, sbyte d)
+        public Effect(EffectType e, sbyte d, byte s)
         {
             EffectType = e;
             Duration = d;
+            Strength = s;
         }
 
         public bool Equals(Effect other)
@@ -108,8 +110,7 @@ namespace Core
         public Color OurSide;
         public readonly int MaxRank;
         public readonly int MaxFile;
-        public readonly int MaxPos;
-        public static readonly Effect SlowOne = new Effect(EffectType.SlowOne, 0);
+        public static readonly Effect Slow = new(EffectType.Slow, 0, 1);
         
         public readonly PieceData[] MainBoard;
         public readonly BitArray ActiveBoard;
@@ -117,14 +118,15 @@ namespace Core
         public ushort Ply;
         private readonly List<TriggerElement> triggers;
         public Action LastMove;
+        public PieceData LastMovedPiece;
         
         public GameState(int maxRank, int maxFile, List<PieceConfig> configs, byte[] ac, Color side, Color ourSide)
         {
             OurSide = ourSide;
             MaxFile = maxFile;
             MaxRank = maxRank;
-            MaxPos = MaxRank * MaxFile;
             LastMove = new SwitchSide();
+            LastMovedPiece = null;
 
             MainBoard = new PieceData[maxRank * maxFile];
             ActiveBoard = new BitArray(maxRank * maxFile);
@@ -181,15 +183,11 @@ namespace Core
             }
         }
 
-        public void EndTurn(PieceData pieceToMove)
+        public void EndTurn()
         {
             foreach (var piece in MainBoard)
             {
                 if (piece == null) continue;
-
-                piece.Effects.RemoveAll(e => e.Duration == 0);
-
-                if (piece.SkillCooldown > 0) piece.SkillCooldown -= 1;
                 
                 for (var i = 0; i < piece.Effects.Count; i++)
                 {
@@ -198,9 +196,13 @@ namespace Core
                     eff.Duration -= 1;
                     piece.Effects[i] = eff;
                 }
+
+                piece.Effects.RemoveAll(e => e.Duration == 0);
+
+                if (piece.SkillCooldown > 0) piece.SkillCooldown -= 1;
             }
             
-            var triggerToRemove = triggers.Where(trigger => trigger.Trigger.CallTrigger(pieceToMove)).ToList();
+            var triggerToRemove = triggers.Where(trigger => trigger.Trigger.CallTrigger()).ToList();
 
             foreach (var trigger in triggerToRemove)
             {

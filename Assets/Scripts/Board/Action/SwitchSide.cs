@@ -1,5 +1,4 @@
-﻿using System;
-using Board.Interaction;
+﻿using Board.Interaction;
 using Core;
 
 namespace Board.Action
@@ -23,7 +22,7 @@ namespace Board.Action
         public override void ModifyGameState(GameState state)
         {
             state.SideToMove = state.SideToMove == Color.White ? Color.Black : Color.White;
-            state.EndTurn(state.MainBoard[From]);
+            state.EndTurn();
         }
 
         public override bool DoesMoveChangePos()

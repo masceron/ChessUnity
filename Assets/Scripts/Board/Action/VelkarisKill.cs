@@ -22,6 +22,7 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
+            state.LastMovedPiece = state.MainBoard[From];
             state.RemoveTrigger(state.MainBoard[To]);
             state.MainBoard[To] = null;
             state.MainBoard[From].SkillCooldown = -1;

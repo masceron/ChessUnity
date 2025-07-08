@@ -26,17 +26,17 @@ namespace Core.Triggers
         private int fileStart;
         private int fileEnd;
 
-        public override bool CallTrigger(PieceData movedPiece)
+        public override bool CallTrigger()
         {
-            if (movedPiece == Piece)
+            if (GameState.LastMovedPiece == Piece && GameState.LastMove.DoesMoveChangePos())
             {
                 CalculateEffectRange(Piece.Pos);
             }
 
-            for (var r = rankStart; r < rankEnd; r++)
+            for (var r = rankStart; r <= rankEnd; r++)
             {
                 var rowIndex = r * GameState.MaxFile;
-                for (var f = fileStart; f < fileEnd; f++)
+                for (var f = fileStart; f <= fileEnd; f++)
                 {
                     var index = rowIndex + f;
                     var pOn = GameState.MainBoard[index];

@@ -27,6 +27,7 @@ namespace Board.Action
             state.MainBoard[To].Pos = To;
             state.MainBoard[From] = null;
             state.LastMove = this;
+            state.LastMovedPiece = pieceToMove;
         }
 
         public override bool DoesMoveChangePos()
