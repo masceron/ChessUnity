@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using Board.Action;
 using Board.Interaction;
 using Board.Tile;
@@ -57,10 +58,29 @@ namespace Board
             else if (Input.GetKeyDown(KeyCode.F))
             {
                 if (InteractionManager.SelectingPiece == -1) return;
-                var des = InteractionManager.ActionToTake.Find(action => action.GetType() == typeof(VelkarisKill));
-                if (des != null)
+                switch (gameState.MainBoard[InteractionManager.SelectingPiece].Type)
                 {
-                    ActionManager.Execute(gameState, des);
+                    case PieceType.Velkaris:
+                    {
+                        var des = InteractionManager.ActionToTake.Find(action => action.GetType() == typeof(VelkarisKill));
+                        if (des != null)
+                        {
+                            ActionManager.Execute(gameState, des);
+                        }
+
+                        break;
+                    }
+                    case PieceType.GuidingSiren when InteractionManager.SelectPieceLock == null:
+                    {
+                        InteractionManager.UnmarkPiece(InteractionManager.SelectingPiece);
+                        InteractionManager.MarkPiece(InteractionManager.SelectingPiece, typeof(SirenActive));
+                        Debug.Log("Siren force.");
+                        break;
+                    }
+                    case PieceType.GuidingSiren:
+                        InteractionManager.SelectPieceLock = null;
+                        InteractionManager.UnmarkPiece(InteractionManager.SelectingPiece);
+                        break;
                 }
             }
             

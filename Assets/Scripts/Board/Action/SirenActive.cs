@@ -6,9 +6,8 @@ namespace Board.Action
     public class SirenActive: Action
     {
         private readonly PieceManager pieceManager;
-        public SirenActive(int c, int f, int t, PieceManager p)
+        public SirenActive(int caller, int f, int t, PieceManager p) : base(caller)
         {
-            Caller = (ushort)c;
             From = (ushort)f;
             To = (ushort)t;
             pieceManager = p;
@@ -25,6 +24,7 @@ namespace Board.Action
             state.MainBoard[To] = state.MainBoard[From];
             state.MainBoard[To].Pos = To;
             state.MainBoard[From] = null;
+            state.MainBoard[To].Color = state.MainBoard[To].Color == Color.White ? Color.Black : Color.White;
             state.MainBoard[Caller].SkillCooldown = 12;
             state.LastMove = this;
         }

@@ -5,7 +5,7 @@ namespace Board.Action
 {
     public class SwitchSide: Action
     {
-        public SwitchSide()
+        public SwitchSide(): base(-1)
         {
             From = 0;
             To = 0;

@@ -16,9 +16,9 @@ namespace Core.Triggers
             var file = pos % GameState.MaxFile;
             
             rankStart = Math.Max(0, rank - 4);
-            rankEnd = Math.Min(rank + 4, GameState.MaxRank);
+            rankEnd = Math.Min(rank + 4, GameState.MaxRank - 1);
             fileStart = Math.Max(0, file - 4);
-            fileEnd = Math.Min(file + 4, GameState.MaxFile);
+            fileEnd = Math.Min(file + 4, GameState.MaxFile - 1);
         }
 
         private int rankStart;
@@ -43,7 +43,7 @@ namespace Core.Triggers
                     if (pOn == null || pOn == Piece) continue;
                     if (pOn.Color != Piece.Color)
                     {
-                        ActionManager.Execute(GameState, new SirenDebuff(Piece.Pos, index));
+                        ActionManager.Execute(GameState, new SirenDebuff(Piece.Pos, Piece.Pos, index));
                     }
                 }
             }

@@ -5,7 +5,7 @@ namespace Board.Action
 {
     public class VelkarisMark: Action
     {
-        public VelkarisMark(int f, int t)
+        public VelkarisMark(int p, int f, int t): base(p)
         {
             From = (ushort)f;
             To = (ushort)t;

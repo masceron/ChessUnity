@@ -6,7 +6,7 @@ namespace Board.Action
 {
     public class VelkarisKill: Action
     {
-        public VelkarisKill(int f, int t)
+        public VelkarisKill(int p, int f, int t) : base(p)
         {
             From = (ushort)f;
             To = (ushort)t;

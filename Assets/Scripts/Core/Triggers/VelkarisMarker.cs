@@ -50,7 +50,7 @@ namespace Core.Triggers
             {
                 return false;
             }
-            ActionManager.Execute(GameState, new VelkarisMark(Piece.Pos, GameState.LastMove.To));
+            ActionManager.Execute(GameState, new VelkarisMark(Piece.Pos, Piece.Pos, GameState.LastMove.To));
 
             return true;
         }

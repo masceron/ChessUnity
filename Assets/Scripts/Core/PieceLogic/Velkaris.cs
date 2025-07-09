@@ -46,7 +46,7 @@ namespace Core.PieceLogic
 
         public Velkaris(PieceData p) : base(p) {}
 
-        private static bool[] StraightSlide(List<Action> list, int from, GameState gameState, int range)
+        private bool[] StraightSlide(List<Action> list, int from, GameState gameState, int range)
         {
             var block = new bool[8];
             var board = gameState.MainBoard;
@@ -67,7 +67,7 @@ namespace Core.PieceLogic
                 {
                     if (range > 0)
                     {
-                        list.Add(new NormalMove(from, to, InteractionManager.PieceManager, InteractionManager.MaxFile));
+                        list.Add(new NormalMove(Piece.Pos, from, to, InteractionManager.PieceManager));
                     }
 
                     block[i] = false;
@@ -81,27 +81,27 @@ namespace Core.PieceLogic
                     {
                         if (range > 1)
                         {
-                            list.Add(new NormalMove(from, to2, InteractionManager.PieceManager, InteractionManager.MaxFile));
+                            list.Add(new NormalMove(Piece.Pos, from, to2, InteractionManager.PieceManager));
                         }
                     }
                     else if (board[to2].Color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture((ushort)from, (ushort)to2));
-                    }
+                        list.Add(new NormalCapture(Piece.Pos, (ushort)from, (ushort)to2));
+                    } 
                 }
                 else
                 {
                     block[i] = true;
                     if (board[to].Color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture((ushort)from, (ushort)to));
+                        list.Add(new NormalCapture(Piece.Pos, (ushort)from, (ushort)to));
                     }
                 }
             }
             return block;
         }
 
-        private static void KnightSlide(List<Action> list, int from, GameState gameState, bool[] block, int range)
+        private void KnightSlide(List<Action> list, int from, GameState gameState, bool[] block, int range)
         {
             var board = gameState.MainBoard;
             var maxFile = InteractionManager.MaxFile;
@@ -123,14 +123,14 @@ namespace Core.PieceLogic
                 {
                     if (range > 1)
                     {
-                        list.Add(new NormalMove(from, to, InteractionManager.PieceManager, InteractionManager.MaxFile));
+                        list.Add(new NormalMove(Piece.Pos, from, to, InteractionManager.PieceManager));
                     }
                 }
                 else
                 {
                     if (board[to].Color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture((ushort)from, (ushort)to));
+                        list.Add(new NormalCapture(Piece.Pos, (ushort)from, (ushort)to));
                     }
                 }
             }
@@ -138,7 +138,7 @@ namespace Core.PieceLogic
 
         private static readonly Effect Marked = new(EffectType.VelkarisMarked, -1, 1);
 
-        private static void Kill(List<Action> list, int from, GameState gameState)
+        private void Kill(List<Action> list, int from, GameState gameState)
         {
             for (var i = 0; i < InteractionManager.BoardSize; i++)
             {
@@ -148,7 +148,7 @@ namespace Core.PieceLogic
                 
                 if (p.Effects.Contains(Marked) && p.Color != gameState.OurSide)
                 {
-                    list.Add(new VelkarisKill(from, i));
+                    list.Add(new VelkarisKill(Piece.Pos, from, i));
                 }
             }
         }

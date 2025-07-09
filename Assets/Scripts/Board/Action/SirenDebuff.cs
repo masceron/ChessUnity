@@ -5,7 +5,7 @@ namespace Board.Action
 {
     public class SirenDebuff: Action
     {
-        public SirenDebuff(int f, int t)
+        public SirenDebuff(int p, int f, int t) : base(p)
         {
             From = (ushort)f;
             To = (ushort)t;

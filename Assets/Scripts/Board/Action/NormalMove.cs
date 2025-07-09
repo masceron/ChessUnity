@@ -9,7 +9,7 @@ namespace Board.Action
     {
         private readonly PieceManager pieceManager;
 
-        public NormalMove(int f, int t, PieceManager p, int maxFile)
+        public NormalMove(int caller, int f, int t, PieceManager p) : base(caller)
         {
             From = (ushort)f;
             To = (ushort)t;

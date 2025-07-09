@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Board.Action;
 using Board.Interaction;
+using UnityEngine;
 using Action = Board.Action.Action;
 
 namespace Core.PieceLogic
@@ -23,16 +24,17 @@ namespace Core.PieceLogic
             if (p == null)
             {
                 if (curr <= maxRange)
-                    list.Add(new NormalMove(Piece.Pos, pos, InteractionManager.PieceManager, gameState.MaxFile));
+                    list.Add(new NormalMove(Piece.Pos, Piece.Pos, pos, InteractionManager.PieceManager));
             }
             else if (p.Color != Piece.Color)
             {
-                list.Add(new NormalCapture(Piece.Pos, (ushort)pos));
+                list.Add(new NormalCapture(Piece.Pos, Piece.Pos, (ushort)pos));
             }
         }
 
         private void SirenActive(List<Action> list, int rank, int file, GameState state)
         {
+            var push = Piece.Color == Color.White ? 1 : -1;
             for (var i = -6; i <= 6; i++)
             {
                 var rankOff = rank + i;
@@ -41,13 +43,24 @@ namespace Core.PieceLogic
                 {
                     var fileOff = file + j;
                     if (fileOff < 0 || fileOff >= state.MaxFile) continue;
+                    
                     var pos = rankOff * state.MaxFile + fileOff;
                     var pieceAt = state.MainBoard[pos];
-                    if (pieceAt != null && pieceAt.Color != Piece.Color)
+                    if (pieceAt == null || pieceAt.Color == Piece.Color) continue;
+                    
+                    var rankForce = rankOff + push;
+                    while (Math.Abs(rankForce - rankOff) <= 3 &&
+                           rankForce >= 0 && rankForce < state.MaxRank &&
+                           state.MainBoard[rankForce * state.MaxFile + fileOff] == null &&
+                           state.ActiveBoard[rankForce * state.MaxFile + fileOff])
                     {
-                        
+                         rankForce += push;
                     }
+                    Debug.Log(rankOff + "->" + rankForce);
 
+                    rankForce -= push;
+                    if (rankForce == rankOff) continue;
+                    list.Add(new SirenActive(Piece.Pos, pos, rankForce * state.MaxFile + fileOff, InteractionManager.PieceManager));
                 }
             }
         }

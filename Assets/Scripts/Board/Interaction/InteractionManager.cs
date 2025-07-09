@@ -1,17 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Board.Action;
 using Board.Piece;
 using Board.Tile;
 using Core;
+using Core.PieceLogic;
 using Unity.IL2CPP.CompilerServices;
+using UnityEngine;
 
 namespace Board.Interaction
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class InteractionManager
     {
-        public static bool SelectPieceLock;
+        public static PieceData SelectPieceLock;
         public static int SelectingPiece;
         public static int MaxRank;
         public static int MaxFile;
@@ -19,8 +22,6 @@ namespace Board.Interaction
         public static PieceManager PieceManager;
         public static TileManager TileManager;
         public static GameState GameState;
-        
-        private static Action.Action _pendingMove = null;
 
         public static void Init(int r, int f, TileManager t, PieceManager p, GameState g)
         {
@@ -35,15 +36,13 @@ namespace Board.Interaction
         
         public static void Select(int rank, int file)
         {
-            if (SelectPieceLock) return;
-            
             if (SelectingPiece == -1)
             {
                 var selected = rank * MaxFile + file;
                 var p = GameState.MainBoard[selected];
                 if (p == null || p.Color != GameState.OurSide) return;
                 SelectingPiece = selected;
-                MarkPiece(selected);
+                MarkPiece(selected, null);
                 
             }
             else
@@ -57,9 +56,19 @@ namespace Board.Interaction
                 else
                 {
                     //Just a normal capture or quiet move
-                    if (_pendingMove == null)
+                    if (SelectPieceLock == null)
                     {
                         var action = ActionToTake.Find(x => x.To == selected);
+                        if (action != null)
+                        {
+                            ActionManager.Execute(GameState, action);
+                        }
+                        UnmarkPiece(SelectingPiece);
+                        SelectingPiece = -1;
+                    }
+                    else if (SelectPieceLock.Type == PieceType.GuidingSiren)
+                    {
+                        var action = ActionToTake.Find(x => x.From == selected && x.GetType() == typeof(SirenActive));
                         if (action != null)
                         {
                             ActionManager.Execute(GameState, action);
@@ -72,14 +81,28 @@ namespace Board.Interaction
         }
 
         public static List<Action.Action> ActionToTake = new();
-        private static void MarkPiece(int pos)
+        public static List<Action.Action> ActionMarked = new();
+        public static void MarkPiece(int pos, Type type)
         {
             TileManager.Select(pos);
             ActionToTake = PieceManager.GetPiece(pos).logic.MoveToMake(pos);
 
-            foreach (var action in ActionToTake.Select(action => action).Where(ac => ac.From != ac.To))
+            if (type == null)
             {
-                TileManager.MarkAsMoveable(action.To);
+                foreach (var action in ActionToTake.Select(action => action).Where(ac => ac.GetType() == typeof(NormalCapture) || ac.GetType() == typeof(NormalMove)))
+                {
+                    TileManager.MarkAsMoveable(action.To);
+                    ActionMarked.Add(action);
+                }
+            }
+            else if (type == typeof(SirenActive))
+            {
+                foreach (var action in ActionToTake.Select(action => action).Where(ac => ac.GetType() == typeof(SirenActive)))
+                {
+                    TileManager.MarkAsMoveable(action.From);
+                    ActionMarked.Add(action);
+                }
+                SelectPieceLock = GameState.MainBoard[pos];
             }
         }
 
@@ -87,10 +110,20 @@ namespace Board.Interaction
         {
             if (pos == -1) return;
             TileManager.Unmark(pos);
-            foreach (var encoded in ActionToTake.Select(action => action).Where(ac => ac.To != ac.From))
+            foreach (var action in ActionMarked)
             {
-                TileManager.Unmark(encoded.To);
+                if (action.GetType() == typeof(SirenActive))
+                {
+                    TileManager.Unmark(action.From);
+                }
+                else
+                {
+                    TileManager.Unmark(action.To);
+                }
+                
             }
+            ActionMarked.Clear();
+            SelectPieceLock = null;
         }
     }
 }

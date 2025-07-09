@@ -646,10 +646,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whitePiecePrefabs:
   - {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
-  - {fileID: 119820, guid: 9e4e635002b6a524ca896adb28e8e388, type: 3}
+  - {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
   blackPiecePrefabs:
-  - {fileID: 138226, guid: edd4f3477fd5a8b4599bf6c0dac39f1d, type: 3}
-  - {fileID: 130826, guid: 861e95a585868b643bf2e4a1d0ae63b7, type: 3}
+  - {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
+  - {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ namespace Board.Action
 {
     public class NormalCapture: Action
     {
-        public NormalCapture(ushort f, ushort t)
+        public NormalCapture(int caller, ushort f, ushort t) : base(caller)
         {
             From = f;
             To = t;

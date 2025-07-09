@@ -90,8 +90,8 @@ namespace Core
     {
         public ushort Pos;
         public readonly PieceType Type;
-        public readonly Color Color;
-        public sbyte SkillCooldown = -1;
+        public Color Color;
+        public sbyte SkillCooldown;
         public readonly List<Effect> Effects;
         public readonly List<TriggerElement> Triggers = new();
         
