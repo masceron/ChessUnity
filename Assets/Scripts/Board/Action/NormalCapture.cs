@@ -1,38 +1,36 @@
 ﻿using Board.Interaction;
-using Core;
+using Core.General;
 using UnityEngine;
 
 namespace Board.Action
 {
     public class NormalCapture: Action
     {
-        public NormalCapture(int caller, ushort f, ushort t) : base(caller)
+        public NormalCapture(ushort caller, ushort f, ushort t) : base(caller, true, true)
         {
             From = f;
             To = t;
         }
         public override void ApplyAction(GameState state)
         {
-            Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
-            InteractionManager.PieceManager.Move(From, To);
-            ModifyGameState(state);
+            if (Success)
+            {
+                Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
+                InteractionManager.PieceManager.Move(From, To);
+                ModifyGameState(state);
+            }
+            else
+            {
+                Debug.Log("Action failed");
+            }
         }
 
         public override void ModifyGameState(GameState state)
         {
-            var pieceAffected = state.MainBoard[From];
-            var pieceToMove = state.MainBoard[From];
-            state.RemoveTrigger(pieceAffected);
-            state.MainBoard[To] = pieceToMove;
-            state.MainBoard[To].Pos = To;
-            state.MainBoard[From] = null;
+            state.Destroy(To);
+            state.Move(From, To);
             state.LastMove = this;
-            state.LastMovedPiece = pieceToMove;
-        }
-
-        public override bool DoesMoveChangePos()
-        {
-            return true;
+            Caller = To;
         }
     }
 }

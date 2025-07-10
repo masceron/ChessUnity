@@ -5,33 +5,31 @@ using Board.Action;
 using Board.Piece;
 using Board.Tile;
 using Core;
-using Core.PieceLogic;
+using Core.General;
+using Core.Piece;
 using Unity.IL2CPP.CompilerServices;
-using UnityEngine;
 
 namespace Board.Interaction
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class InteractionManager
     {
-        public static PieceData SelectPieceLock;
+        public static PieceLogic SelectPieceLock;
         public static int SelectingPiece;
         public static int MaxRank;
         public static int MaxFile;
-        public static int BoardSize;
         public static PieceManager PieceManager;
         public static TileManager TileManager;
         public static GameState GameState;
 
-        public static void Init(int r, int f, TileManager t, PieceManager p, GameState g)
+        public static void Init(MatchManager match)
         {
             SelectingPiece = -1;
-            MaxRank = r;
-            MaxFile = f;
-            TileManager = t;
-            PieceManager = p;
-            GameState = g;
-            BoardSize = r * f;
+            MaxRank = match.GameState.MaxRank;
+            MaxFile = match.GameState.MaxFile;
+            TileManager = match.TileManager;
+            PieceManager = match.PieceManager;
+            GameState = match.GameState;
         }
         
         public static void Select(int rank, int file)
@@ -61,7 +59,7 @@ namespace Board.Interaction
                         var action = ActionToTake.Find(x => x.To == selected);
                         if (action != null)
                         {
-                            ActionManager.Execute(GameState, action);
+                            ActionManager.Execute(action);
                         }
                         UnmarkPiece(SelectingPiece);
                         SelectingPiece = -1;
@@ -71,7 +69,7 @@ namespace Board.Interaction
                         var action = ActionToTake.Find(x => x.From == selected && x.GetType() == typeof(SirenActive));
                         if (action != null)
                         {
-                            ActionManager.Execute(GameState, action);
+                            ActionManager.Execute(action);
                         }
                         UnmarkPiece(SelectingPiece);
                         SelectingPiece = -1;
@@ -81,11 +79,11 @@ namespace Board.Interaction
         }
 
         public static List<Action.Action> ActionToTake = new();
-        public static List<Action.Action> ActionMarked = new();
+        private static readonly List<Action.Action> ActionMarked = new();
         public static void MarkPiece(int pos, Type type)
         {
             TileManager.Select(pos);
-            ActionToTake = PieceManager.GetPiece(pos).logic.MoveToMake(pos);
+            ActionToTake = GameState.MainBoard[pos].MoveToMake();
 
             if (type == null)
             {

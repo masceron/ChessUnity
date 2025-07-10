@@ -1,33 +1,24 @@
-﻿using Core;
-using UnityEngine;
+﻿using Core.General;
 
 namespace Board.Action
 {
     public class SirenDebuff: Action
     {
-        public SirenDebuff(int p, int f, int t) : base(p)
+        public SirenDebuff(ushort p, ushort f, ushort t) : base(p, false, false)
         {
-            From = (ushort)f;
-            To = (ushort)t;
+            From = f;
+            To = t;
         }
 
         public override void ApplyAction(GameState state)
         {
-            Debug.Log("Siren Debuffed " + To);
-            
             ModifyGameState(state);
         }
 
         public override void ModifyGameState(GameState state)
         {
-            state.LastMovedPiece = state.MainBoard[From];
             state.MainBoard[To].Effects.Add(new Effect(EffectType.Slow, 1, 1));
             state.LastMove = this;
-        }
-
-        public override bool DoesMoveChangePos()
-        {
-            return false;
         }
     }
 }

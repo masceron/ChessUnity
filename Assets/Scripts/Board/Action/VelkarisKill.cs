@@ -1,37 +1,33 @@
 ﻿using Board.Interaction;
 using Core;
+using Core.General;
+using Core.Piece;
 using UnityEngine;
 
 namespace Board.Action
 {
     public class VelkarisKill: Action
     {
-        public VelkarisKill(int p, int f, int t) : base(p)
+        public VelkarisKill(int p, ushort f, ushort t) : base(p, false, false)
         {
-            From = (ushort)f;
-            To = (ushort)t;
+            From = f;
+            To = t;
         }
 
         public override void ApplyAction(GameState state)
         {
             Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
-            ActionManager.Execute(InteractionManager.GameState, new SwitchSide());
+            ActionManager.Execute(new EndTurn());
             
             ModifyGameState(state);
         }
 
         public override void ModifyGameState(GameState state)
         {
-            state.LastMovedPiece = state.MainBoard[From];
             state.RemoveTrigger(state.MainBoard[To]);
             state.MainBoard[To] = null;
-            state.MainBoard[From].SkillCooldown = -1;
+            ((Velkaris)state.MainBoard[From]).SkillCooldown = -1;
             state.LastMove = this;
-        }
-
-        public override bool DoesMoveChangePos()
-        {
-            return false;
         }
     }
 }

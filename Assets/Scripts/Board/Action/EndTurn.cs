@@ -1,11 +1,11 @@
 ﻿using Board.Interaction;
-using Core;
+using Core.General;
 
 namespace Board.Action
 {
-    public class SwitchSide: Action
+    public class EndTurn: Action
     {
-        public SwitchSide(): base(-1)
+        public EndTurn(): base(-1, false, false)
         {
             From = 0;
             To = 0;
@@ -23,11 +23,6 @@ namespace Board.Action
         {
             state.SideToMove = state.SideToMove == Color.White ? Color.Black : Color.White;
             state.EndTurn();
-        }
-
-        public override bool DoesMoveChangePos()
-        {
-            return false;
         }
     }
 }

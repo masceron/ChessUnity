@@ -1,14 +1,16 @@
 ﻿using Core;
+using Core.General;
+using Core.Piece;
 using UnityEngine;
 
 namespace Board.Action
 {
     public class VelkarisMark: Action
     {
-        public VelkarisMark(int p, int f, int t): base(p)
+        public VelkarisMark(int p, ushort f, ushort t): base(p, false, false)
         {
-            From = (ushort)f;
-            To = (ushort)t;
+            From = f;
+            To = t;
         }
 
         public override void ApplyAction(GameState state)
@@ -20,15 +22,11 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
-            state.LastMovedPiece = state.MainBoard[From];
+            var caller = (Velkaris)state.MainBoard[From];
             state.MainBoard[To].Effects.Add(new Effect(EffectType.VelkarisMarked, -1, 1));
-            state.MainBoard[From].SkillCooldown = -1;
+            caller.SkillCooldown = -1;
+            caller.Marked = state.MainBoard[To];
             state.LastMove = this;
-        }
-
-        public override bool DoesMoveChangePos()
-        {
-            return false;
         }
     }
 }

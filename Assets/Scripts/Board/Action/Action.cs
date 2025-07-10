@@ -1,5 +1,4 @@
-﻿using Core;
-using UnityEditor.Rendering;
+﻿using Core.General;
 
 namespace Board.Action
 {
@@ -8,15 +7,19 @@ namespace Board.Action
         public ushort From;
         public ushort To;
         public int Caller;
+        public bool Success;
+        public readonly bool DoesMoveChangePos;
+        public readonly bool DoesMoveCapture;
 
-        protected Action(int caller)
+        protected Action(int caller, bool pos, bool cap)
         {
             Caller = caller;
+            DoesMoveCapture = cap;
+            DoesMoveChangePos = pos;
+            Success = true;
         }
         
         public abstract void ApplyAction(GameState state);
         public abstract void ModifyGameState(GameState state);
-
-        public abstract bool DoesMoveChangePos();
     }
 }

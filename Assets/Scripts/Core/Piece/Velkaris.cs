@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using Board.Action;
 using Board.Interaction;
+using Core.General;
 using Action = Board.Action.Action;
 
-namespace Core.PieceLogic
+namespace Core.Piece
 {
     public class Velkaris: PieceLogic
     {
-        private const int Range = 2;
+        public PieceLogic Marked;
+        public sbyte SkillCooldown;
 
+        public Velkaris(PieceType type, Color color, ushort pos, List<Effect> effects) : base(type, color, pos, effects, 2)
+        {
+            Marked = null;
+            SkillCooldown = 0;
+            Rank = PieceRank.Commander;
+        }
+        
         private static readonly int[][] Adjacent = {
             new[] {-1, -1},
             new[] {-1, 0},
@@ -44,14 +53,12 @@ namespace Core.PieceLogic
             new[] {-1, -2},
         };
 
-        public Velkaris(PieceData p) : base(p) {}
-
-        private bool[] StraightSlide(List<Action> list, int from, GameState gameState, int range)
+        private bool[] StraightSlide(List<Action> list, GameState gameState, int effectiveRange)
         {
             var block = new bool[8];
             var board = gameState.MainBoard;
-            var rank = from / InteractionManager.MaxFile;
-            var file = from % InteractionManager.MaxFile;
+            var rank = Pos / InteractionManager.MaxFile;
+            var file = Pos % InteractionManager.MaxFile;
             var maxFile = InteractionManager.MaxFile;
             var maxRank = InteractionManager.MaxRank;
 
@@ -65,9 +72,9 @@ namespace Core.PieceLogic
                 
                 if (board[to] == null)
                 {
-                    if (range > 0)
+                    if (effectiveRange > 0)
                     {
-                        list.Add(new NormalMove(Piece.Pos, from, to, InteractionManager.PieceManager));
+                        list.Add(new NormalMove(Pos, Pos, to, InteractionManager.PieceManager));
                     }
 
                     block[i] = false;
@@ -79,14 +86,14 @@ namespace Core.PieceLogic
                     if (to2Rank < 0 || to2Rank >= maxRank || to2File < 0 || to2File >= maxFile || !gameState.ActiveBoard[to2]) continue;
                     if (board[to2] == null)
                     {
-                        if (range > 1)
+                        if (effectiveRange > 1)
                         {
-                            list.Add(new NormalMove(Piece.Pos, from, to2, InteractionManager.PieceManager));
+                            list.Add(new NormalMove(Pos, Pos, to2, InteractionManager.PieceManager));
                         }
                     }
                     else if (board[to2].Color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture(Piece.Pos, (ushort)from, (ushort)to2));
+                        list.Add(new NormalCapture(Pos, Pos, (ushort)to2));
                     } 
                 }
                 else
@@ -94,20 +101,20 @@ namespace Core.PieceLogic
                     block[i] = true;
                     if (board[to].Color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture(Piece.Pos, (ushort)from, (ushort)to));
+                        list.Add(new NormalCapture(Pos, Pos, (ushort)to));
                     }
                 }
             }
             return block;
         }
 
-        private void KnightSlide(List<Action> list, int from, GameState gameState, bool[] block, int range)
+        private void KnightSlide(List<Action> list, GameState gameState, bool[] block, int effectiveRange)
         {
             var board = gameState.MainBoard;
             var maxFile = InteractionManager.MaxFile;
             var maxRank = InteractionManager.MaxRank;
-            var rank = from / InteractionManager.MaxFile;
-            var file = from % InteractionManager.MaxFile;
+            var rank = Pos / InteractionManager.MaxFile;
+            var file = Pos % InteractionManager.MaxFile;
             
             for (var i = 0; i < 8; i++)
             {
@@ -121,52 +128,39 @@ namespace Core.PieceLogic
                 
                 if (board[to] == null)
                 {
-                    if (range > 1)
+                    if (effectiveRange > 1)
                     {
-                        list.Add(new NormalMove(Piece.Pos, from, to, InteractionManager.PieceManager));
+                        list.Add(new NormalMove(Pos, Pos, to, InteractionManager.PieceManager));
                     }
                 }
                 else
                 {
                     if (board[to].Color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture(Piece.Pos, (ushort)from, (ushort)to));
+                        list.Add(new NormalCapture(Pos, Pos, (ushort)to));
                     }
                 }
             }
         }
 
-        private static readonly Effect Marked = new(EffectType.VelkarisMarked, -1, 1);
-
-        private void Kill(List<Action> list, int from, GameState gameState)
+        public override void PassTurn()
         {
-            for (var i = 0; i < InteractionManager.BoardSize; i++)
-            {
-                var p = gameState.MainBoard[i];
-                if (p == null) continue;
-                
-                
-                if (p.Effects.Contains(Marked) && p.Color != gameState.OurSide)
-                {
-                    list.Add(new VelkarisKill(Piece.Pos, from, i));
-                }
-            }
+            
         }
 
-        public override List<Action> MoveToMake(int from)
+        public override List<Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
-            var piece = gameState.MainBoard[from];
             var list = new List<Action>();
             
-            var range = Math.Max(Range - (Piece.Effects.Contains(GameState.Slow) ? 1 : 0), 0);
+            var effectiveRange = Math.Max(Range - (Effects.Contains(GameState.Slow) ? 1 : 0), 0);
             
-            var blocker = StraightSlide(list, from, gameState, range);
-            KnightSlide(list, from, gameState, blocker, range);
+            var blocker = StraightSlide(list, gameState, effectiveRange);
+            KnightSlide(list, gameState, blocker, effectiveRange);
             
-            if (piece.SkillCooldown == -1)
+            if (SkillCooldown == -1 && Marked != null)
             {
-                Kill(list, from, gameState);
+                list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
             }
 
             return list;

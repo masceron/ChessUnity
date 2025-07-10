@@ -1,5 +1,6 @@
 ﻿using Board.Piece;
 using Core;
+using Core.General;
 using Unity.IL2CPP.CompilerServices;
 
 namespace Board.Action
@@ -9,7 +10,7 @@ namespace Board.Action
     {
         private readonly PieceManager pieceManager;
 
-        public NormalMove(int caller, int f, int t, PieceManager p) : base(caller)
+        public NormalMove(ushort caller, int f, int t, PieceManager p) : base(caller, true, false)
         {
             From = (ushort)f;
             To = (ushort)t;
@@ -25,16 +26,9 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
-            state.LastMovedPiece = state.MainBoard[From];
-            state.MainBoard[To] = state.MainBoard[From];
-            state.MainBoard[To].Pos = To;
-            state.MainBoard[From] = null;
+            state.Move(From, To);
             state.LastMove = this;
-        }
-
-        public override bool DoesMoveChangePos()
-        {
-            return true;
+            Caller = To;
         }
     }
 }

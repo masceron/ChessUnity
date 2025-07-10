@@ -1,11 +1,13 @@
 ﻿using Board.Action;
+using Core.General;
+using Core.Piece;
 using Math = System.Math;
 
 namespace Core.Triggers
 {
     public class SirenDebuffer: Trigger
     {
-        public SirenDebuffer(GameState gameState, PieceData p) : base(gameState, p)
+        public SirenDebuffer(GameState gameState, PieceLogic p) : base(gameState, p)
         {
             CalculateEffectRange(p.Pos);
         }
@@ -28,7 +30,7 @@ namespace Core.Triggers
 
         public override bool CallTrigger()
         {
-            if (GameState.LastMovedPiece == Piece && GameState.LastMove.DoesMoveChangePos())
+            if (GameState.LastMove != null && (GameState.LastMove.Caller == Piece.Pos || GameState.LastMove.DoesMoveChangePos))
             {
                 CalculateEffectRange(Piece.Pos);
             }
@@ -43,7 +45,7 @@ namespace Core.Triggers
                     if (pOn == null || pOn == Piece) continue;
                     if (pOn.Color != Piece.Color)
                     {
-                        ActionManager.Execute(GameState, new SirenDebuff(Piece.Pos, Piece.Pos, index));
+                        ActionManager.Execute(new SirenDebuff(Piece.Pos, Piece.Pos, (ushort)index));
                     }
                 }
             }

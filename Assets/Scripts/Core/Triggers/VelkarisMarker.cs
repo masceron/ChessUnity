@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using Board.Action;
+using Core.General;
+using Core.Piece;
 
 namespace Core.Triggers
 {
@@ -26,7 +28,7 @@ namespace Core.Triggers
             }
         }
 
-        public VelkarisMarker(GameState state, PieceData p) : base(state, p)
+        public VelkarisMarker(GameState state, PieceLogic p) : base(state, p)
         {
             rows = new int[2];
             TriggerRows(p.Pos, p.Color);
@@ -34,9 +36,9 @@ namespace Core.Triggers
         
         public override bool CallTrigger()
         {
-            if (GameState.LastMovedPiece == null || !GameState.LastMove.DoesMoveChangePos()) return false;
+            if (GameState.LastMove is not { DoesMoveChangePos: true }) return false;
             
-            if (GameState.LastMovedPiece == Piece)
+            if (GameState.LastMove.Caller == Piece.Pos)
             {
                 TriggerRows(GameState.LastMove.To, Piece.Color);
                 return false;
@@ -50,7 +52,7 @@ namespace Core.Triggers
             {
                 return false;
             }
-            ActionManager.Execute(GameState, new VelkarisMark(Piece.Pos, Piece.Pos, GameState.LastMove.To));
+            ActionManager.Execute(new VelkarisMark(Piece.Pos, Piece.Pos, GameState.LastMove.To));
 
             return true;
         }

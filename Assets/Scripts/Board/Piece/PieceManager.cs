@@ -1,9 +1,10 @@
 using System;
 using Core;
-using Core.PieceLogic;
+using Core.General;
+using Core.Piece;
 using UnityEngine;
 using Unity.IL2CPP.CompilerServices;
-using Color = Core.Color;
+using Color = Core.General.Color;
 
 namespace Board.Piece
 {
@@ -19,7 +20,7 @@ namespace Board.Piece
         private int maxFile;
         private int maxRank;
     
-        public void Spawn(int r, int f, PieceData[] config)
+        public void Spawn(int r, int f, PieceLogic[] config)
         {
             maxFile = r;
             maxRank = f;
@@ -31,10 +32,10 @@ namespace Board.Piece
                 switch (config[i].Type)
                 {
                     case PieceType.Velkaris:
-                        SpawnPiece(i, 0, PieceType.Velkaris, new Velkaris(config[i]), config[i]);
+                        SpawnPiece(i, 0, PieceType.Velkaris, config[i].Color);
                         break;
                     case PieceType.GuidingSiren:
-                        SpawnPiece(i, 1, PieceType.GuidingSiren, new GuidingSiren(config[i]), config[i]);
+                        SpawnPiece(i, 1, PieceType.GuidingSiren, config[i].Color);
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
@@ -42,13 +43,13 @@ namespace Board.Piece
             }
         }
 
-        private void SpawnPiece(int pos, int typeAsFab, PieceType typeAsEnum, PieceLogic l, PieceData data)
+        private void SpawnPiece(int pos, int typeAsFab, PieceType typeAsEnum, Color color)
         {
-            var prefab = data.Color == Color.White ? whitePiecePrefabs[typeAsFab] : blackPiecePrefabs[typeAsFab];
+            var prefab = color == Color.White ? whitePiecePrefabs[typeAsFab] : blackPiecePrefabs[typeAsFab];
             var p = Instantiate(prefab).AddComponent<Piece>();
             p.transform.parent = transform;
             pieces[pos] = p;
-            p.Spawn(pos / maxRank, pos % maxFile, typeAsEnum, data.Color, l, prefab);
+            p.Spawn(pos / maxRank, pos % maxFile, typeAsEnum, color, prefab);
         }
         
         public Piece GetPiece(int pos)

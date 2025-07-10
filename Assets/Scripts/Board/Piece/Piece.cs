@@ -1,8 +1,8 @@
 using Core;
-using Core.PieceLogic;
+using Core.General;
 using UnityEngine;
 using Unity.IL2CPP.CompilerServices;
-using Color = Core.Color;
+using Color = Core.General.Color;
 
 namespace Board.Piece
 {
@@ -13,14 +13,12 @@ namespace Board.Piece
         private int file;
         public Color side;
         public PieceType type;
-        public PieceLogic logic;
-        public void Spawn(int r, int f, PieceType t, Color s, PieceLogic l, GameObject p)
+        public void Spawn(int r, int f, PieceType t, Color s, GameObject p)
         {
             rank = r;
             file = f;
             type = t;
             side = s;
-            logic = l;
 
             transform.position = new Vector3(rank, p.transform.position.y, file);
         }

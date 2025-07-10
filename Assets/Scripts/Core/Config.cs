@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Core.General;
 
 namespace Core
 {
@@ -17,16 +18,18 @@ namespace Core
             Effects = e;
         }
     }
-    public static class Config
+    public class Config
     {
-        public static readonly List<PieceConfig> PieceConfig = new()
+        public int MaxRank = 12;
+        public int MaxFile = 12;
+        
+        public List<PieceConfig> PieceConfig = new()
         {
             new PieceConfig(PieceType.Velkaris, Color.White, 140, new List<Effect>()),
-           // new PieceConfig(PieceType.Velkaris, Color.White, 26),
             new PieceConfig(PieceType.GuidingSiren, Color.Black, 101, new List<Effect>())
         };
         
-        public static readonly byte[] BoardActive = {
+        public byte[] BoardActive = {
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -40,5 +43,24 @@ namespace Core
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
             1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
         };
+
+        public Color OurSide = Color.White;
+
+        public Color SideToMove = Color.White;
+
+        public Config()
+        {
+            
+        }
+
+        public Config(int r, int f, List<PieceConfig> pieces, byte[] ac, Color ourSide, Color sideToMove)
+        {
+            MaxRank = r;
+            MaxFile = f;
+            PieceConfig = pieces;
+            BoardActive = ac;
+            OurSide = ourSide;
+            SideToMove = sideToMove;
+        }
     }
 }
