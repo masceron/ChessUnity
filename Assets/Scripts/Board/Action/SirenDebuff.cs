@@ -1,4 +1,5 @@
-﻿using Core.General;
+﻿using Core.Effect; 
+using Core.General;
 
 namespace Board.Action
 {
@@ -17,7 +18,7 @@ namespace Board.Action
 
         public override void ModifyGameState(GameState state)
         {
-            state.MainBoard[To].Effects.Add(new Effect(EffectType.Slow, 1, 1));
+            state.MainBoard[To].Effects.Add(new Slow(1));
             state.LastMove = this;
         }
     }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Board.Action;
 using Board.Interaction;
+using Core.Effect;
 using Core.General;
 using Action = Board.Action.Action;
 
@@ -11,7 +13,7 @@ namespace Core.Piece
     {
         public sbyte SkillCooldown;
 
-        public GuidingSiren(PieceType type, Color color, ushort pos, List<Effect> effects) : base(type, color, pos, effects, 5)
+        public GuidingSiren(PieceType type, Color color, ushort pos, List<Effect.Effect> effects) : base(type, color, pos, effects, 5)
         {
             SkillCooldown = 0;
             Rank = PieceRank.Commander;
@@ -75,7 +77,7 @@ namespace Core.Piece
         public override List<Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
-            var effectiveRange = Math.Max(0, Range - (Effects.Contains(GameState.Slow) ? 1 : 0));
+            var effectiveRange = Math.Max(0, Range - (Effects.OfType<Slow>().Any() ? 1 : 0));
             var rank = Pos / gameState.MaxFile;
             var file = Pos % gameState.MaxFile;
             

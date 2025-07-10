@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Core.Effect;
 using Core.Piece;
 using Core.Triggers;
 using Unity.IL2CPP.CompilerServices;
@@ -30,46 +31,6 @@ namespace Core.General
     {
         White,
         Black
-    }
-
-    public enum EffectType : byte
-    {
-        None,
-        Shield,
-        Evasion,
-        HardenedShield,
-        VelkarisMarked,
-        Slow,
-        Controlled
-    }
-
-    public struct Effect : IEquatable<Effect>
-    {
-        public readonly EffectType EffectType;
-        public sbyte Duration;
-        public byte Strength;
-
-        public Effect(EffectType e, sbyte d, byte s)
-        {
-            EffectType = e;
-            Duration = d;
-            Strength = s;
-        }
-
-        public bool Equals(Effect other)
-        {
-            return EffectType == other.EffectType;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Effect other && Equals(other);
-        }
-
-        public override int GetHashCode()
-        {
-            return (int)EffectType;
-        }
     }
 
     public struct TriggerElement : IEquatable<TriggerElement>, IComparable<TriggerElement>
@@ -106,7 +67,6 @@ namespace Core.General
         public Color OurSide;
         public readonly int MaxRank;
         public readonly int MaxFile;
-        public static readonly Effect Slow = new(EffectType.Slow, 0, 1);
 
         public readonly PieceLogic[] MainBoard;
         public readonly BitArray ActiveBoard;

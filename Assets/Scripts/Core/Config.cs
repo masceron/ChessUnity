@@ -8,9 +8,9 @@ namespace Core
         public readonly PieceType Type;
         public readonly Color Color;
         public readonly ushort Index;
-        public List<Effect> Effects;
+        public List<Effect.Effect> Effects;
 
-        public PieceConfig(PieceType t, Color c, ushort i, List<Effect> e)
+        public PieceConfig(PieceType t, Color c, ushort i, List<Effect.Effect> e)
         {
             Type = t;
             Color = c;
@@ -25,8 +25,8 @@ namespace Core
         
         public List<PieceConfig> PieceConfig = new()
         {
-            new PieceConfig(PieceType.Velkaris, Color.White, 140, new List<Effect>()),
-            new PieceConfig(PieceType.GuidingSiren, Color.Black, 101, new List<Effect>())
+            new PieceConfig(PieceType.Velkaris, Color.White, 140, new List<Effect.Effect>()),
+            new PieceConfig(PieceType.GuidingSiren, Color.Black, 101, new List<Effect.Effect>())
         };
         
         public byte[] BoardActive = {

@@ -1,4 +1,4 @@
-﻿using Core;
+﻿using Core.Effect;
 using Core.General;
 using Core.Piece;
 using UnityEngine;
@@ -23,7 +23,7 @@ namespace Board.Action
         public override void ModifyGameState(GameState state)
         {
             var caller = (Velkaris)state.MainBoard[From];
-            state.MainBoard[To].Effects.Add(new Effect(EffectType.VelkarisMarked, -1, 1));
+            state.MainBoard[To].Effects.Add(new VelkarisMarked(-1, 1, caller));
             caller.SkillCooldown = -1;
             caller.Marked = state.MainBoard[To];
             state.LastMove = this;

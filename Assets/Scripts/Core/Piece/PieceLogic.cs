@@ -12,10 +12,10 @@ namespace Core.Piece
         protected readonly sbyte Range;
         public PieceRank Rank;
        
-        public readonly List<Effect> Effects;
+        public readonly List<Effect.Effect> Effects;
         public readonly List<TriggerElement> Triggers = new();
 
-        protected PieceLogic(PieceType type, Color color, ushort pos, List<Effect> effects, sbyte r)
+        protected PieceLogic(PieceType type, Color color, ushort pos, List<Effect.Effect> effects, sbyte r)
         {
             Type = type;
             Color = color;

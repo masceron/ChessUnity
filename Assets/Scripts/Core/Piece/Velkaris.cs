@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Board.Action;
 using Board.Interaction;
+using Core.Effect;
 using Core.General;
 using Action = Board.Action.Action;
 
@@ -12,7 +14,7 @@ namespace Core.Piece
         public PieceLogic Marked;
         public sbyte SkillCooldown;
 
-        public Velkaris(PieceType type, Color color, ushort pos, List<Effect> effects) : base(type, color, pos, effects, 2)
+        public Velkaris(PieceType type, Color color, ushort pos, List<Effect.Effect> effects) : base(type, color, pos, effects, 2)
         {
             Marked = null;
             SkillCooldown = 0;
@@ -153,7 +155,7 @@ namespace Core.Piece
             var gameState = InteractionManager.GameState;
             var list = new List<Action>();
             
-            var effectiveRange = Math.Max(Range - (Effects.Contains(GameState.Slow) ? 1 : 0), 0);
+            var effectiveRange = Math.Max(Range - (Effects.OfType<Slow>().Any() ? 1 : 0), 0);
             
             var blocker = StraightSlide(list, gameState, effectiveRange);
             KnightSlide(list, gameState, blocker, effectiveRange);
