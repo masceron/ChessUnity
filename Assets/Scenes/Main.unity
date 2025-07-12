@@ -150,6 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pieceManager: {fileID: 1817019761}
   tileManager: {fileID: 2086704057}
+  pieceObjects:
+  - {fileID: 11400000, guid: 639e14683bd7a5c46a18d66c1f5258bd, type: 2}
+  - {fileID: 11400000, guid: 1bf88f5dd47bc934eb82c9afd3e057f3, type: 2}
+  - {fileID: 11400000, guid: 2c36d31390c6d384fbd1e1339d902147, type: 2}
 --- !u!4 &96585509
 Transform:
   m_ObjectHideFlags: 0
@@ -180,7 +184,6 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
-  - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -322,19 +325,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 96
   m_MaxRayIntersections: 0
---- !u!114 &330585549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1697a0132719bae458729c9e99c0c716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  addToGlobalShakers: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,8 +534,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1116444440}
-  - component: {fileID: 1116444439}
   - component: {fileID: 1116444441}
+  - component: {fileID: 1116444442}
   m_Layer: 0
   m_Name: CameraObject
   m_TagString: Untagged
@@ -553,20 +543,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1116444439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1116444438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 517d72c978d3b9c47b97d3d87f81122e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shaker: {fileID: 330585549}
-  preset: {fileID: 11400000, guid: b61c5ce1fd564614aa898e615aeeae2e, type: 2}
 --- !u!4 &1116444440
 Transform:
   m_ObjectHideFlags: 0
@@ -600,6 +576,18 @@ MonoBehaviour:
   m_MoveSpeed: 10
   m_MoveSpeedIncrement: 2.5
   m_Turbo: 10
+--- !u!114 &1116444442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116444438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 517d72c978d3b9c47b97d3d87f81122e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1817019759
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,12 +632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd8ca563a73b8fd45b8120af2ddbfefc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  whitePiecePrefabs:
-  - {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
-  - {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
-  blackPiecePrefabs:
-  - {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
-  - {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0
