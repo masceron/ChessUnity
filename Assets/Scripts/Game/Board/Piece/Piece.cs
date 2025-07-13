@@ -1,5 +1,4 @@
 using UnityEngine;
-using Color = Game.Board.General.Color;
 
 namespace Game.Board.Piece
 {
@@ -9,7 +8,7 @@ namespace Game.Board.Piece
         private int rank;
         private int file;
         
-        public void Spawn(int r, int f, Color s, Vector3 defaultTransform)
+        public void Spawn(int r, int f, Vector3 defaultTransform)
         {
             rank = r;
             file = f;

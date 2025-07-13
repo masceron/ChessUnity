@@ -10,7 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: Barracuda
+  m_Name: Velkaris
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5444954536440288558, guid: 6db4631d706801f4e9035ddb90685413, type: 3}
+  prefab: {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
   defaultTransform: {x: 0, y: 1.64, z: 0}
+  moveRange: 2
+  attackRange: 2
+  description: 

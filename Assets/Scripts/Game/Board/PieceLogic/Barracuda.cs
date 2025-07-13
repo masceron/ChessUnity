@@ -5,87 +5,89 @@ using Game.Board.Action.Internal;
 using Game.Board.Effects;
 using Game.Board.General;
 using Game.Board.Interaction;
+using Game.Board.Piece;
 
 namespace Game.Board.PieceLogic
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Barracuda: PieceLogic
     {
-        public Barracuda(Color color, ushort pos) : base(color, pos, 2, 2, PieceRank.Elite)
+        public Barracuda(PieceConfig cfg) : base(cfg)
         {
             ActionManager.Execute(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.Execute(new ApplyEffect(new Surpass(-1, this)));
             ActionManager.Execute(new ApplyEffect(new Ambush(-1, this)));
         }
 
-        private void MakeMove(List<Action.Action> list, int rank, int file, int distance)
+        private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)
         {
-            if (rank < 0 ||
-                rank >= InteractionManager.MaxRank ||
+            if (tRank < 0 ||
+                tRank >= InteractionManager.MaxRank ||
                 file < 0 ||
                 file >= InteractionManager.MaxFile) return;
             
-            var pieceRank = Pos / InteractionManager.MaxFile;
+            var rank = pos / InteractionManager.MaxFile;
 
-            var pos = rank * InteractionManager.MaxFile + file;
-            var pieceOn = InteractionManager.GameState.MainBoard[pos];
+            var tpos = tRank * InteractionManager.MaxFile + file;
+            var pieceOn = InteractionManager.GameState.MainBoard[tpos];
             if (pieceOn == null)
             {
-                if (distance == MoveRange)
+                if (distance == moveRange)
                 {
-                    if (Color == Color.White)
+                    if (color == Color.White)
                     {
-                        if (rank >= pieceRank) return;
+                        if (tRank >= rank) return;
                     }
-                    else if (rank <= pieceRank) return;
+                    else if (tRank <= rank) return;
                 }
                 
-                if (distance <= MoveRange)
+                if (distance <= moveRange)
                 {
-                    list.Add(new NormalMove(Pos, Pos, pos));
+                    list.Add(new NormalMove(pos, pos, tpos));
                 }
             }
-            else if (pieceOn.Color != Color)
+            else if (pieceOn.color != color)
             {
-                if (distance == AttackRange)
+                if (distance == attackRange)
                 {
-                    if (Color == Color.White)
+                    if (color == Color.White)
                     {
-                        if (rank >= pieceRank) return;
+                        if (tRank >= rank) return;
                     }
-                    else if (rank <= pieceRank) return;
+                    else if (tRank <= rank) return;
                 }
                 
-                if (pieceOn.Color != Color)
-                    list.Add(new NormalCapture(Pos, Pos, (ushort)pos));
+                if (pieceOn.color != color)
+                    list.Add(new NormalCapture(pos, pos, (ushort)tpos));
             }
         }
 
         public override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var pieceRank = Pos / InteractionManager.MaxFile;
-            var pieceFile = Pos % InteractionManager.MaxFile;
+            var rank = pos / InteractionManager.MaxFile;
+            var pieceFile = pos % InteractionManager.MaxFile;
             
-            for (var i = 1; i <= Math.Max(MoveRange, AttackRange); i++)
+            for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
             {
                 for (var file = pieceFile - i; file <= pieceFile + i; file += 1)
                 {
-                    MakeMove(list, pieceRank - i, file, i);
+                    MakeMove(list, rank - i, file, i);
                 }
                 
                 for (var file = pieceFile - i; file <= pieceFile + i - 1; file += 1)
                 {
-                    MakeMove(list, pieceRank + i, file, i);
+                    MakeMove(list, rank + i, file, i);
                 }
                 
-                for (var rank = pieceRank - i + 1; rank <= pieceRank + i; rank++)
+                for (var tRank = rank - i + 1; tRank <= rank + i; tRank++)
                 {
-                    MakeMove(list, rank, pieceFile + i, i);
+                    MakeMove(list, tRank, pieceFile + i, i);
                 }
                 
-                for (var rank = pieceRank - i + 1; rank <= pieceRank + i - 1; rank++)
+                for (var tRank = rank - i + 1; tRank <= rank + i - 1; tRank++)
                 {
-                    MakeMove(list, rank, pieceFile - i, i);
+                    MakeMove(list, tRank, pieceFile - i, i);
                 }
             }
             

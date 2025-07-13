@@ -13,7 +13,7 @@ namespace Game.Board.Triggers
 
         private void TriggerRows(int pos, Color side)
         {
-            var row = pos / GameState.MaxFile;
+            var row = pos / MatchManager.MaxFile;
             switch (side)
             {
                 case Color.White:
@@ -29,31 +29,31 @@ namespace Game.Board.Triggers
             }
         }
 
-        public VelkarisMarker(GameState state, PieceLogic.PieceLogic p) : base(state, p, ObserverType.Moves, 1)
+        public VelkarisMarker(PieceLogic.PieceLogic p) : base(p, ObserverType.Moves, 1)
         {
             rows = new int[2];
-            TriggerRows(p.Pos, p.Color);
+            TriggerRows(p.pos, p.color);
         }
         
         public override void OnCall(Action.Action action)
         {
-            if (action.Caller == Piece.Pos)
+            if (action.Caller == Piece.pos)
             {
-                TriggerRows(action.To, Piece.Color);
+                TriggerRows(action.To, Piece.color);
                 return;
             }
             
-            if (GameState.SideToMove == Piece.Color) return;
+            if (MatchManager.GameState.SideToMove == Piece.color) return;
 
-            var rowMovedTo = action.To / GameState.MaxFile;
+            var rowMovedTo = action.To / MatchManager.MaxFile;
             
             if (!rows.Contains(rowMovedTo))
             {
                 return;
             }
-            ActionManager.Execute(new VelkarisMark(Piece.Pos, Piece.Pos, action.From));
+            ActionManager.Execute(new VelkarisMark(Piece.pos, Piece.pos, action.From));
 
-            GameState.QueueTriggerDeleter(this);
+            MatchManager.GameState.QueueTriggerDeleter(this);
         }
     }
 }

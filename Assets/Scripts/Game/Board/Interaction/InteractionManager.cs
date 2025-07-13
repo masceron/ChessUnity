@@ -17,7 +17,7 @@ namespace Game.Board.Interaction
         public static int MaxRank;
         public static int MaxFile;
         public static PieceManager PieceManager;
-        public static TileManager TileManager;
+        private static TileManager _tileManager;
         public static GameState GameState;
 
         public static void Init()
@@ -25,7 +25,7 @@ namespace Game.Board.Interaction
             SelectingPiece = -1;
             MaxRank = MatchManager.GameState.MaxRank;
             MaxFile = MatchManager.GameState.MaxFile;
-            TileManager = MatchManager.TileManager;
+            _tileManager = MatchManager.TileManager;
             PieceManager = MatchManager.PieceManager;
             GameState = MatchManager.GameState;
         }
@@ -36,7 +36,7 @@ namespace Game.Board.Interaction
             {
                 var selected = rank * MaxFile + file;
                 var p = GameState.MainBoard[selected];
-                if (p == null || p.Color != GameState.OurSide) return;
+                if (p == null || p.color != GameState.OurSide) return;
                 SelectingPiece = selected;
                 MarkPiece(selected, null);
                 
@@ -80,14 +80,14 @@ namespace Game.Board.Interaction
         private static readonly List<Action.Action> ActionMarked = new();
         public static void MarkPiece(int pos, Type type)
         {
-            TileManager.Select(pos);
+            _tileManager.Select(pos);
             ActionToTake = GameState.MainBoard[pos].MoveToMake();
 
             if (type == null)
             {
                 foreach (var action in ActionToTake.Select(action => action).Where(ac => ac.GetType() == typeof(NormalCapture) || ac.GetType() == typeof(NormalMove)))
                 {
-                    TileManager.MarkAsMoveable(action.To);
+                    _tileManager.MarkAsMoveable(action.To);
                     ActionMarked.Add(action);
                 }
             }
@@ -95,7 +95,7 @@ namespace Game.Board.Interaction
             {
                 foreach (var action in ActionToTake.Select(action => action).Where(ac => ac.GetType() == typeof(SirenActive)))
                 {
-                    TileManager.MarkAsMoveable(action.From);
+                    _tileManager.MarkAsMoveable(action.From);
                     ActionMarked.Add(action);
                 }
                 SelectPieceLock = GameState.MainBoard[pos];
@@ -105,16 +105,16 @@ namespace Game.Board.Interaction
         public static void UnmarkPiece(int pos)
         {
             if (pos == -1) return;
-            TileManager.Unmark(pos);
+            _tileManager.Unmark(pos);
             foreach (var action in ActionMarked)
             {
                 if (action.GetType() == typeof(SirenActive))
                 {
-                    TileManager.Unmark(action.From);
+                    _tileManager.Unmark(action.From);
                 }
                 else
                 {
-                    TileManager.Unmark(action.To);
+                    _tileManager.Unmark(action.To);
                 }
                 
             }

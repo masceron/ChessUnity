@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
+using Game.Board.Piece;
 using Game.Board.PieceLogic;
 using Game.Board.Triggers;
 
@@ -43,7 +44,7 @@ namespace Game.Board.General
         public readonly BitArray ActiveBoard;
         public Color SideToMove;
 
-        public GameState(int maxRank, int maxFile, List<PieceConfig> configs, byte[] ac, Color side, Color ourSide)
+        public GameState(int maxRank, int maxFile, byte[] ac, Color side, Color ourSide)
         {
             OurSide = ourSide;
             MaxFile = maxFile;
@@ -58,33 +59,25 @@ namespace Game.Board.General
                 if (ac[i] == 0) ActiveBoard[i] = false;
                 else ActiveBoard[i] = true;
             }
-
-            foreach (var piece in configs)
-            {
-                var p = SpawnPiece(piece);
-                MainBoard[piece.Index] = p;
-            }
         }
 
-        private PieceLogic.PieceLogic SpawnPiece(PieceConfig piece)
+        public void SpawnPiece(PieceConfig piece)
         {
-            PieceLogic.PieceLogic p;
+            PieceLogic.PieceLogic p = null;
             switch (piece.Type)
             {
                 case PieceType.Velkaris:
-                    p = new Velkaris(piece.Color, piece.Index);
-                    new VelkarisMarker(this, p);
-                    return p;
+                    p = new Velkaris(piece);
+                    break;
                 case PieceType.GuidingSiren:
-                    p = new GuidingSiren(piece.Color, piece.Index);
-                    new SirenDebuffer(this, p);
-                    return p;
+                    p = new GuidingSiren(piece);
+                    break;
                 case PieceType.Barracuda:
-                    p = new Barracuda(piece.Color, piece.Index);
-                    return p;
+                    p = new Barracuda(piece);
+                    break;
             }
-
-            return null;
+            
+            MainBoard[piece.Index] = p;
         }
 
         private readonly List<Trigger> triggersToRemove = new();
@@ -137,7 +130,7 @@ namespace Game.Board.General
         public void Move(ushort f, ushort t)
         {
             MainBoard[t] = MainBoard[f];
-            MainBoard[t].Pos = t;
+            MainBoard[t].pos = t;
             MainBoard[f] = null;
         }
     }

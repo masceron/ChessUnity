@@ -14,26 +14,26 @@ namespace Game.Board.Effects
         public override void OnCall(Action.Action action)
         {
             if (action == null) return;
-            if (action.Caller != Piece.Pos)
+            if (action.Caller != Piece.pos)
             {
                 lastUsed++;
                 if (lastUsed >= 6 && !active)
                 {
                     active = true;
-                    Piece.AttackRange += RangeOffset;
+                    Piece.attackRange += RangeOffset;
                 }
             }
             else if (active)
             {
                 active = false;
                 lastUsed = 0;
-                Piece.AttackRange -= RangeOffset;
+                Piece.attackRange -= RangeOffset;
             }
         }
 
         public override void OnRemove()
         {
-            if (active) Piece.AttackRange -= RangeOffset;
+            if (active) Piece.attackRange -= RangeOffset;
         }
     }
 }

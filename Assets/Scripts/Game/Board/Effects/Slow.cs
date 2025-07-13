@@ -10,12 +10,12 @@ namespace Game.Board.Effects
 
         public override void OnApply()
         {
-            Piece.MoveRange -= Strength;
+            Piece.moveRange -= Strength;
         }
 
         public override void OnRemove()
         {
-            Piece.MoveRange += Strength;
+            Piece.moveRange += Strength;
         }
     }
 }

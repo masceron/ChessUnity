@@ -1,8 +1,6 @@
-using System;
-using Game.Board.PieceLogic;
-using Resources.ScriptableObjects.Pieces;
+using System.Collections.Generic;
+using Game.Board.General;
 using UnityEngine;
-using Color = Game.Board.General.Color;
 
 namespace Game.Board.Piece
 {
@@ -11,45 +9,34 @@ namespace Game.Board.Piece
     {
         private Piece[] pieces;
         
-        private PieceObject[] pieceObjects;
+        private Dictionary<PieceType, PieceObject> piecesInfo;
         
         private int maxFile;
         private int maxRank;
     
-        public void Spawn(int r, int f, PieceObject[] objects,  PieceLogic.PieceLogic[] config)
+        public void Init(int r, int f,  List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
         {
+            piecesInfo = dict;
             maxFile = r;
             maxRank = f;
-            pieceObjects = objects;
             pieces = new Piece[maxRank * maxFile];
-            
-            for (var i = 0; i < maxRank * maxFile; i++)
+
+            foreach (var piece in config)
             {
-                if (config[i] == null) continue;
-                switch (config[i])
-                {
-                    case Velkaris:
-                        SpawnPiece(i, 0, config[i].Color);
-                        break;
-                    case GuidingSiren:
-                        SpawnPiece(i, 1, config[i].Color);
-                        break;
-                    case Barracuda:
-                        SpawnPiece(i, 2, config[i].Color);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
+                SpawnPiece(piece);
             }
         }
 
-        private void SpawnPiece(int pos, int typeAsFab, Color color)
+        private void SpawnPiece(PieceConfig config)
         {
-            var prefab = pieceObjects[typeAsFab].prefab;
+            var pos = config.Index;
+            var info = piecesInfo[config.Type];
+            var prefab = info.prefab;
             var p = Instantiate(prefab).AddComponent<Piece>();
             p.transform.parent = transform;
             pieces[pos] = p;
-            p.Spawn(pos / maxRank, pos % maxFile, color, pieceObjects[typeAsFab].defaultTransform);
+            p.Spawn(pos / maxRank, pos % maxFile, info.defaultTransform);
+            MatchManager.GameState.SpawnPiece(config);
         }
         
         public Piece GetPiece(int pos)

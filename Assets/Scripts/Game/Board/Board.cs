@@ -1,10 +1,9 @@
-using System.Collections;
 using Game.Board.Action;
+using Game.Board.Assets;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.PieceLogic;
 using Game.Board.Tile;
-using Resources.ScriptableObjects.Pieces;
 using UnityEngine;
 using Color = Game.Board.General.Color;
 
@@ -15,30 +14,18 @@ namespace Game.Board
     {
         [SerializeField] private Piece.PieceManager pieceManager;
         [SerializeField] private TileManager tileManager;
-        [SerializeField] public PieceObject[] pieceObjects;
+        [SerializeField] public AssetManager assetManager;
 
         private void MatchMaker()
         {
-            MatchManager.Init(tileManager, pieceManager, new Config());
+            MatchManager.Init(tileManager, pieceManager, assetManager, new Config());
             InteractionManager.Init();
             ActionManager.Init();
-        }
-
-        private void InstantiateBoard(BitArray active)
-        {
-            tileManager.Spawn(MatchManager.GameState.MaxRank, MatchManager.GameState.MaxFile, active);
-        }
-
-        private void InstantiatePieces(PieceLogic.PieceLogic[] config)
-        {
-            pieceManager.Spawn(MatchManager.GameState.MaxRank, MatchManager.GameState.MaxFile, pieceObjects, config);
         }
     
         private void Awake()
         {
             MatchMaker();
-            InstantiateBoard(MatchManager.GameState.ActiveBoard);
-            InstantiatePieces(MatchManager.GameState.MainBoard);
         }
 
         private void Update()

@@ -2,6 +2,8 @@
 using Game.Board.Action;
 using Game.Board.General;
 using Game.Board.Interaction;
+using Game.Board.Piece;
+using Game.Board.Triggers;
 
 namespace Game.Board.PieceLogic
 {
@@ -11,11 +13,11 @@ namespace Game.Board.PieceLogic
         public PieceLogic Marked;
         public sbyte SkillCooldown;
 
-        public Velkaris(Color color, ushort pos) : base(color, pos, 2, 2, PieceRank.Commander)
+        public Velkaris(PieceConfig cfg) : base(cfg)
         {
             Marked = null;
             SkillCooldown = 0;
-            Rank = PieceRank.Commander;
+            new VelkarisMarker(this);
         }
         
         private static readonly int[][] Adjacent = {
@@ -56,51 +58,51 @@ namespace Game.Board.PieceLogic
         {
             var block = new bool[8];
             var board = gameState.MainBoard;
-            var rank = Pos / InteractionManager.MaxFile;
-            var file = Pos % InteractionManager.MaxFile;
+            var tRank = pos / InteractionManager.MaxFile;
+            var tFile = pos % InteractionManager.MaxFile;
             var maxFile = InteractionManager.MaxFile;
             var maxRank = InteractionManager.MaxRank;
 
             for (var i = 0; i < 8; i++)
             {
-                var toRank = rank + Adjacent[i][0];
-                var toFile = file + Adjacent[i][1];
+                var toRank = tRank + Adjacent[i][0];
+                var toFile = tFile + Adjacent[i][1];
                 var to = toRank * maxFile + toFile;
                 
                 if (toRank < 0 || toRank >= maxRank || toFile < 0 || toFile >= maxFile || !gameState.ActiveBoard[to]) continue;
                 
                 if (board[to] == null)
                 {
-                    if (MoveRange > 0)
+                    if (moveRange > 0)
                     {
-                        list.Add(new NormalMove(Pos, Pos, to));
+                        list.Add(new NormalMove(pos, pos, to));
                     }
 
                     block[i] = false;
                     
-                    var to2Rank = rank + Next[i][0];
-                    var to2File = file + Next[i][1];
+                    var to2Rank = tRank + Next[i][0];
+                    var to2File = tFile + Next[i][1];
                     var to2 = to2Rank * maxFile + to2File;
                     
                     if (to2Rank < 0 || to2Rank >= maxRank || to2File < 0 || to2File >= maxFile || !gameState.ActiveBoard[to2]) continue;
                     if (board[to2] == null)
                     {
-                        if (MoveRange > 1)
+                        if (moveRange > 1)
                         {
-                            list.Add(new NormalMove(Pos, Pos, to2));
+                            list.Add(new NormalMove(pos, pos, to2));
                         }
                     }
-                    else if (board[to2].Color != gameState.OurSide && AttackRange > 1)
+                    else if (board[to2].color != gameState.OurSide && attackRange > 1)
                     {
-                        list.Add(new NormalCapture(Pos, Pos, (ushort)to2));
+                        list.Add(new NormalCapture(pos, pos, (ushort)to2));
                     } 
                 }
                 else
                 {
                     block[i] = true;
-                    if (board[to].Color != gameState.OurSide)
+                    if (board[to].color != gameState.OurSide)
                     {
-                        list.Add(new NormalCapture(Pos, Pos, (ushort)to));
+                        list.Add(new NormalCapture(pos, pos, (ushort)to));
                     }
                 }
             }
@@ -112,13 +114,13 @@ namespace Game.Board.PieceLogic
             var board = gameState.MainBoard;
             var maxFile = InteractionManager.MaxFile;
             var maxRank = InteractionManager.MaxRank;
-            var rank = Pos / InteractionManager.MaxFile;
-            var file = Pos % InteractionManager.MaxFile;
+            var tRank = pos / InteractionManager.MaxFile;
+            var tFile = pos % InteractionManager.MaxFile;
             
             for (var i = 0; i < 8; i++)
             {
-                var toRank = rank + KnightSlides[i][0];
-                var toFile = file + KnightSlides[i][1];
+                var toRank = tRank + KnightSlides[i][0];
+                var toFile = tFile + KnightSlides[i][1];
                 var to = toRank * maxFile + toFile;
                 
                 if (toRank < 0 || toRank >= maxRank || toFile < 0 || toFile >= maxFile || !gameState.ActiveBoard[to]) continue;
@@ -127,16 +129,16 @@ namespace Game.Board.PieceLogic
                 
                 if (board[to] == null)
                 {
-                    if (MoveRange > 1)
+                    if (moveRange > 1)
                     {
-                        list.Add(new NormalMove(Pos, Pos, to));
+                        list.Add(new NormalMove(pos, pos, to));
                     }
                 }
                 else
                 {
-                    if (board[to].Color != gameState.OurSide && AttackRange > 1)
+                    if (board[to].color != gameState.OurSide && attackRange > 1)
                     {
-                        list.Add(new NormalCapture(Pos, Pos, (ushort)to));
+                        list.Add(new NormalCapture(pos, pos, (ushort)to));
                     }
                 }
             }
@@ -152,7 +154,7 @@ namespace Game.Board.PieceLogic
             
             if (SkillCooldown == -1 && Marked != null)
             {
-                list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
+                list.Add(new VelkarisKill(pos, pos, Marked.pos));
             }
 
             return list;

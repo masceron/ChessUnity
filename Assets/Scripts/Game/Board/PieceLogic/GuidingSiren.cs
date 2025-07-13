@@ -5,6 +5,8 @@ using Game.Board.Action.Internal;
 using Game.Board.Effects;
 using Game.Board.General;
 using Game.Board.Interaction;
+using Game.Board.Piece;
+using Game.Board.Triggers;
 
 namespace Game.Board.PieceLogic
 {
@@ -13,12 +15,12 @@ namespace Game.Board.PieceLogic
     {
         public sbyte SkillCooldown;
 
-        public GuidingSiren(Color color, ushort pos) : base(color, pos, 5, 5, PieceRank.Commander)
+        public GuidingSiren(PieceConfig cfg) : base(cfg)
         {
             SkillCooldown = 0;
-            Rank = PieceRank.Commander;
             ActionManager.Execute(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.Execute(new ApplyEffect(new Surpass(-1, this)));
+            new SirenDebuffer(this);
         }
 
         public override void PassTurn()
@@ -26,40 +28,40 @@ namespace Game.Board.PieceLogic
             if (SkillCooldown > 0) SkillCooldown--;
         }
         
-        private void MakeMove(List<Action.Action> list, int rank, int file, int curr, GameState gameState)
+        private void MakeMove(List<Action.Action> list, int trank, int file, int curr, GameState gameState)
         {
-            if (rank < 0 || rank >= gameState.MaxRank || file < 0 || file >= gameState.MaxFile) return;
+            if (trank < 0 || trank >= gameState.MaxRank || file < 0 || file >= gameState.MaxFile) return;
             
-            var pos = rank * gameState.MaxFile + file;
-            if (!gameState.ActiveBoard[pos]) return;
+            var tpos = trank * gameState.MaxFile + file;
+            if (!gameState.ActiveBoard[tpos]) return;
 
-            var p = gameState.MainBoard[pos];
+            var p = gameState.MainBoard[tpos];
             if (p == null)
             {
-                if (curr <= MoveRange)
-                    list.Add(new NormalMove(Pos, Pos, pos));
+                if (curr <= moveRange)
+                    list.Add(new NormalMove(this.pos, this.pos, tpos));
             }
-            else if (p.Color != Color && curr <= AttackRange)
+            else if (p.color != color && curr <= attackRange)
             {
-                list.Add(new NormalCapture(Pos, Pos, (ushort)pos));
+                list.Add(new NormalCapture(this.pos, this.pos, (ushort)tpos));
             }
         }
 
-        private void SirenActive(List<Action.Action> list, int rank, int file, GameState state)
+        private void SirenActive(List<Action.Action> list, int trank, int file, GameState state)
         {
-            var push = Color == Color.White ? 1 : -1;
+            var push = color == Color.White ? 1 : -1;
             for (var i = -6; i <= 6; i++)
             {
-                var rankOff = rank + i;
+                var rankOff = trank + i;
                 if (rankOff < 0 || rankOff >= state.MaxRank) continue;
                 for (var j = -6; j <= 6; j++)
                 {
                     var fileOff = file + j;
                     if (fileOff < 0 || fileOff >= state.MaxFile) continue;
                     
-                    var pos = rankOff * state.MaxFile + fileOff;
-                    var pieceAt = state.MainBoard[pos];
-                    if (pieceAt == null || pieceAt.Color == Color) continue;
+                    var tpos = rankOff * state.MaxFile + fileOff;
+                    var pieceAt = state.MainBoard[tpos];
+                    if (pieceAt == null || pieceAt.color == color) continue;
                     
                     var rankForce = rankOff + push;
                     while (Math.Abs(rankForce - rankOff) <= 3 &&
@@ -71,7 +73,7 @@ namespace Game.Board.PieceLogic
                     }
                     rankForce -= push;
                     if (rankForce == rankOff) continue;
-                    list.Add(new SirenActive(Pos, pos, rankForce * state.MaxFile + fileOff, InteractionManager.PieceManager));
+                    list.Add(new SirenActive(pos, tpos, rankForce * state.MaxFile + fileOff, InteractionManager.PieceManager));
                 }
             }
         }
@@ -79,26 +81,26 @@ namespace Game.Board.PieceLogic
         public override List<Action.Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
-            var rank = Pos / gameState.MaxFile;
-            var file = Pos % gameState.MaxFile;
+            var trank = pos / gameState.MaxFile;
+            var file = pos % gameState.MaxFile;
             
             var list = new List<Action.Action>();
             
-            for (var i = 1; i <= Math.Max(AttackRange, MoveRange); i++)
+            for (var i = 1; i <= Math.Max(attackRange, moveRange); i++)
             {
-                MakeMove(list, rank + i, file, i, gameState);
-                MakeMove(list, rank - i, file, i, gameState);
-                MakeMove(list, rank, file + i, i, gameState);
-                MakeMove(list, rank, file - i, i, gameState);
-                MakeMove(list, rank + i, file + i, i, gameState);
-                MakeMove(list, rank - i, file + i, i, gameState);
-                MakeMove(list, rank + i, file - i, i, gameState);
-                MakeMove(list, rank - i, file - i, i, gameState);
+                MakeMove(list, trank + i, file, i, gameState);
+                MakeMove(list, trank - i, file, i, gameState);
+                MakeMove(list, trank, file + i, i, gameState);
+                MakeMove(list, trank, file - i, i, gameState);
+                MakeMove(list, trank + i, file + i, i, gameState);
+                MakeMove(list, trank - i, file + i, i, gameState);
+                MakeMove(list, trank + i, file - i, i, gameState);
+                MakeMove(list, trank - i, file - i, i, gameState);
             }
 
             if (SkillCooldown == 0)
             {
-                SirenActive(list, rank, file, gameState);
+                SirenActive(list, trank, file, gameState);
             }
 
             return list;

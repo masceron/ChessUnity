@@ -1,29 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Board.Effects;
 using Game.Board.General;
+using Game.Board.Piece;
 
 namespace Game.Board.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), Serializable]
     public abstract class PieceLogic
     {
-        public ushort Pos;
-        public Color Color;
-        public sbyte MoveRange;
-        public sbyte AttackRange;
+        public ushort pos;
+        public Color color;
+        public sbyte moveRange;
+        public sbyte attackRange;
         
-        public PieceRank Rank;
+        public PieceRank pieceRank;
        
         public readonly List<Effect> Effects;
 
-        protected PieceLogic(Color color, ushort pos, sbyte moveRange, sbyte attackRange, PieceRank rank)
+        protected PieceLogic(PieceConfig cfg)
         {
-            Color = color;
-            Pos = pos;
+            color = cfg.Color;
+            pos = cfg.Index;
             Effects = new List<Effect>();
-            MoveRange = moveRange;
-            AttackRange = attackRange; 
-            Rank = rank;
+
+            var info = MatchManager.AssetManager.PieceData[cfg.Type];
+            moveRange = info.moveRange;
+            attackRange = info.attackRange; 
+            pieceRank = info.rank;
         }
 
         public virtual void PassTurn()

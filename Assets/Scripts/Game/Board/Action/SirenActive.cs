@@ -23,7 +23,7 @@ namespace Game.Board.Action
         public override void ModifyGameState(GameState state)
         {
             state.Move(From, To);
-            state.MainBoard[To].Color = state.MainBoard[To].Color == Color.White ? Color.Black : Color.White;
+            state.MainBoard[To].color = state.MainBoard[To].color == Color.White ? Color.Black : Color.White;
             ((GuidingSiren) state.MainBoard[Caller]).SkillCooldown = 12;
         }
     }

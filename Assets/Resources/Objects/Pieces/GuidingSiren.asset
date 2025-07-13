@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
   defaultTransform: {x: 0, y: 1.64, z: 0}
+  moveRange: 5
+  attackRange: 5
+  description: 
