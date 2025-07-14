@@ -1,35 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Board.Action;
+using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
+using Game.Board.Action.Quiets;
 using Game.Board.Effects;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
 
-namespace Game.Board.PieceLogic
+namespace Game.Board.PieceLogic.Elites
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Barracuda: PieceLogic
     {
         public Barracuda(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.Execute(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.Execute(new ApplyEffect(new Surpass(-1, this)));
-            ActionManager.Execute(new ApplyEffect(new Ambush(-1, this)));
+            ActionManager.TakeAction(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.TakeAction(new ApplyEffect(new Surpass(-1, this)));
+            ActionManager.TakeAction(new ApplyEffect(new Ambush(-1, this)));
         }
 
         private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)
         {
             if (tRank < 0 ||
-                tRank >= InteractionManager.MaxRank ||
+                tRank >= MatchManager.MaxRank ||
                 file < 0 ||
-                file >= InteractionManager.MaxFile) return;
+                file >= MatchManager.MaxFile || !MatchManager.GameState.ActiveBoard[tRank * MatchManager.MaxFile + file]) return;
             
             var rank = pos / InteractionManager.MaxFile;
 
-            var tpos = tRank * InteractionManager.MaxFile + file;
-            var pieceOn = InteractionManager.GameState.MainBoard[tpos];
+            var tpos = tRank * MatchManager.MaxFile + file;
+            var pieceOn = MatchManager.GameState.MainBoard[tpos];
             if (pieceOn == null)
             {
                 if (distance == moveRange)

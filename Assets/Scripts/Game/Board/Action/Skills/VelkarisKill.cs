@@ -1,14 +1,15 @@
 ﻿using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.PieceLogic;
+using Game.Board.PieceLogic.Commanders;
 using UnityEngine;
 
-namespace Game.Board.Action
+namespace Game.Board.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class VelkarisKill: Action
+    public class VelkarisKill: Action, ISkills
     {
-        public VelkarisKill(int p, ushort f, ushort t) : base(p, false, false, false)
+        public VelkarisKill(int p, ushort f, ushort t) : base(p, false)
         {
             From = f;
             To = t;
@@ -17,7 +18,6 @@ namespace Game.Board.Action
         public override void ApplyAction(GameState state)
         {
             Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
-            ActionManager.Execute(new EndTurn());
             
             ModifyGameState(state);
         }

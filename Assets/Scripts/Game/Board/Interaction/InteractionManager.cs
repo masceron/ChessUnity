@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Board.Action;
+using Game.Board.Action.Captures;
+using Game.Board.Action.Quiets;
+using Game.Board.Action.Skills;
 using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.PieceLogic;
+using Game.Board.PieceLogic.Commanders;
 using Game.Board.Tile;
 
 namespace Game.Board.Interaction
@@ -36,7 +40,7 @@ namespace Game.Board.Interaction
             {
                 var selected = rank * MaxFile + file;
                 var p = GameState.MainBoard[selected];
-                if (p == null || p.color != GameState.OurSide) return;
+                if (p == null || p.color != GameState.OurSide || p.color != GameState.SideToMove) return;
                 SelectingPiece = selected;
                 MarkPiece(selected, null);
                 
@@ -57,7 +61,7 @@ namespace Game.Board.Interaction
                         var action = ActionToTake.Find(x => x.To == selected);
                         if (action != null)
                         {
-                            ActionManager.Execute(action);
+                            ActionManager.TakeAction(action);
                         }
                         UnmarkPiece(SelectingPiece);
                         SelectingPiece = -1;
@@ -67,7 +71,7 @@ namespace Game.Board.Interaction
                         var action = ActionToTake.Find(x => x.From == selected && x.GetType() == typeof(SirenActive));
                         if (action != null)
                         {
-                            ActionManager.Execute(action);
+                            ActionManager.TakeAction(action);
                         }
                         UnmarkPiece(SelectingPiece);
                         SelectingPiece = -1;

@@ -1,14 +1,15 @@
 ﻿using Game.Board.Effects;
 using Game.Board.General;
 using Game.Board.PieceLogic;
+using Game.Board.PieceLogic.Commanders;
 using UnityEngine;
 
 namespace Game.Board.Action.Internal
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class VelkarisMark: Action
+    public class VelkarisMark: Action, IInternal
     {
-        public VelkarisMark(int p, ushort f, ushort t): base(p, false, false, true)
+        public VelkarisMark(int p, ushort f, ushort t): base(p, false)
         {
             From = f;
             To = t;
@@ -17,7 +18,7 @@ namespace Game.Board.Action.Internal
         public override void ApplyAction(GameState state)
         {
             Debug.Log("Velkaris marked " + To);
-            ActionManager.Execute(new ApplyEffect(new VelkarisMarked(state.MainBoard[To])));
+            ActionManager.TakeAction(new ApplyEffect(new VelkarisMarked(state.MainBoard[To])));
             
             ModifyGameState(state);
         }

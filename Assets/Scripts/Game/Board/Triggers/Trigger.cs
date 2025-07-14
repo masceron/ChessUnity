@@ -7,7 +7,7 @@ namespace Game.Board.Triggers
     {
         protected readonly PieceLogic.PieceLogic Piece;
 
-        protected Trigger(PieceLogic.PieceLogic p, ObserverType type, byte priority): base(type, priority)
+        protected Trigger(PieceLogic.PieceLogic p, ObserverType type, ObserverPriority priority): base(type, priority)
         {
             Piece = p;
             EventObserver.AddObserver(this);

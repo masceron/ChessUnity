@@ -4,10 +4,10 @@ using Game.Board.General;
 namespace Game.Board.Action.Internal
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ApplyEffect: Action
+    public class ApplyEffect: Action, IInternal
     {
         private readonly Effect effect;
-        public ApplyEffect(Effect e) : base(-1, false, false, true)
+        public ApplyEffect(Effect e) : base(-1, false)
         {
             effect = e;
         }

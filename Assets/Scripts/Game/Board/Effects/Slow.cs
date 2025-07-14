@@ -5,7 +5,7 @@ namespace Game.Board.Effects
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Slow: Effect
     {
-        public Slow(sbyte duration, sbyte strength, PieceLogic.PieceLogic piece) : base(duration, strength, piece, ObserverType.None, 0)
+        public Slow(sbyte duration, sbyte strength, PieceLogic.PieceLogic piece) : base(duration, strength, piece, ObserverType.None, ObserverPriority.Other)
         {}
 
         public override void OnApply()

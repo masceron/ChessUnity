@@ -8,7 +8,7 @@ namespace Game.Board.Effects
         private bool active;
         private const sbyte RangeOffset = 1;
 
-        public Ambush(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, -1, piece, ObserverType.EndTurn, 0)
+        public Ambush(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, -1, piece, ObserverType.EndTurn, ObserverPriority.Other)
         {}
 
         public override void OnCall(Action.Action action)

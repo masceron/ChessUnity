@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
-using Game.Board.Action;
+using Game.Board.Action.Captures;
+using Game.Board.Action.Quiets;
+using Game.Board.Action.Skills;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
 using Game.Board.Triggers;
 
-namespace Game.Board.PieceLogic
+namespace Game.Board.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Velkaris: PieceLogic

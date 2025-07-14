@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Board.Action;
+using Game.Board.Action.Captures;
 
 namespace Game.Board.General
 {
@@ -68,7 +69,7 @@ namespace Game.Board.General
             }
 
             _lastAction = action;
-            if (action.DoesMoveCapture)
+            if (action is ICaptures)
             {
                 _observersCapture.ForEach(observer => observer.OnCall(action));
             }

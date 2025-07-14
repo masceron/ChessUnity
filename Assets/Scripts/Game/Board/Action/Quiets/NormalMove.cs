@@ -1,13 +1,12 @@
 ﻿using Game.Board.General;
 using Game.Board.Interaction;
-using Game.Board.Piece;
 
-namespace Game.Board.Action
+namespace Game.Board.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class NormalMove: Action
+    public class NormalMove: Action, IQuiets
     {
-        public NormalMove(ushort caller, int f, int t) : base(caller, true, false, false)
+        public NormalMove(ushort caller, int f, int t) : base(caller, true)
         {
             From = (ushort)f;
             To = (ushort)t;

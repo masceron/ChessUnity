@@ -29,7 +29,7 @@ namespace Game.Board.Triggers
             }
         }
 
-        public VelkarisMarker(PieceLogic.PieceLogic p) : base(p, ObserverType.Moves, 1)
+        public VelkarisMarker(PieceLogic.PieceLogic p) : base(p, ObserverType.Moves, ObserverPriority.Debuff)
         {
             rows = new int[2];
             TriggerRows(p.pos, p.color);
@@ -51,7 +51,7 @@ namespace Game.Board.Triggers
             {
                 return;
             }
-            ActionManager.Execute(new VelkarisMark(Piece.pos, Piece.pos, action.From));
+            ActionManager.TakeAction(new VelkarisMark(Piece.pos, Piece.pos, action.From));
 
             MatchManager.GameState.QueueTriggerDeleter(this);
         }

@@ -8,7 +8,7 @@ namespace Game.Board.Triggers
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirenDebuffer: Trigger
     {
-        public SirenDebuffer(PieceLogic.PieceLogic p) : base(p, ObserverType.EndTurn, 3)
+        public SirenDebuffer(PieceLogic.PieceLogic p) : base(p, ObserverType.EndTurn, ObserverPriority.Debuff)
         {
             CalculateEffectRange(p.pos);
         }
@@ -46,7 +46,7 @@ namespace Game.Board.Triggers
                     if (pOn == null || pOn == Piece) continue;
                     if (pOn.color != Piece.color)
                     {
-                        ActionManager.Execute(new SirenDebuff(Piece.pos, Piece.pos, (ushort)index));
+                        ActionManager.TakeAction(new SirenDebuff(Piece.pos, Piece.pos, (ushort)index));
                     }
                 }
             }

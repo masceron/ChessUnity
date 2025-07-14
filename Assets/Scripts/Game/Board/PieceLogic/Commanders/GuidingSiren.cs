@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Board.Action;
+using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
+using Game.Board.Action.Quiets;
+using Game.Board.Action.Skills;
 using Game.Board.Effects;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
 using Game.Board.Triggers;
 
-namespace Game.Board.PieceLogic
+namespace Game.Board.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GuidingSiren: PieceLogic
@@ -18,8 +21,8 @@ namespace Game.Board.PieceLogic
         public GuidingSiren(PieceConfig cfg) : base(cfg)
         {
             SkillCooldown = 0;
-            ActionManager.Execute(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.Execute(new ApplyEffect(new Surpass(-1, this)));
+            ActionManager.TakeAction(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.TakeAction(new ApplyEffect(new Surpass(-1, this)));
             new SirenDebuffer(this);
         }
 

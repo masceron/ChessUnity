@@ -15,15 +15,11 @@ namespace Game.Board.Action
         public int Caller;
         public ActionResult Success;
         public readonly bool DoesMoveChangePos;
-        public readonly bool DoesMoveCapture;
-        public readonly bool IsInternal;
 
-        protected Action(int caller, bool pos, bool cap, bool itn)
+        protected Action(int caller, bool pos)
         {
             Caller = caller;
-            DoesMoveCapture = cap;
             DoesMoveChangePos = pos;
-            IsInternal = itn;
             Success = ActionResult.UNKNOWN;
         }
         

@@ -2,12 +2,12 @@
 using Game.Board.Interaction;
 using UnityEngine;
 
-namespace Game.Board.Action
+namespace Game.Board.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class NormalCapture: Action
+    public class NormalCapture: Action, ICaptures
     {
-        public NormalCapture(ushort caller, ushort f, ushort t) : base(caller, true, true, false)
+        public NormalCapture(ushort caller, ushort f, ushort t) : base(caller, true)
         {
             From = f;
             To = t;
@@ -16,7 +16,7 @@ namespace Game.Board.Action
         {
             if (Success == ActionResult.SUCCEED)
             {
-                Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
+                Object.Destroy(MatchManager.PieceManager.GetPiece(To).gameObject);
                 InteractionManager.PieceManager.Move(From, To);
                 ModifyGameState(state);
             }

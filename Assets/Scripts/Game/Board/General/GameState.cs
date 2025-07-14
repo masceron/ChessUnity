@@ -4,6 +4,9 @@ using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Piece;
 using Game.Board.PieceLogic;
+using Game.Board.PieceLogic.Commanders;
+using Game.Board.PieceLogic.Commons;
+using Game.Board.PieceLogic.Elites;
 using Game.Board.Triggers;
 
 namespace Game.Board.General
@@ -12,7 +15,8 @@ namespace Game.Board.General
     {
         Velkaris,
         GuidingSiren,
-        Barracuda
+        Barracuda,
+        SeaUrchin
     }
 
     public enum PieceRank : byte
@@ -63,20 +67,15 @@ namespace Game.Board.General
 
         public void SpawnPiece(PieceConfig piece)
         {
-            PieceLogic.PieceLogic p = null;
-            switch (piece.Type)
+            PieceLogic.PieceLogic p = piece.Type switch
             {
-                case PieceType.Velkaris:
-                    p = new Velkaris(piece);
-                    break;
-                case PieceType.GuidingSiren:
-                    p = new GuidingSiren(piece);
-                    break;
-                case PieceType.Barracuda:
-                    p = new Barracuda(piece);
-                    break;
-            }
-            
+                PieceType.Velkaris => new Velkaris(piece),
+                PieceType.GuidingSiren => new GuidingSiren(piece),
+                PieceType.Barracuda => new Barracuda(piece),
+                PieceType.SeaUrchin => new SeaUrchin(piece),
+                _ => null
+            };
+
             MainBoard[piece.Index] = p;
         }
 
@@ -104,7 +103,7 @@ namespace Game.Board.General
 
                     if (eff.Duration == 0)
                     {
-                        ActionManager.Execute(new RemoveEffect(piece.Effects[i]));
+                        ActionManager.TakeAction(new RemoveEffect(piece.Effects[i]));
                     }
                 }
 
