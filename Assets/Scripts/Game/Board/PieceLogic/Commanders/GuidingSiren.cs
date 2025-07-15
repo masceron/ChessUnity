@@ -5,11 +5,11 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
-using Game.Board.Effects;
+using Game.Board.Effects.Buffs;
+using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
-using Game.Board.Triggers;
 
 namespace Game.Board.PieceLogic.Commanders
 {
@@ -21,9 +21,9 @@ namespace Game.Board.PieceLogic.Commanders
         public GuidingSiren(PieceConfig cfg) : base(cfg)
         {
             SkillCooldown = 0;
-            ActionManager.TakeAction(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.TakeAction(new ApplyEffect(new Surpass(-1, this)));
-            new SirenDebuffer(this);
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new SirenDebuffer(this)));
         }
 
         public override void PassTurn()
@@ -81,7 +81,7 @@ namespace Game.Board.PieceLogic.Commanders
             }
         }
 
-        public override List<Action.Action> MoveToMake()
+        protected override List<Action.Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
             var trank = pos / gameState.MaxFile;

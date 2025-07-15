@@ -14,7 +14,7 @@ namespace Game.Board.Action.Captures
         }
         public override void ApplyAction(GameState state)
         {
-            if (Success == ActionResult.SUCCEED)
+            if (Success == ActionResult.Succeed)
             {
                 Object.Destroy(MatchManager.PieceManager.GetPiece(To).gameObject);
                 InteractionManager.PieceManager.Move(From, To);

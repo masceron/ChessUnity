@@ -4,10 +4,10 @@ using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.General;
 
-namespace Game.Board.Triggers
+namespace Game.Board.Effects.Kills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class VelkarisMarker: Trigger
+    public class VelkarisMarker: Effect
     {
         private readonly int[] rows;
 
@@ -29,7 +29,7 @@ namespace Game.Board.Triggers
             }
         }
 
-        public VelkarisMarker(PieceLogic.PieceLogic p) : base(p, ObserverType.Moves, ObserverPriority.Debuff)
+        public VelkarisMarker(PieceLogic.PieceLogic p) : base(-1, 1, p, EffectType.VelkarisMarker)
         {
             rows = new int[2];
             TriggerRows(p.pos, p.color);
@@ -51,9 +51,9 @@ namespace Game.Board.Triggers
             {
                 return;
             }
-            ActionManager.TakeAction(new VelkarisMark(Piece.pos, Piece.pos, action.From));
-
-            MatchManager.GameState.QueueTriggerDeleter(this);
+            
+            ActionManager.EnqueueAction(new VelkarisMark(Piece.pos, Piece.pos, action.From));
+            ActionManager.EnqueueAction(new RemoveEffect(this));
         }
     }
 }

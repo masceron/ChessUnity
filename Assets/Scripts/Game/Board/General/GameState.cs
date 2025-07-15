@@ -1,35 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Piece;
-using Game.Board.PieceLogic;
 using Game.Board.PieceLogic.Commanders;
 using Game.Board.PieceLogic.Commons;
 using Game.Board.PieceLogic.Elites;
-using Game.Board.Triggers;
 
 namespace Game.Board.General
 {
-    public enum PieceType : sbyte
-    {
-        Velkaris,
-        GuidingSiren,
-        Barracuda,
-        SeaUrchin
-    }
-
-    public enum PieceRank : byte
-    {
-        Commander,
-        Construct,
-        Champion,
-        Elite,
-        Common,
-        Swarm,
-        Summoned
-    }
-
     public enum Color : byte
     {
         White,
@@ -73,17 +51,11 @@ namespace Game.Board.General
                 PieceType.GuidingSiren => new GuidingSiren(piece),
                 PieceType.Barracuda => new Barracuda(piece),
                 PieceType.SeaUrchin => new SeaUrchin(piece),
+                PieceType.ElectricEel => new ElectricEel(piece),
                 _ => null
             };
 
             MainBoard[piece.Index] = p;
-        }
-
-        private readonly List<Trigger> triggersToRemove = new();
-
-        public void QueueTriggerDeleter(Trigger t)
-        {
-            triggersToRemove.Add(t);
         }
         
         public void EndTurn()
@@ -103,19 +75,12 @@ namespace Game.Board.General
 
                     if (eff.Duration == 0)
                     {
-                        ActionManager.TakeAction(new RemoveEffect(piece.Effects[i]));
+                        ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects[i]));
                     }
                 }
 
                 piece.Effects.RemoveAll(e => e.Duration == 0);
             }
-
-            foreach (var trigger in triggersToRemove)
-            {
-                EventObserver.RemoveObserver(trigger);
-            }
-            
-            triggersToRemove.Clear();
             
         }
 

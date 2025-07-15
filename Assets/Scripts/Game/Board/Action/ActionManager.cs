@@ -10,55 +10,56 @@ namespace Game.Board.Action
         private static GameState _state;
         private static Queue<Action> _actionQueue;
 
-        private static void EnqueueAction(Action _action)
+        public static void EnqueueAction(Action queueAction)
         {
-            _actionQueue.Enqueue(_action);
-
-            if (_action.GetType() != typeof(EndTurn)) return;
-            while (_actionQueue.TryDequeue(out var action))
+            if (queueAction.GetType() != typeof(EndTurn))
             {
-                Execute(action);
-            }
-        }
-
-        private static void ExecuteImmediately(Action action)
-        {
-            action.ApplyAction(_state);
-        }
-
-        public static void TakeAction(Action action)
-        {
-            if (action is IInternal)
-            {
-                ExecuteImmediately(action);
+                _actionQueue.Enqueue(queueAction);
             }
             else
             {
-                EnqueueAction(action);
-                EnqueueAction(new EndTurn());
+                var actionTaken = new Queue<Action>(_actionQueue);
+                _actionQueue.Clear();
+                /*
+                
+                The process of executing actions made on a board is as follows:
+                Every action user take in a turn will be queued and execute sequentially when an EndTurn action is registered.
+                Action that is the result of another action will also be queued.
+                For example: A piece tries to capture another piece with Carapace buff, and is killed in the process.
+                The queue will be: Capture -- CarapaceKill -- EndTurn.
+                When an EndTurn action is registered, the queue will start execute all action taken before, enqueue the actions taken by observers,
+                and finally execute the EndTurn itself.
+                
+                */
+                
+                while (actionTaken.TryDequeue(out var action))
+                {
+                    if (action is not IInternal)
+                    {
+                        EventObserver.Notify(action);
+                    }
+                    action.ApplyAction(_state);
+                }
+                
+                _actionQueue.Enqueue(queueAction);
+
+                while (_actionQueue.TryDequeue(out var action))
+                {
+                    action.ApplyAction(_state);
+                }
             }
+            
+        }
+
+        public static void ExecuteImmediately(Action action)
+        {
+            action.ApplyAction(_state);
         }
 
         public static void Init()
         {
             _state = MatchManager.GameState;
             _actionQueue = new Queue<Action>();
-        }
-        private static void Execute(Action action)
-        {
-            if (action.GetType() != typeof(EndTurn))
-            {
-                if (action is not IInternal)
-                {
-                    EventObserver.Notify(action);
-                }
-                action.ApplyAction(_state);
-            }
-            else
-            {
-                action.ApplyAction(_state);
-                EventObserver.Notify(action);
-            }
         }
     }
 }

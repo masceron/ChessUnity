@@ -4,7 +4,7 @@ namespace Game.Board.Action
 {
     public enum ActionResult
     {
-        UNKNOWN, SUCCEED, FAILED
+        Succeed, Failed, Unblockable
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -20,7 +20,7 @@ namespace Game.Board.Action
         {
             Caller = caller;
             DoesMoveChangePos = pos;
-            Success = ActionResult.UNKNOWN;
+            Success = ActionResult.Succeed;
         }
         
         public abstract void ApplyAction(GameState state);

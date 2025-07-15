@@ -7,7 +7,6 @@ using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.General;
 using Game.Board.Piece;
-using Game.Board.PieceLogic;
 using Game.Board.PieceLogic.Commanders;
 using Game.Board.Tile;
 
@@ -61,7 +60,7 @@ namespace Game.Board.Interaction
                         var action = ActionToTake.Find(x => x.To == selected);
                         if (action != null)
                         {
-                            ActionManager.TakeAction(action);
+                            ActionManager.EnqueueAction(action);
                         }
                         UnmarkPiece(SelectingPiece);
                         SelectingPiece = -1;
@@ -71,7 +70,7 @@ namespace Game.Board.Interaction
                         var action = ActionToTake.Find(x => x.From == selected && x.GetType() == typeof(SirenActive));
                         if (action != null)
                         {
-                            ActionManager.TakeAction(action);
+                            ActionManager.EnqueueAction(action);
                         }
                         UnmarkPiece(SelectingPiece);
                         SelectingPiece = -1;
@@ -85,7 +84,7 @@ namespace Game.Board.Interaction
         public static void MarkPiece(int pos, Type type)
         {
             _tileManager.Select(pos);
-            ActionToTake = GameState.MainBoard[pos].MoveToMake();
+            ActionToTake = GameState.MainBoard[pos].MoveList();
 
             if (type == null)
             {

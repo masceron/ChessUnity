@@ -2,6 +2,25 @@
 
 namespace Game.Board.Effects
 {
+
+    public enum EffectType
+    {
+        Carapace,
+        Evasion,
+        Surpass,
+        Slow,
+        Blinded,
+        Ambush,
+        VelkarisMarked,
+        SirenDebuffer,
+        VelkarisMarker,
+        Demolisher,
+        Vengeful,
+        Stunned,
+        Shield,
+        HardenedShield,
+        Piercing
+    }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Effect: Observer
@@ -10,7 +29,7 @@ namespace Game.Board.Effects
         protected sbyte Strength;
         public readonly PieceLogic.PieceLogic Piece;
 
-        protected Effect(sbyte duration, sbyte strength, PieceLogic.PieceLogic piece, ObserverType type, ObserverPriority priority) : base(type, priority)
+        protected Effect(sbyte duration, sbyte strength, PieceLogic.PieceLogic piece, EffectType type) : base(type)
         {
             Duration = duration;
             Strength = strength;

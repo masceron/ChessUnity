@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Board.Effects;
+using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 using Game.Board.Piece;
 
@@ -34,6 +36,11 @@ namespace Game.Board.PieceLogic
         {
             
         }
-        public abstract List<Action.Action> MoveToMake();
+        protected abstract List<Action.Action> MoveToMake();
+
+        public List<Action.Action> MoveList()
+        {
+            return Effects.OfType<Stunned>().Any() ? new List<Action.Action>() : MoveToMake();
+        }
     }
 }

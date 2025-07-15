@@ -3,7 +3,6 @@ using Game.Board.Action.Skills;
 using Game.Board.Assets;
 using Game.Board.General;
 using Game.Board.Interaction;
-using Game.Board.PieceLogic;
 using Game.Board.PieceLogic.Commanders;
 using Game.Board.Tile;
 using UnityEngine;
@@ -35,7 +34,7 @@ namespace Game.Board
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 MatchManager.GameState.OurSide = MatchManager.GameState.OurSide == Color.White ? Color.Black : Color.White;
-                //ActionManager.TakeAction(new EndTurn());
+                ActionManager.EnqueueAction(new EndTurn());
             }
             else if (Input.GetKeyDown(KeyCode.F))
             {
@@ -47,7 +46,7 @@ namespace Game.Board
                         var des = InteractionManager.ActionToTake.Find(action => action.GetType() == typeof(VelkarisKill));
                         if (des != null)
                         {
-                            ActionManager.TakeAction(des);
+                            ActionManager.EnqueueAction(des);
                         }
 
                         break;

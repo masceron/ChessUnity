@@ -5,6 +5,8 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects;
+using Game.Board.Effects.Buffs;
+using Game.Board.Effects.Others;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
@@ -16,9 +18,9 @@ namespace Game.Board.PieceLogic.Elites
     {
         public Barracuda(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.TakeAction(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.TakeAction(new ApplyEffect(new Surpass(-1, this)));
-            ActionManager.TakeAction(new ApplyEffect(new Ambush(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(-1, this)));
         }
 
         private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)
@@ -64,7 +66,7 @@ namespace Game.Board.PieceLogic.Elites
             }
         }
 
-        public override List<Action.Action> MoveToMake()
+        protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
             var rank = pos / InteractionManager.MaxFile;

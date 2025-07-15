@@ -1,6 +1,5 @@
-﻿using Game.Board.Effects;
+﻿using Game.Board.Effects.Others;
 using Game.Board.General;
-using Game.Board.PieceLogic;
 using Game.Board.PieceLogic.Commanders;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace Game.Board.Action.Internal
         public override void ApplyAction(GameState state)
         {
             Debug.Log("Velkaris marked " + To);
-            ActionManager.TakeAction(new ApplyEffect(new VelkarisMarked(state.MainBoard[To])));
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(state.MainBoard[To])));
             
             ModifyGameState(state);
         }

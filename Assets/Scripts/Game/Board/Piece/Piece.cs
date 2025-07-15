@@ -2,6 +2,25 @@ using UnityEngine;
 
 namespace Game.Board.Piece
 {
+    public enum PieceType : sbyte
+    {
+        Velkaris,
+        GuidingSiren,
+        Barracuda,
+        SeaUrchin,
+        ElectricEel
+    }
+
+    public enum PieceRank : byte
+    {
+        Commander,
+        Construct,
+        Champion,
+        Elite,
+        Common,
+        Swarm,
+        Summoned
+    }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Piece : MonoBehaviour
     {

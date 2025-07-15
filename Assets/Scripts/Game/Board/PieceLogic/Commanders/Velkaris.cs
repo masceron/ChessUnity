@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using Game.Board.Action;
 using Game.Board.Action.Captures;
+using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
+using Game.Board.Effects.Kills;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
-using Game.Board.Triggers;
 
 namespace Game.Board.PieceLogic.Commanders
 {
@@ -19,7 +21,7 @@ namespace Game.Board.PieceLogic.Commanders
         {
             Marked = null;
             SkillCooldown = 0;
-            new VelkarisMarker(this);
+            ActionManager.ExecuteImmediately(new ApplyEffect(new VelkarisMarker(this)));
         }
         
         private static readonly int[][] Adjacent = {
@@ -146,7 +148,7 @@ namespace Game.Board.PieceLogic.Commanders
             }
         }
 
-        public override List<Action.Action> MoveToMake()
+        protected override List<Action.Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
             var list = new List<Action.Action>();

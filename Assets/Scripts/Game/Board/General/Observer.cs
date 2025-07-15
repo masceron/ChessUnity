@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
+using Game.Board.Effects;
 
 namespace Game.Board.General
 {
@@ -15,10 +14,11 @@ namespace Game.Board.General
         public readonly ObserverType Type;
         public readonly ObserverPriority Priority;
 
-        protected Observer(ObserverType type, ObserverPriority priority)
+        protected Observer(EffectType type)
         {
-            Type = type;
-            Priority = priority;
+            var info = MatchManager.AssetManager.EffectData[type];
+            Type = info.activeWhen;
+            Priority = info.effectCategory;
         }
 
         public virtual void OnCall(Action.Action action)

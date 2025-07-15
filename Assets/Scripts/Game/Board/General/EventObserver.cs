@@ -78,7 +78,6 @@ namespace Game.Board.General
             {
                 _observersMove.ForEach(observer => observer.OnCall(action));
             }
-            
         }
     }
 }

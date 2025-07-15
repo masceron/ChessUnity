@@ -1,4 +1,5 @@
 ﻿using Game.Board.Effects;
+using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 
 namespace Game.Board.Action.Internal
@@ -21,7 +22,7 @@ namespace Game.Board.Action.Internal
         {
             var affected = state.MainBoard[To];
             
-            ActionManager.TakeAction(new ApplyEffect(new Slow(1, 1, affected)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, affected)));
         }
     }
 }

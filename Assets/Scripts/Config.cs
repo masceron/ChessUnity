@@ -12,7 +12,8 @@ public class Config
         new PieceConfig(PieceType.Velkaris, Color.White, 140),
         new PieceConfig(PieceType.Barracuda, Color.Black, 104),
         new PieceConfig(PieceType.GuidingSiren, Color.Black, 101),
-        new PieceConfig(PieceType.SeaUrchin, Color.White, 100)
+        new PieceConfig(PieceType.SeaUrchin, Color.White, 100),
+        new PieceConfig(PieceType.ElectricEel, Color.White, 92)
     };
         
     public byte[] BoardActive = {

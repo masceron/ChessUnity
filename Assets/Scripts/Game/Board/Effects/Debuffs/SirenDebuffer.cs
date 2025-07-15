@@ -3,12 +3,12 @@ using Game.Board.Action.Internal;
 using Game.Board.General;
 using Math = System.Math;
 
-namespace Game.Board.Triggers
+namespace Game.Board.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SirenDebuffer: Trigger
+    public class SirenDebuffer: Effect
     {
-        public SirenDebuffer(PieceLogic.PieceLogic p) : base(p, ObserverType.EndTurn, ObserverPriority.Debuff)
+        public SirenDebuffer(PieceLogic.PieceLogic p) : base(-1, 1, p, EffectType.SirenDebuffer)
         {
             CalculateEffectRange(p.pos);
         }
@@ -43,10 +43,10 @@ namespace Game.Board.Triggers
                 {
                     var index = rowIndex + f;
                     var pOn = MatchManager.GameState.MainBoard[index];
-                    if (pOn == null || pOn == Piece) continue;
+                    if (pOn == null) continue;
                     if (pOn.color != Piece.color)
                     {
-                        ActionManager.TakeAction(new SirenDebuff(Piece.pos, Piece.pos, (ushort)index));
+                        ActionManager.EnqueueAction(new SirenDebuff(Piece.pos, Piece.pos, (ushort)index));
                     }
                 }
             }
