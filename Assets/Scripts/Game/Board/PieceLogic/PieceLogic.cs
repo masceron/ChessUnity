@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Game.Board.Effects;
+using Game.Board.Effects.Debuffs;
+using Game.Board.General;
+using Game.Board.Piece;
+using Color = Game.Board.General.Color;
+
+namespace Game.Board.PieceLogic
+{
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), Serializable]
+    public abstract class PieceLogic
+    {
+        public ushort pos;
+        public Color color;
+        public sbyte moveRange;
+        public sbyte attackRange;
+        
+        public PieceRank pieceRank;
+       
+        public readonly List<Effect> Effects;
+
+        protected PieceLogic(PieceConfig cfg)
+        {
+            color = cfg.Color;
+            pos = cfg.Index;
+            Effects = new List<Effect>();
+
+            var info = MatchManager.AssetManager.PieceData[cfg.Type];
+            moveRange = info.moveRange;
+            attackRange = info.attackRange; 
+            pieceRank = info.rank;
+        }
+
+        public virtual void PassTurn()
+        {
+            
+        }
+        protected abstract List<Action.Action> MoveToMake();
+
+        public List<Action.Action> MoveList()
+        {
+            return Effects.OfType<Stunned>().Any() ? new List<Action.Action>() : MoveToMake();
+        }
+    }
+}
