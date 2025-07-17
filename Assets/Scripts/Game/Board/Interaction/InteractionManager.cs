@@ -17,8 +17,7 @@ namespace Game.Board.Interaction
     {
         public static PieceLogic.PieceLogic SelectPieceLock;
         public static int SelectingPiece;
-        public static int MaxRank;
-        public static int MaxFile;
+        public static int MaxLength;
         public static PieceManager PieceManager;
         private static TileManager _tileManager;
         public static GameState GameState;
@@ -26,8 +25,7 @@ namespace Game.Board.Interaction
         public static void Init()
         {
             SelectingPiece = -1;
-            MaxRank = MatchManager.GameState.MaxRank;
-            MaxFile = MatchManager.GameState.MaxFile;
+            MaxLength = MatchManager.GameState.MaxLength;
             _tileManager = MatchManager.TileManager;
             PieceManager = MatchManager.PieceManager;
             GameState = MatchManager.GameState;
@@ -37,7 +35,7 @@ namespace Game.Board.Interaction
         {
             if (SelectingPiece == -1)
             {
-                var selected = rank * MaxFile + file;
+                var selected = rank * MaxLength + file;
                 var p = GameState.MainBoard[selected];
                 if (p == null || p.color != GameState.OurSide || p.color != GameState.SideToMove) return;
                 SelectingPiece = selected;
@@ -46,7 +44,7 @@ namespace Game.Board.Interaction
             }
             else
             {
-                var selected = rank * MaxFile + file;
+                var selected = rank * MaxLength + file;
                 if (selected == SelectingPiece)
                 {
                     UnmarkPiece(selected);
@@ -88,7 +86,7 @@ namespace Game.Board.Interaction
 
             if (type == null)
             {
-                foreach (var action in ActionToTake.Select(action => action).Where(ac => ac.GetType() == typeof(NormalCapture) || ac.GetType() == typeof(NormalMove)))
+                foreach (var action in ActionToTake.Select(action => action).Where(ac => ac is IQuiets or ICaptures))
                 {
                     _tileManager.MarkAsMoveable(action.To);
                     ActionMarked.Add(action);

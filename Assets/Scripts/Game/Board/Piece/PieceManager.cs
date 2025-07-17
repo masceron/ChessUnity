@@ -11,15 +11,13 @@ namespace Game.Board.Piece
         
         private Dictionary<PieceType, PieceObject> piecesInfo;
         
-        private int maxFile;
-        private int maxRank;
+        private int maxLength;
     
-        public void Init(int r, int f,  List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
+        public void Init(int l,  List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
         {
             piecesInfo = dict;
-            maxFile = r;
-            maxRank = f;
-            pieces = new Piece[maxRank * maxFile];
+            maxLength = l;
+            pieces = new Piece[maxLength * maxLength];
 
             foreach (var piece in config)
             {
@@ -35,7 +33,7 @@ namespace Game.Board.Piece
             var p = Instantiate(prefab).AddComponent<Piece>();
             p.transform.parent = transform;
             pieces[pos] = p;
-            p.Spawn(pos / maxRank, pos % maxFile, info.defaultTransform);
+            p.Spawn(pos / maxLength, pos % maxLength, info.defaultTransform);
             MatchManager.GameState.SpawnPiece(config);
         }
         
@@ -44,11 +42,17 @@ namespace Game.Board.Piece
             return pieces[pos];
         }
 
+        public void Destroy(int pos)
+        {
+            Object.Destroy(pieces[pos].gameObject);
+            pieces[pos] = null;
+        }
+
         public void Move(int from, int to)
         {
             pieces[to] = pieces[from];
             pieces[from] = null;
-            pieces[to].Move(to / maxFile, to % maxFile);
+            pieces[to].Move(to / maxLength, to % maxLength);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Game.Board.General;
-
-namespace Game.Board.Effects.Others
+﻿namespace Game.Board.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class VelkarisMarked: Effect

@@ -24,7 +24,6 @@ namespace Game.Board.Action
         public override void ModifyGameState(GameState state)
         {
             state.SideToMove = state.SideToMove == Color.White ? Color.Black : Color.White;
-            state.EndTurn();
         }
     }
 }

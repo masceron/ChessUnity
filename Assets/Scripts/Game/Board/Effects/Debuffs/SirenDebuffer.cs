@@ -15,13 +15,13 @@ namespace Game.Board.Effects.Debuffs
 
         private void CalculateEffectRange(int pos)
         {
-            var rank = pos / MatchManager.MaxFile;
-            var file = pos % MatchManager.MaxFile;
+            var rank = pos / MatchManager.MaxLength;
+            var file = pos % MatchManager.MaxLength;
             
             rankStart = Math.Max(0, rank - 4);
-            rankEnd = Math.Min(rank + 4, MatchManager.MaxRank - 1);
+            rankEnd = Math.Min(rank + 4, MatchManager.MaxLength - 1);
             fileStart = Math.Max(0, file - 4);
-            fileEnd = Math.Min(file + 4, MatchManager.MaxFile - 1);
+            fileEnd = Math.Min(file + 4, MatchManager.MaxLength - 1);
         }
 
         private int rankStart;
@@ -38,7 +38,7 @@ namespace Game.Board.Effects.Debuffs
 
             for (var r = rankStart; r <= rankEnd; r++)
             {
-                var rowIndex = r * MatchManager.MaxFile;
+                var rowIndex = r * MatchManager.MaxLength;
                 for (var f = fileStart; f <= fileEnd; f++)
                 {
                     var index = rowIndex + f;

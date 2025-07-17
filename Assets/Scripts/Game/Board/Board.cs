@@ -3,6 +3,7 @@ using Game.Board.Action.Skills;
 using Game.Board.Assets;
 using Game.Board.General;
 using Game.Board.Interaction;
+using Game.Board.Piece;
 using Game.Board.PieceLogic.Commanders;
 using Game.Board.Tile;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Game.Board
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Board : MonoBehaviour
     {
-        [SerializeField] private Piece.PieceManager pieceManager;
+        [SerializeField] private PieceManager pieceManager;
         [SerializeField] private TileManager tileManager;
         [SerializeField] public AssetManager assetManager;
 

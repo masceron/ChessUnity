@@ -1,6 +1,4 @@
-﻿using Game.Board.General;
-
-namespace Game.Board.Effects.Debuffs
+﻿namespace Game.Board.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Slow: Effect

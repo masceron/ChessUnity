@@ -8,7 +8,8 @@ namespace Game.Board.Piece
         GuidingSiren,
         Barracuda,
         SeaUrchin,
-        ElectricEel
+        ElectricEel,
+        FlyingFish
     }
 
     public enum PieceRank : byte

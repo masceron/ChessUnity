@@ -1,5 +1,4 @@
-﻿using Game.Board.Effects;
-using Game.Board.Effects.Debuffs;
+﻿using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 
 namespace Game.Board.Action.Internal

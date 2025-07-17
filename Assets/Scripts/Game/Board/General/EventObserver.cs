@@ -15,13 +15,16 @@ namespace Game.Board.General
         private static List<Observer> _observersEnd;
         private static List<Observer> _observersCapture;
         private static List<Observer> _observersMove;
-        private static Action.Action _lastAction;
+        
+        //The main action taken this turn.
+        private static Action.Action _mainAction;
 
         public static void Init()
         {
             _observersEnd = new List<Observer>();
             _observersCapture = new List<Observer>();
             _observersMove = new List<Observer>();
+            _mainAction = null;
         }
 
         public static void AddObserver(Observer observer)
@@ -31,15 +34,15 @@ namespace Game.Board.General
             {
                 case ObserverType.EndTurn:
                     pos = _observersEnd.BinarySearch(observer, observer);
-                    _observersEnd.Insert((pos >= 0) ? pos : ~pos, observer);
+                    _observersEnd.Insert(pos >= 0 ? pos : ~pos, observer);
                     break;
                 case ObserverType.Captures:
                     pos = _observersCapture.BinarySearch(observer, observer);
-                    _observersCapture.Insert((pos >= 0) ? pos : ~pos, observer);
+                    _observersCapture.Insert(pos >= 0 ? pos : ~pos, observer);
                     break;
                 case ObserverType.Moves:
                     pos = _observersMove.BinarySearch(observer, observer);
-                    _observersMove.Insert((pos >= 0) ? pos : ~pos, observer);
+                    _observersMove.Insert(pos >= 0 ? pos : ~pos, observer);
                     break;
             }
         }
@@ -64,11 +67,13 @@ namespace Game.Board.General
         {
             if (action.GetType() == typeof(EndTurn))
             {
-                _observersEnd.ForEach(observer => observer.OnCall(_lastAction));
+                _observersEnd.ForEach(observer => observer.OnCall(_mainAction));
+                _mainAction = null;
                 return;
             }
 
-            _lastAction = action;
+            _mainAction ??= action;
+            
             if (action is ICaptures)
             {
                 _observersCapture.ForEach(observer => observer.OnCall(action));

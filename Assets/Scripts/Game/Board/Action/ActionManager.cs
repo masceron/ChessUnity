@@ -27,7 +27,7 @@ namespace Game.Board.Action
                 Action that is the result of another action will also be queued.
                 For example: A piece tries to capture another piece with Carapace buff, and is killed in the process.
                 The queue will be: Capture -- CarapaceKill -- EndTurn.
-                When an EndTurn action is registered, the queue will start execute all action taken before, enqueue the actions taken by observers,
+                When an EndTurn action is registered, the queue will start execute all action taken before, enqueue the actions taken by observers, manage cooldowns of effect,
                 and finally execute the EndTurn itself.
                 
                 */
@@ -40,7 +40,9 @@ namespace Game.Board.Action
                     }
                     action.ApplyAction(_state);
                 }
-                
+
+                _state.EffectCountdown();
+                EventObserver.Notify(queueAction);
                 _actionQueue.Enqueue(queueAction);
 
                 while (_actionQueue.TryDequeue(out var action))

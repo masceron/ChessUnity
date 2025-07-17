@@ -1,8 +1,5 @@
 ﻿using Game.Board.General;
-using Game.Board.Interaction;
-using Game.Board.PieceLogic;
 using Game.Board.PieceLogic.Commanders;
-using UnityEngine;
 
 namespace Game.Board.Action.Skills
 {
@@ -17,14 +14,15 @@ namespace Game.Board.Action.Skills
 
         public override void ApplyAction(GameState state)
         {
-            Object.Destroy(InteractionManager.PieceManager.GetPiece(To).gameObject);
+            MatchManager.PieceManager.Destroy(To);
             
             ModifyGameState(state);
         }
 
         public override void ModifyGameState(GameState state)
         {
-            state.MainBoard[To] = null;
+            state.Destroy(To);
+            
             ((Velkaris)state.MainBoard[From]).SkillCooldown = -1;
         }
     }

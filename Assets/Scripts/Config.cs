@@ -4,8 +4,7 @@ using Game.Board.Piece;
 
 public class Config
 {
-    public int MaxRank = 12;
-    public int MaxFile = 12;
+    public int MaxLength = 12;
         
     public List<PieceConfig> PieceConfig = new()
     {
@@ -13,7 +12,8 @@ public class Config
         new PieceConfig(PieceType.Barracuda, Color.Black, 104),
         new PieceConfig(PieceType.GuidingSiren, Color.Black, 101),
         new PieceConfig(PieceType.SeaUrchin, Color.White, 100),
-        new PieceConfig(PieceType.ElectricEel, Color.White, 92)
+        new PieceConfig(PieceType.ElectricEel, Color.Black, 92),
+        new PieceConfig(PieceType.FlyingFish, Color.White, 112)
     };
         
     public byte[] BoardActive = {
@@ -40,10 +40,9 @@ public class Config
             
     }
 
-    public Config(int r, int f, List<PieceConfig> pieces, byte[] ac, Color ourSide, Color sideToMove)
+    public Config(int l, List<PieceConfig> pieces, byte[] ac, Color ourSide, Color sideToMove)
     {
-        MaxRank = r;
-        MaxFile = f;
+        MaxLength = l;
         PieceConfig = pieces;
         BoardActive = ac;
         OurSide = ourSide;

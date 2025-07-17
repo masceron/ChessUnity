@@ -14,8 +14,7 @@ namespace Game.Board.General
         public static PieceManager PieceManager;
         public static TileManager TileManager;
         public static AssetManager AssetManager;
-        public static int MaxRank;
-        public static int MaxFile;
+        public static int MaxLength;
 
         private static void MakeBoard(TileManager tileManager, byte[] active)
         {
@@ -26,18 +25,18 @@ namespace Game.Board.General
                 activeArray[i] = active[i] != 0;
             }
             
-            tileManager.Spawn(GameState.MaxRank, GameState.MaxFile, activeArray);
+            tileManager.Spawn(GameState.MaxLength, GameState.MaxLength, activeArray);
         }
 
         private static void MakePieces(PieceManager pieceManager, List<PieceConfig> config)
         {
             PieceManager = pieceManager;
-            PieceManager.Init(MaxRank, MaxFile, config, AssetManager.PieceData);
+            PieceManager.Init(MaxLength, config, AssetManager.PieceData);
         }
 
         private static void MakeGame(Config cfg)
         {
-            GameState = new GameState(cfg.MaxRank, cfg.MaxFile, cfg.BoardActive, cfg.SideToMove, cfg.OurSide);
+            GameState = new GameState(cfg.MaxLength, cfg.BoardActive, cfg.SideToMove, cfg.OurSide);
         }
 
         private static void LoadAssets(AssetManager asset)
@@ -50,8 +49,7 @@ namespace Game.Board.General
         {
             LoadAssets(asset);
             
-            MaxRank = cfg.MaxRank;
-            MaxFile = cfg.MaxFile;
+            MaxLength = cfg.MaxLength;
             
             EventObserver.Init();
             

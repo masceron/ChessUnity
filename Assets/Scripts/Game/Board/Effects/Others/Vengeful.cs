@@ -7,12 +7,12 @@ namespace Game.Board.Effects.Others
 {
     public class Vengeful: Effect
     {
-        public Vengeful(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, 1, piece, EffectType.Vengeful)
+        public Vengeful(PieceLogic.PieceLogic piece) : base(-1, 1, piece, EffectType.Vengeful)
         {}
 
         public override void OnCall(Action.Action action)
         {
-            if (action.To == Piece.pos && action.Success == ActionResult.Succeed)
+            if (action.To == Piece.pos && action.Success != ActionResult.Failed)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(4, MatchManager.GameState.MainBoard[action.To])));
             }

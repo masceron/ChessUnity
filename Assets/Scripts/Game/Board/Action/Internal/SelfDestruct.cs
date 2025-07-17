@@ -10,7 +10,7 @@ namespace Game.Board.Action.Internal
 
         public override void ApplyAction(GameState state)
         {
-            Object.Destroy(MatchManager.PieceManager.GetPiece(Caller).gameObject);
+            MatchManager.PieceManager.Destroy(Caller);
             ModifyGameState(state);
         }
 

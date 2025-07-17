@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Board.Effects;
-using Game.Board.General;
 using Game.Board.Piece;
 using UnityEngine;
 

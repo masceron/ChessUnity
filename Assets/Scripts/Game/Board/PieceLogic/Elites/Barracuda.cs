@@ -4,9 +4,7 @@ using Game.Board.Action;
 using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
-using Game.Board.Effects;
 using Game.Board.Effects.Buffs;
-using Game.Board.Effects.Others;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
@@ -19,20 +17,20 @@ namespace Game.Board.PieceLogic.Elites
         public Barracuda(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(-1, this)));
         }
 
         private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)
         {
             if (tRank < 0 ||
-                tRank >= MatchManager.MaxRank ||
+                tRank >= MatchManager.MaxLength ||
                 file < 0 ||
-                file >= MatchManager.MaxFile || !MatchManager.GameState.ActiveBoard[tRank * MatchManager.MaxFile + file]) return;
+                file >= MatchManager.MaxLength || !MatchManager.GameState.ActiveBoard[tRank * MatchManager.MaxLength + file]) return;
             
-            var rank = pos / InteractionManager.MaxFile;
+            var rank = pos / InteractionManager.MaxLength;
 
-            var tpos = tRank * MatchManager.MaxFile + file;
+            var tpos = tRank * MatchManager.MaxLength + file;
             var pieceOn = MatchManager.GameState.MainBoard[tpos];
             if (pieceOn == null)
             {
@@ -62,15 +60,15 @@ namespace Game.Board.PieceLogic.Elites
                 }
                 
                 if (pieceOn.color != color)
-                    list.Add(new NormalCapture(pos, pos, (ushort)tpos));
+                    list.Add(new NormalCapture(pos, pos, tpos));
             }
         }
 
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var rank = pos / InteractionManager.MaxFile;
-            var pieceFile = pos % InteractionManager.MaxFile;
+            var rank = pos / InteractionManager.MaxLength;
+            var pieceFile = pos % InteractionManager.MaxLength;
             
             for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
             {

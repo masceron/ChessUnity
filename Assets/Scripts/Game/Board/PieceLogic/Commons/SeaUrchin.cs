@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Board.Action;
 using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
-using Game.Board.Effects;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
 using Game.Board.Effects.Others;
@@ -25,16 +25,23 @@ namespace Game.Board.PieceLogic.Commons
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var push = color == Color.White ? -MatchManager.MaxFile : MatchManager.MaxFile;
-            var posTo = pos + push;
-            if (posTo >= 0 && pos < MatchManager.MaxRank * MatchManager.MaxFile && MatchManager.GameState.ActiveBoard[posTo])
+            var push = color == Color.White ? -MatchManager.MaxLength : MatchManager.MaxLength;
+            
+            for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
             {
+                var posTo = pos + push * i;
+
+                if (posTo < 0 || pos >= MatchManager.MaxLength * MatchManager.MaxLength ||
+                    !MatchManager.GameState.ActiveBoard[posTo]) continue;
+                
                 var pieceAt = MatchManager.GameState.MainBoard[posTo];
+                
                 if (pieceAt == null)
                 {
-                    list.Add(new NormalMove(pos, pos, posTo));
+                    if (moveRange >= i)
+                        list.Add(new NormalMove(pos, pos, posTo));
                 }
-                else if (pieceAt.pieceRank == PieceRank.Construct)
+                else if (pieceAt.pieceRank == PieceRank.Construct && attackRange >= i)
                 {
                     list.Add(new DestroyConstruct(pos, (ushort)posTo));
                 }

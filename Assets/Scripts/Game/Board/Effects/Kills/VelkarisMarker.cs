@@ -13,7 +13,7 @@ namespace Game.Board.Effects.Kills
 
         private void TriggerRows(int pos, Color side)
         {
-            var row = pos / MatchManager.MaxFile;
+            var row = pos / MatchManager.MaxLength;
             switch (side)
             {
                 case Color.White:
@@ -45,14 +45,14 @@ namespace Game.Board.Effects.Kills
             
             if (MatchManager.GameState.SideToMove == Piece.color) return;
 
-            var rowMovedTo = action.To / MatchManager.MaxFile;
+            var rowMovedTo = action.To / MatchManager.MaxLength;
             
-            if (!rows.Contains(rowMovedTo))
+            if (!rows.Contains(rowMovedTo) || MatchManager.GameState.MainBoard[action.To].color == Piece.color)
             {
                 return;
             }
             
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.pos, Piece.pos, action.From));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece.pos, Piece.pos, action.To));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
     }

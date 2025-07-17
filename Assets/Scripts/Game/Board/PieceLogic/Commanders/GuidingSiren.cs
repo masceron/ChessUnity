@@ -22,7 +22,7 @@ namespace Game.Board.PieceLogic.Commanders
         {
             SkillCooldown = 0;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SirenDebuffer(this)));
         }
 
@@ -33,20 +33,20 @@ namespace Game.Board.PieceLogic.Commanders
         
         private void MakeMove(List<Action.Action> list, int trank, int file, int curr, GameState gameState)
         {
-            if (trank < 0 || trank >= gameState.MaxRank || file < 0 || file >= gameState.MaxFile) return;
+            if (trank < 0 || trank >= gameState.MaxLength || file < 0 || file >= gameState.MaxLength) return;
             
-            var tpos = trank * gameState.MaxFile + file;
+            var tpos = trank * gameState.MaxLength + file;
             if (!gameState.ActiveBoard[tpos]) return;
 
             var p = gameState.MainBoard[tpos];
             if (p == null)
             {
                 if (curr <= moveRange)
-                    list.Add(new NormalMove(this.pos, this.pos, tpos));
+                    list.Add(new NormalMove(pos, pos, tpos));
             }
             else if (p.color != color && curr <= attackRange)
             {
-                list.Add(new NormalCapture(this.pos, this.pos, (ushort)tpos));
+                list.Add(new NormalCapture(pos, pos, tpos));
             }
         }
 
@@ -56,27 +56,27 @@ namespace Game.Board.PieceLogic.Commanders
             for (var i = -6; i <= 6; i++)
             {
                 var rankOff = trank + i;
-                if (rankOff < 0 || rankOff >= state.MaxRank) continue;
+                if (rankOff < 0 || rankOff >= state.MaxLength) continue;
                 for (var j = -6; j <= 6; j++)
                 {
                     var fileOff = file + j;
-                    if (fileOff < 0 || fileOff >= state.MaxFile) continue;
+                    if (fileOff < 0 || fileOff >= state.MaxLength) continue;
                     
-                    var tpos = rankOff * state.MaxFile + fileOff;
+                    var tpos = rankOff * state.MaxLength + fileOff;
                     var pieceAt = state.MainBoard[tpos];
                     if (pieceAt == null || pieceAt.color == color) continue;
                     
                     var rankForce = rankOff + push;
                     while (Math.Abs(rankForce - rankOff) <= 3 &&
-                           rankForce >= 0 && rankForce < state.MaxRank &&
-                           state.MainBoard[rankForce * state.MaxFile + fileOff] == null &&
-                           state.ActiveBoard[rankForce * state.MaxFile + fileOff])
+                           rankForce >= 0 && rankForce < state.MaxLength &&
+                           state.MainBoard[rankForce * state.MaxLength + fileOff] == null &&
+                           state.ActiveBoard[rankForce * state.MaxLength + fileOff])
                     {
                          rankForce += push;
                     }
                     rankForce -= push;
                     if (rankForce == rankOff) continue;
-                    list.Add(new SirenActive(pos, tpos, rankForce * state.MaxFile + fileOff, InteractionManager.PieceManager));
+                    list.Add(new SirenActive(pos, tpos, rankForce * state.MaxLength + fileOff, InteractionManager.PieceManager));
                 }
             }
         }
@@ -84,8 +84,8 @@ namespace Game.Board.PieceLogic.Commanders
         protected override List<Action.Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
-            var trank = pos / gameState.MaxFile;
-            var file = pos % gameState.MaxFile;
+            var trank = pos / gameState.MaxLength;
+            var file = pos % gameState.MaxLength;
             
             var list = new List<Action.Action>();
             

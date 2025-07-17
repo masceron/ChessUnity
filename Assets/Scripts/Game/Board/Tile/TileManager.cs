@@ -8,8 +8,7 @@ namespace Game.Board.Tile
     public class TileManager : MonoBehaviour
     {
         private Tile[] tiles;
-        private int _maxRank;
-        private int _maxFile;
+        private int maxLength;
         
         [SerializeField] private GameObject[] floorPrefabs;
         [SerializeField] private Material moveableMat;
@@ -23,7 +22,7 @@ namespace Game.Board.Tile
             sel.transform.localScale = new Vector3(1, 0.001f, 1);
             sel.transform.parent = tile.transform;
             sel.layer = LayerMask.NameToLayer("Ignore Raycast");
-            sel.transform.position = new Vector3(pos / _maxRank, 1.15f, pos % _maxFile);
+            sel.transform.position = new Vector3(pos / maxLength, 1.15f, pos % maxLength);
             sel.name = "Selection " + pos;
             
             sel.SetActive(false);
@@ -33,16 +32,15 @@ namespace Game.Board.Tile
 
         public void Spawn(int maxRank, int maxFile, BitArray active)
         {
-            _maxRank = maxRank;
-            _maxFile = maxFile;
+            maxLength = maxFile;
             
             selections = new Marker[maxRank * maxFile];
-            tiles = new Tile[_maxRank * _maxFile];
+            tiles = new Tile[maxLength * maxLength];
             
-            for (var i = 0; i < _maxRank; i++)
+            for (var i = 0; i < maxLength; i++)
             {
                 var rankStart = i * maxFile;
-                for (var j = 0; j < _maxFile; j++)
+                for (var j = 0; j < maxLength; j++)
                 {
                     var index = rankStart + j;
                     

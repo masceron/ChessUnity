@@ -5,6 +5,7 @@ using Game.Board.Effects;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 using Game.Board.Piece;
+using Color = Game.Board.General.Color;
 
 namespace Game.Board.PieceLogic
 {

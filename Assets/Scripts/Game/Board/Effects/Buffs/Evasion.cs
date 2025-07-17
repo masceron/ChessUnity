@@ -15,10 +15,10 @@ namespace Game.Board.Effects.Buffs
         {
             if (action.To != Piece.pos || action.Success == ActionResult.Failed) return;
             
-            var rankDiff = Math.Abs(action.From / InteractionManager.MaxFile -
-                                    action.To / InteractionManager.MaxFile);
-            var fileDiff = Math.Abs(action.From % InteractionManager.MaxFile -
-                                    action.To % InteractionManager.MaxFile);
+            var rankDiff = Math.Abs(action.From / InteractionManager.MaxLength -
+                                    action.To / InteractionManager.MaxLength);
+            var fileDiff = Math.Abs(action.From % InteractionManager.MaxLength -
+                                    action.To % InteractionManager.MaxLength);
 
             if (Math.Max(rankDiff, fileDiff) < 3) return;
             if (!MatchManager.Roll(Strength)) return;
