@@ -1,5 +1,5 @@
 ﻿using System;
-using Game.Board.PieceLogic;
+using Game.Board.Piece.PieceLogic;
 using UnityEngine;
 
 namespace Game.Common
@@ -15,6 +15,8 @@ namespace Game.Common
 
         public static Vector2Int LineBlocker(Vector2Int first, Vector2Int second, PieceLogic[] board, int maxLength)
         {
+            var firstBlocker = -Vector2Int.one;
+            
             var x1 = first.x + 0.5f;
             var y1 = first.y + 0.5f;
             var x2 = second.x + 0.5f;
@@ -45,14 +47,15 @@ namespace Game.Common
                     yProgress = Crawl(y1, y2, yNext);
                 }
 
-                if (board[(int)(xCurrent * maxLength + yCurrent)] != null &&
-                    !(Mathf.Approximately(xCurrent, second.x) && Mathf.Approximately(yCurrent, second.y)))
+                if (board[(int)(xCurrent * maxLength + yCurrent)] != null)
                 {
-                    return new Vector2Int((int)xCurrent, (int)yCurrent);
+                    firstBlocker = new Vector2Int((int)xCurrent, (int)yCurrent);
+                    break;
                 }
 
             }
 
+            if (!firstBlocker.Equals(second)) return firstBlocker;
             return -Vector2Int.one;
         }
     }

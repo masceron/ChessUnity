@@ -8,9 +8,8 @@ using Game.Board.Action.Skills;
 using Game.Board.Effects.Kills;
 using Game.Board.General;
 using Game.Board.Interaction;
-using Game.Board.Piece;
 
-namespace Game.Board.PieceLogic.Commanders
+namespace Game.Board.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Velkaris: PieceLogic
@@ -36,7 +35,7 @@ namespace Game.Board.PieceLogic.Commanders
             
             var list = new List<Action.Action>();
 
-            var totalRange = Math.Max(moveRange, attackRange);
+            var totalRange = Math.Max(effectiveMoveRange, attackRange);
             
             for (var rankOff = 1; rankOff <= totalRange; rankOff++)
             {
@@ -49,7 +48,7 @@ namespace Game.Board.PieceLogic.Commanders
                     if (p.color != color && rankOff <= attackRange) list.Add(new NormalCapture(pos, pos, newPos));
                     break;
                 }
-                if (rankOff <= moveRange)
+                if (rankOff <= effectiveMoveRange)
                 {
                     list.Add(new NormalMove(pos, pos, newPos));
                 }
@@ -66,7 +65,7 @@ namespace Game.Board.PieceLogic.Commanders
                     if (p.color != color && rankOff >= -attackRange) list.Add(new NormalCapture(pos, pos, newPos));
                     break;
                 }
-                if (rankOff >= -moveRange)
+                if (rankOff >= -effectiveMoveRange)
                 {
                     list.Add(new NormalMove(pos, pos, newPos));
                 }
@@ -83,7 +82,7 @@ namespace Game.Board.PieceLogic.Commanders
                     if (p.color != color && fileOff <= attackRange) list.Add(new NormalCapture(pos, pos, newPos));
                     break;
                 }
-                if (fileOff <= moveRange)
+                if (fileOff <= effectiveMoveRange)
                 {
                     list.Add(new NormalMove(pos, pos, newPos));
                 }
@@ -100,7 +99,7 @@ namespace Game.Board.PieceLogic.Commanders
                     if (p.color != color && fileOff >= -attackRange) list.Add(new NormalCapture(pos, pos, newPos));
                     break;
                 }
-                if (fileOff >= -moveRange)
+                if (fileOff >= -effectiveMoveRange)
                 {
                     list.Add(new NormalMove(pos, pos, newPos));
                 }

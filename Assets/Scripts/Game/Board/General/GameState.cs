@@ -3,10 +3,11 @@ using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Piece;
-using Game.Board.PieceLogic.Commanders;
-using Game.Board.PieceLogic.Commons;
-using Game.Board.PieceLogic.Elites;
-using Game.Board.PieceLogic.Swarm;
+using Game.Board.Piece.PieceLogic;
+using Game.Board.Piece.PieceLogic.Commanders;
+using Game.Board.Piece.PieceLogic.Commons;
+using Game.Board.Piece.PieceLogic.Elites;
+using Game.Board.Piece.PieceLogic.Swarm;
 
 namespace Game.Board.General
 {
@@ -23,7 +24,7 @@ namespace Game.Board.General
         public Color OurSide;
         public readonly int MaxLength;
 
-        public readonly PieceLogic.PieceLogic[] MainBoard;
+        public readonly PieceLogic[] MainBoard;
         public readonly BitArray ActiveBoard;
         public Color SideToMove;
 
@@ -32,7 +33,7 @@ namespace Game.Board.General
             OurSide = ourSide;
             MaxLength = maxLength;
 
-            MainBoard = new PieceLogic.PieceLogic[maxLength * maxLength];
+            MainBoard = new PieceLogic[maxLength * maxLength];
             ActiveBoard = new BitArray(maxLength * maxLength);
             SideToMove = side;
 
@@ -45,7 +46,7 @@ namespace Game.Board.General
 
         public void SpawnPiece(PieceConfig piece)
         {
-            PieceLogic.PieceLogic p = piece.Type switch
+            PieceLogic p = piece.Type switch
             {
                 PieceType.Velkaris => new Velkaris(piece),
                 PieceType.GuidingSiren => new GuidingSiren(piece),

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Game.Board.Assets;
 using Game.Board.Piece;
 using Game.Board.Tile;
 using UnityEngine;

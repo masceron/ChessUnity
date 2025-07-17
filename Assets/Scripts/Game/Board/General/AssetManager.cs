@@ -3,7 +3,7 @@ using Game.Board.Effects;
 using Game.Board.Piece;
 using UnityEngine;
 
-namespace Game.Board.Assets
+namespace Game.Board.General
 {
     public class AssetManager : MonoBehaviour
     {

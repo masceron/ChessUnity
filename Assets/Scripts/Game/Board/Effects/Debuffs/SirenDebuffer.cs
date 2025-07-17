@@ -1,6 +1,7 @@
 ﻿using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 using Math = System.Math;
 
 namespace Game.Board.Effects.Debuffs
@@ -8,7 +9,7 @@ namespace Game.Board.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirenDebuffer: Effect
     {
-        public SirenDebuffer(PieceLogic.PieceLogic p) : base(-1, 1, p, EffectType.SirenDebuffer)
+        public SirenDebuffer(PieceLogic p) : base(-1, 1, p, EffectType.SirenDebuffer)
         {
             CalculateEffectRange(p.pos);
         }

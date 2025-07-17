@@ -1,4 +1,6 @@
-﻿namespace Game.Board.Effects.Buffs
+﻿using Game.Board.Piece.PieceLogic;
+
+namespace Game.Board.Effects.Buffs
 {
     public class Ambush: Effect
     {
@@ -6,7 +8,7 @@
         private bool active;
         private const sbyte RangeOffset = 1;
 
-        public Ambush(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, -1, piece, EffectType.Ambush)
+        public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, EffectType.Ambush)
         {}
 
         public override void OnCall(Action.Action action)

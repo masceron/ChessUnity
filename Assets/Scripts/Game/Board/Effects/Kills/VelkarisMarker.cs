@@ -3,6 +3,7 @@ using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Kills
 {
@@ -29,7 +30,7 @@ namespace Game.Board.Effects.Kills
             }
         }
 
-        public VelkarisMarker(PieceLogic.PieceLogic p) : base(-1, 1, p, EffectType.VelkarisMarker)
+        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, EffectType.VelkarisMarker)
         {
             rows = new int[2];
             TriggerRows(p.pos, p.color);

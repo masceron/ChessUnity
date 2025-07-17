@@ -1,10 +1,9 @@
 using Game.Board.Action;
 using Game.Board.Action.Skills;
-using Game.Board.Assets;
 using Game.Board.General;
 using Game.Board.Interaction;
 using Game.Board.Piece;
-using Game.Board.PieceLogic.Commanders;
+using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Board.Tile;
 using UnityEngine;
 using Color = Game.Board.General.Color;

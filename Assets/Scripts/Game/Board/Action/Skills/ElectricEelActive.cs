@@ -1,7 +1,7 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
-using Game.Board.PieceLogic.Elites;
+using Game.Board.Piece.PieceLogic.Elites;
 
 namespace Game.Board.Action.Skills
 {

@@ -7,12 +7,11 @@ using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Others;
 using Game.Board.General;
-using Game.Board.Piece;
 using Game.Common;
 using UnityEngine;
 using Color = Game.Board.General.Color;
 
-namespace Game.Board.PieceLogic.Elites
+namespace Game.Board.Piece.PieceLogic.Elites
 {
     public class ElectricEel: PieceLogic
     {
@@ -36,7 +35,7 @@ namespace Game.Board.PieceLogic.Elites
             var rank = pos / maxLength;
             var file = pos % maxLength;
             
-            for (var i = file - moveRange + 1; i <= file + moveRange - 1; i++)
+            for (var i = file - effectiveMoveRange + 1; i <= file + effectiveMoveRange - 1; i++)
             {
                 if (i == file || i < 0 || i >= maxLength) continue;
                 var posTo = rank * maxLength + i;
@@ -47,12 +46,12 @@ namespace Game.Board.PieceLogic.Elites
                 if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                         new Vector2Int(rank, i),
                         MatchManager.GameState.MainBoard,
-                        MatchManager.MaxLength) == -Vector2Int.one) continue;
+                        MatchManager.MaxLength) != -Vector2Int.one) continue;
                 
                 list.Add(new NormalMove(pos, pos, posTo));
             }
             
-            for (var i = 1; i <= moveRange; i++)
+            for (var i = 1; i <= effectiveMoveRange; i++)
             {
                 var rankOffFront = rank + i;
                 var rankOffBack = rank - i;
@@ -68,7 +67,7 @@ namespace Game.Board.PieceLogic.Elites
                         if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                                 new Vector2Int(rankOffFront, fileOff),
                                 MatchManager.GameState.MainBoard,
-                                MatchManager.MaxLength) != -Vector2Int.one)
+                                MatchManager.MaxLength) == -Vector2Int.one)
                         {
                             if (MatchManager.GameState.MainBoard[posOffFront] == null &&
                                 MatchManager.GameState.ActiveBoard[posOffFront])
@@ -85,7 +84,7 @@ namespace Game.Board.PieceLogic.Elites
                     if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                             new Vector2Int(rankOffBack, fileOff),
                             MatchManager.GameState.MainBoard,
-                            MatchManager.MaxLength) == -Vector2Int.one) continue;
+                            MatchManager.MaxLength) != -Vector2Int.one) continue;
                     
                     if (MatchManager.GameState.MainBoard[posOffBack] == null &&
                         MatchManager.GameState.ActiveBoard[posOffBack])
@@ -116,7 +115,7 @@ namespace Game.Board.PieceLogic.Elites
                  if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                          new Vector2Int(rank, i),
                          MatchManager.GameState.MainBoard,
-                         MatchManager.MaxLength) == -Vector2Int.one) continue;
+                         MatchManager.MaxLength) != -Vector2Int.one) continue;
                 
                 list.Add(new NormalCapture(pos, pos, posTo));
             }
@@ -138,7 +137,7 @@ namespace Game.Board.PieceLogic.Elites
                      if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                              new Vector2Int(rank, j),
                              MatchManager.GameState.MainBoard,
-                             MatchManager.MaxLength) == -Vector2Int.one) continue;
+                             MatchManager.MaxLength) != -Vector2Int.one) continue;
                 
                     list.Add(new NormalCapture(pos, pos, posTo));
                     

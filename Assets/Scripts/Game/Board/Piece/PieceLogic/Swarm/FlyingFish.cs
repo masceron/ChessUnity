@@ -5,9 +5,8 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.General;
-using Game.Board.Piece;
 
-namespace Game.Board.PieceLogic.Swarm
+namespace Game.Board.Piece.PieceLogic.Swarm
 {
     public class FlyingFish: PieceLogic
     {
@@ -24,10 +23,10 @@ namespace Game.Board.PieceLogic.Swarm
             var board = MatchManager.GameState.MainBoard;
             var active = MatchManager.GameState.ActiveBoard;
 
-            for (var rankTo = rank - moveRange; rankTo <= rank + moveRange; rankTo += moveRange)
+            for (var rankTo = rank - effectiveMoveRange; rankTo <= rank + effectiveMoveRange; rankTo += effectiveMoveRange)
             {
                 if (rankTo < 0 || rankTo >= maxLen) continue;
-                for (var fileTo = file - moveRange; fileTo <= file + moveRange; fileTo += moveRange)
+                for (var fileTo = file - effectiveMoveRange; fileTo <= file + effectiveMoveRange; fileTo += effectiveMoveRange)
                 {
                     if (fileTo < 0 || fileTo >= maxLen) continue;
                     if (rankTo == rank && fileTo == file) continue;

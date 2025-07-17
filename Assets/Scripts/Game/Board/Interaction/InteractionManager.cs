@@ -7,7 +7,8 @@ using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.General;
 using Game.Board.Piece;
-using Game.Board.PieceLogic.Commanders;
+using Game.Board.Piece.PieceLogic;
+using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Board.Tile;
 
 namespace Game.Board.Interaction
@@ -15,7 +16,7 @@ namespace Game.Board.Interaction
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class InteractionManager
     {
-        public static PieceLogic.PieceLogic SelectPieceLock;
+        public static PieceLogic SelectPieceLock;
         public static int SelectingPiece;
         public static int MaxLength;
         public static PieceManager PieceManager;

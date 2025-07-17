@@ -9,9 +9,8 @@ using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 using Game.Board.Interaction;
-using Game.Board.Piece;
 
-namespace Game.Board.PieceLogic.Commanders
+namespace Game.Board.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GuidingSiren: PieceLogic
@@ -41,7 +40,7 @@ namespace Game.Board.PieceLogic.Commanders
             var p = gameState.MainBoard[tpos];
             if (p == null)
             {
-                if (curr <= moveRange)
+                if (curr <= effectiveMoveRange)
                     list.Add(new NormalMove(pos, pos, tpos));
             }
             else if (p.color != color && curr <= attackRange)
@@ -89,7 +88,7 @@ namespace Game.Board.PieceLogic.Commanders
             
             var list = new List<Action.Action>();
             
-            for (var i = 1; i <= Math.Max(attackRange, moveRange); i++)
+            for (var i = 1; i <= Math.Max(attackRange, effectiveMoveRange); i++)
             {
                 MakeMove(list, trank + i, file, i, gameState);
                 MakeMove(list, trank - i, file, i, gameState);

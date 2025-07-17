@@ -2,12 +2,13 @@
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Others
 {
     public class Vengeful: Effect
     {
-        public Vengeful(PieceLogic.PieceLogic piece) : base(-1, 1, piece, EffectType.Vengeful)
+        public Vengeful(PieceLogic piece) : base(-1, 1, piece, EffectType.Vengeful)
         {}
 
         public override void OnCall(Action.Action action)

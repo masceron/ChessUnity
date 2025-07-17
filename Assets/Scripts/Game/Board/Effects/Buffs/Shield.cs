@@ -1,11 +1,12 @@
 ﻿using Game.Board.Action;
 using Game.Board.Action.Internal;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Buffs
 {
     public class Shield: Effect
     {
-        public Shield(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, 1, piece, EffectType.Shield)
+        public Shield(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectType.Shield)
         {}
 
         public override void OnCall(Action.Action action)

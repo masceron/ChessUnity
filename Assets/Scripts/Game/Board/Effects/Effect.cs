@@ -1,4 +1,5 @@
 ﻿using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects
 {
@@ -27,9 +28,9 @@ namespace Game.Board.Effects
     {
         public sbyte Duration;
         protected sbyte Strength;
-        public readonly PieceLogic.PieceLogic Piece;
+        public readonly PieceLogic Piece;
 
-        protected Effect(sbyte duration, sbyte strength, PieceLogic.PieceLogic piece, EffectType type) : base(type)
+        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectType type) : base(type)
         {
             Duration = duration;
             Strength = strength;

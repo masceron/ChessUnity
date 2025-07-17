@@ -1,11 +1,12 @@
 ﻿using Game.Board.Action;
 using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Debuffs
 {
     public class Blinded: Effect
     {
-        public Blinded(sbyte duration, sbyte strength, PieceLogic.PieceLogic piece) : base(duration, strength, piece, EffectType.Blinded)
+        public Blinded(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, EffectType.Blinded)
         {}
 
         public override void OnCall(Action.Action action)

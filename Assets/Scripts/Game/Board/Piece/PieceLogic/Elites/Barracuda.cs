@@ -7,9 +7,8 @@ using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.General;
 using Game.Board.Interaction;
-using Game.Board.Piece;
 
-namespace Game.Board.PieceLogic.Elites
+namespace Game.Board.Piece.PieceLogic.Elites
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Barracuda: PieceLogic
@@ -34,7 +33,7 @@ namespace Game.Board.PieceLogic.Elites
             var pieceOn = MatchManager.GameState.MainBoard[tpos];
             if (pieceOn == null)
             {
-                if (distance == moveRange)
+                if (distance == effectiveMoveRange)
                 {
                     if (color == Color.White)
                     {
@@ -43,7 +42,7 @@ namespace Game.Board.PieceLogic.Elites
                     else if (tRank <= rank) return;
                 }
                 
-                if (distance <= moveRange)
+                if (distance <= effectiveMoveRange)
                 {
                     list.Add(new NormalMove(pos, pos, tpos));
                 }
@@ -70,7 +69,7 @@ namespace Game.Board.PieceLogic.Elites
             var rank = pos / InteractionManager.MaxLength;
             var pieceFile = pos % InteractionManager.MaxLength;
             
-            for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
+            for (var i = 1; i <= Math.Max(effectiveMoveRange, attackRange); i++)
             {
                 for (var file = pieceFile - i; file <= pieceFile + i; file += 1)
                 {

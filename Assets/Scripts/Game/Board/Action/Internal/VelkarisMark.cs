@@ -1,6 +1,6 @@
 ﻿using Game.Board.Effects.Others;
 using Game.Board.General;
-using Game.Board.PieceLogic.Commanders;
+using Game.Board.Piece.PieceLogic.Commanders;
 using UnityEngine;
 
 namespace Game.Board.Action.Internal

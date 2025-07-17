@@ -8,10 +8,9 @@ using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
 using Game.Board.Effects.Others;
 using Game.Board.General;
-using Game.Board.Piece;
 using Color = Game.Board.General.Color;
 
-namespace Game.Board.PieceLogic.Commons
+namespace Game.Board.Piece.PieceLogic.Commons
 {
     public class SeaUrchin: PieceLogic
     {
@@ -27,7 +26,7 @@ namespace Game.Board.PieceLogic.Commons
             var list = new List<Action.Action>();
             var push = color == Color.White ? -MatchManager.MaxLength : MatchManager.MaxLength;
             
-            for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
+            for (var i = 1; i <= Math.Max(effectiveMoveRange, attackRange); i++)
             {
                 var posTo = pos + push * i;
 
@@ -38,7 +37,7 @@ namespace Game.Board.PieceLogic.Commons
                 
                 if (pieceAt == null)
                 {
-                    if (moveRange >= i)
+                    if (effectiveMoveRange >= i)
                         list.Add(new NormalMove(pos, pos, posTo));
                 }
                 else if (pieceAt.pieceRank == PieceRank.Construct && attackRange >= i)

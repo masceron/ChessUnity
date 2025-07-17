@@ -2,12 +2,13 @@
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Buffs
 {
     public class HardenedShield: Effect
     {
-        public HardenedShield(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, 1, piece, EffectType.HardenedShield)
+        public HardenedShield(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectType.HardenedShield)
         {}
         
         public override void OnCall(Action.Action action)

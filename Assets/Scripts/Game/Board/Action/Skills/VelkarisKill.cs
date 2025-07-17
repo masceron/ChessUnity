@@ -1,5 +1,5 @@
 ﻿using Game.Board.General;
-using Game.Board.PieceLogic.Commanders;
+using Game.Board.Piece.PieceLogic.Commanders;
 
 namespace Game.Board.Action.Skills
 {
