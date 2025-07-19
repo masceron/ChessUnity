@@ -1,0 +1,44 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Resources/UI/Ingame/Ingame.uss?fileID=7433441132597879392&amp;guid=9d6261f90f3c6ff47aeca16c99606d15&amp;type=3#Ingame" />
+    <ui:VisualElement name="ActionBar" class="action-bar" style="flex-grow: 1; position: absolute; left: 410px; right: 410px; bottom: 25px; height: 120px; flex-direction: row;">
+        <ui:VisualElement name="SkillBar" style="flex-grow: 1; right: auto; flex-direction: row; flex-shrink: 0; width: 50%;">
+            <ui:VisualElement name="Move" style="flex-grow: 1; flex-shrink: 0; width: 33.33%;">
+                <ui:VisualElement name="Image" style="flex-grow: 1;" />
+                <ui:Label text="Move" name="Description" style="-unity-text-align: middle-center; font-size: 25px; position: relative;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Capture" style="flex-grow: 1; flex-shrink: 0; width: 33.33%;">
+                <ui:VisualElement name="Image" style="flex-grow: 1;" />
+                <ui:Label text="Capture" name="Description" style="-unity-text-align: middle-center; font-size: 25px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="ActiveSkill" style="flex-grow: 1; flex-shrink: 0; width: 33.33%;">
+                <ui:VisualElement name="Image" style="flex-grow: 1;" />
+                <ui:Label text="Skill" name="Description" style="-unity-text-align: middle-center; font-size: 25px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="RelicBar" style="flex-grow: 1; flex-direction: row; flex-shrink: 0; width: 50%;">
+            <ui:VisualElement name="SpecialSkill" style="flex-grow: 1; width: 33.33%;">
+                <ui:VisualElement name="Image" style="flex-grow: 1;" />
+                <ui:Label text="Special Skill" name="Description" style="-unity-text-align: middle-center; font-size: 25px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Relic" style="flex-grow: 1; width: 33.33%;">
+                <ui:VisualElement name="Image" style="flex-grow: 1;" />
+                <ui:Label text="Relic" name="Description" style="-unity-text-align: middle-center; font-size: 25px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Skip" style="flex-grow: 1; width: 33.33%;">
+                <ui:VisualElement name="Image" style="flex-grow: 1;" />
+                <ui:Label text="Skip Turn" name="Description" style="-unity-text-align: middle-center; font-size: 25px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="PieceCaptured" style="flex-grow: 1; position: absolute; left: 1%; top: 10%; bottom: 10%; width: 20%;">
+        <ui:ScrollView name="AllyCaptured" style="top: 0; height: 15%;" />
+        <ui:ScrollView name="EnemyCaptured" style="bottom: 0; height: 15%; margin-top: auto;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="PieceInfo" style="flex-grow: 1; position: absolute; top: 2%; right: 1%; height: auto; width: 20%; bottom: 2%;">
+        <ui:VisualElement name="PieceIcon" style="flex-grow: 0; position: relative; right: auto; height: 25%; width: 100%; top: auto;" />
+        <ui:VisualElement name="PieceStatusEffect" style="flex-grow: 1; height: 10%; flex-direction: row;" />
+        <ui:VisualElement name="PieceDemonstration" style="flex-grow: 0; height: 50%;" />
+        <ui:VisualElement name="PieceDescription" style="flex-grow: 0; height: 15%;" />
+    </ui:VisualElement>
+    <ui:Button text="Menu" name="Menu" class="menu-button" style="top: 1%; left: 1%; width: 60px; height: 60px;" />
+</ui:UXML>

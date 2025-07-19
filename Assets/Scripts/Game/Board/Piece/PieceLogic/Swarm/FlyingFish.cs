@@ -5,6 +5,7 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.General;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Swarm
 {
@@ -17,20 +18,19 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
         private void Quiets(List<Action.Action> list)
         {
-            var maxLen = MatchManager.MaxLength;
-            var rank = pos / maxLen;
-            var file = pos % maxLen;
+            var (rank, file) = RankFileOf(pos);
+            
             var board = MatchManager.GameState.MainBoard;
             var active = MatchManager.GameState.ActiveBoard;
 
             for (var rankTo = rank - effectiveMoveRange; rankTo <= rank + effectiveMoveRange; rankTo += effectiveMoveRange)
             {
-                if (rankTo < 0 || rankTo >= maxLen) continue;
+                if (!VerifyBounds(rankTo)) continue;
                 for (var fileTo = file - effectiveMoveRange; fileTo <= file + effectiveMoveRange; fileTo += effectiveMoveRange)
                 {
-                    if (fileTo < 0 || fileTo >= maxLen) continue;
+                    if (!VerifyBounds(fileTo)) continue;
                     if (rankTo == rank && fileTo == file) continue;
-                    var posTo = rankTo * maxLen + fileTo;
+                    var posTo = IndexOf(rankTo, fileTo);
 
                     if (board[posTo] == null && active[posTo])
                     {
@@ -43,13 +43,11 @@ namespace Game.Board.Piece.PieceLogic.Swarm
         private void Captures(List<Action.Action> list)
         {
             var board = MatchManager.GameState.MainBoard;
-            var maxLen = MatchManager.MaxLength;
-            var boardSize = maxLen * maxLen;
 
-            var ver1 = pos + maxLen * attackRange;
-            var ver2 = pos - maxLen * attackRange;
+            var ver1 = PushWhite(pos) * attackRange;
+            var ver2 = PushBlack(pos) * attackRange;
 
-            if (ver1 < boardSize && board[ver1] != null && board[ver1].color != color)
+            if (VerifyUpperIndex(ver1) && board[ver1] != null && board[ver1].color != color)
             {
                 list.Add(new NormalCapture(pos, pos, ver1));
             }
@@ -59,23 +57,24 @@ namespace Game.Board.Piece.PieceLogic.Swarm
                 list.Add(new NormalCapture(pos, pos, ver2));
             }
 
-            var rank = pos / maxLen;
-            var file = pos % maxLen;
+            var (rank, file) = RankFileOf(pos);
+                
             var fileOff1 = file - attackRange;
             var fileOff2 = file + attackRange;
 
             if (fileOff1 > 0)
             {
-                var hoz1 = rank * maxLen + fileOff1;
+                var hoz1 = IndexOf(rank, fileOff1);
+                
                 if (board[hoz1] != null && board[hoz1].color != color)
                 {
                     list.Add(new NormalCapture(pos, pos, hoz1));
                 }
             }
 
-            if (fileOff2 >= maxLen) return;
+            if (VerifyUpperBound(fileOff2)) return;
             
-            var hoz2 = rank * maxLen + fileOff2;
+            var hoz2 = IndexOf(rank, fileOff2);
             if (board[hoz2] != null && board[hoz2].color != color)
             {
                 list.Add(new NormalCapture(pos, pos, hoz2));

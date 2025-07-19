@@ -4,6 +4,7 @@ using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Effects.Kills
 {
@@ -14,7 +15,7 @@ namespace Game.Board.Effects.Kills
 
         private void TriggerRows(int pos, Color side)
         {
-            var row = pos / MatchManager.MaxLength;
+            var row = RankOf(pos);
             switch (side)
             {
                 case Color.White:
@@ -46,7 +47,7 @@ namespace Game.Board.Effects.Kills
             
             if (MatchManager.GameState.SideToMove == Piece.color) return;
 
-            var rowMovedTo = action.To / MatchManager.MaxLength;
+            var rowMovedTo = RankOf(action.To);
             
             if (!rows.Contains(rowMovedTo) || MatchManager.GameState.MainBoard[action.To].color == Piece.color)
             {

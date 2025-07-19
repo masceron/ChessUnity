@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Game.Board.General;
 using UnityEngine;
+using static Game.Common.BoardUtils;
+using Object = UnityEngine.Object;
 
 namespace Game.Board.Piece
 {
@@ -10,14 +12,11 @@ namespace Game.Board.Piece
         private Piece[] pieces;
         
         private Dictionary<PieceType, PieceObject> piecesInfo;
-        
-        private int maxLength;
     
-        public void Init(int l,  List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
+        public void Init(List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
         {
             piecesInfo = dict;
-            maxLength = l;
-            pieces = new Piece[maxLength * maxLength];
+            pieces = new Piece[BoardSize];
 
             foreach (var piece in config)
             {
@@ -33,7 +32,7 @@ namespace Game.Board.Piece
             var p = Instantiate(prefab).AddComponent<Piece>();
             p.transform.parent = transform;
             pieces[pos] = p;
-            p.Spawn(pos / maxLength, pos % maxLength, info.defaultTransform);
+            p.Spawn(RankOf(pos), FileOf(pos), info.defaultTransform);
             MatchManager.GameState.SpawnPiece(config);
         }
         
@@ -52,7 +51,7 @@ namespace Game.Board.Piece
         {
             pieces[to] = pieces[from];
             pieces[from] = null;
-            pieces[to].Move(to / maxLength, to % maxLength);
+            pieces[to].Move(RankOf(to), FileOf(to));
         }
     }
 }

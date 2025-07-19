@@ -1,6 +1,7 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Quiets
 {
@@ -20,12 +21,8 @@ namespace Game.Board.Action.Quiets
 
         public override void ModifyGameState(GameState state)
         {
-            var maxLen = MatchManager.MaxLength;
-            
-            var rankFrom = From / maxLen;
-            var fileFrom = From % maxLen;
-            var rankTo = To / maxLen;
-            var fileTo = To % maxLen;
+            var (rankFrom, fileFrom) = RankFileOf(From);
+            var (rankTo, fileTo) = RankFileOf(To);
             var board = MatchManager.GameState.MainBoard;
             var caller = board[From];
 
@@ -37,7 +34,7 @@ namespace Game.Board.Action.Quiets
                 rankFrom += rankDir;
                 fileFrom += fileDir;
 
-                var p = board[rankFrom * maxLen + fileFrom];
+                var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.color == caller.color) continue;
                 
                 ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p)));

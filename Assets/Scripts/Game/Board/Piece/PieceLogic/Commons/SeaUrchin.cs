@@ -9,6 +9,7 @@ using Game.Board.Effects.Debuffs;
 using Game.Board.Effects.Others;
 using Game.Board.General;
 using Color = Game.Board.General.Color;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commons
 {
@@ -24,13 +25,13 @@ namespace Game.Board.Piece.PieceLogic.Commons
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var push = color == Color.White ? -MatchManager.MaxLength : MatchManager.MaxLength;
+            var push = color == Color.White ? -MaxLength : MaxLength;
             
             for (var i = 1; i <= Math.Max(effectiveMoveRange, attackRange); i++)
             {
                 var posTo = pos + push * i;
 
-                if (posTo < 0 || pos >= MatchManager.MaxLength * MatchManager.MaxLength ||
+                if (!VerifyIndex(posTo) ||
                     !MatchManager.GameState.ActiveBoard[posTo]) continue;
                 
                 var pieceAt = MatchManager.GameState.MainBoard[posTo];

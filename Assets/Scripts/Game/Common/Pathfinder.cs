@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Board.Piece.PieceLogic;
 using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace Game.Common
 {
@@ -13,7 +14,7 @@ namespace Game.Common
             return (value - start) / (finish - start);
         }
 
-        public static Vector2Int LineBlocker(Vector2Int first, Vector2Int second, PieceLogic[] board, int maxLength)
+        public static Vector2Int LineBlocker(Vector2Int first, Vector2Int second, PieceLogic[] board)
         {
             var firstBlocker = -Vector2Int.one;
             
@@ -47,7 +48,7 @@ namespace Game.Common
                     yProgress = Crawl(y1, y2, yNext);
                 }
 
-                if (board[(int)(xCurrent * maxLength + yCurrent)] != null)
+                if (board[IndexOf((int)xCurrent, (int)yCurrent)] != null)
                 {
                     firstBlocker = new Vector2Int((int)xCurrent, (int)yCurrent);
                     break;

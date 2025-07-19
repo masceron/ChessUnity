@@ -1,8 +1,8 @@
 ﻿using System;
 using Game.Board.Action;
 using Game.Board.General;
-using Game.Board.Interaction;
 using Game.Board.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Effects.Buffs
 {
@@ -16,10 +16,8 @@ namespace Game.Board.Effects.Buffs
         {
             if (action.To != Piece.pos || action.Success == ActionResult.Failed) return;
             
-            var rankDiff = Math.Abs(action.From / InteractionManager.MaxLength -
-                                    action.To / InteractionManager.MaxLength);
-            var fileDiff = Math.Abs(action.From % InteractionManager.MaxLength -
-                                    action.To % InteractionManager.MaxLength);
+            var rankDiff = Math.Abs(RankOf(action.From) - RankOf(action.To));
+            var fileDiff = Math.Abs(FileOf(action.From) - FileOf(action.To));
 
             if (Math.Max(rankDiff, fileDiff) < 3) return;
             if (!MatchManager.Roll(Strength)) return;

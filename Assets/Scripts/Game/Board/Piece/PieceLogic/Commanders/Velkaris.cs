@@ -6,7 +6,7 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Kills;
-using Game.Board.General;
+using static Game.Common.BoardUtils;
 using Game.Board.Interaction;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
@@ -27,11 +27,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         protected override List<Action.Action> MoveToMake()
         {
             var gameState = InteractionManager.GameState;
-
-            var maxLength = MatchManager.MaxLength;
             
-            var rank = pos / maxLength;
-            var file = pos % maxLength;
+            var (rank, file) = RankFileOf(pos);
             
             var list = new List<Action.Action>();
 
@@ -40,8 +37,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             for (var rankOff = 1; rankOff <= totalRange; rankOff++)
             {
                 var rankAfter = rank + rankOff;
-                if (rankAfter >= maxLength) break;
-                var newPos = rankAfter * maxLength + file;
+                if (!VerifyUpperBound(rankAfter)) break;
+                var newPos = IndexOf(rankAfter, file);
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
@@ -58,7 +55,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             {
                 var rankAfter = rank + rankOff;
                 if (rankAfter < 0) break;
-                var newPos = rankAfter * maxLength + file;
+                var newPos = IndexOf(rankAfter, file);
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
@@ -74,8 +71,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             for (var fileOff = 1; fileOff <= totalRange; fileOff++)
             {
                 var fileAfter = file + fileOff;
-                if (fileAfter >= maxLength) break;
-                var newPos = rank * maxLength + fileAfter;
+                if (!VerifyUpperBound(fileAfter)) break;
+                var newPos = IndexOf(rank, fileAfter);
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
@@ -92,7 +89,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             {
                 var fileAfter = file + fileOff;
                 if (fileAfter < 0) break;
-                var newPos = rank * maxLength + fileAfter;
+                var newPos = IndexOf(rank, fileAfter);
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {

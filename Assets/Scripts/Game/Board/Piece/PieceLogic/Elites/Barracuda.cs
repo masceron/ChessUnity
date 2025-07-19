@@ -6,7 +6,7 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.General;
-using Game.Board.Interaction;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Elites
 {
@@ -22,14 +22,13 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
         private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)
         {
-            if (tRank < 0 ||
-                tRank >= MatchManager.MaxLength ||
-                file < 0 ||
-                file >= MatchManager.MaxLength || !MatchManager.GameState.ActiveBoard[tRank * MatchManager.MaxLength + file]) return;
+            if (!VerifyBounds(tRank) || !VerifyBounds(file)) return;
             
-            var rank = pos / InteractionManager.MaxLength;
-
-            var tpos = tRank * MatchManager.MaxLength + file;
+            var tpos = IndexOf(tRank, file);
+            if (!MatchManager.GameState.ActiveBoard[IndexOf(tRank, file)]) return;
+            
+            var rank = RankOf(pos);
+            
             var pieceOn = MatchManager.GameState.MainBoard[tpos];
             if (pieceOn == null)
             {
@@ -66,8 +65,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var rank = pos / InteractionManager.MaxLength;
-            var pieceFile = pos % InteractionManager.MaxLength;
+            var (rank, pieceFile) = RankFileOf(pos);
             
             for (var i = 1; i <= Math.Max(effectiveMoveRange, attackRange); i++)
             {

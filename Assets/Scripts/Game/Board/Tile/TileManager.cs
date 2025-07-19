@@ -1,6 +1,7 @@
 using System.Collections;
 using Game.Board.Interaction;
 using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Tile
 {
@@ -8,7 +9,6 @@ namespace Game.Board.Tile
     public class TileManager : MonoBehaviour
     {
         private Tile[] tiles;
-        private int maxLength;
         
         [SerializeField] private GameObject[] floorPrefabs;
         [SerializeField] private Material moveableMat;
@@ -22,7 +22,7 @@ namespace Game.Board.Tile
             sel.transform.localScale = new Vector3(1, 0.001f, 1);
             sel.transform.parent = tile.transform;
             sel.layer = LayerMask.NameToLayer("Ignore Raycast");
-            sel.transform.position = new Vector3(pos / maxLength, 1.15f, pos % maxLength);
+            sel.transform.position = new Vector3(RankOf(pos), 1.15f, FileOf(pos));
             sel.name = "Selection " + pos;
             
             sel.SetActive(false);
@@ -30,17 +30,15 @@ namespace Game.Board.Tile
             selections[pos] = sel.AddComponent<Marker>();
         }
 
-        public void Spawn(int maxRank, int maxFile, BitArray active)
+        public void Spawn(BitArray active)
         {
-            maxLength = maxFile;
+            selections = new Marker[BoardSize];
+            tiles = new Tile[BoardSize];
             
-            selections = new Marker[maxRank * maxFile];
-            tiles = new Tile[maxLength * maxLength];
-            
-            for (var i = 0; i < maxLength; i++)
+            for (var i = 0; i < MaxLength; i++)
             {
-                var rankStart = i * maxFile;
-                for (var j = 0; j < maxLength; j++)
+                var rankStart = RowIndex(i);
+                for (var j = 0; j < MaxLength; j++)
                 {
                     var index = rankStart + j;
                     

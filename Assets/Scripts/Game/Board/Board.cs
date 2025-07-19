@@ -5,7 +5,9 @@ using Game.Board.Interaction;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Board.Tile;
+using Game.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Color = Game.Board.General.Color;
 
 namespace Game.Board
@@ -16,6 +18,7 @@ namespace Game.Board
         [SerializeField] private PieceManager pieceManager;
         [SerializeField] private TileManager tileManager;
         [SerializeField] public AssetManager assetManager;
+        [SerializeField] private BoardViewer boardViewer;
 
         private void MatchMaker()
         {

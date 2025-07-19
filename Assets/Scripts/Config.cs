@@ -4,8 +4,6 @@ using Game.Board.Piece;
 
 public class Config
 {
-    public int MaxLength = 12;
-        
     public List<PieceConfig> PieceConfig = new()
     {
         new PieceConfig(PieceType.Velkaris, Color.White, 140),
@@ -40,9 +38,8 @@ public class Config
             
     }
 
-    public Config(int l, List<PieceConfig> pieces, byte[] ac, Color ourSide, Color sideToMove)
+    public Config(List<PieceConfig> pieces, byte[] ac, Color ourSide, Color sideToMove)
     {
-        MaxLength = l;
         PieceConfig = pieces;
         BoardActive = ac;
         OurSide = ourSide;

@@ -1,0 +1,15 @@
+:root {
+}
+
+.action-bar {
+    background-color: black;
+    color: white;
+    font-size: 25px;
+}
+
+.menu-button {
+    background-color: transparent;
+    color: white;
+    font-size: 20px;
+}
+

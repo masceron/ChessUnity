@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Board.Piece;
 using Game.Board.Tile;
 using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.General
 {
@@ -13,7 +14,6 @@ namespace Game.Board.General
         public static PieceManager PieceManager;
         public static TileManager TileManager;
         public static AssetManager AssetManager;
-        public static int MaxLength;
 
         private static void MakeBoard(TileManager tileManager, byte[] active)
         {
@@ -24,18 +24,18 @@ namespace Game.Board.General
                 activeArray[i] = active[i] != 0;
             }
             
-            tileManager.Spawn(GameState.MaxLength, GameState.MaxLength, activeArray);
+            tileManager.Spawn(activeArray);
         }
 
         private static void MakePieces(PieceManager pieceManager, List<PieceConfig> config)
         {
             PieceManager = pieceManager;
-            PieceManager.Init(MaxLength, config, AssetManager.PieceData);
+            PieceManager.Init(config, AssetManager.PieceData);
         }
 
         private static void MakeGame(Config cfg)
         {
-            GameState = new GameState(cfg.MaxLength, cfg.BoardActive, cfg.SideToMove, cfg.OurSide);
+            GameState = new GameState(MaxLength, cfg.BoardActive, cfg.SideToMove, cfg.OurSide);
         }
 
         private static void LoadAssets(AssetManager asset)
@@ -47,8 +47,6 @@ namespace Game.Board.General
         public static void Init(TileManager tile, PieceManager piece, AssetManager asset, Config cfg)
         {
             LoadAssets(asset);
-            
-            MaxLength = cfg.MaxLength;
             
             EventObserver.Init();
             

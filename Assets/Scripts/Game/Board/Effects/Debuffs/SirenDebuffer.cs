@@ -2,7 +2,7 @@
 using Game.Board.Action.Internal;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
-using Math = System.Math;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Effects.Debuffs
 {
@@ -16,13 +16,12 @@ namespace Game.Board.Effects.Debuffs
 
         private void CalculateEffectRange(int pos)
         {
-            var rank = pos / MatchManager.MaxLength;
-            var file = pos % MatchManager.MaxLength;
+            var (rank, file) = RankFileOf(pos);
             
-            rankStart = Math.Max(0, rank - 4);
-            rankEnd = Math.Min(rank + 4, MatchManager.MaxLength - 1);
-            fileStart = Math.Max(0, file - 4);
-            fileEnd = Math.Min(file + 4, MatchManager.MaxLength - 1);
+            rankStart = ClampUp(rank - 4);
+            rankEnd = ClampDown(rank + 4);
+            fileStart = ClampUp(file - 4);
+            fileEnd = ClampDown(file + 4);
         }
 
         private int rankStart;
@@ -39,7 +38,7 @@ namespace Game.Board.Effects.Debuffs
 
             for (var r = rankStart; r <= rankEnd; r++)
             {
-                var rowIndex = r * MatchManager.MaxLength;
+                var rowIndex = RowIndex(r);
                 for (var f = fileStart; f <= fileEnd; f++)
                 {
                     var index = rowIndex + f;
