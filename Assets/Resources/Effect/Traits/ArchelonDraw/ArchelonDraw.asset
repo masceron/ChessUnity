@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: Ambush
+  m_Name: ArchelonDraw
   m_EditorClassIdentifier: 
-  typeName: 5
+  typeName: 17
   category: 2
   stack: 1
-  priority: 0
-  activeWhen: 3
-  icon: {fileID: 2800000, guid: 163621af2d81ba948b9649b5eca3047f, type: 3}
-  effectName: Ambush
-  description: If no action has been taken by this piece in `3 turns, its range of
-    attack will increase by `1.
+  priority: 3
+  activeWhen: 1
+  icon: {fileID: 2800000, guid: a8eee2e2ddbbcaa4fa19ee691ffa56e3, type: 3}
+  effectName: Archelon's Draw
+  description: Any capture occurs within a 2-squares radius will be redirected to
+    this piece.

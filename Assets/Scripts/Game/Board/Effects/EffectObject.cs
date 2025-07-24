@@ -6,7 +6,9 @@ namespace Game.Board.Effects
     [CreateAssetMenu(fileName = "EffectObject", menuName = "ScriptableObjects/EffectObject")]
     public class EffectObject : ScriptableObject
     {
-        [SerializeField] public EffectType type;
+        [SerializeField] public EffectType typeName;
+        [SerializeField] public EffectCategory category;
+        [SerializeField] public EffectStack stack;
         [SerializeField] public ObserverPriority priority;
         [SerializeField] public ObserverType activeWhen;
         [SerializeField] public Texture2D icon;

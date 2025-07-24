@@ -3,7 +3,7 @@ using Game.Board.Action;
 using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
-using Game.Board.Effects.Buffs;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
 using static Game.Common.BoardUtils;
 
@@ -13,6 +13,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
     {
         public FlyingFish(PieceConfig cfg) : base(cfg)
         {
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
 
@@ -49,12 +50,12 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
             if (VerifyUpperIndex(ver1) && board[ver1] != null && board[ver1].color != color)
             {
-                list.Add(new NormalCapture(pos, pos, ver1));
+                list.Add(new NormalCapture(pos, ver1));
             }
             
             if (ver2 > 0 && board[ver2] != null && board[ver2].color != color)
             {
-                list.Add(new NormalCapture(pos, pos, ver2));
+                list.Add(new NormalCapture(pos, ver2));
             }
 
             var (rank, file) = RankFileOf(pos);
@@ -68,7 +69,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
                 
                 if (board[hoz1] != null && board[hoz1].color != color)
                 {
-                    list.Add(new NormalCapture(pos, pos, hoz1));
+                    list.Add(new NormalCapture(pos, hoz1));
                 }
             }
 
@@ -77,7 +78,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
             var hoz2 = IndexOf(rank, fileOff2);
             if (board[hoz2] != null && board[hoz2].color != color)
             {
-                list.Add(new NormalCapture(pos, pos, hoz2));
+                list.Add(new NormalCapture(pos, hoz2));
             }
 
 

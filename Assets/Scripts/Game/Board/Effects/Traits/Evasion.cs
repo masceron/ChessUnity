@@ -4,7 +4,7 @@ using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
-namespace Game.Board.Effects.Buffs
+namespace Game.Board.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Evasion: Effect
@@ -19,11 +19,8 @@ namespace Game.Board.Effects.Buffs
         public override void OnCall(Action.Action action)
         {
             if (action == null || action.To != Piece.pos || action.Result == ActionResult.Failed) return;
-            
-            var rankDiff = Math.Abs(RankOf(action.From) - RankOf(action.To));
-            var fileDiff = Math.Abs(FileOf(action.From) - FileOf(action.To));
 
-            if (Math.Max(rankDiff, fileDiff) < 3) return;
+            if (Distance(action.From, action.To) < 3) return;
             if (!MatchManager.Roll(probability)) return;
             
             action.Result = ActionResult.Failed;

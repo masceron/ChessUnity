@@ -13,7 +13,8 @@ public class Config
         new PieceConfig(PieceType.ElectricEel, Color.White, 92),
         new PieceConfig(PieceType.FlyingFish, Color.Black, 112),
         new PieceConfig(PieceType.Chrysos, Color.White, 88),
-        new PieceConfig(PieceType.Anomalocaris, Color.Black, 75)
+        new PieceConfig(PieceType.Anomalocaris, Color.Black, 75),
+        new PieceConfig(PieceType.Archelon, Color.White, 78)
     };
         
     public readonly byte[] BoardActive = {

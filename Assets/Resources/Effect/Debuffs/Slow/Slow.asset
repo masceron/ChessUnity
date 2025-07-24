@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: Slow
   m_EditorClassIdentifier: 
-  type: 3
-  effectCategory: 2
+  typeName: 3
+  category: 0
+  stack: 0
+  priority: 0
   activeWhen: 0
   icon: {fileID: 2800000, guid: 87c7fee981090ab408e91fcab13bb917, type: 3}
   effectName: Slow

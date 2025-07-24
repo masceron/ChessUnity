@@ -5,7 +5,7 @@ namespace Game.Board.Action.Captures
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class NormalCapture: Action, ICaptures
     {
-        public NormalCapture(ushort caller, int f, int t) : base(caller, true)
+        public NormalCapture(int f, int t) : base(f, true)
         {
             From = (ushort)f;
             To = (ushort)t;

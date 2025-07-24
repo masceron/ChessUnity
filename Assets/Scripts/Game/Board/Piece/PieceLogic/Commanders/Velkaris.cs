@@ -15,12 +15,11 @@ namespace Game.Board.Piece.PieceLogic.Commanders
     public class Velkaris: PieceLogic
     {
         public PieceLogic Marked;
-        public sbyte SkillCooldown;
 
         public Velkaris(PieceConfig cfg) : base(cfg)
         {
             Marked = null;
-            SkillCooldown = 0;
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new VelkarisMarker(this)));
         }
 
@@ -42,7 +41,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && rankOff <= attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.color != color && rankOff <= attackRange) list.Add(new NormalCapture(pos, newPos));
                     break;
                 }
                 if (rankOff <= effectiveMoveRange)
@@ -59,7 +58,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && rankOff >= -attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.color != color && rankOff >= -attackRange) list.Add(new NormalCapture(pos, newPos));
                     break;
                 }
                 if (rankOff >= -effectiveMoveRange)
@@ -76,7 +75,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && fileOff <= attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.color != color && fileOff <= attackRange) list.Add(new NormalCapture(pos, newPos));
                     break;
                 }
                 if (fileOff <= effectiveMoveRange)
@@ -93,7 +92,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var p = gameState.MainBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && fileOff >= -attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.color != color && fileOff >= -attackRange) list.Add(new NormalCapture(pos, newPos));
                     break;
                 }
                 if (fileOff >= -effectiveMoveRange)
@@ -102,7 +101,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 }
             }
             
-            if (SkillCooldown == -1 && Marked != null)
+            if (SkillCooldown == 0 && Marked != null)
             {
                 list.Add(new VelkarisKill(pos, pos, Marked.pos));
             }

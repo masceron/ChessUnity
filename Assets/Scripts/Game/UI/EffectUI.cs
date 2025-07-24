@@ -25,11 +25,12 @@ namespace Game.UI
             if (effectInfo.icon != null) icon.texture = effectInfo.icon;
             
             tooltip.infoLeft = "~" + effectInfo.effectName
-                               + (effect.Strength > 1 ? Numerals.ToRomanNumeral(effect.Strength) : "")
+                               + (effect.Strength > 1 ? " " + Numerals.ToRomanNumeral(effect.Strength) : "")
                                + "\n`"
                                + effect.Description();
-            
-            tooltip.infoRight = "`" + (effect.Duration != -1 ? effect.Duration.ToString() : "∞");
+
+            if (effectInfo.category == EffectCategory.Trait) tooltip.infoRight = "Trait";
+            else tooltip.infoRight = "`" + (effect.Duration != -1 ? effect.Duration.ToString() : "∞");
         }
     }
 }

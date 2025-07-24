@@ -9,6 +9,16 @@ namespace Game.Board.Effects
     {
         Low, AfterAction, DefenderAction, AttackerAction, Kill
     }
+    
+    public enum EffectCategory: byte 
+    {
+        Debuff, Buff, Trait, Condition
+    }
+
+    public enum EffectStack : byte
+    {
+        Stackable, NonStackable
+    }
 
     public enum EffectType
     {
@@ -28,14 +38,15 @@ namespace Game.Board.Effects
         HardenedShield,
         Piercing,
         SlayersCoin,
-        SnappingStrike
+        SnappingStrike,
+        ArchelonDraw
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Effect: Comparer<Effect>
     {
         public sbyte Duration;
-        public readonly sbyte Strength;
+        public sbyte Strength;
         public readonly PieceLogic Piece;
         public readonly EffectType EffectName;
         

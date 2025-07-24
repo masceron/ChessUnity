@@ -14,6 +14,7 @@ namespace Game.Board.Piece.PieceLogic.Summoned
     {
         public Anomalocaris(PieceConfig cfg) : base(cfg)
         {
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));
         }

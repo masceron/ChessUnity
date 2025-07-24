@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: HardenedShield
   m_EditorClassIdentifier: 
-  type: 13
+  typeName: 13
+  category: 1
+  stack: 1
   priority: 2
   activeWhen: 1
   icon: {fileID: 2800000, guid: 868611130517b3f46b9fc2845bad3644, type: 3}

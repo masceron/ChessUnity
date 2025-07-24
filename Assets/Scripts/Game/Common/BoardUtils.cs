@@ -72,5 +72,10 @@ namespace Game.Common
         {
             return row * MaxLength;
         }
+        
+        public static int Distance(int pos1, int pos2)
+        {
+            return Math.Max(Math.Abs(RankOf(pos1) - RankOf(pos2)), Math.Abs(FileOf(pos1) - FileOf(pos2)));
+        }
     }
 }

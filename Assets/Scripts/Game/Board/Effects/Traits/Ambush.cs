@@ -1,7 +1,7 @@
 ﻿using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 
-namespace Game.Board.Effects.Buffs
+namespace Game.Board.Effects.Traits
 {
     public class Ambush: Effect
     {

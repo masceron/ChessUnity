@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: Evasion
   m_EditorClassIdentifier: 
-  type: 1
+  typeName: 1
+  category: 2
+  stack: 1
   priority: 2
   activeWhen: 1
   icon: {fileID: 2800000, guid: 2e5fa1b58736ce346b23ca7e5cda58c0, type: 3}

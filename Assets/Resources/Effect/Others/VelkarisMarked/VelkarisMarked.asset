@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: VelkarisMarked
   m_EditorClassIdentifier: 
-  type: 6
-  effectCategory: 0
+  typeName: 6
+  category: 0
+  stack: 1
+  priority: 0
   activeWhen: 0
   icon: {fileID: 2800000, guid: 92efce3e9edce4e44a7a284302affe90, type: 3}
   effectName: Tidal Protector (Marked)

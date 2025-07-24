@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: SirenDebuffer
   m_EditorClassIdentifier: 
-  type: 7
-  effectCategory: 2
+  typeName: 7
+  category: 2
+  stack: 1
+  priority: 0
   activeWhen: 3
   icon: {fileID: 2800000, guid: d4d85c039a327b14bb00142e6d417be3, type: 3}
   effectName: Luring Radiance

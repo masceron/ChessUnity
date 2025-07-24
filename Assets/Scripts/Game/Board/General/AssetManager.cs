@@ -23,7 +23,7 @@ namespace Game.Board.General
             EffectData = new Dictionary<EffectType, EffectObject>();
             foreach (var effect in effectData)
             {
-                EffectData.Add(effect.type, effect);
+                EffectData.Add(effect.typeName, effect);
             }
         }
     }

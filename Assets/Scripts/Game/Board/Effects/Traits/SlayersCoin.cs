@@ -1,10 +1,9 @@
 ﻿using Game.Board.Action;
 using Game.Board.Piece.PieceLogic;
 using Game.Board.Piece.PieceLogic.Commanders;
-using UnityEngine;
 using static Game.Board.General.MatchManager;
 
-namespace Game.Board.Effects.Buffs
+namespace Game.Board.Effects.Traits
 {
     public class SlayersCoin: Effect
     {

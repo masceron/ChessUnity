@@ -7,7 +7,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class Shield: Effect
     {
-        public Shield(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectType.Shield)
+        public Shield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, EffectType.Shield)
         {}
 
         public override void OnCall(Action.Action action)
@@ -15,7 +15,12 @@ namespace Game.Board.Effects.Buffs
             if (action == null || action.To != Piece.pos || action.Result != ActionResult.Succeed) return;
             
             action.Result = ActionResult.Failed;
-            ActionManager.EnqueueAction(new RemoveEffect(this));
+            
+            if (Strength > 1) Strength--;
+            else
+            {
+                ActionManager.EnqueueAction(new RemoveEffect(this));
+            }
         }
 
         public override string Description()

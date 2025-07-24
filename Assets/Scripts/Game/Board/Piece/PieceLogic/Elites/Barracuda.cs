@@ -4,7 +4,7 @@ using Game.Board.Action;
 using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
-using Game.Board.Effects.Buffs;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
 using static Game.Common.BoardUtils;
 
@@ -15,6 +15,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
     {
         public Barracuda(PieceConfig cfg) : base(cfg)
         {
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(-1, this)));
@@ -58,7 +59,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 }
                 
                 if (pieceOn.color != color)
-                    list.Add(new NormalCapture(pos, pos, tpos));
+                    list.Add(new NormalCapture(pos, tpos));
             }
         }
 

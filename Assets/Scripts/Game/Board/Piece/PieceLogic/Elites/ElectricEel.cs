@@ -5,7 +5,7 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
-using Game.Board.Effects.Others;
+using Game.Board.Effects.Buffs;
 using Game.Board.General;
 using Game.Common;
 using UnityEngine;
@@ -16,17 +16,9 @@ namespace Game.Board.Piece.PieceLogic.Elites
 {
     public class ElectricEel: PieceLogic
     {
-        public sbyte SkillCooldown;
-        
         public ElectricEel(PieceConfig cfg) : base(cfg)
         {
-            SkillCooldown = 0;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Vengeful(this)));
-        }
-
-        public override void PassTurn()
-        {
-            if (SkillCooldown > 0) SkillCooldown--;
         }
 
         private void Quiets(List<Action.Action> list)
@@ -108,7 +100,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                          new Vector2Int(rank, i),
                          MatchManager.gameState.MainBoard) != -Vector2Int.one) continue;
                 
-                list.Add(new NormalCapture(pos, pos, posTo));
+                list.Add(new NormalCapture(pos, posTo));
             }
 
             for (var rankOff = push; Math.Abs(rankOff) <= attackRange; rankOff += push)
@@ -129,7 +121,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                              new Vector2Int(rank, j),
                              MatchManager.gameState.MainBoard) != -Vector2Int.one) continue;
                 
-                    list.Add(new NormalCapture(pos, pos, posTo));
+                    list.Add(new NormalCapture(pos, posTo));
                     
                 }
             }

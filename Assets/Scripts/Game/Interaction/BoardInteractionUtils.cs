@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Captures;
@@ -8,6 +9,7 @@ using Game.Board.Action.Skills;
 using Game.Board.General;
 using Game.UI;
 using UnityEngine;
+using Action = Game.Board.Action.Action;
 
 namespace Game.Interaction
 {
@@ -142,7 +144,7 @@ namespace Game.Interaction
 
         public static GameObject ChrysosShop()
         {
-            return _viewer.ChrysosShopUI;
+            return _viewer.chrysosShopUI;
         }
     }
 }

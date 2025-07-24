@@ -4,7 +4,7 @@ using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
-namespace Game.Board.Effects.Debuffs
+namespace Game.Board.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirenDebuffer: Effect

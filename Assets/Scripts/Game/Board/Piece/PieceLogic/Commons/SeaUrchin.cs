@@ -6,7 +6,7 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
-using Game.Board.Effects.Others;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
 using Color = Game.Board.General.Color;
 using static Game.Common.BoardUtils;
@@ -17,6 +17,7 @@ namespace Game.Board.Piece.PieceLogic.Commons
     {
         public SeaUrchin(PieceConfig cfg) : base(cfg)
         {
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 50, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));

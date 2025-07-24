@@ -17,6 +17,7 @@ namespace Game.Board.Piece.PieceLogic
         public sbyte trueMoveRange;
         public sbyte effectiveMoveRange;
         public sbyte attackRange;
+        public sbyte SkillCooldown;
         
         public PieceRank pieceRank;
        
@@ -37,9 +38,9 @@ namespace Game.Board.Piece.PieceLogic
             pieceRank = info.rank;
         }
 
-        public virtual void PassTurn()
+        public void PassTurn()
         {
-            
+            if (SkillCooldown > 0) SkillCooldown--;
         }
         protected abstract List<Action.Action> MoveToMake();
 

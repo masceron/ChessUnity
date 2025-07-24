@@ -11,7 +11,8 @@ namespace Game.Board.Piece
         ElectricEel,
         FlyingFish,
         Chrysos,
-        Anomalocaris
+        Anomalocaris,
+        Archelon
     }
 
     public enum PieceRank : byte

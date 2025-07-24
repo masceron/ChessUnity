@@ -20,8 +20,7 @@ namespace Game.Board.Action.Skills
         protected override void ModifyGameState()
         {
             gameState.Destroy(To);
-            
-            ((Velkaris)gameState.MainBoard[From]).SkillCooldown = -1;
+            gameState.MainBoard[From].SkillCooldown = -1;
         }
     }
 }

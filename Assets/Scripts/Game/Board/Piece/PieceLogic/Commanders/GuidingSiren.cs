@@ -5,8 +5,7 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
-using Game.Board.Effects.Buffs;
-using Game.Board.Effects.Debuffs;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
 using static Game.Common.BoardUtils;
 
@@ -15,8 +14,6 @@ namespace Game.Board.Piece.PieceLogic.Commanders
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GuidingSiren: PieceLogic
     {
-        public sbyte SkillCooldown;
-
         public GuidingSiren(PieceConfig cfg) : base(cfg)
         {
             SkillCooldown = 0;
@@ -24,11 +21,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SirenDebuffer(this)));
         }
-
-        public override void PassTurn()
-        {
-            if (SkillCooldown > 0) SkillCooldown--;
-        }
+        
         
         private void MakeMove(List<Action.Action> list, int trank, int file, int curr, GameState gameState)
         {
@@ -45,7 +38,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             }
             else if (p.color != color && curr <= attackRange)
             {
-                list.Add(new NormalCapture(pos, pos, tpos));
+                list.Add(new NormalCapture(pos, tpos));
             }
         }
 
@@ -83,8 +76,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         protected override List<Action.Action> MoveToMake()
         {
             var gameState = MatchManager.gameState;
-            var trank = RankOf(pos);
-            var file = FileOf(pos);
+            var (trank, file) = RankFileOf(pos);
             
             var list = new List<Action.Action>();
             

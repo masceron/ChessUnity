@@ -1,9 +1,11 @@
 using System;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic;
+using TMPro;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Color = UnityEngine.Color;
 using static Game.Interaction.BoardInteractionUtils;
@@ -20,6 +22,8 @@ namespace Game.UI
         [SerializeField] private Toggle move;
         [SerializeField] private Toggle capture;
         [SerializeField] private Toggle skill;
+        [SerializeField] private TMP_Text skillCoolDown;
+        
         [SerializeField] private Button special;
         [SerializeField] private Button relic;
         [SerializeField] private Button skip;
@@ -33,8 +37,8 @@ namespace Game.UI
 
         [SerializeField] private GameObject effectUI;
 
-        [SerializeField] public GameObject ChrysosShopUI;
-
+        [SerializeField] public GameObject chrysosShopUI;
+        
         private static ColorBlock _normalColors;
         private static ColorBlock _activeColors;
 
@@ -87,6 +91,7 @@ namespace Game.UI
             Disable(move);
             Disable(capture);
             Disable(skill);
+            skillCoolDown.text = "";
             
             SelectingFunction = 0;
         }
@@ -94,6 +99,17 @@ namespace Game.UI
         public void EnablePieceInteractions()
         {
             pieceAction.interactable = true;
+            var cooldown = gameState.MainBoard[Selecting].SkillCooldown;
+            if (cooldown != 0)
+            {
+                skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";
+                skill.interactable = false;
+            }
+            else
+            {
+                skillCoolDown.text = "";
+                skill.interactable = true;
+            }
         }
 
         public void DisableGameInteractions()

@@ -4,7 +4,7 @@ using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 
-namespace Game.Board.Effects.Others
+namespace Game.Board.Effects.Buffs
 {
     public class Vengeful: Effect
     {
@@ -17,7 +17,7 @@ namespace Game.Board.Effects.Others
             
             if (action.To == Piece.pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(4, MatchManager.gameState.MainBoard[action.To])));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, MatchManager.gameState.MainBoard[action.To])));
             }
         }
 

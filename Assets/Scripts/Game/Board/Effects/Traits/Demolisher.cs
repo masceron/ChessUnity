@@ -4,7 +4,7 @@ using Game.Board.Action.Internal;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 
-namespace Game.Board.Effects.Others
+namespace Game.Board.Effects.Traits
 {
     public class Demolisher: Effect
     {

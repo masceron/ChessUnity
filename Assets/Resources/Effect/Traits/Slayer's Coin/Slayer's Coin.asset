@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: Slayer's Coin
   m_EditorClassIdentifier: 
-  type: 15
+  typeName: 15
+  category: 2
+  stack: 1
   priority: 1
   activeWhen: 1
   icon: {fileID: 2800000, guid: 994f03d8a0dbb0f4ca7288b4846f2694, type: 3}

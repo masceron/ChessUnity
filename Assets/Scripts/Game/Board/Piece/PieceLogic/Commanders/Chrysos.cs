@@ -4,8 +4,7 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Quiets;
-using Game.Board.Effects.Buffs;
-using UnityEngine;
+using Game.Board.Effects.Traits;
 using static Game.Common.BoardUtils;
 using static Game.Board.General.MatchManager;
 
@@ -14,15 +13,9 @@ namespace Game.Board.Piece.PieceLogic.Commanders
     public class Chrysos: PieceLogic
     {
         public byte Coin;
-        public byte SkillCooldown;
         public Chrysos(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SlayersCoin(this)));
-        }
-
-        public override void PassTurn()
-        {
-            if (SkillCooldown > 0) SkillCooldown--;
         }
 
         private void Skill(List<Action.Action> list)
@@ -50,7 +43,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             var pieceOn = gameState.MainBoard[index];
             if (pieceOn != null)
             {
-                if (pieceOn.color != color) list.Add(new NormalCapture(pos, pos, index));
+                if (pieceOn.color != color) list.Add(new NormalCapture(pos, index));
                 return false;
             }
             list.Add(new NormalMove(pos, pos, index));

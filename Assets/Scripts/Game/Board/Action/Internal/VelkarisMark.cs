@@ -21,7 +21,7 @@ namespace Game.Board.Action.Internal
         protected override void ModifyGameState()
         {
             var caller = (Velkaris)gameState.MainBoard[From];
-            caller.SkillCooldown = -1;
+            caller.SkillCooldown = 0;
             caller.Marked = gameState.MainBoard[To];
         }
     }
