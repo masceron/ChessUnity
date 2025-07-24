@@ -1,6 +1,6 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using Game.Board.General;
+using static Game.Board.General.MatchManager;
 using Game.Board.Piece.PieceLogic.Elites;
 using static Game.Common.BoardUtils;
 
@@ -10,18 +10,13 @@ namespace Game.Board.Action.Skills
     {
         public ElectricEelActive(int caller) : base(caller, false)
         {
-            
+            To = (ushort)caller;
         }
 
-        public override void ApplyAction(GameState state)
-        {
-            ModifyGameState(state);
-        }
-
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(Caller);
-            var caller = state.MainBoard[Caller];
+            var caller = gameState.MainBoard[Caller];
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -30,7 +25,7 @@ namespace Game.Board.Action.Skills
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;
-                    var p = MatchManager.GameState.MainBoard[IndexOf(rankOff, fileOff)];
+                    var p = gameState.MainBoard[IndexOf(rankOff, fileOff)];
                     if (p == null || p.color == caller.color) continue;
 
                     ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, p)));

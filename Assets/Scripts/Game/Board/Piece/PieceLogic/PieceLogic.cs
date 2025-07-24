@@ -21,14 +21,16 @@ namespace Game.Board.Piece.PieceLogic
         public PieceRank pieceRank;
        
         public readonly List<Effect> Effects;
+        public PieceType type;
 
         protected PieceLogic(PieceConfig cfg)
         {
             color = cfg.Color;
             pos = cfg.Index;
             Effects = new List<Effect>();
+            type = cfg.Type;
 
-            var info = MatchManager.AssetManager.PieceData[cfg.Type];
+            var info = MatchManager.assetManager.PieceData[cfg.Type];
             effectiveMoveRange = info.moveRange;
             trueMoveRange = info.moveRange;
             attackRange = info.attackRange; 

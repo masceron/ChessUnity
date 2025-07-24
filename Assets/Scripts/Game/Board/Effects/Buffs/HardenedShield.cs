@@ -13,12 +13,16 @@ namespace Game.Board.Effects.Buffs
         
         public override void OnCall(Action.Action action)
         {
-            if (action.To != Piece.pos || action.Success != ActionResult.Succeed) return;
-            action.Success = ActionResult.Failed;
+            if (action == null || action.To != Piece.pos || action.Result != ActionResult.Succeed) return;
+            action.Result = ActionResult.Failed;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, MatchManager.GameState.MainBoard[action.Caller])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, MatchManager.gameState.MainBoard[action.Caller])));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
-        
+
+        public override string Description()
+        {
+            return MatchManager.assetManager.EffectData[EffectName].description;
+        }
     }
 }

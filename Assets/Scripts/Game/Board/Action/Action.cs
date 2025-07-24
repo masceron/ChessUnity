@@ -1,4 +1,5 @@
 ﻿using Game.Board.General;
+using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action
 {
@@ -13,17 +14,29 @@ namespace Game.Board.Action
         public ushort From;
         public ushort To;
         public int Caller;
-        public ActionResult Success;
+        public ActionResult Result;
         public readonly bool DoesMoveChangePos;
 
         protected Action(int caller, bool pos)
         {
             Caller = caller;
             DoesMoveChangePos = pos;
-            Success = ActionResult.Succeed;
+            Result = ActionResult.Succeed;
         }
-        
-        public abstract void ApplyAction(GameState state);
-        public abstract void ModifyGameState(GameState state);
+
+        public void Execute(GameState state)
+        {
+            Animate();
+            if (Result != ActionResult.Failed)
+            {
+                ModifyGameState();
+            }
+        }
+
+        protected virtual void Animate()
+        {
+            
+        }
+        protected abstract void ModifyGameState();
     }
 }

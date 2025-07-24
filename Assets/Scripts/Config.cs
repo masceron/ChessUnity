@@ -4,17 +4,19 @@ using Game.Board.Piece;
 
 public class Config
 {
-    public List<PieceConfig> PieceConfig = new()
+    public readonly List<PieceConfig> PieceConfig = new()
     {
         new PieceConfig(PieceType.Velkaris, Color.White, 140),
-        new PieceConfig(PieceType.Barracuda, Color.Black, 104),
+        new PieceConfig(PieceType.Barracuda, Color.Black, 113),
         new PieceConfig(PieceType.GuidingSiren, Color.Black, 101),
         new PieceConfig(PieceType.SeaUrchin, Color.White, 100),
-        new PieceConfig(PieceType.ElectricEel, Color.Black, 92),
-        new PieceConfig(PieceType.FlyingFish, Color.White, 112)
+        new PieceConfig(PieceType.ElectricEel, Color.White, 92),
+        new PieceConfig(PieceType.FlyingFish, Color.Black, 112),
+        new PieceConfig(PieceType.Chrysos, Color.White, 88),
+        new PieceConfig(PieceType.Anomalocaris, Color.Black, 75)
     };
         
-    public byte[] BoardActive = {
+    public readonly byte[] BoardActive = {
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -29,9 +31,9 @@ public class Config
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
     };
 
-    public Color OurSide = Color.White;
+    public readonly Color OurSide = Color.White;
 
-    public Color SideToMove = Color.White;
+    public readonly Color SideToMove = Color.White;
 
     public Config()
     {

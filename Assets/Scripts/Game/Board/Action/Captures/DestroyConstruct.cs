@@ -1,5 +1,4 @@
-﻿using Game.Board.General;
-using UnityEngine;
+﻿using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Captures
 {
@@ -10,17 +9,16 @@ namespace Game.Board.Action.Captures
             To = (ushort)to;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            Object.Destroy(MatchManager.PieceManager.GetPiece(Caller).gameObject);
-            ModifyGameState(state);
+            pieceManager.Destroy(Caller);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            state.Destroy(Caller);
-            state.Destroy(To);
-            state.ActiveBoard[To] = true;
+            gameState.Destroy(Caller);
+            gameState.Destroy(To);
+            gameState.ActiveBoard[To] = true;
         }
     }
 }

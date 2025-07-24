@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
+  m_Name: HardenedShield
+  m_EditorClassIdentifier: 
+  type: 13
+  priority: 2
+  activeWhen: 1
+  icon: {fileID: 2800000, guid: 868611130517b3f46b9fc2845bad3644, type: 3}
+  effectName: Hardened Shield
+  description: Nullifies an upcoming attack and stuns the attacker for $1 `turn.

@@ -9,6 +9,12 @@ namespace Game.Board.Action
     {
         private static GameState _state;
         private static Queue<Action> _actionQueue;
+        private static Action _lastMainAction;
+
+        public static void Init(GameState state)
+        {
+            _state = state;
+        }
 
         public static void EnqueueAction(Action queueAction)
         {
@@ -36,18 +42,20 @@ namespace Game.Board.Action
                 {
                     if (action is not IInternal)
                     {
-                        EventObserver.Notify(action);
+                        _lastMainAction = action;
+                        EventObserver.Notify(_lastMainAction);
                     }
-                    action.ApplyAction(_state);
+                    action.Execute(_state);
                 }
 
                 _state.EffectCountdown();
                 EventObserver.Notify(queueAction);
                 _actionQueue.Enqueue(queueAction);
+                _lastMainAction = null;
 
                 while (_actionQueue.TryDequeue(out var action))
                 {
-                    action.ApplyAction(_state);
+                    action.Execute(_state);
                 }
             }
             
@@ -55,13 +63,14 @@ namespace Game.Board.Action
 
         public static void ExecuteImmediately(Action action)
         {
-            action.ApplyAction(_state);
+            action.Execute(_state);
         }
 
         public static void Init()
         {
-            _state = MatchManager.GameState;
+            _state = MatchManager.gameState;
             _actionQueue = new Queue<Action>();
+            _lastMainAction = null;
         }
     }
 }

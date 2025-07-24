@@ -6,8 +6,8 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Kills;
+using Game.Board.General;
 using static Game.Common.BoardUtils;
-using Game.Board.Interaction;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
@@ -26,7 +26,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = InteractionManager.GameState;
+            var gameState = MatchManager.gameState;
             
             var (rank, file) = RankFileOf(pos);
             

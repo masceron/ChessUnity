@@ -1,5 +1,5 @@
 using System.Collections;
-using Game.Board.Interaction;
+using Game.Interaction;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -45,9 +45,7 @@ namespace Game.Board.Tile
                     
                     var tile = new GameObject(i + " " + j).AddComponent<Tile>();
                     tile.transform.parent = transform;
-                    if (active[index])
-                        tile.Spawn(i, j, floorPrefabs[(i + j) % 2], true);
-                    else tile.Spawn(i, j, floorPrefabs[2], false);
+                    tile.Spawn(i, j, active[index] ? floorPrefabs[(i + j) % 2] : floorPrefabs[2]);
 
                     tiles[index] = tile;
                     SelectionIndicator(index, tile);
@@ -62,9 +60,12 @@ namespace Game.Board.Tile
             selections[pos].gameObject.SetActive(true);
         }
 
-        public void Unmark(int pos)
+        public void UnmarkAll()
         {
-            selections[pos].gameObject.SetActive(false);
+            for (var i = 0; i < BoardSize; i++)
+            {
+                selections[i].gameObject.SetActive(false);
+            }
         }
 
         public void MarkAsMoveable(int pos)

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
+  m_Name: VelkarisMarker
+  m_EditorClassIdentifier: 
+  type: 8
+  effectCategory: 3
+  activeWhen: 3
+  icon: {fileID: 2800000, guid: ccb6fc20eb12279488dd835b195ea2a9, type: 3}
+  effectName: Tidal Protector
+  description: The first enemy to move into one of two ranks in front of this piece
+    will be marked and can be killed by $Vanquish`.

@@ -1,4 +1,4 @@
-﻿using Game.Board.General;
+﻿using static Game.Board.General.MatchManager;
 using Game.Board.Piece.PieceLogic.Commanders;
 
 namespace Game.Board.Action.Skills
@@ -12,18 +12,16 @@ namespace Game.Board.Action.Skills
             To = t;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            MatchManager.PieceManager.Destroy(To);
-            
-            ModifyGameState(state);
+            pieceManager.Destroy(To);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            state.Destroy(To);
+            gameState.Destroy(To);
             
-            ((Velkaris)state.MainBoard[From]).SkillCooldown = -1;
+            ((Velkaris)gameState.MainBoard[From]).SkillCooldown = -1;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Game.Board.Piece.PieceLogic.Commons
     {
         public SeaUrchin(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, 25, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 50, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
         }
@@ -32,9 +32,9 @@ namespace Game.Board.Piece.PieceLogic.Commons
                 var posTo = pos + push * i;
 
                 if (!VerifyIndex(posTo) ||
-                    !MatchManager.GameState.ActiveBoard[posTo]) continue;
+                    !MatchManager.gameState.ActiveBoard[posTo]) continue;
                 
-                var pieceAt = MatchManager.GameState.MainBoard[posTo];
+                var pieceAt = MatchManager.gameState.MainBoard[posTo];
                 
                 if (pieceAt == null)
                 {

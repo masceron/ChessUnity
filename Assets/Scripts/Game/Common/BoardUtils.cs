@@ -2,6 +2,7 @@
 
 namespace Game.Common
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BoardUtils
     {
         public const int MaxLength = 12;

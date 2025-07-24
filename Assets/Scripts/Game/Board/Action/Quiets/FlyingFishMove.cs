@@ -13,17 +13,16 @@ namespace Game.Board.Action.Quiets
             To = (ushort)to;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            MatchManager.PieceManager.Move(Caller, To);
-            ModifyGameState(state);
+            MatchManager.pieceManager.Move(Caller, To);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
             var (rankFrom, fileFrom) = RankFileOf(From);
             var (rankTo, fileTo) = RankFileOf(To);
-            var board = MatchManager.GameState.MainBoard;
+            var board = MatchManager.gameState.MainBoard;
             var caller = board[From];
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
@@ -41,7 +40,7 @@ namespace Game.Board.Action.Quiets
                 break;
             }
             
-            MatchManager.GameState.Move(From, To);
+            MatchManager.gameState.Move(From, To);
         }
     }
 }

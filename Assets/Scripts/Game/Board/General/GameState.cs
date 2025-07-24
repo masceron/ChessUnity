@@ -7,6 +7,7 @@ using Game.Board.Piece.PieceLogic;
 using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Board.Piece.PieceLogic.Commons;
 using Game.Board.Piece.PieceLogic.Elites;
+using Game.Board.Piece.PieceLogic.Summoned;
 using Game.Board.Piece.PieceLogic.Swarm;
 
 namespace Game.Board.General
@@ -54,6 +55,8 @@ namespace Game.Board.General
                 PieceType.SeaUrchin => new SeaUrchin(piece),
                 PieceType.ElectricEel => new ElectricEel(piece),
                 PieceType.FlyingFish => new FlyingFish(piece),
+                PieceType.Chrysos => new Chrysos(piece),
+                PieceType.Anomalocaris => new Anomalocaris(piece),
                 _ => null
             };
 

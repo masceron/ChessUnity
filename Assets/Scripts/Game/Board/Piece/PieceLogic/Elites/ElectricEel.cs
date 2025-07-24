@@ -38,12 +38,12 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
                 
-                if (MatchManager.GameState.MainBoard[posTo] != null ||
-                    !MatchManager.GameState.ActiveBoard[posTo]) continue;
+                if (MatchManager.gameState.MainBoard[posTo] != null ||
+                    !MatchManager.gameState.ActiveBoard[posTo]) continue;
 
                 if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                         new Vector2Int(rank, i),
-                        MatchManager.GameState.MainBoard) != -Vector2Int.one) continue;
+                        MatchManager.gameState.MainBoard) != -Vector2Int.one) continue;
                 
                 list.Add(new NormalMove(pos, pos, posTo));
             }
@@ -63,10 +63,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                         if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                                 new Vector2Int(rankOffFront, fileOff),
-                                MatchManager.GameState.MainBoard) == -Vector2Int.one)
+                                MatchManager.gameState.MainBoard) == -Vector2Int.one)
                         {
-                            if (MatchManager.GameState.MainBoard[posOffFront] == null &&
-                                MatchManager.GameState.ActiveBoard[posOffFront])
+                            if (MatchManager.gameState.MainBoard[posOffFront] == null &&
+                                MatchManager.gameState.ActiveBoard[posOffFront])
                             {
                                 list.Add(new NormalMove(pos, pos, posOffFront));
                             }
@@ -79,10 +79,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                     if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                             new Vector2Int(rankOffBack, fileOff),
-                            MatchManager.GameState.MainBoard) != -Vector2Int.one) continue;
+                            MatchManager.gameState.MainBoard) != -Vector2Int.one) continue;
                     
-                    if (MatchManager.GameState.MainBoard[posOffBack] == null &&
-                        MatchManager.GameState.ActiveBoard[posOffBack])
+                    if (MatchManager.gameState.MainBoard[posOffBack] == null &&
+                        MatchManager.gameState.ActiveBoard[posOffBack])
                     {
                         list.Add(new NormalMove(pos, pos, posOffBack));
                     }
@@ -100,13 +100,13 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
 
-                var p = MatchManager.GameState.MainBoard[posTo];
+                var p = MatchManager.gameState.MainBoard[posTo];
 
                 if (p == null || p.color == color) continue;
                 
                  if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                          new Vector2Int(rank, i),
-                         MatchManager.GameState.MainBoard) != -Vector2Int.one) continue;
+                         MatchManager.gameState.MainBoard) != -Vector2Int.one) continue;
                 
                 list.Add(new NormalCapture(pos, pos, posTo));
             }
@@ -121,13 +121,13 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     if (!VerifyBounds(j)) continue;
                     
                     var posTo = IndexOf(rankAfter, j);
-                    var p = MatchManager.GameState.MainBoard[posTo];
+                    var p = MatchManager.gameState.MainBoard[posTo];
                     
                     if (p == null || p.color == color) continue;
                     
                      if (Pathfinder.LineBlocker(new Vector2Int(rank, file),
                              new Vector2Int(rank, j),
-                             MatchManager.GameState.MainBoard) != -Vector2Int.one) continue;
+                             MatchManager.gameState.MainBoard) != -Vector2Int.one) continue;
                 
                     list.Add(new NormalCapture(pos, pos, posTo));
                     

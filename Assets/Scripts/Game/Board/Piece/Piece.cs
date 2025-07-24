@@ -9,18 +9,21 @@ namespace Game.Board.Piece
         Barracuda,
         SeaUrchin,
         ElectricEel,
-        FlyingFish
+        FlyingFish,
+        Chrysos,
+        Anomalocaris
     }
 
     public enum PieceRank : byte
     {
-        Commander,
+        None,
         Construct,
-        Champion,
-        Elite,
-        Common,
+        Summoned,
         Swarm,
-        Summoned
+        Common,
+        Elite,
+        Champion,
+        Commander
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Piece : MonoBehaviour
@@ -32,7 +35,7 @@ namespace Game.Board.Piece
         {
             rank = r;
             file = f;
-
+            gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
             transform.position = new Vector3(rank, defaultTransform.y, file);
         }
         

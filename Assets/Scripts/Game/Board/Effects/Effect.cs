@@ -1,8 +1,14 @@
-﻿using Game.Board.General;
+﻿using System.Collections.Generic;
+using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects
 {
+    
+    public enum ObserverPriority: byte
+    {
+        Low, AfterAction, DefenderAction, AttackerAction, Kill
+    }
 
     public enum EffectType
     {
@@ -20,21 +26,32 @@ namespace Game.Board.Effects
         Stunned,
         Shield,
         HardenedShield,
-        Piercing
+        Piercing,
+        SlayersCoin,
+        SnappingStrike
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class Effect: Observer
+    public abstract class Effect: Comparer<Effect>
     {
         public sbyte Duration;
-        protected sbyte Strength;
+        public readonly sbyte Strength;
         public readonly PieceLogic Piece;
+        public readonly EffectType EffectName;
+        
+        public readonly ObserverType ObserverType;
+        private readonly ObserverPriority priority;
 
-        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectType type) : base(type)
+        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectType type)
         {
             Duration = duration;
             Strength = strength;
             Piece = piece;
+            EffectName = type;
+            
+            var info = MatchManager.assetManager.EffectData[type];
+            ObserverType = info.activeWhen;
+            priority = info.priority;
         }
 
         public virtual void OnApply()
@@ -46,5 +63,17 @@ namespace Game.Board.Effects
         {
             
         }
+
+        public virtual void OnCall(Action.Action action)
+        {
+            
+        }
+
+        public override int Compare(Effect x, Effect y)
+        {
+            return -x!.priority.CompareTo(y!.priority);
+        }
+
+        public abstract string Description();
     }
 }

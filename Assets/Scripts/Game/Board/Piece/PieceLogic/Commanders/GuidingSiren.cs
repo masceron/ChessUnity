@@ -8,7 +8,7 @@ using Game.Board.Action.Skills;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
-using Game.Board.Interaction;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
@@ -32,9 +32,9 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         
         private void MakeMove(List<Action.Action> list, int trank, int file, int curr, GameState gameState)
         {
-            if (trank < 0 || trank >= gameState.MaxLength || file < 0 || file >= gameState.MaxLength) return;
+            if (!VerifyBounds(trank) || !VerifyBounds(file)) return;
             
-            var tpos = trank * gameState.MaxLength + file;
+            var tpos = IndexOf(trank, file);
             if (!gameState.ActiveBoard[tpos]) return;
 
             var p = gameState.MainBoard[tpos];
@@ -55,36 +55,36 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             for (var i = -6; i <= 6; i++)
             {
                 var rankOff = trank + i;
-                if (rankOff < 0 || rankOff >= state.MaxLength) continue;
+                if (!VerifyBounds(rankOff)) continue;
                 for (var j = -6; j <= 6; j++)
                 {
                     var fileOff = file + j;
-                    if (fileOff < 0 || fileOff >= state.MaxLength) continue;
+                    if (!VerifyBounds(fileOff)) continue;
                     
-                    var tpos = rankOff * state.MaxLength + fileOff;
+                    var tpos = IndexOf(rankOff, fileOff);
                     var pieceAt = state.MainBoard[tpos];
                     if (pieceAt == null || pieceAt.color == color) continue;
                     
                     var rankForce = rankOff + push;
                     while (Math.Abs(rankForce - rankOff) <= 3 &&
-                           rankForce >= 0 && rankForce < state.MaxLength &&
-                           state.MainBoard[rankForce * state.MaxLength + fileOff] == null &&
-                           state.ActiveBoard[rankForce * state.MaxLength + fileOff])
+                           VerifyBounds(rankForce) &&
+                           state.MainBoard[IndexOf(rankForce, fileOff)] == null &&
+                           state.ActiveBoard[IndexOf(rankForce, fileOff)])
                     {
                          rankForce += push;
                     }
                     rankForce -= push;
                     if (rankForce == rankOff) continue;
-                    list.Add(new SirenActive(pos, tpos, rankForce * state.MaxLength + fileOff, InteractionManager.PieceManager));
+                    list.Add(new SirenActive(pos, tpos, IndexOf(rankForce, fileOff)));
                 }
             }
         }
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = InteractionManager.GameState;
-            var trank = pos / gameState.MaxLength;
-            var file = pos % gameState.MaxLength;
+            var gameState = MatchManager.gameState;
+            var trank = RankOf(pos);
+            var file = FileOf(pos);
             
             var list = new List<Action.Action>();
             

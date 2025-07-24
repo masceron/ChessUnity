@@ -1,4 +1,5 @@
-﻿using Game.Board.Piece.PieceLogic;
+﻿using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Debuffs
 {
@@ -6,5 +7,10 @@ namespace Game.Board.Effects.Debuffs
     {
         public Stunned(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectType.Stunned)
         {}
+
+        public override string Description()
+        {
+            return string.Format(MatchManager.assetManager.EffectData[EffectName].description, Duration);
+        }
     }
 }

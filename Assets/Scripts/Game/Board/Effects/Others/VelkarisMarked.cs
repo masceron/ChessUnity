@@ -1,4 +1,5 @@
-﻿using Game.Board.Piece.PieceLogic;
+﻿using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Others
 {
@@ -7,5 +8,11 @@ namespace Game.Board.Effects.Others
     {
         public VelkarisMarked(PieceLogic piece) : base(-1, 1, piece, EffectType.VelkarisMarked)
         {}
+
+
+        public override string Description()
+        {
+            return MatchManager.assetManager.EffectData[EffectName].description;
+        }
     }
 }

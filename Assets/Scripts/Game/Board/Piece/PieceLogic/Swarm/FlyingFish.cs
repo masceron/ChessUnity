@@ -20,8 +20,8 @@ namespace Game.Board.Piece.PieceLogic.Swarm
         {
             var (rank, file) = RankFileOf(pos);
             
-            var board = MatchManager.GameState.MainBoard;
-            var active = MatchManager.GameState.ActiveBoard;
+            var board = MatchManager.gameState.MainBoard;
+            var active = MatchManager.gameState.ActiveBoard;
 
             for (var rankTo = rank - effectiveMoveRange; rankTo <= rank + effectiveMoveRange; rankTo += effectiveMoveRange)
             {
@@ -42,7 +42,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
         private void Captures(List<Action.Action> list)
         {
-            var board = MatchManager.GameState.MainBoard;
+            var board = MatchManager.gameState.MainBoard;
 
             var ver1 = PushWhite(pos) * attackRange;
             var ver2 = PushBlack(pos) * attackRange;
@@ -72,7 +72,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
                 }
             }
 
-            if (VerifyUpperBound(fileOff2)) return;
+            if (!VerifyUpperBound(fileOff2)) return;
             
             var hoz2 = IndexOf(rank, fileOff2);
             if (board[hoz2] != null && board[hoz2].color != color)

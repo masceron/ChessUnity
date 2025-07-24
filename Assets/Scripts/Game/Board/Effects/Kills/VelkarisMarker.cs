@@ -39,23 +39,30 @@ namespace Game.Board.Effects.Kills
         
         public override void OnCall(Action.Action action)
         {
+            if (action == null) return;
+            
             if (action.Caller == Piece.pos)
             {
                 TriggerRows(action.To, Piece.color);
                 return;
             }
             
-            if (MatchManager.GameState.SideToMove == Piece.color) return;
+            if (MatchManager.gameState.SideToMove == Piece.color) return;
 
             var rowMovedTo = RankOf(action.To);
             
-            if (!rows.Contains(rowMovedTo) || MatchManager.GameState.MainBoard[action.To].color == Piece.color)
+            if (!rows.Contains(rowMovedTo) || MatchManager.gameState.MainBoard[action.To].color == Piece.color)
             {
                 return;
             }
             
             ActionManager.EnqueueAction(new VelkarisMark(Piece.pos, Piece.pos, action.To));
             ActionManager.EnqueueAction(new RemoveEffect(this));
+        }
+
+        public override string Description()
+        {
+            return MatchManager.assetManager.EffectData[EffectName].description;
         }
     }
 }

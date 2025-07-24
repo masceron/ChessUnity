@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Game.Board.General;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Object = UnityEngine.Object;
@@ -13,18 +12,13 @@ namespace Game.Board.Piece
         
         private Dictionary<PieceType, PieceObject> piecesInfo;
     
-        public void Init(List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
+        public void Init(Dictionary<PieceType, PieceObject> dict)
         {
             piecesInfo = dict;
             pieces = new Piece[BoardSize];
-
-            foreach (var piece in config)
-            {
-                SpawnPiece(piece);
-            }
         }
 
-        private void SpawnPiece(PieceConfig config)
+        public void SpawnPiece(PieceConfig config)
         {
             var pos = config.Index;
             var info = piecesInfo[config.Type];
@@ -33,12 +27,6 @@ namespace Game.Board.Piece
             p.transform.parent = transform;
             pieces[pos] = p;
             p.Spawn(RankOf(pos), FileOf(pos), info.defaultTransform);
-            MatchManager.GameState.SpawnPiece(config);
-        }
-        
-        public Piece GetPiece(int pos)
-        {
-            return pieces[pos];
         }
 
         public void Destroy(int pos)

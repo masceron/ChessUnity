@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 
 namespace Game.Common
@@ -16,22 +17,23 @@ namespace Game.Common
             Cursor.lockState = CursorLockMode.Locked;
         }
 
-        private void Update()
+        public void ToggleCursor(InputAction.CallbackContext context)
         {
-            if (!Input.GetKeyDown(KeyCode.Tab)) return;
-            
+            if (!context.performed) return;
             if (!isLocking)
             {
                 isLocking = true;
                 Cursor.visible = true;
                 Cursor.lockState = CursorLockMode.None;
                 moveScript.enabled = false;
-                return;
             }
-            isLocking = false;
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            moveScript.enabled = true;
+            else
+            {
+                isLocking = false;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                moveScript.enabled = true;
+            }
         }
     }
 }

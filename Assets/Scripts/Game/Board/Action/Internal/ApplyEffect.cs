@@ -12,16 +12,15 @@ namespace Game.Board.Action.Internal
             effect = e;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            if (effect.Type != ObserverType.None)
+            if (effect.ObserverType != ObserverType.None)
             {
                 EventObserver.AddObserver(effect);
             }
-            ModifyGameState(state);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
             effect.OnApply();
             effect.Piece.Effects.Add(effect);

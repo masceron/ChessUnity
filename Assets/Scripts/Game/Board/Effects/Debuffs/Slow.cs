@@ -1,5 +1,6 @@
 ﻿using Game.Board.Piece.PieceLogic;
 using System;
+using Game.Board.General;
 
 namespace Game.Board.Effects.Debuffs
 {
@@ -21,6 +22,11 @@ namespace Game.Board.Effects.Debuffs
             Piece.trueMoveRange += Strength;
             
             if (Piece.effectiveMoveRange > 0) Piece.effectiveMoveRange = Math.Max(Piece.trueMoveRange, (sbyte)1);
+        }
+
+        public override string Description()
+        {
+            return string.Format(MatchManager.assetManager.EffectData[EffectName].description, Strength);
         }
     }
 }

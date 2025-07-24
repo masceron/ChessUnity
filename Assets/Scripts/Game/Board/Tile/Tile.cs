@@ -1,25 +1,24 @@
-using Game.Board.Interaction;
+using Game.Interaction;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Tile
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Tile : MonoBehaviour, IPointerClickHandler
+    public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         private int rank;
         private int file;
         private GameObject cell;
         private MeshRenderer floor;
-        private bool isActive;
         
-        public void Spawn(int r, int f, GameObject prefab, bool active)
+        public void Spawn(int r, int f, GameObject prefab)
         {
             rank = r;
             file = f;
             cell = Instantiate(prefab, transform);
             cell.transform.position = new Vector3(rank, 1, file);
-            isActive = active;
         }
 
         public void OnPointerClick(PointerEventData data)
@@ -27,12 +26,24 @@ namespace Game.Board.Tile
             switch (data.button)
             {
                 case PointerEventData.InputButton.Left:
-                    if (!isActive) return;
-                    InteractionManager.Select(rank, file);
+                    BoardInteractionUtils.MarkPiece(IndexOf(rank, file));
+                    break;
+                case PointerEventData.InputButton.Right:
+                    BoardInteractionUtils.Unmark();
                     break;
                 default:
                     return;
             }
+        }
+        
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            BoardInteractionUtils.Hover(IndexOf(rank, file));
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            BoardInteractionUtils.Hover(-1);
         }
     }
 }
