@@ -17,7 +17,7 @@ namespace Game.Board.Effects.Traits
             var caller = gameState.MainBoard[action.Caller];
             var captured = gameState.MainBoard[action.To];
             
-            if (caller.color == Piece.color && caller.pieceRank < captured.pieceRank) ((Chrysos)Piece).Coin+=5;
+            if (caller.color == Piece.color && caller.pieceRank < captured.pieceRank) ((Chrysos)Piece).Coin += 1;
         }
 
         public override string Description()

@@ -10,7 +10,7 @@ using TMPro;
 using UnityEngine;
 using static Game.Board.General.MatchManager;
 
-namespace Game.UI.ChrysosShop
+namespace Game.UX.UI.ChrysosShop
 {
     public class ChrysosShop: MonoBehaviour
     {

@@ -3,7 +3,7 @@ using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Interaction;
-using Game.UI.ChrysosShop;
+using Game.UX.UI.ChrysosShop;
 using UnityEngine;
 using static Game.Board.General.MatchManager;
 

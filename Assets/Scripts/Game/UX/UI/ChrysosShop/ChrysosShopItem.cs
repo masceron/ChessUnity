@@ -4,7 +4,7 @@ using UI.UIObject3D.Scripts;
 using UnityEngine;
 using static Game.Board.General.MatchManager;
 
-namespace Game.UI.ChrysosShop
+namespace Game.UX.UI.ChrysosShop
 {
     public class ChrysosShopItem: MonoBehaviour
     {

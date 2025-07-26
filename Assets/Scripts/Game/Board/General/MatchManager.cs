@@ -5,7 +5,7 @@ using Game.Board.Action.Internal;
 using Game.Board.Piece;
 using Game.Board.Tile;
 using Game.Interaction;
-using Game.UI;
+using Game.UX.UI;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 

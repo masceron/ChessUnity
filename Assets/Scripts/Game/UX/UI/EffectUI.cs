@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.UI
+namespace Game.UX.UI
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EffectUI: MonoBehaviour
@@ -22,7 +22,7 @@ namespace Game.UI
             strength.text = effect.Strength > 1 ? effect.Strength.ToString() : "";
             duration.text =  effect.Duration != -1 ? effect.Duration.ToString() : "";
             
-            if (effectInfo.icon != null) icon.texture = effectInfo.icon;
+            icon.texture = effectInfo.icon;
             
             tooltip.infoLeft = "~" + effectInfo.effectName
                                + (effect.Strength > 1 ? " " + Numerals.ToRomanNumeral(effect.Strength) : "")

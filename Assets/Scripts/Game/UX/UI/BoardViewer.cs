@@ -1,33 +1,37 @@
 using System;
+using DG.Tweening;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic;
 using TMPro;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Color = UnityEngine.Color;
 using static Game.Interaction.BoardInteractionUtils;
 using static Game.Board.General.MatchManager;
 
-namespace Game.UI
+namespace Game.UX.UI
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BoardViewer : MonoBehaviour
     {
+        [Header("Function Groups")]
         [SerializeField] private CanvasGroup pieceAction;
         [SerializeField] private CanvasGroup gameAction;
-        
+     
+        [Header("Piece Actions")]
         [SerializeField] private Toggle move;
         [SerializeField] private Toggle capture;
         [SerializeField] private Toggle skill;
         [SerializeField] private TMP_Text skillCoolDown;
         
+        [Header("Game Actions")]
         [SerializeField] private Button special;
         [SerializeField] private Button relic;
         [SerializeField] private Button skip;
 
+        [Header("Piece Info Popup")]
         [SerializeField] private GameObject pieceInfo;
         [SerializeField] private UIObject3D pieceImage;
         [SerializeField] private GameObject pieceStatusEffect;
@@ -35,6 +39,10 @@ namespace Game.UI
 
         [NonSerialized] public int SelectingFunction;
 
+        [Header("Camera")]
+        [SerializeField] private Transform mainCameraCenter;
+
+        [Header("Miscellaneous UIs")]
         [SerializeField] private GameObject effectUI;
 
         [SerializeField] public GameObject chrysosShopUI;
@@ -74,6 +82,15 @@ namespace Game.UI
             pieceInfo.SetActive(false);
         }
 
+        public void PanTo(int pos1, int pos2)
+        {
+            var direction = mainCameraCenter.position;
+            direction.x = pos1;
+            direction.z = pos2;
+
+            mainCameraCenter.DOMove(direction, 0.3f);
+        }
+
         private static void SetToggle(Toggle toggle)
         {
             toggle.colors = !toggle.isOn ? _normalColors : _activeColors;
@@ -99,16 +116,19 @@ namespace Game.UI
         public void EnablePieceInteractions()
         {
             pieceAction.interactable = true;
+            skill.interactable = gameState.MainBoard[Selecting].SkillCooldown == 0;
+        }
+        
+        public void LoadPieceActionInfo()
+        {
             var cooldown = gameState.MainBoard[Selecting].SkillCooldown;
             if (cooldown != 0)
             {
                 skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";
-                skill.interactable = false;
             }
             else
             {
                 skillCoolDown.text = "";
-                skill.interactable = true;
             }
         }
 

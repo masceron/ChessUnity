@@ -1,6 +1,5 @@
 ﻿using System;
 using Game.Board.Piece.PieceLogic;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Common
@@ -14,15 +13,16 @@ namespace Game.Common
             if (Math.Sign(finish - start) != Math.Sign(finish - value)) return 1;
             return (value - start) / (finish - start);
         }
-
-        public static Vector2Int LineBlocker(Vector2Int first, Vector2Int second, PieceLogic[] board)
+        
+        public static (int, int) LineBlocker(int first1, int first2, int second1, int second2, PieceLogic[] board)
         {
-            var firstBlocker = -Vector2Int.one;
+            var firstBlockerX = -1;
+            var firstBlockerY = -1;
             
-            var x1 = first.x + 0.5f;
-            var y1 = first.y + 0.5f;
-            var x2 = second.x + 0.5f;
-            var y2 = second.y + 0.5f;
+            var x1 = first1 + 0.5f;
+            var y1 = first2 + 0.5f;
+            var x2 = second1 + 0.5f;
+            var y2 = second2 + 0.5f;
             
             float xDirection = x2 > x1 ? 1 : -1;
             var xCurrent = (float) Math.Floor(x1);
@@ -49,16 +49,16 @@ namespace Game.Common
                     yProgress = Crawl(y1, y2, yNext);
                 }
 
-                if (board[IndexOf((int)xCurrent, (int)yCurrent)] != null)
-                {
-                    firstBlocker = new Vector2Int((int)xCurrent, (int)yCurrent);
-                    break;
-                }
+                if (board[IndexOf((int)xCurrent, (int)yCurrent)] == null) continue;
+                
+                firstBlockerX = (int)xCurrent;
+                firstBlockerY = (int)yCurrent;
+                break;
 
             }
 
-            if (!firstBlocker.Equals(second)) return firstBlocker;
-            return -Vector2Int.one;
+            if (!(firstBlockerX == second1 && firstBlockerY == second2)) return (firstBlockerX, firstBlockerY);
+            return (-1, -1);
         }
     }
 }

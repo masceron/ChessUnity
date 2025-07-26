@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Captures;
@@ -7,9 +6,10 @@ using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.General;
-using Game.UI;
+using Game.UX.UI;
 using UnityEngine;
 using Action = Game.Board.Action.Action;
+using static Game.Common.BoardUtils;
 
 namespace Game.Interaction
 {
@@ -115,6 +115,8 @@ namespace Game.Interaction
                 _viewer.SetPieceHover(pos);
                 MatchManager.tileManager.Select(pos);
                 Selecting = pos;
+                _viewer.LoadPieceActionInfo();
+                _viewer.PanTo(RankOf(pos), FileOf(pos));
 
                 if (piece.color != MatchManager.gameState.OurSide) return;
                 

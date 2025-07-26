@@ -80,8 +80,6 @@ namespace Game.Board.Piece.PieceLogic.Swarm
             {
                 list.Add(new NormalCapture(pos, hoz2));
             }
-
-
         }
 
         protected override List<Action.Action> MoveToMake()

@@ -16,7 +16,7 @@ namespace Game.Board.Effects.Buffs
             if (action == null || action.To != Piece.pos || action.Result != ActionResult.Succeed) return;
             action.Result = ActionResult.Failed;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, MatchManager.gameState.MainBoard[action.Caller])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, MatchManager.gameState.MainBoard[action.Caller])));
 
             if (Strength > 1) Strength--;
             else
