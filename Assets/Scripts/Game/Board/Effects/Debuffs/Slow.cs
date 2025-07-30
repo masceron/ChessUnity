@@ -12,16 +12,16 @@ namespace Game.Board.Effects.Debuffs
 
         public override void OnApply()
         {
-            Piece.trueMoveRange -= Strength;
+            Piece.TrueMoveRange -= Strength;
             
-            if (Piece.effectiveMoveRange > 0) Piece.effectiveMoveRange = Math.Max(Piece.trueMoveRange, (sbyte)1);
+            if (Piece.EffectiveMoveRange > 0) Piece.EffectiveMoveRange = Math.Max(Piece.TrueMoveRange, (sbyte)1);
         }
 
         public override void OnRemove()
         {
-            Piece.trueMoveRange += Strength;
+            Piece.TrueMoveRange += Strength;
             
-            if (Piece.effectiveMoveRange > 0) Piece.effectiveMoveRange = Math.Max(Piece.trueMoveRange, (sbyte)1);
+            if (Piece.EffectiveMoveRange > 0) Piece.EffectiveMoveRange = Math.Max(Piece.TrueMoveRange, (sbyte)1);
         }
 
         public override string Description()

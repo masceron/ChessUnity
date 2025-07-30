@@ -1,4 +1,6 @@
 using UnityEngine;
+using Color = Game.Board.General.Color;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece
 {
@@ -12,7 +14,8 @@ namespace Game.Board.Piece
         FlyingFish,
         Chrysos,
         Anomalocaris,
-        Archelon
+        Archelon,
+        Thalassos
     }
 
     public enum PieceRank : byte
@@ -24,20 +27,30 @@ namespace Game.Board.Piece
         Common,
         Elite,
         Champion,
-        Commander
+        Commander,
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Piece : MonoBehaviour
     {
         private int rank;
         private int file;
+        private Color color;
         
-        public void Spawn(int r, int f, Vector3 defaultTransform)
+        public void Spawn(int pos, Color c)
         {
-            rank = r;
-            file = f;
+            rank = RankOf(pos);
+            file = FileOf(pos);
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-            transform.position = new Vector3(rank, defaultTransform.y, file);
+            transform.position = new Vector3(rank, 1.64f, file);
+            
+            var angles = new Quaternion
+            {
+                eulerAngles = c == Color.White
+                    ? new Vector3(-90, 0, 0)
+                    : new Vector3(-90, 0, 180)
+            };
+
+            transform.rotation = angles;
         }
         
         public void Move(int rankTo, int fileTo)

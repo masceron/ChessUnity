@@ -30,21 +30,21 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             var tpos = IndexOf(trank, file);
             if (!gameState.ActiveBoard[tpos]) return;
 
-            var p = gameState.MainBoard[tpos];
+            var p = gameState.PieceBoard[tpos];
             if (p == null)
             {
-                if (curr <= effectiveMoveRange)
-                    list.Add(new NormalMove(pos, pos, tpos));
+                if (curr <= EffectiveMoveRange)
+                    list.Add(new NormalMove(Pos, Pos, tpos));
             }
-            else if (p.color != color && curr <= attackRange)
+            else if (p.Color != Color && curr <= AttackRange)
             {
-                list.Add(new NormalCapture(pos, tpos));
+                list.Add(new NormalCapture(Pos, tpos));
             }
         }
 
         private void SirenActive(List<Action.Action> list, int trank, int file, GameState state)
         {
-            var push = color == Color.White ? 1 : -1;
+            var push = Color == Color.White ? 1 : -1;
             for (var i = -6; i <= 6; i++)
             {
                 var rankOff = trank + i;
@@ -55,20 +55,20 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                     if (!VerifyBounds(fileOff)) continue;
                     
                     var tpos = IndexOf(rankOff, fileOff);
-                    var pieceAt = state.MainBoard[tpos];
-                    if (pieceAt == null || pieceAt.color == color) continue;
+                    var pieceAt = state.PieceBoard[tpos];
+                    if (pieceAt == null || pieceAt.Color == Color) continue;
                     
                     var rankForce = rankOff + push;
                     while (Math.Abs(rankForce - rankOff) <= 3 &&
                            VerifyBounds(rankForce) &&
-                           state.MainBoard[IndexOf(rankForce, fileOff)] == null &&
+                           state.PieceBoard[IndexOf(rankForce, fileOff)] == null &&
                            state.ActiveBoard[IndexOf(rankForce, fileOff)])
                     {
                          rankForce += push;
                     }
                     rankForce -= push;
                     if (rankForce == rankOff) continue;
-                    list.Add(new SirenActive(pos, tpos, IndexOf(rankForce, fileOff)));
+                    list.Add(new SirenActive(Pos, tpos, IndexOf(rankForce, fileOff)));
                 }
             }
         }
@@ -76,11 +76,11 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         protected override List<Action.Action> MoveToMake()
         {
             var gameState = MatchManager.gameState;
-            var (trank, file) = RankFileOf(pos);
+            var (trank, file) = RankFileOf(Pos);
             
             var list = new List<Action.Action>();
             
-            for (var i = 1; i <= Math.Max(attackRange, effectiveMoveRange); i++)
+            for (var i = 1; i <= Math.Max(AttackRange, EffectiveMoveRange); i++)
             {
                 MakeMove(list, trank + i, file, i, gameState);
                 MakeMove(list, trank - i, file, i, gameState);

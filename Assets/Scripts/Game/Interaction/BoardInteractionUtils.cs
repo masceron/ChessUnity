@@ -89,8 +89,6 @@ namespace Game.Interaction
 
         public static void MarkPiece(int pos)
         {
-            if (MatchManager.gameState.SideToMove != MatchManager.gameState.OurSide) return;
-            
             if (Selecting != -1)
             {
                 if (_viewer.SelectingFunction == 0) return;
@@ -109,7 +107,7 @@ namespace Game.Interaction
             }
             else
             {
-                var piece = MatchManager.gameState.MainBoard[pos];
+                var piece = MatchManager.gameState.PieceBoard[pos];
                 if (piece == null) return;
                 
                 _viewer.SetPieceHover(pos);
@@ -118,10 +116,10 @@ namespace Game.Interaction
                 _viewer.LoadPieceActionInfo();
                 _viewer.PanTo(RankOf(pos), FileOf(pos));
 
-                if (piece.color != MatchManager.gameState.OurSide) return;
+                if (piece.Color != MatchManager.gameState.SideToMove) return;
                 
                 _viewer.EnablePieceInteractions();
-                _moveList = MatchManager.gameState.MainBoard[Selecting].MoveList();
+                _moveList = MatchManager.gameState.PieceBoard[Selecting].MoveList();
             }
         }
 
@@ -147,6 +145,11 @@ namespace Game.Interaction
         public static GameObject ChrysosShop()
         {
             return _viewer.chrysosShopUI;
+        }
+
+        public static GameObject ThalassosResurrector()
+        {
+            return _viewer.thalassosResurrector;
         }
     }
 }

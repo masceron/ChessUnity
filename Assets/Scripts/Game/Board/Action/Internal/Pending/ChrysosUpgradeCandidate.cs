@@ -1,5 +1,4 @@
 ﻿using Game.Board.Action.Skills;
-using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Interaction;
@@ -24,10 +23,10 @@ namespace Game.Board.Action.Internal.Pending
             To = (ushort)to;
             Cost = (byte)cost;
 
-            var cr = gameState.MainBoard[to];
-            UpgradableTo = Chrysos.UpgradableTo(cr.pieceRank);
-            UpgradeFrom = cr.pieceRank;
-            CurrentPiece = cr.type;
+            var cr = gameState.PieceBoard[to];
+            UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
+            UpgradeFrom = cr.PieceRank;
+            CurrentPiece = cr.Type;
         }
 
         public void CompleteAction()
@@ -40,7 +39,7 @@ namespace Game.Board.Action.Internal.Pending
             }
             else shop.gameObject.SetActive(true);
 
-            shop.Load((Chrysos)gameState.MainBoard[Caller], this);
+            shop.Load((Chrysos)gameState.PieceBoard[Caller], this);
         }
 
         protected override void ModifyGameState()

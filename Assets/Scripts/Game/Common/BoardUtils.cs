@@ -1,11 +1,12 @@
 ﻿using System;
+using UnityEngine;
 
 namespace Game.Common
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BoardUtils
     {
-        public const int MaxLength = 12;
+        public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
 
         public static int RankOf(int index)
@@ -76,6 +77,14 @@ namespace Game.Common
         public static int Distance(int pos1, int pos2)
         {
             return Math.Max(Math.Abs(RankOf(pos1) - RankOf(pos2)), Math.Abs(FileOf(pos1) - FileOf(pos2)));
+        }
+
+        public static int PosMap(int pos, Vector2Int startingSize)
+        {
+            var rank = pos / startingSize.x;
+            var file = pos % startingSize.y;
+
+            return IndexOf(rank + (MaxLength - startingSize.x) / 2, file + (MaxLength - startingSize.y) / 2);
         }
     }
 }

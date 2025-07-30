@@ -22,20 +22,20 @@ namespace Game.Board.Piece.PieceLogic.Summoned
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
             if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.MainBoard[index];
+            var pieceOn = gameState.PieceBoard[index];
             if (pieceOn != null)
             {
-                if (pieceOn.color != color && distance <= attackRange)
+                if (pieceOn.Color != Color && distance <= AttackRange)
                 {
-                    list.Add(new Action.Captures.SnappingStrike(pos, index));
+                    list.Add(new Action.Captures.SnappingStrike(Pos, index));
                 }
 
                 return false;
             }
 
-            if (distance <= effectiveMoveRange)
+            if (distance <= EffectiveMoveRange)
             {
-                list.Add(new NormalMove(pos, pos, index));
+                list.Add(new NormalMove(Pos, Pos, index));
             }
 
             return true;
@@ -44,9 +44,9 @@ namespace Game.Board.Piece.PieceLogic.Summoned
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var rank = RankOf(pos);
-            var file = FileOf(pos);
-            var maxRange = Math.Max(attackRange, effectiveMoveRange);
+            var rank = RankOf(Pos);
+            var file = FileOf(Pos);
+            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
             {

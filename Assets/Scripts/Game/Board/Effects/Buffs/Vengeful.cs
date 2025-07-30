@@ -15,9 +15,9 @@ namespace Game.Board.Effects.Buffs
         {
             if (action == null) return;
             
-            if (action.To == Piece.pos && action.Result != ActionResult.Failed)
+            if (action.To == Piece.Pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, MatchManager.gameState.MainBoard[action.To])));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, MatchManager.gameState.PieceBoard[action.To])));
             }
         }
 

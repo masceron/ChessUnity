@@ -19,8 +19,8 @@ namespace Game.Board.Action.Skills
         protected override void ModifyGameState()
         {
             gameState.Move(From, To);
-            gameState.MainBoard[To].color = gameState.MainBoard[To].color == Color.White ? Color.Black : Color.White;
-            ((GuidingSiren) gameState.MainBoard[Caller]).SkillCooldown = 12;
+            gameState.PieceBoard[To].Color = gameState.PieceBoard[To].Color == Color.White ? Color.Black : Color.White;
+            ((GuidingSiren) gameState.PieceBoard[Caller]).SkillCooldown = 12;
         }
     }
 }

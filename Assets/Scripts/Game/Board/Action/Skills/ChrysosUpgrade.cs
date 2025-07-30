@@ -1,5 +1,4 @@
 ﻿using Game.Board.Action.Internal;
-using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 using static Game.Board.General.MatchManager;
@@ -21,8 +20,8 @@ namespace Game.Board.Action.Skills
         {
             ActionManager.EnqueueAction(new DestroyPiece(target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(target));
-            ((Chrysos)gameState.MainBoard[Caller]).Coin -= cost;
-            ((Chrysos)gameState.MainBoard[Caller]).SkillCooldown = 4;
+            ((Chrysos)gameState.PieceBoard[Caller]).Coin -= cost;
+            ((Chrysos)gameState.PieceBoard[Caller]).SkillCooldown = 4;
         }
     }
 }

@@ -1,7 +1,4 @@
-using Game.Board.Action;
 using Game.Board.General;
-using Game.Board.Piece;
-using Game.Board.Tile;
 using UnityEngine;
 
 namespace Game.Board
@@ -9,14 +6,9 @@ namespace Game.Board
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Board : MonoBehaviour
     {
-        [SerializeField] private PieceManager pieceManager;
-        [SerializeField] private TileManager tileManager;
-        [SerializeField] public AssetManager assetManager;
-
-        private void MatchMaker()
+        private static void MatchMaker()
         {
-            MatchManager.Init(tileManager, pieceManager, assetManager, new Config());
-            ActionManager.Init();
+            MatchManager.Init(new Config());
         }
     
         private void Awake()

@@ -16,7 +16,7 @@ namespace Game.Board.Action.Skills
         protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(Caller);
-            var caller = gameState.MainBoard[Caller];
+            var caller = gameState.PieceBoard[Caller];
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -25,8 +25,8 @@ namespace Game.Board.Action.Skills
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;
-                    var p = gameState.MainBoard[IndexOf(rankOff, fileOff)];
-                    if (p == null || p.color == caller.color) continue;
+                    var p = gameState.PieceBoard[IndexOf(rankOff, fileOff)];
+                    if (p == null || p.Color == caller.Color) continue;
 
                     ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, p)));
                 }

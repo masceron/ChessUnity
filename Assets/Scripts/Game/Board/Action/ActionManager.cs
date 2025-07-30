@@ -14,6 +14,16 @@ namespace Game.Board.Action
         public static void Init(GameState state)
         {
             _state = state;
+            _actionQueue = new Queue<Action>();
+            _lastMainAction = null;
+        }
+
+        public static void ExecuteWhenStart()
+        {
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                action.Execute(_state);
+            }
         }
 
         public static void EnqueueAction(Action queueAction)
@@ -64,13 +74,6 @@ namespace Game.Board.Action
         public static void ExecuteImmediately(Action action)
         {
             action.Execute(_state);
-        }
-
-        public static void Init()
-        {
-            _state = MatchManager.gameState;
-            _actionQueue = new Queue<Action>();
-            _lastMainAction = null;
         }
     }
 }

@@ -19,7 +19,6 @@ namespace Game.Board.Action
         protected override void ModifyGameState()
         {
             gameState.SideToMove = gameState.SideToMove == Color.White ? Color.Black : Color.White;
-            gameState.OurSide = gameState.SideToMove;
         }
     }
 }

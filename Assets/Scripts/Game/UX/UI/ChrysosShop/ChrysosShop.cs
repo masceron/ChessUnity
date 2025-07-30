@@ -73,7 +73,7 @@ namespace Game.UX.UI.ChrysosShop
 
         public void Buy(PieceType type)
         {
-            BoardInteractionUtils.ExecuteAction(new ChrysosUpgrade(chrysos.pos, new PieceConfig(type, chrysos.color, candidate.To), cost));
+            BoardInteractionUtils.ExecuteAction(new ChrysosUpgrade(chrysos.Pos, new PieceConfig(type, chrysos.Color, candidate.To), cost));
             Disable();
         }
     }

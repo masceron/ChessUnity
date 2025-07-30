@@ -14,7 +14,7 @@ namespace Game.Board.Action.Internal
 
         protected override void ModifyGameState()
         {
-            var affected = gameState.MainBoard[To];
+            var affected = gameState.PieceBoard[To];
             
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, affected)));
         }

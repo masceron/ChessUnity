@@ -663,7 +663,7 @@ namespace UI.UIObject3D.Scripts
         {
             get
             {
-                bool setProperties = false;
+                var setProperties = false;
                 if (!_imageComponent)
                 {
                     _imageComponent = GetComponent<UIObject3DImage>();
@@ -676,11 +676,9 @@ namespace UI.UIObject3D.Scripts
                     setProperties = true;
                 }
 
-                if (setProperties)
-                {
-                    _imageComponent.type = Image.Type.Simple;
-                    _imageComponent.preserveAspect = true;
-                }
+                if (!setProperties) return _imageComponent;
+                _imageComponent.type = Image.Type.Simple;
+                _imageComponent.preserveAspect = true;
 
                 return _imageComponent;
             }

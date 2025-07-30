@@ -14,10 +14,10 @@ namespace Game.Board.Effects.Traits
         {
             if (action.Result == ActionResult.Failed) return;
             
-            var caller = gameState.MainBoard[action.Caller];
-            var captured = gameState.MainBoard[action.To];
+            var caller = gameState.PieceBoard[action.Caller];
+            var captured = gameState.PieceBoard[action.To];
             
-            if (caller.color == Piece.color && caller.pieceRank < captured.pieceRank) ((Chrysos)Piece).Coin += 1;
+            if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
         }
 
         public override string Description()

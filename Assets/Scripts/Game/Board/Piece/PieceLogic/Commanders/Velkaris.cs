@@ -27,26 +27,28 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         {
             var gameState = MatchManager.gameState;
             
-            var (rank, file) = RankFileOf(pos);
+            var (rank, file) = RankFileOf(Pos);
             
             var list = new List<Action.Action>();
 
-            var totalRange = Math.Max(effectiveMoveRange, attackRange);
+            var totalRange = Math.Max(EffectiveMoveRange, AttackRange);
             
             for (var rankOff = 1; rankOff <= totalRange; rankOff++)
             {
                 var rankAfter = rank + rankOff;
                 if (!VerifyUpperBound(rankAfter)) break;
                 var newPos = IndexOf(rankAfter, file);
-                var p = gameState.MainBoard[newPos];
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && rankOff <= attackRange) list.Add(new NormalCapture(pos, newPos));
+                    if (p.Color != Color && rankOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (rankOff <= effectiveMoveRange)
+                if (rankOff <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, Pos, newPos));
                 }
             }
             
@@ -55,15 +57,17 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var rankAfter = rank + rankOff;
                 if (rankAfter < 0) break;
                 var newPos = IndexOf(rankAfter, file);
-                var p = gameState.MainBoard[newPos];
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && rankOff >= -attackRange) list.Add(new NormalCapture(pos, newPos));
+                    if (p.Color != Color && rankOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (rankOff >= -effectiveMoveRange)
+                if (rankOff >= -EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, Pos, newPos));
                 }
             }
             
@@ -72,15 +76,17 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var fileAfter = file + fileOff;
                 if (!VerifyUpperBound(fileAfter)) break;
                 var newPos = IndexOf(rank, fileAfter);
-                var p = gameState.MainBoard[newPos];
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && fileOff <= attackRange) list.Add(new NormalCapture(pos, newPos));
+                    if (p.Color != Color && fileOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (fileOff <= effectiveMoveRange)
+                if (fileOff <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, Pos, newPos));
                 }
             }
             
@@ -89,21 +95,23 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 var fileAfter = file + fileOff;
                 if (fileAfter < 0) break;
                 var newPos = IndexOf(rank, fileAfter);
-                var p = gameState.MainBoard[newPos];
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && fileOff >= -attackRange) list.Add(new NormalCapture(pos, newPos));
+                    if (p.Color != Color && fileOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (fileOff >= -effectiveMoveRange)
+                if (fileOff >= -EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, Pos, newPos));
                 }
             }
             
             if (SkillCooldown == 0 && Marked != null)
             {
-                list.Add(new VelkarisKill(pos, pos, Marked.pos));
+                list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
             }
 
             return list;

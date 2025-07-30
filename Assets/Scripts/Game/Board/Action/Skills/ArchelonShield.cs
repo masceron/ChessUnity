@@ -14,8 +14,8 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(-1, gameState.MainBoard[To])));
-            gameState.MainBoard[Caller].SkillCooldown = 4;
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(-1, gameState.PieceBoard[To])));
+            gameState.PieceBoard[Caller].SkillCooldown = 4;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Game.Board.Effects.Traits
     {
         public SirenDebuffer(PieceLogic p) : base(-1, 1, p, EffectType.SirenDebuffer)
         {
-            CalculateEffectRange(p.pos);
+            CalculateEffectRange(p.Pos);
         }
 
         private void CalculateEffectRange(int pos)
@@ -31,9 +31,9 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action != null && action.Caller == Piece.pos && action.DoesMoveChangePos)
+            if (action != null && action.Caller == Piece.Pos && action.DoesMoveChangePos)
             {
-                CalculateEffectRange(Piece.pos);
+                CalculateEffectRange(Piece.Pos);
             }
 
             for (var r = rankStart; r <= rankEnd; r++)
@@ -42,11 +42,11 @@ namespace Game.Board.Effects.Traits
                 for (var f = fileStart; f <= fileEnd; f++)
                 {
                     var index = rowIndex + f;
-                    var pOn = MatchManager.gameState.MainBoard[index];
+                    var pOn = MatchManager.gameState.PieceBoard[index];
                     if (pOn == null) continue;
-                    if (pOn.color != Piece.color)
+                    if (pOn.Color != Piece.Color)
                     {
-                        ActionManager.EnqueueAction(new SirenDebuff(Piece.pos, Piece.pos, (ushort)index));
+                        ActionManager.EnqueueAction(new SirenDebuff(Piece.Pos, Piece.Pos, (ushort)index));
                     }
                 }
             }

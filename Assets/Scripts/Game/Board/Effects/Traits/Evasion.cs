@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Board.Action;
+﻿using Game.Board.Action;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
@@ -18,7 +17,7 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action == null || action.To != Piece.pos || action.Result == ActionResult.Failed) return;
+            if (action == null || action.To != Piece.Pos || action.Result == ActionResult.Failed) return;
 
             if (Distance(action.From, action.To) < 3) return;
             if (!MatchManager.Roll(probability)) return;

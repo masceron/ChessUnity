@@ -8,7 +8,6 @@ namespace Game.Board.Piece
         [SerializeField] public string pieceName;
         [SerializeField] public PieceType type;
         [SerializeField] public GameObject prefab;
-        [SerializeField] public Vector3 defaultTransform;
 
         [SerializeField] public PieceRank rank;
         [SerializeField] public sbyte moveRange;

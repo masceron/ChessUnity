@@ -22,7 +22,7 @@ namespace Game.Board.Action.Quiets
         {
             var (rankFrom, fileFrom) = RankFileOf(From);
             var (rankTo, fileTo) = RankFileOf(To);
-            var board = MatchManager.gameState.MainBoard;
+            var board = MatchManager.gameState.PieceBoard;
             var caller = board[From];
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
@@ -34,7 +34,7 @@ namespace Game.Board.Action.Quiets
                 fileFrom += fileDir;
 
                 var p = board[IndexOf(rankFrom, fileFrom)];
-                if (p == null || p.color == caller.color) continue;
+                if (p == null || p.Color == caller.Color) continue;
                 
                 ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p)));
                 break;

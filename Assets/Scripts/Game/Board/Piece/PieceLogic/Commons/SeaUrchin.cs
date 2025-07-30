@@ -26,25 +26,25 @@ namespace Game.Board.Piece.PieceLogic.Commons
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var push = color == Color.White ? -MaxLength : MaxLength;
+            var push = Color == Color.White ? -MaxLength : MaxLength;
             
-            for (var i = 1; i <= Math.Max(effectiveMoveRange, attackRange); i++)
+            for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
             {
-                var posTo = pos + push * i;
+                var posTo = Pos + push * i;
 
                 if (!VerifyIndex(posTo) ||
                     !MatchManager.gameState.ActiveBoard[posTo]) continue;
                 
-                var pieceAt = MatchManager.gameState.MainBoard[posTo];
+                var pieceAt = MatchManager.gameState.PieceBoard[posTo];
                 
                 if (pieceAt == null)
                 {
-                    if (effectiveMoveRange >= i)
-                        list.Add(new NormalMove(pos, pos, posTo));
+                    if (EffectiveMoveRange >= i)
+                        list.Add(new NormalMove(Pos, Pos, posTo));
                 }
-                else if (pieceAt.pieceRank == PieceRank.Construct && attackRange >= i)
+                else if (pieceAt.PieceRank == PieceRank.Construct && AttackRange >= i)
                 {
-                    list.Add(new DestroyConstruct(pos, (ushort)posTo));
+                    list.Add(new DestroyConstruct(Pos, (ushort)posTo));
                 }
             }
 

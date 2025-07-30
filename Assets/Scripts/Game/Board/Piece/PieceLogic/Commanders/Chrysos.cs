@@ -23,16 +23,16 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             if (SkillCooldown > 0) return;
             for (var i = 0; i < BoardSize; i++)
             {
-                var piece = gameState.MainBoard[i];
-                if (piece == null || piece.color != color) continue;
+                var piece = gameState.PieceBoard[i];
+                if (piece == null || piece.Color != Color) continue;
                 
-                var upgradableTo = UpgradableTo(piece.pieceRank);
+                var upgradableTo = UpgradableTo(piece.PieceRank);
                 if (upgradableTo == PieceRank.None) continue;
                 
-                var cost = CalculateCost(piece.pieceRank, upgradableTo);
+                var cost = CalculateCost(piece.PieceRank, upgradableTo);
                 if (Coin >= cost)
                 {
-                    list.Add(new ChrysosUpgradeCandidate(pos, i, cost));
+                    list.Add(new ChrysosUpgradeCandidate(Pos, i, cost));
                 }
             }
         }
@@ -40,20 +40,20 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         private bool MakeMove(List<Action.Action> list, int index)
         {
             if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.MainBoard[index];
+            var pieceOn = gameState.PieceBoard[index];
             if (pieceOn != null)
             {
-                if (pieceOn.color != color) list.Add(new NormalCapture(pos, index));
+                if (pieceOn.Color != Color) list.Add(new NormalCapture(Pos, index));
                 return false;
             }
-            list.Add(new NormalMove(pos, pos, index));
+            list.Add(new NormalMove(Pos, Pos, index));
             return true;
         }
 
         private void Moves(List<Action.Action> list)
         {
-            var rank = RankOf(pos);
-            var file = FileOf(pos);
+            var rank = RankOf(Pos);
+            var file = FileOf(Pos);
             
             for (var rankOff = rank - 1; rankOff >= 0; rankOff--)
             {

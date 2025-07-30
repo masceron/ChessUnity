@@ -19,15 +19,15 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
         private void Quiets(List<Action.Action> list)
         {
-            var (rank, file) = RankFileOf(pos);
+            var (rank, file) = RankFileOf(Pos);
             
-            var board = MatchManager.gameState.MainBoard;
+            var board = MatchManager.gameState.PieceBoard;
             var active = MatchManager.gameState.ActiveBoard;
 
-            for (var rankTo = rank - effectiveMoveRange; rankTo <= rank + effectiveMoveRange; rankTo += effectiveMoveRange)
+            for (var rankTo = rank - EffectiveMoveRange; rankTo <= rank + EffectiveMoveRange; rankTo += EffectiveMoveRange)
             {
                 if (!VerifyBounds(rankTo)) continue;
-                for (var fileTo = file - effectiveMoveRange; fileTo <= file + effectiveMoveRange; fileTo += effectiveMoveRange)
+                for (var fileTo = file - EffectiveMoveRange; fileTo <= file + EffectiveMoveRange; fileTo += EffectiveMoveRange)
                 {
                     if (!VerifyBounds(fileTo)) continue;
                     if (rankTo == rank && fileTo == file) continue;
@@ -35,7 +35,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
                     if (board[posTo] == null && active[posTo])
                     {
-                        list.Add(new FlyingFishMove(pos, posTo));
+                        list.Add(new FlyingFishMove(Pos, posTo));
                     }
                 }
             }
@@ -43,42 +43,42 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
         private void Captures(List<Action.Action> list)
         {
-            var board = MatchManager.gameState.MainBoard;
+            var board = MatchManager.gameState.PieceBoard;
 
-            var ver1 = PushWhite(pos) * attackRange;
-            var ver2 = PushBlack(pos) * attackRange;
+            var ver1 = PushWhite(Pos) * AttackRange;
+            var ver2 = PushBlack(Pos) * AttackRange;
 
-            if (VerifyUpperIndex(ver1) && board[ver1] != null && board[ver1].color != color)
+            if (VerifyUpperIndex(ver1) && board[ver1] != null && board[ver1].Color != Color)
             {
-                list.Add(new NormalCapture(pos, ver1));
+                list.Add(new NormalCapture(Pos, ver1));
             }
             
-            if (ver2 > 0 && board[ver2] != null && board[ver2].color != color)
+            if (ver2 > 0 && board[ver2] != null && board[ver2].Color != Color)
             {
-                list.Add(new NormalCapture(pos, ver2));
+                list.Add(new NormalCapture(Pos, ver2));
             }
 
-            var (rank, file) = RankFileOf(pos);
+            var (rank, file) = RankFileOf(Pos);
                 
-            var fileOff1 = file - attackRange;
-            var fileOff2 = file + attackRange;
+            var fileOff1 = file - AttackRange;
+            var fileOff2 = file + AttackRange;
 
             if (fileOff1 > 0)
             {
                 var hoz1 = IndexOf(rank, fileOff1);
                 
-                if (board[hoz1] != null && board[hoz1].color != color)
+                if (board[hoz1] != null && board[hoz1].Color != Color)
                 {
-                    list.Add(new NormalCapture(pos, hoz1));
+                    list.Add(new NormalCapture(Pos, hoz1));
                 }
             }
 
             if (!VerifyUpperBound(fileOff2)) return;
             
             var hoz2 = IndexOf(rank, fileOff2);
-            if (board[hoz2] != null && board[hoz2].color != color)
+            if (board[hoz2] != null && board[hoz2].Color != Color)
             {
-                list.Add(new NormalCapture(pos, hoz2));
+                list.Add(new NormalCapture(Pos, hoz2));
             }
         }
 

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using DG.Tweening;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic;
@@ -39,13 +41,18 @@ namespace Game.UX.UI
 
         [NonSerialized] public int SelectingFunction;
 
+        [Header("Captures")] 
+        [SerializeField] private RectTransform allyCaptured;
+        [SerializeField] private RectTransform enemyCaptured;
+
         [Header("Camera")]
         [SerializeField] private Transform mainCameraCenter;
 
         [Header("Miscellaneous UIs")]
         [SerializeField] private GameObject effectUI;
-
+        [SerializeField] private GameObject capturedUI;
         [SerializeField] public GameObject chrysosShopUI;
+        [SerializeField] public GameObject thalassosResurrector;
         
         private static ColorBlock _normalColors;
         private static ColorBlock _activeColors;
@@ -82,6 +89,38 @@ namespace Game.UX.UI
             pieceInfo.SetActive(false);
         }
 
+        public void Load()
+        {
+            gameState.WhiteCaptured.CollectionChanged += ReloadCaptureList;
+            gameState.BlackCaptured.CollectionChanged += ReloadCaptureList;
+        }
+
+        private readonly List<GameObject> allyCapturedList = new();
+        private readonly List<GameObject> enemyCapturedList = new();
+
+        private void ReloadCaptureList(object o, NotifyCollectionChangedEventArgs e)
+        {
+            var color = gameState.OurSide;
+            var collection = o == gameState.WhiteCaptured ? 
+                color == Board.General.Color.White ? allyCapturedList : enemyCapturedList :
+                color == Board.General.Color.Black ? allyCapturedList : enemyCapturedList;
+
+            var obj = collection == allyCapturedList ? allyCaptured : enemyCaptured;
+
+            if (e.OldItems != null)
+            {
+                var removed = collection[e.OldStartingIndex];
+                collection.Remove(removed);
+                Destroy(removed);
+            }
+            else
+            {
+                var newObj = Instantiate(capturedUI, obj);
+                newObj.GetComponent<CapturedUI>().Load((PieceConfig)e.NewItems[0]);
+                collection.Add(newObj);
+            }
+        }
+
         public void PanTo(int pos1, int pos2)
         {
             var direction = mainCameraCenter.position;
@@ -116,12 +155,12 @@ namespace Game.UX.UI
         public void EnablePieceInteractions()
         {
             pieceAction.interactable = true;
-            skill.interactable = gameState.MainBoard[Selecting].SkillCooldown == 0;
+            skill.interactable = gameState.PieceBoard[Selecting].SkillCooldown == 0;
         }
         
         public void LoadPieceActionInfo()
         {
-            var cooldown = gameState.MainBoard[Selecting].SkillCooldown;
+            var cooldown = gameState.PieceBoard[Selecting].SkillCooldown;
             if (cooldown != 0)
             {
                 skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";
@@ -230,7 +269,7 @@ namespace Game.UX.UI
                 return;
             }
             
-            var piece = gameState.MainBoard[pos];
+            var piece = gameState.PieceBoard[pos];
 
             if (piece == null) return;
 
@@ -270,7 +309,7 @@ namespace Game.UX.UI
         private void SetUpPieceInfo(PieceLogic piece)
         {
             pieceInfo.SetActive(true);
-            var pieceInformation = assetManager.PieceData[piece.type];
+            var pieceInformation = assetManager.PieceData[piece.Type];
             LoadPieceModel(pieceInformation);
             LoadPieceDemonstrations(pieceInformation);
         }
@@ -310,7 +349,7 @@ namespace Game.UX.UI
             if (!context.performed || !pieceInfo.activeSelf) return;
             
             seeingCapture = !seeingCapture;
-            LoadPieceDemonstrations(assetManager.PieceData[hovering.type]);
+            LoadPieceDemonstrations(assetManager.PieceData[hovering.Type]);
         }
     }
 }

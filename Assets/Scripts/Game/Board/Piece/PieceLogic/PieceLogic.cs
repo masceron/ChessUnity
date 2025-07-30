@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Board.Effects;
 using Game.Board.Effects.Debuffs;
@@ -8,34 +7,34 @@ using Color = Game.Board.General.Color;
 
 namespace Game.Board.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), Serializable]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
-        public ushort pos;
-        public Color color;
+        public ushort Pos;
+        public Color Color;
 
-        public sbyte trueMoveRange;
-        public sbyte effectiveMoveRange;
-        public sbyte attackRange;
+        public sbyte TrueMoveRange;
+        public sbyte EffectiveMoveRange;
+        public sbyte AttackRange;
         public sbyte SkillCooldown;
         
-        public PieceRank pieceRank;
+        public readonly PieceRank PieceRank;
        
         public readonly List<Effect> Effects;
-        public PieceType type;
+        public readonly PieceType Type;
 
         protected PieceLogic(PieceConfig cfg)
         {
-            color = cfg.Color;
-            pos = cfg.Index;
+            Color = cfg.Color;
+            Pos = cfg.Index;
             Effects = new List<Effect>();
-            type = cfg.Type;
+            Type = cfg.Type;
 
             var info = MatchManager.assetManager.PieceData[cfg.Type];
-            effectiveMoveRange = info.moveRange;
-            trueMoveRange = info.moveRange;
-            attackRange = info.attackRange; 
-            pieceRank = info.rank;
+            EffectiveMoveRange = info.moveRange;
+            TrueMoveRange = info.moveRange;
+            AttackRange = info.attackRange; 
+            PieceRank = info.rank;
         }
 
         public void PassTurn()

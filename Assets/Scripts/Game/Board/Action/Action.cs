@@ -1,5 +1,4 @@
 ﻿using Game.Board.General;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action
 {

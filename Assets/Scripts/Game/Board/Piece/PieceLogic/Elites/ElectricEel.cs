@@ -22,24 +22,24 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
         private void Quiets(List<Action.Action> list)
         {
-            var (rank, file) = RankFileOf(pos);
+            var (rank, file) = RankFileOf(Pos);
             
-            for (var i = file - effectiveMoveRange + 1; i <= file + effectiveMoveRange - 1; i++)
+            for (var i = file - EffectiveMoveRange + 1; i <= file + EffectiveMoveRange - 1; i++)
             {
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
                 
-                if (MatchManager.gameState.MainBoard[posTo] != null ||
+                if (MatchManager.gameState.PieceBoard[posTo] != null ||
                     !MatchManager.gameState.ActiveBoard[posTo]) continue;
 
                 if (Pathfinder.LineBlocker(rank, file,
                         rank, i,
-                        MatchManager.gameState.MainBoard).Item1 != -1) continue;
+                        MatchManager.gameState.PieceBoard).Item1 != -1) continue;
                 
-                list.Add(new NormalMove(pos, pos, posTo));
+                list.Add(new NormalMove(Pos, Pos, posTo));
             }
             
-            for (var i = 1; i <= effectiveMoveRange; i++)
+            for (var i = 1; i <= EffectiveMoveRange; i++)
             {
                 var rankOffFront = rank + i;
                 var rankOffBack = rank - i;
@@ -54,12 +54,12 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                         if (Pathfinder.LineBlocker(rank, file,
                                 rankOffFront, fileOff,
-                                MatchManager.gameState.MainBoard).Item1 == -1)
+                                MatchManager.gameState.PieceBoard).Item1 == -1)
                         {
-                            if (MatchManager.gameState.MainBoard[posOffFront] == null &&
+                            if (MatchManager.gameState.PieceBoard[posOffFront] == null &&
                                 MatchManager.gameState.ActiveBoard[posOffFront])
                             {
-                                list.Add(new NormalMove(pos, pos, posOffFront));
+                                list.Add(new NormalMove(Pos, Pos, posOffFront));
                             }
                         }
                     }
@@ -70,12 +70,12 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                     if (Pathfinder.LineBlocker(rank, file,
                             rankOffBack, fileOff,
-                            MatchManager.gameState.MainBoard).Item1 != -1) continue;
+                            MatchManager.gameState.PieceBoard).Item1 != -1) continue;
                     
-                    if (MatchManager.gameState.MainBoard[posOffBack] == null &&
+                    if (MatchManager.gameState.PieceBoard[posOffBack] == null &&
                         MatchManager.gameState.ActiveBoard[posOffBack])
                     {
-                        list.Add(new NormalMove(pos, pos, posOffBack));
+                        list.Add(new NormalMove(Pos, Pos, posOffBack));
                     }
                 }
             }
@@ -83,44 +83,44 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
         private void Captures(List<Action.Action> list)
         {
-            var (rank, file) = RankFileOf(pos);
-            var push = color == Color.White ? -1 : 1;
+            var (rank, file) = RankFileOf(Pos);
+            var push = Color == Color.White ? -1 : 1;
             
-            for (var i = file - attackRange + 1; i <= file + attackRange - 1; i++)
+            for (var i = file - AttackRange + 1; i <= file + AttackRange - 1; i++)
             {
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
 
-                var p = MatchManager.gameState.MainBoard[posTo];
+                var p = MatchManager.gameState.PieceBoard[posTo];
 
-                if (p == null || p.color == color) continue;
+                if (p == null || p.Color == Color) continue;
                 
                  if (Pathfinder.LineBlocker(rank, file,
                          rank, i,
-                         MatchManager.gameState.MainBoard).Item1 != -1) continue;
+                         MatchManager.gameState.PieceBoard).Item1 != -1) continue;
                 
-                list.Add(new NormalCapture(pos, posTo));
+                list.Add(new NormalCapture(Pos, posTo));
             }
 
-            for (var rankOff = push; Math.Abs(rankOff) <= attackRange; rankOff += push)
+            for (var rankOff = push; Math.Abs(rankOff) <= AttackRange; rankOff += push)
             {
                 var rankAfter = rank + rankOff;
                 if (!VerifyBounds(rankAfter)) break;
                 
-                for (var j = file - attackRange + Math.Abs(rankOff); j <= file + attackRange - Math.Abs(rankOff); j++)
+                for (var j = file - AttackRange + Math.Abs(rankOff); j <= file + AttackRange - Math.Abs(rankOff); j++)
                 {
                     if (!VerifyBounds(j)) continue;
                     
                     var posTo = IndexOf(rankAfter, j);
-                    var p = MatchManager.gameState.MainBoard[posTo];
+                    var p = MatchManager.gameState.PieceBoard[posTo];
                     
-                    if (p == null || p.color == color) continue;
+                    if (p == null || p.Color == Color) continue;
                     
                      if (Pathfinder.LineBlocker(rank, file,
                              rank, j,
-                             MatchManager.gameState.MainBoard).Item1 != -1) continue;
+                             MatchManager.gameState.PieceBoard).Item1 != -1) continue;
                 
-                    list.Add(new NormalCapture(pos, posTo));
+                    list.Add(new NormalCapture(Pos, posTo));
                     
                 }
             }
@@ -130,7 +130,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
         {
             if (SkillCooldown == 0)
             {
-                list.Add(new ElectricEelActive(pos));
+                list.Add(new ElectricEelActive(Pos));
             }
         }
 

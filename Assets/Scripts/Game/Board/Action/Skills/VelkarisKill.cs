@@ -1,5 +1,4 @@
 ﻿using static Game.Board.General.MatchManager;
-using Game.Board.Piece.PieceLogic.Commanders;
 
 namespace Game.Board.Action.Skills
 {
@@ -20,7 +19,7 @@ namespace Game.Board.Action.Skills
         protected override void ModifyGameState()
         {
             gameState.Destroy(To);
-            gameState.MainBoard[From].SkillCooldown = -1;
+            gameState.PieceBoard[From].SkillCooldown = -1;
         }
     }
 }

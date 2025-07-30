@@ -7,7 +7,7 @@ namespace Game.Board.Effects.Traits
     {
         private byte lastUsed;
         private bool active;
-        private const sbyte RangeOffset = 1;
+        private const sbyte RangeOffset = 2;
 
         public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, EffectType.Ambush)
         {}
@@ -15,18 +15,18 @@ namespace Game.Board.Effects.Traits
         public override void OnCall(Action.Action action)
         {
             if (action == null) return;
-            if (action.Caller != Piece.pos)
+            if (action.Caller != Piece.Pos)
             {
                 lastUsed++;
                 if (lastUsed < 6 || active) return;
                 active = true;
-                Piece.attackRange += RangeOffset;
+                Piece.AttackRange += RangeOffset;
             }
             else if (active)
             {
                 active = false;
                 lastUsed = 0;
-                Piece.attackRange -= RangeOffset;
+                Piece.AttackRange -= RangeOffset;
             }
         }
 
@@ -37,7 +37,7 @@ namespace Game.Board.Effects.Traits
 
         public override void OnRemove()
         {
-            if (active) Piece.attackRange -= RangeOffset;
+            if (active) Piece.AttackRange -= RangeOffset;
         }
     }
 }

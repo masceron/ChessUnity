@@ -23,10 +23,10 @@ namespace Game.Board.Piece
             var pos = config.Index;
             var info = piecesInfo[config.Type];
             var prefab = info.prefab;
-            var p = Instantiate(prefab).AddComponent<Piece>();
-            p.transform.parent = transform;
+            var p = Instantiate(prefab, transform).AddComponent<Piece>();
+            
             pieces[pos] = p;
-            p.Spawn(RankOf(pos), FileOf(pos), info.defaultTransform);
+            p.Spawn(pos, config.Color);
         }
 
         public void Destroy(int pos)

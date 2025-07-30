@@ -15,14 +15,14 @@ namespace Game.Board.Action.Internal
 
         protected override void Animate()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(gameState.MainBoard[To])));
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(gameState.PieceBoard[To])));
         }
 
         protected override void ModifyGameState()
         {
-            var caller = (Velkaris)gameState.MainBoard[From];
+            var caller = (Velkaris)gameState.PieceBoard[From];
             caller.SkillCooldown = 0;
-            caller.Marked = gameState.MainBoard[To];
+            caller.Marked = gameState.PieceBoard[To];
         }
     }
 }

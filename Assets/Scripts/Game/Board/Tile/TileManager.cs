@@ -1,7 +1,8 @@
-using System.Collections;
 using Game.Interaction;
 using UnityEngine;
 using static Game.Common.BoardUtils;
+using static Game.Board.General.MatchManager;
+using Color = Game.Board.General.Color;
 
 namespace Game.Board.Tile
 {
@@ -10,7 +11,6 @@ namespace Game.Board.Tile
     {
         private Tile[] tiles;
         
-        [SerializeField] private GameObject[] floorPrefabs;
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
 
@@ -30,27 +30,36 @@ namespace Game.Board.Tile
             selections[pos] = sel.AddComponent<Marker>();
         }
 
-        public void Spawn(BitArray active)
+        public void Spawn()
         {
             selections = new Marker[BoardSize];
             tiles = new Tile[BoardSize];
-            
-            for (var i = 0; i < MaxLength; i++)
-            {
-                var rankStart = RowIndex(i);
-                for (var j = 0; j < MaxLength; j++)
-                {
-                    var index = rankStart + j;
-                    
-                    
-                    var tile = new GameObject(i + " " + j).AddComponent<Tile>();
-                    tile.transform.parent = transform;
-                    tile.Spawn(i, j, active[index] ? floorPrefabs[(i + j) % 2] : floorPrefabs[2]);
 
-                    tiles[index] = tile;
-                    SelectionIndicator(index, tile);
-                }
+            for (var i = 0; i < BoardSize; i++)
+            {
+                SpawnTile(i);
             }
+        }
+
+        public void SpawnTile(int index)
+        {
+            var prefab = gameState.ActiveBoard[index]
+                ? !gameState.SquareColor[index] ? 
+                    assetManager.TileData[Color.White] : 
+                    assetManager.TileData[Color.Black] : 
+                assetManager.TileData[Color.None];
+
+            var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile>();
+            tile.Spawn(index);
+
+            tiles[index] = tile;
+            SelectionIndicator(index, tile);
+        }
+
+        public void DestroyTile(int index)
+        {
+            Destroy(tiles[index]);
+            tiles[index] = null;
         }
         
         public void Select(int pos)

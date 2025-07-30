@@ -23,20 +23,20 @@ namespace Game.Board.Piece.PieceLogic.Summon
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
             if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.MainBoard[index];
+            var pieceOn = gameState.PieceBoard[index];
             if (pieceOn != null)
             {
-                if (pieceOn.color != color && distance <= attackRange)
+                if (pieceOn.Color != Color && distance <= AttackRange)
                 {
-                    list.Add(new NormalCapture(pos, index));
+                    list.Add(new NormalCapture(Pos, index));
                 }
 
                 return false;
             }
 
-            if (distance <= effectiveMoveRange)
+            if (distance <= EffectiveMoveRange)
             {
-                list.Add(new NormalMove(pos, pos, index));
+                list.Add(new NormalMove(Pos, Pos, index));
             }
 
             return true;
@@ -46,7 +46,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
         {
             if (SkillCooldown != 0) return;
             
-            var (rank, file) = RankFileOf(pos);
+            var (rank, file) = RankFileOf(Pos);
             
             for (var r = ClampUp(rank - 3); r <= ClampDown(rank + 3); r++)
             {
@@ -54,11 +54,11 @@ namespace Game.Board.Piece.PieceLogic.Summon
                 for (var f = ClampUp(file - 3); f <= ClampDown(file + 3); f++)
                 {
                     var index = rowIndex + f;
-                    var pOn = gameState.MainBoard[index];
+                    var pOn = gameState.PieceBoard[index];
                     if (pOn == null || pOn == this) continue;
-                    if (pOn.color == color)
+                    if (pOn.Color == Color)
                     {
-                        list.Add(new ArchelonShield(pos, index));
+                        list.Add(new ArchelonShield(Pos, index));
                     }
                 }
             }
@@ -66,9 +66,9 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
         private void Moves(List<Action.Action> list)
         {
-            var rank = RankOf(pos);
-            var file = FileOf(pos);
-            var maxRange = Math.Max(attackRange, effectiveMoveRange);
+            var rank = RankOf(Pos);
+            var file = FileOf(Pos);
+            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
 
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
             {

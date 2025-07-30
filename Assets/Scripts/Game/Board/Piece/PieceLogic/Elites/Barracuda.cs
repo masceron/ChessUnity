@@ -28,47 +28,47 @@ namespace Game.Board.Piece.PieceLogic.Elites
             var tpos = IndexOf(tRank, file);
             if (!MatchManager.gameState.ActiveBoard[IndexOf(tRank, file)]) return;
             
-            var rank = RankOf(pos);
+            var rank = RankOf(Pos);
             
-            var pieceOn = MatchManager.gameState.MainBoard[tpos];
+            var pieceOn = MatchManager.gameState.PieceBoard[tpos];
             if (pieceOn == null)
             {
-                if (distance == effectiveMoveRange)
+                if (distance == EffectiveMoveRange)
                 {
-                    if (color == Color.White)
+                    if (Color == Color.White)
                     {
                         if (tRank >= rank) return;
                     }
                     else if (tRank <= rank) return;
                 }
                 
-                if (distance <= effectiveMoveRange)
+                if (distance <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, tpos));
+                    list.Add(new NormalMove(Pos, Pos, tpos));
                 }
             }
-            else if (pieceOn.color != color)
+            else if (pieceOn.Color != Color)
             {
-                if (distance == attackRange)
+                if (distance == AttackRange)
                 {
-                    if (color == Color.White)
+                    if (Color == Color.White)
                     {
                         if (tRank >= rank) return;
                     }
                     else if (tRank <= rank) return;
                 }
                 
-                if (pieceOn.color != color)
-                    list.Add(new NormalCapture(pos, tpos));
+                if (pieceOn.Color != Color)
+                    list.Add(new NormalCapture(Pos, tpos));
             }
         }
 
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var (rank, pieceFile) = RankFileOf(pos);
+            var (rank, pieceFile) = RankFileOf(Pos);
             
-            for (var i = 1; i <= Math.Max(effectiveMoveRange, attackRange); i++)
+            for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
             {
                 for (var file = pieceFile - i; file <= pieceFile + i; file += 1)
                 {

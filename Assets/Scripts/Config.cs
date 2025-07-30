@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using Game.Board.General;
 using Game.Board.Piece;
+using UnityEngine;
+using Color = Game.Board.General.Color;
 
 public class Config
 {
@@ -14,23 +15,11 @@ public class Config
         new PieceConfig(PieceType.FlyingFish, Color.Black, 112),
         new PieceConfig(PieceType.Chrysos, Color.White, 88),
         new PieceConfig(PieceType.Anomalocaris, Color.Black, 75),
-        new PieceConfig(PieceType.Archelon, Color.White, 78)
+        new PieceConfig(PieceType.Archelon, Color.White, 78),
+        new PieceConfig(PieceType.Thalassos, Color.Black, 65)
     };
-        
-    public readonly byte[] BoardActive = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    };
+
+    public readonly Vector2Int StartingSize = new (12, 12);
 
     public readonly Color OurSide = Color.White;
 
@@ -38,14 +27,14 @@ public class Config
 
     public Config()
     {
-            
+        
     }
 
-    public Config(List<PieceConfig> pieces, byte[] ac, Color ourSide, Color sideToMove)
+    public Config(List<PieceConfig> pieces, Vector2Int startingSize, Color ourSide, Color sideToMove)
     {
         PieceConfig = pieces;
-        BoardActive = ac;
         OurSide = ourSide;
+        StartingSize = startingSize;
         SideToMove = sideToMove;
     }
 }

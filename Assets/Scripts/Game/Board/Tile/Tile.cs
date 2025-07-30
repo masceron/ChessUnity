@@ -2,6 +2,7 @@ using Game.Interaction;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Game.Common.BoardUtils;
+using Color = Game.Board.General.Color;
 
 namespace Game.Board.Tile
 {
@@ -10,15 +11,14 @@ namespace Game.Board.Tile
     {
         private int rank;
         private int file;
-        private GameObject cell;
-        private MeshRenderer floor;
+        [SerializeField] public Color color;
         
-        public void Spawn(int r, int f, GameObject prefab)
+        public void Spawn(int pos)
         {
-            rank = r;
-            file = f;
-            cell = Instantiate(prefab, transform);
-            cell.transform.position = new Vector3(rank, 1, file);
+            rank = RankOf(pos);
+            file = FileOf(pos);
+            
+            transform.position = new Vector3(rank, 1, file);
         }
 
         public void OnPointerClick(PointerEventData data)
@@ -31,6 +31,7 @@ namespace Game.Board.Tile
                 case PointerEventData.InputButton.Right:
                     BoardInteractionUtils.Unmark();
                     break;
+                case PointerEventData.InputButton.Middle:
                 default:
                     return;
             }
@@ -38,12 +39,14 @@ namespace Game.Board.Tile
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            BoardInteractionUtils.Hover(IndexOf(rank, file));
+            if (color != Color.None)
+                BoardInteractionUtils.Hover(IndexOf(rank, file));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            BoardInteractionUtils.Hover(-1);
+            if (color != Color.None) 
+                BoardInteractionUtils.Hover(-1);
         }
     }
 }

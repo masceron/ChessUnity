@@ -34,29 +34,29 @@ namespace Game.Board.Effects.Kills
         public VelkarisMarker(PieceLogic p) : base(-1, 1, p, EffectType.VelkarisMarker)
         {
             rows = new int[2];
-            TriggerRows(p.pos, p.color);
+            TriggerRows(p.Pos, p.Color);
         }
         
         public override void OnCall(Action.Action action)
         {
             if (action == null) return;
             
-            if (action.Caller == Piece.pos)
+            if (action.Caller == Piece.Pos)
             {
-                TriggerRows(action.To, Piece.color);
+                TriggerRows(action.To, Piece.Color);
                 return;
             }
             
-            if (MatchManager.gameState.SideToMove == Piece.color) return;
+            if (MatchManager.gameState.SideToMove == Piece.Color) return;
 
             var rowMovedTo = RankOf(action.To);
             
-            if (!rows.Contains(rowMovedTo) || MatchManager.gameState.MainBoard[action.To].color == Piece.color)
+            if (!rows.Contains(rowMovedTo) || MatchManager.gameState.PieceBoard[action.To].Color == Piece.Color)
             {
                 return;
             }
             
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.pos, Piece.pos, action.To));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, action.To));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 

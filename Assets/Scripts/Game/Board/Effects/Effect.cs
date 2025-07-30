@@ -39,7 +39,8 @@ namespace Game.Board.Effects
         Piercing,
         SlayersCoin,
         SnappingStrike,
-        ArchelonDraw
+        ArchelonDraw,
+        ThalassosShielder
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
