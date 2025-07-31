@@ -9,11 +9,12 @@ namespace Game.Board.Action.Internal
 
         protected override void Animate()
         {
-            pieceManager.Destroy(Caller);
+            
         }
 
         protected override void ModifyGameState()
         {
+            pieceManager.Destroy(Caller);
             gameState.Destroy(Caller);
         }
     }

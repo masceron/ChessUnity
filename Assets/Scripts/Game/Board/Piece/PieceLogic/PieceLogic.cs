@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Board.Effects;
-using Game.Board.Effects.Debuffs;
 using Game.Board.General;
 using Color = Game.Board.General.Color;
 
@@ -45,7 +43,9 @@ namespace Game.Board.Piece.PieceLogic
 
         public List<Action.Action> MoveList()
         {
-            return Effects.OfType<Stunned>().Any() ? new List<Action.Action>() : MoveToMake();
+            var list = MoveToMake();
+            EventObserver.Notify(list);
+            return list;
         }
     }
 }

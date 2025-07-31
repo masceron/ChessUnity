@@ -10,7 +10,7 @@ namespace Game.Board.Effects.Traits
     {
         private readonly int probability;
 
-        public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectType.Evasion)
+        public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, Effects.EffectName.Evasion)
         {
             this.probability = probability;
         }

@@ -44,7 +44,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 
                 if (distance <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(Pos, Pos, tpos));
+                    list.Add(new NormalMove(Pos, tpos));
                 }
             }
             else if (pieceOn.Color != Color)

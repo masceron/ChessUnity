@@ -36,7 +36,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
             if (distance <= EffectiveMoveRange)
             {
-                list.Add(new NormalMove(Pos, Pos, index));
+                list.Add(new NormalMove(Pos, index));
             }
 
             return true;

@@ -8,7 +8,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class Vengeful: Effect
     {
-        public Vengeful(PieceLogic piece) : base(-1, 1, piece, EffectType.Vengeful)
+        public Vengeful(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.Vengeful)
         {}
 
         public override void OnCall(Action.Action action)

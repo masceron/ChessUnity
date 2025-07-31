@@ -7,7 +7,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class Shield: Effect
     {
-        public Shield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, EffectType.Shield)
+        public Shield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, Effects.EffectName.Shield)
         {}
 
         public override void OnCall(Action.Action action)

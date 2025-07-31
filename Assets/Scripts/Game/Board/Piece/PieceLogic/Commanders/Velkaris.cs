@@ -48,7 +48,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 }
                 if (rankOff <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(Pos, Pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
@@ -67,7 +67,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 }
                 if (rankOff >= -EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(Pos, Pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
@@ -86,7 +86,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 }
                 if (fileOff <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(Pos, Pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
@@ -105,7 +105,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 }
                 if (fileOff >= -EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(Pos, Pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             

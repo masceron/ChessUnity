@@ -77,6 +77,7 @@ namespace Game.Board.General
                 PieceType.Anomalocaris => new Anomalocaris(piece),
                 PieceType.Archelon => new Archelon(piece),
                 PieceType.Thalassos => new Thalassos(piece),
+                PieceType.Pufferfish => new Pufferfish(piece),
                 _ => null
             };
 

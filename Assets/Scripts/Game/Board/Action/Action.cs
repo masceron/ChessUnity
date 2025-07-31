@@ -1,4 +1,4 @@
-﻿using Game.Board.General;
+﻿using UnityEngine;
 
 namespace Game.Board.Action
 {
@@ -13,18 +13,18 @@ namespace Game.Board.Action
         public ushort From;
         public ushort To;
         public int Caller;
-        public ActionResult Result;
+        public ActionResult Result = ActionResult.Succeed;
         public readonly bool DoesMoveChangePos;
 
         protected Action(int caller, bool pos)
         {
             Caller = caller;
             DoesMoveChangePos = pos;
-            Result = ActionResult.Succeed;
         }
 
-        public void Execute(GameState state)
+        public void Execute()
         {
+            Debug.Log(GetType());
             Animate();
             if (Result != ActionResult.Failed)
             {

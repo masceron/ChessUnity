@@ -46,7 +46,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 if (pieceOn.Color != Color) list.Add(new NormalCapture(Pos, index));
                 return false;
             }
-            list.Add(new NormalMove(Pos, Pos, index));
+            list.Add(new NormalMove(Pos, index));
             return true;
         }
 

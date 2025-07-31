@@ -6,7 +6,7 @@ namespace Game.Board.Effects.Traits
 {
     public class ArchelonDraw: Effect
     {
-        public ArchelonDraw(PieceLogic piece) : base(-1, 1, piece, EffectType.ArchelonDraw)
+        public ArchelonDraw(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.ArchelonDraw)
         {}
 
         public override string Description()

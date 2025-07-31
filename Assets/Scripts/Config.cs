@@ -16,7 +16,8 @@ public class Config
         new PieceConfig(PieceType.Chrysos, Color.White, 88),
         new PieceConfig(PieceType.Anomalocaris, Color.Black, 75),
         new PieceConfig(PieceType.Archelon, Color.White, 78),
-        new PieceConfig(PieceType.Thalassos, Color.Black, 65)
+        new PieceConfig(PieceType.Thalassos, Color.Black, 65),
+        new PieceConfig(PieceType.Pufferfish, Color.White, 70)
     };
 
     public readonly Vector2Int StartingSize = new (12, 12);

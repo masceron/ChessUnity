@@ -6,7 +6,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class Piercing: Effect
     {
-        public Piercing(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectType.Piercing)
+        public Piercing(sbyte duration, PieceLogic piece) : base(duration, 1, piece, Effects.EffectName.Piercing)
         {}
 
         public override void OnCall(Action.Action action)

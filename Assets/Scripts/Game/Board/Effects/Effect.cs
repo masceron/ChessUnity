@@ -17,10 +17,10 @@ namespace Game.Board.Effects
 
     public enum EffectStack : byte
     {
-        Stackable, NonStackable
+        Stackable, NonStackable, Additive
     }
 
-    public enum EffectType
+    public enum EffectName
     {
         Carapace,
         Evasion,
@@ -40,7 +40,9 @@ namespace Game.Board.Effects
         SlayersCoin,
         SnappingStrike,
         ArchelonDraw,
-        ThalassosShielder
+        ThalassosShielder,
+        Dominator,
+        Poison
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -49,19 +51,19 @@ namespace Game.Board.Effects
         public sbyte Duration;
         public sbyte Strength;
         public readonly PieceLogic Piece;
-        public readonly EffectType EffectName;
+        public readonly EffectName EffectName;
         
         public readonly ObserverType ObserverType;
         private readonly ObserverPriority priority;
 
-        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectType type)
+        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectName name)
         {
             Duration = duration;
             Strength = strength;
             Piece = piece;
-            EffectName = type;
+            EffectName = name;
             
-            var info = MatchManager.assetManager.EffectData[type];
+            var info = MatchManager.assetManager.EffectData[name];
             ObserverType = info.activeWhen;
             priority = info.priority;
         }
@@ -77,6 +79,11 @@ namespace Game.Board.Effects
         }
 
         public virtual void OnCall(Action.Action action)
+        {
+            
+        }
+
+        public virtual void OnCall(List<Action.Action> actions)
         {
             
         }

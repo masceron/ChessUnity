@@ -12,7 +12,7 @@ namespace Game.Board.General
         [SerializeField] private Tile.Tile[] tileData;
         
         public Dictionary<PieceType, PieceObject> PieceData;
-        public Dictionary<EffectType, EffectObject> EffectData;
+        public Dictionary<EffectName, EffectObject> EffectData;
         public Dictionary<Color, Tile.Tile> TileData;
 
         public void Init()
@@ -23,7 +23,7 @@ namespace Game.Board.General
                 PieceData.Add(piece.type, piece);
             }
 
-            EffectData = new Dictionary<EffectType, EffectObject>();
+            EffectData = new Dictionary<EffectName, EffectObject>();
             foreach (var effect in effectData)
             {
                 EffectData.Add(effect.typeName, effect);

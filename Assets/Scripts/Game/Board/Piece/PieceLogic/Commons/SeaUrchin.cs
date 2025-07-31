@@ -40,7 +40,7 @@ namespace Game.Board.Piece.PieceLogic.Commons
                 if (pieceAt == null)
                 {
                     if (EffectiveMoveRange >= i)
-                        list.Add(new NormalMove(Pos, Pos, posTo));
+                        list.Add(new NormalMove(Pos, posTo));
                 }
                 else if (pieceAt.PieceRank == PieceRank.Construct && AttackRange >= i)
                 {

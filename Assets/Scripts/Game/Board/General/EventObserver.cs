@@ -7,7 +7,7 @@ namespace Game.Board.General
 {
     public enum ObserverType: byte
     {
-        None, Captures, Moves, EndTurn
+        None, Captures, Moves, EndTurn, ToTakeAction
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -16,6 +16,7 @@ namespace Game.Board.General
         private static List<Effect> _observersEnd;
         private static List<Effect> _observersCapture;
         private static List<Effect> _observersMove;
+        private static List<Effect> _observerTakeAction;
         
         //The main action taken this turn.
         private static Action.Action _mainAction;
@@ -25,6 +26,7 @@ namespace Game.Board.General
             _observersEnd = new List<Effect>();
             _observersCapture = new List<Effect>();
             _observersMove = new List<Effect>();
+            _observerTakeAction = new List<Effect>();
             _mainAction = null;
         }
 
@@ -45,6 +47,12 @@ namespace Game.Board.General
                     pos = _observersMove.BinarySearch(effect, effect);
                     _observersMove.Insert(pos >= 0 ? pos : ~pos, effect);
                     break;
+                case ObserverType.ToTakeAction:
+                    pos = _observerTakeAction.BinarySearch(effect, effect);
+                    _observerTakeAction.Insert(pos >= 0 ? pos : ~pos, effect);
+                    break;
+                case ObserverType.None: default:
+                    break;
             }
         }
 
@@ -60,6 +68,11 @@ namespace Game.Board.General
                     break;
                 case ObserverType.Moves:
                     _observersMove.Remove(effect);
+                    break;
+                case ObserverType.ToTakeAction:
+                    _observerTakeAction.Remove(effect);
+                    break;
+                case ObserverType.None: default:
                     break;
             }
         }
@@ -84,6 +97,11 @@ namespace Game.Board.General
             {
                 _observersMove.ForEach(effect => effect.OnCall(action));
             }
+        }
+
+        public static void Notify(List<Action.Action> actions)
+        {
+            _observerTakeAction.ForEach(e => e.OnCall(actions));
         }
     }
 }

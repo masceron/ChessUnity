@@ -7,7 +7,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class Carapace: Effect
     {
-        public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectType.Carapace)
+        public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, Effects.EffectName.Carapace)
         {}
 
         public override void OnCall(Action.Action action)

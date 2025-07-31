@@ -6,7 +6,7 @@ namespace Game.Board.Effects
     [CreateAssetMenu(fileName = "EffectObject", menuName = "ScriptableObjects/EffectObject")]
     public class EffectObject : ScriptableObject
     {
-        [SerializeField] public EffectType typeName;
+        [SerializeField] public EffectName typeName;
         [SerializeField] public EffectCategory category;
         [SerializeField] public EffectStack stack;
         [SerializeField] public ObserverPriority priority;

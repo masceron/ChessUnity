@@ -34,7 +34,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             if (p == null)
             {
                 if (curr <= EffectiveMoveRange)
-                    list.Add(new NormalMove(Pos, Pos, tpos));
+                    list.Add(new NormalMove(Pos, tpos));
             }
             else if (p.Color != Color && curr <= AttackRange)
             {

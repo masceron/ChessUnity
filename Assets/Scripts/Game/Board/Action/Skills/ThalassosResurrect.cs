@@ -9,7 +9,7 @@ namespace Game.Board.Action.Skills
     public class ThalassosResurrect: Action, ISkills
     {
         private readonly PieceType typeTo;
-        public ThalassosResurrect(int caller, int to, PieceType typeTo) : base(caller, false)
+        public ThalassosResurrect(int caller, int to, PieceType typeTo) : base(caller, true)
         {
             From = (ushort)caller;
             To = (ushort)to;

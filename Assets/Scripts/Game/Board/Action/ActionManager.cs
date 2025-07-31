@@ -22,7 +22,7 @@ namespace Game.Board.Action
         {
             while (_actionQueue.TryDequeue(out var action))
             {
-                action.Execute(_state);
+                action.Execute();
             }
         }
 
@@ -34,8 +34,6 @@ namespace Game.Board.Action
             }
             else
             {
-                var actionTaken = new Queue<Action>(_actionQueue);
-                _actionQueue.Clear();
                 /*
                 
                 The process of executing actions made on a board is as follows:
@@ -48,24 +46,26 @@ namespace Game.Board.Action
                 
                 */
                 
-                while (actionTaken.TryDequeue(out var action))
+                while (_actionQueue.TryDequeue(out var action))
                 {
                     if (action is not IInternal)
                     {
                         _lastMainAction = action;
                         EventObserver.Notify(_lastMainAction);
                     }
-                    action.Execute(_state);
+                    action.Execute();
                 }
 
                 _state.EffectCountdown();
-                EventObserver.Notify(queueAction);
+                
                 _actionQueue.Enqueue(queueAction);
+                EventObserver.Notify(queueAction);
+                
                 _lastMainAction = null;
 
                 while (_actionQueue.TryDequeue(out var action))
                 {
-                    action.Execute(_state);
+                    action.Execute();
                 }
             }
             
@@ -73,7 +73,7 @@ namespace Game.Board.Action
 
         public static void ExecuteImmediately(Action action)
         {
-            action.Execute(_state);
+            action.Execute();
         }
     }
 }

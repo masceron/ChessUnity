@@ -5,7 +5,7 @@ namespace Game.Board.Effects.Traits
 {
     public class SnappingStrike: Effect
     {
-        public SnappingStrike(PieceLogic piece) : base(-1, -1, piece, EffectType.SnappingStrike)
+        public SnappingStrike(PieceLogic piece) : base(-1, -1, piece, Effects.EffectName.SnappingStrike)
         {}
 
         public override string Description()

@@ -36,7 +36,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                         rank, i,
                         MatchManager.gameState.PieceBoard).Item1 != -1) continue;
                 
-                list.Add(new NormalMove(Pos, Pos, posTo));
+                list.Add(new NormalMove(Pos, posTo));
             }
             
             for (var i = 1; i <= EffectiveMoveRange; i++)
@@ -59,7 +59,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                             if (MatchManager.gameState.PieceBoard[posOffFront] == null &&
                                 MatchManager.gameState.ActiveBoard[posOffFront])
                             {
-                                list.Add(new NormalMove(Pos, Pos, posOffFront));
+                                list.Add(new NormalMove(Pos, posOffFront));
                             }
                         }
                     }
@@ -75,7 +75,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     if (MatchManager.gameState.PieceBoard[posOffBack] == null &&
                         MatchManager.gameState.ActiveBoard[posOffBack])
                     {
-                        list.Add(new NormalMove(Pos, Pos, posOffBack));
+                        list.Add(new NormalMove(Pos, posOffBack));
                     }
                 }
             }

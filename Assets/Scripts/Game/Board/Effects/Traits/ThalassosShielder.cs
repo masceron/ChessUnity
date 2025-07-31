@@ -13,9 +13,9 @@ namespace Game.Board.Effects.Traits
     {
         private List<PieceLogic> inRange = new();
         private readonly List<PieceLogic> shielding = new();
-        public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, EffectType.ThalassosShielder)
+        public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.ThalassosShielder)
         {
-            OnCall(null);
+            OnCall((Action.Action)null);
         }
 
         public override string Description()

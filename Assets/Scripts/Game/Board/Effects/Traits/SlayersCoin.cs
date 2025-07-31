@@ -7,7 +7,7 @@ namespace Game.Board.Effects.Traits
 {
     public class SlayersCoin: Effect
     {
-        public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, EffectType.SlayersCoin)
+        public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.SlayersCoin)
         {}
 
         public override void OnCall(Action.Action action)

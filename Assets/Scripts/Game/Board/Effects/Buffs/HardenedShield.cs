@@ -8,7 +8,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class HardenedShield: Effect
     { 
-        public HardenedShield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, EffectType.HardenedShield)
+        public HardenedShield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, Effects.EffectName.HardenedShield)
         {}
         
         public override void OnCall(Action.Action action)

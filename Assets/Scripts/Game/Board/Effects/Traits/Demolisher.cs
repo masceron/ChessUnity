@@ -8,7 +8,7 @@ namespace Game.Board.Effects.Traits
 {
     public class Demolisher: Effect
     {
-        public Demolisher(PieceLogic piece) : base(-1, 1, piece, EffectType.Demolisher)
+        public Demolisher(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.Demolisher)
         {}
 
         public override void OnCall(Action.Action action)

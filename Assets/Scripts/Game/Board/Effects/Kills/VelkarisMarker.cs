@@ -31,7 +31,7 @@ namespace Game.Board.Effects.Kills
             }
         }
 
-        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, EffectType.VelkarisMarker)
+        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, Effects.EffectName.VelkarisMarker)
         {
             rows = new int[2];
             TriggerRows(p.Pos, p.Color);

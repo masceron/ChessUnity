@@ -9,7 +9,7 @@ namespace Game.Board.Effects.Traits
         private bool active;
         private const sbyte RangeOffset = 2;
 
-        public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, EffectType.Ambush)
+        public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, Effects.EffectName.Ambush)
         {}
 
         public override void OnCall(Action.Action action)
