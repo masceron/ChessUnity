@@ -1,6 +1,8 @@
-using System.Collections;
-using Game.Board.Interaction;
+using Game.Interaction;
 using UnityEngine;
+using static Game.Common.BoardUtils;
+using static Game.Board.General.MatchManager;
+using Color = Game.Board.General.Color;
 
 namespace Game.Board.Tile
 {
@@ -8,9 +10,7 @@ namespace Game.Board.Tile
     public class TileManager : MonoBehaviour
     {
         private Tile[] tiles;
-        private int maxLength;
         
-        [SerializeField] private GameObject[] floorPrefabs;
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
 
@@ -22,7 +22,7 @@ namespace Game.Board.Tile
             sel.transform.localScale = new Vector3(1, 0.001f, 1);
             sel.transform.parent = tile.transform;
             sel.layer = LayerMask.NameToLayer("Ignore Raycast");
-            sel.transform.position = new Vector3(pos / maxLength, 1.15f, pos % maxLength);
+            sel.transform.position = new Vector3(RankOf(pos), 1.15f, FileOf(pos));
             sel.name = "Selection " + pos;
             
             sel.SetActive(false);
@@ -30,31 +30,36 @@ namespace Game.Board.Tile
             selections[pos] = sel.AddComponent<Marker>();
         }
 
-        public void Spawn(int maxRank, int maxFile, BitArray active)
+        public void Spawn()
         {
-            maxLength = maxFile;
-            
-            selections = new Marker[maxRank * maxFile];
-            tiles = new Tile[maxLength * maxLength];
-            
-            for (var i = 0; i < maxLength; i++)
-            {
-                var rankStart = i * maxFile;
-                for (var j = 0; j < maxLength; j++)
-                {
-                    var index = rankStart + j;
-                    
-                    
-                    var tile = new GameObject(i + " " + j).AddComponent<Tile>();
-                    tile.transform.parent = transform;
-                    if (active[index])
-                        tile.Spawn(i, j, floorPrefabs[(i + j) % 2], true);
-                    else tile.Spawn(i, j, floorPrefabs[2], false);
+            selections = new Marker[BoardSize];
+            tiles = new Tile[BoardSize];
 
-                    tiles[index] = tile;
-                    SelectionIndicator(index, tile);
-                }
+            for (var i = 0; i < BoardSize; i++)
+            {
+                SpawnTile(i);
             }
+        }
+
+        public void SpawnTile(int index)
+        {
+            var prefab = gameState.ActiveBoard[index]
+                ? !gameState.SquareColor[index] ? 
+                    assetManager.TileData[Color.White] : 
+                    assetManager.TileData[Color.Black] : 
+                assetManager.TileData[Color.None];
+
+            var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile>();
+            tile.Spawn(index);
+
+            tiles[index] = tile;
+            SelectionIndicator(index, tile);
+        }
+
+        public void DestroyTile(int index)
+        {
+            Destroy(tiles[index]);
+            tiles[index] = null;
         }
         
         public void Select(int pos)
@@ -64,9 +69,12 @@ namespace Game.Board.Tile
             selections[pos].gameObject.SetActive(true);
         }
 
-        public void Unmark(int pos)
+        public void UnmarkAll()
         {
-            selections[pos].gameObject.SetActive(false);
+            for (var i = 0; i < BoardSize; i++)
+            {
+                selections[i].gameObject.SetActive(false);
+            }
         }
 
         public void MarkAsMoveable(int pos)

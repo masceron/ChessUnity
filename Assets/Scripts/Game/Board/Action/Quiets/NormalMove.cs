@@ -1,26 +1,24 @@
-﻿using Game.Board.General;
-using Game.Board.Interaction;
+﻿using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class NormalMove: Action, IQuiets
     {
-        public NormalMove(ushort caller, int f, int t) : base(caller, true)
+        public NormalMove(int f, int t) : base(f, true)
         {
             From = (ushort)f;
             To = (ushort)t;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            InteractionManager.PieceManager.Move(From, To);
-            ModifyGameState(state);
+            pieceManager.Move(From, To);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            state.Move(From, To);
+            gameState.Move(From, To);
             Caller = To;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Game.Board.Effects.Others;
-using Game.Board.General;
-using Game.Board.PieceLogic.Commanders;
-using UnityEngine;
+using Game.Board.Piece.PieceLogic.Commanders;
+using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Internal
 {
@@ -14,19 +13,16 @@ namespace Game.Board.Action.Internal
             To = t;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            Debug.Log("Velkaris marked " + To);
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(state.MainBoard[To])));
-            
-            ModifyGameState(state);
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(gameState.PieceBoard[To])));
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            var caller = (Velkaris)state.MainBoard[From];
-            caller.SkillCooldown = -1;
-            caller.Marked = state.MainBoard[To];
+            var caller = (Velkaris)gameState.PieceBoard[From];
+            caller.SkillCooldown = 0;
+            caller.Marked = gameState.PieceBoard[To];
         }
     }
 }

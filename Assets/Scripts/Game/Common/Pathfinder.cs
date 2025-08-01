@@ -1,9 +1,10 @@
 ﻿using System;
-using Game.Board.PieceLogic;
-using UnityEngine;
+using Game.Board.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Common
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class Pathfinder
     {
         private static float Crawl(float start, float finish, float value)
@@ -12,13 +13,16 @@ namespace Game.Common
             if (Math.Sign(finish - start) != Math.Sign(finish - value)) return 1;
             return (value - start) / (finish - start);
         }
-
-        public static Vector2Int LineBlocker(Vector2Int first, Vector2Int second, PieceLogic[] board, int maxLength)
+        
+        public static (int, int) LineBlocker(int first1, int first2, int second1, int second2, PieceLogic[] board)
         {
-            var x1 = first.x + 0.5f;
-            var y1 = first.y + 0.5f;
-            var x2 = second.x + 0.5f;
-            var y2 = second.y + 0.5f;
+            var firstBlockerX = -1;
+            var firstBlockerY = -1;
+            
+            var x1 = first1 + 0.5f;
+            var y1 = first2 + 0.5f;
+            var x2 = second1 + 0.5f;
+            var y2 = second2 + 0.5f;
             
             float xDirection = x2 > x1 ? 1 : -1;
             var xCurrent = (float) Math.Floor(x1);
@@ -45,15 +49,16 @@ namespace Game.Common
                     yProgress = Crawl(y1, y2, yNext);
                 }
 
-                if (board[(int)(xCurrent * maxLength + yCurrent)] != null &&
-                    !(Mathf.Approximately(xCurrent, second.x) && Mathf.Approximately(yCurrent, second.y)))
-                {
-                    return new Vector2Int((int)xCurrent, (int)yCurrent);
-                }
+                if (board[IndexOf((int)xCurrent, (int)yCurrent)] == null) continue;
+                
+                firstBlockerX = (int)xCurrent;
+                firstBlockerY = (int)yCurrent;
+                break;
 
             }
 
-            return -Vector2Int.one;
+            if (!(firstBlockerX == second1 && firstBlockerY == second2)) return (firstBlockerX, firstBlockerY);
+            return (-1, -1);
         }
     }
 }

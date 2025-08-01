@@ -2,22 +2,32 @@
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Buffs
 {
     public class HardenedShield: Effect
-    {
-        public HardenedShield(sbyte duration, PieceLogic.PieceLogic piece) : base(duration, 1, piece, EffectType.HardenedShield)
+    { 
+        public HardenedShield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, Effects.EffectName.HardenedShield)
         {}
         
         public override void OnCall(Action.Action action)
         {
-            if (action.To != Piece.pos || action.Success != ActionResult.Succeed) return;
-            action.Success = ActionResult.Failed;
+            if (action == null || action.To != Piece.Pos || action.Result != ActionResult.Succeed) return;
+            action.Result = ActionResult.Failed;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, MatchManager.GameState.MainBoard[action.Caller])));
-            ActionManager.EnqueueAction(new RemoveEffect(this));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, MatchManager.gameState.PieceBoard[action.Caller])));
+
+            if (Strength > 1) Strength--;
+            else
+            {
+                ActionManager.EnqueueAction(new RemoveEffect(this));
+            }
         }
-        
+
+        public override string Description()
+        {
+            return MatchManager.assetManager.EffectData[EffectName].description;
+        }
     }
 }

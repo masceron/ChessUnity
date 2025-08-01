@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using Game.Board.General;
 using UnityEngine;
+using static Game.Common.BoardUtils;
+using Object = UnityEngine.Object;
 
 namespace Game.Board.Piece
 {
@@ -10,36 +11,22 @@ namespace Game.Board.Piece
         private Piece[] pieces;
         
         private Dictionary<PieceType, PieceObject> piecesInfo;
-        
-        private int maxLength;
     
-        public void Init(int l,  List<PieceConfig> config, Dictionary<PieceType, PieceObject> dict)
+        public void Init(Dictionary<PieceType, PieceObject> dict)
         {
             piecesInfo = dict;
-            maxLength = l;
-            pieces = new Piece[maxLength * maxLength];
-
-            foreach (var piece in config)
-            {
-                SpawnPiece(piece);
-            }
+            pieces = new Piece[BoardSize];
         }
 
-        private void SpawnPiece(PieceConfig config)
+        public void SpawnPiece(PieceConfig config)
         {
             var pos = config.Index;
             var info = piecesInfo[config.Type];
             var prefab = info.prefab;
-            var p = Instantiate(prefab).AddComponent<Piece>();
-            p.transform.parent = transform;
+            var p = Instantiate(prefab, transform).AddComponent<Piece>();
+            
             pieces[pos] = p;
-            p.Spawn(pos / maxLength, pos % maxLength, info.defaultTransform);
-            MatchManager.GameState.SpawnPiece(config);
-        }
-        
-        public Piece GetPiece(int pos)
-        {
-            return pieces[pos];
+            p.Spawn(pos, config.Color);
         }
 
         public void Destroy(int pos)
@@ -52,7 +39,7 @@ namespace Game.Board.Piece
         {
             pieces[to] = pieces[from];
             pieces[from] = null;
-            pieces[to].Move(to / maxLength, to % maxLength);
+            pieces[to].Move(RankOf(to), FileOf(to));
         }
     }
 }

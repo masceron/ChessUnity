@@ -13,17 +13,12 @@ namespace Game.Board.Action.Internal
             effect = e;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void ModifyGameState()
         {
-            if (effect.Type != ObserverType.None)
+            if (effect.ObserverType != ObserverType.None)
             {
                 EventObserver.RemoveObserver(effect);
             }
-            ModifyGameState(state);
-        }
-
-        public override void ModifyGameState(GameState state)
-        {
             effect.OnRemove();
             effect.Piece.Effects.Remove(effect);
         }

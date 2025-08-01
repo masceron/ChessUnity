@@ -1,5 +1,9 @@
-﻿using Game.Board.Effects;
+﻿using System;
+using System.Linq;
+using Game.Board.Effects;
 using Game.Board.General;
+using UnityEngine;
+using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Internal
 {
@@ -12,19 +16,44 @@ namespace Game.Board.Action.Internal
             effect = e;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            if (effect.Type != ObserverType.None)
+            if (effect.ObserverType != ObserverType.None)
             {
                 EventObserver.AddObserver(effect);
             }
-            ModifyGameState(state);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            effect.OnApply();
-            effect.Piece.Effects.Add(effect);
+            var already = effect.Piece.Effects.FirstOrDefault(e => e.EffectName == effect.EffectName);
+
+            if (already == null)
+            {
+                effect.OnApply();
+                effect.Piece.Effects.Add(effect);
+            }
+            else
+            {
+                switch (assetManager.EffectData[effect.EffectName].stack)
+                {
+                    case EffectStack.Stackable:
+                        if (already.Strength < effect.Strength) already.Strength = effect.Strength;
+                        var weakerEffect = already.Strength < effect.Strength ? already : effect;
+                        var strongerEffect = weakerEffect == already ? effect : already;
+                        var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
+                        already.Duration = (sbyte)newDuration;
+                        break;
+                    case EffectStack.NonStackable:
+                        return;
+                    case EffectStack.Additive:
+                        already.Strength += effect.Strength;
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+            
         }
     }
 }

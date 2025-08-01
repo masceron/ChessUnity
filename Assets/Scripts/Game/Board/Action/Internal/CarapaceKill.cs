@@ -1,5 +1,4 @@
-﻿using Game.Board.General;
-using UnityEngine;
+﻿using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Internal
 {
@@ -11,15 +10,14 @@ namespace Game.Board.Action.Internal
             To = (ushort)to;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            MatchManager.PieceManager.Destroy(To);
-            ModifyGameState(state);
+            pieceManager.Destroy(To);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            state.Destroy(To);
+            gameState.Destroy(To);
         }
     }
 }

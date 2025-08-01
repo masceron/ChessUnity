@@ -1,35 +1,26 @@
-﻿using Game.Board.General;
-using Game.Board.Interaction;
-using UnityEngine;
+﻿using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class NormalCapture: Action, ICaptures
     {
-        public NormalCapture(ushort caller, int f, int t) : base(caller, true)
+        public NormalCapture(int f, int t) : base(f, true)
         {
             From = (ushort)f;
             To = (ushort)t;
         }
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            if (Success == ActionResult.Succeed)
-            {
-                MatchManager.PieceManager.Destroy(To);
-                InteractionManager.PieceManager.Move(From, To);
-                ModifyGameState(state);
-            }
-            else
-            {
-                Debug.Log("Action failed");
-            }
+            
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            state.Destroy(To);
-            state.Move(From, To);
+            pieceManager.Destroy(To);
+            pieceManager.Move(From, To);
+            gameState.Destroy(To);
+            gameState.Move(From, To);
             Caller = To;
         }
     }

@@ -7,51 +7,48 @@ using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Kills;
 using Game.Board.General;
-using Game.Board.Interaction;
-using Game.Board.Piece;
+using static Game.Common.BoardUtils;
 
-namespace Game.Board.PieceLogic.Commanders
+namespace Game.Board.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Velkaris: PieceLogic
     {
         public PieceLogic Marked;
-        public sbyte SkillCooldown;
 
         public Velkaris(PieceConfig cfg) : base(cfg)
         {
             Marked = null;
-            SkillCooldown = 0;
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new VelkarisMarker(this)));
         }
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = InteractionManager.GameState;
-
-            var maxLength = MatchManager.MaxLength;
+            var gameState = MatchManager.gameState;
             
-            var rank = pos / maxLength;
-            var file = pos % maxLength;
+            var (rank, file) = RankFileOf(Pos);
             
             var list = new List<Action.Action>();
 
-            var totalRange = Math.Max(moveRange, attackRange);
+            var totalRange = Math.Max(EffectiveMoveRange, AttackRange);
             
             for (var rankOff = 1; rankOff <= totalRange; rankOff++)
             {
                 var rankAfter = rank + rankOff;
-                if (rankAfter >= maxLength) break;
-                var newPos = rankAfter * maxLength + file;
-                var p = gameState.MainBoard[newPos];
+                if (!VerifyUpperBound(rankAfter)) break;
+                var newPos = IndexOf(rankAfter, file);
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && rankOff <= attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.Color != Color && rankOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (rankOff <= moveRange)
+                if (rankOff <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
@@ -59,33 +56,37 @@ namespace Game.Board.PieceLogic.Commanders
             {
                 var rankAfter = rank + rankOff;
                 if (rankAfter < 0) break;
-                var newPos = rankAfter * maxLength + file;
-                var p = gameState.MainBoard[newPos];
+                var newPos = IndexOf(rankAfter, file);
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && rankOff >= -attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.Color != Color && rankOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (rankOff >= -moveRange)
+                if (rankOff >= -EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
             for (var fileOff = 1; fileOff <= totalRange; fileOff++)
             {
                 var fileAfter = file + fileOff;
-                if (fileAfter >= maxLength) break;
-                var newPos = rank * maxLength + fileAfter;
-                var p = gameState.MainBoard[newPos];
+                if (!VerifyUpperBound(fileAfter)) break;
+                var newPos = IndexOf(rank, fileAfter);
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && fileOff <= attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.Color != Color && fileOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (fileOff <= moveRange)
+                if (fileOff <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
@@ -93,22 +94,24 @@ namespace Game.Board.PieceLogic.Commanders
             {
                 var fileAfter = file + fileOff;
                 if (fileAfter < 0) break;
-                var newPos = rank * maxLength + fileAfter;
-                var p = gameState.MainBoard[newPos];
+                var newPos = IndexOf(rank, fileAfter);
+                
+                if (!gameState.ActiveBoard[newPos]) break;
+                var p = gameState.PieceBoard[newPos];
                 if (p != null)
                 {
-                    if (p.color != color && fileOff >= -attackRange) list.Add(new NormalCapture(pos, pos, newPos));
+                    if (p.Color != Color && fileOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
                     break;
                 }
-                if (fileOff >= -moveRange)
+                if (fileOff >= -EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, newPos));
+                    list.Add(new NormalMove(Pos, newPos));
                 }
             }
             
-            if (SkillCooldown == -1 && Marked != null)
+            if (SkillCooldown == 0 && Marked != null)
             {
-                list.Add(new VelkarisKill(pos, pos, Marked.pos));
+                list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
             }
 
             return list;

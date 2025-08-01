@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: ElectricEel
   m_EditorClassIdentifier: 
+  pieceName: Electric Eel
   type: 4
-  prefab: {fileID: 5598166101255696859, guid: b5743e98285446748982a08ad7d79d7a, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 992a919ee8a0e884c8042bdfada586bf, type: 3}
   defaultTransform: {x: 0, y: 1.64, z: 0}
-  rank: 3
+  rank: 5
   moveRange: 2
   attackRange: 2
+  movePattern: {fileID: 2800000, guid: 838229ac48dea524b816891fd414a1e4, type: 3}
+  capturePattern: {fileID: 2800000, guid: 83705c21dcb23de4084902ec5b0632bc, type: 3}

@@ -9,6 +9,22 @@ namespace Game.Board.Action
     {
         private static GameState _state;
         private static Queue<Action> _actionQueue;
+        private static Action _lastMainAction;
+
+        public static void Init(GameState state)
+        {
+            _state = state;
+            _actionQueue = new Queue<Action>();
+            _lastMainAction = null;
+        }
+
+        public static void ExecuteWhenStart()
+        {
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                action.Execute();
+            }
+        }
 
         public static void EnqueueAction(Action queueAction)
         {
@@ -18,8 +34,6 @@ namespace Game.Board.Action
             }
             else
             {
-                var actionTaken = new Queue<Action>(_actionQueue);
-                _actionQueue.Clear();
                 /*
                 
                 The process of executing actions made on a board is as follows:
@@ -32,22 +46,26 @@ namespace Game.Board.Action
                 
                 */
                 
-                while (actionTaken.TryDequeue(out var action))
+                while (_actionQueue.TryDequeue(out var action))
                 {
                     if (action is not IInternal)
                     {
-                        EventObserver.Notify(action);
+                        _lastMainAction = action;
+                        EventObserver.Notify(_lastMainAction);
                     }
-                    action.ApplyAction(_state);
+                    action.Execute();
                 }
 
                 _state.EffectCountdown();
-                EventObserver.Notify(queueAction);
+                
                 _actionQueue.Enqueue(queueAction);
+                EventObserver.Notify(queueAction);
+                
+                _lastMainAction = null;
 
                 while (_actionQueue.TryDequeue(out var action))
                 {
-                    action.ApplyAction(_state);
+                    action.Execute();
                 }
             }
             
@@ -55,13 +73,7 @@ namespace Game.Board.Action
 
         public static void ExecuteImmediately(Action action)
         {
-            action.ApplyAction(_state);
-        }
-
-        public static void Init()
-        {
-            _state = MatchManager.GameState;
-            _actionQueue = new Queue<Action>();
+            action.Execute();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Game.Board.General;
-using Game.Board.Interaction;
+﻿using static Game.Board.General.MatchManager;
 using Color = Game.Board.General.Color;
 
 namespace Game.Board.Action
@@ -13,17 +12,13 @@ namespace Game.Board.Action
             To = 0;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            InteractionManager.UnmarkPiece(InteractionManager.SelectingPiece);
-            InteractionManager.SelectingPiece = -1;
-            
-            ModifyGameState(state);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            state.SideToMove = state.SideToMove == Color.White ? Color.Black : Color.White;
+            gameState.SideToMove = gameState.SideToMove == Color.White ? Color.Black : Color.White;
         }
     }
 }

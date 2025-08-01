@@ -1,47 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Game.Board.Effects;
-using Game.Board.Effects.Debuffs;
 using Game.Board.General;
-using Game.Board.Piece;
 using Color = Game.Board.General.Color;
 
-namespace Game.Board.PieceLogic
+namespace Game.Board.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), Serializable]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
-        public ushort pos;
-        public Color color;
-        public sbyte moveRange;
-        public sbyte attackRange;
+        public ushort Pos;
+        public Color Color;
+
+        public sbyte TrueMoveRange;
+        public sbyte EffectiveMoveRange;
+        public sbyte AttackRange;
+        public sbyte SkillCooldown;
         
-        public PieceRank pieceRank;
+        public readonly PieceRank PieceRank;
        
         public readonly List<Effect> Effects;
+        public readonly PieceType Type;
 
         protected PieceLogic(PieceConfig cfg)
         {
-            color = cfg.Color;
-            pos = cfg.Index;
+            Color = cfg.Color;
+            Pos = cfg.Index;
             Effects = new List<Effect>();
+            Type = cfg.Type;
 
-            var info = MatchManager.AssetManager.PieceData[cfg.Type];
-            moveRange = info.moveRange;
-            attackRange = info.attackRange; 
-            pieceRank = info.rank;
+            var info = MatchManager.assetManager.PieceData[cfg.Type];
+            EffectiveMoveRange = info.moveRange;
+            TrueMoveRange = info.moveRange;
+            AttackRange = info.attackRange; 
+            PieceRank = info.rank;
         }
 
-        public virtual void PassTurn()
+        public void PassTurn()
         {
-            
+            if (SkillCooldown > 0) SkillCooldown--;
         }
         protected abstract List<Action.Action> MoveToMake();
 
         public List<Action.Action> MoveList()
         {
-            return Effects.OfType<Stunned>().Any() ? new List<Action.Action>() : MoveToMake();
+            var list = MoveToMake();
+            EventObserver.Notify(list);
+            return list;
         }
     }
 }

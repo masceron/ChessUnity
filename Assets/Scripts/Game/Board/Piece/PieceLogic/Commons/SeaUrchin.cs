@@ -6,18 +6,19 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
-using Game.Board.Effects.Others;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
-using Game.Board.Piece;
 using Color = Game.Board.General.Color;
+using static Game.Common.BoardUtils;
 
-namespace Game.Board.PieceLogic.Commons
+namespace Game.Board.Piece.PieceLogic.Commons
 {
     public class SeaUrchin: PieceLogic
     {
         public SeaUrchin(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, 25, this)));
+            SkillCooldown = -1;
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 50, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
         }
@@ -25,25 +26,25 @@ namespace Game.Board.PieceLogic.Commons
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var push = color == Color.White ? -MatchManager.MaxLength : MatchManager.MaxLength;
+            var push = Color == Color.White ? -MaxLength : MaxLength;
             
-            for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
+            for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
             {
-                var posTo = pos + push * i;
+                var posTo = Pos + push * i;
 
-                if (posTo < 0 || pos >= MatchManager.MaxLength * MatchManager.MaxLength ||
-                    !MatchManager.GameState.ActiveBoard[posTo]) continue;
+                if (!VerifyIndex(posTo) ||
+                    !MatchManager.gameState.ActiveBoard[posTo]) continue;
                 
-                var pieceAt = MatchManager.GameState.MainBoard[posTo];
+                var pieceAt = MatchManager.gameState.PieceBoard[posTo];
                 
                 if (pieceAt == null)
                 {
-                    if (moveRange >= i)
-                        list.Add(new NormalMove(pos, pos, posTo));
+                    if (EffectiveMoveRange >= i)
+                        list.Add(new NormalMove(Pos, posTo));
                 }
-                else if (pieceAt.pieceRank == PieceRank.Construct && attackRange >= i)
+                else if (pieceAt.PieceRank == PieceRank.Construct && AttackRange >= i)
                 {
-                    list.Add(new DestroyConstruct(pos, (ushort)posTo));
+                    list.Add(new DestroyConstruct(Pos, (ushort)posTo));
                 }
             }
 

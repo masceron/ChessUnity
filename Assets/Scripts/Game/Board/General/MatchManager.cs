@@ -1,67 +1,72 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Game.Board.Assets;
+﻿using System.Collections.Generic;
+using Game.Board.Action;
+using Game.Board.Action.Internal;
 using Game.Board.Piece;
 using Game.Board.Tile;
+using Game.Interaction;
+using Game.UX.UI;
 using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.General
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class MatchManager
     {
-        public static GameState GameState;
-        public static PieceManager PieceManager;
-        public static TileManager TileManager;
-        public static AssetManager AssetManager;
-        public static int MaxLength;
+        public static GameState gameState;
+        public static PieceManager pieceManager;
+        internal static TileManager tileManager;
+        public static AssetManager assetManager;
 
-        private static void MakeBoard(TileManager tileManager, byte[] active)
+        private static void MakeBoard()
         {
-            TileManager = tileManager;
-            var activeArray = new BitArray(active.Length);
-            for (var i = 0; i < active.Length; i++)
-            {
-                activeArray[i] = active[i] != 0;
-            }
+            tileManager = Object.FindAnyObjectByType<TileManager>();
             
-            tileManager.Spawn(GameState.MaxLength, GameState.MaxLength, activeArray);
+            BoardInteractionUtils.Init(Object.FindAnyObjectByType<BoardViewer>());
+            
+            tileManager.Spawn();
         }
 
-        private static void MakePieces(PieceManager pieceManager, List<PieceConfig> config)
+        private static void MakePieces(List<PieceConfig> config, Vector2Int startingSize)
         {
-            PieceManager = pieceManager;
-            PieceManager.Init(MaxLength, config, AssetManager.PieceData);
+            pieceManager = Object.FindAnyObjectByType<PieceManager>();
+            pieceManager.Init(assetManager.PieceData);
+
+            foreach (var cfg in config)
+            {
+                var pieceConfig = new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize));
+                ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
+            }
         }
 
         private static void MakeGame(Config cfg)
         {
-            GameState = new GameState(cfg.MaxLength, cfg.BoardActive, cfg.SideToMove, cfg.OurSide);
+            gameState = new GameState(MaxLength, cfg.StartingSize, cfg.SideToMove, cfg.OurSide);
+            ActionManager.Init(gameState);
+            Object.FindAnyObjectByType<BoardViewer>().Load();
         }
 
-        private static void LoadAssets(AssetManager asset)
+        private static void LoadAssets()
         {
-            AssetManager = asset;
-            AssetManager.Init();
+            assetManager = Object.FindAnyObjectByType<AssetManager>();
+            assetManager.Init();
         }
 
-        public static void Init(TileManager tile, PieceManager piece, AssetManager asset, Config cfg)
+        public static void Init(Config cfg)
         {
-            LoadAssets(asset);
             
-            MaxLength = cfg.MaxLength;
-            
+            LoadAssets();
             EventObserver.Init();
-            
             MakeGame(cfg);
-            MakeBoard(tile, cfg.BoardActive);
-            MakePieces(piece, cfg.PieceConfig);
+            MakeBoard();
+            MakePieces(cfg.PieceConfig, cfg.StartingSize);
+            
+            ActionManager.ExecuteWhenStart();
         }
 
         public static bool Roll(int chance)
         {
             var a = Random.Range(1, 101);
-            Debug.Log(a);
             return a <= chance;
         } 
     }

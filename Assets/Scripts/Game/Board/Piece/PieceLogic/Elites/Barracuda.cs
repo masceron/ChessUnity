@@ -4,18 +4,18 @@ using Game.Board.Action;
 using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
-using Game.Board.Effects.Buffs;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
-using Game.Board.Interaction;
-using Game.Board.Piece;
+using static Game.Common.BoardUtils;
 
-namespace Game.Board.PieceLogic.Elites
+namespace Game.Board.Piece.PieceLogic.Elites
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Barracuda: PieceLogic
     {
         public Barracuda(PieceConfig cfg) : base(cfg)
         {
+            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(-1, this)));
@@ -23,54 +23,52 @@ namespace Game.Board.PieceLogic.Elites
 
         private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)
         {
-            if (tRank < 0 ||
-                tRank >= MatchManager.MaxLength ||
-                file < 0 ||
-                file >= MatchManager.MaxLength || !MatchManager.GameState.ActiveBoard[tRank * MatchManager.MaxLength + file]) return;
+            if (!VerifyBounds(tRank) || !VerifyBounds(file)) return;
             
-            var rank = pos / InteractionManager.MaxLength;
-
-            var tpos = tRank * MatchManager.MaxLength + file;
-            var pieceOn = MatchManager.GameState.MainBoard[tpos];
+            var tpos = IndexOf(tRank, file);
+            if (!MatchManager.gameState.ActiveBoard[IndexOf(tRank, file)]) return;
+            
+            var rank = RankOf(Pos);
+            
+            var pieceOn = MatchManager.gameState.PieceBoard[tpos];
             if (pieceOn == null)
             {
-                if (distance == moveRange)
+                if (distance == EffectiveMoveRange)
                 {
-                    if (color == Color.White)
+                    if (Color == Color.White)
                     {
                         if (tRank >= rank) return;
                     }
                     else if (tRank <= rank) return;
                 }
                 
-                if (distance <= moveRange)
+                if (distance <= EffectiveMoveRange)
                 {
-                    list.Add(new NormalMove(pos, pos, tpos));
+                    list.Add(new NormalMove(Pos, tpos));
                 }
             }
-            else if (pieceOn.color != color)
+            else if (pieceOn.Color != Color)
             {
-                if (distance == attackRange)
+                if (distance == AttackRange)
                 {
-                    if (color == Color.White)
+                    if (Color == Color.White)
                     {
                         if (tRank >= rank) return;
                     }
                     else if (tRank <= rank) return;
                 }
                 
-                if (pieceOn.color != color)
-                    list.Add(new NormalCapture(pos, pos, tpos));
+                if (pieceOn.Color != Color)
+                    list.Add(new NormalCapture(Pos, tpos));
             }
         }
 
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var rank = pos / InteractionManager.MaxLength;
-            var pieceFile = pos % InteractionManager.MaxLength;
+            var (rank, pieceFile) = RankFileOf(Pos);
             
-            for (var i = 1; i <= Math.Max(moveRange, attackRange); i++)
+            for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
             {
                 for (var file = pieceFile - i; file <= pieceFile + i; file += 1)
                 {

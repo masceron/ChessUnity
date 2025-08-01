@@ -1,6 +1,7 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Quiets
 {
@@ -12,21 +13,16 @@ namespace Game.Board.Action.Quiets
             To = (ushort)to;
         }
 
-        public override void ApplyAction(GameState state)
+        protected override void Animate()
         {
-            MatchManager.PieceManager.Move(Caller, To);
-            ModifyGameState(state);
+            MatchManager.pieceManager.Move(Caller, To);
         }
 
-        public override void ModifyGameState(GameState state)
+        protected override void ModifyGameState()
         {
-            var maxLen = MatchManager.MaxLength;
-            
-            var rankFrom = From / maxLen;
-            var fileFrom = From % maxLen;
-            var rankTo = To / maxLen;
-            var fileTo = To % maxLen;
-            var board = MatchManager.GameState.MainBoard;
+            var (rankFrom, fileFrom) = RankFileOf(From);
+            var (rankTo, fileTo) = RankFileOf(To);
+            var board = MatchManager.gameState.PieceBoard;
             var caller = board[From];
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
@@ -37,14 +33,14 @@ namespace Game.Board.Action.Quiets
                 rankFrom += rankDir;
                 fileFrom += fileDir;
 
-                var p = board[rankFrom * maxLen + fileFrom];
-                if (p == null || p.color == caller.color) continue;
+                var p = board[IndexOf(rankFrom, fileFrom)];
+                if (p == null || p.Color == caller.Color) continue;
                 
                 ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p)));
                 break;
             }
             
-            MatchManager.GameState.Move(From, To);
+            MatchManager.gameState.Move(From, To);
         }
     }
 }

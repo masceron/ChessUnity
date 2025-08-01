@@ -1,8 +1,9 @@
-﻿using Game.Board.General;
+﻿using System;
+using Game.Board.General;
 
 namespace Game.Board.Piece
 {
-    public struct PieceConfig
+    public readonly struct PieceConfig : IEquatable<PieceConfig>
     {
         public readonly PieceType Type;
         public readonly Color Color;
@@ -13,6 +14,37 @@ namespace Game.Board.Piece
             Type = t;
             Color = c;
             Index = i;
+        }
+
+        public bool Equals(PieceConfig other)
+        {
+            return Type == other.Type && Color == other.Color && Index == other.Index;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is PieceConfig other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                var hashCode = (int)Type;
+                hashCode = (hashCode * 397) ^ (int)Color;
+                hashCode = (hashCode * 397) ^ Index.GetHashCode();
+                return hashCode;
+            }
+        }
+
+        public static bool operator ==(PieceConfig left, PieceConfig right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(PieceConfig left, PieceConfig right)
+        {
+            return !left.Equals(right);
         }
     }
 }
