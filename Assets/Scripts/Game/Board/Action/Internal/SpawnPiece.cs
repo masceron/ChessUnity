@@ -1,5 +1,5 @@
-﻿using Game.Board.Piece;
-using static Game.Board.General.MatchManager;
+﻿using Game.Board.General;
+using Game.Board.Piece;
 
 namespace Game.Board.Action.Internal
 {
@@ -13,12 +13,12 @@ namespace Game.Board.Action.Internal
 
         protected override void Animate()
         {
-            pieceManager.SpawnPiece(pieceToSpawn);
+            PieceManager.Ins.SpawnPiece(pieceToSpawn);
         }
 
         protected override void ModifyGameState()
         {
-            gameState.SpawnPiece(pieceToSpawn);
+            MatchManager.Ins.GameState.SpawnPiece(pieceToSpawn);
         }
     }
 }

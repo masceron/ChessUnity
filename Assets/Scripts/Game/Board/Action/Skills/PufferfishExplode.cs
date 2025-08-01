@@ -21,7 +21,7 @@ namespace Game.Board.Action.Skills
         {
             ActionManager.EnqueueAction(new DestroyPiece(Caller));
             var (rank, file) = RankFileOf(Caller);
-            var caller = MatchManager.gameState.PieceBoard[Caller];
+            var caller = MatchManager.Ins.GameState.PieceBoard[Caller];
 
             for (var i = -1; i <= 1; i++)
             {
@@ -32,7 +32,7 @@ namespace Game.Board.Action.Skills
 
                     var idx = IndexOf(rank + i, file + j);
 
-                    var p = MatchManager.gameState.PieceBoard[idx];
+                    var p = MatchManager.Ins.GameState.PieceBoard[idx];
 
                     if (p != null && p.Color != caller.Color)
                     {

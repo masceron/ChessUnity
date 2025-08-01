@@ -1,17 +1,18 @@
-﻿using Game.Board.Action;
+﻿using System.Linq;
+using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SirenDebuffer: Effect
+    public class SirenDebuffer: Effect, IEndTurnEffect
     {
         public SirenDebuffer(PieceLogic p) : base(-1, 1, p, EffectName.SirenDebuffer)
         {
+            EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
             CalculateEffectRange(p.Pos);
         }
 
@@ -30,9 +31,9 @@ namespace Game.Board.Effects.Traits
         private int fileStart;
         private int fileEnd;
 
-        public override void OnCall(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (action != null && action.Caller == Piece.Pos && action.DoesMoveChangePos)
+            if (lastMainAction != null && lastMainAction.Caller == Piece.Pos && lastMainAction.DoesMoveChangePos)
             {
                 CalculateEffectRange(Piece.Pos);
             }
@@ -43,9 +44,9 @@ namespace Game.Board.Effects.Traits
                 for (var f = fileStart; f <= fileEnd; f++)
                 {
                     var index = rowIndex + f;
-                    var pOn = MatchManager.gameState.PieceBoard[index];
+                    var pOn = MatchManager.Ins.GameState.PieceBoard[index];
                     if (pOn == null) continue;
-                    if (pOn.Color != Piece.Color)
+                    if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != EffectName.Slow))
                     {
                         ActionManager.EnqueueAction(new SirenDebuff(Piece.Pos, Piece.Pos, (ushort)index));
                     }
@@ -53,9 +54,6 @@ namespace Game.Board.Effects.Traits
             }
         }
 
-        public override string Description()
-        {
-            return MatchManager.assetManager.EffectData[EffectName].description;
-        }
+        public EndTurnEffectType EndTurnEffectType { get; set; }
     }
 }

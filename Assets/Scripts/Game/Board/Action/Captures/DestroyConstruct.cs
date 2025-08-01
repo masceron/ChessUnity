@@ -1,4 +1,5 @@
-﻿using static Game.Board.General.MatchManager;
+﻿using Game.Board.General;
+using Game.Board.Piece;
 
 namespace Game.Board.Action.Captures
 {
@@ -11,14 +12,14 @@ namespace Game.Board.Action.Captures
 
         protected override void Animate()
         {
-            pieceManager.Destroy(Caller);
+            PieceManager.Ins.Destroy(Caller);
         }
 
         protected override void ModifyGameState()
         {
-            gameState.Destroy(Caller);
-            gameState.Destroy(To);
-            gameState.ActiveBoard[To] = true;
+            MatchManager.Ins.GameState.Destroy(Caller);
+            MatchManager.Ins.GameState.Destroy(To);
+            MatchManager.Ins.GameState.ActiveBoard[To] = true;
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Game.Board.Piece.PieceLogic
             Effects = new List<Effect>();
             Type = cfg.Type;
 
-            var info = MatchManager.assetManager.PieceData[cfg.Type];
+            var info = AssetManager.Ins.PieceData[cfg.Type];
             EffectiveMoveRange = info.moveRange;
             TrueMoveRange = info.moveRange;
             AttackRange = info.attackRange; 
@@ -37,7 +37,8 @@ namespace Game.Board.Piece.PieceLogic
 
         public void PassTurn()
         {
-            if (SkillCooldown > 0) SkillCooldown--;
+            var gameState = MatchManager.Ins.GameState;
+            if (SkillCooldown > 0 && gameState.SideToMove != gameState.OurSide) SkillCooldown--;
         }
         protected abstract List<Action.Action> MoveToMake();
 

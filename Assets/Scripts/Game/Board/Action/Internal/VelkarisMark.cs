@@ -1,6 +1,6 @@
 ﻿using Game.Board.Effects.Others;
+using Game.Board.General;
 using Game.Board.Piece.PieceLogic.Commanders;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Internal
 {
@@ -15,14 +15,14 @@ namespace Game.Board.Action.Internal
 
         protected override void Animate()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(gameState.PieceBoard[To])));
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(MatchManager.Ins.GameState.PieceBoard[To])));
         }
 
         protected override void ModifyGameState()
         {
-            var caller = (Velkaris)gameState.PieceBoard[From];
+            var caller = (Velkaris)MatchManager.Ins.GameState.PieceBoard[From];
             caller.SkillCooldown = 0;
-            caller.Marked = gameState.PieceBoard[To];
+            caller.Marked = MatchManager.Ins.GameState.PieceBoard[To];
         }
     }
 }

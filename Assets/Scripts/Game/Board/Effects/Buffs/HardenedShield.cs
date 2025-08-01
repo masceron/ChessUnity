@@ -8,7 +8,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class HardenedShield: Effect
     { 
-        public HardenedShield(sbyte duration, PieceLogic piece, sbyte stack = 1) : base(duration, stack, piece, Effects.EffectName.HardenedShield)
+        public HardenedShield(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, EffectName.HardenedShield)
         {}
         
         public override void OnCall(Action.Action action)
@@ -16,18 +16,13 @@ namespace Game.Board.Effects.Buffs
             if (action == null || action.To != Piece.Pos || action.Result != ActionResult.Succeed) return;
             action.Result = ActionResult.Failed;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, MatchManager.gameState.PieceBoard[action.Caller])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, MatchManager.Ins.GameState.PieceBoard[action.Caller])));
 
             if (Strength > 1) Strength--;
             else
             {
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }
-        }
-
-        public override string Description()
-        {
-            return MatchManager.assetManager.EffectData[EffectName].description;
         }
     }
 }

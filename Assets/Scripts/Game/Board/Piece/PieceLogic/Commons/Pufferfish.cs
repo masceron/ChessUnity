@@ -8,7 +8,6 @@ using Game.Board.Action.Skills;
 using Game.Board.Effects.Traits;
 using Game.Board.General;
 using static Game.Common.BoardUtils;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Piece.PieceLogic.Commons
 {
@@ -24,6 +23,7 @@ namespace Game.Board.Piece.PieceLogic.Commons
             var list = new List<Action.Action>();
             var range = Math.Max(AttackRange, EffectiveMoveRange);
             var push = Color == Color.White ? -1 : 1;
+            var gameState = MatchManager.Ins.GameState;
 
             for (var rank = RankOf(Pos) - (range - 1) * push; rank != RankOf(Pos) + (range + 1) * push; rank += push)
             {

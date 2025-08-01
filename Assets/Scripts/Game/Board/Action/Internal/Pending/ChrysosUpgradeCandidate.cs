@@ -1,10 +1,10 @@
 ﻿using Game.Board.Action.Skills;
+using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Interaction;
 using Game.UX.UI.ChrysosShop;
 using UnityEngine;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Internal.Pending
 {
@@ -23,7 +23,7 @@ namespace Game.Board.Action.Internal.Pending
             To = (ushort)to;
             Cost = (byte)cost;
 
-            var cr = gameState.PieceBoard[to];
+            var cr = MatchManager.Ins.GameState.PieceBoard[to];
             UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
             UpgradeFrom = cr.PieceRank;
             CurrentPiece = cr.Type;
@@ -35,11 +35,11 @@ namespace Game.Board.Action.Internal.Pending
             if (!shop)
             {
                 var canvas = GameObject.Find("IngameUI");
-                shop = Object.Instantiate(BoardInteractionUtils.ChrysosShop(), canvas.transform).GetComponent<ChrysosShop>();
+                shop = Object.Instantiate(MatchManager.Ins.InputProcessor.chrysosShopUI, canvas.transform).GetComponent<ChrysosShop>();
             }
             else shop.gameObject.SetActive(true);
 
-            shop.Load((Chrysos)gameState.PieceBoard[Caller], this);
+            shop.Load((Chrysos)MatchManager.Ins.GameState.PieceBoard[Caller], this);
         }
 
         protected override void ModifyGameState()

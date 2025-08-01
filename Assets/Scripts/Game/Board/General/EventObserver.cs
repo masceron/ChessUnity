@@ -81,7 +81,25 @@ namespace Game.Board.General
         {
             if (action.GetType() == typeof(EndTurn))
             {
-                _observersEnd.ForEach(effect => effect.OnCall(_mainAction));
+                _observersEnd.ForEach(effect =>
+                {
+                    //The next turn is of the opponent.
+                    if (MatchManager.Ins.GameState.SideToMove != effect.Piece.Color)
+                    {
+                        if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.AtEnemyTurn)
+                        {
+                            ((IEndTurnEffect)effect).OnCallEnd(_mainAction);
+                        }
+                    }
+                    //The next turn is ours.
+                    else
+                    {
+                        if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.AtAllyTurn)
+                        {
+                            ((IEndTurnEffect)effect).OnCallEnd(_mainAction);
+                        }
+                    }
+                });
                 _mainAction = null;
                 return;
             }

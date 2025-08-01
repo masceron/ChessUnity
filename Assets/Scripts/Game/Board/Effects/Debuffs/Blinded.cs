@@ -8,7 +8,7 @@ namespace Game.Board.Effects.Debuffs
     {
         private readonly int probability;
 
-        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, Effects.EffectName.Blinded)
+        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Blinded)
         {
             this.probability = probability;
         }
@@ -25,7 +25,7 @@ namespace Game.Board.Effects.Debuffs
 
         public override string Description()
         {
-            return string.Format(MatchManager.assetManager.EffectData[EffectName].description, probability);
+            return string.Format(AssetManager.Ins.EffectData[EffectName].description, probability);
         }
     }
 }

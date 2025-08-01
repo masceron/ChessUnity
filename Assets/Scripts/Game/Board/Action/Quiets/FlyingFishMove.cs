@@ -1,6 +1,7 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
 using Game.Board.General;
+using Game.Board.Piece;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Quiets
@@ -15,14 +16,14 @@ namespace Game.Board.Action.Quiets
 
         protected override void Animate()
         {
-            MatchManager.pieceManager.Move(Caller, To);
+            PieceManager.Ins.Move(Caller, To);
         }
 
         protected override void ModifyGameState()
         {
             var (rankFrom, fileFrom) = RankFileOf(From);
             var (rankTo, fileTo) = RankFileOf(To);
-            var board = MatchManager.gameState.PieceBoard;
+            var board = MatchManager.Ins.GameState.PieceBoard;
             var caller = board[From];
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
@@ -40,7 +41,9 @@ namespace Game.Board.Action.Quiets
                 break;
             }
             
-            MatchManager.gameState.Move(From, To);
+            MatchManager.Ins.GameState.Move(From, To);
+
+            Caller = To;
         }
     }
 }

@@ -5,8 +5,8 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Traits;
+using Game.Board.General;
 using static Game.Common.BoardUtils;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
@@ -21,6 +21,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         private void Skill(List<Action.Action> list)
         {
             if (SkillCooldown > 0) return;
+            var gameState = MatchManager.Ins.GameState;
             for (var i = 0; i < BoardSize; i++)
             {
                 var piece = gameState.PieceBoard[i];
@@ -39,6 +40,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         
         private bool MakeMove(List<Action.Action> list, int index)
         {
+            var gameState = MatchManager.Ins.GameState;
             if (!gameState.ActiveBoard[index]) return false;
             var pieceOn = gameState.PieceBoard[index];
             if (pieceOn != null)

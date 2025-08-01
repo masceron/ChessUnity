@@ -6,12 +6,19 @@ using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
-namespace Game.Board.Effects.Kills
+namespace Game.Board.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class VelkarisMarker: Effect
+    public class VelkarisMarker: Effect, IEndTurnEffect
     {
         private readonly int[] rows;
+        
+        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, EffectName.VelkarisMarker)
+        {
+            rows = new int[2];
+            TriggerRows(p.Pos, p.Color);
+            EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
+        }
 
         private void TriggerRows(int pos, Color side)
         {
@@ -30,14 +37,8 @@ namespace Game.Board.Effects.Kills
                     throw new ArgumentOutOfRangeException(nameof(side), side, null);
             }
         }
-
-        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, Effects.EffectName.VelkarisMarker)
-        {
-            rows = new int[2];
-            TriggerRows(p.Pos, p.Color);
-        }
         
-        public override void OnCall(Action.Action action)
+        public void OnCallEnd(Action.Action action)
         {
             if (action == null) return;
             
@@ -47,11 +48,11 @@ namespace Game.Board.Effects.Kills
                 return;
             }
             
-            if (MatchManager.gameState.SideToMove == Piece.Color) return;
+            if (MatchManager.Ins.GameState.SideToMove == Piece.Color) return;
 
             var rowMovedTo = RankOf(action.To);
             
-            if (!rows.Contains(rowMovedTo) || MatchManager.gameState.PieceBoard[action.To].Color == Piece.Color)
+            if (!rows.Contains(rowMovedTo) || MatchManager.Ins.GameState.PieceBoard[action.To].Color == Piece.Color)
             {
                 return;
             }
@@ -60,9 +61,6 @@ namespace Game.Board.Effects.Kills
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 
-        public override string Description()
-        {
-            return MatchManager.assetManager.EffectData[EffectName].description;
-        }
+        public EndTurnEffectType EndTurnEffectType { get; set; }
     }
 }

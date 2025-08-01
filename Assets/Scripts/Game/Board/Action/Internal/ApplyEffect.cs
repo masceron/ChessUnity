@@ -2,8 +2,6 @@
 using System.Linq;
 using Game.Board.Effects;
 using Game.Board.General;
-using UnityEngine;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Internal
 {
@@ -35,7 +33,7 @@ namespace Game.Board.Action.Internal
             }
             else
             {
-                switch (assetManager.EffectData[effect.EffectName].stack)
+                switch (AssetManager.Ins.EffectData[effect.EffectName].stack)
                 {
                     case EffectStack.Stackable:
                         if (already.Strength < effect.Strength) already.Strength = effect.Strength;

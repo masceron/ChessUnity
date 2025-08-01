@@ -1,6 +1,5 @@
 ﻿using Game.Board.Effects.Debuffs;
-using UnityEngine;
-using static Game.Board.General.MatchManager;
+using Game.Board.General;
 
 namespace Game.Board.Action.Internal
 {
@@ -15,7 +14,7 @@ namespace Game.Board.Action.Internal
 
         protected override void ModifyGameState()
         {
-            var affected = gameState.PieceBoard[To];
+            var affected = MatchManager.Ins.GameState.PieceBoard[To];
             
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, affected)));
         }

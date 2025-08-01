@@ -2,16 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using DG.Tweening;
+using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic;
+using Game.Board.Tile;
 using TMPro;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Color = UnityEngine.Color;
-using static Game.Interaction.BoardInteractionUtils;
-using static Game.Board.General.MatchManager;
+using System.Linq;
+using Game.Board.Action;
+using Game.Board.Action.Captures;
+using Game.Board.Action.Internal.Pending;
+using Game.Board.Action.Quiets;
+using Game.Board.Action.Skills;
+using Action = Game.Board.Action.Action;
+using static Game.Common.BoardUtils;
 
 namespace Game.UX.UI
 {
@@ -39,14 +47,13 @@ namespace Game.UX.UI
         [SerializeField] private GameObject pieceStatusEffect;
         [SerializeField] private RawImage pieceDemonstration;
 
-        [NonSerialized] public int SelectingFunction;
+        [NonSerialized] private int SelectingFunction;
 
         [Header("Captures")] 
         [SerializeField] private RectTransform allyCaptured;
         [SerializeField] private RectTransform enemyCaptured;
-
-        [Header("Camera")]
-        [SerializeField] private Transform mainCameraCenter;
+        
+        private Transform mainCameraCenter;
 
         [Header("Miscellaneous UIs")]
         [SerializeField] private GameObject effectUI;
@@ -60,8 +67,9 @@ namespace Game.UX.UI
         private bool seeingCapture;
         private PieceLogic hovering;
         
-        public void Start()
+        private void Start()
         {
+            mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             _normalColors = move.colors;
 
             _activeColors = _normalColors;
@@ -87,10 +95,8 @@ namespace Game.UX.UI
             
             DisablePieceInteractions();
             pieceInfo.SetActive(false);
-        }
-
-        public void Load()
-        {
+            
+            var gameState = MatchManager.Ins.GameState;
             gameState.WhiteCaptured.CollectionChanged += ReloadCaptureList;
             gameState.BlackCaptured.CollectionChanged += ReloadCaptureList;
         }
@@ -100,6 +106,7 @@ namespace Game.UX.UI
 
         private void ReloadCaptureList(object o, NotifyCollectionChangedEventArgs e)
         {
+            var gameState = MatchManager.Ins.GameState;
             var color = gameState.OurSide;
             var collection = o == gameState.WhiteCaptured ? 
                 color == Board.General.Color.White ? allyCapturedList : enemyCapturedList :
@@ -121,7 +128,7 @@ namespace Game.UX.UI
             }
         }
 
-        public void PanTo(int pos1, int pos2)
+        private void PanTo(int pos1, int pos2)
         {
             var direction = mainCameraCenter.position;
             direction.x = pos1;
@@ -141,7 +148,7 @@ namespace Game.UX.UI
             toggle.isOn = false;
         }
 
-        public void DisablePieceInteractions()
+        private void DisablePieceInteractions()
         {
             pieceAction.interactable = false;
             Disable(move);
@@ -152,15 +159,15 @@ namespace Game.UX.UI
             SelectingFunction = 0;
         }
 
-        public void EnablePieceInteractions()
+        private void EnablePieceInteractions()
         {
             pieceAction.interactable = true;
-            skill.interactable = gameState.PieceBoard[Selecting].SkillCooldown == 0;
+            skill.interactable = MatchManager.Ins.GameState.PieceBoard[Selecting].SkillCooldown == 0;
         }
-        
-        public void LoadPieceActionInfo()
+
+        private void LoadPieceActionInfo()
         {
-            var cooldown = gameState.PieceBoard[Selecting].SkillCooldown;
+            var cooldown = MatchManager.Ins.GameState.PieceBoard[Selecting].SkillCooldown;
             if (cooldown != 0)
             {
                 skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";
@@ -171,12 +178,12 @@ namespace Game.UX.UI
             }
         }
 
-        public void DisableGameInteractions()
+        private void DisableGameInteractions()
         {
             gameAction.interactable = false;
         }
 
-        public void EnableGameInteractions()
+        private void EnableGameInteractions()
         {
             gameAction.interactable = true;
         }
@@ -185,7 +192,6 @@ namespace Game.UX.UI
         {
             if (!context.performed || !pieceAction.interactable) return;
             move.isOn = !move.isOn;
-
         }
 
         public void PressCapture(InputAction.CallbackContext context)
@@ -204,7 +210,7 @@ namespace Game.UX.UI
         {
             if (SelectingFunction == 1)
             {
-                tileManager.UnmarkAll();
+                TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;
             }
@@ -219,7 +225,7 @@ namespace Game.UX.UI
         {
             if (SelectingFunction == 2)
             {
-                tileManager.UnmarkAll();
+                TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;
             }
@@ -234,7 +240,7 @@ namespace Game.UX.UI
         {
             if (SelectingFunction == 3)
             {
-                tileManager.UnmarkAll();
+                TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;
             }
@@ -257,7 +263,7 @@ namespace Game.UX.UI
             NewTurn();
         }
 
-        public void SetPieceHover(int pos)
+        private void SetPieceHover(int pos)
         {
             if (Selecting != -1) return;
             
@@ -269,7 +275,7 @@ namespace Game.UX.UI
                 return;
             }
             
-            var piece = gameState.PieceBoard[pos];
+            var piece = MatchManager.Ins.GameState.PieceBoard[pos];
 
             if (piece == null) return;
 
@@ -309,7 +315,7 @@ namespace Game.UX.UI
         private void SetUpPieceInfo(PieceLogic piece)
         {
             pieceInfo.SetActive(true);
-            var pieceInformation = assetManager.PieceData[piece.Type];
+            var pieceInformation = AssetManager.Ins.PieceData[piece.Type];
             LoadPieceModel(pieceInformation);
             LoadPieceDemonstrations(pieceInformation);
         }
@@ -349,7 +355,125 @@ namespace Game.UX.UI
             if (!context.performed || !pieceInfo.activeSelf) return;
             
             seeingCapture = !seeingCapture;
-            LoadPieceDemonstrations(assetManager.PieceData[hovering.Type]);
+            LoadPieceDemonstrations(AssetManager.Ins.PieceData[hovering.Type]);
+        }
+
+        private static int Selecting = -1;
+        private static List<Action> _moveList;
+        private static List<Action> _listOf = new();
+        
+        private static bool MarkMove()
+        {
+            TileManager.Ins.UnmarkAll();
+            _listOf.Clear();
+            
+            foreach (var _move in _moveList.OfType<IQuiets>())
+            {
+                _listOf.Add((Action)_move);
+                TileManager.Ins.MarkAsMoveable(((Action)_move).To);
+            }
+            
+            return _listOf.Count > 0;
+        }
+
+        private bool MarkCapture()
+        {
+            TileManager.Ins.UnmarkAll();
+            _listOf.Clear();
+            
+            foreach (var _move in _moveList.OfType<ICaptures>())
+            {
+                _listOf.Add((Action)_move);
+                TileManager.Ins.MarkAsMoveable(((Action)_move).To);
+            }
+
+            return _listOf.Count > 0;
+        }
+
+        private bool MarkSkill()
+        {
+            TileManager.Ins.UnmarkAll();
+            _listOf.Clear();
+            
+            foreach (var _move in _moveList.OfType<ISkills>())
+            {
+                _listOf.Add((Action)_move);
+                TileManager.Ins.MarkAsMoveable(((Action)_move).To);
+            }
+            
+            return _listOf.Count > 0;
+        }
+
+
+        public void Unmark()
+        {
+            Selecting = -1;
+            TileManager.Ins.UnmarkAll();
+            DisablePieceInteractions();
+            _listOf.Clear();
+            SetPieceHover(-1);
+        }
+
+        public void ExecuteAction(Action action)
+        {
+            ActionManager.EnqueueAction(action);
+            Unmark();
+            NewTurn();
+        }
+
+        public void MarkPiece(int pos)
+        {
+            if (Selecting != -1)
+            {
+                if (SelectingFunction == 0) return;
+                
+                var action = _listOf.Find(a => a.To == pos);
+                switch (action)
+                {
+                    case null:
+                        return;
+                    case IPendingAble pending:
+                        pending.CompleteAction();
+                        return;
+                }
+
+                ExecuteAction(action);
+            }
+            else
+            {
+                var piece = MatchManager.Ins.GameState.PieceBoard[pos];
+                if (piece == null) return;
+                
+                SetPieceHover(pos);
+                TileManager.Ins.Select(pos);
+                Selecting = pos;
+                LoadPieceActionInfo();
+                PanTo(RankOf(pos), FileOf(pos));
+
+                if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
+                
+                EnablePieceInteractions();
+                _moveList = MatchManager.Ins.GameState.PieceBoard[Selecting].MoveList();
+            }
+        }
+
+        private void NewTurn()
+        {
+            ActionManager.EnqueueAction(new EndTurn());
+            
+            if (MatchManager.Ins.GameState.SideToMove != MatchManager.Ins.GameState.OurSide)
+            {
+                DisableGameInteractions();
+            }
+            else
+            {
+                EnableGameInteractions();
+            }
+        }
+
+        public void Hover(int pos)
+        {
+            SetPieceHover(pos);
         }
     }
 }

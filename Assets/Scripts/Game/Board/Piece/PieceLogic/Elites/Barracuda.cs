@@ -26,11 +26,11 @@ namespace Game.Board.Piece.PieceLogic.Elites
             if (!VerifyBounds(tRank) || !VerifyBounds(file)) return;
             
             var tpos = IndexOf(tRank, file);
-            if (!MatchManager.gameState.ActiveBoard[IndexOf(tRank, file)]) return;
+            if (!MatchManager.Ins.GameState.ActiveBoard[IndexOf(tRank, file)]) return;
             
             var rank = RankOf(Pos);
             
-            var pieceOn = MatchManager.gameState.PieceBoard[tpos];
+            var pieceOn = MatchManager.Ins.GameState.PieceBoard[tpos];
             if (pieceOn == null)
             {
                 if (distance == EffectiveMoveRange)

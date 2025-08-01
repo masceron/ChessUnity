@@ -1,5 +1,5 @@
 ﻿using Game.Board.General;
-using static Game.Board.General.MatchManager;
+using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 
 namespace Game.Board.Action.Skills
@@ -13,14 +13,15 @@ namespace Game.Board.Action.Skills
         }
         protected override void Animate()
         {
-            pieceManager.Move(From, To);
+            PieceManager.Ins.Move(From, To);
         }
 
         protected override void ModifyGameState()
         {
+            var gameState = MatchManager.Ins.GameState;
             gameState.Move(From, To);
             gameState.PieceBoard[To].Color = gameState.PieceBoard[To].Color == Color.White ? Color.Black : Color.White;
-            ((GuidingSiren) gameState.PieceBoard[Caller]).SkillCooldown = 12;
+            ((GuidingSiren) gameState.PieceBoard[Caller]).SkillCooldown = 6;
         }
     }
 }

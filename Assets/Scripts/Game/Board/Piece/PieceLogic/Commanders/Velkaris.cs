@@ -5,7 +5,7 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
-using Game.Board.Effects.Kills;
+using Game.Board.Effects.Traits;
 using Game.Board.General;
 using static Game.Common.BoardUtils;
 
@@ -25,7 +25,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = MatchManager.gameState;
+            var gameState = MatchManager.Ins.GameState;
             
             var (rank, file) = RankFileOf(Pos);
             

@@ -1,8 +1,8 @@
-﻿using Game.Board.Piece;
+﻿using Game.Board.General;
+using Game.Board.Piece;
 using TMPro;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
-using static Game.Board.General.MatchManager;
 
 namespace Game.UX.UI.ChrysosShop
 {
@@ -15,7 +15,7 @@ namespace Game.UX.UI.ChrysosShop
         public void Load(PieceType type)
         {
             pieceType = type;
-            var info = assetManager.PieceData[type];
+            var info = AssetManager.Ins.PieceData[type];
             pieceName.text = info.pieceName != "" ? info.pieceName : type.ToString();
             pieceModel.ObjectPrefab = info.prefab.transform;
         }

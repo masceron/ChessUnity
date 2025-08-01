@@ -1,4 +1,4 @@
-using Game.Interaction;
+using Game.Board.General;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using static Game.Common.BoardUtils;
@@ -23,13 +23,15 @@ namespace Game.Board.Tile
 
         public void OnPointerClick(PointerEventData data)
         {
+            var processor = MatchManager.Ins.InputProcessor;
+            if (!processor) return;
             switch (data.button)
             {
                 case PointerEventData.InputButton.Left:
-                    BoardInteractionUtils.MarkPiece(IndexOf(rank, file));
+                    processor.MarkPiece(IndexOf(rank, file));
                     break;
                 case PointerEventData.InputButton.Right:
-                    BoardInteractionUtils.Unmark();
+                    processor.Unmark();
                     break;
                 case PointerEventData.InputButton.Middle:
                 default:
@@ -39,14 +41,14 @@ namespace Game.Board.Tile
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (color != Color.None)
-                BoardInteractionUtils.Hover(IndexOf(rank, file));
+            if (MatchManager.Ins.InputProcessor && color != Color.None)
+                MatchManager.Ins.InputProcessor.Hover(IndexOf(rank, file));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (color != Color.None) 
-                BoardInteractionUtils.Hover(-1);
+            if (MatchManager.Ins.InputProcessor && color != Color.None) 
+                MatchManager.Ins.InputProcessor.Hover(-1);
         }
     }
 }

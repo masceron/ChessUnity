@@ -33,9 +33,9 @@ namespace Game.Board.Piece.PieceLogic.Commons
                 var posTo = Pos + push * i;
 
                 if (!VerifyIndex(posTo) ||
-                    !MatchManager.gameState.ActiveBoard[posTo]) continue;
+                    !MatchManager.Ins.GameState.ActiveBoard[posTo]) continue;
                 
-                var pieceAt = MatchManager.gameState.PieceBoard[posTo];
+                var pieceAt = MatchManager.Ins.GameState.PieceBoard[posTo];
                 
                 if (pieceAt == null)
                 {

@@ -1,4 +1,5 @@
-﻿using static Game.Board.General.MatchManager;
+﻿using Game.Board.General;
+using Game.Board.Piece;
 
 namespace Game.Board.Action.Quiets
 {
@@ -13,12 +14,12 @@ namespace Game.Board.Action.Quiets
 
         protected override void Animate()
         {
-            pieceManager.Move(From, To);
+            PieceManager.Ins.Move(From, To);
         }
 
         protected override void ModifyGameState()
         {
-            gameState.Move(From, To);
+            MatchManager.Ins.GameState.Move(From, To);
             Caller = To;
         }
     }

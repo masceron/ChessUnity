@@ -8,10 +8,10 @@ namespace Game.Board
     {
         private static void MatchMaker()
         {
-            MatchManager.Init(new Config());
+            MatchManager.Ins.Init(new Config());
         }
     
-        private void Awake()
+        private void Start()
         {
             MatchMaker();
         }

@@ -18,7 +18,7 @@ namespace Game.UX.UI
         
         public void Set(Effect effect)
         {
-            var effectInfo = MatchManager.assetManager.EffectData[effect.EffectName];
+            var effectInfo = AssetManager.Ins.EffectData[effect.EffectName];
             strength.text = effect.Strength > 1 ? effect.Strength.ToString() : "";
             duration.text =  effect.Duration != -1 ? effect.Duration.ToString() : "";
             

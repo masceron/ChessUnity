@@ -75,7 +75,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = MatchManager.gameState;
+            var gameState = MatchManager.Ins.GameState;
             var (trank, file) = RankFileOf(Pos);
             
             var list = new List<Action.Action>();

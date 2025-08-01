@@ -1,4 +1,4 @@
-﻿using static Game.Board.General.MatchManager;
+﻿using Game.Board.General;
 using Color = Game.Board.General.Color;
 
 namespace Game.Board.Action
@@ -18,6 +18,7 @@ namespace Game.Board.Action
 
         protected override void ModifyGameState()
         {
+            var gameState = MatchManager.Ins.GameState;
             gameState.SideToMove = gameState.SideToMove == Color.White ? Color.Black : Color.White;
         }
     }

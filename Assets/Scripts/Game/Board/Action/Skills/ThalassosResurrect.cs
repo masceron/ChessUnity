@@ -2,7 +2,6 @@
 using Game.Board.Action.Internal;
 using Game.Board.General;
 using Game.Board.Piece;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Action.Skills
 {
@@ -18,6 +17,7 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
+            var gameState = MatchManager.Ins.GameState;
             var color = gameState.PieceBoard[Caller].Color;
             var collection = color == Color.White ? gameState.WhiteCaptured : gameState.BlackCaptured;
             ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, To)));

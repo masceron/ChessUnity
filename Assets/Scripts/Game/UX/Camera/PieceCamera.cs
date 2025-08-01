@@ -19,7 +19,6 @@ namespace Game.UX.Camera
         [SerializeField] private float moveSpeed;
         [SerializeField] private float zoomSpeed;
         [SerializeField] private float zoomRotationSpeed;
-        
 
         private void Awake()
         {

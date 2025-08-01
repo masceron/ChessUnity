@@ -1,4 +1,5 @@
-﻿using static Game.Board.General.MatchManager;
+﻿using Game.Board.General;
+using Game.Board.Piece;
 
 namespace Game.Board.Action.Internal
 {
@@ -14,8 +15,8 @@ namespace Game.Board.Action.Internal
 
         protected override void ModifyGameState()
         {
-            pieceManager.Destroy(Caller);
-            gameState.Destroy(Caller);
+            PieceManager.Ins.Destroy(Caller);
+            MatchManager.Ins.GameState.Destroy(Caller);
         }
     }
 }

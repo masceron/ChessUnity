@@ -9,7 +9,6 @@ using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Board.Piece.PieceLogic.Commons;
 using Game.Board.Piece.PieceLogic.Elites;
 using Game.Board.Piece.PieceLogic.Summon;
-using Game.Board.Piece.PieceLogic.Summoned;
 using Game.Board.Piece.PieceLogic.Swarm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -92,7 +91,7 @@ namespace Game.Board.General
                 
                 piece.PassTurn();
 
-                foreach (var effect in piece.Effects.Where(effect => effect.Duration >= 0))
+                foreach (var effect in piece.Effects.Where(effect => effect.Duration >= 0 && effect.Piece.Color != SideToMove))
                 {
                     effect.Duration -= 1;
 

@@ -1,13 +1,14 @@
+using Game.Board.General;
+using Game.Common;
 using Game.Interaction;
 using UnityEngine;
 using static Game.Common.BoardUtils;
-using static Game.Board.General.MatchManager;
 using Color = Game.Board.General.Color;
 
 namespace Game.Board.Tile
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TileManager : MonoBehaviour
+    public class TileManager : Singleton<TileManager>
     {
         private Tile[] tiles;
         
@@ -41,13 +42,14 @@ namespace Game.Board.Tile
             }
         }
 
-        public void SpawnTile(int index)
+        private void SpawnTile(int index)
         {
-            var prefab = gameState.ActiveBoard[index]
-                ? !gameState.SquareColor[index] ? 
-                    assetManager.TileData[Color.White] : 
-                    assetManager.TileData[Color.Black] : 
-                assetManager.TileData[Color.None];
+            var ins = MatchManager.Ins;
+            var prefab = ins.GameState.ActiveBoard[index]
+                ? !ins.GameState.SquareColor[index] ? 
+                    AssetManager.Ins.TileData[Color.White] : 
+                    AssetManager.Ins.TileData[Color.Black] : 
+                AssetManager.Ins.TileData[Color.None];
 
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile>();
             tile.Spawn(index);

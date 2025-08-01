@@ -8,7 +8,7 @@ namespace Game.Board.Effects.Buffs
 {
     public class Vengeful: Effect
     {
-        public Vengeful(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.Vengeful)
+        public Vengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.Vengeful)
         {}
 
         public override void OnCall(Action.Action action)
@@ -17,13 +17,8 @@ namespace Game.Board.Effects.Buffs
             
             if (action.To == Piece.Pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, MatchManager.gameState.PieceBoard[action.To])));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, MatchManager.Ins.GameState.PieceBoard[action.To])));
             }
-        }
-
-        public override string Description()
-        {
-            return MatchManager.assetManager.EffectData[EffectName].description;
         }
     }
 }

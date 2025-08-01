@@ -44,7 +44,7 @@ namespace UI.UIObject3D.Scripts
             }
 
             // stop calling update if we have nothing scheduled (DelayedCall will re-enable this)
-            if (delayedActions.Count == 0) this.enabled = false;
+            if (delayedActions.Count == 0) enabled = false;
         }
     }
 

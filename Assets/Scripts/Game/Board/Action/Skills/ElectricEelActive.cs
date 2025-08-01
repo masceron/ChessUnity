@@ -1,6 +1,6 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using static Game.Board.General.MatchManager;
+using Game.Board.General;
 using Game.Board.Piece.PieceLogic.Elites;
 using static Game.Common.BoardUtils;
 
@@ -15,6 +15,7 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
+            var gameState = MatchManager.Ins.GameState;
             var (rank, file) = RankFileOf(Caller);
             var caller = gameState.PieceBoard[Caller];
 
@@ -32,7 +33,7 @@ namespace Game.Board.Action.Skills
                 }
             }
 
-            ((ElectricEel)caller).SkillCooldown = 8;
+            ((ElectricEel)caller).SkillCooldown = 4;
         }
     }
 }

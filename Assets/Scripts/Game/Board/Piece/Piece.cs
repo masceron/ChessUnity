@@ -16,7 +16,8 @@ namespace Game.Board.Piece
         Anomalocaris,
         Archelon,
         Thalassos,
-        Pufferfish
+        Pufferfish,
+        Swordfish
     }
 
     public enum PieceRank : byte

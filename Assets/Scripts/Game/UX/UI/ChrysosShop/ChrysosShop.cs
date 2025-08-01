@@ -2,13 +2,12 @@
 using DG.Tweening;
 using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Skills;
+using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic;
 using Game.Board.Piece.PieceLogic.Commanders;
-using Game.Interaction;
 using TMPro;
 using UnityEngine;
-using static Game.Board.General.MatchManager;
 
 namespace Game.UX.UI.ChrysosShop
 {
@@ -43,7 +42,7 @@ namespace Game.UX.UI.ChrysosShop
             candidate = cd;
             cost = cd.Cost;
             
-            var upgradableTo = (from piece in assetManager.PieceData.Values where piece.rank == candidate.UpgradableTo select piece.type).ToList();
+            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == candidate.UpgradableTo select piece.type).ToList();
             if (cd.UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(cd.CurrentPiece);
             var already = itemLine.transform.childCount;
             var needed = upgradableTo.Count;
@@ -73,7 +72,7 @@ namespace Game.UX.UI.ChrysosShop
 
         public void Buy(PieceType type)
         {
-            BoardInteractionUtils.ExecuteAction(new ChrysosUpgrade(chrysos.Pos, new PieceConfig(type, chrysos.Color, candidate.To), cost));
+            MatchManager.Ins.InputProcessor.ExecuteAction(new ChrysosUpgrade(chrysos.Pos, new PieceConfig(type, chrysos.Color, candidate.To), cost));
             Disable();
         }
     }

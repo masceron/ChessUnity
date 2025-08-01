@@ -21,8 +21,8 @@ namespace Game.Board.Piece.PieceLogic.Swarm
         {
             var (rank, file) = RankFileOf(Pos);
             
-            var board = MatchManager.gameState.PieceBoard;
-            var active = MatchManager.gameState.ActiveBoard;
+            var board = MatchManager.Ins.GameState.PieceBoard;
+            var active = MatchManager.Ins.GameState.ActiveBoard;
 
             for (var rankTo = rank - EffectiveMoveRange; rankTo <= rank + EffectiveMoveRange; rankTo += EffectiveMoveRange)
             {
@@ -43,7 +43,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
         private void Captures(List<Action.Action> list)
         {
-            var board = MatchManager.gameState.PieceBoard;
+            var board = MatchManager.Ins.GameState.PieceBoard;
 
             var ver1 = PushWhite(Pos) * AttackRange;
             var ver2 = PushBlack(Pos) * AttackRange;

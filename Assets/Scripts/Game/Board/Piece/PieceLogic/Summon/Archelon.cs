@@ -7,8 +7,8 @@ using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Traits;
+using Game.Board.General;
 using static Game.Common.BoardUtils;
-using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Piece.PieceLogic.Summon
 {
@@ -16,12 +16,13 @@ namespace Game.Board.Piece.PieceLogic.Summon
     {
         public Archelon(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(-1, this, 3)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this, 3)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ArchelonDraw(this)));
         }
 
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
+            var gameState = MatchManager.Ins.GameState;
             if (!gameState.ActiveBoard[index]) return false;
             var pieceOn = gameState.PieceBoard[index];
             if (pieceOn != null)
@@ -47,6 +48,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
             if (SkillCooldown != 0) return;
             
             var (rank, file) = RankFileOf(Pos);
+            var gameState = MatchManager.Ins.GameState;
             
             for (var r = ClampUp(rank - 3); r <= ClampDown(rank + 3); r++)
             {

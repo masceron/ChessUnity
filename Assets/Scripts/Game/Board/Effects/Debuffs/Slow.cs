@@ -26,7 +26,7 @@ namespace Game.Board.Effects.Debuffs
 
         public override string Description()
         {
-            return string.Format(MatchManager.assetManager.EffectData[EffectName].description, Strength);
+            return string.Format(AssetManager.Ins.EffectData[EffectName].description, Strength);
         }
     }
 }

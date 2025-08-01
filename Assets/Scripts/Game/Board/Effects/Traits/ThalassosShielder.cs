@@ -3,26 +3,23 @@ using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Buffs;
+using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 using static Game.Board.General.MatchManager;
 
 namespace Game.Board.Effects.Traits
 {
-    public class ThalassosShielder: Effect
+    public class ThalassosShielder: Effect, IEndTurnEffect
     {
         private List<PieceLogic> inRange = new();
         private readonly List<PieceLogic> shielding = new();
-        public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, Effects.EffectName.ThalassosShielder)
+        public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, EffectName.ThalassosShielder)
         {
+            EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
             OnCall((Action.Action)null);
         }
-
-        public override string Description()
-        {
-            return assetManager.EffectData[EffectName].description;
-        }
-
+        
         private void InRange()
         {
             var newInRange = new List<PieceLogic>(); 
@@ -38,7 +35,7 @@ namespace Game.Board.Effects.Traits
                     var file = FileOf(Piece.Pos) + fileOff;
                     if (!VerifyBounds(file)) continue;
 
-                    var p = gameState.PieceBoard[IndexOf(rank, file)];
+                    var p = MatchManager.Ins.GameState.PieceBoard[IndexOf(rank, file)];
 
                     if (p != null && p.Color == Piece.Color)
                     {
@@ -49,10 +46,10 @@ namespace Game.Board.Effects.Traits
 
             foreach (var pieceEntered in newInRange.Except(inRange))
             {
-                if (!Roll(50)) continue;
+                if (pieceEntered.Effects.Any(e => e.EffectName == EffectName.Shield) || !Roll(50)) continue;
                 
                 shielding.Add(pieceEntered);
-                ActionManager.EnqueueAction(new ApplyEffect(new Shield(-1, pieceEntered)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Shield(pieceEntered)));
             }
 
             foreach (var pieceExited in inRange.Except(newInRange))
@@ -69,7 +66,7 @@ namespace Game.Board.Effects.Traits
             inRange = newInRange;
         }
 
-        public sealed override void OnCall(Action.Action action)
+        public void OnCallEnd(Action.Action action)
         {
             if (action == null)
             {
@@ -78,10 +75,12 @@ namespace Game.Board.Effects.Traits
             }
 
             if (action.DoesMoveChangePos &&
-                (action.Caller == Piece.Pos || gameState.PieceBoard[Piece.Pos].Color == Piece.Color))
+                (action.Caller == Piece.Pos || MatchManager.Ins.GameState.PieceBoard[Piece.Pos].Color == Piece.Color))
             {
                 InRange();
             }
         }
+
+        public EndTurnEffectType EndTurnEffectType { get; set; }
     }
 }

@@ -42,7 +42,10 @@ namespace Game.Board.Effects
         ArchelonDraw,
         ThalassosShielder,
         Dominator,
-        Poison
+        Poison,
+        SwordfishAttack,
+        Bleeding,
+        Bound
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -63,7 +66,7 @@ namespace Game.Board.Effects
             Piece = piece;
             EffectName = name;
             
-            var info = MatchManager.assetManager.EffectData[name];
+            var info = AssetManager.Ins.EffectData[name];
             ObserverType = info.activeWhen;
             priority = info.priority;
         }
@@ -93,6 +96,9 @@ namespace Game.Board.Effects
             return -x!.priority.CompareTo(y!.priority);
         }
 
-        public abstract string Description();
+        public virtual string Description()
+        {
+            return AssetManager.Ins.EffectData[EffectName].description;
+        }
     }
 }

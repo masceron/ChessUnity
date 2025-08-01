@@ -29,12 +29,12 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
                 
-                if (MatchManager.gameState.PieceBoard[posTo] != null ||
-                    !MatchManager.gameState.ActiveBoard[posTo]) continue;
+                if (MatchManager.Ins.GameState.PieceBoard[posTo] != null ||
+                    !MatchManager.Ins.GameState.ActiveBoard[posTo]) continue;
 
                 if (Pathfinder.LineBlocker(rank, file,
                         rank, i,
-                        MatchManager.gameState.PieceBoard).Item1 != -1) continue;
+                        MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
                 
                 list.Add(new NormalMove(Pos, posTo));
             }
@@ -54,10 +54,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                         if (Pathfinder.LineBlocker(rank, file,
                                 rankOffFront, fileOff,
-                                MatchManager.gameState.PieceBoard).Item1 == -1)
+                                MatchManager.Ins.GameState.PieceBoard).Item1 == -1)
                         {
-                            if (MatchManager.gameState.PieceBoard[posOffFront] == null &&
-                                MatchManager.gameState.ActiveBoard[posOffFront])
+                            if (MatchManager.Ins.GameState.PieceBoard[posOffFront] == null &&
+                                MatchManager.Ins.GameState.ActiveBoard[posOffFront])
                             {
                                 list.Add(new NormalMove(Pos, posOffFront));
                             }
@@ -70,10 +70,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                     if (Pathfinder.LineBlocker(rank, file,
                             rankOffBack, fileOff,
-                            MatchManager.gameState.PieceBoard).Item1 != -1) continue;
+                            MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
                     
-                    if (MatchManager.gameState.PieceBoard[posOffBack] == null &&
-                        MatchManager.gameState.ActiveBoard[posOffBack])
+                    if (MatchManager.Ins.GameState.PieceBoard[posOffBack] == null &&
+                        MatchManager.Ins.GameState.ActiveBoard[posOffBack])
                     {
                         list.Add(new NormalMove(Pos, posOffBack));
                     }
@@ -91,13 +91,13 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
 
-                var p = MatchManager.gameState.PieceBoard[posTo];
+                var p = MatchManager.Ins.GameState.PieceBoard[posTo];
 
                 if (p == null || p.Color == Color) continue;
                 
                  if (Pathfinder.LineBlocker(rank, file,
                          rank, i,
-                         MatchManager.gameState.PieceBoard).Item1 != -1) continue;
+                         MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
                 
                 list.Add(new NormalCapture(Pos, posTo));
             }
@@ -112,13 +112,13 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     if (!VerifyBounds(j)) continue;
                     
                     var posTo = IndexOf(rankAfter, j);
-                    var p = MatchManager.gameState.PieceBoard[posTo];
+                    var p = MatchManager.Ins.GameState.PieceBoard[posTo];
                     
                     if (p == null || p.Color == Color) continue;
                     
                      if (Pathfinder.LineBlocker(rank, file,
                              rank, j,
-                             MatchManager.gameState.PieceBoard).Item1 != -1) continue;
+                             MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
                 
                     list.Add(new NormalCapture(Pos, posTo));
                     

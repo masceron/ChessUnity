@@ -1,18 +1,19 @@
-﻿using Game.Board.General;
-using Game.Board.Piece.PieceLogic;
+﻿using Game.Board.Piece.PieceLogic;
 
 namespace Game.Board.Effects.Traits
 {
-    public class Ambush: Effect
+    public class Ambush: Effect, IEndTurnEffect
     {
         private byte lastUsed;
         private bool active;
         private const sbyte RangeOffset = 2;
 
-        public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, Effects.EffectName.Ambush)
-        {}
+        public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, EffectName.Ambush)
+        {
+            EndTurnEffectType = EndTurnEffectType.AtAllyTurn;
+        }
 
-        public override void OnCall(Action.Action action)
+        public void OnCallEnd(Action.Action action)
         {
             if (action == null) return;
             if (action.Caller != Piece.Pos)
@@ -30,14 +31,11 @@ namespace Game.Board.Effects.Traits
             }
         }
 
-        public override string Description()
-        {
-            return MatchManager.assetManager.EffectData[EffectName].description;
-        }
-
         public override void OnRemove()
         {
             if (active) Piece.AttackRange -= RangeOffset;
         }
+
+        public EndTurnEffectType EndTurnEffectType { get; set; }
     }
 }

@@ -4,23 +4,23 @@ using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
+using Game.Board.General;
 using static Game.Common.BoardUtils;
-using static Game.Board.General.MatchManager;
 using SnappingStrike = Game.Board.Effects.Traits.SnappingStrike;
 
-namespace Game.Board.Piece.PieceLogic.Summoned
+namespace Game.Board.Piece.PieceLogic.Summon
 {
     public class Anomalocaris: PieceLogic
     {
         public Anomalocaris(PieceConfig cfg) : base(cfg)
         {
-            SkillCooldown = -1;
-            ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));
         }
 
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
+            var gameState = MatchManager.Ins.GameState;
             if (!gameState.ActiveBoard[index]) return false;
             var pieceOn = gameState.PieceBoard[index];
             if (pieceOn != null)
@@ -39,6 +39,14 @@ namespace Game.Board.Piece.PieceLogic.Summoned
             }
 
             return true;
+        }
+
+        private void Skill(List<Action.Action> list)
+        {
+            if (SkillCooldown == 0)
+            {
+                
+            }
         }
 
         protected override List<Action.Action> MoveToMake()
@@ -95,6 +103,8 @@ namespace Game.Board.Piece.PieceLogic.Summoned
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
+            
+            Skill(list);
 
             return list;
         }
