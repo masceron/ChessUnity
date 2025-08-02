@@ -27,6 +27,7 @@ namespace Game.UX.UI.UIManager
             }
 
             currentCanvas = Instantiate(canvasDict[id], transform).GetComponent<RectTransform>();
+            currentCanvas.name = canvasDict[id].name;
 
             switch (id)
             {

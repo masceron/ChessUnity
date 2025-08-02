@@ -14,9 +14,12 @@ namespace Game.Board.Effects.Debuffs
             return string.Format(AssetManager.Ins.EffectData[EffectName].description, Duration);
         }
 
-        public override void OnCall(List<Action.Action> actions)
+        public override List<Action.Action> OnCall(List<Action.Action> actions)
         {
+            if (actions.Count == 0 || actions[0].Caller != Piece.Pos) return actions;
+            
             actions.Clear();
+            return actions;
         }
     }
 }

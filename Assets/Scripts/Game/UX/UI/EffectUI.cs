@@ -29,7 +29,7 @@ namespace Game.UX.UI
                                + "\n`"
                                + effect.Description();
 
-            if (effectInfo.category == EffectCategory.Trait) tooltip.infoRight = "Trait";
+            if (effectInfo.category == EffectCategory.Trait && effect.Duration == -1) tooltip.infoRight = "Trait";
             else tooltip.infoRight = "`" + (effect.Duration != -1 ? effect.Duration.ToString() : "∞");
         }
     }

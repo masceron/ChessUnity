@@ -15,5 +15,9 @@ namespace Game.Board.Piece
 
         [SerializeField] public Texture2D movePattern;
         [SerializeField] public Texture2D capturePattern;
+
+        [SerializeField] public string skillName;
+        [SerializeField, TextArea] public string skillDescription;
+        [SerializeField] public byte normalSkillCooldown;
     }
 }

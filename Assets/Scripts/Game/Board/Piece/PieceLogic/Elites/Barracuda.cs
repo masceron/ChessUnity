@@ -5,7 +5,6 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Elites
@@ -15,7 +14,6 @@ namespace Game.Board.Piece.PieceLogic.Elites
     {
         public Barracuda(PieceConfig cfg) : base(cfg)
         {
-            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(-1, this)));
@@ -26,16 +24,16 @@ namespace Game.Board.Piece.PieceLogic.Elites
             if (!VerifyBounds(tRank) || !VerifyBounds(file)) return;
             
             var tpos = IndexOf(tRank, file);
-            if (!MatchManager.Ins.GameState.ActiveBoard[IndexOf(tRank, file)]) return;
+            if (!IsActive(IndexOf(tRank, file))) return;
             
             var rank = RankOf(Pos);
             
-            var pieceOn = MatchManager.Ins.GameState.PieceBoard[tpos];
+            var pieceOn = PieceOn(tpos);
             if (pieceOn == null)
             {
                 if (distance == EffectiveMoveRange)
                 {
-                    if (Color == Color.White)
+                    if (!Color)
                     {
                         if (tRank >= rank) return;
                     }
@@ -51,7 +49,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
             {
                 if (distance == AttackRange)
                 {
-                    if (Color == Color.White)
+                    if (!Color)
                     {
                         if (tRank >= rank) return;
                     }

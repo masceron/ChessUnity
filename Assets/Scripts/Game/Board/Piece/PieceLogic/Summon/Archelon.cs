@@ -7,12 +7,11 @@ using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Summon
 {
-    public class Archelon: PieceLogic
+    public class Archelon: PieceLogic, IPieceWithSkill
     {
         public Archelon(PieceConfig cfg) : base(cfg)
         {
@@ -22,9 +21,8 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
-            var gameState = MatchManager.Ins.GameState;
-            if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.PieceBoard[index];
+            if (!IsActive(index)) return false;
+            var pieceOn = PieceOn(index);
             if (pieceOn != null)
             {
                 if (pieceOn.Color != Color && distance <= AttackRange)
@@ -48,15 +46,14 @@ namespace Game.Board.Piece.PieceLogic.Summon
             if (SkillCooldown != 0) return;
             
             var (rank, file) = RankFileOf(Pos);
-            var gameState = MatchManager.Ins.GameState;
-            
+
             for (var r = ClampUp(rank - 3); r <= ClampDown(rank + 3); r++)
             {
                 var rowIndex = RowIndex(r);
                 for (var f = ClampUp(file - 3); f <= ClampDown(file + 3); f++)
                 {
                     var index = rowIndex + f;
-                    var pOn = gameState.PieceBoard[index];
+                    var pOn = PieceOn(index);
                     if (pOn == null || pOn == this) continue;
                     if (pOn.Color == Color)
                     {
@@ -101,5 +98,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

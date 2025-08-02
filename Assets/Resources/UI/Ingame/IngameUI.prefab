@@ -2336,6 +2336,7 @@ MonoBehaviour:
   capture: {fileID: 6303949910559525424}
   skill: {fileID: 5782717915260830124}
   skillCoolDown: {fileID: 2077903816141525867}
+  skillInfo: {fileID: 4759373815033913993}
   special: {fileID: 2003327872829812241}
   relic: {fileID: 8581293819904038088}
   skip: {fileID: 1474739531883002493}
@@ -2725,6 +2726,7 @@ GameObject:
   - component: {fileID: 8201397366035708889}
   - component: {fileID: 643160452633892744}
   - component: {fileID: 5782717915260830124}
+  - component: {fileID: 4759373815033913993}
   m_Layer: 5
   m_Name: Skill
   m_TagString: Untagged
@@ -2822,6 +2824,21 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 0
+--- !u!114 &4759373815033913993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552266445428952956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99634edca86565b4a96a0b7b261787f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleTooltipStyle: {fileID: 11400000, guid: b60656fad1664684d8fb0085c2c6ccbb, type: 2}
+  infoLeft: 
+  infoRight: 
 --- !u!1 &7743496120642831210
 GameObject:
   m_ObjectHideFlags: 0

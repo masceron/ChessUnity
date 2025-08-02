@@ -1,8 +1,8 @@
 ﻿using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
+using Game.Common;
 
 namespace Game.Board.Effects.Buffs
 {
@@ -17,7 +17,7 @@ namespace Game.Board.Effects.Buffs
             
             if (action.To == Piece.Pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, MatchManager.Ins.GameState.PieceBoard[action.To])));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, BoardUtils.PieceOn(action.To))));
             }
         }
     }

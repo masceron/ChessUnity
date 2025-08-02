@@ -20,6 +20,11 @@ namespace Game.Board.Effects
         Stackable, NonStackable, Additive
     }
 
+    public enum EffectScope : byte
+    {
+        Local, Global
+    }
+
     public enum EffectName
     {
         Carapace,
@@ -56,7 +61,7 @@ namespace Game.Board.Effects
         public readonly PieceLogic Piece;
         public readonly EffectName EffectName;
         
-        public readonly ObserverType ObserverType;
+        public readonly ObserverActivateWhen ObserverActivateWhen;
         private readonly ObserverPriority priority;
 
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectName name)
@@ -67,7 +72,7 @@ namespace Game.Board.Effects
             EffectName = name;
             
             var info = AssetManager.Ins.EffectData[name];
-            ObserverType = info.activeWhen;
+            ObserverActivateWhen = info.activeWhen;
             priority = info.priority;
         }
 
@@ -86,9 +91,9 @@ namespace Game.Board.Effects
             
         }
 
-        public virtual void OnCall(List<Action.Action> actions)
+        public virtual List<Action.Action> OnCall(List<Action.Action> actions)
         {
-            
+            return null;
         }
 
         public override int Compare(Effect x, Effect y)

@@ -4,7 +4,6 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Swarm
@@ -13,7 +12,6 @@ namespace Game.Board.Piece.PieceLogic.Swarm
     {
         public FlyingFish(PieceConfig cfg) : base(cfg)
         {
-            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
 
@@ -21,8 +19,8 @@ namespace Game.Board.Piece.PieceLogic.Swarm
         {
             var (rank, file) = RankFileOf(Pos);
             
-            var board = MatchManager.Ins.GameState.PieceBoard;
-            var active = MatchManager.Ins.GameState.ActiveBoard;
+            var board = PieceBoard();
+            var active = ActiveBoard();
 
             for (var rankTo = rank - EffectiveMoveRange; rankTo <= rank + EffectiveMoveRange; rankTo += EffectiveMoveRange)
             {
@@ -43,7 +41,7 @@ namespace Game.Board.Piece.PieceLogic.Swarm
 
         private void Captures(List<Action.Action> list)
         {
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = PieceBoard();
 
             var ver1 = PushWhite(Pos) * AttackRange;
             var ver2 = PushBlack(Pos) * AttackRange;

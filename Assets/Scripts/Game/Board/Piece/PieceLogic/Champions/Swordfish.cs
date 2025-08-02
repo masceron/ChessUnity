@@ -4,28 +4,38 @@ using Game.Board.Action.Internal;
 using Game.Board.Effects.Traits;
 using static Game.Common.BoardUtils;
 using System;
+using System.Linq;
+using Game.Board.Action.Captures;
 using Game.Board.Action.Quiets;
-using Game.Board.General;
+using Game.Board.Action.Skills;
+using Game.Board.Effects;
+using Game.Board.Effects.Buffs;
 
 namespace Game.Board.Piece.PieceLogic.Champions
 {
-    public class Swordfish: PieceLogic
+    public class Swordfish: PieceLogic, IPieceWithSkill
     {
         public Swordfish(PieceConfig cfg) : base(cfg)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SwordfishAttack(this)));
         }
 
+        private bool snap;
+
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
-            if (!MatchManager.Ins.GameState.ActiveBoard[index]) return false;
-            var pieceOn = MatchManager.Ins.GameState.PieceBoard[index];
+            if (!IsActive(index)) return false;
+            var pieceOn = PieceOn(index);
             if (pieceOn != null)
             {
-                if (pieceOn.Color != Color && distance <= AttackRange)
+                if (pieceOn.Color == Color || distance > AttackRange) return false;
+                
+                if (snap)
                 {
                     list.Add(new Action.Captures.SnappingStrike(Pos, index));
                 }
+                else list.Add(new NormalCapture(Pos, index));
 
                 return false;
             }
@@ -44,6 +54,7 @@ namespace Game.Board.Piece.PieceLogic.Champions
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
             var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
+            snap = Effects.Any(e => e.EffectName == EffectName.SnappingStrike);
             
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
             {
@@ -92,8 +103,12 @@ namespace Game.Board.Piece.PieceLogic.Champions
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
+            
+            if (SkillCooldown == 0) list.Add(new SwordFishActive(Pos));
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

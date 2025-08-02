@@ -44,7 +44,6 @@ namespace Game.Board.General
 
         public void Init(Config cfg)
         {
-            EventObserver.Init();
             MakeGame(cfg);
             MakeBoard();
             MakePieces(cfg.PieceConfig, cfg.StartingSize);

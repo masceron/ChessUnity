@@ -1,8 +1,8 @@
 ﻿using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
+using Game.Common;
 
 namespace Game.Board.Effects.Buffs
 {
@@ -16,7 +16,7 @@ namespace Game.Board.Effects.Buffs
             if (action == null || action.To != Piece.Pos || action.Result != ActionResult.Succeed) return;
             action.Result = ActionResult.Failed;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, MatchManager.Ins.GameState.PieceBoard[action.Caller])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, BoardUtils.PieceOn(action.Caller))));
 
             if (Strength > 1) Strength--;
             else

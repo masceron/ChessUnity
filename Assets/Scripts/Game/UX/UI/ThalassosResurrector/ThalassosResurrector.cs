@@ -3,8 +3,8 @@ using DG.Tweening;
 using Game.Board.Action.Skills;
 using Game.Board.General;
 using Game.Board.Piece;
+using Game.Common;
 using UnityEngine;
-using Color = Game.Board.General.Color;
 
 namespace Game.UX.UI.ThalassosResurrector
 {
@@ -19,8 +19,8 @@ namespace Game.UX.UI.ThalassosResurrector
             caller = c;
             to = t;
             var gameState = MatchManager.Ins.GameState;
-            var pieceCaller = gameState.PieceBoard[c];
-            var collection = pieceCaller.Color == Color.White ? gameState.WhiteCaptured : gameState.BlackCaptured;
+            var pieceCaller = BoardUtils.PieceOn(c);
+            var collection = !pieceCaller.Color ? gameState.WhiteCaptured : gameState.BlackCaptured;
             var pieceInfos = AssetManager.Ins.PieceData;
             var candidates = collection.Where(e => pieceInfos[e.Type].rank is PieceRank.Common or PieceRank.Swarm).Distinct().ToList();
             

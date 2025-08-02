@@ -2,6 +2,7 @@
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using Game.Board.Piece.PieceLogic.Commanders;
+using Game.Common;
 
 namespace Game.Board.Effects.Traits
 {
@@ -14,8 +15,8 @@ namespace Game.Board.Effects.Traits
         {
             if (action.Result == ActionResult.Failed) return;
             
-            var caller = MatchManager.Ins.GameState.PieceBoard[action.Caller];
-            var captured = MatchManager.Ins.GameState.PieceBoard[action.To];
+            var caller = BoardUtils.PieceOn(action.Caller);
+            var captured = BoardUtils.PieceOn(action.To);
             
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
         }

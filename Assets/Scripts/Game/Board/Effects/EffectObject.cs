@@ -10,7 +10,7 @@ namespace Game.Board.Effects
         [SerializeField] public EffectCategory category;
         [SerializeField] public EffectStack stack;
         [SerializeField] public ObserverPriority priority;
-        [SerializeField] public ObserverType activeWhen;
+        [SerializeField] public ObserverActivateWhen activeWhen;
         [SerializeField] public Texture2D icon;
 
         [SerializeField] public string effectName;

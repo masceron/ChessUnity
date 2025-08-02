@@ -23,7 +23,7 @@ namespace Game.Board.Action.Quiets
         {
             var (rankFrom, fileFrom) = RankFileOf(From);
             var (rankTo, fileTo) = RankFileOf(To);
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = PieceBoard();
             var caller = board[From];
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;

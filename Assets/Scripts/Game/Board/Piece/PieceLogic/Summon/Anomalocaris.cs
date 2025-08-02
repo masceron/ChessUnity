@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
+using Game.Board.Action.Skills;
 using Game.Board.Effects.Buffs;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 using SnappingStrike = Game.Board.Effects.Traits.SnappingStrike;
 
 namespace Game.Board.Piece.PieceLogic.Summon
 {
-    public class Anomalocaris: PieceLogic
+    public class Anomalocaris: PieceLogic, IPieceWithSkill
     {
         public Anomalocaris(PieceConfig cfg) : base(cfg)
         {
@@ -20,9 +20,8 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
-            var gameState = MatchManager.Ins.GameState;
-            if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.PieceBoard[index];
+            if (!IsActive(index)) return false;
+            var pieceOn = PieceOn(index);
             if (pieceOn != null)
             {
                 if (pieceOn.Color != Color && distance <= AttackRange)
@@ -43,9 +42,65 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
         private void Skill(List<Action.Action> list)
         {
-            if (SkillCooldown == 0)
+            if (SkillCooldown != 0) return;
+            
+            var file = FileOf(Pos);
+            var rank = RankOf(Pos);
+
+            //Up
+            var rankTo = rank - 5;
+            if (rankTo >= 0)
             {
-                
+                for (var tFileTo = file - 5; tFileTo <= file + 5; tFileTo++)
+                {
+                    if (!VerifyBounds(tFileTo)) continue;
+                    var idx = IndexOf(rankTo, tFileTo);
+                    var piece = PieceOn(idx);
+                    if (piece == null || piece.Color == Color) continue;
+                    list.Add(new AnomalocarisActive(Pos, idx));
+                }
+            }
+
+            //Down
+            rankTo = rank + 5;
+            if (VerifyUpperBound(rankTo))
+            {
+                for (var tFileTo = file - 5; tFileTo <= file + 5 - 1; tFileTo++)
+                {
+                    if (!VerifyBounds(tFileTo)) continue;
+                    var idx = IndexOf(rankTo, tFileTo);
+                    var piece = PieceOn(idx);
+                    if (piece == null || piece.Color == Color) continue;
+                    list.Add(new AnomalocarisActive(Pos, idx));
+                }
+            }
+
+            //Left
+            var fileTo = file - 5;
+            if (fileTo >= 0)
+            {
+                for (var tRankTo = rank - 5 + 1; tRankTo <= rank + 5 - 1; tRankTo++)
+                {
+                    if (!VerifyBounds(tRankTo)) continue;
+                    var idx = IndexOf(tRankTo, fileTo);
+                    var piece = PieceOn(idx);
+                    if (piece == null || piece.Color == Color) continue;
+                    list.Add(new AnomalocarisActive(Pos, idx));
+                }
+            }
+
+            //Right
+            fileTo = file + 5;
+            if (VerifyUpperBound(fileTo))
+            {
+                for (var tRankTo = rank - 5 + 1; tRankTo <= rank + 5; tRankTo++)
+                {
+                    if (!VerifyBounds(tRankTo)) continue;
+                    var idx = IndexOf(tRankTo, fileTo);
+                    var piece = PieceOn(idx);
+                    if (piece == null || piece.Color == Color) continue;
+                    list.Add(new AnomalocarisActive(Pos, idx));
+                }
             }
         }
 
@@ -108,5 +163,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Board.Effects;
 using Game.Board.General;
-using Color = Game.Board.General.Color;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic
 {
@@ -9,7 +9,7 @@ namespace Game.Board.Piece.PieceLogic
     public abstract class PieceLogic
     {
         public ushort Pos;
-        public Color Color;
+        public bool Color;
 
         public sbyte TrueMoveRange;
         public sbyte EffectiveMoveRange;
@@ -33,19 +33,25 @@ namespace Game.Board.Piece.PieceLogic
             TrueMoveRange = info.moveRange;
             AttackRange = info.attackRange; 
             PieceRank = info.rank;
+
+            if (this is IPieceWithSkill pieceWithSkill)
+            {
+                SkillCooldown = 0;
+                pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown + 1);
+            }
+            else SkillCooldown = -1;
         }
 
         public void PassTurn()
         {
-            var gameState = MatchManager.Ins.GameState;
-            if (SkillCooldown > 0 && gameState.SideToMove != gameState.OurSide) SkillCooldown--;
+            if (SkillCooldown > 0 && SideToMove() != OurSide()) SkillCooldown--;
         }
         protected abstract List<Action.Action> MoveToMake();
 
         public List<Action.Action> MoveList()
         {
             var list = MoveToMake();
-            EventObserver.Notify(list);
+            NotifyOnMoveGen(list);
             return list;
         }
     }

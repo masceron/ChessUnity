@@ -15,9 +15,11 @@ MonoBehaviour:
   pieceName: 
   type: 8
   prefab: {fileID: 919132149155446097, guid: 4be53cebe51372e47901d262e9f3ab62, type: 3}
-  defaultTransform: {x: 0, y: 1.64, z: 0}
   rank: 2
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
+  skillName: Shield
+  skillDescription: Grant a $Shield` to an ally in a 2 squares radius.
+  normalSkillCooldown: 0

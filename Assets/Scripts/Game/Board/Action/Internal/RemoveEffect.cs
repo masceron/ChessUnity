@@ -1,5 +1,6 @@
 ﻿using Game.Board.Effects;
 using Game.Board.General;
+using Game.Common;
 
 namespace Game.Board.Action.Internal
 {
@@ -15,9 +16,9 @@ namespace Game.Board.Action.Internal
 
         protected override void ModifyGameState()
         {
-            if (effect.ObserverType != ObserverType.None)
+            if (effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {
-                EventObserver.RemoveObserver(effect);
+                BoardUtils.RemoveObserver(effect);
             }
             effect.OnRemove();
             effect.Piece.Effects.Remove(effect);

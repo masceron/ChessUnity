@@ -15,9 +15,12 @@ MonoBehaviour:
   pieceName: Guiding Siren
   type: 1
   prefab: {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
-  defaultTransform: {x: 0, y: 1.64, z: 0}
   rank: 7
   moveRange: 5
   attackRange: 5
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
+  skillName: Enchanting Tune
+  skillDescription: Force a piece in a 6 squares radius to step forth 3 squares or
+    until meeting an obstacle. The controlled piece will switch side.
+  normalSkillCooldown: 6

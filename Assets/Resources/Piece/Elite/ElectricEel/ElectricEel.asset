@@ -15,9 +15,11 @@ MonoBehaviour:
   pieceName: Electric Eel
   type: 4
   prefab: {fileID: 919132149155446097, guid: 992a919ee8a0e884c8042bdfada586bf, type: 3}
-  defaultTransform: {x: 0, y: 1.64, z: 0}
   rank: 5
   moveRange: 2
   attackRange: 2
   movePattern: {fileID: 2800000, guid: 838229ac48dea524b816891fd414a1e4, type: 3}
   capturePattern: {fileID: 2800000, guid: 83705c21dcb23de4084902ec5b0632bc, type: 3}
+  skillName: Zap
+  skillDescription: Stuns all adjacent enemy pieces in 1 turn.
+  normalSkillCooldown: 4

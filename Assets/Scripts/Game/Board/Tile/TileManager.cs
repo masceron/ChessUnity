@@ -44,9 +44,8 @@ namespace Game.Board.Tile
 
         private void SpawnTile(int index)
         {
-            var ins = MatchManager.Ins;
-            var prefab = ins.GameState.ActiveBoard[index]
-                ? !ins.GameState.SquareColor[index] ? 
+            var prefab = IsActive(index)
+                ? !ColorOfSquare(index) ? 
                     AssetManager.Ins.TileData[Color.White] : 
                     AssetManager.Ins.TileData[Color.Black] : 
                 AssetManager.Ins.TileData[Color.None];

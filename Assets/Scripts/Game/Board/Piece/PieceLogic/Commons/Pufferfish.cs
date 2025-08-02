@@ -6,12 +6,11 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commons
 {
-    public class Pufferfish: PieceLogic
+    public class Pufferfish: PieceLogic, IPieceWithSkill
     {
         public Pufferfish(PieceConfig cfg) : base(cfg)
         {
@@ -22,8 +21,7 @@ namespace Game.Board.Piece.PieceLogic.Commons
         {
             var list = new List<Action.Action>();
             var range = Math.Max(AttackRange, EffectiveMoveRange);
-            var push = Color == Color.White ? -1 : 1;
-            var gameState = MatchManager.Ins.GameState;
+            var push = !Color ? -1 : 1;
 
             for (var rank = RankOf(Pos) - (range - 1) * push; rank != RankOf(Pos) + (range + 1) * push; rank += push)
             {
@@ -32,9 +30,9 @@ namespace Game.Board.Piece.PieceLogic.Commons
                 {
                     if (!VerifyBounds(file)) continue;
                     var idx = IndexOf(rank, file);
-                    if (!gameState.ActiveBoard[idx]) continue;
+                    if (!IsActive(idx)) continue;
                     
-                    var piece = gameState.PieceBoard[idx];
+                    var piece = PieceOn(idx);
                     
                     if (piece == null)
                     {
@@ -51,5 +49,7 @@ namespace Game.Board.Piece.PieceLogic.Commons
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

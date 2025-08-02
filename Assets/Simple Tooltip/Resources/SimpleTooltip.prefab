@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: (Aligned on right side)
+  m_text: Right
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ef190b77111ab84ba152f9da434fbae, type: 2}
   m_sharedMaterial: {fileID: -6112306360411951812, guid: 2ef190b77111ab84ba152f9da434fbae, type: 2}
@@ -303,9 +303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Placeholder text
-
-    Aligned on the left side.'
+  m_text: Left
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ef190b77111ab84ba152f9da434fbae, type: 2}
   m_sharedMaterial: {fileID: -6112306360411951812, guid: 2ef190b77111ab84ba152f9da434fbae, type: 2}
@@ -414,7 +412,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: -132.84998}
-  m_SizeDelta: {x: 316, y: 132.85}
+  m_SizeDelta: {x: 370, y: 132.85}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &7111340749674033723
 CanvasRenderer:

@@ -7,8 +7,6 @@ using Game.Board.Action.Quiets;
 using Game.Board.Effects.Buffs;
 using Game.Board.Effects.Debuffs;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
-using Color = Game.Board.General.Color;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commons
@@ -17,7 +15,6 @@ namespace Game.Board.Piece.PieceLogic.Commons
     {
         public SeaUrchin(PieceConfig cfg) : base(cfg)
         {
-            SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 50, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
@@ -26,16 +23,16 @@ namespace Game.Board.Piece.PieceLogic.Commons
         protected override List<Action.Action> MoveToMake()
         {
             var list = new List<Action.Action>();
-            var push = Color == Color.White ? -MaxLength : MaxLength;
+            var push = !Color ? -MaxLength : MaxLength;
             
             for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
             {
                 var posTo = Pos + push * i;
 
                 if (!VerifyIndex(posTo) ||
-                    !MatchManager.Ins.GameState.ActiveBoard[posTo]) continue;
+                    !IsActive(posTo)) continue;
                 
-                var pieceAt = MatchManager.Ins.GameState.PieceBoard[posTo];
+                var pieceAt = PieceOn(posTo);
                 
                 if (pieceAt == null)
                 {

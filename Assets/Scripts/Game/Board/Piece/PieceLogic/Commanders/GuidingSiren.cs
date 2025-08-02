@@ -6,31 +6,29 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GuidingSiren: PieceLogic
+    public class GuidingSiren: PieceLogic, IPieceWithSkill
     {
         public GuidingSiren(PieceConfig cfg) : base(cfg)
         {
-            SkillCooldown = 0;
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SirenDebuffer(this)));
         }
         
         
-        private void MakeMove(List<Action.Action> list, int trank, int file, int curr, GameState gameState)
+        private void MakeMove(List<Action.Action> list, int trank, int file, int curr)
         {
             if (!VerifyBounds(trank) || !VerifyBounds(file)) return;
             
             var tpos = IndexOf(trank, file);
-            if (!gameState.ActiveBoard[tpos]) return;
+            if (!IsActive(tpos)) return;
 
-            var p = gameState.PieceBoard[tpos];
+            var p = PieceOn(tpos);
             if (p == null)
             {
                 if (curr <= EffectiveMoveRange)
@@ -42,9 +40,9 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             }
         }
 
-        private void SirenActive(List<Action.Action> list, int trank, int file, GameState state)
+        private void SirenActive(List<Action.Action> list, int trank, int file)
         {
-            var push = Color == Color.White ? 1 : -1;
+            var push = !Color ? 1 : -1;
             for (var i = -6; i <= 6; i++)
             {
                 var rankOff = trank + i;
@@ -55,14 +53,14 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                     if (!VerifyBounds(fileOff)) continue;
                     
                     var tpos = IndexOf(rankOff, fileOff);
-                    var pieceAt = state.PieceBoard[tpos];
+                    var pieceAt = PieceOn(tpos);
                     if (pieceAt == null || pieceAt.Color == Color) continue;
                     
                     var rankForce = rankOff + push;
                     while (Math.Abs(rankForce - rankOff) <= 3 &&
                            VerifyBounds(rankForce) &&
-                           state.PieceBoard[IndexOf(rankForce, fileOff)] == null &&
-                           state.ActiveBoard[IndexOf(rankForce, fileOff)])
+                           PieceOn(IndexOf(rankForce, fileOff)) == null &&
+                           IsActive(IndexOf(rankForce, fileOff)))
                     {
                          rankForce += push;
                     }
@@ -75,29 +73,30 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = MatchManager.Ins.GameState;
             var (trank, file) = RankFileOf(Pos);
             
             var list = new List<Action.Action>();
             
             for (var i = 1; i <= Math.Max(AttackRange, EffectiveMoveRange); i++)
             {
-                MakeMove(list, trank + i, file, i, gameState);
-                MakeMove(list, trank - i, file, i, gameState);
-                MakeMove(list, trank, file + i, i, gameState);
-                MakeMove(list, trank, file - i, i, gameState);
-                MakeMove(list, trank + i, file + i, i, gameState);
-                MakeMove(list, trank - i, file + i, i, gameState);
-                MakeMove(list, trank + i, file - i, i, gameState);
-                MakeMove(list, trank - i, file - i, i, gameState);
+                MakeMove(list, trank + i, file, i);
+                MakeMove(list, trank - i, file, i);
+                MakeMove(list, trank, file + i, i);
+                MakeMove(list, trank, file - i, i);
+                MakeMove(list, trank + i, file + i, i);
+                MakeMove(list, trank - i, file + i, i);
+                MakeMove(list, trank + i, file - i, i);
+                MakeMove(list, trank - i, file - i, i);
             }
 
             if (SkillCooldown == 0)
             {
-                SirenActive(list, trank, file, gameState);
+                SirenActive(list, trank, file);
             }
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

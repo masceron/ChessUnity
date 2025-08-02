@@ -4,7 +4,7 @@ namespace Game.Board.Effects.Traits
 {
     public class SnappingStrike: Effect
     {
-        public SnappingStrike(PieceLogic piece) : base(-1, -1, piece, EffectName.SnappingStrike)
+        public SnappingStrike(PieceLogic piece, sbyte duration = -1) : base(duration, -1, piece, EffectName.SnappingStrike)
         {}
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Game.Board.General;
 using Game.Board.Piece;
+using Game.Board.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Skills
 {
@@ -21,7 +23,7 @@ namespace Game.Board.Action.Skills
         {
             var gameState = MatchManager.Ins.GameState;
             gameState.Destroy(To);
-            gameState.PieceBoard[From].SkillCooldown = -1;
+            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
         }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using Game.Board.General;
 using Game.Board.Piece;
-using Game.Board.Piece.PieceLogic.Commanders;
+using Game.Board.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirenActive: Action, ISkills
-    { public SirenActive(ushort caller, int f, int t) : base(caller, true)
+    {
+        public SirenActive(ushort caller, int f, int t) : base(caller, true)
         {
             From = (ushort)f;
             To = (ushort)t;
@@ -20,8 +22,8 @@ namespace Game.Board.Action.Skills
         {
             var gameState = MatchManager.Ins.GameState;
             gameState.Move(From, To);
-            gameState.PieceBoard[To].Color = gameState.PieceBoard[To].Color == Color.White ? Color.Black : Color.White;
-            ((GuidingSiren) gameState.PieceBoard[Caller]).SkillCooldown = 6;
+            FlipPieceColor(To);
+            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
         }
     }
 }

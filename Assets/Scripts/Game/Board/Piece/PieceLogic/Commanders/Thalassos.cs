@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Board.Action;
+using Game.Board.Action.Captures;
 using Game.Board.Action.Internal;
 using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
-    public class Thalassos: PieceLogic
+    public class Thalassos: PieceLogic, IPieceWithSkill
     {
         public Thalassos(PieceConfig cfg) : base(cfg)
         {
@@ -19,14 +19,13 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         
         private bool MakeMove(List<Action.Action> list, int index, int distance)
         {
-            var gameState = MatchManager.Ins.GameState;
-            if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.PieceBoard[index];
+            if (!IsActive(index)) return false;
+            var pieceOn = PieceOn(index);
             if (pieceOn != null)
             {
                 if (pieceOn.Color != Color && distance <= AttackRange)
                 {
-                    list.Add(new Action.Captures.SnappingStrike(Pos, index));
+                    list.Add(new NormalCapture(Pos, index));
                 }
 
                 return false;
@@ -43,8 +42,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         private void Skills(List<Action.Action> list)
         {
             if (SkillCooldown != 0) return;
-            var gameState = MatchManager.Ins.GameState;
-            
+
             for (var rankOff = -1; rankOff <= 1; rankOff++)
             {
                 var rank = RankOf(Pos) + rankOff;
@@ -57,7 +55,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                     if (!VerifyBounds(file)) continue;
                     var posTo = IndexOf(rank, file);
 
-                    if (gameState.PieceBoard[posTo] == null)
+                    if (PieceOn(posTo) == null)
                     {
                         list.Add(new ThalassosResurrectCandidate(Pos, posTo));
                     }
@@ -71,7 +69,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             var list = new List<Action.Action>();
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var push = Color == Color.White ? -1 : 1;
+            var push = !Color ? -1 : 1;
             
             var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             
@@ -108,6 +106,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
             return list;
         }
-        
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

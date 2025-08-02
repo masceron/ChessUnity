@@ -19,7 +19,6 @@ namespace Game.Board.Action.Captures
         {
             MatchManager.Ins.GameState.Destroy(Caller);
             MatchManager.Ins.GameState.Destroy(To);
-            MatchManager.Ins.GameState.ActiveBoard[To] = true;
         }
     }
 }

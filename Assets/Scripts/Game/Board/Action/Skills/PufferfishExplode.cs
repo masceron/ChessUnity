@@ -1,6 +1,5 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Skills
@@ -21,7 +20,7 @@ namespace Game.Board.Action.Skills
         {
             ActionManager.EnqueueAction(new DestroyPiece(Caller));
             var (rank, file) = RankFileOf(Caller);
-            var caller = MatchManager.Ins.GameState.PieceBoard[Caller];
+            var caller = PieceOn(Caller);
 
             for (var i = -1; i <= 1; i++)
             {
@@ -32,7 +31,7 @@ namespace Game.Board.Action.Skills
 
                     var idx = IndexOf(rank + i, file + j);
 
-                    var p = MatchManager.Ins.GameState.PieceBoard[idx];
+                    var p = PieceOn(idx);
 
                     if (p != null && p.Color != caller.Color)
                     {

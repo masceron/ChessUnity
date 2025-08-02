@@ -18,6 +18,7 @@ using Game.Board.Action.Captures;
 using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
+using Simple_Tooltip.Assets.Scripts;
 using Action = Game.Board.Action.Action;
 using static Game.Common.BoardUtils;
 
@@ -35,6 +36,7 @@ namespace Game.UX.UI
         [SerializeField] private Toggle capture;
         [SerializeField] private Toggle skill;
         [SerializeField] private TMP_Text skillCoolDown;
+        [SerializeField] private SimpleTooltip skillInfo;
         
         [Header("Game Actions")]
         [SerializeField] private Button special;
@@ -106,11 +108,10 @@ namespace Game.UX.UI
 
         private void ReloadCaptureList(object o, NotifyCollectionChangedEventArgs e)
         {
-            var gameState = MatchManager.Ins.GameState;
-            var color = gameState.OurSide;
-            var collection = o == gameState.WhiteCaptured ? 
-                color == Board.General.Color.White ? allyCapturedList : enemyCapturedList :
-                color == Board.General.Color.Black ? allyCapturedList : enemyCapturedList;
+            var color = OurSide();
+            var collection = o == WhiteCaptured() ? 
+                !color ? allyCapturedList : enemyCapturedList :
+                color ? allyCapturedList : enemyCapturedList;
 
             var obj = collection == allyCapturedList ? allyCaptured : enemyCaptured;
 
@@ -155,6 +156,7 @@ namespace Game.UX.UI
             Disable(capture);
             Disable(skill);
             skillCoolDown.text = "";
+            skillInfo.enabled = false;
             
             SelectingFunction = 0;
         }
@@ -162,12 +164,24 @@ namespace Game.UX.UI
         private void EnablePieceInteractions()
         {
             pieceAction.interactable = true;
-            skill.interactable = MatchManager.Ins.GameState.PieceBoard[Selecting].SkillCooldown == 0;
+            skill.interactable = PieceOn(Selecting).SkillCooldown == 0;
+            if (skill.interactable)
+            {
+                skillInfo.enabled = true;
+                LoadSkillInfo();
+            }
+            else skillInfo.enabled = false;
+        }
+
+        private void LoadSkillInfo()
+        {
+            var info = AssetManager.Ins.PieceData[PieceOn(Selecting).Type];
+            skillInfo.infoLeft = "$" + info.skillName + "`\n" + info.skillDescription;
         }
 
         private void LoadPieceActionInfo()
         {
-            var cooldown = MatchManager.Ins.GameState.PieceBoard[Selecting].SkillCooldown;
+            var cooldown = PieceOn(Selecting).SkillCooldown;
             if (cooldown != 0)
             {
                 skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";
@@ -275,7 +289,7 @@ namespace Game.UX.UI
                 return;
             }
             
-            var piece = MatchManager.Ins.GameState.PieceBoard[pos];
+            var piece = PieceOn(pos);
 
             if (piece == null) return;
 
@@ -360,7 +374,7 @@ namespace Game.UX.UI
 
         private static int Selecting = -1;
         private static List<Action> _moveList;
-        private static List<Action> _listOf = new();
+        private static readonly List<Action> _listOf = new();
         
         private static bool MarkMove()
         {
@@ -441,7 +455,7 @@ namespace Game.UX.UI
             }
             else
             {
-                var piece = MatchManager.Ins.GameState.PieceBoard[pos];
+                var piece = PieceOn(pos);
                 if (piece == null) return;
                 
                 SetPieceHover(pos);
@@ -453,7 +467,7 @@ namespace Game.UX.UI
                 if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
                 
                 EnablePieceInteractions();
-                _moveList = MatchManager.Ins.GameState.PieceBoard[Selecting].MoveList();
+                _moveList = PieceOn(Selecting).MoveList();
             }
         }
 
@@ -461,7 +475,7 @@ namespace Game.UX.UI
         {
             ActionManager.EnqueueAction(new EndTurn());
             
-            if (MatchManager.Ins.GameState.SideToMove != MatchManager.Ins.GameState.OurSide)
+            if (SideToMove() != OurSide())
             {
                 DisableGameInteractions();
             }

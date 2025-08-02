@@ -1,7 +1,6 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using Game.Board.General;
-using Game.Board.Piece.PieceLogic.Elites;
+using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Skills
@@ -15,9 +14,8 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var gameState = MatchManager.Ins.GameState;
             var (rank, file) = RankFileOf(Caller);
-            var caller = gameState.PieceBoard[Caller];
+            var caller = PieceOn(Caller);
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -26,14 +24,14 @@ namespace Game.Board.Action.Skills
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;
-                    var p = gameState.PieceBoard[IndexOf(rankOff, fileOff)];
+                    var p = PieceOn(IndexOf(rankOff, fileOff));
                     if (p == null || p.Color == caller.Color) continue;
 
                     ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, p)));
                 }
             }
 
-            ((ElectricEel)caller).SkillCooldown = 4;
+            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Debuffs;
-using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
@@ -14,19 +13,16 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action.Caller != Piece.Pos) return;
+            if (action.Caller != Piece.Pos || action.Result == ActionResult.Failed) return;
             
-            var behind = Piece.Color == Color.White ? PushWhite(action.To) : PushBlack(action.To);
-            if (VerifyIndex(behind)) {
-                var pieceBehind = MatchManager.Ins.GameState.PieceBoard[behind];
-                if (pieceBehind != null && pieceBehind.Color != Piece.Color)
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(pieceBehind)));
-                    return;
-                }
+            var behind = !Piece.Color ? PushWhite(action.To) : PushBlack(action.To);
+            if (!VerifyIndex(behind)) return;
+            
+            var pieceBehind = PieceOn(behind);
+            if (pieceBehind != null && pieceBehind.Color != Piece.Color)
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(pieceBehind)));
             }
-
-            action.Result = ActionResult.Unblockable;
         }
     }
 }

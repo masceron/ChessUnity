@@ -15,9 +15,11 @@ MonoBehaviour:
   pieceName: 
   type: 7
   prefab: {fileID: 919132149155446097, guid: 05cb3f3a2b18a264cae0c5e67a515eb5, type: 3}
-  defaultTransform: {x: 0, y: 1.64, z: 0}
   rank: 2
   moveRange: 5
   attackRange: 5
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
+  skillName: Bound
+  skillDescription: $Bound` an enemy at a distance of 5 squares for 1 turn.
+  normalSkillCooldown: 1

@@ -12,7 +12,12 @@ namespace Game.Board.Tile
         private int rank;
         private int file;
         [SerializeField] public Color color;
-        
+
+        public void Start()
+        {
+            if (color == Color.None) gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+        }
+
         public void Spawn(int pos)
         {
             rank = RankOf(pos);
@@ -41,13 +46,13 @@ namespace Game.Board.Tile
         
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (MatchManager.Ins.InputProcessor && color != Color.None)
+            if (MatchManager.Ins.InputProcessor)
                 MatchManager.Ins.InputProcessor.Hover(IndexOf(rank, file));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (MatchManager.Ins.InputProcessor && color != Color.None) 
+            if (MatchManager.Ins.InputProcessor) 
                 MatchManager.Ins.InputProcessor.Hover(-1);
         }
     }

@@ -15,9 +15,12 @@ MonoBehaviour:
   pieceName: 
   type: 6
   prefab: {fileID: 919132149155446097, guid: c68c2d911c895d94dbc1d4a5ab6903b9, type: 3}
-  defaultTransform: {x: 0, y: 1.64, z: 0}
   rank: 7
   moveRange: 40
   attackRange: 40
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
+  skillName: Golden Morph
+  skillDescription: Upgrade an allied piece into another piece in the immediate upper
+    rank. A champion will change into another champion instead.
+  normalSkillCooldown: 1

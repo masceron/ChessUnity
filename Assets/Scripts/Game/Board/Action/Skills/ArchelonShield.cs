@@ -1,6 +1,7 @@
 ﻿using Game.Board.Action.Internal;
 using Game.Board.Effects.Buffs;
-using Game.Board.General;
+using Game.Board.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Board.Action.Skills
 {
@@ -14,9 +15,8 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var gameState = MatchManager.Ins.GameState;
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(gameState.PieceBoard[To])));
-            gameState.PieceBoard[Caller].SkillCooldown = 2;
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(To))));
+            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
         }
     }
 }

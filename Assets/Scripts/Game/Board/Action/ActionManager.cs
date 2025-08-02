@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Board.Action.Internal;
 using Game.Board.General;
+using Game.Common;
 
 namespace Game.Board.Action
 {
@@ -40,7 +41,7 @@ namespace Game.Board.Action
                     if (action is not IInternal)
                     {
                         _lastMainAction = action;
-                        EventObserver.Notify(_lastMainAction);
+                        BoardUtils.Notify(_lastMainAction);
                     }
                     action.Execute();
                 }
@@ -52,7 +53,7 @@ namespace Game.Board.Action
                 _state.EffectCountdown();
                 
                 //Call triggers when ending turn.
-                EventObserver.Notify(queueAction);
+                BoardUtils.Notify(queueAction);
                 
                 _lastMainAction = null;
 

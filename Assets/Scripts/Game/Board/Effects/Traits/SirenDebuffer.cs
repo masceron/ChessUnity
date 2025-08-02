@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
-using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
@@ -44,7 +43,7 @@ namespace Game.Board.Effects.Traits
                 for (var f = fileStart; f <= fileEnd; f++)
                 {
                     var index = rowIndex + f;
-                    var pOn = MatchManager.Ins.GameState.PieceBoard[index];
+                    var pOn = PieceOn(index);
                     if (pOn == null) continue;
                     if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != EffectName.Slow))
                     {

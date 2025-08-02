@@ -1,5 +1,4 @@
-﻿using Game.Board.General;
-using Game.Board.Piece.PieceLogic;
+﻿using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Effects.Traits
@@ -12,7 +11,7 @@ namespace Game.Board.Effects.Traits
         public override void OnCall(Action.Action action)
         {
             if (Distance(action.To, Piece.Pos) > 2 || 
-                MatchManager.Ins.GameState.PieceBoard[action.To].Color != Piece.Color ||
+                ColorOfPiece(action.To) != Piece.Color ||
                 action.To == Piece.Pos) 
                 return;
             

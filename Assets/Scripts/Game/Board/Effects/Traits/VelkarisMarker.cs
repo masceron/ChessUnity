@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.General;
@@ -20,21 +19,19 @@ namespace Game.Board.Effects.Traits
             EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
         }
 
-        private void TriggerRows(int pos, Color side)
+        private void TriggerRows(int pos, bool side)
         {
             var row = RankOf(pos);
             switch (side)
             {
-                case Color.White:
+                case false:
                     rows[0] = row - 1;
                     rows[1] = row - 2;
                     break;
-                case Color.Black:
+                case true:
                     rows[0] = row + 1;
                     rows[1] = row + 2;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(side), side, null);
             }
         }
         
@@ -52,7 +49,7 @@ namespace Game.Board.Effects.Traits
 
             var rowMovedTo = RankOf(action.To);
             
-            if (!rows.Contains(rowMovedTo) || MatchManager.Ins.GameState.PieceBoard[action.To].Color == Piece.Color)
+            if (!rows.Contains(rowMovedTo) || ColorOfPiece(action.To) == Piece.Color)
             {
                 return;
             }

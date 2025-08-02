@@ -1,5 +1,4 @@
 using UnityEngine;
-using Color = Game.Board.General.Color;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece
@@ -36,9 +35,9 @@ namespace Game.Board.Piece
     {
         private int rank;
         private int file;
-        private Color color;
+        private bool color;
         
-        public void Spawn(int pos, Color c)
+        public void Spawn(int pos, bool c)
         {
             rank = RankOf(pos);
             file = FileOf(pos);
@@ -47,7 +46,7 @@ namespace Game.Board.Piece
             
             var angles = new Quaternion
             {
-                eulerAngles = c == Color.White
+                eulerAngles = !c
                     ? new Vector3(-90, 0, 0)
                     : new Vector3(-90, 0, 180)
             };

@@ -6,13 +6,12 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Velkaris: PieceLogic
+    public class Velkaris: PieceLogic, IPieceWithSkill
     {
         public PieceLogic Marked;
 
@@ -25,8 +24,6 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
         protected override List<Action.Action> MoveToMake()
         {
-            var gameState = MatchManager.Ins.GameState;
-            
             var (rank, file) = RankFileOf(Pos);
             
             var list = new List<Action.Action>();
@@ -39,8 +36,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 if (!VerifyUpperBound(rankAfter)) break;
                 var newPos = IndexOf(rankAfter, file);
                 
-                if (!gameState.ActiveBoard[newPos]) break;
-                var p = gameState.PieceBoard[newPos];
+                if (!IsActive(newPos)) break;
+                var p = PieceOn(newPos);
                 if (p != null)
                 {
                     if (p.Color != Color && rankOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
@@ -58,8 +55,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 if (rankAfter < 0) break;
                 var newPos = IndexOf(rankAfter, file);
                 
-                if (!gameState.ActiveBoard[newPos]) break;
-                var p = gameState.PieceBoard[newPos];
+                if (!IsActive(newPos)) break;
+                var p = PieceOn(newPos);
                 if (p != null)
                 {
                     if (p.Color != Color && rankOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
@@ -77,8 +74,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 if (!VerifyUpperBound(fileAfter)) break;
                 var newPos = IndexOf(rank, fileAfter);
                 
-                if (!gameState.ActiveBoard[newPos]) break;
-                var p = gameState.PieceBoard[newPos];
+                if (!IsActive(newPos)) break;
+                var p = PieceOn(newPos);
                 if (p != null)
                 {
                     if (p.Color != Color && fileOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
@@ -96,8 +93,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
                 if (fileAfter < 0) break;
                 var newPos = IndexOf(rank, fileAfter);
                 
-                if (!gameState.ActiveBoard[newPos]) break;
-                var p = gameState.PieceBoard[newPos];
+                if (!IsActive(newPos)) break;
+                var p = PieceOn(newPos);
                 if (p != null)
                 {
                     if (p.Color != Color && fileOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
@@ -116,5 +113,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

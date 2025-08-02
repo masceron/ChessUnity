@@ -1,15 +1,14 @@
 ﻿using System;
-using Game.Board.General;
 
 namespace Game.Board.Piece
 {
     public readonly struct PieceConfig : IEquatable<PieceConfig>
     {
         public readonly PieceType Type;
-        public readonly Color Color;
+        public readonly bool Color;
         public readonly ushort Index;
 
-        public PieceConfig(PieceType t, Color c, ushort i)
+        public PieceConfig(PieceType t, bool c, ushort i)
         {
             Type = t;
             Color = c;
@@ -31,7 +30,7 @@ namespace Game.Board.Piece
             unchecked
             {
                 var hashCode = (int)Type;
-                hashCode = (hashCode * 397) ^ (int)Color;
+                hashCode = (hashCode * 397) ^ Color.GetHashCode();
                 hashCode = (hashCode * 397) ^ Index.GetHashCode();
                 return hashCode;
             }

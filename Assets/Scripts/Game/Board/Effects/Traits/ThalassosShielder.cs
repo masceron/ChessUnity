@@ -3,7 +3,6 @@ using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
 using Game.Board.Effects.Buffs;
-using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 using static Game.Board.General.MatchManager;
@@ -35,7 +34,7 @@ namespace Game.Board.Effects.Traits
                     var file = FileOf(Piece.Pos) + fileOff;
                     if (!VerifyBounds(file)) continue;
 
-                    var p = MatchManager.Ins.GameState.PieceBoard[IndexOf(rank, file)];
+                    var p = PieceOn(IndexOf(rank, file));
 
                     if (p != null && p.Color == Piece.Color)
                     {
@@ -75,7 +74,7 @@ namespace Game.Board.Effects.Traits
             }
 
             if (action.DoesMoveChangePos &&
-                (action.Caller == Piece.Pos || MatchManager.Ins.GameState.PieceBoard[Piece.Pos].Color == Piece.Color))
+                (action.Caller == Piece.Pos || ColorOfPiece(action.Caller) == Piece.Color))
             {
                 InRange();
             }

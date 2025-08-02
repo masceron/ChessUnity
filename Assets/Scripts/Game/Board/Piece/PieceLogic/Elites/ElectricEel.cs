@@ -6,14 +6,12 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Buffs;
-using Game.Board.General;
 using Game.Common;
-using Color = Game.Board.General.Color;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Elites
 {
-    public class ElectricEel: PieceLogic
+    public class ElectricEel: PieceLogic, IPieceWithSkill
     {
         public ElectricEel(PieceConfig cfg) : base(cfg)
         {
@@ -29,12 +27,12 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
                 
-                if (MatchManager.Ins.GameState.PieceBoard[posTo] != null ||
-                    !MatchManager.Ins.GameState.ActiveBoard[posTo]) continue;
+                if (PieceOn(posTo) != null ||
+                    !IsActive(posTo)) continue;
 
                 if (Pathfinder.LineBlocker(rank, file,
                         rank, i,
-                        MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
+                        PieceBoard()).Item1 != -1) continue;
                 
                 list.Add(new NormalMove(Pos, posTo));
             }
@@ -54,10 +52,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                         if (Pathfinder.LineBlocker(rank, file,
                                 rankOffFront, fileOff,
-                                MatchManager.Ins.GameState.PieceBoard).Item1 == -1)
+                                PieceBoard()).Item1 == -1)
                         {
-                            if (MatchManager.Ins.GameState.PieceBoard[posOffFront] == null &&
-                                MatchManager.Ins.GameState.ActiveBoard[posOffFront])
+                            if (PieceOn(posOffFront) == null &&
+                                IsActive(posOffFront))
                             {
                                 list.Add(new NormalMove(Pos, posOffFront));
                             }
@@ -70,10 +68,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
                     if (Pathfinder.LineBlocker(rank, file,
                             rankOffBack, fileOff,
-                            MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
+                            PieceBoard()).Item1 != -1) continue;
                     
-                    if (MatchManager.Ins.GameState.PieceBoard[posOffBack] == null &&
-                        MatchManager.Ins.GameState.ActiveBoard[posOffBack])
+                    if (PieceOn(posOffBack) == null &&
+                        IsActive(posOffBack))
                     {
                         list.Add(new NormalMove(Pos, posOffBack));
                     }
@@ -84,20 +82,20 @@ namespace Game.Board.Piece.PieceLogic.Elites
         private void Captures(List<Action.Action> list)
         {
             var (rank, file) = RankFileOf(Pos);
-            var push = Color == Color.White ? -1 : 1;
+            var push = !Color ? -1 : 1;
             
             for (var i = file - AttackRange + 1; i <= file + AttackRange - 1; i++)
             {
                 if (i == file || !VerifyBounds(i)) continue;
                 var posTo = IndexOf(rank, i);
 
-                var p = MatchManager.Ins.GameState.PieceBoard[posTo];
+                var p = PieceOn(posTo);
 
                 if (p == null || p.Color == Color) continue;
                 
                  if (Pathfinder.LineBlocker(rank, file,
                          rank, i,
-                         MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
+                         PieceBoard()).Item1 != -1) continue;
                 
                 list.Add(new NormalCapture(Pos, posTo));
             }
@@ -112,13 +110,13 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     if (!VerifyBounds(j)) continue;
                     
                     var posTo = IndexOf(rankAfter, j);
-                    var p = MatchManager.Ins.GameState.PieceBoard[posTo];
+                    var p = PieceOn(posTo);
                     
                     if (p == null || p.Color == Color) continue;
                     
                      if (Pathfinder.LineBlocker(rank, file,
                              rank, j,
-                             MatchManager.Ins.GameState.PieceBoard).Item1 != -1) continue;
+                             PieceBoard()).Item1 != -1) continue;
                 
                     list.Add(new NormalCapture(Pos, posTo));
                     
@@ -144,5 +142,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
 
             return list;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

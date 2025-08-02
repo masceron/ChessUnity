@@ -5,14 +5,14 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Internal.Pending;
 using Game.Board.Action.Quiets;
 using Game.Board.Effects.Traits;
-using Game.Board.General;
 using static Game.Common.BoardUtils;
 
 namespace Game.Board.Piece.PieceLogic.Commanders
 {
-    public class Chrysos: PieceLogic
+    public class Chrysos: PieceLogic, IPieceWithSkill
     {
         public byte Coin;
+
         public Chrysos(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SlayersCoin(this)));
@@ -21,10 +21,10 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         private void Skill(List<Action.Action> list)
         {
             if (SkillCooldown > 0) return;
-            var gameState = MatchManager.Ins.GameState;
+            var pieceBoard = PieceBoard();
             for (var i = 0; i < BoardSize; i++)
             {
-                var piece = gameState.PieceBoard[i];
+                var piece = pieceBoard[i];
                 if (piece == null || piece.Color != Color) continue;
                 
                 var upgradableTo = UpgradableTo(piece.PieceRank);
@@ -40,9 +40,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
         
         private bool MakeMove(List<Action.Action> list, int index)
         {
-            var gameState = MatchManager.Ins.GameState;
-            if (!gameState.ActiveBoard[index]) return false;
-            var pieceOn = gameState.PieceBoard[index];
+            if (!IsActive(index)) return false;
+            var pieceOn = PieceOn(index);
             if (pieceOn != null)
             {
                 if (pieceOn.Color != Color) list.Add(new NormalCapture(Pos, index));
@@ -128,5 +127,7 @@ namespace Game.Board.Piece.PieceLogic.Commanders
 
             return -1;
         }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
     }
 }

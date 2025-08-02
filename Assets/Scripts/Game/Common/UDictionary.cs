@@ -21,8 +21,8 @@ using UnityEditorInternal;
 
             public SplitAttribute(float key, float value)
             {
-                this.Key = key;
-                this.Value = value;
+                Key = key;
+                Value = value;
             }
         }
 
