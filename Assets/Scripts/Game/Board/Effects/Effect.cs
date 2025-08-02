@@ -37,7 +37,7 @@ namespace Game.Board.Effects
         SirenDebuffer,
         VelkarisMarker,
         Demolisher,
-        Vengeful,
+        ElectricEelVengeful,
         Stunned,
         Shield,
         HardenedShield,
@@ -50,7 +50,8 @@ namespace Game.Board.Effects
         Poison,
         SwordfishAttack,
         Bleeding,
-        Bound
+        Bound,
+        LionfishVengeful,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

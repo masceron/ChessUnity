@@ -44,7 +44,7 @@ namespace Game.Board.Piece.PieceLogic
 
         public void PassTurn()
         {
-            if (SkillCooldown > 0 && SideToMove() != OurSide()) SkillCooldown--;
+            if (SkillCooldown > 0) SkillCooldown--;
         }
         protected abstract List<Action.Action> MoveToMake();
 

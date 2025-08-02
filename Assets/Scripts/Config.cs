@@ -17,7 +17,8 @@ public class Config
         new PieceConfig(PieceType.Archelon, false, 78),
         new PieceConfig(PieceType.Thalassos, true, 65),
         new PieceConfig(PieceType.Pufferfish, false, 70),
-        new PieceConfig(PieceType.Swordfish, true, 98)
+        new PieceConfig(PieceType.Swordfish, true, 98),
+        new PieceConfig(PieceType.Lionfish, false, 99)
     };
 
     public readonly Vector2Int StartingSize = new (12, 12);

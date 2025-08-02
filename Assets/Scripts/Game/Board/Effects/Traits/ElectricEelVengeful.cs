@@ -4,11 +4,11 @@ using Game.Board.Effects.Debuffs;
 using Game.Board.Piece.PieceLogic;
 using Game.Common;
 
-namespace Game.Board.Effects.Buffs
+namespace Game.Board.Effects.Traits
 {
-    public class Vengeful: Effect
+    public class ElectricEelVengeful: Effect
     {
-        public Vengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.Vengeful)
+        public ElectricEelVengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.ElectricEelVengeful)
         {}
 
         public override void OnCall(Action.Action action)
@@ -17,7 +17,7 @@ namespace Game.Board.Effects.Buffs
             
             if (action.To == Piece.Pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, BoardUtils.PieceOn(action.To))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, BoardUtils.PieceOn(action.Caller))));
             }
         }
     }

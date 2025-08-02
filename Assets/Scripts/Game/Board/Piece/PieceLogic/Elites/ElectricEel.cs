@@ -6,6 +6,7 @@ using Game.Board.Action.Internal;
 using Game.Board.Action.Quiets;
 using Game.Board.Action.Skills;
 using Game.Board.Effects.Buffs;
+using Game.Board.Effects.Traits;
 using Game.Common;
 using static Game.Common.BoardUtils;
 
@@ -15,7 +16,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
     {
         public ElectricEel(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Vengeful(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new ElectricEelVengeful(this)));
         }
 
         private void Quiets(List<Action.Action> list)

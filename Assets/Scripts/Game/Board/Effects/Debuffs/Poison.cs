@@ -1,12 +1,14 @@
 ﻿using Game.Board.Action;
 using Game.Board.Action.Internal;
+using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
+using UnityEngine;
 
 namespace Game.Board.Effects.Debuffs
 {
     public class Poison: Effect, IEndTurnEffect
     {
-        public byte TimeLeft = 3;
+        private byte timeLeft = 3;
 
         public Poison(sbyte strength, PieceLogic piece) : base(-1, strength, piece, EffectName.Poison)
         {
@@ -15,10 +17,18 @@ namespace Game.Board.Effects.Debuffs
 
         public void OnCallEnd(Action.Action action)
         {
-            if (Strength >= 5) TimeLeft--;
-            if (TimeLeft <= 0) ActionManager.EnqueueAction(new DestroyPiece(Piece.Pos));
+            if (Strength >= 5) timeLeft--;
+            if (timeLeft <= 0)
+            {
+                ActionManager.EnqueueAction(new DestroyPiece(Piece.Pos));
+            }
         }
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
+
+        public override string Description()
+        {
+            return string.Format(AssetManager.Ins.EffectData[EffectName].description, timeLeft);
+        }
     }
 }

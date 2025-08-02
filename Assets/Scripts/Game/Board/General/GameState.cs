@@ -92,6 +92,7 @@ namespace Game.Board.General
                 PieceType.Thalassos => new Thalassos(piece),
                 PieceType.Pufferfish => new Pufferfish(piece),
                 PieceType.Swordfish => new Swordfish(piece),
+                PieceType.Lionfish => new Lionfish(piece),
                 _ => null
             };
 
@@ -160,7 +161,7 @@ namespace Game.Board.General
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.EndTurn)
                     {
                         //The next turn is of the opponent.
-                        if (MatchManager.Ins.GameState.SideToMove != effect.Piece.Color)
+                        if (SideToMove != effect.Piece.Color)
                         {
                             if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.AtEnemyTurn)
                             {

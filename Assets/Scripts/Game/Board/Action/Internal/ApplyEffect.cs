@@ -43,13 +43,11 @@ namespace Game.Board.Action.Internal
                         var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
                         already.Duration = (sbyte)newDuration;
                         break;
-                    case EffectStack.NonStackable:
-                        return;
+                    case EffectStack.NonStackable: default:
+                        break;
                     case EffectStack.Additive:
                         already.Strength += effect.Strength;
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
                 }
             }
             
