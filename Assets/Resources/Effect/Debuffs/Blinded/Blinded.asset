@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeName: 4
   category: 0
-  stack: 0
+  stack: 1
   priority: 3
   activeWhen: 1
   icon: {fileID: 2800000, guid: 3b4cfeed2d353ac4fb31dbcb4fab5a7b, type: 3}

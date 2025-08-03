@@ -11,7 +11,7 @@ namespace Game.Board.Effects.Traits
     {
         public SirenDebuffer(PieceLogic p) : base(-1, 1, p, EffectName.SirenDebuffer)
         {
-            EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             CalculateEffectRange(p.Pos);
         }
 
@@ -45,6 +45,7 @@ namespace Game.Board.Effects.Traits
                     var index = rowIndex + f;
                     var pOn = PieceOn(index);
                     if (pOn == null) continue;
+                    
                     if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != EffectName.Slow))
                     {
                         ActionManager.EnqueueAction(new SirenDebuff(Piece.Pos, Piece.Pos, (ushort)index));

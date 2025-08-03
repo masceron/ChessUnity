@@ -2,7 +2,6 @@
 using Game.Board.Action.Internal;
 using Game.Board.General;
 using Game.Board.Piece.PieceLogic;
-using UnityEngine;
 
 namespace Game.Board.Effects.Debuffs
 {
@@ -12,7 +11,7 @@ namespace Game.Board.Effects.Debuffs
 
         public Poison(sbyte strength, PieceLogic piece) : base(-1, strength, piece, EffectName.Poison)
         {
-            EndTurnEffectType = EndTurnEffectType.AtAllyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
 
         public void OnCallEnd(Action.Action action)

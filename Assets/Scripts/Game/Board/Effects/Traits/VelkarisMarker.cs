@@ -16,7 +16,7 @@ namespace Game.Board.Effects.Traits
         {
             rows = new int[2];
             TriggerRows(p.Pos, p.Color);
-            EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
         private void TriggerRows(int pos, bool side)

@@ -5,18 +5,22 @@ using Game.Common;
 
 namespace Game.Board.Action
 {
+    public enum Phase
+    {
+        BeforeEndTurn, AfterEndTurn
+    }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class ActionManager
     {
         private static GameState _state;
         private static Queue<Action> _actionQueue;
-        private static Action _lastMainAction;
+        public static Phase CurrentPhase;
 
         public static void Init(GameState state)
         {
             _state = state;
             _actionQueue = new Queue<Action>();
-            _lastMainAction = null;
+            CurrentPhase = Phase.BeforeEndTurn;
         }
 
         public static void ExecuteWhenStart()
@@ -40,28 +44,33 @@ namespace Game.Board.Action
                 {
                     if (action is not IInternal)
                     {
-                        _lastMainAction = action;
-                        BoardUtils.Notify(_lastMainAction);
+                        BoardUtils.SetMainAction(action);
+                        BoardUtils.Notify();
                     }
                     action.Execute();
                 }
                 
                 //End the current turn.
                 queueAction.Execute();
+                CurrentPhase = Phase.AfterEndTurn;
                 
                 //Process durations.
                 _state.EffectCountdown();
+                while (_actionQueue.TryDequeue(out var action))
+                {
+                    action.Execute();
+                }
                 
                 //Call triggers when ending turn.
-                BoardUtils.Notify(queueAction);
-                
-                _lastMainAction = null;
+                BoardUtils.NotifyEnd();
 
                 //Execute actions caused by end turn triggers.
                 while (_actionQueue.TryDequeue(out var action))
                 {
                     action.Execute();
                 }
+
+                CurrentPhase = Phase.BeforeEndTurn;
             }
             
         }

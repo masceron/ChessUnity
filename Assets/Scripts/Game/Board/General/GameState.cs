@@ -45,7 +45,7 @@ namespace Game.Board.General
         private readonly List<Effect> observers = new();
         
         //The main action taken this turn.
-        private static Action.Action _mainAction;
+        public Action.Action MainAction;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -151,53 +151,53 @@ namespace Game.Board.General
         {
             observers.Remove(effect);
         }
-        
-        public void Notify(Action.Action action)
+
+        public void NotifyEnd()
         {
-            if (action.GetType() == typeof(EndTurn))
+            observers.ForEach(effect =>
             {
-                observers.ForEach(effect =>
+                if (effect.ObserverActivateWhen == ObserverActivateWhen.EndTurn)
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.EndTurn)
+                    //The next turn is of the opponent.
+                    if (SideToMove != effect.Piece.Color)
                     {
-                        //The next turn is of the opponent.
-                        if (SideToMove != effect.Piece.Color)
+                        if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
                         {
-                            if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.AtEnemyTurn)
-                            {
-                                ((IEndTurnEffect)effect).OnCallEnd(_mainAction);
-                            }
-                        }
-                        //The next turn is ours.
-                        else
-                        {
-                            if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.AtAllyTurn)
-                            {
-                                ((IEndTurnEffect)effect).OnCallEnd(_mainAction);
-                            }
+                            ((IEndTurnEffect)effect).OnCallEnd(MainAction);
                         }
                     }
-                });
-                _mainAction = null;
-                return;
-            }
-
-            _mainAction ??= action;
+                    //The next turn is ours.
+                    else
+                    {
+                        if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
+                        {
+                            ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                        }
+                    }
+                }
+            });
             
-            if (action is ICaptures)
+            MainAction = null;
+        }
+        
+        public void Notify()
+        {
+            MainAction ??= MainAction;
+            
+            if (MainAction is ICaptures)
             {
                 observers.ForEach(effect =>
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCall(action);
+                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCall(MainAction);
                 });
             }
 
-            if (action.DoesMoveChangePos)
+            if (MainAction.DoesMoveChangePos)
             {
                 observers.ForEach(effect =>
                 {
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves)
-                        effect.OnCall(action);
+                        effect.OnCall(MainAction);
                 });
             }
         }
@@ -208,7 +208,7 @@ namespace Game.Board.General
             {
                 if (e.ObserverActivateWhen == ObserverActivateWhen.EndTurn)
                 {
-                    actions = e.OnCall(actions);
+                    actions = e.OnCallMoveGen(actions);
                 }
             });
         }

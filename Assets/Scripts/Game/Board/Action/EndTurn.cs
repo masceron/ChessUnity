@@ -1,5 +1,4 @@
-﻿using Game.Board.General;
-using Game.Common;
+﻿using Game.Common;
 
 namespace Game.Board.Action
 {
@@ -18,7 +17,6 @@ namespace Game.Board.Action
 
         protected override void ModifyGameState()
         {
-            var gameState = MatchManager.Ins.GameState;
             BoardUtils.FlipSideToMove();
         }
     }

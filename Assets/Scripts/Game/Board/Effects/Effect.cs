@@ -92,7 +92,7 @@ namespace Game.Board.Effects
             
         }
 
-        public virtual List<Action.Action> OnCall(List<Action.Action> actions)
+        public virtual List<Action.Action> OnCallMoveGen(List<Action.Action> actions)
         {
             return null;
         }

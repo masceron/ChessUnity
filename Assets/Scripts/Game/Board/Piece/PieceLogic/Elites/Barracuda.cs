@@ -16,7 +16,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(this)));
         }
 
         private void MakeMove(List<Action.Action> list, int tRank, int file, int distance)

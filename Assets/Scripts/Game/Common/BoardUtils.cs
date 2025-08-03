@@ -60,12 +60,12 @@ namespace Game.Common
  
         public static int PushWhite(int pos)
         {
-            return pos + MaxLength;
+            return pos - MaxLength;
         }
 
         public static int PushBlack(int pos)
         {
-            return pos - MaxLength;
+            return pos + MaxLength;
         }
 
         public static int ClampDown(int dimension)
@@ -162,9 +162,14 @@ namespace Game.Common
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
-        public static void Notify(Action action)
+        public static void Notify()
         {
-            MatchManager.Ins.GameState.Notify(action);
+            MatchManager.Ins.GameState.Notify();
+        }
+
+        public static void NotifyEnd()
+        {
+            MatchManager.Ins.GameState.NotifyEnd();
         }
 
         public static void NotifyOnMoveGen(List<Action> actions)
@@ -180,6 +185,11 @@ namespace Game.Common
         public static void RemoveObserver(Effect effect)
         {
             MatchManager.Ins.GameState.RemoveObserver(effect);
+        }
+
+        public static void SetMainAction(Action action)
+        {
+            MatchManager.Ins.GameState.MainAction = action;
         }
     }
 }

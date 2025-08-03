@@ -15,8 +15,8 @@ namespace Game.Board.Effects.Traits
         private readonly List<PieceLogic> shielding = new();
         public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, EffectName.ThalassosShielder)
         {
-            EndTurnEffectType = EndTurnEffectType.AtEnemyTurn;
-            OnCall((Action.Action)null);
+            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+            InRange();
         }
         
         private void InRange()
@@ -67,12 +67,6 @@ namespace Game.Board.Effects.Traits
 
         public void OnCallEnd(Action.Action action)
         {
-            if (action == null)
-            {
-                InRange();
-                return;
-            }
-
             if (action.DoesMoveChangePos &&
                 (action.Caller == Piece.Pos || ColorOfPiece(action.Caller) == Piece.Color))
             {

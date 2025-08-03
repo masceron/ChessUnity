@@ -29,6 +29,8 @@ namespace Game.Board.Action.Internal
 
             if (already == null)
             {
+                if (effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) effect.Duration++;
+                
                 effect.OnApply();
                 effect.Piece.Effects.Add(effect);
             }
@@ -42,6 +44,9 @@ namespace Game.Board.Action.Internal
                         var strongerEffect = weakerEffect == already ? effect : already;
                         var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
                         already.Duration = (sbyte)newDuration;
+                        //Remove and reapply.
+                        ActionManager.EnqueueAction(new RemoveEffect(already));
+                        ActionManager.EnqueueAction(new ApplyEffect(already));
                         break;
                     case EffectStack.NonStackable: default:
                         break;

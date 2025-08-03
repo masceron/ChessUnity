@@ -15,7 +15,7 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(PieceOn(Caller), 2)));
+            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(PieceOn(Caller), 1)));
             SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
         }
     }

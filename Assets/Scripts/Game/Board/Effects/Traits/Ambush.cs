@@ -8,9 +8,9 @@ namespace Game.Board.Effects.Traits
         private bool active;
         private const sbyte RangeOffset = 2;
 
-        public Ambush(sbyte duration, PieceLogic piece) : base(duration, -1, piece, EffectName.Ambush)
+        public Ambush(PieceLogic piece) : base(-1, -1, piece, EffectName.Ambush)
         {
-            EndTurnEffectType = EndTurnEffectType.AtAllyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
 
         public void OnCallEnd(Action.Action action)
