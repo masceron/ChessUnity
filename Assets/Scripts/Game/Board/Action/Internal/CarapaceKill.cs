@@ -5,9 +5,9 @@ namespace Game.Board.Action.Internal
 {
     public class CarapaceKill: Action, IInternal
     {
-        public CarapaceKill(int caller, int to) : base(caller, false)
+        public CarapaceKill(int from, int to) : base(from, false)
         {
-            From = (ushort)caller;
+            From = (ushort)from;
             To = (ushort)to;
         }
 

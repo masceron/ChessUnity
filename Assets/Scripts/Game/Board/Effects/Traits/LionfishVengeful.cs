@@ -17,7 +17,7 @@ namespace Game.Board.Effects.Traits
             
             if (action.To == Piece.Pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(3, BoardUtils.PieceOn(action.Caller))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(3, BoardUtils.PieceOn(action.From))));
             }
         }
     }

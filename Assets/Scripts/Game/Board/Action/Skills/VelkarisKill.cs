@@ -23,7 +23,7 @@ namespace Game.Board.Action.Skills
         {
             var gameState = MatchManager.Ins.GameState;
             gameState.Destroy(To);
-            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
+            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
         }
     }
 }

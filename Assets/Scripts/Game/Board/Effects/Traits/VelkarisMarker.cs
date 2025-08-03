@@ -39,7 +39,7 @@ namespace Game.Board.Effects.Traits
         {
             if (action == null) return;
             
-            if (action.Caller == Piece.Pos)
+            if (action.From == Piece.Pos)
             {
                 TriggerRows(action.To, Piece.Color);
                 return;

@@ -5,9 +5,9 @@ namespace Game.Board.Action.Captures
 {
     public class SnappingStrike: Action, ICaptures
     {
-        public SnappingStrike(int caller, int to) : base(caller, false)
+        public SnappingStrike(int from, int to) : base(from, false)
         {
-            From = (ushort)caller;
+            From = (ushort)from;
             To = (ushort)to;
         }
 

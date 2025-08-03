@@ -12,7 +12,7 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action.GetType() == typeof(DestroyConstruct) && action.Caller == Piece.Pos)
+            if (action.GetType() == typeof(DestroyConstruct) && action.From == Piece.Pos)
             {
                 ActionManager.EnqueueAction(new DestroyPiece(Piece.Pos));
             }

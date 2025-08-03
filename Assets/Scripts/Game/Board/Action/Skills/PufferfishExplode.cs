@@ -6,9 +6,9 @@ namespace Game.Board.Action.Skills
 {
     public class PufferfishExplode: Action, ISkills
     {
-        public PufferfishExplode(int caller) : base(caller, true)
+        public PufferfishExplode(int from) : base(from, true)
         {
-            To = (ushort)caller;
+            To = (ushort)from;
         }
 
         protected override void Animate()
@@ -18,9 +18,9 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new DestroyPiece(Caller));
-            var (rank, file) = RankFileOf(Caller);
-            var caller = PieceOn(Caller);
+            ActionManager.EnqueueAction(new DestroyPiece(From));
+            var (rank, file) = RankFileOf(From);
+            var caller = PieceOn(From);
 
             for (var i = -1; i <= 1; i++)
             {

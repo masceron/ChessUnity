@@ -14,12 +14,10 @@ namespace Game.Board.Effects.Debuffs
             return string.Format(AssetManager.Ins.EffectData[EffectName].description, Duration);
         }
 
-        public override List<Action.Action> OnCallMoveGen(List<Action.Action> actions)
+        public override void OnCallMoveGen(List<Action.Action> actions)
         {
-            if (actions.Count == 0 || actions[0].Caller != Piece.Pos) return actions;
-            
+            if (actions.Count == 0 || actions[0].From != Piece.Pos) return;
             actions.Clear();
-            return actions;
         }
     }
 }

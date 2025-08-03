@@ -5,7 +5,7 @@ namespace Game.Board.Action.Internal
 {
     public class DestroyPiece: Action, IInternal
     {
-        public DestroyPiece(int caller) : base(caller, false)
+        public DestroyPiece(int from) : base(from, false)
         {}
 
         protected override void Animate()
@@ -15,8 +15,8 @@ namespace Game.Board.Action.Internal
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Caller);
-            MatchManager.Ins.GameState.Destroy(Caller);
+            PieceManager.Ins.Destroy(From);
+            MatchManager.Ins.GameState.Destroy(From);
         }
     }
 }

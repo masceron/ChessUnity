@@ -206,9 +206,9 @@ namespace Game.Board.General
         {
             observers.ForEach(e =>
             {
-                if (e.ObserverActivateWhen == ObserverActivateWhen.EndTurn)
+                if (e.ObserverActivateWhen == ObserverActivateWhen.MoveGeneration)
                 {
-                    actions = e.OnCallMoveGen(actions);
+                    e.OnCallMoveGen(actions);
                 }
             });
         }

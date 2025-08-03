@@ -8,15 +8,15 @@ namespace Game.Board.Action.Quiets
 {
     public class FlyingFishMove: Action, IQuiets
     {
-        public FlyingFishMove(int caller, int to) : base(caller, true)
+        public FlyingFishMove(int from, int to) : base(from, true)
         {
-            From = (ushort)caller;
+            From = (ushort)from;
             To = (ushort)to;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Caller, To);
+            PieceManager.Ins.Move(From, To);
         }
 
         protected override void ModifyGameState()
@@ -43,7 +43,7 @@ namespace Game.Board.Action.Quiets
             
             MatchManager.Ins.GameState.Move(From, To);
 
-            Caller = To;
+            From = To;
         }
     }
 }

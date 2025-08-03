@@ -7,16 +7,16 @@ namespace Game.Board.Action.Skills
 {
     public class SwordFishActive: Action, ISkills
     {
-        public SwordFishActive(int caller) : base(caller, true)
+        public SwordFishActive(int from) : base(from, true)
         {
-            From = (ushort)caller;
-            To = (ushort)caller;
+            From = (ushort)from;
+            To = (ushort)from;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(PieceOn(Caller), 1)));
-            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(PieceOn(From), 1)));
+            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
         }
     }
 }

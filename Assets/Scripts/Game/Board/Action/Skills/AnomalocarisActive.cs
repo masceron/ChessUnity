@@ -7,9 +7,9 @@ namespace Game.Board.Action.Skills
 {
     public class AnomalocarisActive: Action, ISkills
     {
-        public AnomalocarisActive(int caller, int to) : base(caller, false)
+        public AnomalocarisActive(int from, int to) : base(from, false)
         {
-            From = (ushort)caller;
+            From = (ushort)from;
             To = (ushort)to;
         }
 
@@ -21,7 +21,7 @@ namespace Game.Board.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, PieceOn(To))));
-            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
+            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
         }
     }
 }

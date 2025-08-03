@@ -22,7 +22,7 @@ namespace Game.Board.Action.Captures
             PieceManager.Ins.Move(From, To);
             MatchManager.Ins.GameState.Destroy(To);
             MatchManager.Ins.GameState.Move(From, To);
-            Caller = To;
+            From = To;
         }
     }
 }

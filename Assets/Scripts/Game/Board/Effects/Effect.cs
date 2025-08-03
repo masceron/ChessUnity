@@ -92,9 +92,9 @@ namespace Game.Board.Effects
             
         }
 
-        public virtual List<Action.Action> OnCallMoveGen(List<Action.Action> actions)
+        public virtual void OnCallMoveGen(List<Action.Action> actions)
         {
-            return null;
+            
         }
 
         public override int Compare(Effect x, Effect y)

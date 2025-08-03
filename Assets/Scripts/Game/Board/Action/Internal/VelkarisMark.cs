@@ -20,8 +20,8 @@ namespace Game.Board.Action.Internal
 
         protected override void ModifyGameState()
         {
-            SetCooldown(Caller, 0);
-            ((Velkaris)PieceOn(Caller)).Marked = PieceOn(To);
+            SetCooldown(From, 0);
+            ((Velkaris)PieceOn(From)).Marked = PieceOn(To);
         }
     }
 }

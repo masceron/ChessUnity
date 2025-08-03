@@ -20,7 +20,7 @@ namespace Game.Board.Action.Quiets
         protected override void ModifyGameState()
         {
             MatchManager.Ins.GameState.Move(From, To);
-            Caller = To;
+            From = To;
         }
     }
 }

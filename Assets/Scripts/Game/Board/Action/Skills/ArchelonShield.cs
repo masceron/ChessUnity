@@ -7,16 +7,16 @@ namespace Game.Board.Action.Skills
 {
     public class ArchelonShield: Action, ISkills
     {
-        public ArchelonShield(int caller, int to) : base(caller, false)
+        public ArchelonShield(int from, int to) : base(from, false)
         {
-            From = (ushort)caller;
+            From = (ushort)from;
             To = (ushort)to;
         }
 
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(To))));
-            SetCooldown(Caller, ((IPieceWithSkill)PieceOn(Caller)).TimeToCooldown);
+            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
         }
     }
 }
