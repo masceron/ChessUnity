@@ -22,12 +22,10 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             ActionManager.ExecuteImmediately(new ApplyEffect(new VelkarisMarker(this)));
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
             var (rank, file) = RankFileOf(Pos);
             
-            var list = new List<Action.Action>();
-
             var totalRange = Math.Max(EffectiveMoveRange, AttackRange);
             
             for (var rankOff = 1; rankOff <= totalRange; rankOff++)
@@ -110,8 +108,6 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             {
                 list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
             }
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

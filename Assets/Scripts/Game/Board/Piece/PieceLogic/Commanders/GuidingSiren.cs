@@ -71,11 +71,9 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
             var (trank, file) = RankFileOf(Pos);
-            
-            var list = new List<Action.Action>();
             
             for (var i = 1; i <= Math.Max(AttackRange, EffectiveMoveRange); i++)
             {
@@ -93,8 +91,6 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             {
                 SirenActive(list, trank, file);
             }
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

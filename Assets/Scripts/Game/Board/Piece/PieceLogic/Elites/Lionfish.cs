@@ -100,7 +100,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
         {
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var maxRange = Math.Max(AttackRange, base.EffectiveMoveRange);
+            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             
             for (int rankOff = rank - 1, fileOff = file - 1;
                  rankOff >= 0 && fileOff >= 0 && rank - rankOff <= maxRange && file - fileOff <= maxRange;
@@ -131,14 +131,11 @@ namespace Game.Board.Piece.PieceLogic.Elites
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             Quiets(list);
             Captures(list);
             if (SkillCooldown == 0) list.Add(new LionfishActive(Pos));
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

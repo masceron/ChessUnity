@@ -13,33 +13,76 @@ namespace Game.Board.Piece.PieceLogic.Elites
         public Stingray(PieceConfig cfg) : base(cfg)
         {}
 
+        private void MakeMove(List<Action.Action> list, int rank, int file, int rankTo, int fileTo)
+        {
+            
+            if (Pathfinder.LineBlocker(rank, file, rankTo, fileTo).Item1 != -1) return;
+                    
+            var posTo = IndexOf(rankTo, fileTo);
+            if (!IsActive(posTo)) return;
+
+            var pOn = PieceOn(posTo);
+
+            if (pOn == null)
+            {
+                if (Distance(Pos, posTo) <= EffectiveMoveRange)
+                    list.Add(new NormalMove(Pos, posTo));
+            }
+            else if (pOn.Color != Color && Distance(Pos, posTo) <= AttackRange)
+            {
+                list.Add(new NormalCapture(Pos, posTo));
+            }
+        }
+
         private void Moves(List<Action.Action> list)
         {
             var (rank, file) = RankFileOf(Pos);
             var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
-            
-            for (var rankTo = rank - maxRange; rankTo <= rank + maxRange; rankTo++)
+
+            for (var range = 1; range <= maxRange; range++)
             {
-                if (!VerifyBounds(rankTo)) continue;
-                for (var fileTo = file - maxRange; fileTo <= file + maxRange; fileTo++)
+
+                //Up
+                var rankTo = rank - range;
+                if (rankTo >= 0)
                 {
-                    if (!VerifyBounds(fileTo)) continue;
-                    if (rankTo == rank && fileTo == file) continue;
-                    if (Pathfinder.LineBlocker(rank, file, rankTo, fileTo, PieceBoard()).Item1 != -1) continue;
-                    
-                    var posTo = IndexOf(rankTo, fileTo);
-                    if (!IsActive(posTo)) continue;
-
-                    var pOn = PieceOn(posTo);
-
-                    if (pOn == null)
+                    for (var tFileTo = file - range; tFileTo <= file + range; tFileTo++)
                     {
-                        if (Distance(Pos, posTo) <= EffectiveMoveRange)
-                            list.Add(new NormalMove(Pos, posTo));
+                        if (!VerifyBounds(tFileTo)) continue;
+                        MakeMove(list, rank, file, rankTo, tFileTo);
                     }
-                    else if (pOn.Color != Color && Distance(Pos, posTo) <= AttackRange)
+                }
+
+                //Down
+                rankTo = rank + range;
+                if (VerifyUpperBound(rankTo))
+                {
+                    for (var tFileTo = file - range; tFileTo <= file + range - 1; tFileTo++)
                     {
-                        list.Add(new NormalCapture(Pos, posTo));
+                        if (!VerifyBounds(tFileTo)) continue;
+                        MakeMove(list, rank, file, rankTo, tFileTo);
+                    }
+                }
+
+                //Left
+                var fileTo = file - range;
+                if (fileTo >= 0)
+                {
+                    for (var tRankTo = rank - range + 1; tRankTo <= rank + range - 1; tRankTo++)
+                    {
+                        if (!VerifyBounds(tRankTo)) continue;
+                        MakeMove(list, rank, file, tRankTo, fileTo);
+                    }
+                }
+
+                //Right
+                fileTo = file + range;
+                if (VerifyUpperBound(fileTo))
+                {
+                    for (var tRankTo = rank - range + 1; tRankTo <= rank + range; tRankTo++)
+                    {
+                        if (!VerifyBounds(tRankTo)) continue;
+                        MakeMove(list, rank, file, tRankTo, fileTo);
                     }
                 }
             }
@@ -71,13 +114,10 @@ namespace Game.Board.Piece.PieceLogic.Elites
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
-
             Moves(list);
             Skills(list);
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

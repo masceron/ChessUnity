@@ -20,9 +20,8 @@ namespace Game.Board.Piece.PieceLogic.Commons
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             var push = !Color ? -MaxLength : MaxLength;
             
             for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
@@ -44,8 +43,6 @@ namespace Game.Board.Piece.PieceLogic.Commons
                     list.Add(new DestroyConstruct(Pos, (ushort)posTo));
                 }
             }
-
-            return list;
         }
     }
 }

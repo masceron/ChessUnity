@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Board.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Common
@@ -14,8 +13,11 @@ namespace Game.Common
             return (value - start) / (finish - start);
         }
         
-        public static (int, int) LineBlocker(int first1, int first2, int second1, int second2, PieceLogic[] board)
+        public static (int, int) LineBlocker(int first1, int first2, int second1, int second2)
         {
+            var board = PieceBoard();
+            var activeBoard = ActiveBoard();
+            
             var firstBlockerX = -1;
             var firstBlockerY = -1;
             
@@ -49,7 +51,8 @@ namespace Game.Common
                     yProgress = Crawl(y1, y2, yNext);
                 }
 
-                if (board[IndexOf((int)xCurrent, (int)yCurrent)] == null) continue;
+                var tmpIdx = IndexOf((int)xCurrent, (int)yCurrent);
+                if (board[tmpIdx] == null && activeBoard[tmpIdx]) continue;
                 
                 firstBlockerX = (int)xCurrent;
                 firstBlockerY = (int)yCurrent;

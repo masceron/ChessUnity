@@ -31,8 +31,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     !IsActive(posTo)) continue;
 
                 if (Pathfinder.LineBlocker(rank, file,
-                        rank, i,
-                        PieceBoard()).Item1 != -1) continue;
+                        rank, i).Item1 != -1) continue;
                 
                 list.Add(new NormalMove(Pos, posTo));
             }
@@ -51,8 +50,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                         var posOffFront = IndexOf(rankOffFront, fileOff);
 
                         if (Pathfinder.LineBlocker(rank, file,
-                                rankOffFront, fileOff,
-                                PieceBoard()).Item1 == -1)
+                                rankOffFront, fileOff).Item1 == -1)
                         {
                             if (PieceOn(posOffFront) == null &&
                                 IsActive(posOffFront))
@@ -67,8 +65,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     var posOffBack = IndexOf(rankOffBack, fileOff);
 
                     if (Pathfinder.LineBlocker(rank, file,
-                            rankOffBack, fileOff,
-                            PieceBoard()).Item1 != -1) continue;
+                            rankOffBack, fileOff).Item1 != -1) continue;
                     
                     if (PieceOn(posOffBack) == null &&
                         IsActive(posOffBack))
@@ -94,8 +91,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                 if (p == null || p.Color == Color) continue;
                 
                  if (Pathfinder.LineBlocker(rank, file,
-                         rank, i,
-                         PieceBoard()).Item1 != -1) continue;
+                         rank, i).Item1 != -1) continue;
                 
                 list.Add(new NormalCapture(Pos, posTo));
             }
@@ -115,8 +111,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     if (p == null || p.Color == Color) continue;
                     
                      if (Pathfinder.LineBlocker(rank, file,
-                             rank, j,
-                             PieceBoard()).Item1 != -1) continue;
+                             rank, j).Item1 != -1) continue;
                 
                     list.Add(new NormalCapture(Pos, posTo));
                     
@@ -132,15 +127,11 @@ namespace Game.Board.Piece.PieceLogic.Elites
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
-            
             Captures(list);
             Quiets(list);
             Skills(list);
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

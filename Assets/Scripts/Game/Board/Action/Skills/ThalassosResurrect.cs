@@ -21,7 +21,7 @@ namespace Game.Board.Action.Skills
         protected override void ModifyGameState()
         {
             var gameState = MatchManager.Ins.GameState;
-            var color = BoardUtils.ColorOfPiece(Maker);
+            var color = ColorOfPiece(Maker);
             var collection = !color ? gameState.WhiteCaptured : gameState.BlackCaptured;
             ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, Target)));
 

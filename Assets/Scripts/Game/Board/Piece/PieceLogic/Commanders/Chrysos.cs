@@ -81,13 +81,10 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             Moves(list);
             Skill(list);
-
-            return list;
         }
 
         public static PieceRank UpgradableTo(PieceRank from)

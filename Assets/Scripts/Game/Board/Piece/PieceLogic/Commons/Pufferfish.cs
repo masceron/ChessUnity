@@ -17,9 +17,8 @@ namespace Game.Board.Piece.PieceLogic.Commons
             ActionManager.ExecuteImmediately(new ApplyEffect(new Dominator(this)));
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             var range = Math.Max(AttackRange, EffectiveMoveRange);
             var push = !Color ? -1 : 1;
 
@@ -46,8 +45,6 @@ namespace Game.Board.Piece.PieceLogic.Commons
             }
 
             list.Add(new PufferfishExplode(Pos));
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

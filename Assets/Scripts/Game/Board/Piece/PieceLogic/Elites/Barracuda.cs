@@ -61,9 +61,8 @@ namespace Game.Board.Piece.PieceLogic.Elites
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             var (rank, pieceFile) = RankFileOf(Pos);
             
             for (var i = 1; i <= Math.Max(EffectiveMoveRange, AttackRange); i++)
@@ -88,8 +87,6 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     MakeMove(list, tRank, pieceFile - i, i);
                 }
             }
-            
-            return list;
         }
     }
 }

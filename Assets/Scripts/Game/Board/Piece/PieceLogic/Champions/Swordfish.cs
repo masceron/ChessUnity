@@ -48,12 +48,11 @@ namespace Game.Board.Piece.PieceLogic.Champions
             return true;
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var maxRange = Math.Max(AttackRange, base.EffectiveMoveRange);
+            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             snap = Effects.Any(e => e.EffectName == EffectName.SnappingStrike);
             
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
@@ -105,8 +104,6 @@ namespace Game.Board.Piece.PieceLogic.Champions
             }
             
             if (SkillCooldown == 0) list.Add(new SwordFishActive(Pos));
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

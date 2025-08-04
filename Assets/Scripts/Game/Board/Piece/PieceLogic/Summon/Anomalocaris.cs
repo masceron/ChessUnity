@@ -44,8 +44,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
         {
             if (SkillCooldown != 0) return;
             
-            var file = FileOf(Pos);
-            var rank = RankOf(Pos);
+            var (rank, file) = RankFileOf(Pos);
 
             //Up
             var rankTo = rank - 5;
@@ -104,12 +103,11 @@ namespace Game.Board.Piece.PieceLogic.Summon
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var maxRange = Math.Max(AttackRange, base.EffectiveMoveRange);
+            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
             {
@@ -160,8 +158,6 @@ namespace Game.Board.Piece.PieceLogic.Summon
             }
             
             Skill(list);
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

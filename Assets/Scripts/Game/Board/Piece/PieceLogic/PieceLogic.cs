@@ -46,13 +46,12 @@ namespace Game.Board.Piece.PieceLogic
         {
             if (SkillCooldown > 0) SkillCooldown--;
         }
-        protected abstract List<Action.Action> MoveToMake();
+        protected abstract void MoveToMake(List<Action.Action> list);
 
-        public List<Action.Action> MoveList()
+        public void MoveList(List<Action.Action> list)
         {
-            var list = MoveToMake();
+            MoveToMake(list);
             NotifyOnMoveGen(list);
-            return list;
         }
     }
 }

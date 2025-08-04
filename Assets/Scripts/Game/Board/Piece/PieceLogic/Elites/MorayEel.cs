@@ -128,7 +128,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     var idx = IndexOf(rankTo, tFileTo);
                     
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
-                    if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo, PieceBoard()).Item1 != -1) continue;
+                    if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
                     
                     list.Add(new NormalMove(Pos, idx));
                 }
@@ -144,7 +144,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     var idx = IndexOf(rankTo, tFileTo);
                     
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
-                    if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo, PieceBoard()).Item1 != -1) continue;
+                    if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
                     
                     list.Add(new NormalMove(Pos, idx));
                 }
@@ -160,7 +160,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     var idx = IndexOf(tRankTo, fileTo);
                     
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
-                    if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo, PieceBoard()).Item1 != -1) continue;
+                    if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
                     
                     list.Add(new NormalMove(Pos, idx));
                 }
@@ -176,21 +176,17 @@ namespace Game.Board.Piece.PieceLogic.Elites
                     var idx = IndexOf(tRankTo, fileTo);
                     
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
-                    if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo, PieceBoard()).Item1 != -1) continue;
+                    if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
                     
                     list.Add(new NormalMove(Pos, idx));
                 }
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
-            
             Quiets(list);
             Capture(list);
-
-            return list;
         }
     }
 }

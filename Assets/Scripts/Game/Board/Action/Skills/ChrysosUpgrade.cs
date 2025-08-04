@@ -20,7 +20,7 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieceOn = BoardUtils.PieceOn(Maker);
+            var pieceOn = PieceOn(Maker);
             ActionManager.EnqueueAction(new DestroyPiece(target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(target));
             ((Chrysos)pieceOn).Coin -= cost;

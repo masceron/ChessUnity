@@ -64,9 +64,8 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
             var push = !Color ? -1 : 1;
@@ -103,8 +102,6 @@ namespace Game.Board.Piece.PieceLogic.Commanders
             }
 
             Skills(list);
-
-            return list;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

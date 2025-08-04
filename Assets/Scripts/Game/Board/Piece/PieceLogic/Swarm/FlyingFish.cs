@@ -80,13 +80,10 @@ namespace Game.Board.Piece.PieceLogic.Swarm
             }
         }
 
-        protected override List<Action.Action> MoveToMake()
+        protected override void MoveToMake(List<Action.Action> list)
         {
-            var list = new List<Action.Action>();
             Quiets(list);
             Captures(list);
-
-            return list;
         }
     }
 }

@@ -101,6 +101,7 @@ namespace Game.UX.UI
             var gameState = MatchManager.Ins.GameState;
             gameState.WhiteCaptured.CollectionChanged += ReloadCaptureList;
             gameState.BlackCaptured.CollectionChanged += ReloadCaptureList;
+            _moveList = new List<Action>();
         }
 
         private readonly List<GameObject> allyCapturedList = new();
@@ -467,7 +468,8 @@ namespace Game.UX.UI
                 if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
                 
                 EnablePieceInteractions();
-                _moveList = PieceOn(Selecting).MoveList();
+                _moveList.Clear();
+                PieceOn(Selecting).MoveList(_moveList);
             }
         }
 
