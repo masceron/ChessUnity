@@ -21,7 +21,9 @@ public class Config
         new PieceConfig(PieceType.Lionfish, false, 99),
         new PieceConfig(PieceType.MorayEel, false, 95),
         new PieceConfig(PieceType.Stingray, true, 96),
-        new PieceConfig(PieceType.Seahorse, false, 55)
+        new PieceConfig(PieceType.Seahorse, false, 55),
+        new PieceConfig(PieceType.SeaStar, false, 97),
+        new PieceConfig(PieceType.SeaStar, false, 90)
     };
 
     public readonly Vector2Int StartingSize = new (12, 12);

@@ -18,6 +18,6 @@ namespace Game.Board.Piece
 
         [SerializeField] public string skillName;
         [SerializeField, TextArea] public string skillDescription;
-        [SerializeField] public byte normalSkillCooldown;
+        [SerializeField] public sbyte normalSkillCooldown;
     }
 }

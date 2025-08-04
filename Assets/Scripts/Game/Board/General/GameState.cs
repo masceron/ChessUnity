@@ -96,6 +96,7 @@ namespace Game.Board.General
                 PieceType.MorayEel => new MorayEel(piece),
                 PieceType.Stingray => new Stingray(piece),
                 PieceType.Seahorse => new Seahorse(piece),
+                PieceType.SeaStar => new SeaStar(piece),
                 _ => null
             };
 

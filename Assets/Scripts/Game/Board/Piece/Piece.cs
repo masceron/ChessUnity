@@ -20,7 +20,8 @@ namespace Game.Board.Piece
         Lionfish,
         MorayEel,
         Stingray,
-        Seahorse
+        Seahorse,
+        SeaStar
     }
 
     public enum PieceRank : byte

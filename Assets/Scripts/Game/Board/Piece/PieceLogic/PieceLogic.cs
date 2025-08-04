@@ -37,7 +37,7 @@ namespace Game.Board.Piece.PieceLogic
             if (this is IPieceWithSkill pieceWithSkill)
             {
                 SkillCooldown = 0;
-                pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown + 1);
+                pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1);
             }
             else SkillCooldown = -1;
         }
