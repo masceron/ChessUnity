@@ -8,23 +8,23 @@ namespace Game.Board.Action.Quiets
 {
     public class FlyingFishMove: Action, IQuiets
     {
-        public FlyingFishMove(int from, int to) : base(from, true)
+        public FlyingFishMove(int maker, int to) : base(maker, true)
         {
-            From = (ushort)from;
-            To = (ushort)to;
+            Maker = (ushort)maker;
+            Target = (ushort)to;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(From, To);
+            PieceManager.Ins.Move(Maker, Target);
         }
 
         protected override void ModifyGameState()
         {
-            var (rankFrom, fileFrom) = RankFileOf(From);
-            var (rankTo, fileTo) = RankFileOf(To);
+            var (rankFrom, fileFrom) = RankFileOf(Maker);
+            var (rankTo, fileTo) = RankFileOf(Target);
             var board = PieceBoard();
-            var caller = board[From];
+            var caller = board[Maker];
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;
@@ -41,9 +41,9 @@ namespace Game.Board.Action.Quiets
                 break;
             }
             
-            MatchManager.Ins.GameState.Move(From, To);
+            MatchManager.Ins.GameState.Move(Maker, Target);
 
-            From = To;
+            Maker = Target;
         }
     }
 }

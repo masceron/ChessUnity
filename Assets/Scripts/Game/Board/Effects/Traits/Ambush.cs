@@ -16,7 +16,7 @@ namespace Game.Board.Effects.Traits
         public void OnCallEnd(Action.Action action)
         {
             if (action == null) return;
-            if (action.From != Piece.Pos)
+            if (action.Maker != Piece.Pos)
             {
                 lastUsed++;
                 if (lastUsed < 6 || active) return;

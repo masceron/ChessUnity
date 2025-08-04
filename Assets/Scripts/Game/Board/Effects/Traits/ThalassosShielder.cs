@@ -68,7 +68,7 @@ namespace Game.Board.Effects.Traits
         public void OnCallEnd(Action.Action action)
         {
             if (action.DoesMoveChangePos &&
-                (action.From == Piece.Pos || ColorOfPiece(action.From) == Piece.Color))
+                (action.Maker == Piece.Pos || ColorOfPiece(action.Maker) == Piece.Color))
             {
                 InRange();
             }

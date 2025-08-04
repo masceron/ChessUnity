@@ -8,8 +8,8 @@ namespace Game.Board.Action.Captures
     {
         public NormalCapture(int f, int t) : base(f, true)
         {
-            From = (ushort)f;
-            To = (ushort)t;
+            Maker = (ushort)f;
+            Target = (ushort)t;
         }
         protected override void Animate()
         {
@@ -18,11 +18,11 @@ namespace Game.Board.Action.Captures
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(To);
-            PieceManager.Ins.Move(From, To);
-            MatchManager.Ins.GameState.Destroy(To);
-            MatchManager.Ins.GameState.Move(From, To);
-            From = To;
+            PieceManager.Ins.Destroy(Target);
+            PieceManager.Ins.Move(Maker, Target);
+            MatchManager.Ins.GameState.Destroy(Target);
+            MatchManager.Ins.GameState.Move(Maker, Target);
+            Maker = Target;
         }
     }
 }

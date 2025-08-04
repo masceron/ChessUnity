@@ -11,22 +11,22 @@ namespace Game.Board.Action.Skills
     public class ThalassosResurrect: Action, ISkills
     {
         private readonly PieceType typeTo;
-        public ThalassosResurrect(int from, int to, PieceType typeTo) : base(from, true)
+        public ThalassosResurrect(int maker, int to, PieceType typeTo) : base(maker, true)
         {
-            From = (ushort)from;
-            To = (ushort)to;
+            Maker = (ushort)maker;
+            Target = (ushort)to;
             this.typeTo = typeTo;
         }
 
         protected override void ModifyGameState()
         {
             var gameState = MatchManager.Ins.GameState;
-            var color = BoardUtils.ColorOfPiece(From);
+            var color = BoardUtils.ColorOfPiece(Maker);
             var collection = !color ? gameState.WhiteCaptured : gameState.BlackCaptured;
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, To)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, Target)));
 
             collection.Remove(collection.First(e => e.Type == typeTo));
-            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

@@ -7,21 +7,21 @@ namespace Game.Board.Action.Internal
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class VelkarisMark: Action, IInternal
     {
-        public VelkarisMark(int p, ushort f, ushort t): base(p, false)
+        public VelkarisMark(int p, ushort f, ushort t): base(p)
         {
-            From = f;
-            To = t;
+            Maker = f;
+            Target = t;
         }
 
         protected override void Animate()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(PieceOn(To))));
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(PieceOn(Target))));
         }
 
         protected override void ModifyGameState()
         {
-            SetCooldown(From, 0);
-            ((Velkaris)PieceOn(From)).Marked = PieceOn(To);
+            SetCooldown(Maker, 0);
+            ((Velkaris)PieceOn(Maker)).Marked = PieceOn(Target);
         }
     }
 }

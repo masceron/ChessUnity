@@ -17,9 +17,9 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action == null || action.To != Piece.Pos || action.Result == ActionResult.Failed) return;
+            if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
 
-            if (Distance(action.From, action.To) < 3) return;
+            if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(probability)) return;
             
             action.Result = ActionResult.Failed;

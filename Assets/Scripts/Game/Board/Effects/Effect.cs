@@ -52,6 +52,8 @@ namespace Game.Board.Effects
         Bleeding,
         Bound,
         LionfishVengeful,
+        MorayEelCamouflage,
+        Camouflage
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

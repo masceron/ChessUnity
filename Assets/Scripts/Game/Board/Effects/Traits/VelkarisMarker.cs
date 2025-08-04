@@ -39,22 +39,22 @@ namespace Game.Board.Effects.Traits
         {
             if (action == null) return;
             
-            if (action.From == Piece.Pos)
+            if (action.Maker == Piece.Pos)
             {
-                TriggerRows(action.To, Piece.Color);
+                TriggerRows(action.Target, Piece.Color);
                 return;
             }
             
             if (MatchManager.Ins.GameState.SideToMove == Piece.Color) return;
 
-            var rowMovedTo = RankOf(action.To);
+            var rowMovedTo = RankOf(action.Target);
             
-            if (!rows.Contains(rowMovedTo) || ColorOfPiece(action.To) == Piece.Color)
+            if (!rows.Contains(rowMovedTo) || ColorOfPiece(action.Target) == Piece.Color)
             {
                 return;
             }
             
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, action.To));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, action.Target));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 

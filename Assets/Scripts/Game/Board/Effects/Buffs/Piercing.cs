@@ -10,7 +10,7 @@ namespace Game.Board.Effects.Buffs
 
         public override void OnCall(Action.Action action)
         {
-            if (action != null && action.From == Piece.Pos) action.Result = ActionResult.Unblockable;
+            if (action != null && action.Maker == Piece.Pos) action.Result = ActionResult.Unblockable;
         }
     }
 }

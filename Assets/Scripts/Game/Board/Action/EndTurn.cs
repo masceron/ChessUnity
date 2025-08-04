@@ -5,10 +5,10 @@ namespace Game.Board.Action
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EndTurn: Action
     {
-        public EndTurn(): base(-1, false)
+        public EndTurn(): base(-1)
         {
-            From = 0;
-            To = 0;
+            Maker = 0;
+            Target = 0;
         }
 
         protected override void Animate()

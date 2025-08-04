@@ -7,15 +7,15 @@ namespace Game.Board.Action.Skills
 {
     public class ElectricEelActive: Action, ISkills
     {
-        public ElectricEelActive(int from) : base(from, false)
+        public ElectricEelActive(int maker) : base(maker)
         {
-            To = (ushort)from;
+            Target = (ushort)maker;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(From);
-            var caller = PieceOn(From);
+            var (rank, file) = RankFileOf(Maker);
+            var caller = PieceOn(Maker);
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -31,7 +31,7 @@ namespace Game.Board.Action.Skills
                 }
             }
 
-            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

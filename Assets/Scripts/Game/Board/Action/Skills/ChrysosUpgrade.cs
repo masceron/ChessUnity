@@ -12,7 +12,7 @@ namespace Game.Board.Action.Skills
         private readonly PieceConfig target;
         private readonly byte cost;
 
-        public ChrysosUpgrade(int from, PieceConfig t, byte cost) : base(from, false)
+        public ChrysosUpgrade(int maker, PieceConfig t, byte cost) : base(maker)
         {
             target = t;
             this.cost = cost;
@@ -20,11 +20,11 @@ namespace Game.Board.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieceOn = BoardUtils.PieceOn(From);
+            var pieceOn = BoardUtils.PieceOn(Maker);
             ActionManager.EnqueueAction(new DestroyPiece(target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(target));
             ((Chrysos)pieceOn).Coin -= cost;
-            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

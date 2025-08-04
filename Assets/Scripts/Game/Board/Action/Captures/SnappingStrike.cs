@@ -5,10 +5,10 @@ namespace Game.Board.Action.Captures
 {
     public class SnappingStrike: Action, ICaptures
     {
-        public SnappingStrike(int from, int to) : base(from, false)
+        public SnappingStrike(int maker, int to) : base(maker)
         {
-            From = (ushort)from;
-            To = (ushort)to;
+            Maker = (ushort)maker;
+            Target = (ushort)to;
         }
 
         protected override void Animate()
@@ -18,8 +18,8 @@ namespace Game.Board.Action.Captures
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(To);
-            MatchManager.Ins.GameState.Destroy(To);
+            PieceManager.Ins.Destroy(Target);
+            MatchManager.Ins.GameState.Destroy(Target);
         }
     }
 }

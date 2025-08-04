@@ -15,7 +15,7 @@ namespace Game.Board.Effects.Debuffs
 
         public override void OnCall(Action.Action action)
         {
-            if (action == null || action.From != Piece.Pos) return;
+            if (action == null || action.Maker != Piece.Pos) return;
             
             if (MatchManager.Roll(probability))
             {

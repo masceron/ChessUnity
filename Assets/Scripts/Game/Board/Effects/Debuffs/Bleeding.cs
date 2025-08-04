@@ -18,7 +18,7 @@ namespace Game.Board.Effects.Debuffs
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.From != Piece.Pos)
+            if (lastMainAction.Maker != Piece.Pos)
             {
                 turnSinceLastMove++;
                 if (turnSinceLastMove < 6) return;
@@ -28,7 +28,7 @@ namespace Game.Board.Effects.Debuffs
             {
                 turnSinceLastMove = 0;
                 turnLeftToDie--;
-                if (turnLeftToDie == 0) ActionManager.EnqueueAction(new DestroyPiece(lastMainAction.From));
+                if (turnLeftToDie == 0) ActionManager.EnqueueAction(new DestroyPiece(lastMainAction.Maker));
             }
 
         }

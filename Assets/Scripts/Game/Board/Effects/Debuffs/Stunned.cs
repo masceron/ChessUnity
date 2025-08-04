@@ -16,7 +16,7 @@ namespace Game.Board.Effects.Debuffs
 
         public override void OnCallMoveGen(List<Action.Action> actions)
         {
-            if (actions.Count == 0 || actions[0].From != Piece.Pos) return;
+            if (actions.Count == 0 || actions[0].Maker != Piece.Pos) return;
             actions.Clear();
         }
     }

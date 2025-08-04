@@ -72,7 +72,7 @@ namespace Game.UX.UI.ChrysosShop
 
         public void Buy(PieceType type)
         {
-            MatchManager.Ins.InputProcessor.ExecuteAction(new ChrysosUpgrade(chrysos.Pos, new PieceConfig(type, chrysos.Color, candidate.To), cost));
+            MatchManager.Ins.InputProcessor.ExecuteAction(new ChrysosUpgrade(chrysos.Pos, new PieceConfig(type, chrysos.Color, candidate.Target), cost));
             Disable();
         }
     }

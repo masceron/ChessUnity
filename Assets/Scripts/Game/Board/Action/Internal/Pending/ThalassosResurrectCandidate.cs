@@ -7,10 +7,10 @@ namespace Game.Board.Action.Internal.Pending
 {
     public class ThalassosResurrectCandidate: Action, IPendingAble, IInternal, ISkills
     {
-        public ThalassosResurrectCandidate(int from, int pos) : base(from, false)
+        public ThalassosResurrectCandidate(int maker, int pos) : base(maker)
         {
-            From = (ushort)from;
-            To = (ushort)pos;
+            Maker = (ushort)maker;
+            Target = (ushort)pos;
         }
 
         public void CompleteAction()
@@ -23,7 +23,7 @@ namespace Game.Board.Action.Internal.Pending
             }
             else selector.gameObject.SetActive(true);
 
-            selector.Load(From, To);
+            selector.Load(Maker, Target);
         }
 
         protected override void ModifyGameState()

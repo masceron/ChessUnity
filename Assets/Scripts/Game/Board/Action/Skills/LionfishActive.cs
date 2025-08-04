@@ -7,16 +7,16 @@ namespace Game.Board.Action.Skills
 {
     public class LionfishActive: Action, ISkills
     {
-        public LionfishActive(int from) : base(from, false)
+        public LionfishActive(int maker) : base(maker)
         {
-            From = (ushort)from;
-            To = (ushort)from;
+            Maker = (ushort)maker;
+            Target = (ushort)maker;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(From);
-            var caller = PieceOn(From);
+            var (rank, file) = RankFileOf(Maker);
+            var caller = PieceOn(Maker);
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -32,7 +32,7 @@ namespace Game.Board.Action.Skills
                 }
             }
 
-            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

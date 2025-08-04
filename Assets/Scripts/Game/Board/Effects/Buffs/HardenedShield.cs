@@ -13,10 +13,10 @@ namespace Game.Board.Effects.Buffs
         
         public override void OnCall(Action.Action action)
         {
-            if (action == null || action.To != Piece.Pos || action.Result != ActionResult.Succeed) return;
+            if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
             action.Result = ActionResult.Failed;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.From))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker))));
 
             if (Strength > 1) Strength--;
             else

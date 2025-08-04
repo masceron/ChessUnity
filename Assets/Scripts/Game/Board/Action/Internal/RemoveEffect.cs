@@ -9,7 +9,7 @@ namespace Game.Board.Action.Internal
     {
         private readonly Effect effect;
         
-        public RemoveEffect(Effect e) : base(-1, false)
+        public RemoveEffect(Effect e) : base(-1)
         {
             effect = e;
         }

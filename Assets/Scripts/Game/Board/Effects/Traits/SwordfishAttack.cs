@@ -13,9 +13,9 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action.From != Piece.Pos || action.Result == ActionResult.Failed) return;
+            if (action.Maker != Piece.Pos || action.Result == ActionResult.Failed) return;
             
-            var behind = !Piece.Color ? PushWhite(action.To) : PushBlack(action.To);
+            var behind = !Piece.Color ? PushWhite(action.Target) : PushBlack(action.Target);
             if (!VerifyIndex(behind)) return;
             
             var pieceBehind = PieceOn(behind);

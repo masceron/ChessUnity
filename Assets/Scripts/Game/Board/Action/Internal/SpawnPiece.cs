@@ -6,7 +6,7 @@ namespace Game.Board.Action.Internal
     public class SpawnPiece: Action, IInternal
     {
         private readonly PieceConfig pieceToSpawn;
-        public SpawnPiece(PieceConfig p) : base(-1, false)
+        public SpawnPiece(PieceConfig p) : base(-1)
         {
             pieceToSpawn = p;
         }

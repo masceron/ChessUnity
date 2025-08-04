@@ -10,14 +10,14 @@ namespace Game.Board.Action
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Action
     {
-        public ushort To;
-        public ushort From;
+        public ushort Target;
+        public ushort Maker;
         public ActionResult Result = ActionResult.Succeed;
         public readonly bool DoesMoveChangePos;
 
-        protected Action(int from, bool pos)
+        protected Action(int maker, bool pos = false)
         {
-            From = (ushort)from;
+            Maker = (ushort)maker;
             DoesMoveChangePos = pos;
         }
 

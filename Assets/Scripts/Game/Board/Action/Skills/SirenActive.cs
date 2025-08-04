@@ -8,24 +8,25 @@ namespace Game.Board.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirenActive: Action, ISkills
     {
-        private readonly ushort moveFrom;
-        public SirenActive(ushort from, int f, int t) : base(from, true)
+        private readonly ushort moveTo;
+        public SirenActive(ushort maker, int f, int t) : base(maker, true)
         {
-            From = from;
-            moveFrom = (ushort)f;
-            To = (ushort)t;
+            Maker = maker;
+            Target = (ushort)f;
+            moveTo = (ushort)t;
         }
         protected override void Animate()
         {
-            PieceManager.Ins.Move(From, To);
+            PieceManager.Ins.Move(Target, moveTo);
         }
 
         protected override void ModifyGameState()
         {
             var gameState = MatchManager.Ins.GameState;
-            gameState.Move(moveFrom, To);
-            FlipPieceColor(To);
-            SetCooldown(From, ((IPieceWithSkill)PieceOn(From)).TimeToCooldown);
+            gameState.Move(Target, moveTo);
+            
+            FlipPieceColor(moveTo);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

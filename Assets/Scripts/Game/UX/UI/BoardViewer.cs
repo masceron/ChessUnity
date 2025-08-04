@@ -384,7 +384,7 @@ namespace Game.UX.UI
             foreach (var _move in _moveList.OfType<IQuiets>())
             {
                 _listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).To);
+                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
             
             return _listOf.Count > 0;
@@ -398,7 +398,7 @@ namespace Game.UX.UI
             foreach (var _move in _moveList.OfType<ICaptures>())
             {
                 _listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).To);
+                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
 
             return _listOf.Count > 0;
@@ -412,7 +412,7 @@ namespace Game.UX.UI
             foreach (var _move in _moveList.OfType<ISkills>())
             {
                 _listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).To);
+                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
             
             return _listOf.Count > 0;
@@ -441,7 +441,7 @@ namespace Game.UX.UI
             {
                 if (SelectingFunction == 0) return;
                 
-                var action = _listOf.Find(a => a.To == pos);
+                var action = _listOf.Find(a => a.Target == pos);
                 switch (action)
                 {
                     case null:

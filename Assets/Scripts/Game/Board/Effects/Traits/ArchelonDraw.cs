@@ -10,12 +10,12 @@ namespace Game.Board.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (Distance(action.To, Piece.Pos) > 2 || 
-                ColorOfPiece(action.To) != Piece.Color ||
-                action.To == Piece.Pos) 
+            if (Distance(action.Target, Piece.Pos) > 2 || 
+                ColorOfPiece(action.Target) != Piece.Color ||
+                action.Target == Piece.Pos) 
                 return;
             
-            action.To = Piece.Pos;
+            action.Target = Piece.Pos;
         }
     }
 }

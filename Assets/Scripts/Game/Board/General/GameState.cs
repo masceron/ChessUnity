@@ -93,6 +93,7 @@ namespace Game.Board.General
                 PieceType.Pufferfish => new Pufferfish(piece),
                 PieceType.Swordfish => new Swordfish(piece),
                 PieceType.Lionfish => new Lionfish(piece),
+                PieceType.MorayEel => new MorayEel(piece),
                 _ => null
             };
 

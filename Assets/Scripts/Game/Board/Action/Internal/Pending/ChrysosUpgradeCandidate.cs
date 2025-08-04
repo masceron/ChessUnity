@@ -17,10 +17,10 @@ namespace Game.Board.Action.Internal.Pending
         public readonly PieceRank UpgradableTo;
         public readonly byte Cost;
         
-        public ChrysosUpgradeCandidate(int from, int to, int cost) : base(from, false)
+        public ChrysosUpgradeCandidate(int maker, int to, int cost) : base(maker)
         {
-            From = (ushort)from;
-            To = (ushort)to;
+            Maker = (ushort)maker;
+            Target = (ushort)to;
             Cost = (byte)cost;
 
             var cr = BoardUtils.PieceOn(to);
@@ -39,7 +39,7 @@ namespace Game.Board.Action.Internal.Pending
             }
             else shop.gameObject.SetActive(true);
 
-            shop.Load((Chrysos)BoardUtils.PieceOn(From), this);
+            shop.Load((Chrysos)BoardUtils.PieceOn(Maker), this);
         }
 
         protected override void ModifyGameState()

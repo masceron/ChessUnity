@@ -10,7 +10,7 @@ namespace Game.Board.Action.Internal
     public class ApplyEffect: Action, IInternal
     {
         private readonly Effect effect;
-        public ApplyEffect(Effect e) : base(-1, false)
+        public ApplyEffect(Effect e) : base(-1)
         {
             effect = e;
         }

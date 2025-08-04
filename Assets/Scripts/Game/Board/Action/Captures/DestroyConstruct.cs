@@ -5,20 +5,20 @@ namespace Game.Board.Action.Captures
 {
     public class DestroyConstruct: Action, ICaptures
     {
-        public DestroyConstruct(int from, int to) : base(from, false)
+        public DestroyConstruct(int maker, int to) : base(maker)
         {
-            To = (ushort)to;
+            Target = (ushort)to;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(From);
+            PieceManager.Ins.Destroy(Maker);
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Destroy(From);
-            MatchManager.Ins.GameState.Destroy(To);
+            MatchManager.Ins.GameState.Destroy(Maker);
+            MatchManager.Ins.GameState.Destroy(Target);
         }
     }
 }

@@ -15,8 +15,8 @@ namespace Game.Board.Effects.Traits
         {
             if (action.Result == ActionResult.Failed) return;
             
-            var caller = BoardUtils.PieceOn(action.From);
-            var captured = BoardUtils.PieceOn(action.To);
+            var caller = BoardUtils.PieceOn(action.Maker);
+            var captured = BoardUtils.PieceOn(action.Target);
             
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
         }
