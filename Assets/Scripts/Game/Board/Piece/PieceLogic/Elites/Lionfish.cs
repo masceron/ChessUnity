@@ -100,7 +100,7 @@ namespace Game.Board.Piece.PieceLogic.Elites
         {
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
+            var maxRange = Math.Max(AttackRange, base.EffectiveMoveRange);
             
             for (int rankOff = rank - 1, fileOff = file - 1;
                  rankOff >= 0 && fileOff >= 0 && rank - rankOff <= maxRange && file - fileOff <= maxRange;

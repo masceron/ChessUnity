@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: FlyingFish
   m_EditorClassIdentifier: 
-  pieceName: 
+  pieceName: Flying Fish
   type: 5
   prefab: {fileID: 919132149155446097, guid: d1b020d50898cbd4baa12287c4aeb3d1, type: 3}
   rank: 3

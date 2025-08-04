@@ -53,7 +53,7 @@ namespace Game.Board.Piece.PieceLogic.Champions
             var list = new List<Action.Action>();
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
+            var maxRange = Math.Max(AttackRange, base.EffectiveMoveRange);
             snap = Effects.Any(e => e.EffectName == EffectName.SnappingStrike);
             
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)

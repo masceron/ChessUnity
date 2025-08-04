@@ -67,7 +67,7 @@ namespace Game.Board.Piece.PieceLogic.Summon
         {
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
-            var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
+            var maxRange = Math.Max(AttackRange, base.EffectiveMoveRange);
 
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
             {

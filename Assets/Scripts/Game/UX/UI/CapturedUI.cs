@@ -15,7 +15,7 @@ namespace Game.UX.UI
             PieceInfo = config;
             var info = AssetManager.Ins.PieceData[config.Type];
             transform.GetChild(0).GetComponent<UIObject3D>().ObjectPrefab = info.prefab.transform;
-            transform.GetComponent<SimpleTooltip>().infoLeft = "`" + (info.pieceName == "" ? config.Type.ToString() : info.pieceName);
+            transform.GetComponent<SimpleTooltip>().infoLeft = "`" + info.pieceName;
         }
     }
 }

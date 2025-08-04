@@ -16,7 +16,7 @@ namespace Game.UX.UI.ThalassosResurrector
         {
             pieceType = type;
             var info = AssetManager.Ins.PieceData[type];
-            pieceName.text = info.pieceName != "" ? info.pieceName : type.ToString();
+            pieceName.text = info.pieceName;
             pieceModel.ObjectPrefab = info.prefab.transform;
         }
 
