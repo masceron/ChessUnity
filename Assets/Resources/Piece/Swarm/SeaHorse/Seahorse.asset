@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Seahorse
   m_EditorClassIdentifier: 
-  pieceName: Seahorse
+  pieceName: seahorse
   type: 15
   prefab: {fileID: 919132149155446097, guid: d9264b15acfef8c4d8423ace50e300c0, type: 3}
   rank: 3

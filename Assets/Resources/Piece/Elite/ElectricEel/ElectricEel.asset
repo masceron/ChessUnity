@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: ElectricEel
   m_EditorClassIdentifier: 
-  pieceName: Electric Eel
+  pieceName: electric eel
   type: 4
   prefab: {fileID: 919132149155446097, guid: 992a919ee8a0e884c8042bdfada586bf, type: 3}
   rank: 5

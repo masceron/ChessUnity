@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: SeaStar
   m_EditorClassIdentifier: 
-  pieceName: Sea Star
+  pieceName: sea star
   type: 16
   prefab: {fileID: 919132149155446097, guid: 0364d102d5e84cd4aa7f80b1d1fb29f6, type: 3}
   rank: 3

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: GuidingSiren
   m_EditorClassIdentifier: 
-  pieceName: Guiding Siren
+  pieceName: guiding siren
   type: 1
   prefab: {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
   rank: 7

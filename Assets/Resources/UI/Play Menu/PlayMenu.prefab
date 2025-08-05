@@ -37,7 +37,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -17}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6823560519107603672
 CanvasRenderer:
@@ -238,6 +238,7 @@ GameObject:
   - component: {fileID: 6333437194739713721}
   - component: {fileID: 7201821044360418272}
   - component: {fileID: 8987170229445874782}
+  - component: {fileID: 9193008564931789288}
   m_Layer: 0
   m_Name: Campaign
   m_TagString: Untagged
@@ -254,16 +255,16 @@ RectTransform:
   m_GameObject: {fileID: 3304727353772750505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6285271612404571929}
   m_Father: {fileID: 8867306370808024769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 190, y: -400}
-  m_SizeDelta: {x: 300, y: 800}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6333437194739713721
 CanvasRenderer:
@@ -356,6 +357,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9193008564931789288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3304727353772750505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83836dd330074fa8a6c5cf52c459c5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4011493938201521207
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,6 +381,7 @@ GameObject:
   - component: {fileID: 651921290805477431}
   - component: {fileID: 2295098470166620208}
   - component: {fileID: 7422192362485129294}
+  - component: {fileID: 7320852783823239716}
   m_Layer: 0
   m_Name: Sanctuary
   m_TagString: Untagged
@@ -384,16 +398,16 @@ RectTransform:
   m_GameObject: {fileID: 4011493938201521207}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4365095139511050346}
   m_Father: {fileID: 8867306370808024769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1710, y: -400}
-  m_SizeDelta: {x: 300, y: 800}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &651921290805477431
 CanvasRenderer:
@@ -486,6 +500,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7320852783823239716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4011493938201521207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83836dd330074fa8a6c5cf52c459c5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4251945050158813762
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +524,7 @@ GameObject:
   - component: {fileID: 7866427687300421096}
   - component: {fileID: 2866189215282451621}
   - component: {fileID: 7438387289581262158}
+  - component: {fileID: 7293457551751065871}
   m_Layer: 0
   m_Name: Followers
   m_TagString: Untagged
@@ -514,16 +541,16 @@ RectTransform:
   m_GameObject: {fileID: 4251945050158813762}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3383687632454634124}
   m_Father: {fileID: 8867306370808024769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 950, y: -400}
-  m_SizeDelta: {x: 300, y: 800}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7866427687300421096
 CanvasRenderer:
@@ -616,6 +643,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7293457551751065871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4251945050158813762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83836dd330074fa8a6c5cf52c459c5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5016033459057357873
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +803,7 @@ GameObject:
   - component: {fileID: 2366123022056309205}
   - component: {fileID: 8397711875303755974}
   - component: {fileID: 3749872128676877160}
+  - component: {fileID: 4701769927585945579}
   m_Layer: 0
   m_Name: PlayMenu
   m_TagString: Untagged
@@ -854,6 +894,52 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4701769927585945579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103212258012795172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9ddcc7ed53367064388f5fd5d684d661, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6144383098311040237}
+        m_TargetAssemblyTypeName: UX.UI.Menus.PlayPanel, Assembly-CSharp
+        m_MethodName: OnClickBack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c7e4c54b-ce68-4c6b-a80c-2c0787d309e7
+    m_ActionName: 'UI/Back[/Keyboard/escape]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: UI
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &5915279667175891350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1084,6 +1170,7 @@ GameObject:
   - component: {fileID: 3656007781781402553}
   - component: {fileID: 3496404518906714300}
   - component: {fileID: 5410825974734427758}
+  - component: {fileID: 5405235185060859359}
   m_Layer: 0
   m_Name: Tidal Trial
   m_TagString: Untagged
@@ -1100,16 +1187,16 @@ RectTransform:
   m_GameObject: {fileID: 6466242225061657010}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2092209173333529345}
   m_Father: {fileID: 8867306370808024769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1330, y: -400}
-  m_SizeDelta: {x: 300, y: 800}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3656007781781402553
 CanvasRenderer:
@@ -1202,6 +1289,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5405235185060859359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6466242225061657010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83836dd330074fa8a6c5cf52c459c5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6792696314497463731
 GameObject:
   m_ObjectHideFlags: 0
@@ -1321,6 +1420,7 @@ GameObject:
   - component: {fileID: 7919031697653524459}
   - component: {fileID: 616481915314797793}
   - component: {fileID: 8762599502201924661}
+  - component: {fileID: 4375644914021146226}
   m_Layer: 0
   m_Name: Multiplayer
   m_TagString: Untagged
@@ -1337,16 +1437,16 @@ RectTransform:
   m_GameObject: {fileID: 6885410846645846401}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 190114211483405499}
   m_Father: {fileID: 8867306370808024769}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 570, y: -400}
-  m_SizeDelta: {x: 300, y: 800}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7919031697653524459
 CanvasRenderer:
@@ -1439,6 +1539,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4375644914021146226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6885410846645846401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83836dd330074fa8a6c5cf52c459c5ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8353657268139792290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1587,7 +1699,6 @@ GameObject:
   - component: {fileID: 3096733165220851940}
   - component: {fileID: 375377041688265468}
   - component: {fileID: 6144383098311040237}
-  - component: {fileID: 4441300590743251845}
   m_Layer: 0
   m_Name: PlayPanel
   m_TagString: Untagged
@@ -1665,58 +1776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2a30fc101b8a641b0939913866da4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  contents:
-  - {fileID: 3304727353772750505}
-  - {fileID: 6885410846645846401}
-  - {fileID: 4251945050158813762}
-  - {fileID: 6466242225061657010}
-  - {fileID: 4011493938201521207}
---- !u!114 &4441300590743251845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8616655759633216918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 9ddcc7ed53367064388f5fd5d684d661, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6144383098311040237}
-        m_TargetAssemblyTypeName: Game.UX.UI.Menus.PlayPanel, Assembly-CSharp
-        m_MethodName: OnClickBack
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: c7e4c54b-ce68-4c6b-a80c-2c0787d309e7
-    m_ActionName: 'UI/Back[/Keyboard/escape]'
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: UI
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!1 &8706440037778165259
 GameObject:
   m_ObjectHideFlags: 0

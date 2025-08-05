@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Barracuda
   m_EditorClassIdentifier: 
-  pieceName: Barracuda
+  pieceName: barracuda
   type: 2
   prefab: {fileID: 919132149155446097, guid: 2d5a4add6cc223448a48678a745f547e, type: 3}
   rank: 5

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Chrysos
   m_EditorClassIdentifier: 
-  pieceName: Chrysos
+  pieceName: chrysos
   type: 6
   prefab: {fileID: 919132149155446097, guid: c68c2d911c895d94dbc1d4a5ab6903b9, type: 3}
   rank: 7

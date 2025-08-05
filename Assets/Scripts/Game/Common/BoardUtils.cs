@@ -2,12 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Game.Board.Effects;
-using Game.Board.General;
-using Game.Board.Piece;
-using Game.Board.Piece.PieceLogic;
+using Game.Data.Pieces;
+using Game.Effects;
+using Game.Managers;
+using Game.Piece.PieceLogic;
 using UnityEngine;
-using Action = Game.Board.Action.Action;
+using Action = Game.Action.Action;
 
 namespace Game.Common
 {
@@ -172,7 +172,7 @@ namespace Game.Common
             MatchManager.Ins.GameState.NotifyEnd();
         }
 
-        public static void NotifyOnMoveGen(List<Action> actions)
+        public static void NotifyOnMoveGen(List<Action.Action> actions)
         {
             MatchManager.Ins.GameState.NotifyOnMoveGen(actions);
         }
@@ -187,7 +187,7 @@ namespace Game.Common
             MatchManager.Ins.GameState.RemoveObserver(effect);
         }
 
-        public static void SetMainAction(Action action)
+        public static void SetMainAction(Action.Action action)
         {
             MatchManager.Ins.GameState.MainAction = action;
         }

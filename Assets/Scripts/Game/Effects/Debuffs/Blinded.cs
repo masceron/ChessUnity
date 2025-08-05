@@ -1,0 +1,31 @@
+﻿using Game.Action;
+using Game.Managers;
+using Game.Piece.PieceLogic;
+
+namespace Game.Effects.Debuffs
+{
+    public class Blinded: Effect
+    {
+        private readonly int probability;
+
+        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Blinded)
+        {
+            this.probability = probability;
+        }
+
+        public override void OnCall(Action.Action action)
+        {
+            if (action == null || action.Maker != Piece.Pos) return;
+            
+            if (MatchManager.Roll(probability))
+            {
+                action.Result = ActionResult.Failed;
+            }
+        }
+
+        public override string Description()
+        {
+            return string.Format(AssetManager.Ins.EffectData[EffectName].description, probability);
+        }
+    }
+}

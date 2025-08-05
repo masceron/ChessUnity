@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Stingray
   m_EditorClassIdentifier: 
-  pieceName: Stingray
+  pieceName: stingray
   type: 14
   prefab: {fileID: 919132149155446097, guid: fb3795de90af58d4b9f2b3781c413f5a, type: 3}
   rank: 5
