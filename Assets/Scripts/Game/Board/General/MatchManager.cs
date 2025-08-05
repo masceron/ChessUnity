@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Board.Action;
 using Game.Board.Action.Internal;
+using Game.Board.General.Configs;
 using Game.Board.Piece;
 using Game.Board.Tile;
 using Game.Common;
 using Game.UX.UI;
-using Game.UX.UI.UIManager;
+using Game.UX.UI.Ingame;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Random = UnityEngine.Random;
@@ -23,33 +24,41 @@ namespace Game.Board.General
         [NonSerialized]
         public BoardViewer InputProcessor;
 
-        private void MakeBoard()
+        private Vector2Int startingSize;
+
+        private static void MakeBoard()
         {
             TileManager.Ins.Spawn();
         }
 
-        private void MakePieces(List<PieceConfig> config, Vector2Int startingSize)
+        private void MakePieces(LineupConfig lineup, Vector2Int sts)
         {
+            startingSize = sts;
+            var config = new List<PieceConfig>(lineup.WhiteConfig);
+            config.AddRange(lineup.BlackConfig);
+            
             foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize))))
             {
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
             }
         }
 
-        private void MakeGame(Config cfg)
+        private void MakeGame(GameConfig cfg)
         {
-            GameState = new GameState(MaxLength, cfg.StartingSize, cfg.SideToMove, cfg.OurSide);
+            GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
             ActionManager.Init(GameState);
         }
 
-        public void Init(Config cfg)
+        public void Init(GameConfig cfg)
         {
             MakeGame(cfg);
             MakeBoard();
-            MakePieces(cfg.PieceConfig, cfg.StartingSize);
-            
+        }
+
+        public void StartGame(LineupConfig cfg)
+        {
+            MakePieces(cfg, startingSize);
             UIManager.Ins.Load(CanvasID.Ingame);
-            
             ActionManager.ExecuteWhenStart();
         }
 

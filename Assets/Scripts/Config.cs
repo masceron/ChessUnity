@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Game.Board.Piece;
-using UnityEngine;
 
 public class Config
 {
@@ -25,23 +24,4 @@ public class Config
         new PieceConfig(PieceType.SeaStar, false, 97),
         new PieceConfig(PieceType.SeaStar, false, 90)
     };
-
-    public readonly Vector2Int StartingSize = new (12, 12);
-
-    public readonly bool OurSide;
-
-    public readonly bool SideToMove;
-
-    public Config()
-    {
-        
-    }
-
-    public Config(List<PieceConfig> pieces, Vector2Int startingSize, bool ourSide, bool sideToMove)
-    {
-        PieceConfig = pieces;
-        OurSide = ourSide;
-        StartingSize = startingSize;
-        SideToMove = sideToMove;
-    }
 }

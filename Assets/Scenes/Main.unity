@@ -128,7 +128,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 96585509}
-  - component: {fileID: 96585508}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -136,18 +135,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &96585508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96585507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04d1d7542791d4d4db92fa81058d4b8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &96585509
 Transform:
   m_ObjectHideFlags: 0
@@ -937,9 +924,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasDict:
-    keys: 00000000
+    keys: 0300000004000000
     values:
-    - {fileID: 6214464588167556209, guid: 52e0f9949abb67b4293b1304edacb925, type: 3}
+    - {fileID: 3020086329195182827, guid: 52e0f9949abb67b4293b1304edacb925, type: 3}
+    - {fileID: 8788904782196925133, guid: e9031a7dc59ce664f8fadb57dae0e325, type: 3}
 --- !u!4 &1587264568
 Transform:
   m_ObjectHideFlags: 0

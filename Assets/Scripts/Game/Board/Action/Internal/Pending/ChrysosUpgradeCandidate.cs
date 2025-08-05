@@ -3,7 +3,7 @@ using Game.Board.General;
 using Game.Board.Piece;
 using Game.Board.Piece.PieceLogic.Commanders;
 using Game.Common;
-using Game.UX.UI.ChrysosShop;
+using Game.UX.UI.Ingame.ChrysosShop;
 using UnityEngine;
 
 namespace Game.Board.Action.Internal.Pending

@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "PlayMenuNavigate",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "2ea698d2-e623-40fc-8e76-77c02837fd10",
+            "actions": [
+                {
+                    "name": "Back",
+                    "type": "Button",
+                    "id": "c7e4c54b-ce68-4c6b-a80c-2c0787d309e7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9afdb596-bddc-4148-9e8b-66f1e3b84836",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -36,7 +36,7 @@ namespace Simple_Tooltip.Assets.Scripts
 
             // Always make sure there's a style loaded
             if (!simpleTooltipStyle)
-                simpleTooltipStyle = Resources.Load<SimpleTooltipStyle>("STDefault");
+                simpleTooltipStyle = UnityEngine.Resources.Load<SimpleTooltipStyle>("STDefault");
         }
 
         private void Update()
@@ -49,7 +49,7 @@ namespace Simple_Tooltip.Assets.Scripts
 
         private static StController AddTooltipPrefabToScene()
         {
-            return Instantiate(Resources.Load<GameObject>("SimpleTooltip")).GetComponentInChildren<StController>();
+            return Instantiate(UnityEngine.Resources.Load<GameObject>("SimpleTooltip")).GetComponentInChildren<StController>();
         }
 
         private void OnMouseOver()
@@ -115,7 +115,7 @@ namespace Simple_Tooltip.Assets.Scripts
         {
             // Load the default style if none is specified
             if (!simpleTooltipStyle)
-                simpleTooltipStyle = Resources.Load<SimpleTooltipStyle>("STDefault");
+                simpleTooltipStyle = UnityEngine.Resources.Load<SimpleTooltipStyle>("STDefault");
 
             // If UI, nothing else needs to be done
             if (GetComponent<RectTransform>())

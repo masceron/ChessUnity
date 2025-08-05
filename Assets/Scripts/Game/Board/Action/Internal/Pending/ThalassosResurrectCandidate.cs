@@ -1,6 +1,6 @@
 ﻿using Game.Board.Action.Skills;
 using Game.Board.General;
-using Game.UX.UI.ThalassosResurrector;
+using Game.UX.UI.Ingame.ThalassosResurrector;
 using UnityEngine;
 
 namespace Game.Board.Action.Internal.Pending
