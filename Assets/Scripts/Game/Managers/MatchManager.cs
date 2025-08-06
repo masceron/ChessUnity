@@ -30,9 +30,8 @@ namespace Game.Managers
             TileManager.Ins.Spawn();
         }
 
-        private void MakePieces(LineupConfig lineup, Vector2Int sts)
+        private void MakePieces(LineupConfig lineup)
         {
-            startingSize = sts;
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
             
@@ -50,14 +49,17 @@ namespace Game.Managers
 
         public void Init(GameConfig cfg)
         {
+            startingSize = cfg.StartingSize;
             AssetManager.Ins.Load();
             MakeGame(cfg);
             MakeBoard();
+            
+            StartGame(new LineupConfig(new List<PieceConfig>(Config.PieceConfig), new List<PieceConfig>()));
         }
 
         public void StartGame(LineupConfig cfg)
         {
-            MakePieces(cfg, startingSize);
+            MakePieces(cfg);
             UIManager.Ins.Load(CanvasID.Ingame);
             ActionManager.ExecuteWhenStart();
         }

@@ -2,9 +2,9 @@
 using Game.Data.Pieces;
 using Game.Piece;
 
-public class Config
+public static class Config
 {
-    public readonly List<PieceConfig> PieceConfig = new()
+    public static readonly List<PieceConfig> PieceConfig = new()
     {
         new PieceConfig(PieceType.Velkaris, false, 140),
         new PieceConfig(PieceType.Barracuda, true, 113),

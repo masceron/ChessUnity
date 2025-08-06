@@ -4,6 +4,7 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Data.Pieces;
 using Game.Effects.Traits;
 using static Game.Common.BoardUtils;
@@ -42,48 +43,9 @@ namespace Game.Piece.PieceLogic.Swarm
 
             for (var range = 1; range <= maxRange; range++)
             {
-                //Up
-                var rankTo = rank - range;
-                if (rankTo >= 0)
+                foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, range))
                 {
-                    MakeMove(list, rankTo, file - range + 1);
-                    if (range >= 2)
-                    {
-                        MakeMove(list, rankTo, file + range - 1);
-                    }
-                }
-
-                //Down
-                rankTo = rank + range;
-                if (VerifyUpperBound(rankTo))
-                {
-                    MakeMove(list, rankTo, file - range + 1);
-                    if (range >= 2)
-                    {
-                        MakeMove(list, rankTo, file + range - 1);
-                    }
-                }
-
-                //Left
-                var fileTo = file - range;
-                if (fileTo >= 0)
-                {
-                    MakeMove(list, rank - range + 1, fileTo);
-                    if (range >= 2)
-                    {
-                        MakeMove(list, rank + range - 1, fileTo);
-                    }
-                }
-
-                //Right
-                fileTo = file + range;
-                if (VerifyUpperBound(fileTo))
-                {
-                    MakeMove(list, rank - range + 1, fileTo);
-                    if (range >= 2)
-                    {
-                        MakeMove(list, rank + range - 1, fileTo);
-                    }
+                    MakeMove(list, rankOff, fileOff);
                 }
             }
         }

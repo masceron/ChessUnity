@@ -40,52 +40,9 @@ namespace Game.Piece.PieceLogic.Elites
             var (rank, file) = RankFileOf(Pos);
             var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
 
-            for (var range = 1; range <= maxRange; range++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, maxRange))
             {
-
-                //Up
-                var rankTo = rank - range;
-                if (rankTo >= 0)
-                {
-                    for (var tFileTo = file - range; tFileTo <= file + range; tFileTo++)
-                    {
-                        if (!VerifyBounds(tFileTo)) continue;
-                        MakeMove(list, rank, file, rankTo, tFileTo);
-                    }
-                }
-
-                //Down
-                rankTo = rank + range;
-                if (VerifyUpperBound(rankTo))
-                {
-                    for (var tFileTo = file - range; tFileTo <= file + range - 1; tFileTo++)
-                    {
-                        if (!VerifyBounds(tFileTo)) continue;
-                        MakeMove(list, rank, file, rankTo, tFileTo);
-                    }
-                }
-
-                //Left
-                var fileTo = file - range;
-                if (fileTo >= 0)
-                {
-                    for (var tRankTo = rank - range + 1; tRankTo <= rank + range - 1; tRankTo++)
-                    {
-                        if (!VerifyBounds(tRankTo)) continue;
-                        MakeMove(list, rank, file, tRankTo, fileTo);
-                    }
-                }
-
-                //Right
-                fileTo = file + range;
-                if (VerifyUpperBound(fileTo))
-                {
-                    for (var tRankTo = rank - range + 1; tRankTo <= rank + range; tRankTo++)
-                    {
-                        if (!VerifyBounds(tRankTo)) continue;
-                        MakeMove(list, rank, file, tRankTo, fileTo);
-                    }
-                }
+                MakeMove(list, rank, file, rankOff, fileOff);
             }
         }
 

@@ -35,50 +35,42 @@ namespace Game.Piece.PieceLogic.Elites
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
             
-            for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= AttackRange; rankOff--)
-            {
-                if (!MakeCapture(list, IndexOf(rankOff, file))) break;
-            }
-            
-            for (var rankOff = rank + 1; VerifyUpperBound(rankOff) && rankOff - rank <= AttackRange; rankOff++)
-            {
-                if (!MakeCapture(list, IndexOf(rankOff, file))) break;
-            }
-            
-            for (var fileOff = file - 1; fileOff >= 0 && file - fileOff <= AttackRange; fileOff--)
-            {
-                if (!MakeCapture(list, IndexOf(rank, fileOff))) break;
-            }
-            
-            for (var fileOff = file + 1; VerifyUpperBound(fileOff) && fileOff - file <= AttackRange; fileOff++)
-            {
-                if (!MakeCapture(list, IndexOf(rank, fileOff))) break;
-            }
-            
-            for (int rankOff = rank - 1, fileOff = file - 1;
-                 rankOff >= 0 && fileOff >= 0 && rank - rankOff <= AttackRange && file - fileOff <= AttackRange;
-                 rankOff--, fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, AttackRange))
             {
                 if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
             }
             
-            for (int rankOff = rank - 1, fileOff = file + 1;
-                 rankOff >= 0 && VerifyUpperBound(fileOff) && rank - rankOff <= AttackRange && fileOff - file <= AttackRange;
-                 rankOff--, fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, AttackRange))
             {
                 if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
             }
             
-            for (int rankOff = rank + 1, fileOff = file + 1;
-                 VerifyBounds(rankOff) && VerifyUpperBound(fileOff) && rankOff - rank <= AttackRange && fileOff - file <= AttackRange;
-                 rankOff++, fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, AttackRange))
             {
                 if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
             }
             
-            for (int rankOff = rank + 1, fileOff = file - 1;
-                 VerifyBounds(rankOff) && fileOff >= 0 && rankOff - rank <= AttackRange && file - fileOff <= AttackRange;
-                 rankOff++, fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, AttackRange))
+            {
+                if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, AttackRange))
+            {
+                if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, AttackRange))
+            {
+                if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, AttackRange))
+            {
+                if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownRight(rank, file, AttackRange))
             {
                 if (!MakeCapture(list, IndexOf(rankOff, fileOff))) break;
             }

@@ -6,6 +6,7 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Data.Pieces;
 using Game.Effects;
 using Game.Effects.Buffs;
@@ -56,53 +57,45 @@ namespace Game.Piece.PieceLogic.Champions
             var file = FileOf(Pos);
             var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             snap = Effects.Any(e => e.EffectName == EffectName.SnappingStrike);
-            
-            for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
-            {
-                if (!MakeMove(list, IndexOf(rankOff, file), rank - rankOff)) break;
-            }
-            
-            for (var rankOff = rank + 1; VerifyUpperBound(rankOff) && rankOff - rank <= maxRange; rankOff++)
-            {
-                if (!MakeMove(list, IndexOf(rankOff, file), rankOff - rank)) break;
-            }
-            
-            for (var fileOff = file - 1; fileOff >= 0 && file - fileOff <= maxRange; fileOff--)
-            {
-                if (!MakeMove(list, IndexOf(rank, fileOff), file - fileOff)) break;
-            }
-            
-            for (var fileOff = file + 1; VerifyUpperBound(fileOff) && fileOff - file <= maxRange; fileOff++)
-            {
-                if (!MakeMove(list, IndexOf(rank, fileOff), fileOff - file)) break;
-            }
-            
-            for (int rankOff = rank - 1, fileOff = file - 1;
-                 rankOff >= 0 && fileOff >= 0 && rank - rankOff <= maxRange && file - fileOff <= maxRange;
-                 rankOff--, fileOff--)
+
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, maxRange))
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (int rankOff = rank - 1, fileOff = file + 1;
-                 rankOff >= 0 && VerifyUpperBound(fileOff) && rank - rankOff <= maxRange && fileOff - file <= maxRange;
-                 rankOff--, fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), file - fileOff)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), fileOff - file)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, maxRange))
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (int rankOff = rank + 1, fileOff = file + 1;
-                 VerifyBounds(rankOff) && VerifyUpperBound(fileOff) && rankOff - rank <= maxRange && fileOff - file <= maxRange;
-                 rankOff++, fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, maxRange))
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (int rankOff = rank + 1, fileOff = file - 1;
-                 VerifyBounds(rankOff) && fileOff >= 0 && rankOff - rank <= maxRange && file - fileOff <= maxRange;
-                 rankOff++, fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownRight(rank, file, maxRange))
             {
-                if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
             }
             
             if (SkillCooldown == 0) list.Add(new SwordFishActive(Pos));

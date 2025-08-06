@@ -4,6 +4,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Data.Pieces;
 using Game.Effects.Buffs;
 using static Game.Common.BoardUtils;
@@ -41,66 +42,22 @@ namespace Game.Piece.PieceLogic.Summon
             return true;
         }
 
+        private void MakeSkill(List<Action.Action> list, int index)
+        {
+            var piece = PieceOn(index);
+            if (piece == null || piece.Color == Color) return;
+            list.Add(new AnomalocarisActive(Pos, index));
+        }
+
         private void Skill(List<Action.Action> list)
         {
             if (SkillCooldown != 0) return;
             
             var (rank, file) = RankFileOf(Pos);
 
-            //Up
-            var rankTo = rank - 5;
-            if (rankTo >= 0)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Around(rank, file, 5))
             {
-                for (var tFileTo = file - 5; tFileTo <= file + 5; tFileTo++)
-                {
-                    if (!VerifyBounds(tFileTo)) continue;
-                    var idx = IndexOf(rankTo, tFileTo);
-                    var piece = PieceOn(idx);
-                    if (piece == null || piece.Color == Color) continue;
-                    list.Add(new AnomalocarisActive(Pos, idx));
-                }
-            }
-
-            //Down
-            rankTo = rank + 5;
-            if (VerifyUpperBound(rankTo))
-            {
-                for (var tFileTo = file - 5; tFileTo <= file + 5 - 1; tFileTo++)
-                {
-                    if (!VerifyBounds(tFileTo)) continue;
-                    var idx = IndexOf(rankTo, tFileTo);
-                    var piece = PieceOn(idx);
-                    if (piece == null || piece.Color == Color) continue;
-                    list.Add(new AnomalocarisActive(Pos, idx));
-                }
-            }
-
-            //Left
-            var fileTo = file - 5;
-            if (fileTo >= 0)
-            {
-                for (var tRankTo = rank - 5 + 1; tRankTo <= rank + 5 - 1; tRankTo++)
-                {
-                    if (!VerifyBounds(tRankTo)) continue;
-                    var idx = IndexOf(tRankTo, fileTo);
-                    var piece = PieceOn(idx);
-                    if (piece == null || piece.Color == Color) continue;
-                    list.Add(new AnomalocarisActive(Pos, idx));
-                }
-            }
-
-            //Right
-            fileTo = file + 5;
-            if (VerifyUpperBound(fileTo))
-            {
-                for (var tRankTo = rank - 5 + 1; tRankTo <= rank + 5; tRankTo++)
-                {
-                    if (!VerifyBounds(tRankTo)) continue;
-                    var idx = IndexOf(tRankTo, fileTo);
-                    var piece = PieceOn(idx);
-                    if (piece == null || piece.Color == Color) continue;
-                    list.Add(new AnomalocarisActive(Pos, idx));
-                }
+                MakeSkill(list, IndexOf(rankOff, fileOff));
             }
         }
 
@@ -110,52 +67,44 @@ namespace Game.Piece.PieceLogic.Summon
             var file = FileOf(Pos);
             var maxRange = Math.Max(AttackRange, EffectiveMoveRange);
             
-            for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= maxRange; rankOff--)
-            {
-                if (!MakeMove(list, IndexOf(rankOff, file), rank - rankOff)) break;
-            }
-            
-            for (var rankOff = rank + 1; VerifyUpperBound(rankOff) && rankOff - rank <= maxRange; rankOff++)
-            {
-                if (!MakeMove(list, IndexOf(rankOff, file), rankOff - rank)) break;
-            }
-            
-            for (var fileOff = file - 1; fileOff >= 0 && file - fileOff <= maxRange; fileOff--)
-            {
-                if (!MakeMove(list, IndexOf(rank, fileOff), file - fileOff)) break;
-            }
-            
-            for (var fileOff = file + 1; VerifyUpperBound(fileOff) && fileOff - file <= maxRange; fileOff++)
-            {
-                if (!MakeMove(list, IndexOf(rank, fileOff), fileOff - file)) break;
-            }
-            
-            for (int rankOff = rank - 1, fileOff = file - 1;
-                 rankOff >= 0 && fileOff >= 0 && rank - rankOff <= maxRange && file - fileOff <= maxRange;
-                 rankOff--, fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, maxRange))
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (int rankOff = rank - 1, fileOff = file + 1;
-                 rankOff >= 0 && VerifyUpperBound(fileOff) && rank - rankOff <= maxRange && fileOff - file <= maxRange;
-                 rankOff--, fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), file - fileOff)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), fileOff - file)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, maxRange))
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (int rankOff = rank + 1, fileOff = file + 1;
-                 VerifyBounds(rankOff) && VerifyUpperBound(fileOff) && rankOff - rank <= maxRange && fileOff - file <= maxRange;
-                 rankOff++, fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, maxRange))
+            {
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
+            }
+            
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, maxRange))
             {
                 if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (int rankOff = rank + 1, fileOff = file - 1;
-                 VerifyBounds(rankOff) && fileOff >= 0 && rankOff - rank <= maxRange && file - fileOff <= maxRange;
-                 rankOff++, fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownRight(rank, file, maxRange))
             {
-                if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
             }
             
             Skill(list);

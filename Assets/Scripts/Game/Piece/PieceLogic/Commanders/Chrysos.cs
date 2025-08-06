@@ -4,6 +4,7 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Data.Pieces;
 using Game.Effects.Traits;
 using static Game.Common.BoardUtils;
@@ -57,28 +58,24 @@ namespace Game.Piece.PieceLogic.Commanders
             var rank = RankOf(Pos);
             var file = FileOf(Pos);
             
-            for (var rankOff = rank - 1; rankOff >= 0; rankOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, 50))
             {
-                var index = IndexOf(rankOff, file);
-                if (!MakeMove(list, index)) break;
+                if (!MakeMove(list, IndexOf(rankOff, fileOff))) break;
             }
             
-            for (var rankOff = rank + 1; rankOff < MaxLength; rankOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, 50))
             {
-                var index = IndexOf(rankOff, file);
-                if (!MakeMove(list, index)) break;
+                if (!MakeMove(list, IndexOf(rankOff, fileOff))) break;
             }
             
-            for (var fileOff = file - 1; fileOff >= 0; fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, 50))
             {
-                var index = IndexOf(rank, fileOff);
-                if (!MakeMove(list, index)) break;
+                if (!MakeMove(list, IndexOf(rankOff, fileOff))) break;
             }
             
-            for (var fileOff = file + 1; fileOff < MaxLength; fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, 50))
             {
-                var index = IndexOf(rank, fileOff);
-                if (!MakeMove(list, index)) break;
+                if (!MakeMove(list, IndexOf(rankOff, fileOff))) break;
             }
         }
 

@@ -5,6 +5,7 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Data.Pieces;
 using Game.Effects.Traits;
 using static Game.Common.BoardUtils;
@@ -23,86 +24,50 @@ namespace Game.Piece.PieceLogic.Commanders
             ActionManager.ExecuteImmediately(new ApplyEffect(new VelkarisMarker(this)));
         }
 
+        private bool MakeMove(List<Action.Action> list, int index, int distance)
+        {
+            if (!IsActive(index)) return false;
+            var p = PieceOn(index);
+            if (p != null)
+            {
+                if (p.Color != Color || distance > AttackRange) return false;
+                
+                list.Add(new NormalCapture(Pos, index));
+                return false;
+            }
+            
+            if (distance <= EffectiveMoveRange)
+            {
+                list.Add(new NormalMove(Pos, index));
+            }
+
+            return true;
+        }
+
         protected override void MoveToMake(List<Action.Action> list)
         {
             var (rank, file) = RankFileOf(Pos);
             
-            var totalRange = Math.Max(EffectiveMoveRange, AttackRange);
+            var maxRange = Math.Max(EffectiveMoveRange, AttackRange);
             
-            for (var rankOff = 1; rankOff <= totalRange; rankOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, maxRange))
             {
-                var rankAfter = rank + rankOff;
-                if (!VerifyUpperBound(rankAfter)) break;
-                var newPos = IndexOf(rankAfter, file);
-                
-                if (!IsActive(newPos)) break;
-                var p = PieceOn(newPos);
-                if (p != null)
-                {
-                    if (p.Color != Color && rankOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
-                    break;
-                }
-                if (rankOff <= EffectiveMoveRange)
-                {
-                    list.Add(new NormalMove(Pos, newPos));
-                }
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rank - rankOff)) break;
             }
             
-            for (var rankOff = -1; rankOff >= -totalRange; rankOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, maxRange))
             {
-                var rankAfter = rank + rankOff;
-                if (rankAfter < 0) break;
-                var newPos = IndexOf(rankAfter, file);
-                
-                if (!IsActive(newPos)) break;
-                var p = PieceOn(newPos);
-                if (p != null)
-                {
-                    if (p.Color != Color && rankOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
-                    break;
-                }
-                if (rankOff >= -EffectiveMoveRange)
-                {
-                    list.Add(new NormalMove(Pos, newPos));
-                }
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), rankOff - rank)) break;
             }
             
-            for (var fileOff = 1; fileOff <= totalRange; fileOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, maxRange))
             {
-                var fileAfter = file + fileOff;
-                if (!VerifyUpperBound(fileAfter)) break;
-                var newPos = IndexOf(rank, fileAfter);
-                
-                if (!IsActive(newPos)) break;
-                var p = PieceOn(newPos);
-                if (p != null)
-                {
-                    if (p.Color != Color && fileOff <= AttackRange) list.Add(new NormalCapture(Pos, newPos));
-                    break;
-                }
-                if (fileOff <= EffectiveMoveRange)
-                {
-                    list.Add(new NormalMove(Pos, newPos));
-                }
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), file - fileOff)) break;
             }
             
-            for (var fileOff = -1; fileOff >= -totalRange; fileOff--)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, maxRange))
             {
-                var fileAfter = file + fileOff;
-                if (fileAfter < 0) break;
-                var newPos = IndexOf(rank, fileAfter);
-                
-                if (!IsActive(newPos)) break;
-                var p = PieceOn(newPos);
-                if (p != null)
-                {
-                    if (p.Color != Color && fileOff >= -AttackRange) list.Add(new NormalCapture(Pos, newPos));
-                    break;
-                }
-                if (fileOff >= -EffectiveMoveRange)
-                {
-                    list.Add(new NormalMove(Pos, newPos));
-                }
+                if (!MakeMove(list, IndexOf(rankOff, fileOff), fileOff - file)) break;
             }
             
             if (SkillCooldown == 0 && Marked != null)
