@@ -33,7 +33,7 @@ namespace Game.Piece
         Common,
         Elite,
         Champion,
-        Commander,
+        Commander
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Piece : MonoBehaviour

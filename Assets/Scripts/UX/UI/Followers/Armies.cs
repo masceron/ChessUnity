@@ -8,7 +8,5 @@ namespace UX.UI.Followers
         {
             
         }
-        
-        
     }
 }
