@@ -4,11 +4,14 @@ using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
-    public class SRInfo: MonoBehaviour
+    public class RelicInfo: MonoBehaviour
     {
         [SerializeField] private RawImage image;
         [SerializeField] private TMP_Text description;
         
-        
+        public void Undisplay()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

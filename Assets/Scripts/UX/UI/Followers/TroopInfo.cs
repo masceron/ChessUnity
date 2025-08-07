@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
-    public class PieceInfo: MonoBehaviour
+    public class TroopInfo: MonoBehaviour
     {
         [SerializeField] private UIObject3D image;
         [SerializeField] private RawImage demonstration;

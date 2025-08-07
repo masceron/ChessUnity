@@ -1,80 +1,79 @@
-﻿using System;
-using System.Collections.Generic;
-using Game.Common;
-using Game.Data.Pieces;
-using Game.Piece;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
-    public class Followers: Singleton<Followers>, IPointerClickHandler
+    public class Followers: Game.Common.Singleton<Followers>
     {
-        [SerializeField] private PiecesData piecesData;
-        [SerializeField] private Armies armies;
-        [SerializeField] private PieceList list;
-        [SerializeField] private PieceInfo pieceInfo;
-        [SerializeField] private SRInfo srInfo;
         
-        [NonSerialized] private Dictionary<PieceType, PieceObject> PiecesData;
-
-        private bool selecting;
-        private PieceType displaying;
-
-        private void Awake()
-        {
-            PiecesData = new Dictionary<PieceType, PieceObject>(piecesData.piecesData);
-            list.Load(PiecesData);
-        }
+        [SerializeField] private Armies armies;
+        [SerializeField] private TroopList troopList;
+        [SerializeField] private RelicList relicList;
+        [SerializeField] private Toggle pieceButton;
+        [SerializeField] private Toggle relicButton;
 
         private void OnDisable()
         {
-            pieceInfo.Undisplay();
-            selecting = false;
+            troopList.Undisplay();
+            relicList.Undisplay();
+        }
+
+        private void Awake()
+        {
+            pieceButton.onValueChanged.AddListener(delegate
+            {
+                if (pieceButton.isOn)
+                {
+                    var color = pieceButton.GetComponent<Image>().color;
+                    color.a = 1f;
+                    pieceButton.GetComponent<Image>().color = color;
+                    
+                    ChooseTroops();
+                }
+                else
+                {
+                    var color = pieceButton.GetComponent<Image>().color;
+                    color.a = 0.2f;
+                    pieceButton.GetComponent<Image>().color = color;
+                }
+            });
+            
+            relicButton.onValueChanged.AddListener(delegate
+            {
+                if (relicButton.isOn)
+                {
+                    var color = relicButton.GetComponent<Image>().color;
+                    color.a = 1f;
+                    relicButton.GetComponent<Image>().color = color;
+                    
+                    ChooseRelics();
+                }
+                else
+                {
+                    var color = relicButton.GetComponent<Image>().color;
+                    color.a = 0.2f;
+                    relicButton.GetComponent<Image>().color = color;
+                }
+            });
+        }
+
+        private void ChooseTroops()
+        {
+            relicList.gameObject.SetActive(false);
+            troopList.gameObject.SetActive(true);
+        }
+
+        private void ChooseRelics()
+        {
+            troopList.gameObject.SetActive(false);
+            relicList.gameObject.SetActive(true);
         }
 
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
             UIManager.Ins.Load(CanvasID.PlayMenu);
-        }
-
-        public void Select(PieceType type)
-        {
-            if (selecting)
-            {
-                selecting = false;
-            }
-            
-            DisplayInfo((int)type);
-            selecting = true;
-        }
-
-        public void DisplayInfo(int type)
-        {
-            if (selecting) return;
-            
-            
-            if (type != -1)
-            {
-                var piece = (PieceType)type;
-                if (displaying == piece) return;
-
-                displaying = piece;
-                pieceInfo.Display(PiecesData[piece]);
-            }
-            else
-            {
-                pieceInfo.Undisplay();   
-            }
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button != PointerEventData.InputButton.Right) return;
-            selecting = false;
-            DisplayInfo(-1);
         }
     }
 }

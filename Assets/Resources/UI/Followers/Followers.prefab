@@ -3810,7 +3810,7 @@ GameObject:
   - component: {fileID: 653594035811166001}
   - component: {fileID: 8553158708779041746}
   m_Layer: 0
-  m_Name: SkillsRelics
+  m_Name: Relics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3849,7 +3849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.19607843}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3907,7 +3907,7 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2379502931350327814}
-  toggleTransition: 1
+  toggleTransition: 0
   graphic: {fileID: 0}
   m_Group: {fileID: 3142662854663173376}
   onValueChanged:
@@ -4011,7 +4011,7 @@ GameObject:
   - component: {fileID: 8771354564085697529}
   - component: {fileID: 2153707011312913175}
   m_Layer: 0
-  m_Name: SRInfo
+  m_Name: RelicInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5177,11 +5177,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ff7a495c0d4034bca3f0f51cc712e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   armies: {fileID: 5634579515978605648}
-  list: {fileID: 8125032766626006041}
-  pieceInfo: {fileID: 3344505349079295429}
-  srInfo: {fileID: 0}
+  troopList: {fileID: 8125032766626006041}
+  relicList: {fileID: 3510365675999335271}
+  pieceButton: {fileID: 3010119024750234154}
+  relicButton: {fileID: 653594035811166001}
 --- !u!114 &4272440855527932027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6488,12 +6488,24 @@ MonoBehaviour:
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7197506248050845672}
-  toggleTransition: 1
+  toggleTransition: 0
   graphic: {fileID: 0}
   m_Group: {fileID: 3142662854663173376}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4692624573800312132}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!222 &9036066868901502800
 CanvasRenderer:
@@ -8366,7 +8378,7 @@ GameObject:
   - component: {fileID: 6259138367851787406}
   - component: {fileID: 8125032766626006041}
   m_Layer: 0
-  m_Name: PieceList
+  m_Name: TroopList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8470,9 +8482,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a101d66dac4dd786ce3ed746cf182f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  piecesData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   searchBar: {fileID: 2406933726110952966}
   list: {fileID: 6249974880111800310}
-  pieceDisplay: {fileID: 1292840448665757387, guid: 2e314c99ae904fc4f9f194b416f9c299, type: 3}
+  troopDisplay: {fileID: 1292840448665757387, guid: 2e314c99ae904fc4f9f194b416f9c299, type: 3}
   filterButtons:
     keys: 01020304050607
     values:
@@ -8483,6 +8496,7 @@ MonoBehaviour:
     - {fileID: 3150347908723199365}
     - {fileID: 4114462186718195068}
     - {fileID: 2860049457124721545}
+  troopInfo: {fileID: 3344505349079295429}
 --- !u!1 &8754091874360593005
 GameObject:
   m_ObjectHideFlags: 0
@@ -8497,7 +8511,7 @@ GameObject:
   - component: {fileID: 6746026058517974770}
   - component: {fileID: 3510365675999335271}
   m_Layer: 0
-  m_Name: SRList
+  m_Name: RelicList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8601,6 +8615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0531b30f74e4fa9b7d2fc4ffcf7a4b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  relicInfo: {fileID: 2153707011312913175}
 --- !u!1 &9074907415092808612
 GameObject:
   m_ObjectHideFlags: 0

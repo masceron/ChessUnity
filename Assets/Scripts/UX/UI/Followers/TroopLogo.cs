@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace UX.UI.Followers
 {
-    public class PieceLogo: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    public class TroopLogo: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] public UIObject3D model;
         private PieceObject obj;
@@ -18,19 +18,19 @@ namespace UX.UI.Followers
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            Followers.Ins.DisplayInfo((int)obj.type);
+            TroopList.Ins.DisplayInfo(obj.type);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            Followers.Ins.DisplayInfo(-1);
+            TroopList.Ins.Undisplay();
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                Followers.Ins.Select(obj.type);
+                TroopList.Ins.Select(obj.type);
             }
         }
     }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4197783774499568729}
   - component: {fileID: 5175587779172751146}
   m_Layer: 0
-  m_Name: Info
+  m_Name: TroopLogo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

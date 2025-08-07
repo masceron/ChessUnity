@@ -5,21 +5,54 @@ using Game.Data.Pieces;
 using Game.Piece;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
-    public class PieceList: MonoBehaviour
+    public class TroopList: Singleton<TroopList>, IPointerClickHandler
     {
+        [SerializeField] private PiecesData piecesData;
         [SerializeField] private TMP_InputField searchBar;
         [SerializeField] private Transform list;
-        [SerializeField] private GameObject pieceDisplay;
+        [SerializeField] private GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
+        [SerializeField] private TroopInfo troopInfo;
 
-        private Dictionary<PieceType, PieceObject> piecesData;
+        private Dictionary<PieceType, PieceObject> data;
         private List<PieceObject> lastSearchResult;
         private string lastKeyword;
-        private readonly List<PieceLogo> pool = new();
+        private readonly List<TroopLogo> pool = new();
+        private bool selecting;
+        private PieceType displaying;
+        
+        private void OnDisable()
+        {
+            troopInfo.Undisplay();
+            selecting = false;
+        }
+
+        private void Awake()
+        {
+            data = piecesData.piecesData.Dictionary;
+            Load();
+        }
+        
+        private void Load()
+        {
+            SearchByKeyword("");
+        }
+
+        public void Select(PieceType type)
+        {
+            if (selecting)
+            {
+                selecting = false;
+            }
+            
+            DisplayInfo(type);
+            selecting = true;
+        }
         
         private readonly SortedSet<PieceRank> pieceFilters = new()
         {
@@ -31,12 +64,6 @@ namespace UX.UI.Followers
             PieceRank.Summoned,
             PieceRank.Construct
         };
-
-        public void Load(Dictionary<PieceType, PieceObject> p)
-        {
-            piecesData = p;
-            SearchByKeyword("");
-        }
 
         public void ToggleFilter(int filter)
         {
@@ -64,7 +91,7 @@ namespace UX.UI.Followers
         {
             pieceFilters.Add(toFilter);
             
-            var result = piecesData.Values.Where(p => 
+            var result = data.Values.Where(p => 
                 pieceFilters.Contains(p.rank) && 
                 p.pieceName.Contains(lastKeyword)).ToList();
 
@@ -107,7 +134,7 @@ namespace UX.UI.Followers
             }
             else
             {
-                lastSearchResult = piecesData.Values.Where(p => 
+                lastSearchResult = data.Values.Where(p => 
                     pieceFilters.Contains(p.rank) &&  
                     p.pieceName.Contains(start)).ToList();
             }
@@ -125,7 +152,7 @@ namespace UX.UI.Followers
                 {
                     for (var i = 1; i <= needed; i++)
                     {
-                        pool.Add(Instantiate(pieceDisplay, list).GetComponent<PieceLogo>());
+                        pool.Add(Instantiate(troopDisplay, list).GetComponent<TroopLogo>());
                     }
 
                     break;
@@ -154,6 +181,28 @@ namespace UX.UI.Followers
                     pool[i].Load(lastSearchResult[i]);
                 }
             }
+        }
+
+        public void DisplayInfo(PieceType type)
+        {
+            if (selecting) return;
+            
+            if (displaying == type) return;
+
+            displaying = type;
+            troopInfo.Display(data[type]);
+        }
+
+        public void Undisplay()
+        {
+            troopInfo.Undisplay();
+        }
+        
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Right) return;
+            selecting = false;
+            Undisplay();
         }
     }
 
