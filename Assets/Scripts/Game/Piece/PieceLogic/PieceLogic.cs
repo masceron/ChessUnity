@@ -2,6 +2,7 @@
 using Game.Data.Pieces;
 using Game.Effects;
 using Game.Managers;
+using Game.Moves;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -22,7 +23,7 @@ namespace Game.Piece.PieceLogic
         public readonly List<Effect> Effects;
         public readonly PieceType Type;
 
-        protected PieceLogic(PieceConfig cfg)
+        protected PieceLogic(PieceConfig cfg, QuietsDelegate quiets = null, CapturesDelegate captures = null)
         {
             Color = cfg.Color;
             Pos = cfg.Index;
@@ -32,7 +33,7 @@ namespace Game.Piece.PieceLogic
             var info = AssetManager.Ins.PieceData[cfg.Type];
             EffectiveMoveRange = info.moveRange;
             TrueMoveRange = info.moveRange;
-            AttackRange = info.attackRange; 
+            AttackRange = info.attackRange;
             PieceRank = info.rank;
 
             if (this is IPieceWithSkill pieceWithSkill)
@@ -41,6 +42,9 @@ namespace Game.Piece.PieceLogic
                 pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1);
             }
             else SkillCooldown = -1;
+            
+            Quiets = quiets;
+            Captures = captures;
         }
 
         public void PassTurn()
@@ -49,10 +53,23 @@ namespace Game.Piece.PieceLogic
         }
         protected abstract void MoveToMake(List<Action.Action> list);
 
+        protected QuietsDelegate Quiets;
+        protected CapturesDelegate Captures;
+
         public void MoveList(List<Action.Action> list)
         {
             MoveToMake(list);
             NotifyOnMoveGen(list);
+        }
+
+        public void ChangeQuietsPattern(QuietsDelegate newQuiets)
+        {
+            Quiets = newQuiets;
+        }
+
+        public void ChangeCapturesPattern(CapturesDelegate newCaptures)
+        {
+            Captures = newCaptures;
         }
     }
 }
