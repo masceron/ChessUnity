@@ -12,6 +12,7 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.ChrysosShop
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChrysosShop: MonoBehaviour
     {
         [SerializeField] private GameObject shopItem;

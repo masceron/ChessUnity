@@ -8,6 +8,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrect: Action, ISkills
     {
         private readonly PieceType typeTo;

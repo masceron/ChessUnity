@@ -5,6 +5,7 @@ using UX.UI.Ingame.ThalassosResurrector;
 
 namespace Game.Action.Internal.Pending
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrectCandidate: Action, IPendingAble, IInternal, ISkills
     {
         public ThalassosResurrectCandidate(int maker, int pos) : base(maker)

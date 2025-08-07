@@ -6,6 +6,7 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Buffs
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HardenedShield: Effect
     { 
         public HardenedShield(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, EffectName.HardenedShield)

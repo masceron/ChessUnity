@@ -2,6 +2,7 @@
 
 namespace Game.Action.Internal
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DestroyPiece: Action, IInternal
     {
         public DestroyPiece(int maker) : base(maker)

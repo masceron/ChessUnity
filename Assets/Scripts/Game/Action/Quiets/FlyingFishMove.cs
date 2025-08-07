@@ -5,6 +5,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Quiets
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FlyingFishMove: Action, IQuiets
     {
         public FlyingFishMove(int maker, int to) : base(maker, true)

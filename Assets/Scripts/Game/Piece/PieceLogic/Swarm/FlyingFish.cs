@@ -8,6 +8,7 @@ using Game.Moves;
 
 namespace Game.Piece.PieceLogic.Swarm
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FlyingFish: PieceLogic
     {
         public FlyingFish(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)

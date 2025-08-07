@@ -5,6 +5,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArchelonShield: Action, ISkills
     {
         public ArchelonShield(int maker, int to) : base(maker)

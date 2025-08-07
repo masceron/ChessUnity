@@ -7,6 +7,7 @@ using static UnityEngine.SceneManagement.SceneManager;
 
 namespace UX.UI.Loader
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class SceneLoader
     {
         public static void Start()

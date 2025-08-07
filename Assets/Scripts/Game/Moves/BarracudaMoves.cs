@@ -5,6 +5,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Moves
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BarracudaMoves
     {
         public static void Quiets(List<Action.Action> list, int pos)

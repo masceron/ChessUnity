@@ -2,6 +2,7 @@
 
 namespace Game.Common
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T _instance;

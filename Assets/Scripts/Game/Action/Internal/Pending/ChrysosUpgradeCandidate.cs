@@ -9,6 +9,7 @@ using UX.UI.Ingame.ChrysosShop;
 
 namespace Game.Action.Internal.Pending
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChrysosUpgradeCandidate: Action, IPendingAble, IInternal, ISkills
     {
         private PieceConfig config;

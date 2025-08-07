@@ -3,6 +3,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Common
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class MoveEnumerators
     {
         public static IEnumerable<(int, int)> Up(int startRank, int startFile, int maxRange)

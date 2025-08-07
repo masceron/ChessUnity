@@ -12,6 +12,7 @@ namespace UX.UI
     {
         MainMenu, PlayMenu, Settings, Ingame, Loading, Followers
     }
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIManager : Singleton<UIManager>
     {
         private RectTransform currentCanvas;

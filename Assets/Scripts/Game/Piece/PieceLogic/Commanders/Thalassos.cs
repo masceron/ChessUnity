@@ -9,6 +9,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Commanders
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Thalassos: PieceLogic, IPieceWithSkill
     {
         public Thalassos(PieceConfig cfg) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)

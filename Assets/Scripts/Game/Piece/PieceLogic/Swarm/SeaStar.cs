@@ -8,6 +8,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Swarm
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeaStar: PieceLogic, IPieceWithSkill
     {
         public SeaStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)

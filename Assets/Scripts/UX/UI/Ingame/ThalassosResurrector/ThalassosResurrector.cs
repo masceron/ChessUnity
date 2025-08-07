@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.ThalassosResurrector
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrector: MonoBehaviour
     {
         [SerializeField] private GameObject selector;

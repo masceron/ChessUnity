@@ -11,6 +11,7 @@ using SnappingStrike = Game.Effects.Traits.SnappingStrike;
 
 namespace Game.Piece.PieceLogic.Summon
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Anomalocaris: PieceLogic, IPieceWithSkill
     {
         public Anomalocaris(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)

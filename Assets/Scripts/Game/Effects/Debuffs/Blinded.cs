@@ -4,6 +4,7 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Debuffs
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Blinded: Effect
     {
         private readonly int probability;

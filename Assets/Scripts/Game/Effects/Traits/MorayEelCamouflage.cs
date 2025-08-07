@@ -7,6 +7,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MorayEelCamouflage: Effect, IEndTurnEffect
     {
         private Camouflage already;

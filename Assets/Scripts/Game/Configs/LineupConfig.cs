@@ -4,7 +4,7 @@ using Game.Data.Pieces;
 
 namespace Game.Configs
 {
-    [Serializable]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public struct LineupConfig
     {
         public readonly List<PieceConfig> WhiteConfig;

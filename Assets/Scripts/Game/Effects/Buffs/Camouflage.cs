@@ -4,6 +4,7 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Buffs
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Camouflage: Effect
     {
         public Camouflage(PieceLogic piece, sbyte duration = -1) : base(duration, 1, piece, EffectName.Camouflage)

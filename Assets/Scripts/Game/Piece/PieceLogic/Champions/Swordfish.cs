@@ -13,6 +13,7 @@ using SnappingStrike = Game.Action.Captures.SnappingStrike;
 
 namespace Game.Piece.PieceLogic.Champions
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Swordfish: PieceLogic, IPieceWithSkill
     {
         public Swordfish(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)

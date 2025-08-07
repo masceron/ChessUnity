@@ -8,6 +8,7 @@ using Game.Moves;
 
 namespace Game.Piece.PieceLogic.Elites
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Lionfish: PieceLogic, IPieceWithSkill
     {
         public Lionfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)

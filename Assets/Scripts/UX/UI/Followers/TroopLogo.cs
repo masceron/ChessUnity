@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace UX.UI.Followers
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TroopLogo: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] public UIObject3D model;

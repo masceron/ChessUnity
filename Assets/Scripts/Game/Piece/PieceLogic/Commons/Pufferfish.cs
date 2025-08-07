@@ -8,6 +8,7 @@ using Game.Moves;
 
 namespace Game.Piece.PieceLogic.Commons
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Pufferfish: PieceLogic, IPieceWithSkill
     {
         public Pufferfish(PieceConfig cfg) : base(cfg, PufferfishMoves.Quiets, PufferfishMoves.Captures)

@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.ThalassosResurrector
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ResurrectorItem: MonoBehaviour
     {
         [SerializeField] private TMP_Text pieceName;

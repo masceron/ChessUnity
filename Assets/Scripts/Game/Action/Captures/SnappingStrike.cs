@@ -2,6 +2,7 @@
 
 namespace Game.Action.Captures
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SnappingStrike: Action, ICaptures
     {
         public SnappingStrike(int maker, int to) : base(maker)

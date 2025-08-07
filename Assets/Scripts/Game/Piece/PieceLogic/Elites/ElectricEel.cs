@@ -8,6 +8,7 @@ using Game.Moves;
 
 namespace Game.Piece.PieceLogic.Elites
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ElectricEel : PieceLogic, IPieceWithSkill
     {
         public ElectricEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, ElectricEelMoves.Captures)

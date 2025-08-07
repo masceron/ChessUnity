@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace Game.Managers
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AssetManager : Singleton<AssetManager>
     {
         [NonSerialized] public Dictionary<PieceType, PieceObject> PieceData;

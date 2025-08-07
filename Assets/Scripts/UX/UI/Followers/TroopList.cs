@@ -10,6 +10,7 @@ using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TroopList: Singleton<TroopList>, IPointerClickHandler
     {
         [SerializeField] private PiecesData piecesData;

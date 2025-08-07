@@ -4,6 +4,7 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Buffs
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Carapace: Effect
     {
         public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectName.Carapace)

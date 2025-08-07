@@ -10,8 +10,8 @@ namespace Game.Common
 using UnityEditor;
 using UnityEditorInternal;
 #endif
-
-    [Serializable]
+    
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), Serializable]
     public class UDictionary
     {
         public class SplitAttribute : PropertyAttribute

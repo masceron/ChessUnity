@@ -6,6 +6,7 @@ using Game.Piece.PieceLogic.Commanders;
 
 namespace Game.Effects.Traits
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SlayersCoin: Effect
     {
         public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, EffectName.SlayersCoin)

@@ -3,8 +3,9 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game.UX.Camera
+namespace UX.Camera
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PieceCamera : MonoBehaviour
     {
         [Header("Camera")]

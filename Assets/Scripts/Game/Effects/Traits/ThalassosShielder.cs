@@ -9,6 +9,7 @@ using static Game.Managers.MatchManager;
 
 namespace Game.Effects.Traits
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosShielder: Effect, IEndTurnEffect
     {
         private List<PieceLogic> inRange = new();

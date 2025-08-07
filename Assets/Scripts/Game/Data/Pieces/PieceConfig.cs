@@ -3,6 +3,7 @@ using Game.Piece;
 
 namespace Game.Data.Pieces
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public readonly struct PieceConfig : IEquatable<PieceConfig>
     {
         public readonly PieceType Type;

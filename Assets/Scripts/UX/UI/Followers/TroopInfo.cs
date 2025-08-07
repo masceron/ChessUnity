@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TroopInfo: MonoBehaviour
     {
         [SerializeField] private UIObject3D image;

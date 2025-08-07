@@ -2,6 +2,7 @@
 
 namespace Game.Action.Captures
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DestroyConstruct: Action, ICaptures
     {
         public DestroyConstruct(int maker, int to) : base(maker)

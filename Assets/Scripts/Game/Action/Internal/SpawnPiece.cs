@@ -3,6 +3,7 @@ using Game.Managers;
 
 namespace Game.Action.Internal
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SpawnPiece: Action, IInternal
     {
         private readonly PieceConfig pieceToSpawn;
