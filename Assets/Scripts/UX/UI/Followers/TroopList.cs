@@ -29,8 +29,7 @@ namespace UX.UI.Followers
         
         private void OnDisable()
         {
-            troopInfo.Undisplay();
-            selecting = false;
+            Close();
         }
 
         private void Awake()
@@ -44,13 +43,15 @@ namespace UX.UI.Followers
             SearchByKeyword("");
         }
 
+        public void Close()
+        {
+            selecting = false;
+            troopInfo.Undisplay();
+        }
+
         public void Select(PieceType type)
         {
-            if (selecting)
-            {
-                selecting = false;
-            }
-            
+            selecting = false;
             DisplayInfo(type);
             selecting = true;
         }
@@ -101,7 +102,7 @@ namespace UX.UI.Followers
                 lastSearchResult = result;
             }
 
-            Display();
+            DisplaySearchResult();
         }
 
         private void RemoveFromFilter(PieceRank toRemove)
@@ -117,7 +118,7 @@ namespace UX.UI.Followers
                 lastSearchResult = result;
             }
 
-            Display();
+            DisplaySearchResult();
         }
         
         public void SearchByKeyword(string start)
@@ -141,10 +142,10 @@ namespace UX.UI.Followers
             }
             
             lastKeyword = start;
-            Display();
+            DisplaySearchResult();
         }
         
-        private void Display()
+        private void DisplaySearchResult()
         {
             var needed = lastSearchResult.Count - pool.Count;
             switch (needed)
@@ -196,12 +197,13 @@ namespace UX.UI.Followers
 
         public void Undisplay()
         {
+            if (selecting) return;
             troopInfo.Undisplay();
         }
         
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button != PointerEventData.InputButton.Right) return;
+            if (eventData.button != PointerEventData.InputButton.Right || !selecting) return;
             selecting = false;
             Undisplay();
         }

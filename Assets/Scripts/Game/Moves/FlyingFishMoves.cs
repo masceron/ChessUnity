@@ -14,7 +14,7 @@ namespace Game.Moves
             
             var board = PieceBoard();
             var active = ActiveBoard();
-            var effectiveMoveRange = PieceOn(pos).EffectiveMoveRange;
+            var effectiveMoveRange = PieceOn(pos).GetMoveRange();
 
             for (var rankTo = rank - effectiveMoveRange; rankTo <= rank + effectiveMoveRange; rankTo += effectiveMoveRange)
             {

@@ -9,10 +9,15 @@ namespace UX.UI.Followers
 
         private void OnDisable()
         {
+            Close();
+        }
+
+        public void Close()
+        {
             relicInfo.Undisplay();
         }
 
-        public void Undisplay()
+        private void Undisplay()
         {
             relicInfo.Undisplay();
         }

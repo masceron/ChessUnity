@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Managers;
+﻿using Game.Managers;
 using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Debuffs
@@ -9,20 +8,6 @@ namespace Game.Effects.Debuffs
     {
         public Slow(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, EffectName.Slow)
         {}
-
-        public override void OnApply()
-        {
-            Piece.TrueMoveRange -= Strength;
-            
-            if (Piece.EffectiveMoveRange > 0) Piece.EffectiveMoveRange = Math.Max(Piece.TrueMoveRange, (sbyte)1);
-        }
-
-        public override void OnRemove()
-        {
-            Piece.TrueMoveRange += Strength;
-            
-            if (Piece.EffectiveMoveRange > 0) Piece.EffectiveMoveRange = Math.Max(Piece.TrueMoveRange, (sbyte)1);
-        }
 
         public override string Description()
         {

@@ -13,7 +13,7 @@ namespace Game.Moves
         {
             var caller = PieceOn(pos);
             var color = caller.Color;
-            var range = caller.EffectiveMoveRange;
+            var range = caller.GetMoveRange();
             var (startRank, startFile) = RankFileOf(pos);
             
             var push = !color ? -1 : 1;

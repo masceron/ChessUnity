@@ -23,7 +23,7 @@ namespace Game.Managers
     
     public enum ObserverActivateWhen: byte
     {
-        None, Captures, Moves, EndTurn, MoveGeneration
+        None, Captures, Moves, EndTurn, MoveGeneration, EffectApplied
     }
     
     public enum Color : byte
@@ -98,6 +98,7 @@ namespace Game.Managers
                 PieceType.Stingray => new Stingray(piece),
                 PieceType.Seahorse => new Seahorse(piece),
                 PieceType.SeaStar => new SeaStar(piece),
+                PieceType.Anglerfish => new Anglerfish(piece),
                 _ => null
             };
 

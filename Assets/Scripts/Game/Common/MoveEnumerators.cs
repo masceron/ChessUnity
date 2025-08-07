@@ -1,51 +1,52 @@
 ﻿using System.Collections.Generic;
+using Unity.Burst;
 using static Game.Common.BoardUtils;
 
 namespace Game.Common
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), BurstCompile]
     public static class MoveEnumerators
     {
         public static IEnumerable<(int, int)> Up(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && --startRank >= 0) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> Down(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && VerifyUpperBound(++startRank)) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> Left(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && --startFile >= 0) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> Right(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && VerifyUpperBound(++startFile)) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> UpLeft(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && --startRank >= 0 && --startFile >= 0) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> UpRight(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && --startRank >= 0 && VerifyUpperBound(++startFile)) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> DownLeft(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && VerifyUpperBound(++startRank) && --startFile >= 0) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> DownRight(int startRank, int startFile, int maxRange)
         {
             while (--maxRange >= 0 && VerifyUpperBound(++startRank) && VerifyUpperBound(++startFile)) yield return (startRank, startFile);
         }
-
+        
         public static IEnumerable<(int, int)> Around(int startRank, int startFile, int radius)
         {
             var rankTo = startRank - radius;
@@ -83,7 +84,7 @@ namespace Game.Common
                     yield return (tRankTo, fileTo);
                 }
         }
-
+        
         public static IEnumerable<(int, int)> AroundUntil(int startRank, int startFile, int radius)
         {
             for (var cr = 1; cr <= radius; cr++)
@@ -95,7 +96,7 @@ namespace Game.Common
             
             }
         }
-
+        
         public static IEnumerable<(int, int)> KnightMovement(int startRank, int startFile, int radius)
         {
             var rankTo = startRank - radius;

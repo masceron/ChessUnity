@@ -1,11 +1,13 @@
 ﻿using System;
+using Unity.Burst;
 using static Game.Common.BoardUtils;
 
 namespace Game.Common
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), BurstCompile]
     public static class Pathfinder
     {
+        [BurstCompile]
         private static float Crawl(float start, float finish, float value)
         {
             if (Math.Abs(start - finish) < 0.0001) return 1;

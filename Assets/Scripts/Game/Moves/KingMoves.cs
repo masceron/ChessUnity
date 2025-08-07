@@ -15,7 +15,7 @@ namespace Game.Moves
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
             
-            var effectiveMoveRange = caller.EffectiveMoveRange;
+            var effectiveMoveRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, effectiveMoveRange))
             {

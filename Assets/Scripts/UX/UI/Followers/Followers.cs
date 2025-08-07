@@ -16,8 +16,8 @@ namespace UX.UI.Followers
 
         private void OnDisable()
         {
-            troopList.Undisplay();
-            relicList.Undisplay();
+            troopList.Close();
+            relicList.Close();
         }
 
         private void Awake()

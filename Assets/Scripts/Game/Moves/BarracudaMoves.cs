@@ -12,7 +12,7 @@ namespace Game.Moves
         {
             var (rank, pieceFile) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var moveRange = piece.EffectiveMoveRange;
+            var moveRange = piece.GetMoveRange();
             var color = piece.Color;
             
             for (var i = 1; i <= moveRange; i++)

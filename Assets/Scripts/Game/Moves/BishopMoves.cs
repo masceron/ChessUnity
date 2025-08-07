@@ -14,7 +14,7 @@ namespace Game.Moves
             var piece = PieceOn(pos);
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            var maxRange = piece.EffectiveMoveRange;
+            var maxRange = piece.GetMoveRange();
             
             foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, maxRange))
             {

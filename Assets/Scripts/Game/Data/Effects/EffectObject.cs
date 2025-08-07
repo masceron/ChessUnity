@@ -5,6 +5,7 @@ using UnityEngine;
 namespace Game.Data.Effects
 {
     [CreateAssetMenu(fileName = "EffectObject", menuName = "ScriptableObjects/EffectObject")]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EffectObject : ScriptableObject
     {
         [SerializeField] public EffectName typeName;

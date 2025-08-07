@@ -4,7 +4,6 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects
 {
-    
     public enum ObserverPriority: byte
     {
         Low, AfterAction, DefenderAction, AttackerAction, Kill
@@ -18,11 +17,6 @@ namespace Game.Effects
     public enum EffectStack : byte
     {
         Stackable, NonStackable, Additive
-    }
-
-    public enum EffectScope : byte
-    {
-        Local, Global
     }
 
     public enum EffectName
@@ -53,7 +47,11 @@ namespace Game.Effects
         Bound,
         LionfishVengeful,
         MorayEelCamouflage,
-        Camouflage
+        Camouflage,
+        Taunted,
+        Consume,
+        Solitary,
+        Extremophiles
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

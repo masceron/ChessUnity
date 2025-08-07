@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Game.Action;
 using Game.Data.Pieces;
 using Game.Effects;
 using Game.Managers;
 using Game.Moves;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -13,8 +17,7 @@ namespace Game.Piece.PieceLogic
         public ushort Pos;
         public bool Color;
 
-        public sbyte TrueMoveRange;
-        public sbyte EffectiveMoveRange;
+        public sbyte MoveRange;
         public sbyte AttackRange;
         public sbyte SkillCooldown;
         
@@ -31,8 +34,7 @@ namespace Game.Piece.PieceLogic
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
-            EffectiveMoveRange = info.moveRange;
-            TrueMoveRange = info.moveRange;
+            MoveRange = info.moveRange;
             AttackRange = info.attackRange;
             PieceRank = info.rank;
 
@@ -53,23 +55,33 @@ namespace Game.Piece.PieceLogic
         }
         protected abstract void MoveToMake(List<Action.Action> list);
 
-        protected QuietsDelegate Quiets;
-        protected CapturesDelegate Captures;
+        public QuietsDelegate Quiets;
+        protected readonly CapturesDelegate Captures;
 
         public void MoveList(List<Action.Action> list)
         {
+            if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
+            
             MoveToMake(list);
+            if (Quiets.GetInvocationList().GetLength(0) > 1)
+            {
+                list = list.Distinct(new ActionComparer()).ToList();
+            }
             NotifyOnMoveGen(list);
         }
 
-        public void ChangeQuietsPattern(QuietsDelegate newQuiets)
+        public int GetMoveRange()
         {
-            Quiets = newQuiets;
-        }
+            if (Effects.Any(e => e.EffectName == EffectName.Bound)) return 0;
 
-        public void ChangeCapturesPattern(CapturesDelegate newCaptures)
-        {
-            Captures = newCaptures;
+            Effect slow;
+            if ((slow = Effects.Find(e => e.EffectName == EffectName.Slow)) != null)
+            {
+                return Math.Max(MoveRange - slow.Strength, 1);
+            }
+
+
+            return MoveRange;
         }
     }
 }

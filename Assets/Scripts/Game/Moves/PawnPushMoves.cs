@@ -14,7 +14,7 @@ namespace Game.Moves
             var piece = PieceOn(pos);
             var color = piece.Color;
             var (rank, file) = RankFileOf(pos);
-            var moveRange = piece.EffectiveMoveRange;
+            var moveRange = piece.GetMoveRange();
 
             switch (color)
             {

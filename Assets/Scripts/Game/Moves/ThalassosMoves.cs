@@ -15,7 +15,7 @@ namespace Game.Moves
             var file = FileOf(pos);
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.EffectiveMoveRange;
+            var moveRange = piece.GetMoveRange();
             
             var push = !color ? -1 : 1;
             

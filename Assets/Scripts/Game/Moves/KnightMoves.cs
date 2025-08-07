@@ -13,7 +13,7 @@ namespace Game.Moves
         {
             var (rank, file) = RankFileOf(pos);
             var caller = PieceOn(pos);
-            var maxRange = caller.EffectiveMoveRange;
+            var maxRange = caller.GetMoveRange();
 
             for (var range = 1; range <= maxRange; range++)
             {

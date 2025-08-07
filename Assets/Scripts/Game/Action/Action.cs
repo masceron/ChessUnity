@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Action
 {
@@ -36,5 +38,20 @@ namespace Game.Action
             
         }
         protected abstract void ModifyGameState();
+    }
+
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ActionComparer: IEqualityComparer<Action>
+    {
+        public bool Equals(Action x, Action y)
+        {
+            if (x!.GetType() != y!.GetType()) return false;
+            return x.Target == y.Target && x.Maker == y.Maker;
+        }
+
+        public int GetHashCode(Action obj)
+        {
+            return HashCode.Combine(obj.Target, obj.Maker);
+        }
     }
 }

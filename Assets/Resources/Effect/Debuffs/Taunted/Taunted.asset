@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: Stunned
+  m_Name: Taunted
   m_EditorClassIdentifier: 
-  typeName: 11
+  typeName: 0
   category: 0
-  stack: 0
-  priority: 3
-  activeWhen: 0
-  icon: {fileID: 2800000, guid: eea849f3d4e794142b87c5bdd12d727f, type: 3}
-  effectName: Stunned
-  description: This piece is stunned and cannot do any action for ${0} `turn(s).
+  stack: 1
+  priority: 0
+  activeWhen: 3
+  icon: {fileID: 2800000, guid: 9d529dc35a3764a48b9da1b0a3f0086b, type: 3}
+  effectName: Taunted
+  description: Automatically walks up 1 square and be stunned every turn.

@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Game.Data.Pieces
 {
     [CreateAssetMenu(fileName = "PieceObject", menuName = "ScriptableObjects/PieceObject")]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PieceObject : ScriptableObject
     {
         [SerializeField] public string pieceName;

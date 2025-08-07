@@ -12,7 +12,7 @@ namespace Game.Moves
         public static void Quiets(List<Action.Action> list, int pos)
         {
             var piece = PieceOn(pos);
-            var moveRange = piece.EffectiveMoveRange;
+            var moveRange = piece.GetMoveRange();
 
             var (rank, file) = RankFileOf(pos);
 

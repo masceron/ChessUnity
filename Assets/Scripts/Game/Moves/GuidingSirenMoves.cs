@@ -12,7 +12,7 @@ namespace Game.Moves
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
-            var effectiveMoveRange = p.EffectiveMoveRange;
+            var effectiveMoveRange = p.GetMoveRange();
             
             for (var i = 1; i <= effectiveMoveRange; i++)
             {

@@ -1,0 +1,21 @@
+﻿using Game.Action.Internal;
+using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic;
+using static Game.Common.BoardUtils;
+
+namespace Game.Action.Skills
+{
+    public class AnglerfishTaunt: Action, ISkills
+    {
+        public AnglerfishTaunt(int maker, int to) : base(maker)
+        {
+            Target = (ushort)to;
+        }
+
+        protected override void ModifyGameState()
+        {
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(3, PieceOn(Target))));
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+    }
+}
