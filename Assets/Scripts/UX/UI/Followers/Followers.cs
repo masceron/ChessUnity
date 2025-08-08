@@ -76,5 +76,10 @@ namespace UX.UI.Followers
             if (!context.performed) return;
             UIManager.Ins.Load(CanvasID.PlayMenu);
         }
+
+        public void CreateArmy()
+        {
+            UIManager.Ins.Load(CanvasID.CreateArmy);
+        }
     }
 }

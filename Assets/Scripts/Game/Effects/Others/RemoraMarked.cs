@@ -5,6 +5,7 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Others
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RemoraMarked: Effect, IEndTurnEffect
     {
         private readonly PieceLogic caster;

@@ -10,7 +10,7 @@ namespace UX.UI
 {
     public enum CanvasID
     {
-        MainMenu, PlayMenu, Settings, Ingame, Loading, Followers
+        MainMenu, PlayMenu, Settings, Ingame, Loading, Followers, CreateArmy, DesignArmy
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIManager : Singleton<UIManager>
