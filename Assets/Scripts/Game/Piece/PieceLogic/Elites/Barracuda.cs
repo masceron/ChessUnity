@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Action;
+﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Data.Pieces;
 using Game.Effects.Traits;
@@ -15,12 +14,6 @@ namespace Game.Piece.PieceLogic.Elites
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(this)));
-        }
-
-        protected override void MoveToMake(List<Action.Action> list)
-        {
-            Quiets(list, Pos);
-            Captures(list, Pos);
         }
     }
 }

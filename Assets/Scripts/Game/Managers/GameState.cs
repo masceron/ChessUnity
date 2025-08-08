@@ -99,6 +99,7 @@ namespace Game.Managers
                 PieceType.Seahorse => new Seahorse(piece),
                 PieceType.SeaStar => new SeaStar(piece),
                 PieceType.Anglerfish => new Anglerfish(piece),
+                PieceType.Remora => new Remora(piece),
                 _ => null
             };
 
@@ -131,6 +132,7 @@ namespace Game.Managers
             PieceBoard[pos] = null;
             
             pieceAffected.Effects.ForEach(RemoveObserver);
+            pieceAffected.Die();
             
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type, pieceAffected.Color, pieceAffected.Pos));
         }
@@ -162,23 +164,21 @@ namespace Game.Managers
         {
             observers.ForEach(effect =>
             {
-                if (effect.ObserverActivateWhen == ObserverActivateWhen.EndTurn)
+                if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                //The next turn is of the opponent.
+                if (SideToMove != effect.Piece.Color)
                 {
-                    //The next turn is of the opponent.
-                    if (SideToMove != effect.Piece.Color)
+                    if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
                     {
-                        if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
-                        {
-                            ((IEndTurnEffect)effect).OnCallEnd(MainAction);
-                        }
+                        ((IEndTurnEffect)effect).OnCallEnd(MainAction);
                     }
-                    //The next turn is ours.
-                    else
+                }
+                //The next turn is ours.
+                else
+                {
+                    if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
                     {
-                        if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
-                        {
-                            ((IEndTurnEffect)effect).OnCallEnd(MainAction);
-                        }
+                        ((IEndTurnEffect)effect).OnCallEnd(MainAction);
                     }
                 }
             });
@@ -215,6 +215,17 @@ namespace Game.Managers
                 if (e.ObserverActivateWhen == ObserverActivateWhen.MoveGeneration)
                 {
                     e.OnCallMoveGen(actions);
+                }
+            });
+        }
+
+        public void NotifyWhenApplyEffect(ApplyEffect action)
+        {
+            observers.ForEach(e =>
+            {
+                if (e.ObserverActivateWhen == ObserverActivateWhen.EffectApplied)
+                {
+                    ((IApplyEffect)e).OnCallApplyEffect(action);
                 }
             });
         }

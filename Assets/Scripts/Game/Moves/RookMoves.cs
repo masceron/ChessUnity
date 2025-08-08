@@ -9,10 +9,10 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class RookMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var piece = PieceOn(pos);
-            var moveRange = piece.GetMoveRange();
+            var moveRange = piece.GetMoveRange(ref index);
 
             var (rank, file) = RankFileOf(pos);
             

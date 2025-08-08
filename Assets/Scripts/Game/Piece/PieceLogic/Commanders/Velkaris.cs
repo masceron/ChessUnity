@@ -28,10 +28,8 @@ namespace Game.Piece.PieceLogic.Commanders
             };
         }
         
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
-            Quiets(list, Pos);
-            Captures(list, Pos);
             Skills(list);
         }
 

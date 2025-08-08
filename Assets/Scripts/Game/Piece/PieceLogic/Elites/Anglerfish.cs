@@ -16,6 +16,7 @@ namespace Game.Piece.PieceLogic.Elites
         public Anglerfish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PawnPushMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
             
             Skills = list =>
             {
@@ -48,10 +49,8 @@ namespace Game.Piece.PieceLogic.Elites
             };
         }
 
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
-            Quiets(list, Pos);
-            Captures(list, Pos);
             Skills(list);
         }
 

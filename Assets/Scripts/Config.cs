@@ -22,8 +22,9 @@ public static class Config
         new PieceConfig(PieceType.MorayEel, false, 95),
         new PieceConfig(PieceType.Stingray, true, 96),
         new PieceConfig(PieceType.Seahorse, false, 55),
-        new PieceConfig(PieceType.SeaStar, false, 97),
-        new PieceConfig(PieceType.SeaStar, false, 90),
-        new PieceConfig(PieceType.Anglerfish, true, 93),
+        new PieceConfig(PieceType.SeaStar, true, 97),
+        new PieceConfig(PieceType.SeaStar, true, 90),
+        new PieceConfig(PieceType.Anglerfish, false, 93),
+        new PieceConfig(PieceType.Remora, false, 91)
     };
 }

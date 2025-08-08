@@ -6,7 +6,6 @@ using Game.Data.Pieces;
 using Game.Effects;
 using Game.Managers;
 using Game.Moves;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -17,14 +16,22 @@ namespace Game.Piece.PieceLogic
         public ushort Pos;
         public bool Color;
 
-        public sbyte MoveRange;
-        public sbyte AttackRange;
+        public readonly List<byte> MoveRange;
+        public byte AttackRange;
         public sbyte SkillCooldown;
-        
         public readonly PieceRank PieceRank;
-       
         public readonly List<Effect> Effects;
         public readonly PieceType Type;
+
+        private bool dead;
+        public bool IsDead()
+        {
+            return dead;
+        }
+        public void Die()
+        {
+            dead = true;
+        }
 
         protected PieceLogic(PieceConfig cfg, QuietsDelegate quiets = null, CapturesDelegate captures = null)
         {
@@ -34,7 +41,7 @@ namespace Game.Piece.PieceLogic
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
-            MoveRange = info.moveRange;
+            MoveRange = new List<byte> { info.moveRange };
             AttackRange = info.attackRange;
             PieceRank = info.rank;
 
@@ -46,42 +53,55 @@ namespace Game.Piece.PieceLogic
             else SkillCooldown = -1;
             
             Quiets = quiets;
-            Captures = captures;
+            this.captures = captures;
         }
 
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;
         }
-        protected abstract void MoveToMake(List<Action.Action> list);
+
+        protected virtual void CustomBehaviors(List<Action.Action> list)
+        {}
 
         public QuietsDelegate Quiets;
-        protected readonly CapturesDelegate Captures;
+        private readonly CapturesDelegate captures;
 
         public void MoveList(List<Action.Action> list)
         {
             if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
+            var i = 0;
+
+            Quiets(list, Pos, ref i);
             
-            MoveToMake(list);
-            if (Quiets.GetInvocationList().GetLength(0) > 1)
+            if (MoveRange.Count > 1)
             {
                 list = list.Distinct(new ActionComparer()).ToList();
             }
+            
+            captures(list, Pos);
+            CustomBehaviors(list);
             NotifyOnMoveGen(list);
         }
 
-        public int GetMoveRange()
+        public int GetMoveRange(ref int index)
         {
+            int range = MoveRange[index++];
             if (Effects.Any(e => e.EffectName == EffectName.Bound)) return 0;
 
-            Effect slow;
-            if ((slow = Effects.Find(e => e.EffectName == EffectName.Slow)) != null)
+            if (range > MaxLength) return range;
+            
+            Effect movement;
+            if ((movement = Effects.Find(e => e.EffectName == EffectName.Slow)) != null)
             {
-                return Math.Max(MoveRange - slow.Strength, 1);
+                range -= movement.Strength;
             }
-
-
-            return MoveRange;
+            if ((movement = Effects.Find(e => e.EffectName == EffectName.Haste)) != null)
+            {
+                range += movement.Strength;
+            }
+            
+            return Math.Max(1, range);
         }
     }
 }

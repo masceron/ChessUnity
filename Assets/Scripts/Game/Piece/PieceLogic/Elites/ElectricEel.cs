@@ -26,10 +26,8 @@ namespace Game.Piece.PieceLogic.Elites
 
         
 
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
-            Captures(list, Pos);
-            Quiets(list, Pos);
             Skills(list);
         }
 

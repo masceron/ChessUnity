@@ -10,11 +10,11 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class ElectricEelMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var (rank, file) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var effectiveMoveRange = piece.GetMoveRange();
+            var effectiveMoveRange = piece.GetMoveRange(ref index);
             
             for (var i = file - effectiveMoveRange + 1; i <= file + effectiveMoveRange - 1; i++)
             {

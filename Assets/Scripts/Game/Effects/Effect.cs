@@ -51,7 +51,9 @@ namespace Game.Effects
         Taunted,
         Consume,
         Solitary,
-        Extremophiles
+        Extremophile,
+        Haste,
+        RemoraMarked
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -61,6 +63,7 @@ namespace Game.Effects
         public sbyte Strength;
         public readonly PieceLogic Piece;
         public readonly EffectName EffectName;
+        public readonly EffectCategory Category;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
         private readonly ObserverPriority priority;
@@ -75,6 +78,7 @@ namespace Game.Effects
             var info = AssetManager.Ins.EffectData[name];
             ObserverActivateWhen = info.activeWhen;
             priority = info.priority;
+            Category = info.category;
         }
 
         public virtual void OnApply()

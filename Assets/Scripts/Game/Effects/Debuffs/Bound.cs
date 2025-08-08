@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Piece.PieceLogic;
+﻿using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Debuffs
 {

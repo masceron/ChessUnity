@@ -12,8 +12,8 @@ namespace Game.Data.Pieces
         [SerializeField] public GameObject prefab;
 
         [SerializeField] public PieceRank rank;
-        [SerializeField] public sbyte moveRange;
-        [SerializeField] public sbyte attackRange;
+        [SerializeField] public byte moveRange;
+        [SerializeField] public byte attackRange;
 
         [SerializeField] public Texture2D movePattern;
         [SerializeField] public Texture2D capturePattern;

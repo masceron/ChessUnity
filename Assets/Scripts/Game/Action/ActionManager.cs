@@ -45,7 +45,11 @@ namespace Game.Action
                     if (action is not IInternal)
                     {
                         BoardUtils.SetMainAction(action);
-                        BoardUtils.Notify();
+                        BoardUtils.NotifyMainAction();
+                    }
+                    else
+                    {
+                        BoardUtils.NotifyInternalAction(action);
                     }
                     action.Execute();
                 }
@@ -58,6 +62,7 @@ namespace Game.Action
                 _state.EffectCountdown();
                 while (_actionQueue.TryDequeue(out var action))
                 {
+                    BoardUtils.NotifyInternalAction(action);
                     action.Execute();
                 }
                 
@@ -67,6 +72,7 @@ namespace Game.Action
                 //Execute actions caused by end turn triggers.
                 while (_actionQueue.TryDequeue(out var action))
                 {
+                    BoardUtils.NotifyInternalAction(action);
                     action.Execute();
                 }
 

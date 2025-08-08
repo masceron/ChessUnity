@@ -39,10 +39,8 @@ namespace Game.Piece.PieceLogic.Summon
             list.Add(new AnomalocarisActive(Pos, index));
         }
 
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
-            Quiets(list, Pos);
-            Captures(list, Pos);
             Skills(list);
         }
 

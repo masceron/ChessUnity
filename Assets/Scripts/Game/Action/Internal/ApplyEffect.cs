@@ -9,49 +9,46 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ApplyEffect: Action, IInternal
     {
-        private readonly Effect effect;
+        public readonly Effect Effect;
         public ApplyEffect(Effect e) : base(-1)
         {
-            effect = e;
+            Effect = e;
         }
 
         protected override void Animate()
         {
-            if (effect.ObserverActivateWhen != ObserverActivateWhen.None)
+            if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {
-                BoardUtils.AddObserver(effect);
+                BoardUtils.AddObserver(Effect);
             }
         }
 
         protected override void ModifyGameState()
         {
-            var already = effect.Piece.Effects.FirstOrDefault(e => e.EffectName == effect.EffectName);
+            var already = Effect.Piece.Effects.FirstOrDefault(e => e.EffectName == Effect.EffectName);
 
             if (already == null)
             {
-                if (effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) effect.Duration++;
+                if (Effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) Effect.Duration++;
                 
-                effect.OnApply();
-                effect.Piece.Effects.Add(effect);
+                Effect.OnApply();
+                Effect.Piece.Effects.Add(Effect);
             }
             else
             {
-                switch (AssetManager.Ins.EffectData[effect.EffectName].stack)
+                switch (AssetManager.Ins.EffectData[Effect.EffectName].stack)
                 {
                     case EffectStack.Stackable:
-                        if (already.Strength < effect.Strength) already.Strength = effect.Strength;
-                        var weakerEffect = already.Strength < effect.Strength ? already : effect;
-                        var strongerEffect = weakerEffect == already ? effect : already;
+                        if (already.Strength < Effect.Strength) already.Strength = Effect.Strength;
+                        var weakerEffect = already.Strength < Effect.Strength ? already : Effect;
+                        var strongerEffect = weakerEffect == already ? Effect : already;
                         var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
                         already.Duration = (sbyte)newDuration;
-                        //Remove and reapply.
-                        ActionManager.EnqueueAction(new RemoveEffect(already));
-                        ActionManager.EnqueueAction(new ApplyEffect(already));
                         break;
                     case EffectStack.NonStackable: default:
                         break;
                     case EffectStack.Additive:
-                        already.Strength += effect.Strength;
+                        already.Strength += Effect.Strength;
                         break;
                 }
             }

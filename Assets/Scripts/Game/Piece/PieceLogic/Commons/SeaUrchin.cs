@@ -20,15 +20,13 @@ namespace Game.Piece.PieceLogic.Commons
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
         }
 
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
-            Captures(list, Pos);
             for (var i = 0; i < list.Count; i++)
             {
-                list[i] = new DestroyConstruct(Pos, list[i].Target);
+                if (list[i] is ICaptures)
+                    list[i] = new DestroyConstruct(Pos, list[i].Target);
             }
-
-            Quiets(list, Pos);
         }
     }
 }

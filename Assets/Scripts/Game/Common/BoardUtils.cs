@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Game.Action.Internal;
 using Game.Data.Pieces;
 using Game.Effects;
 using Game.Managers;
@@ -155,12 +156,17 @@ namespace Game.Common
             return MatchManager.Ins.GameState.BlackCaptured;
         }
 
+        public static void Move(ushort from, ushort to)
+        {
+            MatchManager.Ins.GameState.Move(from, to);
+        }
+
         public static void FlipSideToMove()
         {
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
-        public static void Notify()
+        public static void NotifyMainAction()
         {
             MatchManager.Ins.GameState.Notify();
         }
@@ -168,6 +174,14 @@ namespace Game.Common
         public static void NotifyEnd()
         {
             MatchManager.Ins.GameState.NotifyEnd();
+        }
+
+        public static void NotifyInternalAction(Action.Action action)
+        {
+            if (action is ApplyEffect applyEffect)
+            {
+                MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
+            }
         }
 
         public static void NotifyOnMoveGen(List<Action.Action> actions)

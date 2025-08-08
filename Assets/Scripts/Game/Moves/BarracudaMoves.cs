@@ -8,11 +8,11 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BarracudaMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var (rank, pieceFile) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var moveRange = piece.GetMoveRange();
+            var moveRange = piece.GetMoveRange(ref index);
             var color = piece.Color;
             
             for (var i = 1; i <= moveRange; i++)
@@ -45,7 +45,7 @@ namespace Game.Moves
                 if (!VerifyBounds(tRank) || !VerifyBounds(file)) return;
 
                 var tpos = IndexOf(tRank, file);
-                if (!IsActive(IndexOf(tRank, file))) return;
+                if (!IsActive(tpos)) return;
 
                 var pieceOn = PieceOn(tpos);
                 if (pieceOn != null) return;

@@ -9,12 +9,12 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BishopMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var piece = PieceOn(pos);
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            var maxRange = piece.GetMoveRange();
+            var maxRange = piece.GetMoveRange(ref index);
             
             foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, maxRange))
             {

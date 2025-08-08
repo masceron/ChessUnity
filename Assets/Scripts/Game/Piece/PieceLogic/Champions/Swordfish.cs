@@ -28,13 +28,9 @@ namespace Game.Piece.PieceLogic.Champions
 
         private bool snap;
 
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
             snap = Effects.Any(e => e.EffectName == EffectName.SnappingStrike);
-
-            Quiets(list, Pos);
-            Captures(list, Pos);
-            Skills(list);
 
             if (!snap) return;
             
@@ -45,6 +41,8 @@ namespace Game.Piece.PieceLogic.Champions
                     list[i] = new SnappingStrike(Pos, list[i].Target);
                 }
             }
+            
+            Skills(list);
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

@@ -16,14 +16,15 @@ namespace Game.Piece.PieceLogic.Swarm
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
 
-        protected override void MoveToMake(List<Action.Action> list)
+        protected override void CustomBehaviors(List<Action.Action> list)
         {
-            Quiets(list, Pos);
             for (var i = 0; i < list.Count; i++)
             {
-                list[i] = new FlyingFishMove(Pos, list[i].Target);
+                if (list[i] is IQuiets)
+                {
+                    list[i] = new FlyingFishMove(Pos, list[i].Target);
+                }
             }
-            Captures(list, Pos);
         }
     }
 }

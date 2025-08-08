@@ -9,11 +9,11 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class PufferfishMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var caller = PieceOn(pos);
             var color = caller.Color;
-            var range = caller.GetMoveRange();
+            var range = caller.GetMoveRange(ref index);
             var (startRank, startFile) = RankFileOf(pos);
             
             var push = !color ? -1 : 1;

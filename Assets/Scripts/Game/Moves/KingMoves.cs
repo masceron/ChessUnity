@@ -9,13 +9,13 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KingMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
             
-            var effectiveMoveRange = caller.GetMoveRange();
+            var effectiveMoveRange = caller.GetMoveRange(ref index);
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, effectiveMoveRange))
             {

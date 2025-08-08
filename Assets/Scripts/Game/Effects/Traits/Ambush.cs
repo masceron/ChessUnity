@@ -7,7 +7,7 @@ namespace Game.Effects.Traits
     {
         private byte lastUsed;
         private bool active;
-        private const sbyte RangeOffset = 2;
+        private const byte RangeOffset = 2;
 
         public Ambush(PieceLogic piece) : base(-1, -1, piece, EffectName.Ambush)
         {

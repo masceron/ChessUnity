@@ -8,13 +8,13 @@ namespace Game.Moves
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class FlyingFishMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos)
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var (rank, file) = RankFileOf(pos);
             
             var board = PieceBoard();
             var active = ActiveBoard();
-            var effectiveMoveRange = PieceOn(pos).GetMoveRange();
+            var effectiveMoveRange = PieceOn(pos).GetMoveRange(ref index);
 
             for (var rankTo = rank - effectiveMoveRange; rankTo <= rank + effectiveMoveRange; rankTo += effectiveMoveRange)
             {
