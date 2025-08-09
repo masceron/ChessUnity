@@ -29,7 +29,7 @@ namespace Game.Effects.Debuffs
             {
                 turnSinceLastMove = 0;
                 turnLeftToDie--;
-                if (turnLeftToDie == 0) ActionManager.EnqueueAction(new DestroyPiece(lastMainAction.Maker));
+                if (turnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.Maker));
             }
 
         }

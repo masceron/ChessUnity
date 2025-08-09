@@ -1,6 +1,7 @@
 ﻿using Game.Action.Skills;
 using Game.Managers;
 using UnityEngine;
+using UX.UI.Ingame;
 using UX.UI.Ingame.ThalassosResurrector;
 
 namespace Game.Action.Internal.Pending
@@ -19,7 +20,7 @@ namespace Game.Action.Internal.Pending
             var selector = Object.FindAnyObjectByType<ThalassosResurrector>(FindObjectsInactive.Include);
             if (!selector)
             {
-                var canvas = GameObject.Find("IngameUI");
+                var canvas = Object.FindAnyObjectByType<BoardViewer>(FindObjectsInactive.Exclude);
                 selector = Object.Instantiate(MatchManager.Ins.InputProcessor.thalassosResurrector, canvas.transform).GetComponent<ThalassosResurrector>();
             }
             else selector.gameObject.SetActive(true);

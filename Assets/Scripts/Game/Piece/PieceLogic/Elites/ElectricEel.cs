@@ -4,7 +4,7 @@ using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Data.Pieces;
 using Game.Effects.Traits;
-using Game.Moves;
+using Game.Movesets;
 
 namespace Game.Piece.PieceLogic.Elites
 {

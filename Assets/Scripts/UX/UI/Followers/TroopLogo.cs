@@ -1,5 +1,5 @@
-﻿using Game.Data.Pieces;
-using UI.UIObject3D.Scripts;
+﻿using Data.UI.UIObject3D.Scripts;
+using Game.Data.Pieces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

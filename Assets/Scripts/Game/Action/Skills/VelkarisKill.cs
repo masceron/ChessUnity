@@ -1,4 +1,5 @@
-﻿using Game.Managers;
+﻿using Game.Action.Internal;
+using Game.Managers;
 using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
@@ -20,8 +21,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var gameState = MatchManager.Ins.GameState;
-            gameState.Destroy(Target);
+            ActionManager.EnqueueAction(new KillPiece(Target));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

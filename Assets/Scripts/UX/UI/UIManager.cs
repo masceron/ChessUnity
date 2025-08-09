@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Common;
-using Game.Managers;
 using UnityEngine;
-using UX.UI.Ingame;
-using UX.UI.Menus;
 
 namespace UX.UI
 {
     public enum CanvasID
     {
-        MainMenu, PlayMenu, Settings, Ingame, Loading, Followers, CreateArmy, DesignArmy
+        MainMenu, PlayMenu, Settings, Ingame, Loading, Followers, CreateArmy, DesignArmy, QuitToMainMenu
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIManager : Singleton<UIManager>
@@ -34,6 +31,7 @@ namespace UX.UI
             if (!loadedCanvases.TryGetValue(id, out var canvasToLoad))
             {
                 canvasToLoad = Instantiate(canvasDict[id].gameObject, transform);
+                canvasToLoad.name = canvasDict[id].name;
                 loadedCanvases.Add(id, canvasToLoad);
             }
             else
@@ -43,20 +41,6 @@ namespace UX.UI
 
             currentCanvas = canvasToLoad.GetComponent<RectTransform>();
             currentCanvas.name = canvasToLoad.name;
-
-            switch (id)
-            {
-                case CanvasID.Ingame:
-                    MatchManager.Ins.InputProcessor = currentCanvas.gameObject.GetComponent<BoardViewer>();
-                    break;
-                case CanvasID.PlayMenu:
-                    FindAnyObjectByType<PlayPanel>().OnOpen();
-                    break;
-                case CanvasID.MainMenu:
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

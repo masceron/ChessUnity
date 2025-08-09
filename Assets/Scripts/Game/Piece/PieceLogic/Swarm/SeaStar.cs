@@ -3,7 +3,7 @@ using System.Linq;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Data.Pieces;
-using Game.Moves;
+using Game.Movesets;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Swarm

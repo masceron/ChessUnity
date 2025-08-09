@@ -189,8 +189,6 @@ namespace UX.UI.Followers
         {
             if (selecting) return;
             
-            if (displaying == type) return;
-
             displaying = type;
             troopInfo.Display(data[type]);
         }

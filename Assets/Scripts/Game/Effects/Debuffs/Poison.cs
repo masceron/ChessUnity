@@ -20,7 +20,7 @@ namespace Game.Effects.Debuffs
             if (Strength >= 5) timeLeft--;
             if (timeLeft <= 0)
             {
-                ActionManager.EnqueueAction(new DestroyPiece(Piece.Pos));
+                ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
         }
 

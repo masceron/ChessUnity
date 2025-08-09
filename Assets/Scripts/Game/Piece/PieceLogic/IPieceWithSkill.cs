@@ -1,4 +1,4 @@
-﻿using Game.Moves;
+﻿using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {

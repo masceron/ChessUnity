@@ -130,11 +130,21 @@ namespace Game.Managers
         {
             var pieceAffected = PieceBoard[pos];
             PieceBoard[pos] = null;
-            
+
+            pieceAffected.Effects.ForEach(RemoveObserver);
+            pieceAffected.Die();
+        }
+
+        public void Kill(int pos)
+        {
+            var pieceAffected = PieceBoard[pos];
+            PieceBoard[pos] = null;
+
             pieceAffected.Effects.ForEach(RemoveObserver);
             pieceAffected.Die();
             
-            (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type, pieceAffected.Color, pieceAffected.Pos));
+            (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
+                pieceAffected.Color, pieceAffected.Pos));
         }
 
         public void Move(ushort f, ushort t)

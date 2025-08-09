@@ -8,9 +8,9 @@ namespace UX.UI.Menus
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PlayPanel : MonoBehaviour
     {
-        public void OnOpen()
+        [SerializeField] private RectTransform contents;
+        private void OnEnable()
         {
-            var contents = transform.GetChild(0).GetChild(0).GetChild(0);
             for (var i = 0; i < contents.childCount; i++)
             {
                 var content = contents.GetChild(i);

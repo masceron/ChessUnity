@@ -8,7 +8,7 @@ using Game.Data.Pieces;
 using Game.Effects;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
-using Game.Moves;
+using Game.Movesets;
 using SnappingStrike = Game.Action.Captures.SnappingStrike;
 
 namespace Game.Piece.PieceLogic.Champions

@@ -13,9 +13,9 @@ namespace Game.Effects.Traits
 
         public override void OnCall(Action.Action action)
         {
-            if (action.GetType() == typeof(DestroyConstruct) && action.Maker == Piece.Pos)
+            if (action.GetType() == typeof(DestroyConstruct) && action.Maker == Piece.Pos && action.Result != ActionResult.Failed)
             {
-                ActionManager.EnqueueAction(new DestroyPiece(Piece.Pos));
+                ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
         }
     }

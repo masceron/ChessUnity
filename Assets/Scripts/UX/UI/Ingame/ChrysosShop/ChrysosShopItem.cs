@@ -1,7 +1,7 @@
-﻿using Game.Managers;
+﻿using Data.UI.UIObject3D.Scripts;
+using Game.Managers;
 using Game.Piece;
 using TMPro;
-using UI.UIObject3D.Scripts;
 using UnityEngine;
 
 namespace UX.UI.Ingame.ChrysosShop

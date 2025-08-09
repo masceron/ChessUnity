@@ -19,7 +19,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new DestroyPiece(Maker));
+            ActionManager.EnqueueAction(new KillPiece(Maker));
             var (rank, file) = RankFileOf(Maker);
             var caller = PieceOn(Maker);
 

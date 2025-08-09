@@ -24,7 +24,7 @@ namespace Game.Effects.Others
             }
             else
             {
-                ActionManager.EnqueueAction(new DestroyPiece(Piece.Pos));
+                ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
         }
     }

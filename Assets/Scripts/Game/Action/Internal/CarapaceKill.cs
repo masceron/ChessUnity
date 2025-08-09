@@ -18,7 +18,7 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Destroy(Target);
+            MatchManager.Ins.GameState.Kill(Target);
         }
     }
 }

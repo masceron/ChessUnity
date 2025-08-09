@@ -19,7 +19,7 @@ namespace Game.Action.Captures
         protected override void ModifyGameState()
         {
             PieceManager.Ins.Destroy(Target);
-            MatchManager.Ins.GameState.Destroy(Target);
+            MatchManager.Ins.GameState.Kill(Target);
         }
     }
 }

@@ -6,7 +6,7 @@ using Game.Data.Pieces;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;
-using Game.Moves;
+using Game.Movesets;
 
 namespace Game.Piece.PieceLogic.Commons
 {

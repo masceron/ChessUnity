@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using Data.UI.UIObject3D.Scripts;
 using DG.Tweening;
 using Game.Action;
 using Game.Action.Captures;
@@ -11,9 +12,7 @@ using Game.Action.Skills;
 using Game.Data.Pieces;
 using Game.Managers;
 using Game.Piece.PieceLogic;
-using Simple_Tooltip.Assets.Scripts;
 using TMPro;
-using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -34,7 +33,6 @@ namespace UX.UI.Ingame
         [SerializeField] private Toggle capture;
         [SerializeField] private Toggle skill;
         [SerializeField] private TMP_Text skillCoolDown;
-        [SerializeField] private SimpleTooltip skillInfo;
         
         [Header("Game Actions")]
         [SerializeField] private Button special;
@@ -128,6 +126,11 @@ namespace UX.UI.Ingame
             }
         }
 
+        private void OnEnable()
+        {
+            MatchManager.Ins.InputProcessor = this;
+        }
+
         private void PanTo(int pos1, int pos2)
         {
             var direction = mainCameraCenter.position;
@@ -155,7 +158,6 @@ namespace UX.UI.Ingame
             Disable(capture);
             Disable(skill);
             skillCoolDown.text = "";
-            skillInfo.enabled = false;
             
             SelectingFunction = 0;
         }
@@ -166,16 +168,14 @@ namespace UX.UI.Ingame
             skill.interactable = PieceOn(Selecting).SkillCooldown == 0;
             if (skill.interactable)
             {
-                skillInfo.enabled = true;
                 LoadSkillInfo();
             }
-            else skillInfo.enabled = false;
         }
 
         private void LoadSkillInfo()
         {
             var info = AssetManager.Ins.PieceData[PieceOn(Selecting).Type];
-            skillInfo.infoLeft = "$" + info.skillName + "`\n" + info.skillDescription;
+            
         }
 
         private void LoadPieceActionInfo()
@@ -369,6 +369,12 @@ namespace UX.UI.Ingame
             
             seeingCapture = !seeingCapture;
             LoadPieceDemonstrations(AssetManager.Ins.PieceData[hovering.Type]);
+        }
+
+        public void QuitMenu(InputAction.CallbackContext context)
+        {
+            if (!context.performed) return;
+            UIManager.Ins.Load(CanvasID.QuitToMainMenu);
         }
 
         private static int Selecting = -1;

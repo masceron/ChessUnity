@@ -2,7 +2,7 @@
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Data.Pieces;
-using Game.Moves;
+using Game.Movesets;
 
 namespace Game.Piece.PieceLogic.Commons
 {
