@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Data.Pieces;
 
-namespace Game.Configs
+namespace Game.Save
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public struct LineupConfig

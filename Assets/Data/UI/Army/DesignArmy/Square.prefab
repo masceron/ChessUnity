@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -6900289534742801969}
   - component: {fileID: -1336659139203099753}
   m_Layer: 0
-  m_Name: WhiteSquare
+  m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -91,6 +91,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rect: {fileID: 3844496757671288513}
   grid: {fileID: -1336659139203099753}
+  image: {fileID: 4191601956048116056}
 --- !u!114 &-1336659139203099753
 MonoBehaviour:
   m_ObjectHideFlags: 0

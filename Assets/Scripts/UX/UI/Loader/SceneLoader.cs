@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using Game.Configs;
 using Game.Managers;
+using Game.Save;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.SceneManagement.SceneManager;

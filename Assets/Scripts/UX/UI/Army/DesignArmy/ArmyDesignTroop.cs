@@ -1,6 +1,7 @@
 ﻿using System;
 using Data.UI.UIObject3D.Scripts;
 using Game.Data.Pieces;
+using Game.Piece;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,11 +15,15 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private Image image;
         [NonSerialized] public Transform Parent;
         private Transform oldParent;
-        private bool set;
+        public bool set;
+        public int rank = -1;
+        public int file = -1;
+        public PieceType type;
 
         public void Load(PieceObject piece)
         {
             model.ObjectPrefab = piece.prefab.transform;
+            type = piece.type;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -27,6 +32,7 @@ namespace UX.UI.Army.DesignArmy
             transform.SetParent(FindAnyObjectByType<ArmyDesign>().transform);
             image.raycastTarget = false;
             Parent = null;
+            FindAnyObjectByType<ArmyDesignBoard>().SetAllowed();
 
             if (set) return;
             
@@ -42,6 +48,12 @@ namespace UX.UI.Army.DesignArmy
         public void OnDrag(PointerEventData eventData)
         {
             transform.position = eventData.position;
+        }
+
+        public void Set(int r, int f)
+        {
+            rank = r;
+            file = f;
         }
         
         public void OnEndDrag(PointerEventData eventData)
@@ -73,7 +85,10 @@ namespace UX.UI.Army.DesignArmy
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Right) return;
-            if (set) Destroy(gameObject);
+            if (!set) return;
+            
+            Destroy(gameObject);
+            FindAnyObjectByType<ArmyDesignBoard>().Remove(rank, file);
         }
     }
 }

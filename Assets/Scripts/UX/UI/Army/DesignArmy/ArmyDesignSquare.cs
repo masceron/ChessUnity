@@ -9,25 +9,59 @@ namespace UX.UI.Army.DesignArmy
     {
         [SerializeField] private RectTransform rect;
         [SerializeField] private GridLayoutGroup grid;
+        [SerializeField] private Image image;
         private int rank;
         private int file;
+        private bool color;
+
+        private static readonly Color White = new(0.9411765f, 0.8509804f, 0.7098039f, 1);
+        private static readonly Color Black = new(0.7098039f, 0.5333334f, 0.3882353f, 1);
         
-        public void SetSquare(int r, int f, float size)
+        public void SetSquare(int r, int f, float size, bool c)
         {
             rank = r;
             file = f;
             grid.cellSize = new Vector2(size, size);
+            image.color = c ? Black : White;
+            color = c;
+        }
+
+        public void MarkAsNotAllowed()
+        {
+            var imageColor = image.color;
+            imageColor.a = 0.5f;
+            image.color = imageColor;
+        }
+
+        public void UnMark()
+        {
+            var imageColor = image.color;
+            imageColor.a = 1;
+            image.color = imageColor;
         }
         
         public void OnDrop(PointerEventData eventData)
         {
-            var type = eventData.pointerDrag.GetComponent<ArmyDesignTroop>();
-            if (!type) return;
+            var piece = eventData.pointerDrag.GetComponent<ArmyDesignTroop>();
+            if (!piece) return;
+            var board = FindAnyObjectByType<ArmyDesignBoard>();
             
-            if (FindAnyObjectByType<ArmyDesign>().IsAllowed(rank, file))
+            if (board.IsAllowed(rank, file))
             {
-                type.Parent = transform;
+                piece.Parent = transform;
+                if (piece.set)
+                {
+                    board.Move(piece.rank, piece.file, rank, file);
+                    piece.Set(rank, file);
+                }
+                else
+                {
+                    piece.Set(rank, file);
+                    board.Add(rank, file, piece.type);
+                }
             }
+            
+            board.UnSet();
         }
     }
 }
