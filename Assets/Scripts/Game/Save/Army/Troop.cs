@@ -5,11 +5,11 @@ using MemoryPack;
 namespace Game.Save.Army
 {
     [MemoryPackable]
-    public partial struct Troop: IComparable<Troop>
+    public readonly partial struct Troop: IComparable<Troop>
     {
-        public PieceType Type;
-        public ushort Rank;
-        public ushort File;
+        public readonly PieceType Type;
+        public readonly ushort Rank;
+        public readonly ushort File;
 
         public Troop(PieceType pieceType, int rank, int file)
         {

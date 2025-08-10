@@ -1,4 +1,5 @@
 ﻿using Game.Common;
+using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,32 +21,38 @@ namespace UX.UI.Army.DesignArmy
             quitter.gameObject.SetActive(!quitter.gameObject.activeSelf);
         }
 
-        public void Load(int s)
+        public void Load(int s, Game.Save.Army.Army? armyToLoad)
         {
             size = s;
-            army.BoardSize = (ushort) s;
             info.Load(size);
             board.Load(size);
+
+            if (armyToLoad != null)
+            {
+                LoadSave(armyToLoad.Value);
+            }
         }
 
-        private void LoadSave(Game.Save.Army.Army saved)
+        private void LoadSave(Game.Save.Army.Army armyToLoad)
         {
-            army = saved;
+            army = armyToLoad;
+            board.LoadSave(army.Troops);
+            info.LoadSave(army.Name);
         }
 
         public void Save()
         {
+            army.Name = info.armyName.text;
+            army.BoardSize = (ushort) size;
             SetTroops();
+            ArmySaveLoader.Save(army);
+            UIManager.Ins.Load(CanvasID.Followers);
         }
 
         private void SetTroops()
         {
             board.troops.Sort();
             army.Troops = board.troops.ToArray();
-            foreach (var troop in army.Troops)
-            {
-                Debug.Log($"{troop.Type} {troop.Rank} {troop.File}");
-            }
         }
     }
 }

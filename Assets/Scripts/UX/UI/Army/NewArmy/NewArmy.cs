@@ -9,7 +9,7 @@ namespace UX.UI.Army.NewArmy
         public void Create(int size)
         {
             UIManager.Ins.Load(CanvasID.DesignArmy);
-            ArmyDesign.Ins.Load(size);
+            ArmyDesign.Ins.Load(size, null);
         }
 
         public void Back(InputAction.CallbackContext context)

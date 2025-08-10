@@ -15,10 +15,10 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private PiecesData piecesData;
         [SerializeField] private TMP_InputField searchBar;
         [SerializeField] public Transform list;
-        [SerializeField] private GameObject troopDisplay;
+        [SerializeField] public GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
 
-        private Dictionary<PieceType, PieceObject> data;
+        public Dictionary<PieceType, PieceObject> data;
         private List<PieceObject> lastSearchResult;
         private string lastKeyword;
         public readonly List<ArmyDesignTroop> Pool = new();

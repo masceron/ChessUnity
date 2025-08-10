@@ -8,7 +8,7 @@ namespace UX.UI.Followers
     public class Followers: Game.Common.Singleton<Followers>
     {
         
-        [SerializeField] private Armies armies;
+        [SerializeField] private SavedArmies savedArmies;
         [SerializeField] private TroopList troopList;
         [SerializeField] private RelicList relicList;
         [SerializeField] private Toggle pieceButton;
@@ -18,6 +18,11 @@ namespace UX.UI.Followers
         {
             troopList.Close();
             relicList.Close();
+        }
+
+        private void OnEnable()
+        {
+            savedArmies.Load();
         }
 
         private void Awake()

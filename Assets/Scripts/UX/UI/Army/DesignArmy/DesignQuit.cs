@@ -24,7 +24,7 @@ namespace UX.UI.Army.DesignArmy
         public void Quit()
         {
             gameObject.SetActive(false);
-            UIManager.Ins.Load(CanvasID.CreateArmy);
+            UIManager.Ins.Load(CanvasID.Followers);
         }
     }
 }

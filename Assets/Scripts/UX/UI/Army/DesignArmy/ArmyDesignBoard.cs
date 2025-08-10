@@ -113,6 +113,20 @@ namespace UX.UI.Army.DesignArmy
             }
         }
 
+        public void LoadSave(Troop[] _troops)
+        {
+            var searcher = FindAnyObjectByType<ArmySearcher>();
+            foreach (var troop in _troops)
+            {
+                troops.Add(troop);
+                var piece = Instantiate(searcher.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
+                
+                piece.Load(searcher.data[troop.Type]);
+                piece.Set(troop.Rank, troop.File);
+                piece.set = true;
+            }
+        }
+
         public void Add(int rank, int file, PieceType type)
         {
             troops.Add(new Troop(type, rank, file));

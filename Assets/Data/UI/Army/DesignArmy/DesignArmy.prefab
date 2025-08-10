@@ -5368,6 +5368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardSize: {fileID: 442170166194918591}
+  armyName: {fileID: 4788608635761603234}
 --- !u!1 &6890378425090689476
 GameObject:
   m_ObjectHideFlags: 0

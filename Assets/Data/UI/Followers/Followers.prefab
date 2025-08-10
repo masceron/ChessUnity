@@ -501,6 +501,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eba825320395495a896c271063cfc5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  list: {fileID: 1395817060098674104}
+  saved: {fileID: 1982544008149015845, guid: babba4b5afc3fe6489c4e38f3db86bd0, type: 3}
 --- !u!1 &878104693482548210
 GameObject:
   m_ObjectHideFlags: 0
@@ -5208,7 +5210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ff7a495c0d4034bca3f0f51cc712e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  armies: {fileID: 5634579515978605648}
+  savedArmies: {fileID: 5634579515978605648}
   troopList: {fileID: 8125032766626006041}
   relicList: {fileID: 3510365675999335271}
   pieceButton: {fileID: 3010119024750234154}
