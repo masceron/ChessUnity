@@ -20,6 +20,6 @@ MonoBehaviour:
   attackRange: 5
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: Bound
-  skillDescription: $Bound` an enemy at a distance of 5 squares for 1 turn.
+  key: piece_anomalocaris
+  hasSkill: 1
   normalSkillCooldown: 1

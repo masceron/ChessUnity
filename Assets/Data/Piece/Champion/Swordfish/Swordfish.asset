@@ -20,6 +20,6 @@ MonoBehaviour:
   attackRange: 3
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: Snapping Strike
-  skillDescription: Gain $Snapping Strike` on the next turn.
+  key: piece_swordfish
+  hasSkill: 1
   normalSkillCooldown: 3

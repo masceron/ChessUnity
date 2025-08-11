@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Marked (Remora)
   description: This piece will die in the next turn unless the caster is killed or
     leaving its range.
+  key: effect_remora_marked

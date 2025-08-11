@@ -20,6 +20,6 @@ MonoBehaviour:
   attackRange: 2
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: Vanquish
-  skillDescription: Kill the marked piece immediately.
+  key: piece_velkaris
+  hasSkill: 1
   normalSkillCooldown: 0

@@ -15,6 +15,27 @@ MonoBehaviour:
   m_GroupName: Localization-Assets-Shared
   m_GUID: 26c66e1d49bacbe46af51436ea3645e2
   m_SerializeEntries:
+  - m_GUID: 2711b0bbcf85d87438d84e666982b468
+    m_Address: Assets/Data/Collections/Texts/Assets/piece_skill Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c6c3ecd473618646acdf55cffc2ca99
+    m_Address: Assets/Data/Collections/Texts/effect Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 40b82d547ea6737438be00e50f1a32ff
+    m_Address: Assets/Data/Collections/Texts/effect_name Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b0ce1d75cf9d214eb22f350454410af
+    m_Address: Assets/Data/Collections/Texts/Assets/piece_skill_description Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77911d5ba1910f948ae8671b68076d14
     m_Address: Assets/Data/Collections/Texts/GameTexts Shared Data.asset
     m_ReadOnly: 1
@@ -22,6 +43,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: b57f84e6c77ff404c96b911dd59f9111
     m_Address: Assets/Data/Collections/Texts/common Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c889e11e8d1856c43984b8cc52c380be
+    m_Address: Assets/Data/Collections/Texts/game Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: eede08d557d40834a8ee0b238f68460d
+    m_Address: Assets/Data/Collections/Texts/piece Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

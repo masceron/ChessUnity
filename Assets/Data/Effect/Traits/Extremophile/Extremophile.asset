@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: b9e0085634ed65c4e8258bdd899a1967, type: 3}
   effectName: Extremophile
   description: This piece cannot be affected by any Buff or Debuff.
+  key: effect_extremophile

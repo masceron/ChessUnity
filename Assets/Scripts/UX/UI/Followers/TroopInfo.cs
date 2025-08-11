@@ -22,7 +22,6 @@ namespace UX.UI.Followers
             displaying = obj;
             
             image.ObjectPrefab = obj.prefab.transform;
-            description.text = obj.skillDescription;
             demonstration.texture = obj.movePattern;
         }
 

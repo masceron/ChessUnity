@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Ambush
   description: If no action has been taken by this piece in 3 turns, its range of
     attack will increase by 1.
+  key: effect_ambush

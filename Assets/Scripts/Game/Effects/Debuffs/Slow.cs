@@ -1,5 +1,4 @@
-﻿using Game.Managers;
-using Game.Piece.PieceLogic;
+﻿using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Debuffs
 {
@@ -8,10 +7,5 @@ namespace Game.Effects.Debuffs
     {
         public Slow(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, EffectName.Slow)
         {}
-
-        public override string Description()
-        {
-            return string.Format(AssetManager.Ins.EffectData[EffectName].description, Strength);
-        }
     }
 }

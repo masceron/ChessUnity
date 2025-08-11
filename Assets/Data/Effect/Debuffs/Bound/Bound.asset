@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Bound
   description: This piece is currently bounded and cannot make any move, but still
     able to capture and use skill.
+  key: effect_bound

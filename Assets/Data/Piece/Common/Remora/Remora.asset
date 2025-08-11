@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Remora
   m_EditorClassIdentifier: 
-  pieceName: 
-  type: 0
+  pieceName: remora
+  type: 18
   prefab: {fileID: 919132149155446097, guid: 231ea54fe36cc93439c303b24f20a48a, type: 3}
-  rank: 0
+  rank: 4
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: 
-  skillDescription: 
-  normalSkillCooldown: 0
+  key: piece_remora
+  hasSkill: 0
+  normalSkillCooldown: -1

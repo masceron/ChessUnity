@@ -1,0 +1,191 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: effect_description_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2c6c3ecd473618646acdf55cffc2ca99, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 1405300356192928012
+  m_TableData:
+  - m_Id: 7428760408064
+    m_Localized: Any attack without Piercing on this piece will kill the attacker.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7567054999552
+    m_Localized: If an attack is initiated at a distance of 3 squares or more, this
+      piece has a {Probability}% chance to evade.
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 7670192934912
+    m_Localized: This piece can jump over other pieces when moving.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7868218609664
+    m_Localized: The range of movement of this piece is reduced by {Strength}. Movement
+      range cannot be below 1. Attack range is not impacted.
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 7953300066304
+    m_Localized: When attacking, this piece has {Probability}% chance to miss.
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 8149983563776
+    m_Localized: If no action has been taken by this piece in 3 turns, its range
+      of attack will increase by 1.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8225732694016
+    m_Localized: This piece is marked by a Velkaris's Tidal Protector.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8318485532672
+    m_Localized: This piece continuously applies Slow I on any enemy pieces in a
+      4-square radius.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8422693015552
+    m_Localized: The first enemy to move into one of two ranks in front of this piece
+      will be marked and can be killed by Vanquish.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8500119867392
+    m_Localized: This piece cannot attack normal pieces, save for Constructs. After
+      destroying a Construct, this piece will also die.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9143773564928
+    m_Localized: When captured, stun the capturer for 2 turns.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9236144721920
+    m_Localized: This piece is stunned and cannot do any action for {Duration} turn(s).
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 9307816988672
+    m_Localized: Nullifies an upcoming attack.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9369636835328
+    m_Localized: Nullifies an upcoming attack and stuns the attacker for 1 turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9513396604928
+    m_Localized: This piece's attacks ignore all Shields, Hardened Shields and Carapaces.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9587715477504
+    m_Localized: 'Gain 1 coin if an enemy is captured by an allied piece with lower
+      rank.
+
+      Current balance: {Piece.Coin}'
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 10143875993600
+    m_Localized: This piece captures without moving.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10262931312640
+    m_Localized: Any capture occurs within a 2-squares radius will be redirected
+      to this piece.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10425703862272
+    m_Localized: Any unit that enter a 1-square radius around this piece will have
+      a 50% chance to gain a Shield, effective until that unit left the range.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10576438759424
+    m_Localized: This piece can only capture enemies with lower rank.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10669455839232
+    m_Localized: 'If Poison is at 5 stack or more, this piece will die in 3 turns.
+
+      Time
+      left: {TimeLeft}.'
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 10908686356480
+    m_Localized: Inflicts Bleeding to any piece behind Swordfish's capture target.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10981658857472
+    m_Localized: This piece will die after making {TurnLeftToDie} more moves. This
+      effect will dissappear if this piece stays still after {6 - TurnSinceLastMove}
+      more turns.
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 11354700255232
+    m_Localized: This piece is currently bounded and cannot make any move, but still
+      able to capture and use skill.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11403417096192
+    m_Localized: When captured, afflicts 3 stacks of Poison to the capturer.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551954178048
+    m_Localized: This piece gain Camouflage when sitting at an edge of the board.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11690622062592
+    m_Localized: Cannot be targeted from 3 squares or further.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11753490485248
+    m_Localized: Automatically walks up 1 square and be stunned every turn.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11860487180288
+    m_Localized: Gain the movement of any captured piece without Surpass.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12019119951872
+    m_Localized: This piece cannot be affected by any Buff or Debuff.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12098706870272
+    m_Localized: Increase move range by {Strength}.
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192928012
+  - m_Id: 12293309992960
+    m_Localized: This piece will die in the next turn unless the caster is killed
+      or leaving its range.
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 1405300356192928012
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 7953300066304
+        - id: 7868218609664
+        - id: 9236144721920
+        - id: 7567054999552
+        - id: 9587715477504
+        - id: 10669455839232
+        - id: 10981658857472
+        - id: 12098706870272

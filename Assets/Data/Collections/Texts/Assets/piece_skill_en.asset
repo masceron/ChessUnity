@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: piece_skill_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 2711b0bbcf85d87438d84e666982b468, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 4246135115776
+    m_Localized: Vanquish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058816
+    m_Localized: Enchanting Tune
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058819
+    m_Localized: Zap
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058821
+    m_Localized: Golden Morph
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058822
+    m_Localized: Bound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058823
+    m_Localized: Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058824
+    m_Localized: Relentless Will
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058825
+    m_Localized: Explode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058826
+    m_Localized: Snapping Strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058827
+    m_Localized: Poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058829
+    m_Localized: Stingray's Dash
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058831
+    m_Localized: Resurrect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4246177058832
+    m_Localized: Taunt
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

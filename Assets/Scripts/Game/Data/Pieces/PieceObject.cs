@@ -14,12 +14,12 @@ namespace Game.Data.Pieces
         [SerializeField] public PieceRank rank;
         [SerializeField] public byte moveRange;
         [SerializeField] public byte attackRange;
-
+        
         [SerializeField] public Texture2D movePattern;
         [SerializeField] public Texture2D capturePattern;
-
-        [SerializeField] public string skillName;
-        [SerializeField, TextArea] public string skillDescription;
+        
+        [SerializeField] public string key;
+        [SerializeField] public bool hasSkill;
         [SerializeField] public sbyte normalSkillCooldown;
     }
 }

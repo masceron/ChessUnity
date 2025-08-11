@@ -15,14 +15,52 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Chinese (Simplified) (zh-Hans)
   m_GUID: 7d5002aa3476e4f46924d65fa1f84d59
   m_SerializeEntries:
+  - m_GUID: 2490d16243940284ba73c2ab4566fa81
+    m_Address: piece_skill_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2c3342f1a90c8774db03f54878c45ea0
+    m_Address: piece_name_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57e4f366159114f4984e43407b1605c4
+    m_Address: piece_skill_description_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60fbea4d375560b4d9f4513ca0f61081
     m_Address: common_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bc596b7401d3df6488759104b34c5e27
     m_Address: design_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bd483531ad1a24147acf2cb73a4f6710
+    m_Address: game_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e4ea01dc67da03b4598286268d21518f
+    m_Address: effect_name_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f6cf7b5131c873e4b925451efefbff96
+    m_Address: effect_description_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans

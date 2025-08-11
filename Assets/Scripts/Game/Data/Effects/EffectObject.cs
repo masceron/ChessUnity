@@ -15,7 +15,6 @@ namespace Game.Data.Effects
         [SerializeField] public ObserverActivateWhen activeWhen;
         [SerializeField] public Texture2D icon;
 
-        [SerializeField] public string effectName;
-        [TextArea] public string description;
+        [SerializeField] public string key;
     }
 }

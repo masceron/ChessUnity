@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Tidal Protector
   description: The first enemy to move into one of two ranks in front of this piece
     will be marked and can be killed by Vanquish.
+  key: effect_velkaris_marker

@@ -44,20 +44,20 @@ namespace UX.UI.Army.DesignArmy
             {
                 case DesignNotifications.Quit:
                     no.transform.parent.gameObject.SetActive(true);
-                    Localize.SetText(text, "design", "design_quit");
-                    Localize.SetText(no, "common", "cancel");
-                    Localize.SetText(yes, "common", "quit");
+                    Localizer.SetText(text, "design", "design_quit");
+                    Localizer.SetText(no, "common", "cancel");
+                    Localizer.SetText(yes, "common", "quit");
                     break;
                 case DesignNotifications.EmptyName:
                     no.transform.parent.gameObject.SetActive(false);
-                    Localize.SetText(text, "design", "design_noname");
-                    Localize.SetText(yes, "common", "ok");
+                    Localizer.SetText(text, "design", "design_noname");
+                    Localizer.SetText(yes, "common", "ok");
                     break;
                 case DesignNotifications.Overwrite:
                     no.transform.parent.gameObject.SetActive(true);
-                    Localize.SetText(text, "design", "design_overwrite");
-                    Localize.SetText(no, "common", "cancel");
-                    Localize.SetText(yes, "common", "overwrite");
+                    Localizer.SetText(text, "design", "design_overwrite");
+                    Localizer.SetText(no, "common", "cancel");
+                    Localizer.SetText(yes, "common", "overwrite");
                     break;
             }
         }

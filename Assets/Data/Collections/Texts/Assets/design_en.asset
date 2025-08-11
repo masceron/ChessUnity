@@ -37,6 +37,22 @@ MonoBehaviour:
     m_Localized: Choose board size
     m_Metadata:
       m_Items: []
+  - m_Id: 59463195168768
+    m_Localized: Create new army
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59713901301760
+    m_Localized: Armies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59745174032384
+    m_Localized: Army
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59784504020992
+    m_Localized: Saved Armies
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

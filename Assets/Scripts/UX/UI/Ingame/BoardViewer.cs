@@ -16,6 +16,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UX.UI.Ingame.Tooltip;
 using Color = UnityEngine.Color;
 using static Game.Common.BoardUtils;
 
@@ -32,6 +33,7 @@ namespace UX.UI.Ingame
         [SerializeField] private Toggle move;
         [SerializeField] private Toggle capture;
         [SerializeField] private Toggle skill;
+        [SerializeField] private TooltipTrigger skillTooltip;
         [SerializeField] private TMP_Text skillCoolDown;
         
         [Header("Game Actions")]
@@ -166,21 +168,26 @@ namespace UX.UI.Ingame
         {
             pieceAction.interactable = true;
             skill.interactable = PieceOn(Selecting).SkillCooldown == 0;
-            if (skill.interactable)
-            {
-                LoadSkillInfo();
-            }
         }
 
         private void LoadSkillInfo()
         {
             var info = AssetManager.Ins.PieceData[PieceOn(Selecting).Type];
-            
+            if (info.hasSkill)
+            {
+                skillTooltip.enabled = true;
+                skillTooltip.SetText(
+                    Localizer.GetText("piece_skill", info.key + "_skill", null),
+                    "",
+                    Localizer.GetText("piece_skill_description", info.key + "_skill_description", null));
+            }
+            else skillTooltip.enabled = false;
         }
 
         private void LoadPieceActionInfo()
         {
             var cooldown = PieceOn(Selecting).SkillCooldown;
+            LoadSkillInfo();
             if (cooldown != 0)
             {
                 skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";

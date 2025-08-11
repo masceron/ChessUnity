@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: aae733c655635c64c951bcf342d85faa, type: 3}
   effectName: Surpass
   description: This piece can jump over other pieces when moving.
+  key: effect_surpass

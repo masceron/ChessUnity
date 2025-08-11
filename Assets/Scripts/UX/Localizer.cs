@@ -3,7 +3,7 @@ using UnityEngine.Localization;
 
 namespace UX
 {
-    public static class Localize
+    public static class Localizer
     {
         private static readonly LocalizedString Localized = new();
         
@@ -11,6 +11,12 @@ namespace UX
         {
             Localized.SetReference(table, key);
             text.text = Localized.GetLocalizedString();
+        }
+
+        public static string GetText(string table, string key, object[] arguments)
+        {
+            Localized.SetReference(table, key);
+            return Localized.GetLocalizedString(arguments);
         }
     }
 }

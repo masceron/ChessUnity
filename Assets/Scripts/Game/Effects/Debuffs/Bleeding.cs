@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Managers;
 using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Debuffs
@@ -8,8 +7,10 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Bleeding: Effect, IEndTurnEffect
     {
-        private byte turnLeftToDie = 3;
-        private byte turnSinceLastMove;
+        // ReSharper disable once MemberCanBePrivate.Global
+        public byte TurnLeftToDie = 3;
+        // ReSharper disable once MemberCanBePrivate.Global
+        public byte TurnSinceLastMove;
         
         public Bleeding(PieceLogic piece) : base(-1, 1, piece, EffectName.Bleeding)
         {
@@ -21,22 +22,17 @@ namespace Game.Effects.Debuffs
         {
             if (lastMainAction.Maker != Piece.Pos)
             {
-                turnSinceLastMove++;
-                if (turnSinceLastMove < 6) return;
+                TurnSinceLastMove++;
+                if (TurnSinceLastMove < 6) return;
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }
             else
             {
-                turnSinceLastMove = 0;
-                turnLeftToDie--;
-                if (turnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.Maker));
+                TurnSinceLastMove = 0;
+                TurnLeftToDie--;
+                if (TurnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.Maker));
             }
 
-        }
-
-        public override string Description()
-        {
-            return string.Format(AssetManager.Ins.EffectData[EffectName].description, turnLeftToDie, 6 - turnSinceLastMove); 
         }
     }
 }

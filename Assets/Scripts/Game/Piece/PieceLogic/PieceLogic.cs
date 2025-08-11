@@ -22,6 +22,7 @@ namespace Game.Piece.PieceLogic
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
         public readonly PieceType Type;
+        private readonly bool hasSkill;
 
         private bool dead;
         public bool IsDead()
@@ -44,6 +45,7 @@ namespace Game.Piece.PieceLogic
             MoveRange = new List<byte> { info.moveRange };
             AttackRange = info.attackRange;
             PieceRank = info.rank;
+            hasSkill = info.hasSkill;
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
@@ -80,6 +82,12 @@ namespace Game.Piece.PieceLogic
             }
             
             captures(list, Pos);
+
+            if (hasSkill)
+            {
+                ((IPieceWithSkill)this).Skills(list);
+            }
+            
             CustomBehaviors(list);
             NotifyOnMoveGen(list);
         }

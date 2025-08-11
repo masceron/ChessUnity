@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Slow
   description: The range of movement of this piece is reduced by {0}. Movement range
     cannot be below 1. Attack range is not impacted.
+  key: effect_slow

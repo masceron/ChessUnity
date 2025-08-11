@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 7abcd88f3d589e94d97b9076813ee938, type: 3}
   effectName: Camouflage
   description: Cannot be targeted from 3 squares or further.
+  key: effect_camouflage

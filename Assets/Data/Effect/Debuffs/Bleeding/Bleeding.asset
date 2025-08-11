@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Bleeding
   description: This piece will die after making {0} more moves. This effect will
     dissappear if this piece stays still after {1} more turns.
+  key: effect_bleeding

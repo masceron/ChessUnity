@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 8663d5c15e0eaf64eb054a286921a3e6, type: 3}
   effectName: Vengeful
   description: When captured, stun the capturer for 2 turns.
+  key: effect_electric_eel_vengeful

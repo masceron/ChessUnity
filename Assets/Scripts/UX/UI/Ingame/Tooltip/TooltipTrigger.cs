@@ -21,8 +21,8 @@ namespace UX.UI.Ingame.Tooltip
 
         public void SetText(string left, string right, string cnt)
         {
-            this.headerLeft = left;
-            this.headerRight = right;
+            headerLeft = left;
+            headerRight = right;
             content = cnt;
         }
     }

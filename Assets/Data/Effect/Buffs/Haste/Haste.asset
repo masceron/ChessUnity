@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 75fdabbce0e81d34c859ba8a1a37eb3d, type: 3}
   effectName: Haste
   description: Increase move range by {0}.
+  key: effect_haste

@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Demolisher
   description: This piece cannot attack normal pieces, save for Constructs. After
     destroying a Construct, this piece will also die.
+  key: effect_demolisher

@@ -20,7 +20,6 @@ MonoBehaviour:
   attackRange: 50
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: Golden Morph
-  skillDescription: Upgrade an allied piece into another piece in the immediate upper
-    rank. A champion will change into another champion instead.
+  key: piece_chrysos
+  hasSkill: 1
   normalSkillCooldown: 1

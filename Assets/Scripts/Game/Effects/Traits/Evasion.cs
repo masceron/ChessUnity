@@ -8,11 +8,12 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Evasion: Effect
     {
-        private readonly int probability;
+        // ReSharper disable once MemberCanBePrivate.Global
+        public readonly int Probability;
 
         public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Evasion)
         {
-            this.probability = probability;
+            Probability = probability;
         }
 
         public override void OnCall(Action.Action action)
@@ -20,14 +21,9 @@ namespace Game.Effects.Traits
             if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
 
             if (Distance(action.Maker, action.Target) < 3) return;
-            if (!MatchManager.Roll(probability)) return;
+            if (!MatchManager.Roll(Probability)) return;
             
             action.Result = ActionResult.Failed;
-        }
-
-        public override string Description()
-        {
-            return string.Format(AssetManager.Ins.EffectData[EffectName].description, probability);
         }
     }
 }

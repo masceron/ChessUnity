@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 9d529dc35a3764a48b9da1b0a3f0086b, type: 3}
   effectName: Taunted
   description: Automatically walks up 1 square and be stunned every turn.
+  key: effect_taunted

@@ -15,14 +15,52 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-English (en)
   m_GUID: 440143a50e06a0e499d6ef7c239f4f42
   m_SerializeEntries:
+  - m_GUID: 17d4abc13a81415449d37ba734a4ce14
+    m_Address: piece_skill_description_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1d9ee56ea64042b4d9c97a6ef6b6f767
     m_Address: design_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30fbadc1561692b4dbe241ad5eebebfe
+    m_Address: piece_skill_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3a57f52c92e363f42be40e7176568fbe
     m_Address: common_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6a03ced2947145046b2b75372fb8644e
+    m_Address: piece_name_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7d09bf49f563be24da042bcacb28bd77
+    m_Address: effect_description_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a77478329b10e1b429e1370e82a63bd2
+    m_Address: effect_name_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e7344c401de444e479c01f32c4f93ac4
+    m_Address: game_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

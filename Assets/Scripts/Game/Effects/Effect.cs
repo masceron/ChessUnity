@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using UX;
 
 namespace Game.Effects
 {
@@ -106,9 +107,9 @@ namespace Game.Effects
             return -x!.priority.CompareTo(y!.priority);
         }
 
-        public virtual string Description()
+        public string Description()
         {
-            return AssetManager.Ins.EffectData[EffectName].description;
+            return Localizer.GetText("effect_description", AssetManager.Ins.EffectData[EffectName].key + "_description", new object[]{this});
         }
     }
 }

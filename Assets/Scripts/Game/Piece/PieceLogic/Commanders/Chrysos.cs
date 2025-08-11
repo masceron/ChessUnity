@@ -38,11 +38,6 @@ namespace Game.Piece.PieceLogic.Commanders
             };
         }
 
-        protected override void CustomBehaviors(List<Action.Action> list)
-        {
-            Skills(list);
-        }
-
         public static PieceRank UpgradableTo(PieceRank from)
         {
             return from switch

@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Archelon's Draw
   description: Any capture occurs within a 2-squares radius will be redirected to
     this piece.
+  key: effect_archelon_draw

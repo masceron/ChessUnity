@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: b071c5476ebfb9d4abf6013661f63036, type: 3}
   effectName: Vengeful
   description: When captured, afflicts 3 stacks of Poison to the capturer.
+  key: effect_lionfish_vengeful

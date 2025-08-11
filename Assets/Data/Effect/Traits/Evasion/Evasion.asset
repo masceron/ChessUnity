@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Evasion
   description: If an attack is initiated at a distance of 3 squares or more, this
     piece has a {0}% chance to evade.
+  key: effect_evasion

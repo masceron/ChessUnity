@@ -21,5 +21,6 @@ MonoBehaviour:
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   skillName: 
+  key: piece_seahorse
   skillDescription: 
   normalSkillCooldown: 0

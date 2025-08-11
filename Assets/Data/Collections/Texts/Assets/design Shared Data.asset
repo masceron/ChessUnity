@@ -31,6 +31,22 @@ MonoBehaviour:
     m_Key: design_choosesize
     m_Metadata:
       m_Items: []
+  - m_Id: 59463195168768
+    m_Key: create_new_army
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59713901301760
+    m_Key: armies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59745174032384
+    m_Key: army
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59784504020992
+    m_Key: saved_armies
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

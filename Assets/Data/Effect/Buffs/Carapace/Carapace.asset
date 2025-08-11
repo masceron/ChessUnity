@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 105cf1c21dafcf044973b0ba8d24537b, type: 3}
   effectName: Carapace
   description: Any attack without Piercing on this piece will kill the attacker.
+  key: effect_carapace

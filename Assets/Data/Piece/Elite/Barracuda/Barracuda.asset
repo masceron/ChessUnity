@@ -20,6 +20,6 @@ MonoBehaviour:
   attackRange: 2
   movePattern: {fileID: 2800000, guid: 6de6c8d3ffe68ab40afd18dcf15e1c57, type: 3}
   capturePattern: {fileID: 2800000, guid: 6de6c8d3ffe68ab40afd18dcf15e1c57, type: 3}
-  skillName: 
-  skillDescription: 
-  normalSkillCooldown: 0
+  key: piece_barracuda
+  hasSkill: 0
+  normalSkillCooldown: -1

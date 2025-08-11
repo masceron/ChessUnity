@@ -20,7 +20,6 @@ MonoBehaviour:
   attackRange: 5
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: Enchanting Tune
-  skillDescription: Force a piece in a 6 squares radius to step forth 3 squares or
-    until meeting an obstacle. The controlled piece will switch side.
+  key: piece_siren
+  hasSkill: 1
   normalSkillCooldown: 6

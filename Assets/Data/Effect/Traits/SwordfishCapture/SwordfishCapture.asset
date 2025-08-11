@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 57b43c02cc400c64a9eafb2e83b4581f, type: 3}
   effectName: Swordfish's Attack
   description: Inflicts Bleeding to any piece behind Swordfish's capture target.
+  key: effect_swordfish_capture

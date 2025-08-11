@@ -21,5 +21,6 @@ MonoBehaviour:
   movePattern: {fileID: 2800000, guid: d33892fc77cc873429588221f2c754cd, type: 3}
   capturePattern: {fileID: 0}
   skillName: 
+  key: piece_moray_eel
   skillDescription: 
   normalSkillCooldown: 0

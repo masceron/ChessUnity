@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Luring Radiance
   description: This piece continuously applies Slow I on any enemy pieces in a 4-square
     radius.
+  key: effect_siren_debuffer

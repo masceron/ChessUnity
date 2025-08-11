@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: effect_name Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: effect_name
+  m_TableCollectionNameGuidString: 40b82d547ea6737438be00e50f1a32ff
+  m_Entries:
+  - m_Id: 72429342720
+    m_Key: effect_carapace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72467091456
+    m_Key: effect_evasion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72479674368
+    m_Key: effect_surpass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72479674369
+    m_Key: effect_slow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868672
+    m_Key: effect_blinded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868673
+    m_Key: effect_ambush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868674
+    m_Key: effect_velkaris_marked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868675
+    m_Key: effect_siren_debuffer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868676
+    m_Key: effect_velkaris_marker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868677
+    m_Key: effect_demolisher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868678
+    m_Key: effect_electric_eel_vengeful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868679
+    m_Key: effect_stunned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868680
+    m_Key: effect_shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868681
+    m_Key: effect_hardened_shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868682
+    m_Key: effect_piercing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868683
+    m_Key: effect_slayer_coin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868684
+    m_Key: effect_snapping_strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868685
+    m_Key: effect_archelon_draw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868686
+    m_Key: effect_thalassos_shielder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868687
+    m_Key: effect_dominator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868688
+    m_Key: effect_poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868689
+    m_Key: effect_swordfish_capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868690
+    m_Key: effect_bleeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868691
+    m_Key: effect_bound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868692
+    m_Key: effect_lionfish_vengeful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868693
+    m_Key: effect_moray_eel_camouflage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868694
+    m_Key: effect_camouflage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868695
+    m_Key: effect_taunted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868696
+    m_Key: effect_consume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868697
+    m_Key: effect_extremophile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868698
+    m_Key: effect_haste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868699
+    m_Key: effect_remora_marked
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1405300362136518657
+  references:
+    version: 2
+    RefIds:
+    - rid: 1405300362136518657
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1754900515909

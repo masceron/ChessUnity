@@ -39,11 +39,6 @@ namespace Game.Piece.PieceLogic.Summon
             list.Add(new AnomalocarisActive(Pos, index));
         }
 
-        protected override void CustomBehaviors(List<Action.Action> list)
-        {
-            Skills(list);
-        }
-
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }

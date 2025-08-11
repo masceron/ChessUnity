@@ -39,6 +39,22 @@ MonoBehaviour:
     m_Key: overwrite
     m_Metadata:
       m_Items: []
+  - m_Id: 46581485146112
+    m_Key: placeholder_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47205178150912
+    m_Key: play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47225352753152
+    m_Key: settings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47251642650624
+    m_Key: exit
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

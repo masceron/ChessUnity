@@ -41,8 +41,6 @@ namespace Game.Piece.PieceLogic.Champions
                     list[i] = new SnappingStrike(Pos, list[i].Target);
                 }
             }
-            
-            Skills(list);
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

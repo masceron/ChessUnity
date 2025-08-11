@@ -7,26 +7,22 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Blinded: Effect
     {
-        private readonly int probability;
+        // ReSharper disable once MemberCanBePrivate.Global
+        public readonly int Probability;
 
         public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Blinded)
         {
-            this.probability = probability;
+            Probability = probability;
         }
 
         public override void OnCall(Action.Action action)
         {
             if (action == null || action.Maker != Piece.Pos) return;
             
-            if (MatchManager.Roll(probability))
+            if (MatchManager.Roll(Probability))
             {
                 action.Result = ActionResult.Failed;
             }
-        }
-
-        public override string Description()
-        {
-            return string.Format(AssetManager.Ins.EffectData[EffectName].description, probability);
         }
     }
 }

@@ -20,9 +20,47 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja
+    - Preload
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3627783e801ee5d48b1309e8571142d7
     m_Address: common_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 36eb6b5658d76bf4083933ef824e00dd
+    m_Address: effect_description_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6389ef60c1e9fbb458c6c55ffc1735b3
+    m_Address: game_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87faa8fec7626dc4d9f694f0d7e1b032
+    m_Address: piece_skill_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c2719eac87fbbfb4da5d0a8740a192d3
+    m_Address: piece_name_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d72b7fe4a30667d4d9d1cc0f30fb5cb0
+    m_Address: piece_skill_description_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: edd10e1b8bda60b4886b68406c841573
+    m_Address: effect_name_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja

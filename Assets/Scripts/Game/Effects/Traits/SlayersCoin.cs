@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Common;
-using Game.Managers;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commanders;
 
@@ -20,11 +19,6 @@ namespace Game.Effects.Traits
             var captured = BoardUtils.PieceOn(action.Target);
             
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
-        }
-
-        public override string Description()
-        {
-            return string.Format(AssetManager.Ins.EffectData[EffectName].description, ((Chrysos)Piece).Coin);
         }
     }
 }

@@ -21,3 +21,4 @@ MonoBehaviour:
   effectName: Shielding Shell
   description: Any unit that enter a 1-square radius around this piece will have
     a 50% chance to gain a Shield, effective until that unit left the range.
+  key: effect_thalassos_shielder

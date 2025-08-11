@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 6b37570c236c9974eb2ef47811903181, type: 3}
   effectName: Hiding
   description: This piece gain Camouflage when sitting at an edge of the board.
+  key: effect_moray_eel_camouflage

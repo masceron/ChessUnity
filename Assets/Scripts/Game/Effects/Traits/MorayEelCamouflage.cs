@@ -1,7 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Managers;
 using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
@@ -80,11 +79,6 @@ namespace Game.Effects.Traits
             
             ActionManager.EnqueueAction(new RemoveEffect(already));
             already = null;
-        }
-
-        public override string Description()
-        {
-            return AssetManager.Ins.EffectData[EffectName].description;
         }
     }
 }

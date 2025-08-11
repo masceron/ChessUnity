@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 92efce3e9edce4e44a7a284302affe90, type: 3}
   effectName: Tidal Protector (Marked)
   description: This piece is marked by a Velkaris's Tidal Protector.
+  key: effect_velkaris_marked

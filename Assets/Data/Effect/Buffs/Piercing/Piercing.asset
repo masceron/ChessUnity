@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: cec9ea58526d3d542a27ccfe3586b500, type: 3}
   effectName: Piercing
   description: This piece's attacks ignore all Shields, Hardened Shields and Carapaces.
+  key: effect_piercing

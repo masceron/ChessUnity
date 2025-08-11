@@ -41,11 +41,6 @@ namespace Game.Piece.PieceLogic.Commanders
             };
         }
 
-        protected override void CustomBehaviors(List<Action.Action> list)
-        {
-            Skills(list);
-        }
-
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }

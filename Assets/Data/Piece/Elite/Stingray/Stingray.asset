@@ -20,8 +20,6 @@ MonoBehaviour:
   attackRange: 2
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  skillName: Stingray's Dash
-  skillDescription: Dash 2 squares in any orthogonal or diagonal direction, unblockable
-    by any other pieces. Any enemy lies on the path will be stunned for 1 turn and
-    gain one stack of  $Poison`.
+  key: piece_stingray
+  hasSkill: 1
   normalSkillCooldown: 0

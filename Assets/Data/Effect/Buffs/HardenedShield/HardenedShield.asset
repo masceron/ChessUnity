@@ -20,3 +20,4 @@ MonoBehaviour:
   icon: {fileID: 2800000, guid: 868611130517b3f46b9fc2845bad3644, type: 3}
   effectName: Hardened Shield
   description: Nullifies an upcoming attack and stuns the attacker for 1 turn.
+  key: effect_hardened_shield
