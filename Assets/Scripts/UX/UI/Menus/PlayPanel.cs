@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UX.UI.Loader;
@@ -19,7 +19,8 @@ namespace UX.UI.Menus
                 {
                     eulerAngles = new Vector3(0, 90, 0)
                 };
-                content.transform.DORotate(new Vector3(0, 0, 0), 0.25f);
+                
+                Tween.Rotation(content.transform, Vector3.zero, 0.25f);
             }
         }
         

@@ -1,4 +1,4 @@
-using DG.Tweening;
+using PrimeTween;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -67,7 +67,7 @@ namespace Game.Piece
             rank = rankTo;
             file = fileTo;
             
-            transform.DOMove(new Vector3(rank, transform.position.y, file), 0.2f);
+            Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
         }
     }
 }

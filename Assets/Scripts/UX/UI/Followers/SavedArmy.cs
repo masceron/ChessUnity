@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using Game.Save.Army;
+using TMPro;
 using UnityEngine;
 using UX.UI.Army.DesignArmy;
 
@@ -21,6 +22,12 @@ namespace UX.UI.Followers
         {
             UIManager.Ins.Load(CanvasID.DesignArmy);
             ArmyDesign.Ins.Load(army.BoardSize, army);
+        }
+
+        public void Delete()
+        {
+            ArmySaveLoader.Remove(army.Name);
+            Destroy(gameObject);
         }
     }
 }

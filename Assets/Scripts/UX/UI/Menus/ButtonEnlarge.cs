@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+﻿using PrimeTween;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,12 +9,12 @@ namespace UX.UI.Menus
     {
         public void OnPointerEnter(PointerEventData eventData)
         {
-            transform.DOScale(1f, 0.2f);
+            Tween.Scale(transform, 1f, 0.2f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            transform.DOScale(0.95f, 0.2f);
+            Tween.Scale(transform, 0.95f, 0.2f);
         }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using DG.Tweening;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
+using PrimeTween;
 using UnityEngine;
 
 namespace UX.UI.Ingame.ThalassosResurrector
@@ -55,7 +55,7 @@ namespace UX.UI.Ingame.ThalassosResurrector
         {
             var rect = (RectTransform)transform.GetChild(0);
             rect.anchoredPosition = new Vector2(-50, 0);
-            rect.DOAnchorPos(Vector3.zero, 0.3f);
+            Tween.UIAnchoredPosition(rect, Vector3.zero, 0.3f);
         }
 
         public void Disable()

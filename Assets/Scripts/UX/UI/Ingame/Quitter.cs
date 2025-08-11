@@ -1,4 +1,4 @@
-﻿using DG.Tweening;
+﻿using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UX.UI.Loader;
@@ -27,7 +27,8 @@ namespace UX.UI.Ingame
             {
                 eulerAngles = new Vector3(90, 0, 0)
             };
-            menuRect.DORotate(new Vector3(0, 0, 0), 0.15f);
+            
+            Tween.Rotation(menuRect, new Vector3(0, 0, 0), 0.15f);
         }
 
         public void QuitToMainMenu()

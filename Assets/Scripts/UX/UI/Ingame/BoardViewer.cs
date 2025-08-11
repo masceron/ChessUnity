@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using Data.UI.UIObject3D.Scripts;
-using DG.Tweening;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal.Pending;
@@ -12,6 +11,7 @@ using Game.Action.Skills;
 using Game.Data.Pieces;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -136,8 +136,8 @@ namespace UX.UI.Ingame
             var direction = mainCameraCenter.position;
             direction.x = pos1;
             direction.z = pos2;
-
-            mainCameraCenter.DOMove(direction, 0.3f);
+            
+            Tween.Position(mainCameraCenter, direction, 0.3f);
         }
 
         private static void SetToggle(Toggle toggle)

@@ -42,6 +42,11 @@ namespace Game.Save.Army
             return Dict[name];
         }
 
+        public static bool Exists(string name)
+        {
+            return Dict.ContainsKey(name);
+        }
+
         public static void Remove(string name)
         {
             using var stream = File.Open(Path, FileMode.Create);

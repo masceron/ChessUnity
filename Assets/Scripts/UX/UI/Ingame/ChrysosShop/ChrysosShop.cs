@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using DG.Tweening;
 using Game.Action.Internal.Pending;
 using Game.Action.Skills;
 using Game.Data.Pieces;
@@ -7,6 +6,7 @@ using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commanders;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +27,7 @@ namespace UX.UI.Ingame.ChrysosShop
         {
             var rect = (RectTransform)transform.GetChild(0);
             rect.anchoredPosition = new Vector2(-50, 0);
-            rect.DOAnchorPos(Vector3.zero, 0.3f);
+            Tween.UIAnchoredPosition(rect, Vector3.zero, 0.3f);
         }
 
         public void Disable()

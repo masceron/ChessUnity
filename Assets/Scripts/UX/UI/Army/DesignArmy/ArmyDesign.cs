@@ -11,14 +11,23 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private DesignArmyInfo info;
         [SerializeField] private ArmyDesignBoard board;
         [SerializeField] private ArmySearcher searcher;
-        [SerializeField] private DesignQuit quitter;
+        [SerializeField] private DesignNotification notification;
         private int size;
         private Game.Save.Army.Army army;
         
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            quitter.gameObject.SetActive(!quitter.gameObject.activeSelf);
+            if (!notification.gameObject.activeSelf)
+            {
+                notification.Open(DesignNotifications.Quit);
+            }
+            else notification.Close();
+        }
+
+        private void OnDisable()
+        {
+            notification.Close();
         }
 
         public void Load(int s, Game.Save.Army.Army? armyToLoad)
@@ -40,9 +49,24 @@ namespace UX.UI.Army.DesignArmy
             info.LoadSave(army.Name);
         }
 
-        public void Save()
+        public void TrySave()
         {
             army.Name = info.armyName.text;
+            if (army.Name == string.Empty)
+            {
+                notification.Open(DesignNotifications.EmptyName);
+                return;
+            }
+            if (ArmySaveLoader.Exists(army.Name))
+            {
+                notification.Open(DesignNotifications.Overwrite);
+                return;
+            }
+            Save();
+        }
+
+        public void Save()
+        {
             army.BoardSize = (ushort) size;
             SetTroops();
             ArmySaveLoader.Save(army);
