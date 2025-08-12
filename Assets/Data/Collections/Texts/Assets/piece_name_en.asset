@@ -19,79 +19,79 @@ MonoBehaviour:
     m_Items: []
   m_TableData:
   - m_Id: 27529618395136
-    m_Localized: velkaris
+    m_Localized: Velkaris
     m_Metadata:
       m_Items: []
   - m_Id: 27662691078144
-    m_Localized: guiding siren
+    m_Localized: Guiding Siren
     m_Metadata:
       m_Items: []
   - m_Id: 27753384513536
-    m_Localized: barracuda
+    m_Localized: Barracuda
     m_Metadata:
       m_Items: []
   - m_Id: 27798917877760
-    m_Localized: sea urchin
+    m_Localized: Sea Urchin
     m_Metadata:
       m_Items: []
   - m_Id: 28935481987072
-    m_Localized: electric eel
+    m_Localized: Electric Eel
     m_Metadata:
       m_Items: []
   - m_Id: 29041904062464
-    m_Localized: flying fish
+    m_Localized: Flying Fish
     m_Metadata:
       m_Items: []
   - m_Id: 29099361832960
-    m_Localized: chrysos
+    m_Localized: Chrysos
     m_Metadata:
       m_Items: []
   - m_Id: 29243801079808
-    m_Localized: anomalocaris
+    m_Localized: Anomalocaris
     m_Metadata:
       m_Items: []
   - m_Id: 29291658088448
-    m_Localized: archelon
+    m_Localized: Archelon
     m_Metadata:
       m_Items: []
   - m_Id: 29342862151680
-    m_Localized: thalassos
+    m_Localized: Thalassos
     m_Metadata:
       m_Items: []
   - m_Id: 29403931217920
-    m_Localized: pufferfish
+    m_Localized: Pufferfish
     m_Metadata:
       m_Items: []
   - m_Id: 29430820900864
-    m_Localized: swordfish
+    m_Localized: Swordfish
     m_Metadata:
       m_Items: []
   - m_Id: 29535267459072
-    m_Localized: lionfish
+    m_Localized: Lionfish
     m_Metadata:
       m_Items: []
   - m_Id: 29608621641728
-    m_Localized: moray eel
+    m_Localized: Moray Eel
     m_Metadata:
       m_Items: []
   - m_Id: 29660261912576
-    m_Localized: stingray
+    m_Localized: Stingray
     m_Metadata:
       m_Items: []
   - m_Id: 29703656181760
-    m_Localized: seahorse
+    m_Localized: Seahorse
     m_Metadata:
       m_Items: []
   - m_Id: 29746740072448
-    m_Localized: sea star
+    m_Localized: Sea Star
     m_Metadata:
       m_Items: []
   - m_Id: 29848854597632
-    m_Localized: anglerfish
+    m_Localized: Anglerfish
     m_Metadata:
       m_Items: []
   - m_Id: 29941217366016
-    m_Localized: remora
+    m_Localized: Remora
     m_Metadata:
       m_Items: []
   references:

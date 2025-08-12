@@ -33,6 +33,8 @@ namespace Game.Action.Quiets
                     ActionManager.EnqueueAction(new Nullify(Target, idx));
                 }
             }
+
+            Maker = Target;
         }
     }
 }

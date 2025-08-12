@@ -73,7 +73,7 @@ namespace UX.UI.Army.DesignArmy
             
             var result = data.Values.Where(p => 
                 pieceFilters.Contains(p.rank) && 
-                p.pieceName.Contains(lastKeyword)).ToList();
+                p.pieceName.ToLower().Contains(lastKeyword)).ToList();
 
             if (!result.SequenceEqual(lastSearchResult))
             {

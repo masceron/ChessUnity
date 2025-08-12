@@ -59,6 +59,14 @@ MonoBehaviour:
     m_Key: troops
     m_Metadata:
       m_Items: []
+  - m_Id: 316033262948352
+    m_Key: move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 316064544067584
+    m_Key: capture
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

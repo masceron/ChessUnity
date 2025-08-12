@@ -123,7 +123,7 @@ namespace UX.UI.Army.DesignArmy
                 
                 piece.Load(searcher.data[troop.Type]);
                 piece.Set(troop.Rank, troop.File);
-                piece.set = true;
+                piece.Placed = true;
             }
         }
 

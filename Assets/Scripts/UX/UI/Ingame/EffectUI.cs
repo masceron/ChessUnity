@@ -4,7 +4,7 @@ using Game.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UX.UI.Ingame.Tooltip;
+using UX.UI.Tooltip;
 
 namespace UX.UI.Ingame
 {

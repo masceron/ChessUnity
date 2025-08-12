@@ -1,7 +1,6 @@
 ﻿using Game.Action.Skills;
 using Game.Common;
 using Game.Data.Pieces;
-using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commanders;
 using UnityEngine;
@@ -38,7 +37,7 @@ namespace Game.Action.Internal.Pending
             if (!shop)
             {
                 var canvas = Object.FindAnyObjectByType<BoardViewer>(FindObjectsInactive.Exclude);
-                shop = Object.Instantiate(MatchManager.Ins.InputProcessor.chrysosShopUI, canvas.transform).GetComponent<ChrysosShop>();
+                shop = Object.Instantiate(UIHolder.Ins.Get(IngameSubmenus.ChrysosShop), canvas.transform).GetComponent<ChrysosShop>();
             }
             else shop.gameObject.SetActive(true);
 

@@ -20,7 +20,7 @@ namespace Game.Effects.Debuffs
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.Maker != Piece.Pos)
+            if (lastMainAction == null || lastMainAction.Maker != Piece.Pos)
             {
                 TurnSinceLastMove++;
                 if (TurnSinceLastMove < 6) return;

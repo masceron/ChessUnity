@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Action.Skills;
+﻿using Game.Action.Skills;
 using Game.Data.Pieces;
 using Game.Movesets;
 using static Game.Common.BoardUtils;

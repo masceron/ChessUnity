@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3517929475700819479}
   - component: {fileID: 4197783774499568729}
   - component: {fileID: 2545505702639453213}
+  - component: {fileID: -3289124238289176407}
   m_Layer: 0
   m_Name: DesignTroopLogo
   m_TagString: Untagged
@@ -91,6 +92,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model: {fileID: 1400082744471719213}
   image: {fileID: 4197783774499568729}
+  trigger: {fileID: -3289124238289176407}
+  set: 0
+  rank: -1
+  file: -1
+  type: 0
+--- !u!114 &-3289124238289176407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292840448665757387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a0008bdd0c941b2b5cc73622042fd29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2441543203379043917
 GameObject:
   m_ObjectHideFlags: 0

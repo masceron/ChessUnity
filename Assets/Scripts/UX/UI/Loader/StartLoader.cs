@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PrimeTween;
+using UnityEngine;
 
 namespace UX.UI.Loader
 {
@@ -7,6 +8,7 @@ namespace UX.UI.Loader
     {
         private void Awake()
         {
+            PrimeTweenConfig.warnEndValueEqualsCurrent = false;
             SceneLoader.Start();
         }
     }

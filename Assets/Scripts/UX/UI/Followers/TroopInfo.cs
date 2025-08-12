@@ -23,6 +23,10 @@ namespace UX.UI.Followers
             
             image.ObjectPrefab = obj.prefab.transform;
             demonstration.texture = obj.movePattern;
+            if (obj.hasSkill)
+                description.text = Localizer.GetText("piece_skill", obj.key + "_skill", null) + ": " +
+                                   Localizer.GetText("piece_skill_description", obj.key + "_skill_description", null);
+            else description.text = "";
         }
 
         public void Undisplay()

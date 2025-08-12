@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Data.Pieces;

@@ -42,26 +42,22 @@ namespace UX.UI.Army.DesignArmy
         
         public void OnDrop(PointerEventData eventData)
         {
-            var piece = eventData.pointerDrag.GetComponent<ArmyDesignTroop>();
-            if (!piece) return;
+            if (!eventData.pointerDrag.TryGetComponent<ArmyDesignTroop>(out var piece)) return;
             var board = FindAnyObjectByType<ArmyDesignBoard>();
+
+            if (!board.IsAllowed(rank, file)) return;
             
-            if (board.IsAllowed(rank, file))
+            piece.Parent = transform;
+            if (piece.Placed)
             {
-                piece.Parent = transform;
-                if (piece.set)
-                {
-                    board.Move(piece.rank, piece.file, rank, file);
-                    piece.Set(rank, file);
-                }
-                else
-                {
-                    piece.Set(rank, file);
-                    board.Add(rank, file, piece.type);
-                }
+                board.Move(piece.Rank, piece.File, rank, file);
+                piece.Set(rank, file);
             }
-            
-            board.UnSet();
+            else
+            {
+                piece.Set(rank, file);
+                board.Add(rank, file, piece.Piece.type);
+            }
         }
     }
 }

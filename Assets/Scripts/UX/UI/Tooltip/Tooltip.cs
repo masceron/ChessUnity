@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace UX.UI.Ingame.Tooltip
+namespace UX.UI.Tooltip
 {
     [ExecuteInEditMode]   
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
