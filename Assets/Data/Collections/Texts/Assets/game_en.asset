@@ -70,6 +70,14 @@ MonoBehaviour:
     m_Localized: Capture
     m_Metadata:
       m_Items: []
+  - m_Id: 2482791394578432
+    m_Localized: Load from saved armies...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2484470571601920
+    m_Localized: Start
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

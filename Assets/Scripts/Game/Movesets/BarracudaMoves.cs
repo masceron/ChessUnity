@@ -95,6 +95,8 @@ namespace Game.Movesets
                 }
             }
 
+            return;
+
             void MakeCapture(int tRank, int file, int distance)
             {
                 if (!VerifyBounds(tRank) || !VerifyBounds(file)) return;

@@ -1,4 +1,5 @@
-﻿using MemoryPack;
+﻿using Game.Save.Relics;
+using MemoryPack;
 
 namespace Game.Save.Army
 {
@@ -8,5 +9,6 @@ namespace Game.Save.Army
         public string Name;
         public ushort BoardSize;
         public Troop[] Troops;
+        public Relic? Relic;
     }
 }

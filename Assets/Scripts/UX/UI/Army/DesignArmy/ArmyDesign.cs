@@ -1,5 +1,7 @@
 ﻿using Game.Common;
+using Game.Relics;
 using Game.Save.Army;
+using Game.Save.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,12 +14,20 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private ArmyDesignBoard board;
         [SerializeField] private ArmySearcher searcher;
         [SerializeField] private DesignNotification notification;
+        [SerializeField] private ArmyRelicSearcher relicSearcher;
         private int size;
         private Game.Save.Army.Army army;
         
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
+            
+            if (relicSearcher.container.gameObject.activeSelf)
+            {
+                relicSearcher.Toggle();
+                return;
+            }
+            
             if (!notification.gameObject.activeSelf)
             {
                 notification.Open(DesignNotifications.Quit);
@@ -35,10 +45,14 @@ namespace UX.UI.Army.DesignArmy
             size = s;
             info.Load(size);
             board.Load(size);
-
+            
             if (armyToLoad != null)
             {
                 LoadSave(armyToLoad.Value);
+            }
+            else
+            {
+                relicSearcher.Load(null);
             }
         }
 
@@ -47,6 +61,7 @@ namespace UX.UI.Army.DesignArmy
             army = armyToLoad;
             board.LoadSave(army.Troops);
             info.LoadSave(army.Name);
+            relicSearcher.Load(armyToLoad.Relic);
         }
 
         public void TrySave()
@@ -75,8 +90,13 @@ namespace UX.UI.Army.DesignArmy
 
         private void SetTroops()
         {
-            board.troops.Sort();
-            army.Troops = board.troops.ToArray();
+            board.Troops.Sort();
+            army.Troops = board.Troops.ToArray();
+        }
+
+        public void SelectRelic(RelicType type)
+        {
+            army.Relic = new Relic(type);
         }
     }
 }

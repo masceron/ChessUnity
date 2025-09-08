@@ -16,6 +16,7 @@ using static UX.UI.Ingame.BoardViewer;
 
 namespace UX.UI.Ingame
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PieceActions: MonoBehaviour
     {
         [SerializeField] private CanvasGroup pieceAction;

@@ -1,6 +1,6 @@
-﻿using Data.UI.UIObject3D.Scripts;
-using Game.Data.Pieces;
-using Game.Managers;
+﻿using Game.Managers;
+using Game.Piece;
+using UI.UIObject3D.Scripts;
 using UnityEngine;
 
 namespace UX.UI.Ingame

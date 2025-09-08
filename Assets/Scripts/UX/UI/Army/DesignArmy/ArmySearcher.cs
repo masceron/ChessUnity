@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
-using Game.Data.Pieces;
 using Game.Piece;
+using Game.ScriptableObjects;
+using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,14 +19,14 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
 
-        public Dictionary<PieceType, PieceObject> data;
-        private List<PieceObject> lastSearchResult;
+        public Dictionary<PieceType, PieceInfo> Data;
+        private List<PieceInfo> lastSearchResult;
         private string lastKeyword;
         public readonly List<ArmyDesignTroop> Pool = new();
         
         private void Awake()
         {
-            data = piecesData.piecesData.Dictionary;
+            Data = piecesData.piecesData.Dictionary;
             Load();
         }
 
@@ -71,9 +72,9 @@ namespace UX.UI.Army.DesignArmy
         {
             pieceFilters.Add(toFilter);
             
-            var result = data.Values.Where(p => 
+            var result = Data.Values.Where(p => 
                 pieceFilters.Contains(p.rank) && 
-                p.pieceName.ToLower().Contains(lastKeyword)).ToList();
+                Localizer.GetText("piece_name", p.key, null).ToLower().Contains(lastKeyword)).ToList();
 
             if (!result.SequenceEqual(lastSearchResult))
             {
@@ -89,7 +90,7 @@ namespace UX.UI.Army.DesignArmy
             
             var result = lastSearchResult.Where(p => 
                 pieceFilters.Contains(p.rank) && 
-                p.pieceName.Contains(lastKeyword)).ToList();
+                Localizer.GetText("piece_name", p.key, null).Contains(lastKeyword)).ToList();
 
             if (!result.SequenceEqual(lastSearchResult))
             {
@@ -107,16 +108,16 @@ namespace UX.UI.Army.DesignArmy
             {
                 var result = lastSearchResult.Where(p => 
                     pieceFilters.Contains(p.rank) && 
-                    p.pieceName.Contains(start)).ToList();
+                    Localizer.GetText("piece_name", p.key, null).Contains(start)).ToList();
 
                 if (result.SequenceEqual(lastSearchResult)) return;
                 lastSearchResult = result;
             }
             else
             {
-                lastSearchResult = data.Values.Where(p => 
+                lastSearchResult = Data.Values.Where(p => 
                     pieceFilters.Contains(p.rank) &&  
-                    p.pieceName.Contains(start)).ToList();
+                    Localizer.GetText("piece_name", p.key, null).Contains(start)).ToList();
             }
             
             lastKeyword = start;

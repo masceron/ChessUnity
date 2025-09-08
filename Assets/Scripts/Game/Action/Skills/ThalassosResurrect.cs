@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Game.Action.Internal;
-using Game.Data.Pieces;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic;

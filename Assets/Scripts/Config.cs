@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Data.Pieces;
 using Game.Piece;
 
 public static class Config

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Game.Common;
-using Game.Data.Effects;
-using Game.Data.Pieces;
 using Game.Effects;
 using Game.Piece;
+using Game.ScriptableObjects;
+using Game.ScriptableObjects.Collections;
 using UnityEngine;
 
 namespace Game.Managers
@@ -12,8 +12,8 @@ namespace Game.Managers
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AssetManager : Singleton<AssetManager>
     {
-        [NonSerialized] public Dictionary<PieceType, PieceObject> PieceData;
-        [NonSerialized] public Dictionary<EffectName, EffectObject> EffectData;
+        [NonSerialized] public Dictionary<PieceType, PieceInfo> PieceData;
+        [NonSerialized] public Dictionary<EffectName, EffectInfo> EffectData;
         
         [SerializeField] public UDictionary<Color, Tile.Tile> TileData;
         [SerializeField] private PiecesData pieceData;
@@ -21,8 +21,8 @@ namespace Game.Managers
 
         public void Load()
         {
-            PieceData = new Dictionary<PieceType, PieceObject>(pieceData.piecesData);
-            EffectData = new Dictionary<EffectName, EffectObject>(effectsData.effectsData);
+            PieceData = new Dictionary<PieceType, PieceInfo>(pieceData.piecesData);
+            EffectData = new Dictionary<EffectName, EffectInfo>(effectsData.effectsData);
         }
     }
 }

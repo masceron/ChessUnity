@@ -28,6 +28,12 @@ MonoBehaviour:
     - Locale-fr
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4134548135c601c488034aa919c93325
+    m_Address: relic_name_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 421f2b4f3e6839e46962349156afa744
     m_Address: effect_name_fr
     m_ReadOnly: 1
@@ -61,6 +67,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a73be134254fbd94e9ca7d83fa249686
     m_Address: piece_skill_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bf4d5cb0d47f84b46af0650d848ec9c5
+    m_Address: relic_description_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr

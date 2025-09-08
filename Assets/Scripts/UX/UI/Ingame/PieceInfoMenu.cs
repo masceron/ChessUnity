@@ -1,7 +1,7 @@
-﻿using Data.UI.UIObject3D.Scripts;
-using Game.Data.Pieces;
-using Game.Managers;
+﻿using Game.Managers;
 using Game.Piece.PieceLogic;
+using Game.ScriptableObjects;
+using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -9,6 +9,7 @@ using Color = UnityEngine.Color;
 
 namespace UX.UI.Ingame
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PieceInfoMenu: MonoBehaviour
     {
         [SerializeField] private GameObject pieceInfo;
@@ -40,12 +41,12 @@ namespace UX.UI.Ingame
             LoadPieceDemonstrations(pieceInformation);
         }
         
-        private void LoadPieceModel(PieceObject info)
+        private void LoadPieceModel(PieceInfo info)
         {
             pieceImage.ObjectPrefab = info.prefab.transform;
         }
         
-        private void LoadPieceDemonstrations(PieceObject info)
+        private void LoadPieceDemonstrations(PieceInfo info)
         {
             if (!seeingCapture)
             {

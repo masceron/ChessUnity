@@ -1,7 +1,7 @@
-﻿using Data.UI.UIObject3D.Scripts;
-using Game.Managers;
+﻿using Game.Managers;
 using Game.Piece;
 using TMPro;
+using UI.UIObject3D.Scripts;
 using UnityEngine;
 
 namespace UX.UI.Ingame.ThalassosResurrector
@@ -17,7 +17,7 @@ namespace UX.UI.Ingame.ThalassosResurrector
         {
             pieceType = type;
             var info = AssetManager.Ins.PieceData[type];
-            pieceName.text = info.pieceName;
+            pieceName.text = Localizer.GetText("piece_name", info.key, null);
             pieceModel.ObjectPrefab = info.prefab.transform;
         }
 

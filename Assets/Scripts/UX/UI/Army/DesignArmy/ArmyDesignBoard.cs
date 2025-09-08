@@ -17,10 +17,10 @@ namespace UX.UI.Army.DesignArmy
         private BitArray allowed;
 
         private List<ArmyDesignSquare> childSquares;
-        public List<Troop> troops;
+        public List<Troop> Troops;
         public void Load(int boardSize)
         {
-            troops = new List<Troop>();
+            Troops = new List<Troop>();
             size = boardSize;
             if (childSquares != null)
             {
@@ -113,15 +113,15 @@ namespace UX.UI.Army.DesignArmy
             }
         }
 
-        public void LoadSave(Troop[] _troops)
+        public void LoadSave(Troop[] troops)
         {
             var searcher = FindAnyObjectByType<ArmySearcher>();
-            foreach (var troop in _troops)
+            foreach (var troop in troops)
             {
-                troops.Add(troop);
+                Troops.Add(troop);
                 var piece = Instantiate(searcher.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
                 
-                piece.Load(searcher.data[troop.Type]);
+                piece.Load(searcher.Data[troop.Type]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
             }
@@ -129,18 +129,18 @@ namespace UX.UI.Army.DesignArmy
 
         public void Add(int rank, int file, PieceType type)
         {
-            troops.Add(new Troop(type, rank, file));
+            Troops.Add(new Troop(type, rank, file));
         }
 
         public void Move(int oldR, int oldF, int newR, int newF)
         {
-            var old = troops.FindIndex(t => t.Rank == oldR && t.File == oldF);
-            troops[old] = new Troop(troops[old].Type, newR, newF);
+            var old = Troops.FindIndex(t => t.Rank == oldR && t.File == oldF);
+            Troops[old] = new Troop(Troops[old].Type, newR, newF);
         }
 
         public void Remove(int r, int f)
         {
-            troops.RemoveAt(troops.FindIndex(t => t.Rank == r && t.File == f));
+            Troops.RemoveAt(Troops.FindIndex(t => t.Rank == r && t.File == f));
         }
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
-using Game.Data.Pieces;
 using Game.Piece;
+using Game.ScriptableObjects;
+using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,10 +19,10 @@ namespace UX.UI.Followers
         [SerializeField] private Transform list;
         [SerializeField] private GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
-        [SerializeField] private TroopInfo troopInfo;
+        [SerializeField] private TroopDescriptions troopDescriptions;
 
-        private Dictionary<PieceType, PieceObject> data;
-        private List<PieceObject> lastSearchResult;
+        private Dictionary<PieceType, PieceInfo> data;
+        private List<PieceInfo> lastSearchResult;
         private string lastKeyword;
         private readonly List<TroopLogo> pool = new();
         private bool selecting;
@@ -34,18 +35,13 @@ namespace UX.UI.Followers
         private void Awake()
         {
             data = piecesData.piecesData.Dictionary;
-            Load();
-        }
-        
-        private void Load()
-        {
             SearchByKeyword("");
         }
 
         public void Close()
         {
             selecting = false;
-            troopInfo.Undisplay();
+            troopDescriptions.Undisplay();
         }
 
         public void Select(PieceType type)
@@ -93,8 +89,8 @@ namespace UX.UI.Followers
             pieceFilters.Add(toFilter);
             
             var result = data.Values.Where(p => 
-                pieceFilters.Contains(p.rank) && 
-                p.pieceName.ToLower().Contains(lastKeyword)).ToList();
+                pieceFilters.Contains(p.rank) &&
+                Localizer.GetText("piece_name", p.key, null).ToLower().Contains(lastKeyword)).ToList();
 
             if (!result.SequenceEqual(lastSearchResult))
             {
@@ -110,7 +106,7 @@ namespace UX.UI.Followers
             
             var result = lastSearchResult.Where(p => 
                 pieceFilters.Contains(p.rank) && 
-                p.pieceName.Contains(lastKeyword)).ToList();
+                Localizer.GetText("piece_name", p.key, null).ToLower().Contains(lastKeyword)).ToList();
 
             if (!result.SequenceEqual(lastSearchResult))
             {
@@ -128,7 +124,7 @@ namespace UX.UI.Followers
             {
                 var result = lastSearchResult.Where(p => 
                     pieceFilters.Contains(p.rank) && 
-                    p.pieceName.Contains(start)).ToList();
+                    Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
 
                 if (result.SequenceEqual(lastSearchResult)) return;
                 lastSearchResult = result;
@@ -137,7 +133,7 @@ namespace UX.UI.Followers
             {
                 lastSearchResult = data.Values.Where(p => 
                     pieceFilters.Contains(p.rank) &&  
-                    p.pieceName.Contains(start)).ToList();
+                    Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
             }
             
             lastKeyword = start;
@@ -188,13 +184,13 @@ namespace UX.UI.Followers
         {
             if (selecting) return;
             
-            troopInfo.Display(data[type]);
+            troopDescriptions.Display(data[type]);
         }
 
         public void Undisplay()
         {
             if (selecting) return;
-            troopInfo.Undisplay();
+            troopDescriptions.Undisplay();
         }
         
         public void OnPointerClick(PointerEventData eventData)

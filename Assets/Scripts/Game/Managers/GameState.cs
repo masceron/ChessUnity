@@ -5,7 +5,6 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Data.Pieces;
 using Game.Effects;
 using Game.Piece;
 using Game.Piece.PieceLogic;

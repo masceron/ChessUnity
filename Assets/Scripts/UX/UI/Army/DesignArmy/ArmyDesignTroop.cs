@@ -1,6 +1,6 @@
 ﻿using System;
-using Data.UI.UIObject3D.Scripts;
-using Game.Data.Pieces;
+using Game.ScriptableObjects;
+using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -19,9 +19,9 @@ namespace UX.UI.Army.DesignArmy
         [NonSerialized] public bool Placed;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
-        [NonSerialized] public PieceObject Piece;
+        [NonSerialized] public PieceInfo Piece;
         
-        public void Load(PieceObject piece)
+        public void Load(PieceInfo piece)
         {
             Piece = piece;
             model.ObjectPrefab = Piece.prefab.transform;
@@ -44,7 +44,7 @@ namespace UX.UI.Army.DesignArmy
         public void OnBeginDrag(PointerEventData eventData)
         {
             oldParent = transform.parent;
-            transform.SetParent(FindAnyObjectByType<ArmyDesign>().transform);
+            transform.SetParent(FindAnyObjectByType<Canvas>().transform);
             image.raycastTarget = false;
             Parent = null;
             FindAnyObjectByType<ArmyDesignBoard>().SetAllowed();

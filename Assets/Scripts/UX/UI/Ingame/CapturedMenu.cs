@@ -1,11 +1,12 @@
 ﻿using static Game.Common.BoardUtils;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Game.Data.Pieces;
+using Game.Piece;
 using UnityEngine;
 
 namespace UX.UI.Ingame
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CapturedMenu: MonoBehaviour
     {
         [SerializeField] private RectTransform allyCaptured;

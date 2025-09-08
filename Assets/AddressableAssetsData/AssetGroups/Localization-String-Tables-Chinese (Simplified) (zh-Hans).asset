@@ -33,12 +33,24 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 58b1b77469b1a374eb330de45a20da18
+    m_Address: relic_name_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 60fbea4d375560b4d9f4513ca0f61081
     m_Address: common_zh-Hans
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-zh-Hans
     - Preload
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8290b18ef9d1e76428113b7a1b6878c2
+    m_Address: relic_description_zh-Hans
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-zh-Hans
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bc596b7401d3df6488759104b34c5e27
     m_Address: design_zh-Hans

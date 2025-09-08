@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Action;
-using Game.Data.Pieces;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;

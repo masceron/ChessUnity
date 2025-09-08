@@ -2,17 +2,17 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
-using Game.Data.Pieces;
 using Game.Effects.Traits;
 using Game.Movesets;
+using Game.Relics;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GuidingSiren: PieceLogic, IPieceWithSkill
+    public class GuidingSiren: PieceLogic, IPieceWithSkill, IRelicCarriable
     {
-        public GuidingSiren(PieceConfig cfg) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
+        public GuidingSiren(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
@@ -51,9 +51,12 @@ namespace Game.Piece.PieceLogic.Commanders
                     }
                 }
             };
+
+            CarriedRelic = carriedRelic;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
+        public RelicLogic CarriedRelic { get; set; }
     }
 }

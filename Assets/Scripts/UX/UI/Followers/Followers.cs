@@ -7,7 +7,6 @@ namespace UX.UI.Followers
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Followers: Game.Common.Singleton<Followers>
     {
-        
         [SerializeField] private SavedArmies savedArmies;
         [SerializeField] private TroopList troopList;
         [SerializeField] private RelicList relicList;

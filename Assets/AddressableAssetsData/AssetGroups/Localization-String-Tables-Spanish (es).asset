@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Spanish (es)
   m_GUID: c672a5af1a6d8874987a3266ecc20c63
   m_SerializeEntries:
+  - m_GUID: 203e5d9f2dddec94aaf86456a4c4bbf0
+    m_Address: relic_description_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 271c00f9d2e2b3f4a873391078809c1a
     m_Address: game_es
     m_ReadOnly: 1
@@ -61,6 +67,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eb6c078e836ac334e98f73a8e8236a04
     m_Address: piece_skill_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f1165d8e054ba764cbd1317cacd863bf
+    m_Address: relic_name_es
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-es

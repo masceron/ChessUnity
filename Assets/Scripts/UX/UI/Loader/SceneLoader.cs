@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using Game.Managers;
-using Game.Save;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.SceneManagement.SceneManager;
+using GameConfig = Game.Save.Stage.GameConfig;
 
 namespace UX.UI.Loader
 {

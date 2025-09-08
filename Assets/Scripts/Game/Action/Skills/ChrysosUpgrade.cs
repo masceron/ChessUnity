@@ -1,5 +1,5 @@
 ﻿using Game.Action.Internal;
-using Game.Data.Pieces;
+using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commanders;
 using static Game.Common.BoardUtils;

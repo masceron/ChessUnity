@@ -5,6 +5,8 @@ using UnityEngine.UI;
 namespace UX.UI.Ingame
 {
     public delegate void VoidDelegates();
+
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GameActions: MonoBehaviour
     {
         [SerializeField] private CanvasGroup gameAction;

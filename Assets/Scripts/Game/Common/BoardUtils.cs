@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Game.Action.Internal;
-using Game.Data.Pieces;
 using Game.Effects;
 using Game.Managers;
+using Game.Piece;
 using Game.Piece.PieceLogic;
 using UnityEngine;
 

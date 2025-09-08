@@ -2,7 +2,6 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Data.Pieces;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Game.Action.Internal.Pending;
 using Game.Action.Skills;
-using Game.Data.Pieces;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic;

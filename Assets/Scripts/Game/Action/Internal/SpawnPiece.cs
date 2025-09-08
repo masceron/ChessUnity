@@ -1,5 +1,5 @@
-﻿using Game.Data.Pieces;
-using Game.Managers;
+﻿using Game.Managers;
+using Game.Piece;
 
 namespace Game.Action.Internal
 {

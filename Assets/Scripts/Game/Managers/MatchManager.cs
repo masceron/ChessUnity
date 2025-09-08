@@ -4,12 +4,14 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Data.Pieces;
-using Game.Save;
+using Game.Piece;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;
+using UX.UI.Ingame.EditLineup;
 using static Game.Common.BoardUtils;
+using GameConfig = Game.Save.Stage.GameConfig;
+using LineupConfig = Game.Save.Stage.LineupConfig;
 using Random = UnityEngine.Random;
 
 namespace Game.Managers
@@ -54,7 +56,9 @@ namespace Game.Managers
             MakeGame(cfg);
             MakeBoard();
             
-            StartGame(new LineupConfig(new List<PieceConfig>(Config.PieceConfig), new List<PieceConfig>()));
+            //StartGame(new LineupConfig(new List<PieceConfig>(Config.PieceConfig).ToArray(), Array.Empty<PieceConfig>()));
+            UIManager.Ins.Load(CanvasID.LineupEdit);
+            FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
 
         public void StartGame(LineupConfig cfg)

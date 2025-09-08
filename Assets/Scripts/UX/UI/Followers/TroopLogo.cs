@@ -1,5 +1,5 @@
-﻿using Data.UI.UIObject3D.Scripts;
-using Game.Data.Pieces;
+﻿using Game.ScriptableObjects;
+using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,9 +9,9 @@ namespace UX.UI.Followers
     public class TroopLogo: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] public UIObject3D model;
-        private PieceObject obj;
+        private PieceInfo obj;
 
-        public void Load(PieceObject piece)
+        public void Load(PieceInfo piece)
         {
             obj = piece;
             model.ObjectPrefab = piece.prefab.transform;

@@ -4,7 +4,6 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Skills;
-using Game.Data.Pieces;
 using Game.Effects;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;

@@ -1,6 +1,5 @@
 ﻿using Game.Action.Skills;
 using Game.Common;
-using Game.Data.Pieces;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commanders;
 using UnityEngine;
