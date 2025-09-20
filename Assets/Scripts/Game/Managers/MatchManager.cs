@@ -56,9 +56,10 @@ namespace Game.Managers
             MakeGame(cfg);
             MakeBoard();
             
-            //StartGame(new LineupConfig(new List<PieceConfig>(Config.PieceConfig).ToArray(), Array.Empty<PieceConfig>()));
-            UIManager.Ins.Load(CanvasID.LineupEdit);
-            FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
+            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()));
+            
+            //UIManager.Ins.Load(CanvasID.LineupEdit);
+            //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
 
         public void StartGame(LineupConfig cfg)

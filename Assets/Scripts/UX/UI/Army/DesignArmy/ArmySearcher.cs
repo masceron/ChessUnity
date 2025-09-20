@@ -108,7 +108,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 var result = lastSearchResult.Where(p => 
                     pieceFilters.Contains(p.rank) && 
-                    Localizer.GetText("piece_name", p.key, null).Contains(start)).ToList();
+                    Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
 
                 if (result.SequenceEqual(lastSearchResult)) return;
                 lastSearchResult = result;
@@ -117,7 +117,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 lastSearchResult = Data.Values.Where(p => 
                     pieceFilters.Contains(p.rank) &&  
-                    Localizer.GetText("piece_name", p.key, null).Contains(start)).ToList();
+                    Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
             }
             
             lastKeyword = start;
