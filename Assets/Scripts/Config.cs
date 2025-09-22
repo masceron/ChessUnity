@@ -14,7 +14,8 @@ public static class Config
         new PieceConfig(PieceType.Pufferfish, false, 70),
         new PieceConfig(PieceType.Lionfish, false, 99),
         new PieceConfig(PieceType.Seahorse, false, 55),
-        new PieceConfig(PieceType.Remora, false, 91)
+        new PieceConfig(PieceType.Remora, false, 91),
+        new PieceConfig(PieceType.MedicalLeech, false, 1)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()

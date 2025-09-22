@@ -59,8 +59,6 @@ ExportedObj/
 *.pidb.meta
 *.pdb.meta
 *.mdb.meta
-*.meta
-.idea/
 
 # Unity3D generated file on crash reports
 sysinfo.txt
@@ -99,3 +97,4 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+.idea/
