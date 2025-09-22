@@ -99,7 +99,8 @@ namespace Game.Managers
                 PieceType.SeaStar => new SeaStar(piece),
                 PieceType.Anglerfish => new Anglerfish(piece),
                 PieceType.Remora => new Remora(piece),
-                PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.HorseLeech => new HorseLeech(piece),
+               // PieceType.MedicalLeech => new MedicalLeech(piece),
                 _ => null
             };
 
