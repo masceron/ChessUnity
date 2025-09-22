@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: effect_name_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 40b82d547ea6737438be00e50f1a32ff, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 72429342720
+    m_Localized: Carapace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72467091456
+    m_Localized: Evasion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72479674368
+    m_Localized: Surpass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72479674369
+    m_Localized: Slow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868672
+    m_Localized: Blinded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868673
+    m_Localized: Ambush
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868674
+    m_Localized: Tidal Protector (Marked)
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868675
+    m_Localized: Luring Radiance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868676
+    m_Localized: Tidal Protector
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868677
+    m_Localized: Demolisher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868678
+    m_Localized: Vengeful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868679
+    m_Localized: Stunned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868680
+    m_Localized: Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868681
+    m_Localized: Hardened Shield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868682
+    m_Localized: Piercing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868683
+    m_Localized: Slayer's Coin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868684
+    m_Localized: Snapping Strike
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868685
+    m_Localized: Archelon's Draw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868686
+    m_Localized: Thalassos Shielder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868687
+    m_Localized: Dominator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868688
+    m_Localized: Poison
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868689
+    m_Localized: Swordfish's Attack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868690
+    m_Localized: Bleeding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868691
+    m_Localized: Bound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868692
+    m_Localized: Vengeful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868693
+    m_Localized: Hiding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868694
+    m_Localized: Camouflage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868695
+    m_Localized: Taunted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868696
+    m_Localized: Consume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868697
+    m_Localized: Extremophile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868698
+    m_Localized: Haste
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72483868699
+    m_Localized: Marked (Remora)
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

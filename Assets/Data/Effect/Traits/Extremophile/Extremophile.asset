@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
+  m_Name: Extremophile
+  m_EditorClassIdentifier: 
+  typeName: 30
+  category: 2
+  stack: 1
+  priority: 2
+  activeWhen: 5
+  icon: {fileID: 2800000, guid: b9e0085634ed65c4e8258bdd899a1967, type: 3}
+  effectName: Extremophile
+  description: This piece cannot be affected by any Buff or Debuff.
+  key: effect_extremophile

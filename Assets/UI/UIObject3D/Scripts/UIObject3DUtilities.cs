@@ -10,6 +10,7 @@ namespace UI.UIObject3D.Scripts
 {
     public static class UIObject3DUtilities
     {
+        [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
         public static Vector3 NormalizeRotation(Vector3 rotation)
         {            
             return new Vector3(NormalizeAngle(rotation.x), NormalizeAngle(rotation.y), NormalizeAngle(rotation.z));

@@ -1,4 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using Game.Action.Internal;
+using Game.Effects;
+using Game.Managers;
+using Game.Piece;
+using Game.Piece.PieceLogic;
 using UnityEngine;
 
 namespace Game.Common
@@ -51,12 +59,12 @@ namespace Game.Common
  
         public static int PushWhite(int pos)
         {
-            return pos + MaxLength;
+            return pos - MaxLength;
         }
 
         public static int PushBlack(int pos)
         {
-            return pos - MaxLength;
+            return pos + MaxLength;
         }
 
         public static int ClampDown(int dimension)
@@ -85,6 +93,115 @@ namespace Game.Common
             var file = pos % startingSize.y;
 
             return IndexOf(rank + (MaxLength - startingSize.x) / 2, file + (MaxLength - startingSize.y) / 2);
+        }
+
+        public static PieceLogic PieceOn(int pos)
+        {
+            return MatchManager.Ins.GameState.PieceBoard[pos];
+        }
+
+        public static bool IsActive(int pos)
+        {
+            return MatchManager.Ins.GameState.ActiveBoard[pos];
+        }
+
+        public static bool ColorOfSquare(int pos)
+        {
+            return MatchManager.Ins.GameState.SquareColor[pos];
+        }
+
+        public static bool ColorOfPiece(int pos)
+        {
+            return PieceOn(pos).Color;
+        }
+
+        public static void FlipPieceColor(int pos)
+        {
+            var gameState = MatchManager.Ins.GameState;
+            gameState.PieceBoard[pos].Color = !gameState.PieceBoard[pos].Color;
+        }
+
+        public static void SetCooldown(int pos, sbyte cd)
+        {
+            MatchManager.Ins.GameState.PieceBoard[pos].SkillCooldown = cd;
+        }
+
+        public static PieceLogic[] PieceBoard()
+        {
+            return MatchManager.Ins.GameState.PieceBoard;
+        }
+
+        public static BitArray ActiveBoard()
+        {
+            return MatchManager.Ins.GameState.ActiveBoard;
+        }
+
+        public static bool OurSide()
+        {
+            return MatchManager.Ins.GameState.OurSide;
+        }
+
+        public static bool SideToMove()
+        {
+            return MatchManager.Ins.GameState.SideToMove;
+        }
+
+        public static ObservableCollection<PieceConfig> WhiteCaptured()
+        {
+            return MatchManager.Ins.GameState.WhiteCaptured;
+        }
+
+        public static ObservableCollection<PieceConfig> BlackCaptured()
+        {
+            return MatchManager.Ins.GameState.BlackCaptured;
+        }
+
+        public static void Move(ushort from, ushort to)
+        {
+            MatchManager.Ins.GameState.Move(from, to);
+        }
+
+        public static void FlipSideToMove()
+        {
+            MatchManager.Ins.GameState.FlipSideToMove();
+        }
+
+        public static void NotifyMainAction()
+        {
+            MatchManager.Ins.GameState.Notify();
+        }
+
+        public static void NotifyEnd()
+        {
+            MatchManager.Ins.GameState.NotifyEnd();
+        }
+
+        public static void NotifyInternalAction(Action.Action action)
+        {
+            if (action is ApplyEffect applyEffect)
+            {
+                MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
+            }
+        }
+
+        public static void NotifyOnMoveGen(List<Action.Action> actions)
+        {
+            MatchManager.Ins.GameState.NotifyOnMoveGen(actions);
+        }
+
+        public static void AddObserver(Effect effect)
+        {
+            MatchManager.Ins.GameState.AddObserver(effect);
+        }
+
+        public static void RemoveObserver(Effect effect)
+        {
+            MatchManager.Ins.GameState.RemoveObserver(effect);
+        }
+
+        public static void SetMainAction(Action.Action action)
+        {
+            MatchManager.Ins.GameState.MainAction = action;
         }
     }
 }

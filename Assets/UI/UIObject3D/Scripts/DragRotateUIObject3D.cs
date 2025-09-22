@@ -9,6 +9,7 @@ namespace UI.UIObject3D.Scripts
 {
     [RequireComponent(typeof(UIObject3D))]
     [AddComponentMenu("UI/UIObject3D/Drag Rotate UIObject3D")]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DragRotateUIObject3D : MonoBehaviour
     {
         [Header("Speed")]
@@ -78,8 +79,8 @@ namespace UI.UIObject3D.Scripts
 
             if (speed != Vector3.zero)
             {
-                if (RotateX) UIObject3D.targetContainer.Rotate(Camera.main.transform.up * (speed.x * RotationSpeed), Space.World);
-                if (RotateY) UIObject3D.targetContainer.Rotate(Camera.main.transform.right * (speed.y * RotationSpeed), Space.World);
+                if (RotateX) UIObject3D.targetContainer.Rotate(Camera.main!.transform.up * (speed.x * RotationSpeed), Space.World);
+                if (RotateY) UIObject3D.targetContainer.Rotate(Camera.main!.transform.right * (speed.y * RotationSpeed), Space.World);
                 UIObject3D.TargetRotation = UIObject3D.targetContainer.localRotation.eulerAngles;
             }
 

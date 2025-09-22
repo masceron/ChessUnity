@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
+  m_Name: Velkaris
+  m_EditorClassIdentifier: 
+  pieceName: velkaris
+  type: 0
+  prefab: {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
+  rank: 7
+  moveRange: 2
+  attackRange: 2
+  movePattern: {fileID: 0}
+  capturePattern: {fileID: 0}
+  key: piece_velkaris
+  hasSkill: 1
+  normalSkillCooldown: 0

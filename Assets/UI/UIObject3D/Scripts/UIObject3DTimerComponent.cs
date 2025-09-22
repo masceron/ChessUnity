@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace UI.UIObject3D.Scripts
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3DTimerComponent : MonoBehaviour
     {
         private readonly List<DelayedAction> delayedActions = new();
@@ -44,7 +45,7 @@ namespace UI.UIObject3D.Scripts
             }
 
             // stop calling update if we have nothing scheduled (DelayedCall will re-enable this)
-            if (delayedActions.Count == 0) this.enabled = false;
+            if (delayedActions.Count == 0) enabled = false;
         }
     }
 

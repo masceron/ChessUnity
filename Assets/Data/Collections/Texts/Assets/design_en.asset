@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: design_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 77911d5ba1910f948ae8671b68076d14, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 1405300356192927981
+  m_TableData:
+  - m_Id: 45627740160
+    m_Localized: Army setup incomplete. Are you sure you want to quit? All progress
+      will be lost.
+    m_Metadata:
+      m_Items:
+      - rid: 1405300356192927981
+  - m_Id: 502186119168
+    m_Localized: Army name cannot be empty.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 586764259328
+    m_Localized: An army with this name already exists. Do you want to overwrite?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 27130173853696
+    m_Localized: Choose board size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59463195168768
+    m_Localized: Create new army
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59713901301760
+    m_Localized: Armies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59745174032384
+    m_Localized: Army
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59784504020992
+    m_Localized: Saved Armies
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 1405300356192927981
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 45627740160

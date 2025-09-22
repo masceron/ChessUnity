@@ -1,0 +1,88 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: game Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: game
+  m_TableCollectionNameGuidString: c889e11e8d1856c43984b8cc52c380be
+  m_Entries:
+  - m_Id: 69166174208
+    m_Key: rank_commander
+    m_Metadata:
+      m_Items: []
+  - m_Id: 103479775232
+    m_Key: rank_champion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 135809470464
+    m_Key: rank_elite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 160824299520
+    m_Key: rank_common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 181741293568
+    m_Key: rank_summoned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 209914433536
+    m_Key: rank_construct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 270849282048
+    m_Key: rank_swarm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2092737499136
+    m_Key: relic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2220206592000
+    m_Key: relics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2319724843008
+    m_Key: troop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2343913394176
+    m_Key: troops
+    m_Metadata:
+      m_Items: []
+  - m_Id: 316033262948352
+    m_Key: move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 316064544067584
+    m_Key: capture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2482791394578432
+    m_Key: load_from_saved_armies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2484470571601920
+    m_Key: start
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1405300356192927991
+  references:
+    version: 2
+    RefIds:
+    - rid: 1405300356192927991
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1754893765283

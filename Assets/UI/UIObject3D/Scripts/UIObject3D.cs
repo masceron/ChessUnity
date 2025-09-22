@@ -14,6 +14,7 @@ namespace UI.UIObject3D.Scripts
 {
     [RequireComponent(typeof(RectTransform)), DisallowMultipleComponent, ExecuteInEditMode]
     [AddComponentMenu("UI/UIObject3D/UIObject3D")]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3D : MonoBehaviour
     {
         [Header("Target"), SerializeField]
@@ -858,7 +859,7 @@ namespace UI.UIObject3D.Scripts
         private void UpdateTargetPositioningAndScale()
         {
             if (!_target) return;
-            var renderer = _target.GetComponentInChildren<Renderer>();
+            var componentInChildren = _target.GetComponentInChildren<Renderer>();
 
             _target.name = "Target";
 
@@ -892,13 +893,13 @@ namespace UI.UIObject3D.Scripts
             }
 
 
-            if (renderer)
+            if (componentInChildren)
             {
                 if (initial)
                 {
                     var storedPosition = _target.transform.localPosition;
                     _target.transform.position = Vector3.zero;
-                    targetBounds = new Bounds(renderer.bounds.center, renderer.bounds.size);
+                    targetBounds = new Bounds(componentInChildren.bounds.center, componentInChildren.bounds.size);
                     _target.transform.localPosition = storedPosition;
 
                     // debug code to visualize the target container

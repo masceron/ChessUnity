@@ -13,6 +13,7 @@ using UnityEngine;
 namespace UI.UIObject3D.Scripts
 {
     [ExecuteInEditMode]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3DSceneManager : MonoBehaviour
     {
 

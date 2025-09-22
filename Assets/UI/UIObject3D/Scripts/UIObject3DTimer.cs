@@ -6,6 +6,7 @@ using Object = UnityEngine.Object;
 
 namespace UI.UIObject3D.Scripts
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     internal class DelayedEditorAction
     {
         internal readonly double TimeToExecute;
@@ -22,6 +23,7 @@ namespace UI.UIObject3D.Scripts
         }
     }
 
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class UIObject3DTimer
     {
         private static UIObject3DTimerComponent _timerComponent;

@@ -9,6 +9,7 @@ namespace UI.UIObject3D.Scripts
 {
     [RequireComponent(typeof(UIObject3D)), ExecuteInEditMode]
     [AddComponentMenu("UI/UIObject3D/UIObject3D Light")]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3DLight : MonoBehaviour
     {
         [SerializeField]

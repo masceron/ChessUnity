@@ -10,6 +10,7 @@ namespace UI.UIObject3D.Scripts
 {
     [RequireComponent(typeof(UIObject3D))]
     [AddComponentMenu("UI/UIObject3D/Rotate UIObject3D")]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RotateUIObject3D : MonoBehaviour
     {
         public enum eRotationMode

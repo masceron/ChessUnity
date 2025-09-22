@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: effect_description Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: effect_description
+  m_TableCollectionNameGuidString: 2c6c3ecd473618646acdf55cffc2ca99
+  m_Entries:
+  - m_Id: 7428760408064
+    m_Key: effect_carapace_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7567054999552
+    m_Key: effect_evasion_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7670192934912
+    m_Key: effect_surpass_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7868218609664
+    m_Key: effect_slow_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 7953300066304
+    m_Key: effect_blinded_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8149983563776
+    m_Key: effect_ambush_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8225732694016
+    m_Key: effect_velkaris_marked_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8318485532672
+    m_Key: effect_siren_debuffer_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8422693015552
+    m_Key: effect_velkaris_marker_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 8500119867392
+    m_Key: effect_demolisher_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9143773564928
+    m_Key: effect_electric_eel_vengeful_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9236144721920
+    m_Key: effect_stunned_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9307816988672
+    m_Key: effect_shield_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9369636835328
+    m_Key: effect_hardened_shield_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9513396604928
+    m_Key: effect_piercing_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 9587715477504
+    m_Key: effect_slayer_coin_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10143875993600
+    m_Key: effect_snapping_strike_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10262931312640
+    m_Key: effect_archelon_draw_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10425703862272
+    m_Key: effect_thalassos_shielder_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10576438759424
+    m_Key: effect_dominator_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10669455839232
+    m_Key: effect_poison_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10908686356480
+    m_Key: effect_swordfish_capture_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10981658857472
+    m_Key: effect_bleeding_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11354700255232
+    m_Key: effect_bound_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11403417096192
+    m_Key: effect_lionfish_vengeful_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11551954178048
+    m_Key: effect_moray_eel_camouflage_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11690622062592
+    m_Key: effect_camouflage_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11753490485248
+    m_Key: effect_taunted_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11860487180288
+    m_Key: effect_consume_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12019119951872
+    m_Key: effect_extremophile_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12098706870272
+    m_Key: effect_haste_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12293309992960
+    m_Key: effect_remora_marked_description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1405300356192927996
+  references:
+    version: 2
+    RefIds:
+    - rid: 1405300356192927996
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1754894825154
