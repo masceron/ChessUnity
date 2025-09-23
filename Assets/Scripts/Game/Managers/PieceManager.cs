@@ -33,5 +33,6 @@ namespace Game.Managers
             pieces[from] = null;
             pieces[to].Move(RankOf(to), FileOf(to));
         }
+        
     }
 }
