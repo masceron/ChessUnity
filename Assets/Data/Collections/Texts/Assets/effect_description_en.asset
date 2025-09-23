@@ -128,9 +128,9 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10981658857472
-    m_Localized: This piece will die after making {TurnLeftToDie} more moves. This
-      effect will dissappear if this piece stays still after {6 - TurnSinceLastMove}
-      more turns.
+    m_Localized: 'This piece will die after making {TurnLeftToDie} more moves. This
+      effect will disappear if this piece stays still for 6 turns. Time stayed still:
+      {TurnSinceLastMove} turn(s).'
     m_Metadata:
       m_Items:
       - rid: 1405300356192928012

@@ -11,7 +11,6 @@ namespace Game.Piece.PieceLogic.Summon
         public HorseLeech(PieceConfig cfg) : base(cfg, KingMoves.Quiets, HorseLeechMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
-            //ActionManager.ExecuteImmediately(new ApplyEffect(new HorseLeechAttack(this)));
         }
     }
 }

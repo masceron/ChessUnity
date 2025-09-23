@@ -1,8 +1,5 @@
-using System.Text.RegularExpressions;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using Game.Effects.Others;
-using Game.Managers;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Captures

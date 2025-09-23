@@ -55,7 +55,6 @@ namespace Game.Effects
         Extremophile,
         Haste,
         RemoraMarked,
-        HorseLeechAttack
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
