@@ -101,6 +101,7 @@ namespace Game.Managers
                 PieceType.Remora => new Remora(piece),
                 PieceType.MedicalLeech => new MedicalLeech(piece),
                 PieceType.HermitCrab => new HermitCrab(piece),
+                PieceType.SeaTurtle => new SeaTurtle(piece),
                 _ => null
             };
 

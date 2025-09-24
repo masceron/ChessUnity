@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PiecesData
   m_EditorClassIdentifier: 
   piecesData:
-    keys: 000102030405060708090a0b0c0d0e0f1011121314
+    keys: 000102030405060708090a0b0c0d0e0f101112131415
     values:
     - {fileID: 11400000, guid: 639e14683bd7a5c46a18d66c1f5258bd, type: 2}
     - {fileID: 11400000, guid: 1bf88f5dd47bc934eb82c9afd3e057f3, type: 2}
@@ -36,3 +36,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 9b8b1a4e372053d4a908dfa34b1ef736, type: 2}
     - {fileID: 11400000, guid: cb13b4c06897a9440a6989da4dd5d3f3, type: 2}
     - {fileID: 11400000, guid: de99bab94f36b91469776b21142f8c56, type: 2}
+    - {fileID: 11400000, guid: 6031a2180272b87429d16a8056b301b1, type: 2}
