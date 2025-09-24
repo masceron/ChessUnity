@@ -100,6 +100,7 @@ namespace Game.Managers
                 PieceType.Anglerfish => new Anglerfish(piece),
                 PieceType.Remora => new Remora(piece),
                 PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.HermitCrab => new HermitCrab(piece),
                 _ => null
             };
 
@@ -152,6 +153,15 @@ namespace Game.Managers
             PieceBoard[t] = PieceBoard[f];
             PieceBoard[t].Pos = t;
             PieceBoard[f] = null;
+        }
+        
+        public void Swap(ushort a, ushort b)
+        {
+            var pieceB = PieceBoard[b];
+            PieceBoard[b] = PieceBoard[a];
+            PieceBoard[b].Pos = b;
+            PieceBoard[a] = pieceB;
+            PieceBoard[a].Pos = a;
         }
 
         public void FlipSideToMove()

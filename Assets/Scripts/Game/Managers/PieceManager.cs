@@ -33,5 +33,13 @@ namespace Game.Managers
             pieces[from] = null;
             pieces[to].Move(RankOf(to), FileOf(to));
         }
+        public void Swap(int a, int b)
+        {
+             var pieceA = pieces[a];
+            pieces[a] = pieces[b];
+            pieces[b] = pieceA;
+            pieces[a].Move(RankOf(a), FileOf(a));
+            pieces[b].Move(RankOf(b), FileOf(b));
+        }
     }
 }

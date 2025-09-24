@@ -14,14 +14,25 @@ namespace Game.Action.Skills
         }
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
-            PieceManager.Ins.Move(Target, Maker);
+           PieceManager.Ins.Swap(Maker, Target);
         }
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            MatchManager.Ins.GameState.Move(Target, Maker);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            // var board = PieceBoard();
+            // int a = Maker;
+            // int b = Target;
+
+            // var pieceA = board[(ushort)a];
+            // var pieceB = board[(ushort)b];
+
+            // board[(ushort)a] = pieceB;
+            // if (pieceB != null) pieceB.Pos = (ushort)a;
+            // board[(ushort)b] = pieceA;
+            // if (pieceA != null) pieceA.Pos = (ushort)b;
+            // SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+
+            MatchManager.Ins.GameState.Swap(Maker, Target);
+            SetCooldown(Target, ((IPieceWithSkill)PieceOn(Target)).TimeToCooldown);
         }
     }
 }
