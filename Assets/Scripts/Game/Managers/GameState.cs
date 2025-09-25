@@ -101,10 +101,11 @@ namespace Game.Managers
                 PieceType.Remora => new Remora(piece),
                 PieceType.MedicalLeech => new MedicalLeech(piece),
                 PieceType.Archerfish => new Archerfish(piece),
+                PieceType.MoorishIdols => new MoorishIdols(piece),
                 _ => null
             };
 
-            PieceBoard[piece.Index] = p;
+            PieceBoard[piece.Index] = p;    
         }
 
         public void EffectCountdown()

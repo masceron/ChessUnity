@@ -5,9 +5,9 @@ public static class Config
 {
     public static readonly List<PieceConfig> PieceConfigWhite = new()
     {
-        new PieceConfig(PieceType.Velkaris, false, 140),
-        /*new PieceConfig(PieceType.SeaUrchin, false, 100),
-        new PieceConfig(PieceType.ElectricEel, false, 92),
+/*        new PieceConfig(PieceType.Velkaris, false, 140),
+        new PieceConfig(PieceType.SeaUrchin, false, 103),*/
+        /*new PieceConfig(PieceType.ElectricEel, false, 92),
         new PieceConfig(PieceType.Chrysos, false, 88),
         new PieceConfig(PieceType.Archelon, false, 78),
         new PieceConfig(PieceType.Thalassos, false, 65),
@@ -16,13 +16,14 @@ public static class Config
         new PieceConfig(PieceType.Seahorse, false, 55),
         new PieceConfig(PieceType.Remora, false, 91),
         new PieceConfig(PieceType.MedicalLeech, false, 1)*/
-        new PieceConfig(PieceType.Archerfish, false , 100)
+        new PieceConfig(PieceType.MoorishIdols, false , 100)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        //new PieceConfig(PieceType.Barracuda, true, 113),
-        new PieceConfig(PieceType.GuidingSiren, true, 113),
+        new PieceConfig(PieceType.MoorishIdols, true, 87),
+/*        new PieceConfig(PieceType.Barracuda, true, 102),
+        new PieceConfig(PieceType.GuidingSiren, true, 113),*/
         /*new PieceConfig(PieceType.FlyingFish, true, 112),
         new PieceConfig(PieceType.Anomalocaris, true, 75),
         new PieceConfig(PieceType.Swordfish, true, 98),

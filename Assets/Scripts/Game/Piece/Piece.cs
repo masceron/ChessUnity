@@ -27,6 +27,7 @@ namespace Game.Piece
         Remora,
         MedicalLeech,
         Archerfish,
+        MoorishIdols
     }
 
     public enum PieceRank : byte

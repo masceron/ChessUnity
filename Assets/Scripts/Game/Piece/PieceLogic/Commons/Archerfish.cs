@@ -1,5 +1,6 @@
 using Game.Action.Skills;
 using Game.Movesets;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Commons
 {
@@ -10,7 +11,24 @@ namespace Game.Piece.PieceLogic.Commons
         {
             Skills = list =>
             {
-                if (SkillCooldown == 0) list.Add(new ArcherfishActive(Pos));
+                if (SkillCooldown > 0) return;
+                //Find all enemy pieces within 4 cells
+                var (trank, file) = RankFileOf(Pos);
+                for (var i = -4; i <= 4; i++)
+                {
+                    var rankOff = trank + i;
+                    if (!VerifyBounds(rankOff)) continue;
+                    for (var j = -4; j <= 4; j++)
+                    {
+                        var fileOff = file + j;
+                        if (!VerifyBounds(fileOff)) continue;
+                        var tpos = IndexOf(rankOff, fileOff);
+                        var pieceAt = PieceOn(tpos);
+                        if (pieceAt == null || pieceAt.Color == Color) continue;
+                        list.Add(new ArcherfishActive(Pos, tpos));
+                    }
+                }
+
             };
         }
 
