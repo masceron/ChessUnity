@@ -55,6 +55,8 @@ namespace Game.Effects
         Extremophile,
         Haste,
         RemoraMarked,
+        FrenziedVeteran,
+        TrueBite
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

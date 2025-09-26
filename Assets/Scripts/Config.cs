@@ -16,6 +16,7 @@ public static class Config
         // new PieceConfig(PieceType.Seahorse, false, 55),
         // new PieceConfig(PieceType.Remora, false, 91),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
+        new PieceConfig(PieceType.Megalodon, false, 93),
         new PieceConfig(PieceType.HorseLeech, false, 91)
     };
 

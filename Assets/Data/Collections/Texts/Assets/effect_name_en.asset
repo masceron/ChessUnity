@@ -146,6 +146,10 @@ MonoBehaviour:
     m_Localized: Marked (Remora)
     m_Metadata:
       m_Items: []
+  - m_Id: 16679593133789184
+    m_Localized: Frenzied Veteran
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
