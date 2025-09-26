@@ -3,6 +3,10 @@ using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Common;
 using static Game.Common.BoardUtils;
+using Game.Effects;
+using Game.Effects.Debuffs;
+using System.Linq;
+using Game.Piece;
 
 namespace Game.Movesets
 {
@@ -93,6 +97,8 @@ namespace Game.Movesets
                 var p = PieceOn(index);
                 if (p == null) return true;
                 if (!IsActive(index)) return false;
+                if (!p.Effects.Any(e => e.Category == EffectCategory.Debuff)) return false;
+                if (p.PieceRank != PieceRank.Construct && !p.Effects.Any(e => e.Category == EffectCategory.Debuff)) return false;
                 if (p.Color != color)
                 {
                     list.Add(new NormalCapture(pos, index));

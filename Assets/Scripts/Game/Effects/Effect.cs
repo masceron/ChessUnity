@@ -54,7 +54,8 @@ namespace Game.Effects
         Solitary,
         Extremophile,
         Haste,
-        RemoraMarked
+        RemoraMarked,
+        SeaTurtleCountdown
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

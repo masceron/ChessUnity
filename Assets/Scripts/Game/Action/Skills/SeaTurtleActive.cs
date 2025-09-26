@@ -5,7 +5,8 @@ using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Action;
-
+using Game.Effects.Others;
+using UnityEngine;
 
 
 namespace Game.Action.Skills
@@ -23,7 +24,7 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(PieceOn(Maker))));
+            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, PieceOn(Maker))));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
