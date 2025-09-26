@@ -12,6 +12,7 @@ namespace Game.Piece.PieceLogic.Commons
         public MoorishIdols(PieceConfig cfg) : base(cfg, UpDoorMoves.Quiets, UpDoorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new FreeMovement(this)));
         }
     }
 }
