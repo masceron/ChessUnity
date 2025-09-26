@@ -20,6 +20,7 @@ namespace Game.Piece.PieceLogic
         public sbyte SkillCooldown;
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
+        public readonly List<int> PreviousMoves;
         public readonly PieceType Type;
         private readonly bool hasSkill;
 
@@ -38,6 +39,7 @@ namespace Game.Piece.PieceLogic
             Color = cfg.Color;
             Pos = cfg.Index;
             Effects = new List<Effect>();
+            PreviousMoves = new List<int>();
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
@@ -56,7 +58,6 @@ namespace Game.Piece.PieceLogic
             Quiets = quiets;
             this.captures = captures;
         }
-
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;

@@ -100,6 +100,7 @@ namespace Game.Managers
                 PieceType.Anglerfish => new Anglerfish(piece),
                 PieceType.Remora => new Remora(piece),
                 PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.HourglassJelly => new HourglassJelly(piece),
                 _ => null
             };
 
@@ -151,6 +152,7 @@ namespace Game.Managers
         {
             PieceBoard[t] = PieceBoard[f];
             PieceBoard[t].Pos = t;
+            PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
         }
 
