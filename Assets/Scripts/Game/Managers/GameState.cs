@@ -101,6 +101,7 @@ namespace Game.Managers
                 PieceType.Remora => new Remora(piece),
                 PieceType.MedicalLeech => new MedicalLeech(piece),
                 PieceType.KelpBass => new KelpBass(piece),
+                PieceType.HourglassJelly => new HourglassJelly(piece),
                 _ => null
             };
 
@@ -152,6 +153,7 @@ namespace Game.Managers
         {
             PieceBoard[t] = PieceBoard[f];
             PieceBoard[t].Pos = t;
+            PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
         }
 
