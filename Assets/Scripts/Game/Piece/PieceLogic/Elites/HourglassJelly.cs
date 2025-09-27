@@ -2,7 +2,6 @@ using UnityEngine;
 using Game.Action.Skills;
 using Game.Movesets;
 using Game.Common;
-using Game.Managers;
 namespace Game.Piece.PieceLogic.Elites
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -16,16 +15,15 @@ namespace Game.Piece.PieceLogic.Elites
             Skills = list =>
             {
                 if (SkillCooldown != 0) { return; }
-                (int rank, int file) = BoardUtils.RankFileOf(Pos);
+                var (rank, file) = BoardUtils.RankFileOf(Pos);
 
-                for (int x = rank - 4; x <= rank + 4; ++x){
-                    for (int y = file - 4; y <= file + 4; ++y){
-                        PieceLogic piece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
-                        if (piece != null && piece.Equals(this) == false && piece.PreviousMoves.Count > 0){
-                            Debug.Log("Add new candidate");
-                            // Debug.Log(PieceManager.Ins.)
-                            list.Add(new HourglassJellyActive(Pos, piece.Pos));
-                        }
+                for (var x = rank - 4; x <= rank + 4; ++x){
+                    for (var y = file - 4; y <= file + 4; ++y){
+                        var piece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
+                        if (piece == null || piece.Equals(this) || piece.PreviousMoves.Count <= 0) continue;
+                        Debug.Log("Add new candidate");
+                        // Debug.Log(PieceManager.Ins.)
+                        list.Add(new HourglassJellyActive(Pos, piece.Pos));
                     }
                 }
             };

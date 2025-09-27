@@ -25,8 +25,7 @@ namespace Game.Piece
         SeaStar,
         Anglerfish,
         Remora,
-        MedicalLeech,
-        KelpBass
+        KelpBass,
         MedicalLeech,
         HourglassJelly
     }
