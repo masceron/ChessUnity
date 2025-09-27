@@ -963,8 +963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acb91c2f57abfa4fae28da9de268622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveableMat: {fileID: 2100000, guid: 8635a6542fb3eb24aa38d31deea59e91, type: 2}
-  selectionMat: {fileID: 2100000, guid: b7f6ac6fd19f4b64aa4228d08ff8618e, type: 2}
+  moveableMat: {fileID: 0}
+  selectionMat: {fileID: 0}
 --- !u!4 &2086704058
 Transform:
   m_ObjectHideFlags: 0

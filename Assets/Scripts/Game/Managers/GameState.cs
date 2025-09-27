@@ -100,6 +100,7 @@ namespace Game.Managers
                 PieceType.Anglerfish => new Anglerfish(piece),
                 PieceType.Remora => new Remora(piece),
                 PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.KelpBass => new KelpBass(piece),
                 _ => null
             };
 

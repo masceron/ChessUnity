@@ -25,7 +25,8 @@ namespace Game.Piece
         SeaStar,
         Anglerfish,
         Remora,
-        MedicalLeech
+        MedicalLeech,
+        KelpBass
     }
 
     public enum PieceRank : byte
@@ -69,6 +70,20 @@ namespace Game.Piece
             file = fileTo;
             
             Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
+        }
+
+        public void SpecialMove(int rankTo, int fileTo)
+        {
+            rank = rankTo;
+            file = fileTo;
+
+            Vector3 initialPos = transform.position;
+
+            Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f).OnComplete(() =>
+                {
+                    Tween.Position(transform, initialPos, 0.2f);
+                }
+            );
         }
     }
 }

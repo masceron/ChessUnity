@@ -33,5 +33,16 @@ namespace Game.Managers
             pieces[from] = null;
             pieces[to].Move(RankOf(to), FileOf(to));
         }
+
+        public void SpecialMove(int from, int to)
+        {
+            if (pieces[from] == null) return;
+
+            int rankTo = RankOf(to);
+            int fileTo = FileOf(to);
+
+            pieces[from].SpecialMove(rankTo, fileTo);
+        }
+        
     }
 }

@@ -30,5 +30,6 @@ public static class Config
         new PieceConfig(PieceType.SeaStar, true, 97),
         new PieceConfig(PieceType.SeaStar, true, 90),
         new PieceConfig(PieceType.Anglerfish, true, 93),
+        new PieceConfig(PieceType.KelpBass, true, 69)
     };
 }
