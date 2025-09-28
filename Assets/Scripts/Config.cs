@@ -16,19 +16,18 @@ public static class Config
         new PieceConfig(PieceType.Seahorse, false, 55),
         new PieceConfig(PieceType.Remora, false, 91),
         new PieceConfig(PieceType.MedicalLeech, false, 1)*/
-        new PieceConfig(PieceType.MoorishIdols, false , 100)
+        new PieceConfig(PieceType.Helicoprion, false , 66)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
         new PieceConfig(PieceType.MoorishIdols, true, 87),
-/*        new PieceConfig(PieceType.Barracuda, true, 102),
-        new PieceConfig(PieceType.GuidingSiren, true, 113),*/
-        /*new PieceConfig(PieceType.FlyingFish, true, 112),
-        new PieceConfig(PieceType.Anomalocaris, true, 75),
-        new PieceConfig(PieceType.Swordfish, true, 98),
-        new PieceConfig(PieceType.MorayEel, true, 95),
-        new PieceConfig(PieceType.Stingray, true, 96),
+        new PieceConfig(PieceType.GuidingSiren, true, 89),
+        new PieceConfig(PieceType.FlyingFish, true, 99),
+        new PieceConfig(PieceType.Anomalocaris, true, 101),
+        new PieceConfig(PieceType.Swordfish, true, 111),
+        new PieceConfig(PieceType.MorayEel, true, 113),
+        /*new PieceConfig(PieceType.Stingray, true, 96),
         new PieceConfig(PieceType.SeaStar, true, 97),
         new PieceConfig(PieceType.SeaStar, true, 90),
         new PieceConfig(PieceType.Anglerfish, true, 93),*/

@@ -56,6 +56,7 @@ namespace Game.Effects
         Haste,
         RemoraMarked,
         FreeMovement,
+        DestroyEnemyWhenMove
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
