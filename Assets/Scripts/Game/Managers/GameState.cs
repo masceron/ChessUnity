@@ -109,6 +109,8 @@ namespace Game.Managers
                 PieceType.SeaTurtle => new SeaTurtle(piece),
                 PieceType.HorseLeech => new HorseLeech(piece),
                 PieceType.Megalodon => new Megalodon(piece),
+                PieceType.Humilitas => new Humilitas(piece),
+                PieceType.StoneGrab => new StoneGrab(piece),
                 _ => null
             };
 
