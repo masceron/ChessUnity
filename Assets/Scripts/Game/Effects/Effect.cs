@@ -57,7 +57,7 @@ namespace Game.Effects
         RemoraMarked,
         HourglassJelly,
         FreeMovement,
-        DestroyEnemyWhenMove
+        DestroyEnemyWhenMove,
         SeaTurtleCountdown
     }
     
