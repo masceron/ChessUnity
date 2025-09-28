@@ -107,6 +107,8 @@ namespace Game.Managers
                 PieceType.Helicoprion => new Helicoprion(piece),
                 PieceType.HermitCrab => new HermitCrab(piece),
                 PieceType.SeaTurtle => new SeaTurtle(piece),
+                PieceType.HorseLeech => new HorseLeech(piece),
+                PieceType.Megalodon => new Megalodon(piece),
                 _ => null
             };
 

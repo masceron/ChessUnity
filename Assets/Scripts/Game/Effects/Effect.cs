@@ -58,7 +58,9 @@ namespace Game.Effects
         HourglassJelly,
         FreeMovement,
         DestroyEnemyWhenMove,
-        SeaTurtleCountdown
+        SeaTurtleCountdown,
+        FrenziedVeteran,
+        TrueBite
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
