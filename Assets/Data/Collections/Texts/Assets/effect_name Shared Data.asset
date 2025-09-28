@@ -143,6 +143,10 @@ MonoBehaviour:
     m_Key: effect_remora_marked
     m_Metadata:
       m_Items: []
+  - m_Id: 16679593133789184
+    m_Key: effect_frenziedveteran
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

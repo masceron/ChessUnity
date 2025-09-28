@@ -25,9 +25,16 @@ namespace Game.Piece
         SeaStar,
         Anglerfish,
         Remora,
-        MedicalLeech,
+        KelpBass,
+        MedicinalLeach,
+        HourglassJelly,
+        Archerfish,
+        MoorishIdols,
+        Helicoprion,
         HermitCrab,
-        SeaTurtle
+        SeaTurtle,
+        HorseLeech,
+        Megalodon
     }
 
     public enum PieceRank : byte

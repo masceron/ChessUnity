@@ -35,11 +35,10 @@ namespace Game.Managers
         }
         public void Swap(int a, int b)
         {
-             var pieceA = pieces[a];
-            pieces[a] = pieces[b];
-            pieces[b] = pieceA;
-            pieces[a].Move(RankOf(a), FileOf(a));
+             (pieces[a], pieces[b]) = (pieces[b], pieces[a]);
+             pieces[a].Move(RankOf(a), FileOf(a));
             pieces[b].Move(RankOf(b), FileOf(b));
         }
+        
     }
 }

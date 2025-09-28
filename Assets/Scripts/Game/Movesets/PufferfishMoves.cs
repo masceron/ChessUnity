@@ -15,7 +15,7 @@ namespace Game.Movesets
             var color = caller.Color;
             var range = caller.GetMoveRange(ref index);
             var (startRank, startFile) = RankFileOf(pos);
-            
+
             var push = !color ? -1 : 1;
 
             for (var rank = RankOf(pos) - (range - 1) * push; rank != RankOf(pos) + (range + 1) * push; rank += push)

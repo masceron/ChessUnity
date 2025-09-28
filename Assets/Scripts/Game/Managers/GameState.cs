@@ -99,13 +99,20 @@ namespace Game.Managers
                 PieceType.SeaStar => new SeaStar(piece),
                 PieceType.Anglerfish => new Anglerfish(piece),
                 PieceType.Remora => new Remora(piece),
-                PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.MedicinalLeach => new MedicinalLeech(piece),
+                PieceType.KelpBass => new KelpBass(piece),
+                PieceType.HourglassJelly => new HourglassJelly(piece),
+                PieceType.Archerfish => new Archerfish(piece),
+                PieceType.MoorishIdols => new MoorishIdols(piece),
+                PieceType.Helicoprion => new Helicoprion(piece),
                 PieceType.HermitCrab => new HermitCrab(piece),
                 PieceType.SeaTurtle => new SeaTurtle(piece),
+                PieceType.HorseLeech => new HorseLeech(piece),
+                PieceType.Megalodon => new Megalodon(piece),
                 _ => null
             };
 
-            PieceBoard[piece.Index] = p;
+            PieceBoard[piece.Index] = p;    
         }
 
         public void EffectCountdown()
@@ -153,6 +160,7 @@ namespace Game.Managers
         {
             PieceBoard[t] = PieceBoard[f];
             PieceBoard[t].Pos = t;
+            PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
         }
         

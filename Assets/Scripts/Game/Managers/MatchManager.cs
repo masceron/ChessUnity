@@ -8,7 +8,6 @@ using Game.Piece;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;
-using UX.UI.Ingame.EditLineup;
 using static Game.Common.BoardUtils;
 using GameConfig = Game.Save.Stage.GameConfig;
 using LineupConfig = Game.Save.Stage.LineupConfig;
