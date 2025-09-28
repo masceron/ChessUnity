@@ -105,6 +105,8 @@ namespace Game.Managers
                 PieceType.Archerfish => new Archerfish(piece),
                 PieceType.MoorishIdols => new MoorishIdols(piece),
                 PieceType.Helicoprion => new Helicoprion(piece),
+                PieceType.HermitCrab => new HermitCrab(piece),
+                PieceType.SeaTurtle => new SeaTurtle(piece),
                 _ => null
             };
 
@@ -158,6 +160,15 @@ namespace Game.Managers
             PieceBoard[t].Pos = t;
             PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
+        }
+        
+        public void Swap(ushort a, ushort b)
+        {
+            var pieceB = PieceBoard[b];
+            PieceBoard[b] = PieceBoard[a];
+            PieceBoard[b].Pos = b;
+            PieceBoard[a] = pieceB;
+            PieceBoard[a].Pos = a;
         }
 
         public void FlipSideToMove()

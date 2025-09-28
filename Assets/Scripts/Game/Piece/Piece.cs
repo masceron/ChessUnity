@@ -30,7 +30,9 @@ namespace Game.Piece
         HourglassJelly,
         Archerfish,
         MoorishIdols,
-        Helicoprion
+        Helicoprion,
+        HermitCrab,
+        SeaTurtle
     }
 
     public enum PieceRank : byte
