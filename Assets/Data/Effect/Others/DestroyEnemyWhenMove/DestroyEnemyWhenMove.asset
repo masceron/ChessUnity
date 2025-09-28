@@ -16,6 +16,6 @@ MonoBehaviour:
   category: 3
   stack: 1
   priority: 1
-  activeWhen: 4
+  activeWhen: 2
   icon: {fileID: 0}
   key: destroy_enemy_when_move
