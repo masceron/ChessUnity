@@ -55,7 +55,9 @@ namespace Game.Effects
         Extremophile,
         Haste,
         RemoraMarked,
-        HourglassJelly
+        HourglassJelly,
+        FreeMovement,
+        DestroyEnemyWhenMove
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

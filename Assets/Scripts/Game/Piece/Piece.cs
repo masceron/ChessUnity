@@ -27,7 +27,10 @@ namespace Game.Piece
         Remora,
         KelpBass,
         MedicalLeech,
-        HourglassJelly
+        HourglassJelly,
+        Archerfish,
+        MoorishIdols,
+        Helicoprion
     }
 
     public enum PieceRank : byte

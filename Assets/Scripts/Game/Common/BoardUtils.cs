@@ -203,5 +203,26 @@ namespace Game.Common
         {
             MatchManager.Ins.GameState.MainAction = action;
         }
+
+        public static List<PieceLogic> GetPiecesInRange(int rank, int file, int range, Predicate<PieceLogic> predicate)
+        {
+            // Get all pieces in range of (rank, file) that match the predicate
+            var pieces = new List<PieceLogic>();
+            for (var rankOff = rank - range; rankOff <= rank + range; rankOff++)
+            {
+                if (!VerifyBounds(rankOff)) continue;
+
+                for (var fileOff = file - range; fileOff <= file + range; fileOff++)
+                {
+                    if (!VerifyBounds(fileOff)) continue;
+                    var piece = PieceOn(IndexOf(rankOff, fileOff));
+                    if (predicate(piece))
+                    {
+                        pieces.Add(piece);
+                    }
+                }
+            }
+            return pieces;
+        }
     }
 }

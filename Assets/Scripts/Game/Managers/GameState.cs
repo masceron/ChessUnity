@@ -102,10 +102,13 @@ namespace Game.Managers
                 PieceType.MedicalLeech => new MedicalLeech(piece),
                 PieceType.KelpBass => new KelpBass(piece),
                 PieceType.HourglassJelly => new HourglassJelly(piece),
+                PieceType.Archerfish => new Archerfish(piece),
+                PieceType.MoorishIdols => new MoorishIdols(piece),
+                PieceType.Helicoprion => new Helicoprion(piece),
                 _ => null
             };
 
-            PieceBoard[piece.Index] = p;
+            PieceBoard[piece.Index] = p;    
         }
 
         public void EffectCountdown()
