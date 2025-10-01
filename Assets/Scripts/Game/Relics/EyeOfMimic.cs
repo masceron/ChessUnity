@@ -9,9 +9,9 @@ namespace Game.Relics
     {
         public EyeOfMimic(RelicConfig config) : base(config)
         {
-            Type = RelicType.EyeOfMimic;
+            Type = config.Type;
             Color = config.Color;
-            TimeCooldown = 3; // Cooldown in turns
+            TimeCooldown = config.TimeCooldown; // Cooldown in turns
             currentCooldown = 0;
         }
         public override void Activate()
