@@ -3,6 +3,7 @@ using Game.Action;
 using Game.Action.Internal.Pending;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using Game.Relics;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -36,6 +37,11 @@ namespace UX.UI.Ingame
         private void OnEnable()
         {
             MatchManager.Ins.InputProcessor = this;
+        }
+
+        public void LoadRelic(RelicConfig whiteRelic, RelicConfig blackRelic)
+        {
+            gameActions.LoadRelic(whiteRelic, blackRelic);
         }
 
         private void PanTo(int pos1, int pos2)
@@ -145,6 +151,7 @@ namespace UX.UI.Ingame
             else
             {
                 gameActions.EnableGameInteractions();
+                gameActions.PassTurn();
             }
         }
 

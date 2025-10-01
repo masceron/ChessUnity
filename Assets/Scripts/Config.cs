@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Piece;
+using Game.Relics;
+using UnityEngine.TextCore;
 
 public static class Config
 {
@@ -33,4 +35,7 @@ public static class Config
         // new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
     };
+
+    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.EyeOfMimic, false, 4);
+    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 4);
 }

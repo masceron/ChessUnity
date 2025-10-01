@@ -5,6 +5,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Piece;
+using Game.Relics;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;
@@ -55,17 +56,21 @@ namespace Game.Managers
             MakeGame(cfg);
             MakeBoard();
             
-            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()));
+            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
+                Config.relicBlackConfig, 
+                Config.relicBlackConfig
+                );
             
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
 
-        public void StartGame(LineupConfig cfg)
+        public void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic)
         {
             MakePieces(cfg);
             UIManager.Ins.Load(CanvasID.Ingame);
             ActionManager.ExecuteWhenStart();
+            InputProcessor.LoadRelic(whiteRelic, blackRelic);
         }
 
         public static bool Roll(int chance)
