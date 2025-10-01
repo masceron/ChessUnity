@@ -43,6 +43,10 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> observers = new();
+        public bool IsDay { get; private set; }
+
+        private int countTurn = 0;
+        private readonly int numberOfTurnToChange = 10;
         
         //The main action taken this turn.
         public Action.Action MainAction;
@@ -74,6 +78,8 @@ namespace Game.Managers
                     ActiveBoard[IndexOf(rank, file)] = true;
                 }
             }
+
+            IsDay = true;
         }
 
         public void SpawnPiece(PieceConfig piece)
@@ -176,6 +182,13 @@ namespace Game.Managers
         public void FlipSideToMove()
         {
             SideToMove = !SideToMove;
+
+            countTurn++;
+            if (countTurn > numberOfTurnToChange * 2)
+            {
+                IsDay = !IsDay;
+                countTurn = 0;
+            }
         }
 
         public void AddObserver(Effect effect)
