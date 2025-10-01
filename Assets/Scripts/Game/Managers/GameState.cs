@@ -101,6 +101,7 @@ namespace Game.Managers
                 PieceType.Remora => new Remora(piece),
                 PieceType.HorseLeech => new HorseLeech(piece),
                 PieceType.Megalodon => new Megalodon(piece),
+                PieceType.PhantomJelly => new PhantomJelly(piece),
                // PieceType.MedicalLeech => new MedicalLeech(piece),
                 _ => null
             };
