@@ -82,5 +82,20 @@ namespace Game.Managers
             selections[pos].GetComponent<Marker>().enabled = false;
             selections[pos].gameObject.SetActive(true);
         }
+
+        public void MarkIfDifferntColor(bool color)
+        {
+            for (var i = 0; i < BoardSize; i++)
+            {
+                if (PieceOn(i) == null) continue;
+
+                if (PieceOn(i).Color != color)
+                {
+                    selections[i].GetComponent<MeshRenderer>().material = moveableMat;
+                    selections[i].GetComponent<Marker>().enabled = false;
+                    selections[i].gameObject.SetActive(true);
+                } else selections[i].gameObject.SetActive(false);
+            }
+        }
     }
 }

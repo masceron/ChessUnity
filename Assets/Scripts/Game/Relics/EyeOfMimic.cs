@@ -1,17 +1,16 @@
-using Game.Action;
-using Game.Common;
 using Game.Managers;
-using Game.Relics;
 using UnityEngine;
+using UX.UI.Ingame;
 
 namespace Game.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class EyeOfMimic : RelicLogic 
+    public class EyeOfMimic : RelicLogic
     {
         public EyeOfMimic(RelicConfig config) : base(config)
         {
             Type = RelicType.EyeOfMimic;
+            Color = config.Color;
             TimeCooldown = 3; // Cooldown in turns
             currentCooldown = 0;
         }
@@ -19,18 +18,18 @@ namespace Game.Relics
         {
             if (currentCooldown == 0)
             {
-                //select Piece and random 2 effect buff if the piece same color, 2 effect debuff if different color
-                Debug.Log("Eye of Mimic activated!");
+                
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null) continue;
-                    if (BoardUtils.PieceOn((piece.Pos)) != null)
-                    {
-                        TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    }
+
+                    TileManager.Ins.MarkAsMoveable(piece.Pos);
+                    var pending = new EyeOfMimicPending(this, piece.Pos, piece.Color);
+                    BoardViewer.ListOf.Add(pending);
                 }
-                // Implement the logic to mimic the last used relic's effect here.
-                currentCooldown = TimeCooldown;
+
+                BoardViewer.Selecting = -2;
+                BoardViewer.SelectingFunction = 4;
             }
             else
             {

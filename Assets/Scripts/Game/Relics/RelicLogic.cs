@@ -9,7 +9,7 @@
     {
         protected RelicType Type;
         protected sbyte TimeCooldown;
-        protected sbyte currentCooldown;
+        public sbyte currentCooldown { get; protected set; }
         protected bool Color; // true for white, false for black
 
         protected RelicLogic(RelicConfig cfg)
@@ -20,6 +20,10 @@
         }
 
         public abstract void Activate();
+        public void SetCooldown()
+        {
+            currentCooldown = TimeCooldown;
+        }
         public void PassTurn()
         {
             if (currentCooldown > 0) currentCooldown--;

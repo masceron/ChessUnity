@@ -19,7 +19,7 @@ public static class Config
         // new PieceConfig(PieceType.Remora, false, 91),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
         new PieceConfig(PieceType.Megalodon, false, 93),
-        new PieceConfig(PieceType.HorseLeech, false, 91)
+        new PieceConfig(PieceType.GuidingSiren, false, 91)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()

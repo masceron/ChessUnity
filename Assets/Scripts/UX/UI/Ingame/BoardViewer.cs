@@ -25,13 +25,14 @@ namespace UX.UI.Ingame
         public static int Selecting = -1;
         public static int SelectingFunction;
         private static readonly List<Action> MoveList = new();
-        private static readonly List<Action> ListOf = new();
+        public static readonly List<Action> ListOf = new();
         
         private void Start()
         {
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
             gameActions.Load(EndTurn);
+            gameActions.UpdateRelic();
         }
 
         private void OnEnable()
@@ -42,6 +43,11 @@ namespace UX.UI.Ingame
         public void LoadRelic(RelicConfig whiteRelic, RelicConfig blackRelic)
         {
             gameActions.LoadRelic(whiteRelic, blackRelic);
+        }
+
+        public void UpdateRelic()
+        {
+            gameActions.UpdateRelic();
         }
 
         private void PanTo(int pos1, int pos2)
@@ -109,17 +115,34 @@ namespace UX.UI.Ingame
             {
                 if (SelectingFunction == 0) return;
                 
-                var action = ListOf.Find(a => a.Target == pos);
-                switch (action)
+                if (SelectingFunction == 4)
                 {
-                    case null:
-                        return;
-                    case IPendingAble pending:
-                        pending.CompleteAction();
-                        return;
-                }
+                    Hovering = PieceOn(pos);
+                    var action = ListOf.Find(a => a.Maker == pos);
+                    switch (action)
+                    {
+                        case null:
+                            return;
+                        case IPendingAble pending:
+                            pending.CompleteAction();
+                            return;
+                    }
+                    ActionManager.EnqueueAction(action);
+                } 
+                else
+                {
+                    var action = ListOf.Find(a => a.Target == pos);
+                    switch (action)
+                    {
+                        case null:
+                            return;
+                        case IPendingAble pending:
+                            pending.CompleteAction();
+                            return;
+                    }
 
-                ExecuteAction(action);
+                    ExecuteAction(action);
+                }
             }
             else
             {
@@ -135,6 +158,7 @@ namespace UX.UI.Ingame
                 if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
                 
                 pieceActions.EnablePieceInteractions();
+                UpdateRelic();
                 MoveList.Clear();
                 PieceOn(Selecting).MoveList(MoveList);
             }
@@ -147,6 +171,7 @@ namespace UX.UI.Ingame
             if (SideToMove() != OurSide())
             {
                 gameActions.DisableGameInteractions();
+                UpdateRelic();
             }
             else
             {

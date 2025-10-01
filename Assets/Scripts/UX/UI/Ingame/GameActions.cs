@@ -3,6 +3,7 @@ using Game.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UX.UI.Ingame
 {
@@ -13,6 +14,7 @@ namespace UX.UI.Ingame
     {
         [SerializeField] private CanvasGroup gameAction;
         [SerializeField] private Button relic;
+        [SerializeField] private TMP_Text relicCooldownText;
         [SerializeField] private Button skip;
 
         private RelicLogic _whiteRelic;
@@ -65,11 +67,29 @@ namespace UX.UI.Ingame
         public void DisableGameInteractions()
         {
             gameAction.interactable = false;
+            relicCooldownText.gameObject.SetActive(false);
         }
 
         public void EnableGameInteractions()
         {
             gameAction.interactable = true;
+            UpdateRelic();
+        }
+
+        public void UpdateRelic()
+        {
+            if (MatchManager.Ins.GameState.OurSide)
+            {
+                relicCooldownText.gameObject.SetActive(_blackRelic.currentCooldown != 0);
+                relic.interactable = _blackRelic.currentCooldown == 0;
+                relicCooldownText.text = _blackRelic.currentCooldown.ToString();
+            }
+            else
+            {
+                relicCooldownText.gameObject.SetActive(_whiteRelic.currentCooldown != 0);
+                relic.interactable = _whiteRelic.currentCooldown == 0;
+                relicCooldownText.text = _whiteRelic.currentCooldown.ToString();
+            }
         }
         
         public void PressEndTurn(InputAction.CallbackContext context)
