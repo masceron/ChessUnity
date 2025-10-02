@@ -2,22 +2,44 @@ using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
 using static Game.Common.BoardUtils;
-using Game.Effects.Buffs;
-using Game.Effects.Others;
+using Game.Effects.Debuffs;
+using Game.Action.Internal.Pending;
+using UX.UI.Ingame;
+using static UX.UI.Ingame.BoardViewer;
+using UnityEngine;
+using Game.Managers;
 
 namespace Game.Action.Skills
 {
+    
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive: Action, ISkills
+    public class HumilitasActive: Action, ISkills, IPendingAble
     {
-        public HumilitasActive(int maker) : base(maker)
+        public HumilitasActive(int maker, int to, int count) : base(maker, false)
         {
-            Target = (ushort)maker;
+            Target = (ushort)to;
+
         }
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, PieceOn(Maker))));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+
+        }
+        private void MakeSkill(int target)
+        {
+
+            TileManager.Ins.Unselect(target);
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(1, PieceOn(target))));
+            SetCount(GetCount() + 1);  
+            if(GetCount() >= 2)
+            {
+                BoardViewer.ExecuteActionStatic(this);
+                SetCount(0);
+                return;
+            }
+        }
+        public void CompleteAction()
+        {
+            MakeSkill(Target);
         }
 
     }

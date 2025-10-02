@@ -67,6 +67,12 @@ namespace Game.Managers
             selections[pos].GetComponent<Marker>().enabled = true;
             selections[pos].gameObject.SetActive(true);
         }
+        public void Unselect(int pos)
+        {
+            selections[pos].GetComponent<MeshRenderer>().material = null;
+            selections[pos].GetComponent<Marker>().enabled = false;
+            selections[pos].gameObject.SetActive(false);
+        }
 
         public void UnmarkAll()
         {

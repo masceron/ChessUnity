@@ -20,7 +20,6 @@ namespace UX.UI.Ingame
         
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
-        
         public static int Selecting = -1;
         public static int SelectingFunction;
         private static readonly List<Action> MoveList = new();
@@ -96,7 +95,34 @@ namespace UX.UI.Ingame
             Unmark();
             NewTurn();
         }
+        public static void ExecuteActionStatic(Action action)
+        {
+            var instance = FindObjectOfType<BoardViewer>();
+            if (instance != null)
+            {
+                instance.ExecuteAction(action);
+            }
+        }
+        // public void MarkMultiTarget(List<int> pos)
+        // {
+        //     foreach (var p in pos)
+        //     {
+        //         if (SelectingFunction == 0) return;
+                
+        //         var action = ListOf.Find(a => a.Target == p);
+        //         switch (action)
+        //         {
+        //             case null:
+        //                 return;
+        //             case IPendingAble pending:
+        //                 pending.CompleteAction();
+        //                 return;
+        //         }
 
+        //         ExecuteAction(action);
+        //     }
+
+        // }
         public void MarkPiece(int pos)
         {
             if (Selecting != -1)

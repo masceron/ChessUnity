@@ -17,6 +17,17 @@ namespace Game.Common
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
 
+        //Đếm cho Humilitas nhìn ngu vãi nhưng không biets làm gì khác
+        public static int Count = 0;
+        public static void SetCount(int count)
+        {
+            Count = count;
+        }
+        public static int GetCount()
+        {
+            return Count;
+        }
+
         public static int RankOf(int index)
         {
             return index / MaxLength;
