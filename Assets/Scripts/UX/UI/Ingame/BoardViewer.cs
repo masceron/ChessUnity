@@ -32,7 +32,7 @@ namespace UX.UI.Ingame
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
             gameActions.Load(EndTurn);
-            gameActions.UpdateRelic();
+            UpdateRelic();
         }
 
         private void OnEnable()
@@ -158,7 +158,6 @@ namespace UX.UI.Ingame
                 if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
                 
                 pieceActions.EnablePieceInteractions();
-                UpdateRelic();
                 MoveList.Clear();
                 PieceOn(Selecting).MoveList(MoveList);
             }
@@ -171,7 +170,6 @@ namespace UX.UI.Ingame
             if (SideToMove() != OurSide())
             {
                 gameActions.DisableGameInteractions();
-                UpdateRelic();
             }
             else
             {

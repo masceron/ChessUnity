@@ -37,16 +37,23 @@ namespace Game.Relics
                 if (FristTarget.Color == BoardViewer.Hovering.Color) return;
 
                 SecondTarget = BoardViewer.Hovering;
-                eyeOfMimic.SetCooldown();
 
                 TileManager.Ins.UnmarkAll();
 
-                ActionManager.ExecuteImmediately(new ApplyEffect (new SwapMoveMethod(FristTarget, SecondTarget, 0, true)));
-                ActionManager.ExecuteImmediately(new ApplyEffect(new SwapMoveMethod(SecondTarget, FristTarget, 0, false)));
+                if (FristTarget.Color == MatchManager.Ins.GameState.OurSide)
+                {
+                    ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(FristTarget, SecondTarget, 0)));
+                } else
+                {
+                    ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(SecondTarget, FristTarget, 0)));
+                }
 
                 BoardViewer.Selecting = -1;
                 BoardViewer.SelectingFunction = 0;
+                eyeOfMimic.SetCooldown();
                 MatchManager.Ins.InputProcessor.UpdateRelic();
+                FristTarget = null;
+                SecondTarget = null;
             }
         }
 

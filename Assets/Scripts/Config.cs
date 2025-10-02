@@ -24,18 +24,18 @@ public static class Config
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        // new PieceConfig(PieceType.Barracuda, true, 113),
+         new PieceConfig(PieceType.Barracuda, true, 66),
         // new PieceConfig(PieceType.GuidingSiren, true, 101),
         // new PieceConfig(PieceType.FlyingFish, true, 112),
         // new PieceConfig(PieceType.Anomalocaris, true, 75),
         // new PieceConfig(PieceType.Swordfish, true, 98),
-        new PieceConfig(PieceType.MorayEel, true, 92),
+        new PieceConfig(PieceType.MorayEel, true, 69),
         // new PieceConfig(PieceType.Stingray, true, 96),
         // new PieceConfig(PieceType.SeaStar, true, 97),
         // new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
     };
 
-    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.EyeOfMimic, false, 4);
-    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 4);
+    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.EyeOfMimic, false, 5);
+    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
 }

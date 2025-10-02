@@ -38,30 +38,18 @@ namespace UX.UI.Ingame
 
         public void LoadRelic(RelicConfig whiteRelic, RelicConfig blackRelic)
         {
-            switch (whiteRelic.Type)
-            {
-                case RelicType.CommonPearl:
-                    //_whiteRelic = new CommonPearl(whiteRelic.Color);
-                    break;
-                case RelicType.BlackPearl:
-                    //_whiteRelic = new BlackPearl(whiteRelic.Color);
-                    break;
-                case RelicType.EyeOfMimic:
-                    _whiteRelic = new EyeOfMimic(whiteRelic);
-                    break;
-            }
-            switch (blackRelic.Type)
-            {
-                case RelicType.CommonPearl:
-                    //_blackRelic = new CommonPearl(blackRelic.Color);
-                    break;
-                case RelicType.BlackPearl:
-                    //_blackRelic = new BlackPearl(blackRelic.Color);
-                    break;
-                case RelicType.EyeOfMimic:
-                    _blackRelic = new EyeOfMimic(blackRelic);
-                    break;
-            }
+            _whiteRelic = GetRelicLogicByConfig(whiteRelic);
+            _blackRelic = GetRelicLogicByConfig(blackRelic);
+        }
+
+        private RelicLogic GetRelicLogicByConfig(RelicConfig cfg)
+        {
+            RelicLogic rl = cfg.Type switch 
+            { 
+                RelicType.EyeOfMimic => new EyeOfMimic(cfg),
+                _ => null
+            };
+            return rl;
         }
 
         public void DisableGameInteractions()
@@ -117,6 +105,7 @@ namespace UX.UI.Ingame
         {
             _whiteRelic?.PassTurn();
             _blackRelic?.PassTurn();
+            UpdateRelic();
         }
     }
 }

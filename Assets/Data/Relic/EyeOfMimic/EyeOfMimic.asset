@@ -9,13 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: SwapMoveMethod
-  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 39
-  category: 3
-  stack: 1
-  priority: 3
-  activeWhen: 0
+  m_Script: {fileID: 11500000, guid: cdee4035d1e7499a89a7d83135831603, type: 3}
+  m_Name: EyeOfMimic
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.RelicInfo
+  type: 2
+  key: eye_of_mimic
   icon: {fileID: 0}
-  key: swap_move_method
+  cooldown: 5

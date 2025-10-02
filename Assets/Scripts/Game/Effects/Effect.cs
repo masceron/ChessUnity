@@ -61,7 +61,7 @@ namespace Game.Effects
         SeaTurtleCountdown,
         FrenziedVeteran,
         TrueBite,
-        SwapMoveMethod
+        CopyCatureMethod
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
