@@ -98,6 +98,13 @@ namespace UX.UI.Ingame
             Selecting = -1;
             TileManager.Ins.UnmarkAll();
             pieceActions.DisablePieceInteractions();
+            foreach (var action in ListOf)
+            {
+                if (action is System.IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
             ListOf.Clear();
             SetPieceHover(-1);
         }
