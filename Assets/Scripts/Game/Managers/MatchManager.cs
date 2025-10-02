@@ -57,7 +57,7 @@ namespace Game.Managers
             MakeBoard();
             
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
-                Config.relicBlackConfig, 
+                Config.relicWhiteConfig, 
                 Config.relicBlackConfig
                 );
             

@@ -8,6 +8,7 @@ namespace Game.Relics
     using Game.Managers;
     using Game.Action.Internal;
     using Game.Effects.Others;
+    using Game.Common;
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
@@ -24,7 +25,7 @@ namespace Game.Relics
 
         public void CompleteAction()
         {
-            var hovering = BoardViewer.Hovering;
+            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
             if (FirstTarget == null || FirstTarget.Color == hovering.Color)
             {

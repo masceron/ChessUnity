@@ -76,6 +76,50 @@ namespace Game.Managers
             }
         }
 
+        public void UnMark(int pos)
+        {
+            if (selections[pos]  != null)
+            {
+                selections[pos].gameObject.SetActive(false);
+            }
+        }
+
+        public void MarkTileInRange(Tile.Tile hoveringTile, int range, bool isMark)
+        {
+            if (range % 2 == 0) return;
+
+            int centerRank = hoveringTile.rank;
+            int centerFile = hoveringTile.file;
+            int centerIndex = IndexOf(centerRank, centerFile);
+
+            if (!IsActive(centerIndex)) return;
+
+            int radius = range / 2;
+
+            for (int r = centerRank - radius; r <= centerRank + radius; r++)
+            {
+                for (int f = centerFile - radius; f <= centerFile + radius; f++)
+                {
+                    int index = IndexOf(r, f);
+
+                    if (!IsActive(index))
+                    {
+                        continue;
+                    }
+
+                    MarkOrUnmark(index, isMark);
+                }
+            }
+        }
+
+        private void MarkOrUnmark(int index, bool isMark)
+        {
+            if (isMark)
+                MarkAsMoveable(index);
+            else
+                UnMark(index);
+        }
+
         public void MarkAsMoveable(int pos)
         {
             selections[pos].GetComponent<MeshRenderer>().material = moveableMat;
