@@ -1,7 +1,9 @@
 using Game.Common;
 using Game.Managers;
 using UnityEngine;
-using Game.Tile;
+using UX.UI.Ingame;
+using Game.Action;
+using System.Linq;
 
 namespace Game.Relics
 {
@@ -19,25 +21,28 @@ namespace Game.Relics
         {
             if (currentCooldown == 0)
             {
-                /*foreach (var activeBoard in BoardUtils.ActiveBoard())
-                {
-                    if ((bool)activeBoard)
-                    {
+                BoardViewer.Selecting = -2;
+                BoardViewer.SelectingFunction = 4;
 
-                    }
-                }*/
                 Tile.Tile.OnPointEnterHandle = (thisTile) =>
                 {
                     if (hoveringTile != null)
                     {
-                        TileManager.Ins.MarkTileInRange(hoveringTile, 3, false);
+                        TileManager.Ins.MarkTileInRange(hoveringTile, 3, isMark: false);
                     }
 
                     hoveringTile = thisTile;
+                    TileManager.Ins.MarkTileInRange(hoveringTile, 3, isMark: true, onlyMarkEnemy: false);
                     
-                    TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
+                    int pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
+                    var pending = new FrostSigilPending(pos ,hoveringTile, this);
+                    var comparer = new ActionComparer();
+
+                    if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
+                    {
+                        BoardViewer.ListOf.Add(pending);
+                    }
                 };
-                currentCooldown = TimeCooldown;
             }
             else
             {

@@ -16,6 +16,7 @@
         {
             Type = cfg.Type;
             Color = cfg.Color;
+            TimeCooldown = cfg.TimeCooldown;
             currentCooldown = 0;
         }
 
