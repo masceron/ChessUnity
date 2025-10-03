@@ -23,6 +23,7 @@ namespace Game.Managers
 
         public void Destroy(int pos)
         {
+            // if (pieces[pos] == null) return;
             Object.Destroy(pieces[pos].gameObject);
             pieces[pos] = null;
         }

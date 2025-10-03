@@ -60,7 +60,9 @@ namespace Game.Effects
         DestroyEnemyWhenMove,
         SeaTurtleCountdown,
         FrenziedVeteran,
-        TrueBite
+        TrueBite, 
+        ClownFishPassive,
+        LivingCoralPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -17,7 +17,8 @@ public static class Config
         // new PieceConfig(PieceType.Remora, false, 91),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
         new PieceConfig(PieceType.Megalodon, false, 93),
-        new PieceConfig(PieceType.HorseLeech, false, 91)
+        new PieceConfig(PieceType.HorseLeech, false, 91),
+        new PieceConfig(PieceType.SeaStar, false, 87)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
@@ -32,5 +33,8 @@ public static class Config
         // new PieceConfig(PieceType.SeaStar, true, 97),
         // new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
+        new PieceConfig(PieceType.ClownFish, true, 100),
+        new PieceConfig(PieceType.ClownFish, true, 85),
+        new PieceConfig(PieceType.LivingCoral, true, 86)
     };
 }

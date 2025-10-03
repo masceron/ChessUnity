@@ -71,6 +71,7 @@ namespace Game.Piece.PieceLogic
 
         public void MoveList(List<Action.Action> list)
         {
+            if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
             var i = 0;
 

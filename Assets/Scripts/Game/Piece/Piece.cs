@@ -34,7 +34,9 @@ namespace Game.Piece
         HermitCrab,
         SeaTurtle,
         HorseLeech,
-        Megalodon
+        Megalodon, 
+        ClownFish,
+        LivingCoral
     }
 
     public enum PieceRank : byte
