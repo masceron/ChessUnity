@@ -3,7 +3,6 @@ using Game.Movesets;
 using Game.Action.Skills;
 using Game.Action;
 using Game.Common;
-using System;
 using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 using Game.Effects;
@@ -12,7 +11,7 @@ using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Action.Internal.Pending;
 using static UX.UI.Ingame.BoardViewer;
-
+using Game.Effects.Traits;
 
 namespace Game.Piece.PieceLogic.Commanders
 {
@@ -23,6 +22,7 @@ namespace Game.Piece.PieceLogic.Commanders
         {
             ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(10, 1, this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, 4)));
 
             Skills = list =>
             {
