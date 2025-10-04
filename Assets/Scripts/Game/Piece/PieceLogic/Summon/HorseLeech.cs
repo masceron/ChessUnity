@@ -7,19 +7,13 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic.Summon
 {
-    public class HorseLeech : PieceLogic, IPieceWithSkill
+    public class HorseLeech : PieceLogic
     {
         public HorseLeech(PieceConfig cfg) : base(cfg, KingMoves.Quiets, HorseLeechMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
-            Skills = list =>
-            {
-                if (SkillCooldown == 0) list.Add(new PhantomJellyActive(Pos));
-            };
+
         }
-        
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
-        
-        public SkillsDelegate Skills { get; set; }
+
     }
 }

@@ -14,7 +14,7 @@ public static class Config
         // new PieceConfig(PieceType.Pufferfish, false, 70),
         // new PieceConfig(PieceType.Lionfish, false, 99),
         // new PieceConfig(PieceType.Seahorse, false, 55),
-        // new PieceConfig(PieceType.Remora, false, 91),
+         new PieceConfig(PieceType.Remora, false, 68),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
         new PieceConfig(PieceType.Megalodon, false, 93),
         new PieceConfig(PieceType.HorseLeech, false, 91)
@@ -28,8 +28,8 @@ public static class Config
         // new PieceConfig(PieceType.Anomalocaris, true, 75),
         // new PieceConfig(PieceType.Swordfish, true, 98),
         new PieceConfig(PieceType.MorayEel, true, 92),
-        // new PieceConfig(PieceType.Stingray, true, 96),
-        // new PieceConfig(PieceType.SeaStar, true, 97),
+         new PieceConfig(PieceType.Stingray, true, 96),
+         //new PieceConfig(PieceType.SeaStar, true, 68),
         // new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
     };

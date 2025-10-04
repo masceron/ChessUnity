@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: HorseLeech
+  m_Name: PhantomJelly
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 20
-  prefab: {fileID: 3142425345472215724, guid: ccd17018d71545943a01fc9d74f9a174, type: 3}
-  rank: 4
-  moveRange: 1
-  attackRange: 1
+  type: 0
+  prefab: {fileID: 0}
+  rank: 0
+  moveRange: 0
+  attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_horseleech
-  hasSkill: 1
+  key: 
+  hasSkill: 0
   normalSkillCooldown: 0

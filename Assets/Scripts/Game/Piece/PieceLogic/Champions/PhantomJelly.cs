@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic.Champions
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PhantomJelly: PieceLogic, IPieceWithSkill
     {
-        public PhantomJelly(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
+        public PhantomJelly(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PhantomJellyMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 50, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));
