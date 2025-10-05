@@ -2,7 +2,7 @@
 {
     public enum RelicType
     {
-        CommonPearl, BlackPearl, EyeOfMimic
+        CommonPearl, BlackPearl, EyeOfMimic, FrostSigil
     }
     
     public abstract class RelicLogic
@@ -10,12 +10,13 @@
         protected RelicType Type;
         protected sbyte TimeCooldown;
         public sbyte currentCooldown { get; protected set; }
-        protected bool Color; // true for white, false for black
+        protected bool Color; // false for white, true for black
 
         protected RelicLogic(RelicConfig cfg)
         {
             Type = cfg.Type;
             Color = cfg.Color;
+            TimeCooldown = cfg.TimeCooldown;
             currentCooldown = 0;
         }
 

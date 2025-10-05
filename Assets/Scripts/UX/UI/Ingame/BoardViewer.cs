@@ -21,6 +21,7 @@ namespace UX.UI.Ingame
         
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
+        public static int HoveringPos;
         
         public static int Selecting = -1;
         public static int SelectingFunction;
@@ -67,6 +68,8 @@ namespace UX.UI.Ingame
 
         private void SetPieceHover(int pos)
         {
+            HoveringPos = pos;
+
             if (Selecting != -1) return;
             
             if (pos == -1)
@@ -118,13 +121,14 @@ namespace UX.UI.Ingame
 
         public void MarkPiece(int pos)
         {
+            HoveringPos = pos;
+
             if (Selecting != -1)
             {
                 if (SelectingFunction == 0) return;
                 
                 if (SelectingFunction == 4)
                 {
-                    Hovering = PieceOn(pos);
                     var action = ListOf.Find(a => a.Maker == pos);
                     switch (action)
                     {

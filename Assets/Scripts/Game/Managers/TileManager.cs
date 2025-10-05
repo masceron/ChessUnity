@@ -1,4 +1,4 @@
-using Game.Common;
+﻿using Game.Common;
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -75,6 +75,60 @@ namespace Game.Managers
                 selections[i].gameObject.SetActive(false);
             }
         }
+
+        public void UnMark(int pos)
+        {
+            if (selections[pos]  != null)
+            {
+                selections[pos].gameObject.SetActive(false);
+            }
+        }
+
+        public void MarkTileInRange(Tile.Tile hoveringTile, int range, bool isMark, bool onlyMarkEnemy = false)
+        {
+            if (range % 2 == 0) return; // chỉ hỗ trợ range lẻ
+
+            int centerIndex = IndexOf(hoveringTile.rank, hoveringTile.file);
+            if (!IsActive(centerIndex)) return;
+
+            int radius = range / 2;
+
+            for (int r = hoveringTile.rank - radius; r <= hoveringTile.rank + radius; r++)
+            {
+                for (int f = hoveringTile.file - radius; f <= hoveringTile.file + radius; f++)
+                {
+                    int index = IndexOf(r, f);
+                    if (!IsActive(index)) continue;
+
+                    ApplyMarkingRule(index, isMark, onlyMarkEnemy);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Đánh dấu hoặc bỏ đánh dấu ô theo rule enemy / ally
+        /// </summary>
+        private void ApplyMarkingRule(int index, bool isMark, bool onlyMarkEnemy)
+        {
+            if (!isMark)
+            {
+                UnMark(index);
+                return;
+            }
+
+            if (!onlyMarkEnemy)
+            {
+                MarkAsMoveable(index);
+                return;
+            }
+
+            var piece = PieceOn(index);
+            if (piece != null && piece.Color != MatchManager.Ins.GameState.OurSide)
+            {
+                MarkAsMoveable(index);
+            }
+        }
+
 
         public void MarkAsMoveable(int pos)
         {

@@ -47,6 +47,7 @@ namespace UX.UI.Ingame
             RelicLogic rl = cfg.Type switch 
             { 
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
+                RelicType.FrostSigil => new FrostSigil(cfg),
                 _ => null
             };
             return rl;
