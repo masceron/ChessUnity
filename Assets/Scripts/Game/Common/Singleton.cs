@@ -23,6 +23,7 @@ namespace Game.Common
                 var singletonObject = new GameObject();
                 _instance = singletonObject.AddComponent<T>();
                 singletonObject.name = typeof(T).ToString();
+                Debug.Log("Singleton magically created: " + singletonObject.name);
                 return _instance;
             }
         }

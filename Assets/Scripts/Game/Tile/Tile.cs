@@ -6,11 +6,13 @@ using Color = Game.Managers.Color;
 
 namespace Game.Tile
 {
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         private int rank;
         private int file;
+        public Formation tileEffect;
         [SerializeField] public Color color;
 
         public void Start()

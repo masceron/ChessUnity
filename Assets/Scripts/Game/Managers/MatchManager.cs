@@ -30,6 +30,7 @@ namespace Game.Managers
         private static void MakeBoard()
         {
             TileManager.Ins.Spawn();
+            FormationManager.Ins.Intialize();
         }
 
         private void MakePieces(LineupConfig lineup)
@@ -55,7 +56,6 @@ namespace Game.Managers
             AssetManager.Ins.Load();
             MakeGame(cfg);
             MakeBoard();
-            
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()));
             
             //UIManager.Ins.Load(CanvasID.LineupEdit);

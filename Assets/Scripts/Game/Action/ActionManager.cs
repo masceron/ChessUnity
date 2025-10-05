@@ -30,7 +30,7 @@ namespace Game.Action
                 action.Execute();
             }
         }
-
+        
         public static void EnqueueAction(Action queueAction)
         {
             if (queueAction.GetType() != typeof(EndTurn))

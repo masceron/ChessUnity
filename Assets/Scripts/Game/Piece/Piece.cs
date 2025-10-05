@@ -26,7 +26,9 @@ namespace Game.Piece
         Anglerfish,
         Remora,
         MedicalLeech,
-        HourglassJelly
+        HourglassJelly,
+        Temperantia,
+        BobtailSquid,
     }
 
     public enum PieceRank : byte
@@ -52,7 +54,7 @@ namespace Game.Piece
             rank = RankOf(pos);
             file = FileOf(pos);
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-            transform.position = new Vector3(rank, 1.64f, file);
+            transform.position = new Vector3(rank, YCoordinate, file);
             
             var angles = new Quaternion
             {

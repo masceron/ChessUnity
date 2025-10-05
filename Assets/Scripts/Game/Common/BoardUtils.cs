@@ -16,7 +16,7 @@ namespace Game.Common
     {
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
-
+        public const float YCoordinate = 1.64f;
         public static int RankOf(int index)
         {
             return index / MaxLength;
@@ -202,6 +202,17 @@ namespace Game.Common
         public static void SetMainAction(Action.Action action)
         {
             MatchManager.Ins.GameState.MainAction = action;
+        }
+
+        public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
+        {
+            List<PieceLogic> validPieces = new List<PieceLogic>();
+            foreach (PieceLogic piece in MatchManager.Ins.GameState.PieceBoard)
+            {
+                if (piece != null && piece is T && piece.Color == side)
+                    validPieces.Add(piece);
+            }
+            return validPieces;
         }
     }
 }

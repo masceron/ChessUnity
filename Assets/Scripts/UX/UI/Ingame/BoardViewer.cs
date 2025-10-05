@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
+using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using PrimeTween;
@@ -108,6 +109,12 @@ namespace UX.UI.Ingame
                 {
                     case null:
                         return;
+                    case IDoubleSelectionSkill doubleSkill:
+                        if (doubleSkill.IsBothSelected()) { break; }
+                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
+                        ShowMoveList(action.Maker);
+                        pieceActions.MarkSkill();
+                        return;
                     case IPendingAble pending:
                         pending.CompleteAction();
                         return;
@@ -117,23 +124,24 @@ namespace UX.UI.Ingame
             }
             else
             {
-                var piece = PieceOn(pos);
-                if (piece == null) return;
-                
-                SetPieceHover(pos);
-                TileManager.Ins.Select(pos);
-                Selecting = pos;
-                pieceActions.LoadPieceActionInfo();
-                PanTo(RankOf(pos), FileOf(pos));
-
-                if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
-                
-                pieceActions.EnablePieceInteractions();
-                MoveList.Clear();
-                PieceOn(Selecting).MoveList(MoveList);
+                ShowMoveList(pos);
             }
         }
+        private void ShowMoveList(int pos){
+            var piece = PieceOn(pos);
+            if (piece == null || piece.isClickable == false) return;
+            SetPieceHover(pos);
+            TileManager.Ins.Select(pos);
+            Selecting = pos;
+            pieceActions.LoadPieceActionInfo();
+            PanTo(RankOf(pos), FileOf(pos));
 
+            if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
+            pieceActions.EnablePieceInteractions();
+            MoveList.Clear();
+            PieceOn(Selecting).MoveList(MoveList);
+        }
+        
         private void NewTurn()
         {
             ActionManager.EnqueueAction(new EndTurn());
