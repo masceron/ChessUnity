@@ -62,7 +62,9 @@ namespace Game.Effects
         FrenziedVeteran,
         TrueBite,
         PureMinded,
-        Relentless
+        Relentless,
+        DeathDefiance
+
 
     }
     

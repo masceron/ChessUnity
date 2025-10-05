@@ -10,22 +10,22 @@ namespace Game.Effects.Traits
     public class Relentless: Effect
     {
 
-        private int survivalCount;
-        public Relentless(PieceLogic piece, int survivalCount) : base(-1, 1, piece, EffectName.Relentless)
+        private int deathDefianceCount;
+        public Relentless(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, EffectName.Relentless)
         {
-            this.survivalCount = survivalCount;
+            this.deathDefianceCount = deathDefianceCount;
         }
 
         public override void OnCall(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed || action.Maker == action.Target) {
+            if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
                 return;
             }
-            Debug.Log("Relentless: " + survivalCount);
+            Debug.Log("Relentless: " + deathDefianceCount);
             action.Result = ActionResult.Failed;
             ActionManager.EnqueueAction(new KillPiece(action.Maker));
-            survivalCount--;
-            if (survivalCount <= 0)
+            deathDefianceCount--;
+            if (deathDefianceCount <= 0)
             {
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
