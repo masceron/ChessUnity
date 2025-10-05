@@ -14,10 +14,10 @@ namespace Game.Piece.PieceLogic.Construct.LivingCoral
         private List<PieceLogic> inRange = new();
         private readonly List<PieceLogic> evasionBuff = new();
 
-        private readonly (int, int)[] rangeSpawn = new (int, int)[8]
+        private readonly (int, int)[] rangeSpawn = new (int, int)[4]
         {
-            (1, 0), (1, -1), (0, -1), (-1, -1),
-            (-1, 0), (1, -1), (0, 1), (1, 1)
+            (1, 0), (0, -1),
+            (-1, 0), (0, 1)
         };
         public EndTurnEffectType EndTurnEffectType { get; }
         private const int Interval = 3;

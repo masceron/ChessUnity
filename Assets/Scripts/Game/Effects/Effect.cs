@@ -61,6 +61,7 @@ namespace Game.Effects
         SeaTurtleCountdown,
         FrenziedVeteran,
         TrueBite, 
+        Construct,
         ClownFishPassive,
         LivingCoralPassive
     }
