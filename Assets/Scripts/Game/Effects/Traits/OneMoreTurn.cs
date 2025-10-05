@@ -1,7 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic;
-
+using Game.Managers;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -12,13 +12,10 @@ namespace Game.Effects.Traits
         public OneMoreTurn(PieceLogic piece) : base(-1, 1, piece, EffectName.OneMoreTurn)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+
         }
 
         public void OnCallEnd(Action.Action lastMainAction){
-            if (willDie == false){
-                willDie = true;
-                return;
-            }
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
         }
     }

@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
-        public bool isClickable = false;
+        public bool isClickable = true;
         public ushort Pos;
         public bool Color;
 

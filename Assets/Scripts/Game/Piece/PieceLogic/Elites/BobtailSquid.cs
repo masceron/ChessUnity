@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic.Elites
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BobtailSquid: PieceLogic, IPieceWithSkill
     {
-        public BobtailSquid(PieceConfig cfg) : base(cfg, BarracudaMoves.Quiets, BarracudaMoves.Captures)
+        public BobtailSquid(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             
