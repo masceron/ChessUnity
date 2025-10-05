@@ -19,7 +19,7 @@ namespace Game.Managers
         [SerializeField] public UDictionary<Color, Tile.Tile> TileData;
         [SerializeField] private PiecesData pieceData;
         [SerializeField] private EffectsData effectsData;
-        [SerializeField] private EnviromentsData enviromentsData;
+        [SerializeField] private FormationsData enviromentsData;
 
         public void Load()
         {
