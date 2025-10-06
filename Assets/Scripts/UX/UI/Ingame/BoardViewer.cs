@@ -120,8 +120,8 @@ namespace UX.UI.Ingame
         }
         public static void ExecuteActionStatic(Action action)
         {
-            var instance = FindObjectOfType<BoardViewer>();
-            if (instance != null)
+            var instance = FindAnyObjectByType<BoardViewer>();
+            if (instance)
             {
                 instance.ExecuteAction(action);
             }
