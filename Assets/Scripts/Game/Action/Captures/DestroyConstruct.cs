@@ -12,7 +12,7 @@ namespace Game.Action.Captures
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(Maker);
+            PieceManager.Ins.Destroy(Target);
         }
 
         protected override void ModifyGameState()
