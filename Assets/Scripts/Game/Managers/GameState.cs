@@ -11,7 +11,6 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
-using Game.Piece.PieceLogic.Construct.LivingCoral;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -120,6 +119,8 @@ namespace Game.Managers
                 PieceType.LivingCoral => new LivingCoral(piece),
                 PieceType.Humilitas => new Humilitas(piece),
                 PieceType.StoneCrab => new StoneCrab(piece),
+                PieceType.PhantomJelly => new PhantomJelly(piece),
+               // PieceType.MedicalLeech => new MedicalLeech(piece),
                 _ => null
             };
 
