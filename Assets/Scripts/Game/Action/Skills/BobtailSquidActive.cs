@@ -24,7 +24,7 @@ namespace Game.Action.Skills
             (int rank, int file) = RankFileOf(Maker);
             for (int x = rank - 1; x <= rank + 1; ++x){
                 for (int y = file; y <= file + 1; ++y){
-                    FormationManager.Ins.SetEnviroment(IndexOf(x, y), new FogOfWar(PieceOn(Maker).Color, 3));
+                    FormationManager.Ins.SetFormation(IndexOf(x, y), new FogOfWar(PieceOn(Maker).Color, 3));
                 }
             }
             MatchManager.Ins.GameState.Move(Maker, (ushort)IndexOf(rank - 3, file));

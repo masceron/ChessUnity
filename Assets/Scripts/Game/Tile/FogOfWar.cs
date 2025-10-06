@@ -18,7 +18,7 @@ namespace Game.Tile
         {
             if (piece.Color != color)
             {
-                FormationManager.Ins.RemoveEnviroment(piece.Pos);
+                FormationManager.Ins.RemoveFormation(piece.Pos);
             }
             ToggleVisibility(piece, false);
         }
