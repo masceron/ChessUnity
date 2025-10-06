@@ -15,7 +15,7 @@ namespace Game.Effects.Traits
 
             var effect = applyEffect.Effect;
 
-            if (effect.EffectName is EffectName.Slow or EffectName.Haste)
+            if (effect.Category == EffectCategory.Debuff || effect.Category == EffectCategory.Buff)
             {
                 applyEffect.Result = ActionResult.Failed;
             }

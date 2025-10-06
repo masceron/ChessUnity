@@ -30,7 +30,7 @@ namespace Game.Managers
             PieceData = new Dictionary<PieceType, PieceInfo>(pieceData.piecesData);
             EffectData = new Dictionary<EffectName, EffectInfo>(effectsData.effectsData);
             RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
-            EnviromentData = new Dictionary<FormationType, GameObject>(enviromentsData.enviromentsData);
+           // EnviromentData = new Dictionary<FormationType, GameObject>(enviromentsData.enviromentsData);
         }
     }
 }

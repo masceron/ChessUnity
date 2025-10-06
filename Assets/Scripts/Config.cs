@@ -18,13 +18,13 @@ public static class Config
         // new PieceConfig(PieceType.Seahorse, false, 55),
         // new PieceConfig(PieceType.Remora, false, 91),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
-        new PieceConfig(PieceType.Megalodon, false, 93),
+        new PieceConfig(PieceType.MoorishIdols, false, 100),
         new PieceConfig(PieceType.GuidingSiren, false, 91)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-         new PieceConfig(PieceType.Barracuda, true, 66),
+         new PieceConfig(PieceType.MoorishIdols, true, 30),
         // new PieceConfig(PieceType.GuidingSiren, true, 101),
         // new PieceConfig(PieceType.FlyingFish, true, 112),
         // new PieceConfig(PieceType.Anomalocaris, true, 75),
