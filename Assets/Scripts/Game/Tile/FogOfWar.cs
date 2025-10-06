@@ -31,7 +31,7 @@ namespace Game.Tile
             piece.isClickable = value;
             PieceManager.Ins.GetPieceGameObject(piece.Pos).GetComponent<MeshRenderer>().enabled = value;
         }
-        public override FormationType GetType()
+        public override FormationType GetFormationType()
         {
             return FormationType.FogOfWar;
         }

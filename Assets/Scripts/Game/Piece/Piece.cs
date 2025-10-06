@@ -38,6 +38,8 @@ namespace Game.Piece
         MedicalLeech,
         Temperantia,
         BobtailSquid,
+        LivingCoral,
+        ClownFish
     }
 
     public enum PieceRank : byte

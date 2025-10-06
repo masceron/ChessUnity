@@ -15,7 +15,7 @@ namespace Game.Tile{
         /// <summary>
         /// Trả về FormationType tương ứng với class
         /// </summary>
-        public abstract FormationType GetType();
+        public abstract FormationType GetFormationType();
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
         /// </summary>
