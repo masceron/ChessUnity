@@ -62,6 +62,7 @@ namespace Game.Effects
         FrenziedVeteran,
         TrueBite, 
         Construct,
+        CopyCatureMethod,
         ClownFishPassive,
         LivingCoralPassive
     }

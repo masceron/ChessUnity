@@ -204,15 +204,15 @@ namespace Game.Common
             MatchManager.Ins.GameState.MainAction = action;
         }
 
-        public static List<PieceLogic> GetPiecesInRange(int rank, int file, int range, Predicate<PieceLogic> predicate)
+        public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
         {
             // Get all pieces in range of (rank, file) that match the predicate
             var pieces = new List<PieceLogic>();
-            for (var rankOff = rank - range; rankOff <= rank + range; rankOff++)
+            for (var rankOff = rank - radius; rankOff <= rank + radius; rankOff++)
             {
                 if (!VerifyBounds(rankOff)) continue;
 
-                for (var fileOff = file - range; fileOff <= file + range; fileOff++)
+                for (var fileOff = file - radius; fileOff <= file + radius; fileOff++)
                 {
                     if (!VerifyBounds(fileOff)) continue;
                     var piece = PieceOn(IndexOf(rankOff, fileOff));

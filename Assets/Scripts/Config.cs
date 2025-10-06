@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Piece;
+using Game.Relics;
+using UnityEngine.TextCore;
 
 public static class Config
 {
@@ -17,25 +19,23 @@ public static class Config
         // new PieceConfig(PieceType.Remora, false, 91),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
         new PieceConfig(PieceType.Megalodon, false, 93),
-        new PieceConfig(PieceType.HorseLeech, false, 91),
-        new PieceConfig(PieceType.SeaStar, false, 87)
+        new PieceConfig(PieceType.GuidingSiren, false, 91)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        // new PieceConfig(PieceType.Barracuda, true, 113),
+         new PieceConfig(PieceType.Barracuda, true, 66),
         // new PieceConfig(PieceType.GuidingSiren, true, 101),
         // new PieceConfig(PieceType.FlyingFish, true, 112),
         // new PieceConfig(PieceType.Anomalocaris, true, 75),
         // new PieceConfig(PieceType.Swordfish, true, 98),
-        new PieceConfig(PieceType.MorayEel, true, 92),
+        new PieceConfig(PieceType.MorayEel, true, 69),
         // new PieceConfig(PieceType.Stingray, true, 96),
         // new PieceConfig(PieceType.SeaStar, true, 97),
         // new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
-        new PieceConfig(PieceType.ClownFish, true, 100),
-        new PieceConfig(PieceType.ClownFish, true, 85),
-        new PieceConfig(PieceType.LivingCoral, true, 86),
-        new PieceConfig(PieceType.ChamberedNautilus, true, 87)
     };
+
+    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.FrostSigil, false, 5);
+    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
 }

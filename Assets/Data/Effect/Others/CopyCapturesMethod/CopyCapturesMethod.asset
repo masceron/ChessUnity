@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: DestroyEnemyWhenMove
+  m_Name: CopyCapturesMethod
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 34
+  typeName: 39
   category: 3
   stack: 1
-  priority: 1
-  activeWhen: 2
+  priority: 3
+  activeWhen: 0
   icon: {fileID: 0}
-  key: destroy_enemy_when_move
+  key: copy_captures_method
