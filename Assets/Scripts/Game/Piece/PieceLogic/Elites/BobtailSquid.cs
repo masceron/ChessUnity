@@ -3,6 +3,8 @@ using Game.Action.Skills;
 using Game.Action.Internal;
 using Game.Effects.Traits;
 using Game.Movesets;
+using UnityEngine;
+
 
 namespace Game.Piece.PieceLogic.Elites
 {
@@ -17,7 +19,7 @@ namespace Game.Piece.PieceLogic.Elites
             {
                 if (SkillCooldown == 0)
                 {
-                    list.Add(new BobtailSquidActive(Pos));
+                    list.Add(new BobtailSquidActive(Pos, Pos));
                 }
             };
         }
