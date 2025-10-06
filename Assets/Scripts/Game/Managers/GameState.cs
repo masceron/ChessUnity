@@ -112,6 +112,7 @@ namespace Game.Managers
                 PieceType.Megalodon => new Megalodon(piece),
                 PieceType.ClownFish => new ClownFish(piece),
                 PieceType.LivingCoral => new LivingCoral(piece),
+                PieceType.ChamberedNautilus => new ChamberedNautilus(piece),
                 _ => null
             };
 

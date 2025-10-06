@@ -35,6 +35,7 @@ public static class Config
         // new PieceConfig(PieceType.Anglerfish, true, 93),
         new PieceConfig(PieceType.ClownFish, true, 100),
         new PieceConfig(PieceType.ClownFish, true, 85),
-        new PieceConfig(PieceType.LivingCoral, true, 86)
+        new PieceConfig(PieceType.LivingCoral, true, 86),
+        new PieceConfig(PieceType.ChamberedNautilus, true, 87)
     };
 }
