@@ -11,6 +11,7 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
+using Game.Piece.PieceLogic.Construct.LivingCoral;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -117,6 +118,8 @@ namespace Game.Managers
                 PieceType.Megalodon => new Megalodon(piece),
                 PieceType.Temperantia => new Temperantia(piece),
                 PieceType.BobtailSquid => new BobtailSquid(piece),
+                PieceType.ClownFish => new ClownFish(piece),
+                PieceType.LivingCoral => new LivingCoral(piece),
                 _ => null
             };
 
@@ -212,6 +215,11 @@ namespace Game.Managers
             observers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                
+                if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
+                {
+                    ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                }
                 //The next turn is of the opponent.
                 if (SideToMove != effect.Piece.Color)
                 {

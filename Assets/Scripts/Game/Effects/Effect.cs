@@ -62,9 +62,8 @@ namespace Game.Effects
         FrenziedVeteran,
         TrueBite,
         CopyCatureMethod,
-        UndyingDevotion,
-        OneMoreTurn,
-        
+        ClownFishPassive,
+        LivingCoralPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -72,7 +71,7 @@ namespace Game.Effects
     {
         public sbyte Duration;
         public sbyte Strength;
-        public PieceLogic Piece;
+        public readonly PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
         
