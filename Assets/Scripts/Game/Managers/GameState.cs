@@ -115,6 +115,8 @@ namespace Game.Managers
                 PieceType.SeaTurtle => new SeaTurtle(piece),
                 PieceType.HorseLeech => new HorseLeech(piece),
                 PieceType.Megalodon => new Megalodon(piece),
+                PieceType.Temperantia => new Temperantia(piece),
+                PieceType.BobtailSquid => new BobtailSquid(piece),
                 _ => null
             };
 
@@ -164,10 +166,13 @@ namespace Game.Managers
 
         public void Move(ushort f, ushort t)
         {
+            FormationManager.Ins.TriggerExit(f, PieceBoard[f]);
             PieceBoard[t] = PieceBoard[f];
             PieceBoard[t].Pos = t;
             PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
+            FormationManager.Ins.TriggerEnter(t);
+            
         }
         
         public void Swap(ushort a, ushort b)
