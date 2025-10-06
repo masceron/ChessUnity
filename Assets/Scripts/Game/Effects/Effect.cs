@@ -63,7 +63,10 @@ namespace Game.Effects
         TrueBite,
         CopyCatureMethod,
         ClownFishPassive,
-        LivingCoralPassive
+        LivingCoralPassive,
+        PureMinded,
+        Relentless,
+        DeathDefiance
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
