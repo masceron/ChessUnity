@@ -1,7 +1,8 @@
 ﻿using Game.Action; 
-using Game.Action.Internal; 
+using Game.Action.Internal;
+using Game.Effects.Traits;
 
-namespace Game.Piece.PieceLogic.Construct.LivingCoral
+namespace Game.Piece.PieceLogic.Construct
 {
     public class LivingCoral : PieceLogic
     {

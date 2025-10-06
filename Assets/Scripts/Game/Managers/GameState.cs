@@ -11,6 +11,7 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
+using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -45,7 +46,7 @@ namespace Game.Managers
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
 
-        private int countTurn = 0;
+        private int countTurn;
         private readonly int numberOfTurnToChange = 10;
         
         //The main action taken this turn.
