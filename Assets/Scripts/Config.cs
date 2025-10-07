@@ -28,12 +28,17 @@ public static class Config
         // new PieceConfig(PieceType.GuidingSiren, true, 101),
         // new PieceConfig(PieceType.FlyingFish, true, 112),
         // new PieceConfig(PieceType.Anomalocaris, true, 75),
+
         // new PieceConfig(PieceType.Swordfish, true, 98),
         new PieceConfig(PieceType.MorayEel, true, 69),
         // new PieceConfig(PieceType.Stingray, true, 96),
         // new PieceConfig(PieceType.SeaStar, true, 97),
         // new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
+        new PieceConfig(PieceType.StoneGrab, true, 115),
+        new PieceConfig(PieceType.StoneGrab, true, 118),
+         new PieceConfig(PieceType.Humilitas, true, 93),
+         new PieceConfig(PieceType.Thalassos, true, 94),
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.FrostSigil, false, 5);
