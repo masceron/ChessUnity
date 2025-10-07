@@ -20,5 +20,5 @@ MonoBehaviour:
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   key: piece_horseleech
-  hasSkill: 0
+  hasSkill: 1
   normalSkillCooldown: 0

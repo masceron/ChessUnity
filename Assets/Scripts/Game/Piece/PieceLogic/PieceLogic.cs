@@ -56,7 +56,7 @@ namespace Game.Piece.PieceLogic
             else SkillCooldown = -1;
             
             Quiets = quiets;
-            this.captures = captures;
+            this.Captures = captures;
         }
         public void PassTurn()
         {
@@ -67,10 +67,11 @@ namespace Game.Piece.PieceLogic
         {}
 
         public QuietsDelegate Quiets;
-        private readonly CapturesDelegate captures;
+        public CapturesDelegate Captures;
 
         public void MoveList(List<Action.Action> list)
         {
+            if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
             var i = 0;
 
@@ -81,7 +82,7 @@ namespace Game.Piece.PieceLogic
                 list = list.Distinct(new ActionComparer()).ToList();
             }
             
-            captures(list, Pos);
+            Captures(list, Pos);
 
             if (hasSkill)
             {

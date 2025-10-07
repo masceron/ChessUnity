@@ -11,6 +11,7 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
+using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -43,6 +44,10 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> observers = new();
+        public bool IsDay { get; private set; }
+
+        private int countTurn;
+        private readonly int numberOfTurnToChange = 10;
         
         //The main action taken this turn.
         public Action.Action MainAction;
@@ -74,6 +79,8 @@ namespace Game.Managers
                     ActiveBoard[IndexOf(rank, file)] = true;
                 }
             }
+
+            IsDay = true;
         }
 
         public void SpawnPiece(PieceConfig piece)
@@ -109,8 +116,12 @@ namespace Game.Managers
                 PieceType.SeaTurtle => new SeaTurtle(piece),
                 PieceType.HorseLeech => new HorseLeech(piece),
                 PieceType.Megalodon => new Megalodon(piece),
+                PieceType.ClownFish => new ClownFish(piece),
+                PieceType.LivingCoral => new LivingCoral(piece),
                 PieceType.Humilitas => new Humilitas(piece),
-                PieceType.StoneGrab => new StoneGrab(piece),
+                PieceType.StoneCrab => new StoneCrab(piece),
+                PieceType.PhantomJelly => new PhantomJelly(piece),
+               // PieceType.MedicalLeech => new MedicalLeech(piece),
                 _ => null
             };
 
@@ -178,6 +189,13 @@ namespace Game.Managers
         public void FlipSideToMove()
         {
             SideToMove = !SideToMove;
+
+            countTurn++;
+            if (countTurn > numberOfTurnToChange * 2)
+            {
+                IsDay = !IsDay;
+                countTurn = 0;
+            }
         }
 
         public void AddObserver(Effect effect)
@@ -196,6 +214,11 @@ namespace Game.Managers
             observers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                
+                if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
+                {
+                    ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                }
                 //The next turn is of the opponent.
                 if (SideToMove != effect.Piece.Color)
                 {

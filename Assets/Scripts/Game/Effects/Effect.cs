@@ -61,11 +61,12 @@ namespace Game.Effects
         SeaTurtleCountdown,
         FrenziedVeteran,
         TrueBite,
+        CopyCatureMethod,
+        ClownFishPassive,
+        LivingCoralPassive,
         PureMinded,
         Relentless,
         DeathDefiance
-
-
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -9,10 +9,13 @@ namespace Game.Tile
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        private int rank;
-        private int file;
+        public int rank;
+        public int file;
         [SerializeField] public Color color;
 
+        public delegate void OnPointerEnterHandler(Tile thisTile);
+
+        public static OnPointerEnterHandler OnPointEnterHandle;
         public void Start()
         {
             if (color == Color.None) gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
@@ -48,6 +51,8 @@ namespace Game.Tile
         {
             if (MatchManager.Ins.InputProcessor)
                 MatchManager.Ins.InputProcessor.Hover(IndexOf(rank, file));
+
+            OnPointEnterHandle?.Invoke(this);
         }
 
         public void OnPointerExit(PointerEventData eventData)
