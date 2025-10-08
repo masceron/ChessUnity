@@ -20,25 +20,27 @@ public static class Config
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
         // new PieceConfig(PieceType.Megalodon, false, 93),
         // new PieceConfig(PieceType.GuidingSiren, false, 91),
-        new PieceConfig(PieceType.LivingCoral, false, 91)
+        // new PieceConfig(PieceType.LivingCoral, false, 91),
+        // new PieceConfig(PieceType.Swordfish, false, 99),
+        new PieceConfig(PieceType.SeaStar, false, 99),
+        // new PieceConfig(PieceType.SeaStar, false, 90),
+        new PieceConfig(PieceType.Lionfish, false, 100),
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-         new PieceConfig(PieceType.Barracuda, true, 66),
+        // new PieceConfig(PieceType.Barracuda, true, 66),
         // new PieceConfig(PieceType.GuidingSiren, true, 101),
         // new PieceConfig(PieceType.FlyingFish, true, 112),
         // new PieceConfig(PieceType.Anomalocaris, true, 75),
         // new PieceConfig(PieceType.Swordfish, true, 98),
         // new PieceConfig(PieceType.MorayEel, true, 69),
         // new PieceConfig(PieceType.Stingray, true, 96),
-        new PieceConfig(PieceType.SeaStar, true, 97),
-        new PieceConfig(PieceType.SeaStar, true, 90),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
-        new PieceConfig(PieceType.ChamberedNautilus, true, 70),
-        new PieceConfig(PieceType.Barracuda, true, 71),
-        new PieceConfig(PieceType.ClownFish, true, 80),
-        new PieceConfig(PieceType.SeaUrchin, true, 79)
+        new PieceConfig(PieceType.ChamberedNautilus, true, 98),
+        // new PieceConfig(PieceType.Barracuda, true, 71),
+        // new PieceConfig(PieceType.ClownFish, true, 80),
+        // new PieceConfig(PieceType.SeaUrchin, true, 79)
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.FrostSigil, false, 5);

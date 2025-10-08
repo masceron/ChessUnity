@@ -20,5 +20,5 @@ MonoBehaviour:
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   key: piece_chambered_nautilus
-  hasSkill: 0
-  normalSkillCooldown: 0
+  hasSkill: 1
+  normalSkillCooldown: 4

@@ -1,6 +1,8 @@
 ﻿using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Buffs;
+
 namespace Game.Effects.Condition
 {
     public class ChamberedNautilusHunger : Effect
@@ -12,15 +14,8 @@ namespace Game.Effects.Condition
         
         public override void OnCall(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
-            
-            action.Result = ActionResult.Failed;
-            
-            if (Strength > 1) Strength--;
-            else
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(this));
-            }
+            if (action == null || action.Result != ActionResult.Succeed) return;
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(Piece)));
         }
     }
 }
