@@ -65,7 +65,8 @@ namespace Game.Effects
         CopyCatureMethod,
         ClownFishPassive,
         LivingCoralPassive,
-        ChamberedNautilusHunger
+        ChamberedNautilusHunger,
+        EpauletteSharkPurify
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
