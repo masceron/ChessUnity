@@ -19,8 +19,8 @@ namespace Game.Tile{
     // }
     public abstract class Formation{
         private bool color = false;
-        public bool haveDuration{ get; private set; }
-        public int duration{ get; private set; }
+        public bool haveDuration{ get; protected set; }
+        public int duration{ get; protected set; }
         public Formation(bool color){
             this.color = color;
         }

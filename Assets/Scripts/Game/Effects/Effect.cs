@@ -65,7 +65,8 @@ namespace Game.Effects
         ClownFishPassive,
         LivingCoralPassive,
         UndyingDevotion,
-        OneMoreTurn
+        OneMoreTurn,
+        BubbleVentPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

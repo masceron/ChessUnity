@@ -39,7 +39,8 @@ namespace Game.Piece
         Temperantia,
         BobtailSquid,
         LivingCoral,
-        ClownFish
+        ClownFish,
+        BubbleVent
     }
 
     public enum PieceRank : byte

@@ -12,6 +12,7 @@ using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
 using Game.Piece.PieceLogic.Construct.LivingCoral;
+using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -125,6 +126,7 @@ namespace Game.Managers
                 PieceType.BobtailSquid => new BobtailSquid(piece),
                 PieceType.ClownFish => new ClownFish(piece),
                 PieceType.LivingCoral => new LivingCoral(piece),
+                PieceType.BubbleVent => new BubbleVent(piece),
                 _ => null
             };
 
@@ -196,7 +198,7 @@ namespace Game.Managers
             SideToMove = !SideToMove;
 
             countTurn++;
-            if (countTurn > numberOfTurnToChange * 2)
+            if (countTurn >= numberOfTurnToChange * 2)
             {
                 IsDay = !IsDay;
                 countTurn = 0;
