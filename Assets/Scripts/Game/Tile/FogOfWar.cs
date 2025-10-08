@@ -8,15 +8,12 @@ namespace Game.Tile
 {
     public class FogOfWar : Formation
     {
-        public bool color;
-        public FogOfWar(bool color, int duration)
-        {
-            this.color = color;
-            this.duration = duration;
+        public FogOfWar(bool color) : base(color){
+            
         }
-        public override void OnPieceEnter(PieceLogic piece)
+    public override void OnPieceEnter(PieceLogic piece)
         {
-            if (piece.Color != color)
+            if (piece.Color != GetColor())
             {
                 FormationManager.Ins.RemoveFormation(piece.Pos);
             }

@@ -8,13 +8,16 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    public class FormationManager : Singleton<FormationManager>{
+    public class FormationManager : Singleton<FormationManager>, ISubscriber{
         Formation[] formations;
         GameObject[] formationObjects;
+
         public void Intialize(){
             formations = new Formation[BoardSize];
             formationObjects = new GameObject[BoardSize];
+            MatchManager.Ins.GameState.subscribers.Add(this);
         }
+        
         /// <summary>
         /// Gán Formation đã tạo bằng new() vào array, tại vị trí "pos" <br/>
         /// Trước khi sử dụng hàm này, hãy đảm bảo bạn đã: <br/>
@@ -38,19 +41,35 @@ namespace Game.Managers
             formationObjects[pos] = null;
         }
         /// <summary>
-        /// Được gọi bởi GameState.cs khi bất cứ quân nào dẫm phải ô có tọa độ là pos. Hàm này được gọi tự động
+        /// Được gọi tự động bởi GameState.cs khi bất cứ quân nào dẫm phải ô có tọa độ là pos.
         /// </summary>
         public void TriggerEnter(int pos){
             if (formations[pos] == null) return;
             formations[pos].OnPieceEnter(PieceOn(pos));
         }
         /// <summary>
-        /// Được gọi bởi GameState.cs khi bất cứ quân nào di chuyển khỏi ô có tọa độ là pos. Hàm này được gọi tự động
+        /// Được gọi tự động bởi GameState.cs khi bất cứ quân nào di chuyển khỏi ô có tọa độ là pos. 
         /// </summary>
-        /// <param name="pos"></param>
-        public void TriggerExit(int pos, PieceLogic leavePiece){
-            if (formations[pos] == null) return;
-            formations[pos].OnPieceExit(leavePiece);
+        public void TriggerExit(int oldPos, int newPos){
+            if (formations[oldPos] == null) return;
+            formations[oldPos].OnPieceExit(PieceOn(newPos));
         }
+        /// <summary>
+        /// Được gọi tự động bởi GameState.cs khi kết thúc turn, muc đích hiện tại để xử lý duration
+        /// </summary>
+        public void OnCallEnd(bool endOfSide){
+            
+            for(int pos = 0; pos < formations.Length; pos++){
+                Formation format = formations[pos];
+                if (format == null) continue;
+                if (format.haveDuration){
+                    format.SetDuration(format.duration - 1);
+                    if (format.duration == -1){
+                        RemoveFormation(pos);
+                    }
+                }
+            }
+        }
+        public void OnCall(Action.Action action){}
     }
 }

@@ -4,15 +4,17 @@ using Game.Tile;
 using Game.Piece.PieceLogic;
 using Game.Managers;
 using static Game.Common.BoardUtils;
+using UnityEngine;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BobtailSquidActive : Action, ISkills
     {
-        public BobtailSquidActive(int maker) : base(maker)
+        public BobtailSquidActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
+            Target = (ushort)target;
         }
         protected override void Animate()
         {
@@ -21,14 +23,18 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
+            Debug.Log("Execute BobtailSquidActive");
             (int rank, int file) = RankFileOf(Maker);
-            for (int x = rank - 1; x <= rank + 1; ++x){
-                for (int y = file; y <= file + 1; ++y){
-                    FormationManager.Ins.SetFormation(IndexOf(x, y), new FogOfWar(PieceOn(Maker).Color, 3));
+            for (int x = rank; x <= rank + 1; ++x){
+                for (int y = file - 1; y <= file + 1; ++y){
+                    Formation FogOfWar = new FogOfWar(PieceOn(Maker).Color);
+                    FogOfWar.SetDuration(3);
+                    FormationManager.Ins.SetFormation(IndexOf(x, y), FogOfWar);
                 }
             }
-            MatchManager.Ins.GameState.Move(Maker, (ushort)IndexOf(rank - 3, file));
+            
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            MatchManager.Ins.GameState.Move(Maker, (ushort)IndexOf(rank - 3, file));
         }
     }
 }
