@@ -37,7 +37,8 @@ namespace Game.Piece
         Megalodon, 
         ClownFish,
         LivingCoral,
-        ChamberedNautilus
+        ChamberedNautilus,
+        EpauletteShark
     }
 
     public enum PieceRank : byte

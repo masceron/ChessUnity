@@ -25,6 +25,7 @@ public static class Config
         new PieceConfig(PieceType.SeaStar, false, 99),
         // new PieceConfig(PieceType.SeaStar, false, 90),
         new PieceConfig(PieceType.Lionfish, false, 100),
+        new PieceConfig(PieceType.ClownFish, false, 97)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
@@ -38,8 +39,8 @@ public static class Config
         // new PieceConfig(PieceType.Stingray, true, 96),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
         new PieceConfig(PieceType.ChamberedNautilus, true, 98),
+        new PieceConfig(PieceType.EpauletteShark, true, 96),
         // new PieceConfig(PieceType.Barracuda, true, 71),
-        // new PieceConfig(PieceType.ClownFish, true, 80),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
     };
 
