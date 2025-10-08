@@ -55,8 +55,18 @@ namespace Game.Effects
         Extremophile,
         Haste,
         RemoraMarked,
+        HourglassJelly,
+        FreeMovement,
+        DestroyEnemyWhenMove,
+        SeaTurtleCountdown,
         FrenziedVeteran,
-        TrueBite
+        TrueBite,
+        CopyCatureMethod,
+        ClownFishPassive,
+        LivingCoralPassive,
+        PureMinded,
+        Relentless,
+        DeathDefiance
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

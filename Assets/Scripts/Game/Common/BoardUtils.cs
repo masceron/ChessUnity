@@ -17,6 +17,17 @@ namespace Game.Common
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
 
+        //Đếm cho Humilitas nhìn ngu vãi nhưng không biets làm gì khác
+        public static int Count = 0;
+        public static void SetCount(int count)
+        {
+            Count = count;
+        }
+        public static int GetCount()
+        {
+            return Count;
+        }
+
         public static int RankOf(int index)
         {
             return index / MaxLength;
@@ -202,6 +213,27 @@ namespace Game.Common
         public static void SetMainAction(Action.Action action)
         {
             MatchManager.Ins.GameState.MainAction = action;
+        }
+
+        public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
+        {
+            // Get all pieces in range of (rank, file) that match the predicate
+            var pieces = new List<PieceLogic>();
+            for (var rankOff = rank - radius; rankOff <= rank + radius; rankOff++)
+            {
+                if (!VerifyBounds(rankOff)) continue;
+
+                for (var fileOff = file - radius; fileOff <= file + radius; fileOff++)
+                {
+                    if (!VerifyBounds(fileOff)) continue;
+                    var piece = PieceOn(IndexOf(rankOff, fileOff));
+                    if (predicate(piece))
+                    {
+                        pieces.Add(piece);
+                    }
+                }
+            }
+            return pieces;
         }
     }
 }

@@ -25,9 +25,20 @@ namespace Game.Piece
         SeaStar,
         Anglerfish,
         Remora,
-        MedicalLeech,
+        KelpBass,
+        MedicinalLeach,
+        HourglassJelly,
+        Archerfish,
+        MoorishIdols,
+        Helicoprion,
+        HermitCrab,
+        SeaTurtle,
         HorseLeech,
         Megalodon,
+        ClownFish,
+        LivingCoral,
+        Humilitas,
+        StoneCrab,
         PhantomJelly
     }
 

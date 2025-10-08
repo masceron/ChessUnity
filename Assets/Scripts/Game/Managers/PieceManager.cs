@@ -23,6 +23,7 @@ namespace Game.Managers
 
         public void Destroy(int pos)
         {
+            // if (pieces[pos] == null) return;
             Object.Destroy(pieces[pos].gameObject);
             pieces[pos] = null;
         }
@@ -32,6 +33,12 @@ namespace Game.Managers
             pieces[to] = pieces[from];
             pieces[from] = null;
             pieces[to].Move(RankOf(to), FileOf(to));
+        }
+        public void Swap(int a, int b)
+        {
+             (pieces[a], pieces[b]) = (pieces[b], pieces[a]);
+             pieces[a].Move(RankOf(a), FileOf(a));
+            pieces[b].Move(RankOf(b), FileOf(b));
         }
         
     }

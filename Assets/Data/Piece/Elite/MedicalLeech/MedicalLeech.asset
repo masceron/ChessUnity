@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: MedicalLeech
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 19
+  type: 20
   prefab: {fileID: 919132149155446097, guid: f8d6e5b9474dbf043b5426f331f2abf8, type: 3}
   rank: 2
   moveRange: 1

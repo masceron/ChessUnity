@@ -6,7 +6,9 @@ namespace UX.UI.Ingame
     public enum IngameSubmenus
     {
         ChrysosShop,
-        ThalassosResurrector
+        ThalassosResurrector,
+        DeathDefianceUI
+
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

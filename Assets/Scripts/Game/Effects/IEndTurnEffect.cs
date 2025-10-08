@@ -2,7 +2,7 @@
 {
     public enum EndTurnEffectType : byte
     {
-        EndOfAllyTurn, EndOfEnemyTurn
+        EndOfAllyTurn, EndOfEnemyTurn, EndOfAnyTurn
     }
     
     //Interface for triggers that took place on a new turn.
