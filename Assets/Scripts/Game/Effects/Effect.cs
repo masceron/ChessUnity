@@ -66,7 +66,8 @@ namespace Game.Effects
         LivingCoralPassive,
         PureMinded,
         Relentless,
-        DeathDefiance
+        DeathDefiance,
+        DormantFossilPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

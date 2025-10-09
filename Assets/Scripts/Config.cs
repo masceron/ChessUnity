@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Effects.Traits;
 using Game.Piece;
 using Game.Relics;
 using UnityEngine.TextCore;
@@ -18,6 +19,7 @@ public static class Config
         // new PieceConfig(PieceType.Seahorse, false, 55),
          new PieceConfig(PieceType.Remora, false, 68),
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
+        new PieceConfig(PieceType.Chrysos, false, 95),
         new PieceConfig(PieceType.Megalodon, false, 93),
         new PieceConfig(PieceType.GuidingSiren, false, 91)
     };
