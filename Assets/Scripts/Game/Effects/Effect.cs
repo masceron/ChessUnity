@@ -66,7 +66,8 @@ namespace Game.Effects
         ClownFishPassive,
         LivingCoralPassive,
         ChamberedNautilusHunger,
-        EpauletteSharkPurify
+        EpauletteSharkPurify,
+        DiurnalAmbush
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -25,7 +25,7 @@ namespace Game.Piece.PieceLogic.Construct.LivingCoral
         
         public LivingCoralPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.LivingCoralPassive)
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
             BuffEvasionInRange();
         }
         

@@ -40,6 +40,7 @@ public static class Config
         // new PieceConfig(PieceType.Anglerfish, true, 93),
         new PieceConfig(PieceType.ChamberedNautilus, true, 98),
         new PieceConfig(PieceType.EpauletteShark, true, 96),
+        new PieceConfig(PieceType.Barracuda, true, 101)
         // new PieceConfig(PieceType.Barracuda, true, 71),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
     };
