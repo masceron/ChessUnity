@@ -28,8 +28,8 @@ namespace Game.Piece.PieceLogic.Construct
         public void OnCallEnd(Action.Action lastMainAction)
         {
             countToSpawnEffect++;
-            Debug.Log("countToSpawnEffect:  " + countToSpawnEffect);
-            if (countToSpawnEffect <= intervalToSpawn) return;
+
+            if (countToSpawnEffect < intervalToSpawn) return;
             countToSpawnEffect = 0;
 
             RandomApplyEffectInRadius();
@@ -38,21 +38,30 @@ namespace Game.Piece.PieceLogic.Construct
         private void RandomApplyEffectInRadius()
         {
             var (randRank, randFile) = GetRandomPos();
-
+            if (randRank == null || randFile == null    ) return;
             Formation bubbleVent = new BubbleVentFormation(10, true, Piece.Color);
-            FormationManager.Ins.SetFormation(BoardUtils.IndexOf(randRank, randFile), bubbleVent);
-            var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank, randFile));
+            FormationManager.Ins.SetFormation(BoardUtils.IndexOf(randRank.Value, randFile.Value), bubbleVent);
+            var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank.Value, randFile.Value));
             if (pieceOn != null)
             {
                 ActionManager.ExecuteImmediately(new ApplyEffect(new Bound(1, pieceOn)));
             }
         }
 
-        private (int, int) GetRandomPos()
+        private (int?, int?) GetRandomPos()
         {
-            var (rank, file) = BoardUtils.RankFileOf(Piece.Pos);
-            int randRank = Random.Range(Mathf.Max(0, rank - radius), Mathf.Min(BoardUtils.BoardSize - 1, rank + radius) + 1);
-            int randFile = Random.Range(Mathf.Max(0, file - radius), Mathf.Min(BoardUtils.BoardSize - 1, file + radius) + 1);
+            int randRank;
+            int randFile;
+            int counter = 0;
+            do
+            {
+                counter++;
+                var (rank, file) = BoardUtils.RankFileOf(Piece.Pos);
+                randRank = Random.Range(Mathf.Max(0, rank - radius), Mathf.Min(BoardUtils.BoardSize - 1, rank + radius) + 1);
+                randFile = Random.Range(Mathf.Max(0, file - radius), Mathf.Min(BoardUtils.BoardSize - 1, file + radius) + 1);
+                if (counter > 8) return (null, null);
+            } while (FormationManager.Ins.GetFormation(BoardUtils.IndexOf(randRank, randFile)) != null);
+            
             return (randRank, randFile);
         }
     }

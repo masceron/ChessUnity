@@ -51,12 +51,15 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
+        public int currentTurn { get; private set; }
 
         private int countTurn = 0;
         private readonly int numberOfTurnToChange = 10;
         public List<ISubscriber> subscribers = new();
         //The main action taken this turn.
         public Action.Action MainAction;
+
+        public static System.Action<int> OnIncreaseTurn;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -87,6 +90,8 @@ namespace Game.Managers
             }
 
             IsDay = true;
+            currentTurn = 1;
+            countTurn = 0;
         }
 
         public void SpawnPiece(PieceConfig piece)
@@ -195,14 +200,19 @@ namespace Game.Managers
 
         public void FlipSideToMove()
         {
-            SideToMove = !SideToMove;
-
-            countTurn++;
-            if (countTurn >= numberOfTurnToChange * 2)
+            if (SideToMove)
             {
-                IsDay = !IsDay;
-                countTurn = 0;
+                countTurn++;
+                currentTurn++;
+                OnIncreaseTurn?.Invoke(currentTurn);
+
+                if (countTurn >= numberOfTurnToChange)
+                {
+                    IsDay = !IsDay;
+                    countTurn = 0;
+                }
             }
+            SideToMove = !SideToMove;
         }
 
         public void AddObserver(Effect effect)

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BubbleVentPassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
   typeName: 44
-  category: 0
+  category: 3
   stack: 1
   priority: 1
   activeWhen: 3

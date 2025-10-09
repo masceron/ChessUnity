@@ -32,6 +32,11 @@ namespace Game.Managers
             Quaternion.identity, this.transform);
             formations[pos] = env;
         }
+
+        public Formation GetFormation(int pos)
+        {
+            return formations[pos];
+        }
         /// <summary>
         /// Nên dùng để xóa Formation
         /// </summary>
@@ -61,12 +66,12 @@ namespace Game.Managers
             
             for(int pos = 0; pos < formations.Length; pos++){
                 Formation format = formations[pos];
-                if (format == null) continue;
-                if (format.haveDuration){
-                    format.SetDuration(format.duration - 1);
-                    if (format.duration == -1){
-                        RemoveFormation(pos);
-                    }
+
+                if (format == null || !format.haveDuration || !endOfSide) continue;
+                
+                format.SetDuration(format.duration - 1);
+                if (format.duration <= 0){
+                    RemoveFormation(pos);
                 }
             }
         }
