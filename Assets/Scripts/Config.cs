@@ -11,7 +11,7 @@ public static class Config
         // new PieceConfig(PieceType.SeaUrchin, false, 100),
         // new PieceConfig(PieceType.ElectricEel, false, 92),
         // new PieceConfig(PieceType.Chrysos, false, 88),
-        // new PieceConfig(PieceType.Archelon, false, 78),
+        new PieceConfig(PieceType.Archelon, false, 100),
         // new PieceConfig(PieceType.Thalassos, false, 65),
         // new PieceConfig(PieceType.Pufferfish, false, 70),
         // new PieceConfig(PieceType.Lionfish, false, 99),
@@ -24,7 +24,7 @@ public static class Config
         // new PieceConfig(PieceType.Swordfish, false, 99),
         new PieceConfig(PieceType.SeaStar, false, 99),
         // new PieceConfig(PieceType.SeaStar, false, 90),
-        new PieceConfig(PieceType.Lionfish, false, 100),
+        // new PieceConfig(PieceType.Lionfish, false, 100),
         new PieceConfig(PieceType.ClownFish, false, 97)
     };
 
@@ -40,7 +40,7 @@ public static class Config
         // new PieceConfig(PieceType.Anglerfish, true, 93),
         new PieceConfig(PieceType.ChamberedNautilus, true, 98),
         new PieceConfig(PieceType.EpauletteShark, true, 96),
-        new PieceConfig(PieceType.Barracuda, true, 101)
+        // new PieceConfig(PieceType.Barracuda, true, 101)
         // new PieceConfig(PieceType.Barracuda, true, 71),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
     };

@@ -4,7 +4,8 @@ using Game.Action.Skills;
 using Game.Effects.Condition;
 using Game.Effects.Others;
 using Game.Movesets;
-
+using Game.Common;
+using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic.Elites
 {
     public class EpauletteShark : PieceLogic, IPieceWithSkill
@@ -16,7 +17,20 @@ namespace Game.Piece.PieceLogic.Elites
             ActionManager.ExecuteImmediately(new ApplyEffect(new DiurnalAmbush(this)));
             Skills = list =>
             {
-                if (SkillCooldown == 0) list.Add(new EpauletteSharkActive(Pos));
+                if (SkillCooldown != 0) return;
+
+                var (rank, file) = RankFileOf(Pos);
+
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                {
+                    var index = IndexOf(rankOff, fileOff);
+                    var pOn = PieceOn(index);
+                    if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
+                    if (pOn.Color != Color)
+                    {
+                        list.Add(new EpauletteSharkActive(Pos, index));
+                    }
+                }
             };
         }
         
