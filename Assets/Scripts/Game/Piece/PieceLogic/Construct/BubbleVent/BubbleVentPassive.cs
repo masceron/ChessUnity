@@ -7,6 +7,7 @@ using Game.Tile;
 using Game.Managers;
 using Game.Common;
 using Game.Effects.Debuffs;
+using System.Collections.Generic;
 
 namespace Game.Piece.PieceLogic.Construct
 {
@@ -16,10 +17,28 @@ namespace Game.Piece.PieceLogic.Construct
         private int countToSpawnEffect = 0;
         private readonly int intervalToSpawn = 2;
         private readonly int radius = 2;
+        private readonly int aliveTime = 10;
+        private List<(int,int)> tileInradius = new List<(int, int)>();
 
         public BubbleVentPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BubbleVentPassive)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+
+            var (rank, file) = BoardUtils.RankFileOf(piece.Pos);
+            for (int  i = rank-radius;  i <= rank + radius;  i++)
+            {
+                for (int j = file - radius; j <= file + radius; j++)
+                {
+                    if (i == rank && j == file) continue;
+                    if (BoardUtils.VerifyBounds(i) 
+                        && BoardUtils.VerifyBounds(j) 
+                        && BoardUtils.IsActive(BoardUtils.IndexOf(i, j)))
+                    {
+                        tileInradius.Add((i, j));
+                    }
+                }
+
+            }
         }
 
         public EndTurnEffectType EndTurnEffectType
@@ -38,9 +57,11 @@ namespace Game.Piece.PieceLogic.Construct
         private void RandomApplyEffectInRadius()
         {
             var (randRank, randFile) = GetRandomPos();
-            if (randRank == null || randFile == null    ) return;
-            Formation bubbleVent = new BubbleVentFormation(10, true, Piece.Color);
+            if (randRank == null || randFile == null) return;
+
+            Formation bubbleVent = new BubbleVentFormation(aliveTime, true, Piece.Color);
             FormationManager.Ins.SetFormation(BoardUtils.IndexOf(randRank.Value, randFile.Value), bubbleVent);
+
             var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank.Value, randFile.Value));
             if (pieceOn != null)
             {
@@ -50,19 +71,23 @@ namespace Game.Piece.PieceLogic.Construct
 
         private (int?, int?) GetRandomPos()
         {
-            int randRank;
-            int randFile;
-            int counter = 0;
+            var availableTiles = new List<(int, int)>();
+            availableTiles.AddRange(tileInradius);
+            
             do
             {
-                counter++;
-                var (rank, file) = BoardUtils.RankFileOf(Piece.Pos);
-                randRank = Random.Range(Mathf.Max(0, rank - radius), Mathf.Min(BoardUtils.BoardSize - 1, rank + radius) + 1);
-                randFile = Random.Range(Mathf.Max(0, file - radius), Mathf.Min(BoardUtils.BoardSize - 1, file + radius) + 1);
-                if (counter > 8) return (null, null);
-            } while (FormationManager.Ins.GetFormation(BoardUtils.IndexOf(randRank, randFile)) != null);
-            
-            return (randRank, randFile);
+                if (availableTiles.Count == 0) return (null, null);
+
+                int randIndex = Random.Range(0, availableTiles.Count);
+                var (randRank, randFile) = availableTiles[randIndex];
+                var formation = FormationManager.Ins.GetFormation(BoardUtils.IndexOf(randRank, randFile));
+                if (formation == null)
+                {
+                    availableTiles.RemoveAt(randIndex);
+
+                    return (randRank, randFile);
+                }
+            } while (true);
         }
     }
 

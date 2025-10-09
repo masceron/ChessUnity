@@ -67,7 +67,7 @@ namespace Game.Managers
             for(int pos = 0; pos < formations.Length; pos++){
                 Formation format = formations[pos];
 
-                if (format == null || !format.haveDuration || !endOfSide) continue;
+                if (format == null || !format.haveDuration || endOfSide) continue;
                 
                 format.SetDuration(format.duration - 1);
                 if (format.duration <= 0){
