@@ -66,7 +66,7 @@ namespace Game.Effects
         LivingCoralPassive,
         UndyingDevotion,
         OneMoreTurn,
-        BubbleVentPassive,
+        FractureZonePassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

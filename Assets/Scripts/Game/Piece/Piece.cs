@@ -40,7 +40,7 @@ namespace Game.Piece
         BobtailSquid,
         LivingCoral,
         ClownFish,
-        BubbleVent
+        FractureZone
     }
 
     public enum PieceRank : byte

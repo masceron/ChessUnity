@@ -131,7 +131,7 @@ namespace Game.Managers
                 PieceType.BobtailSquid => new BobtailSquid(piece),
                 PieceType.ClownFish => new ClownFish(piece),
                 PieceType.LivingCoral => new LivingCoral(piece),
-                PieceType.BubbleVent => new BubbleVent(piece),
+                PieceType.FractureZone => new FractureZone(piece),
                 _ => null
             };
 

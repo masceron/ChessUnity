@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Game.Piece.PieceLogic.Construct
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BubbleVentPassive : Effect, IEndTurnEffect
+    public class FractureZonePassive : Effect, IEndTurnEffect
     {
         private int countToSpawnEffect = 0;
         private readonly int intervalToSpawn = 2;
@@ -20,7 +20,7 @@ namespace Game.Piece.PieceLogic.Construct
         private readonly int aliveTime = 10;
         private List<(int,int)> tileInradius = new List<(int, int)>();
 
-        public BubbleVentPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BubbleVentPassive)
+        public FractureZonePassive(PieceLogic piece) : base(-1, 1, piece, EffectName.FractureZonePassive)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
 
