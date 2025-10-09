@@ -1,9 +1,10 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
-using Game.Effects.Buffs;
 using Game.Effects.Condition;
 using Game.Movesets;
+using Game.Common;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Elites
 {
@@ -18,7 +19,20 @@ namespace Game.Piece.PieceLogic.Elites
             
             Skills = list =>
             {
-                if (SkillCooldown == 0) list.Add(new ChamberedNautilusActive(Pos));
+                if (SkillCooldown != 0) return;
+
+                var (rank, file) = RankFileOf(Pos);
+
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
+                {
+                    var index = IndexOf(rankOff, fileOff);
+                    var pOn = PieceOn(index);
+                    if (pOn == null || pOn == this) continue;
+                    if (pOn.Color != Color)
+                    {
+                        list.Add(new ChamberedNautilusActive(Pos, index));
+                    }
+                }
             };
         }
 
