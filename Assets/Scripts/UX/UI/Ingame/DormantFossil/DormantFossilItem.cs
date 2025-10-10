@@ -23,7 +23,7 @@ namespace UX.UI.Ingame.DormantFossil
 
         public void OnClickSummon()
         {
-            transform.parent.parent.parent.GetComponent<DormantFossilUI>().Choose(pieceType);
+            transform.parent.parent.GetComponent<DormantFossilUI>().Choose(pieceType);
         }
     }
 }

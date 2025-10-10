@@ -40,21 +40,20 @@ namespace UX.UI.Ingame.DormantFossil
         public void Load(ushort piecePos)
         {
             this.piecePos = piecePos;
+            
             for (var i = 0; i < 3; ++i)
             {
                 Instantiate(pieceItem, chooseField.transform, true);
-                Debug.Log("Instantiated");
-                pieceItem.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
+                chooseField.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
             }
+
         }
 
         public void Choose(PieceType type)
         {
             var color = BoardUtils.ColorOfPiece(piecePos);
             ActionManager.EnqueueAction(new KillPiece(piecePos));
-            ActionManager.EnqueueAction(
-                new SpawnPiece(new PieceConfig(type, color, piecePos))
-            );
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(type, color, piecePos)));
             
             Disable();
         }

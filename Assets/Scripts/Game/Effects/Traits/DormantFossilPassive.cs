@@ -20,10 +20,9 @@ namespace Game.Effects.Traits
         private byte numTurns;
         private const byte TurnsToActive = 2;
         
-        public EndTurnEffectType EndTurnEffectType { get; }
-        
         public DormantFossilPassive(PieceLogic piece) : base(-1, -1, piece, EffectName.DormantFossilPassive)
         {
+            //Debug.Log("activated");
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
 
@@ -45,17 +44,20 @@ namespace Game.Effects.Traits
             ui.Load(Piece.Pos);
         }
 
-        public void OnCallEnd(Action.Action action)
+        public override void OnCall(Action.Action action)
         {
-            numTurns++;
-            Debug.Log(numTurns);
             if (numTurns % TurnsToActive == 0)
             {
                 Debug.Log("actived");
                 ActivePassive();
             }
-
         }
 
+        public void OnCallEnd(Action.Action action)
+        {
+            numTurns++;
+        }
+
+        public EndTurnEffectType EndTurnEffectType { get; set; }
     }
 }
