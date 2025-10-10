@@ -45,6 +45,7 @@ public static class Config
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
     };
 
-    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.FrostSigil, false, 5);
-    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
+    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.RottingScythe, false, 5);
+    // public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
+    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 4);
 }

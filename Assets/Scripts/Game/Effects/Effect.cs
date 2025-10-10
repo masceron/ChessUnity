@@ -67,7 +67,8 @@ namespace Game.Effects
         LivingCoralPassive,
         ChamberedNautilusHunger,
         EpauletteSharkPurify,
-        DiurnalAmbush
+        DiurnalAmbush,
+        Infected
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

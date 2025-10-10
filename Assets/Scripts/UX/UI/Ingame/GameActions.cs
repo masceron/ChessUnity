@@ -1,5 +1,6 @@
 ﻿using Game.Managers;
 using Game.Relics;
+using Game.Relics.RottingScythe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -46,8 +47,9 @@ namespace UX.UI.Ingame
         {
             RelicLogic rl = cfg.Type switch 
             { 
+                // RelicType.EyeOfMimic => new EyeOfMimic(cfg),
+                RelicType.RottingScythe => new RottingScythe(cfg),
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
-                RelicType.FrostSigil => new FrostSigil(cfg),
                 _ => null
             };
             return rl;

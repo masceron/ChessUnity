@@ -1,12 +1,15 @@
-﻿namespace Game.Relics.RottingScythe
+﻿using System.Linq;
+using Game.Effects;
+using Game.Managers;
+using UX.UI.Ingame;
+
+namespace Game.Relics.RottingScythe
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RottingScythe : RelicLogic
     {
         public RottingScythe(RelicConfig cfg) : base(cfg)
         {
-            Type = cfg.Type;
-            Color = cfg.Color;
-            TimeCooldown = cfg.TimeCooldown;
             currentCooldown = 0;
         }
 
@@ -14,7 +17,15 @@
         {
             if (currentCooldown == 0)
             {
-                
+                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                {
+                    if (piece == null || !piece.Effects.Any(e => e.EffectName == EffectName.Infected)) continue;
+                    TileManager.Ins.MarkAsMoveable(piece.Pos);
+                    var pending = new RottingScythePending(this, piece.Pos, piece.Color);
+                    BoardViewer.ListOf.Add(pending);
+                }
+                BoardViewer.Selecting = -2;
+                BoardViewer.SelectingFunction = 4;
             }
         }
     }
