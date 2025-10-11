@@ -12,6 +12,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
+        public bool isClickable = true;
         public ushort Pos;
         public bool Color;
 
@@ -69,6 +70,11 @@ namespace Game.Piece.PieceLogic
         public QuietsDelegate Quiets;
         public CapturesDelegate Captures;
 
+        /// <summary>
+        /// Thêm vào tham số list những Action có thể thực thi. Ví dụ: Moves, Captures, ISkills <br/>
+        /// List này sau đó sẽ được hiển thị lên Board bởi BoardViewer
+        /// </summary>
+        /// <param name="list"></param>
         public void MoveList(List<Action.Action> list)
         {
             if (PieceRank == PieceRank.Construct) return;

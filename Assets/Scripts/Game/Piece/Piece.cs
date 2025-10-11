@@ -39,7 +39,11 @@ namespace Game.Piece
         LivingCoral,
         Humilitas,
         StoneCrab,
-        PhantomJelly
+        PhantomJelly,
+        MedicalLeech,
+        Temperantia,
+        BobtailSquid,
+        FractureZone
     }
 
     public enum PieceRank : byte

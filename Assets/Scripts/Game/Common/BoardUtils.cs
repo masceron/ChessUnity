@@ -235,5 +235,16 @@ namespace Game.Common
             }
             return pieces;
         }
+
+        public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
+        {
+            List<PieceLogic> validPieces = new List<PieceLogic>();
+            foreach (PieceLogic piece in MatchManager.Ins.GameState.PieceBoard)
+            {
+                if (piece != null && piece is T && piece.Color == side)
+                    validPieces.Add(piece);
+            }
+            return validPieces;
+        }
     }
 }

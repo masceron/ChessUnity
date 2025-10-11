@@ -76,7 +76,7 @@ namespace Game.Effects
     {
         public sbyte Duration;
         public sbyte Strength;
-        public readonly PieceLogic Piece;
+        public PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
         

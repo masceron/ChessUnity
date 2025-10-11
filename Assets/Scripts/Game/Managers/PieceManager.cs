@@ -21,6 +21,10 @@ namespace Game.Managers
             p.Spawn(pos, config.Color);
         }
 
+        /// <summary>
+        /// Destroy gameObject of that piece
+        /// </summary>
+        /// <param name="pos"></param>
         public void Destroy(int pos)
         {
             // if (pieces[pos] == null) return;
@@ -41,5 +45,8 @@ namespace Game.Managers
             pieces[b].Move(RankOf(b), FileOf(b));
         }
         
+        public Piece.Piece GetPieceGameObject(int pos){
+            return pieces[pos];
+        }
     }
 }
