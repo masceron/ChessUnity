@@ -10,7 +10,7 @@
         protected RelicType Type;
         protected sbyte TimeCooldown;
         public sbyte currentCooldown { get; protected set; }
-        protected bool Color; // false for white, true for black
+        public bool Color; // false for white, true for black
 
         protected RelicLogic(RelicConfig cfg)
         {

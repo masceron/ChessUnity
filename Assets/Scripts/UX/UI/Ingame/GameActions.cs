@@ -48,6 +48,8 @@ namespace UX.UI.Ingame
             { 
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.FrostSigil => new FrostSigil(cfg),
+                RelicType.CommonPearl => new CommonPearl(cfg),
+                RelicType.BlackPearl => new BlackPearl(cfg),
                 _ => null
             };
             return rl;
