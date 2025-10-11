@@ -59,7 +59,7 @@ namespace Game.Piece.PieceLogic.Construct
             var (randRank, randFile) = GetRandomPos();
             if (randRank == null || randFile == null) return;
 
-            Formation bubbleVent = new BubbleVentFormation(aliveTime, true, Piece.Color);
+            Formation bubbleVent = new BubbleVent(aliveTime, true, Piece.Color);
             FormationManager.Ins.SetFormation(BoardUtils.IndexOf(randRank.Value, randFile.Value), bubbleVent);
 
             var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank.Value, randFile.Value));

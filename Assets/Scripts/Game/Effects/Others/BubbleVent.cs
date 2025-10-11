@@ -11,9 +11,9 @@ namespace Game.Tile
     ///     Placeholder for BubbleVentEffect implementation.
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BubbleVentFormation : Formation
+    public class BubbleVent : Formation
     {
-        public BubbleVentFormation(int d, bool hd, bool color) : base(color)
+        public BubbleVent(int d, bool hd, bool color) : base(color)
         {
             this.duration = d;
             this.haveDuration = hd;
