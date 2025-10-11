@@ -1,6 +1,8 @@
 ﻿using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
+using Game.Piece.PieceLogic.Champions;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Quiets
@@ -34,6 +36,14 @@ namespace Game.Action.Quiets
                 rankFrom += rankDir;
                 fileFrom += fileDir;
 
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rankFrom, fileFrom, 1))
+                {
+                    var curP = board[IndexOf(rankOff, fileOff)];
+                    if (!(curP is BlueRingedOctopus)) continue;
+                    
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Maker))));
+                }
+                
                 var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.Color == caller.Color) continue;
                 

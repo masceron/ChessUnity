@@ -1,9 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using Game.Action;
-using Game.Action.Internal;
-using Game.Action.Internal.Pending;
-using Game.Piece;
 using Game.Piece.PieceLogic;
 using UnityEngine;
 using UX.UI.Ingame;
@@ -15,15 +9,16 @@ namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     
-    public class DormantFossilPassive : Effect, IEndTurnEffect
+    public class DormantFossilPassive : Effect, IEndTurnEffect, IStartTurnEffect
     {
-        private byte numTurns;
         private const byte TurnsToActive = 2;
+        private byte numTurns = TurnsToActive;
         
         public DormantFossilPassive(PieceLogic piece) : base(-1, -1, piece, EffectName.DormantFossilPassive)
         {
             //Debug.Log("activated");
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+            StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
         }
 
         private void ActivePassive() 
@@ -44,20 +39,22 @@ namespace Game.Effects.Traits
             ui.Load(Piece.Pos);
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallStart(Action.Action action)
         {
-            if (numTurns % TurnsToActive == 0)
+            if (numTurns == 0)
             {
-                Debug.Log("actived");
                 ActivePassive();
+                numTurns = TurnsToActive;
             }
         }
 
         public void OnCallEnd(Action.Action action)
         {
-            numTurns++;
+            numTurns--;
+            Debug.Log("increased turn" + numTurns);
         }
-
+        
         public EndTurnEffectType EndTurnEffectType { get; set; }
+        public StartTurnEffectType StartTurnEffectType { get; set; }
     }
 }

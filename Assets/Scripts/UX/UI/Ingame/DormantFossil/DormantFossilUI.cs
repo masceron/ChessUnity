@@ -51,7 +51,9 @@ namespace UX.UI.Ingame.DormantFossil
 
         public void Choose(PieceType type)
         {
+            Debug.Log("choosed");
             var color = BoardUtils.ColorOfPiece(piecePos);
+            
             ActionManager.EnqueueAction(new KillPiece(piecePos));
             ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(type, color, piecePos)));
             

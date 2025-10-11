@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
         
         private void InRange()
         {
-            var newInRange = new List<PieceLogic>(); 
+            var newInRange = new List<PieceLogic>();
             
             for (var rankOff = -1; rankOff <= 1; rankOff++)
             {
