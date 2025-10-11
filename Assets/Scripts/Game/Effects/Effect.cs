@@ -67,6 +67,7 @@ namespace Game.Effects
         UndyingDevotion,
         OneMoreTurn,
         FractureZonePassive,
+        BioluminescentBeaconPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

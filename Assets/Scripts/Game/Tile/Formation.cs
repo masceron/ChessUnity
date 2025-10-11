@@ -9,6 +9,7 @@ namespace Game.Tile{
         None,
         FogOfWar,
         BubbleVent,
+        DazzlingLight,
     }
     // public interface IHaveDuration{
     //     /// <summary>

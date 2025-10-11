@@ -68,7 +68,7 @@ namespace Game.Managers
                 Formation format = formations[pos];
 
                 if (format == null || !format.haveDuration || endOfSide) continue;
-                
+
                 format.SetDuration(format.duration - 1);
                 if (format.duration <= 0){
                     RemoveFormation(pos);

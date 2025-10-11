@@ -59,7 +59,7 @@ namespace Game.Managers
         //The main action taken this turn.
         public Action.Action MainAction;
 
-        public static System.Action<int> OnIncreaseTurn;
+        public System.Action<int> OnIncreaseTurn;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -132,6 +132,7 @@ namespace Game.Managers
                 PieceType.ClownFish => new ClownFish(piece),
                 PieceType.LivingCoral => new LivingCoral(piece),
                 PieceType.FractureZone => new FractureZone(piece),
+                PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 _ => null
             };
 

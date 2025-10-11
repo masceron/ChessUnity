@@ -40,7 +40,8 @@ namespace Game.Piece
         BobtailSquid,
         LivingCoral,
         ClownFish,
-        FractureZone
+        FractureZone,
+        BioluminescentBeacon,
     }
 
     public enum PieceRank : byte
