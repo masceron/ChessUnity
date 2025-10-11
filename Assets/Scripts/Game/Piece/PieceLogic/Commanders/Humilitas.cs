@@ -31,6 +31,10 @@ namespace Game.Piece.PieceLogic.Commanders
             ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
             ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this)));
+
+            // active này sẽ chọn 1 hoặc 2 nhưng khi chọn vào thì sẽ bị hiệu ứng luôn những con đã chọn
+            // chứ không có chọn 1 con rồi tắt đi và chọn lại 2 con
+
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;

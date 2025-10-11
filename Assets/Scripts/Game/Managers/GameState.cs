@@ -122,6 +122,7 @@ namespace Game.Managers
                 PieceType.StoneCrab => new StoneCrab(piece),
                 PieceType.PhantomJelly => new PhantomJelly(piece),
                // PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.Sunfish => new Sunfish(piece),
                 _ => null
             };
 
