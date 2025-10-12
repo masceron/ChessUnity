@@ -67,7 +67,9 @@ namespace Game.Effects
         PureMinded,
         Relentless,
         DeathDefiance,
-        SunfishPassive
+        SunfishPassive,
+        QuickReflex,
+        Silenced
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -123,6 +123,7 @@ namespace Game.Managers
                 PieceType.PhantomJelly => new PhantomJelly(piece),
                // PieceType.MedicalLeech => new MedicalLeech(piece),
                 PieceType.Sunfish => new Sunfish(piece),
+                PieceType.BottlenoseDolphin => new BottlenoseDolphin(piece),
                 _ => null
             };
 
