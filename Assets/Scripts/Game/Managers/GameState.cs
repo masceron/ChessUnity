@@ -121,7 +121,8 @@ namespace Game.Managers
                 PieceType.Humilitas => new Humilitas(piece),
                 PieceType.StoneCrab => new StoneCrab(piece),
                 PieceType.PhantomJelly => new PhantomJelly(piece),
-               // PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.ChamberedNautilus => new ChamberedNautilus(piece),
+                PieceType.EpauletteShark => new EpauletteShark(piece),
                 _ => null
             };
 

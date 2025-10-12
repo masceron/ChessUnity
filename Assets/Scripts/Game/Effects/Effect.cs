@@ -60,13 +60,18 @@ namespace Game.Effects
         DestroyEnemyWhenMove,
         SeaTurtleCountdown,
         FrenziedVeteran,
-        TrueBite,
+        TrueBite, 
+        Construct,
         CopyCatureMethod,
         ClownFishPassive,
         LivingCoralPassive,
         PureMinded,
         Relentless,
-        DeathDefiance
+        DeathDefiance,
+        ChamberedNautilusHunger,
+        EpauletteSharkPurify,
+        DiurnalAmbush,
+        Infected
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
