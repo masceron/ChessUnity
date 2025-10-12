@@ -949,8 +949,6 @@ namespace UI.UIObject3D.Scripts
 
 
                     targetContainer.transform.localScale = Vector3.one * (float)scale;
-
-                    //
                     _CalculatedTargetScaleOverride = (float)scale;
                 }
                 else

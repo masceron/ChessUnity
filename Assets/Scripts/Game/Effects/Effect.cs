@@ -61,8 +61,7 @@ namespace Game.Effects
         SeaTurtleCountdown,
         FrenziedVeteran,
         TrueBite, 
-        Construct,
-        CopyCatureMethod,
+        CopyCaptureMethod,
         ClownFishPassive,
         LivingCoralPassive,
         PureMinded,
@@ -71,7 +70,8 @@ namespace Game.Effects
         ChamberedNautilusHunger,
         EpauletteSharkPurify,
         DiurnalAmbush,
-        Infected
+        Infected,
+        Construct
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
