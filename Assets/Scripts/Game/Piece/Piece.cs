@@ -35,22 +35,19 @@ namespace Game.Piece
         SeaTurtle,
         HorseLeech,
         Megalodon,
-        ClownFish,
+        MedicalLeech,
+        Temperantia,
+        BobtailSquid,
         LivingCoral,
+        ClownFish,
         Humilitas,
         StoneCrab,
         PhantomJelly,
-        MedicalLeech,
-        Temperantia,
-        BobtailSquid,
-        FractureZone
-        MedicalLeech,
-        Temperantia,
-        BobtailSquid,
-        LivingCoral,
-        ClownFish,
+        ChamberedNautilus,
+        EpauletteShark,
         FractureZone,
         BioluminescentBeacon,
+        Sunfish
     }
 
     public enum PieceRank : byte

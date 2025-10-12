@@ -10,7 +10,7 @@ namespace Game.Effects.Others
         private byte ourPieceAttackRangeSaver;
         private CapturesDelegate ourPieceCapturesSaver;
 
-        public CopyCapturesMethod(PieceLogic firstPiece, PieceLogic secondPiece, sbyte duration) : base(duration, 1, firstPiece, EffectName.CopyCatureMethod)
+        public CopyCapturesMethod(PieceLogic firstPiece, PieceLogic secondPiece, sbyte duration) : base(duration, 1, firstPiece, EffectName.CopyCaptureMethod)
         {
             Duration = duration;
             ourPiece = firstPiece;

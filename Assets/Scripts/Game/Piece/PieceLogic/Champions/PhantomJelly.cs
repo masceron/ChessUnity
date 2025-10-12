@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using Game.Action;
-using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Skills;
-using Game.Effects;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
 using Game.Movesets;
-using SnappingStrike = Game.Action.Captures.SnappingStrike;
 
 namespace Game.Piece.PieceLogic.Champions
 {

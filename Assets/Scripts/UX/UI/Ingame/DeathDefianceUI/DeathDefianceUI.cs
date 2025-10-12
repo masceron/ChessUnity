@@ -2,16 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
 using Game.Effects;
-using Game.Managers;
 using Game.Piece.PieceLogic;
-using TMPro;
 using UnityEngine;
 using PrimeTween;
-using Game.Effects.Traits;
-using Game.Effects.Buffs;
 using Game.Action;
 using Game.Action.Internal;
-using UX.UI.Ingame.DeathDefianceUI;
 
 namespace UX.UI.Ingame.DeathDefianceUI
 {

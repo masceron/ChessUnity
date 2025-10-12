@@ -2,7 +2,6 @@ using Game.Effects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UX.UI.Ingame.DeathDefianceUI;
 using Game.Managers;
 
 namespace UX.UI.Ingame.DeathDefianceUI  

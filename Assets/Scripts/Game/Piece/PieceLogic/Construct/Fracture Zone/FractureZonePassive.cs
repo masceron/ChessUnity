@@ -1,15 +1,14 @@
-using Game.Effects;
-using Game.Action;
-using Game.Effects.Others;
-using Game.Action.Internal;
-using UnityEngine;
-using Game.Tile;
-using Game.Managers;
-using Game.Common;
-using Game.Effects.Debuffs;
 using System.Collections.Generic;
+using Game.Action;
+using Game.Action.Internal;
+using Game.Common;
+using Game.Effects;
+using Game.Effects.Debuffs;
+using Game.Managers;
+using Game.Tile;
+using UnityEngine;
 
-namespace Game.Piece.PieceLogic.Construct
+namespace Game.Piece.PieceLogic.Construct.Fracture_Zone
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FractureZonePassive : Effect, IEndTurnEffect

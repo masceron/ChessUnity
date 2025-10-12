@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Action.Captures;
-using Game.Action.Quiets;
 using Game.Common;
 using static Game.Common.BoardUtils;
 

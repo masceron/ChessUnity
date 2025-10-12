@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.Effects;
 using Game.Common;
-using Game.Tile;
+using Game.Effects;
 using Game.Managers;
-using Game.Action.Internal;
+using Game.Tile;
 
-namespace Game.Piece.PieceLogic.Construct
+namespace Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon
 {
     /// <summary>
     /// Bioluminescent Beacon Passive Effect
