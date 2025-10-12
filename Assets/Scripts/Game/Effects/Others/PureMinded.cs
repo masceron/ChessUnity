@@ -1,9 +1,7 @@
-using Game.Effects;
 using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Buffs;
-using Game.Common;
+
 namespace Game.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

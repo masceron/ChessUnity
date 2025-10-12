@@ -117,15 +117,8 @@ namespace UX.UI.Ingame
 
         public void ExecuteAction(Action action)
         {
-            ActionManager.EnqueueAction(action);
             Unmark();
-            // sửa vào đây như này được không nhỉ
-            if(PieceOn(action.Maker).Effects.Any(e => e.EffectName == EffectName.QuickReflex) && action is ISkills)
-            {
-                ActionManager.ExecuteImmediately(action);
-                return;
-            }            
-            NewTurn();
+            ActionManager.EnqueueAction(action);
         }
         public static void ExecuteActionStatic(Action action)
         {

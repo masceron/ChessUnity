@@ -212,7 +212,7 @@ namespace UX.UI.Ingame
             return listOf.Count > 0;
         }
 
-        private bool MarkSkill()
+        public bool MarkSkill()
         {
             TileManager.Ins.UnmarkAll();
             listOf.Clear();

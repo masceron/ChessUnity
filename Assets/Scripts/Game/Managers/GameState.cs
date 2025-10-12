@@ -12,6 +12,8 @@ using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
 using Game.Piece.PieceLogic.Construct;
+using Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon;
+using Game.Piece.PieceLogic.Construct.Fracture_Zone;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -20,7 +22,12 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    
+    public interface ISubscriber{
+        // ObserverActivateWhen GetObserverActivate();
+        // ObserverPriority GetPriority();
+        public void OnCall(Action.Action action);
+        public void OnCallEnd(bool color);
+    }
     public enum ObserverActivateWhen: byte
     {
         None, Captures, Moves, EndTurn, MoveGeneration, EffectApplied
@@ -45,12 +52,16 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
+        public int CurrentTurn { get; private set; }
 
         private int countTurn;
-        private readonly int numberOfTurnToChange = 10;
-        
+        private const int numberOfTurnToChange = 10;
+
+        public readonly List<ISubscriber> subscribers = new();
         //The main action taken this turn.
         public Action.Action MainAction;
+
+        public System.Action<int> OnIncreaseTurn;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -81,6 +92,8 @@ namespace Game.Managers
             }
 
             IsDay = true;
+            CurrentTurn = 1;
+            countTurn = 0;
         }
 
         public void SpawnPiece(PieceConfig piece)
@@ -116,12 +129,17 @@ namespace Game.Managers
                 PieceType.SeaTurtle => new SeaTurtle(piece),
                 PieceType.HorseLeech => new HorseLeech(piece),
                 PieceType.Megalodon => new Megalodon(piece),
+                PieceType.Temperantia => new Temperantia(piece),
+                PieceType.BobtailSquid => new BobtailSquid(piece),
                 PieceType.ClownFish => new ClownFish(piece),
                 PieceType.LivingCoral => new LivingCoral(piece),
                 PieceType.Humilitas => new Humilitas(piece),
                 PieceType.StoneCrab => new StoneCrab(piece),
                 PieceType.PhantomJelly => new PhantomJelly(piece),
-               // PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.ChamberedNautilus => new ChamberedNautilus(piece),
+                PieceType.EpauletteShark => new EpauletteShark(piece),
+                PieceType.FractureZone => new FractureZone(piece),
+                PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 PieceType.Sunfish => new Sunfish(piece),
                 PieceType.BottlenoseDolphin => new BottlenoseDolphin(piece),
                 _ => null
@@ -177,6 +195,8 @@ namespace Game.Managers
             PieceBoard[t].Pos = t;
             PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
+            FormationManager.Ins.TriggerEnter(t);
+            FormationManager.Ins.TriggerExit(f, t);
         }
         
         public void Swap(ushort a, ushort b)
@@ -190,14 +210,19 @@ namespace Game.Managers
 
         public void FlipSideToMove()
         {
-            SideToMove = !SideToMove;
-
-            countTurn++;
-            if (countTurn > numberOfTurnToChange * 2)
+            if (SideToMove)
             {
-                IsDay = !IsDay;
-                countTurn = 0;
+                countTurn++;
+                CurrentTurn++;
+                OnIncreaseTurn?.Invoke(CurrentTurn);
+
+                if (countTurn >= numberOfTurnToChange)
+                {
+                    IsDay = !IsDay;
+                    countTurn = 0;
+                }
             }
+            SideToMove = !SideToMove;
         }
 
         public void AddObserver(Effect effect)
@@ -205,36 +230,41 @@ namespace Game.Managers
             var pos = observers.BinarySearch(effect, effect);
             observers.Insert(pos >= 0 ? pos : ~pos, effect);
         }
-
+        
         public void RemoveObserver(Effect effect)
         {
             observers.Remove(effect);
         }
-
+        
         public void NotifyEnd()
         {
+            foreach(var subscriber in subscribers) {
+                subscriber.OnCallEnd(SideToMove);
+            }
             observers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                if (effect is not IEndTurnEffect turnEffect) return;
                 
-                if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
+                if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
                 {
-                    ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                    turnEffect.OnCallEnd(MainAction);
                 }
-                //The next turn is of the opponent.
-                if (SideToMove != effect.Piece.Color)
+                
+                //The next turn is ours.
+                else if (SideToMove == effect.Piece.Color)
                 {
-                    if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
+                    if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
                     {
-                        ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                        turnEffect.OnCallEnd(MainAction);
                     }
                 }
-                //The next turn is ours.
+                //The next turn is of the opponent.
                 else
                 {
-                    if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
+                    if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
                     {
-                        ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                        turnEffect.OnCallEnd(MainAction);
                     }
                 }
             });
@@ -245,7 +275,7 @@ namespace Game.Managers
         public void Notify()
         {
             MainAction ??= MainAction;
-            
+
             if (MainAction is ICaptures)
             {
                 observers.ForEach(effect =>
@@ -262,6 +292,32 @@ namespace Game.Managers
                         effect.OnCall(MainAction);
                 });
             }
+            
+            observers.ForEach(effect =>
+            {
+                if (!(effect is IStartTurnEffect)) return;
+                
+                if (((IStartTurnEffect)effect).StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
+                {
+                    ((IStartTurnEffect)effect).OnCallStart(MainAction);
+                }
+                //The next turn is of the opponent.
+                if (SideToMove != effect.Piece.Color)
+                {
+                    if (((IStartTurnEffect)effect).StartTurnEffectType == StartTurnEffectType.StartOfAllyTurn)
+                    {
+                        ((IStartTurnEffect)effect).OnCallStart(MainAction);
+                    }
+                }
+                //The next turn is ours.
+                else
+                {
+                    if (((IStartTurnEffect)effect).StartTurnEffectType == StartTurnEffectType.StartOfEnemyTurn)
+                    {
+                        ((IStartTurnEffect)effect).OnCallStart(MainAction);
+                    }
+                }
+            });
         }
         
         public void NotifyOnMoveGen(List<Action.Action> actions)

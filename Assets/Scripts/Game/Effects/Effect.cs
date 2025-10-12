@@ -60,13 +60,26 @@ namespace Game.Effects
         DestroyEnemyWhenMove,
         SeaTurtleCountdown,
         FrenziedVeteran,
-        TrueBite,
-        CopyCatureMethod,
+        TrueBite, 
+        CopyCaptureMethod,
         ClownFishPassive,
         LivingCoralPassive,
         PureMinded,
         Relentless,
         DeathDefiance,
+        ChamberedNautilusHunger,
+        EpauletteSharkPurify,
+        DiurnalAmbush,
+        Infected,
+        Construct,
+        UndyingDevotion,
+        OneMoreTurn,
+        FractureZonePassive,
+        BioluminescentBeaconPassive,
+        SunfishPassive,
+        DormantFossilPassive,
+        BlueRingedOctopusPassive,
+        QuickReflex
         SunfishPassive,
         QuickReflex,
         Silenced
@@ -77,7 +90,7 @@ namespace Game.Effects
     {
         public sbyte Duration;
         public sbyte Strength;
-        public readonly PieceLogic Piece;
+        public PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
         
@@ -108,6 +121,11 @@ namespace Game.Effects
         }
 
         public virtual void OnCall(Action.Action action)
+        {
+            
+        }
+
+        public virtual void OnCallStart(Action.Action action)
         {
             
         }

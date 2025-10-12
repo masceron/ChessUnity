@@ -379,11 +379,11 @@ MonoBehaviour:
   _TargetOffsetX: 0
   _TargetOffsetY: 0
   _OverrideCalculatedTargetScale: 0
-  _CalculatedTargetScaleOverride: 205.19597
+  _CalculatedTargetScaleOverride: 170.99663
   _CameraFOV: 35
   _CameraDistance: -3.5
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 180, y: 150}
+  _textureSize: {x: 170, y: 170}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 1

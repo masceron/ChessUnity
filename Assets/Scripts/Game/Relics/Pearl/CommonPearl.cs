@@ -1,12 +1,7 @@
-﻿using Game.Common;
-using Game.Managers;
-using UnityEngine;
+﻿using Game.Managers;
 using UX.UI.Ingame;
-using Game.Action;
-using System.Linq;
 
-
-namespace Game.Relics
+namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CommonPearl: RelicLogic

@@ -2,7 +2,7 @@ using Game.Managers;
 using UnityEngine;
 using UX.UI.Ingame;
 
-namespace Game.Relics
+namespace Game.Relics.EyeOfMimic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EyeOfMimic : RelicLogic

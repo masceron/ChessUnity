@@ -853,6 +853,7 @@ MonoBehaviour:
   pieceData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   effectsData: {fileID: 11400000, guid: 41fbcdd3b409c1a4d9eb51fd2cd34ae6, type: 2}
   relicsData: {fileID: 11400000, guid: 55677e0beededb7439a91660f177e2f3, type: 2}
+  enviromentsData: {fileID: 11400000, guid: 174aa3be7320d8c4693318abc7ea6844, type: 2}
 --- !u!1 &1587264566
 GameObject:
   m_ObjectHideFlags: 0

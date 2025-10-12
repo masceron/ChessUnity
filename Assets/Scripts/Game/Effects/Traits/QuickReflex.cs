@@ -1,13 +1,10 @@
-using Game.Piece.PieceLogic;
-using Game.Action;
+﻿using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class QuickReflex: Effect
     {
-        public QuickReflex(PieceLogic piece) : base(-1, 1, piece, EffectName.QuickReflex)
+        public QuickReflex(PieceLogic piece, EffectName name) : base(-1, 1, piece, EffectName.QuickReflex)
         {}
-        
     }
 }

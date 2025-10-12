@@ -1,21 +1,21 @@
 ﻿
-namespace Game.Relics
-{
-    using Game.Action.Internal.Pending;
-    using Game.Action;
-    using Game.Piece.PieceLogic;
-    using UX.UI.Ingame;
-    using Game.Managers;
-    using Game.Action.Internal;
-    using Game.Effects.Others;
-    using Game.Common;
+using Game.Action;
+using Game.Action.Internal;
+using Game.Action.Internal.Pending;
+using Game.Common;
+using Game.Effects.Others;
+using Game.Managers;
+using Game.Piece.PieceLogic;
+using UX.UI.Ingame;
 
+namespace Game.Relics.EyeOfMimic
+{
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class EyeOfMimicPending : Action, IPendingAble, System.IDisposable
+    public class EyeOfMimicPending : Action.Action, IPendingAble, System.IDisposable
     {
-        public static PieceLogic FirstTarget = null;
-        public static PieceLogic SecondTarget = null;
+        public static PieceLogic FirstTarget;
+        public static PieceLogic SecondTarget;
         private EyeOfMimic eyeOfMimic;
         public EyeOfMimicPending(EyeOfMimic e, int maker, bool pos = false) : base(maker, pos)
         {

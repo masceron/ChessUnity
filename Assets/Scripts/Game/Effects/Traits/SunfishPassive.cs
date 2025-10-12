@@ -4,7 +4,6 @@ using Game.Action.Internal;
 using Game.Effects.Buffs;
 using static Game.Common.BoardUtils;
 using Game.Action;
-using Game.Action.Skills;
 
 namespace Game.Effects.Traits
 {

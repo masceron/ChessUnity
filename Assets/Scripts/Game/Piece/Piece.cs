@@ -34,13 +34,20 @@ namespace Game.Piece
         HermitCrab,
         SeaTurtle,
         HorseLeech,
-        Megalodon, 
-        ClownFish,
+        Megalodon,
+        MedicalLeech,
+        Temperantia,
+        BobtailSquid,
         LivingCoral,
+        ClownFish,
         Humilitas,
         StoneCrab,
         PhantomJelly,
-        Sunfish,
+        ChamberedNautilus,
+        EpauletteShark,
+        FractureZone,
+        BioluminescentBeacon,
+        Sunfish
         BottlenoseDolphin
     }
 
@@ -67,7 +74,7 @@ namespace Game.Piece
             rank = RankOf(pos);
             file = FileOf(pos);
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-            transform.position = new Vector3(rank, 1.64f, file);
+            transform.position = new Vector3(rank, YCoordinate, file);
             
             var angles = new Quaternion
             {

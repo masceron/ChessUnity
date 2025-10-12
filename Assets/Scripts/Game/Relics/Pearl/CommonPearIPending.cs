@@ -1,16 +1,14 @@
+using System.Linq;
 using Game.Action;
-using Game.Managers;
-using UX.UI.Ingame;
-using Game.Action.Skills;
-using Game.Effects.Buffs;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Effects;
-using System.Linq;
+using Game.Managers;
 using Game.Piece.PieceLogic;
+using UX.UI.Ingame;
 
-namespace Game.Relics
+namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CommonPearlPending : Game.Action.Action, System.IDisposable, IPendingAble

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Managers;
@@ -17,6 +18,7 @@ namespace Game.Common
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
 
+        public const float YCoordinate = 1.64f;
         public static int RankOf(int index)
         {
             return index / MaxLength;
@@ -223,6 +225,11 @@ namespace Game.Common
                 }
             }
             return pieces;
+        }
+
+        public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
+        {
+            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();
         }
     }
 }

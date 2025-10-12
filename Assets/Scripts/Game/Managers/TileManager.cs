@@ -9,7 +9,6 @@ namespace Game.Managers
     public class TileManager : Singleton<TileManager>
     {
         private Tile.Tile[] tiles;
-        
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
 

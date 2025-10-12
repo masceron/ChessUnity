@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic.Commanders
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Chrysos: PieceLogic, IPieceWithSkill, IRelicCarriable
     {
-        public byte Coin;
+        public byte Coin = 10;
 
         public Chrysos(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {

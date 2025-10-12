@@ -1,8 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic;
-using Game.Managers;
-using Game.Action.Captures;
 using UnityEngine;
 namespace Game.Effects.Traits
 {
