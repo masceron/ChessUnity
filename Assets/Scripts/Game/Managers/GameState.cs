@@ -11,7 +11,7 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
-using Game.Piece.PieceLogic.Construct.LivingCoral;
+//using Game.Piece.PieceLogic.Construct.LivingCoral;
 using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;

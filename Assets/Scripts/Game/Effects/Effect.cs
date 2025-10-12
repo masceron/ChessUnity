@@ -68,7 +68,10 @@ namespace Game.Effects
         Relentless,
         DeathDefiance,
         DormantFossilPassive,
-        BlueRingedOctopusPassive
+        BlueRingedOctopusPassive,
+        OneMoreTurn,
+        UndyingDevotion,
+        FractureZonePassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

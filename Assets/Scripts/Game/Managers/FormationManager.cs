@@ -28,7 +28,7 @@ namespace Game.Managers
         public void SetFormation(int pos, Formation env){
             int rank = RankOf(pos);
             int file = FileOf(pos);
-            formationObjects[pos] = Instantiate(AssetManager.Ins.EnviromentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
+            formationObjects[pos] = Instantiate(AssetManager.Ins.EnviromentData[env.GetFormationType()], new Vector3(rank, 1.64f, file), 
             Quaternion.identity, this.transform);
             formations[pos] = env;
         }
