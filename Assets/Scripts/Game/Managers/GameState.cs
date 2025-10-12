@@ -11,7 +11,7 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
-//using Game.Piece.PieceLogic.Construct.LivingCoral;
+using Game.Piece.PieceLogic.Construct.LivingCoral;
 using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
@@ -59,7 +59,7 @@ namespace Game.Managers
         //The main action taken this turn.
         public Action.Action MainAction;
 
-        public static System.Action<int> OnIncreaseTurn;
+        public System.Action<int> OnIncreaseTurn;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -135,6 +135,8 @@ namespace Game.Managers
                 PieceType.StoneCrab => new StoneCrab(piece),
                 PieceType.PhantomJelly => new PhantomJelly(piece),
                // PieceType.MedicalLeech => new MedicalLeech(piece),
+                PieceType.FractureZone => new FractureZone(piece),
+                PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 _ => null
             };
 

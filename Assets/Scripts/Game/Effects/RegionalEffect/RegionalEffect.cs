@@ -6,7 +6,7 @@ using static Game.Common.BoardUtils;
 public abstract class RegionalEffect
 {
     protected RegionalEffect(){
-        GameState.OnIncreaseTurn += ApplyEffect;
+        MatchManager.Ins.GameState.OnIncreaseTurn += ApplyEffect;
     }
     protected abstract void ApplyEffect(int currentTurn);
 

@@ -1,0 +1,69 @@
+﻿using System.Collections.Generic;
+using Game.Effects;
+using Game.Common;
+using Game.Tile;
+using Game.Managers;
+using Game.Action.Internal;
+
+namespace Game.Piece.PieceLogic.Construct
+{
+    /// <summary>
+    /// Bioluminescent Beacon Passive Effect
+    /// 
+    /// </summary>
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+
+    public class BioluminescentBeaconPassive : Effect
+    {
+        private int radius = 2;
+        private bool isApplied = false;
+        public BioluminescentBeaconPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BioluminescentBeaconPassive)
+        {
+            isApplied = false;
+            HandlePassive();
+        }
+
+        public List<int> GetPosInRadius()
+        {
+            List<int> positions = new List<int>();
+            var (rank, file) = BoardUtils.RankFileOf(Piece.Pos);
+            for (int i = rank - radius; i <= rank + radius; i++)
+            {
+                for (int j = file - radius; j <= file + radius; j++)
+                {
+                    if (i == rank && j == file) continue;
+                    if (BoardUtils.VerifyBounds(i)
+                        && BoardUtils.VerifyBounds(j)
+                        && BoardUtils.IsActive(BoardUtils.IndexOf(i, j)))
+                    {
+                        positions.Add(BoardUtils.IndexOf(i, j));
+                    }
+                }
+            }
+            return positions;
+        }
+
+        public void HandlePassive()
+        {
+            // chưa ổn lắm cần nghiên cứu thêm
+            if (isApplied) return;
+
+            var posInRadius = GetPosInRadius();
+
+            DazzlingLight dazzlingLight = new DazzlingLight(-1, false, Piece.Color);
+
+            foreach (var pos in posInRadius)
+            {
+                if (FormationManager.Ins.GetFormation(pos) != null) continue;
+                FormationManager.Ins.SetFormation(pos, dazzlingLight);
+                if (BoardUtils.PieceOn(pos) != null)
+                {
+                    UnityEngine.Debug.Log("Trigger enter at pos " + pos);
+                    FormationManager.Ins.TriggerEnter(pos);
+                }
+            }
+            isApplied = true;
+        }
+    }
+}
+

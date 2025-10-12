@@ -9,6 +9,8 @@ namespace Game.Tile{
         None,
         FogOfWar,
         BubbleVent,
+        AnchorIce,
+        DazzlingLight,
     }
     // public interface IHaveDuration{
     //     /// <summary>
@@ -18,7 +20,9 @@ namespace Game.Tile{
     //     public int duration{ get; set; }
     // }
     public abstract class Formation{
+        // public int pos{ get; private set; }
         private bool color = false;
+        protected PieceLogic pieceOnFormation{ get; private set; }
         public bool haveDuration{ get; protected set; }
         public int duration{ get; protected set; }
         public Formation(bool color){
@@ -39,15 +43,15 @@ namespace Game.Tile{
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
         /// </summary>
         public virtual void OnPieceEnter(PieceLogic piece){
-
+            pieceOnFormation = piece;
         }
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân rời khỏi vị trí
         /// </summary>
         public virtual void OnPieceExit(PieceLogic piece){
-
+            pieceOnFormation = null;
         }
-
+        
         public virtual void OnFirstTurn(PieceLogic piece){
 
         }
