@@ -137,6 +137,7 @@ namespace Game.Managers
                 PieceType.EpauletteShark => new EpauletteShark(piece),
                 PieceType.FractureZone => new FractureZone(piece),
                 PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
+                PieceType.Sunfish => new Sunfish(piece),
                 _ => null
             };
 

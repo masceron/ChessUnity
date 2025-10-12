@@ -47,6 +47,8 @@ namespace Game.Piece
         EpauletteShark,
         FractureZone,
         BioluminescentBeacon,
+        PhantomJelly,
+        Sunfish
     }
 
     public enum PieceRank : byte

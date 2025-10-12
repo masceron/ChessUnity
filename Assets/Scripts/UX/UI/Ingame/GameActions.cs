@@ -1,6 +1,5 @@
 ﻿using Game.Managers;
 using Game.Relics;
-using Game.Relics.RottingScythe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -50,6 +49,9 @@ namespace UX.UI.Ingame
                 // RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.RottingScythe => new RottingScythe(cfg),
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
+                RelicType.FrostSigil => new FrostSigil(cfg),
+                RelicType.CommonPearl => new CommonPearl(cfg),
+                RelicType.BlackPearl => new BlackPearl(cfg),
                 _ => null
             };
             return rl;
