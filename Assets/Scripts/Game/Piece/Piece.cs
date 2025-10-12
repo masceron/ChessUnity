@@ -44,7 +44,7 @@ namespace Game.Piece
         StoneCrab,
         PhantomJelly,
         ChamberedNautilus,
-        EpauletteShark
+        EpauletteShark,
         FractureZone,
         BioluminescentBeacon,
     }
