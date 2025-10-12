@@ -34,14 +34,19 @@ namespace Game.Piece
         HermitCrab,
         SeaTurtle,
         HorseLeech,
-        Megalodon, 
-        ClownFish,
+        Megalodon,
+        MedicalLeech,
+        Temperantia,
+        BobtailSquid,
         LivingCoral,
+        ClownFish,
         Humilitas,
         StoneCrab,
         PhantomJelly,
         ChamberedNautilus,
         EpauletteShark
+        FractureZone,
+        BioluminescentBeacon,
     }
 
     public enum PieceRank : byte
@@ -67,7 +72,7 @@ namespace Game.Piece
             rank = RankOf(pos);
             file = FileOf(pos);
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-            transform.position = new Vector3(rank, 1.64f, file);
+            transform.position = new Vector3(rank, YCoordinate, file);
             
             var angles = new Quaternion
             {

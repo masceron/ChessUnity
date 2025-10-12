@@ -71,7 +71,11 @@ namespace Game.Effects
         EpauletteSharkPurify,
         DiurnalAmbush,
         Infected,
-        Construct
+        Construct,
+        UndyingDevotion,
+        OneMoreTurn,
+        FractureZonePassive,
+        BioluminescentBeaconPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -79,7 +83,7 @@ namespace Game.Effects
     {
         public sbyte Duration;
         public sbyte Strength;
-        public readonly PieceLogic Piece;
+        public PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
         

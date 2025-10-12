@@ -2,14 +2,13 @@
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
-
+using System;
 namespace Game.Managers
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TileManager : Singleton<TileManager>
     {
         private Tile.Tile[] tiles;
-        
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
 
