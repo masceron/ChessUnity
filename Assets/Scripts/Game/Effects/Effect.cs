@@ -78,7 +78,8 @@ namespace Game.Effects
         BioluminescentBeaconPassive,
         SunfishPassive,
         DormantFossilPassive,
-        BlueRingedOctopusPassive
+        BlueRingedOctopusPassive,
+        QuickReflex
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

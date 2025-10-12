@@ -14,8 +14,8 @@ namespace Game.Relics.EyeOfMimic
 
     public class EyeOfMimicPending : Action.Action, IPendingAble, System.IDisposable
     {
-        public static PieceLogic FirstTarget = null;
-        public static PieceLogic SecondTarget = null;
+        public static PieceLogic FirstTarget;
+        public static PieceLogic SecondTarget;
         private EyeOfMimic eyeOfMimic;
         public EyeOfMimicPending(EyeOfMimic e, int maker, bool pos = false) : base(maker, pos)
         {

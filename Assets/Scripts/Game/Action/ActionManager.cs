@@ -1,7 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Game.Action.Internal;
+using Game.Action.Relics;
+using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.Traits;
 using Game.Managers;
+using UnityEngine;
 
 namespace Game.Action
 {
@@ -30,55 +35,67 @@ namespace Game.Action
                 action.Execute();
             }
         }
+
+        private static void ProcessActionWithTriggers()
+        {
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                if (action is not IInternal and not IRelicAction)
+                {
+                    BoardUtils.SetMainAction(action);
+                    BoardUtils.NotifyMainAction();
+                }
+                else
+                {
+                    BoardUtils.NotifyInternalAction(action);
+                }
+                action.Execute();
+            }
+
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                action.Execute();
+            }
+        }
+
+        private static void EndTurnProcess()
+        {
+            //End the current turn.
+            new EndTurn().Execute();
+            CurrentPhase = Phase.AfterEndTurn;
+                
+            //Process durations.
+            _state.EffectCountdown();
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                BoardUtils.NotifyInternalAction(action);
+                action.Execute();
+            }
+            
+            //Call triggers when ending turn.
+            BoardUtils.NotifyEnd();
+
+            //Execute actions caused by end turn triggers.
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                BoardUtils.NotifyInternalAction(action);
+                action.Execute();
+            }
+
+            CurrentPhase = Phase.BeforeEndTurn;
+        }
         
         public static void EnqueueAction(Action queueAction)
         {
-            if (queueAction.GetType() != typeof(EndTurn))
-            {
-                _actionQueue.Enqueue(queueAction);
-            }
-            else
-            {
-                //Execute main action and its follow up.
-                while (_actionQueue.TryDequeue(out var action))
-                {
-                    if (action is not IInternal)
-                    {
-                        BoardUtils.SetMainAction(action);
-                        BoardUtils.NotifyMainAction();
-                    }
-                    else
-                    {
-                        BoardUtils.NotifyInternalAction(action);
-                    }
-                    action.Execute();
-                }
-                
-                //End the current turn.
-                queueAction.Execute();
-                CurrentPhase = Phase.AfterEndTurn;
-                
-                //Process durations.
-                _state.EffectCountdown();
-                while (_actionQueue.TryDequeue(out var action))
-                {
-                    BoardUtils.NotifyInternalAction(action);
-                    action.Execute();
-                }
-                
-                //Call triggers when ending turn.
-                BoardUtils.NotifyEnd();
-
-                //Execute actions caused by end turn triggers.
-                while (_actionQueue.TryDequeue(out var action))
-                {
-                    BoardUtils.NotifyInternalAction(action);
-                    action.Execute();
-                }
-
-                CurrentPhase = Phase.BeforeEndTurn;
-            }
+            _actionQueue.Enqueue(queueAction);
+            if (queueAction is IInternal) return;
             
+            var maker = BoardUtils.PieceOn(queueAction.Maker);
+            ProcessActionWithTriggers();
+            if (queueAction is not IRelicAction && !(maker.Effects.OfType<QuickReflex>().Any() && queueAction is ISkills))
+            {
+                EndTurnProcess();
+            }
         }
 
         public static void ExecuteImmediately(Action action)

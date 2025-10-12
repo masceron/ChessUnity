@@ -30,7 +30,7 @@ namespace Game.Managers
     }
     public enum ObserverActivateWhen: byte
     {
-        None, Captures, Moves, StartTurn, EndTurn, MoveGeneration, EffectApplied
+        None, Captures, Moves, EndTurn, MoveGeneration, EffectApplied
     }
     
     public enum Color : byte
@@ -52,11 +52,12 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
-        public int currentTurn { get; private set; }
+        public int CurrentTurn { get; private set; }
 
         private int countTurn;
-        private readonly int numberOfTurnToChange = 10;
-        public List<ISubscriber> subscribers = new();
+        private const int numberOfTurnToChange = 10;
+
+        public readonly List<ISubscriber> subscribers = new();
         //The main action taken this turn.
         public Action.Action MainAction;
 
@@ -91,7 +92,7 @@ namespace Game.Managers
             }
 
             IsDay = true;
-            currentTurn = 1;
+            CurrentTurn = 1;
             countTurn = 0;
         }
 
@@ -211,8 +212,8 @@ namespace Game.Managers
             if (SideToMove)
             {
                 countTurn++;
-                currentTurn++;
-                OnIncreaseTurn?.Invoke(currentTurn);
+                CurrentTurn++;
+                OnIncreaseTurn?.Invoke(CurrentTurn);
 
                 if (countTurn >= numberOfTurnToChange)
                 {
@@ -236,32 +237,33 @@ namespace Game.Managers
         
         public void NotifyEnd()
         {
-            foreach(ISubscriber subscriber in subscribers){
+            foreach(var subscriber in subscribers) {
                 subscriber.OnCallEnd(SideToMove);
             }
             observers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
-                if (!(effect is IEndTurnEffect)) return;
+                if (effect is not IEndTurnEffect turnEffect) return;
                 
-                if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
+                if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
                 {
-                    ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                    turnEffect.OnCallEnd(MainAction);
                 }
-                //The next turn is of the opponent.
-                if (SideToMove != effect.Piece.Color)
+                
+                //The next turn is ours.
+                else if (SideToMove == effect.Piece.Color)
                 {
-                    if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
+                    if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
                     {
-                        ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                        turnEffect.OnCallEnd(MainAction);
                     }
                 }
-                //The next turn is ours.
+                //The next turn is of the opponent.
                 else
                 {
-                    if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
+                    if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
                     {
-                        ((IEndTurnEffect)effect).OnCallEnd(MainAction);
+                        turnEffect.OnCallEnd(MainAction);
                     }
                 }
             });
