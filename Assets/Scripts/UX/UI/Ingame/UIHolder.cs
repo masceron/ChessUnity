@@ -7,7 +7,8 @@ namespace UX.UI.Ingame
     {
         ChrysosShop,
         ThalassosResurrector,
-        DeathDefianceUI
+        DeathDefianceUI,
+        DormantFossilUI,
 
     }
 

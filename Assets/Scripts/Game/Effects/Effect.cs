@@ -76,7 +76,9 @@ namespace Game.Effects
         OneMoreTurn,
         FractureZonePassive,
         BioluminescentBeaconPassive,
-        SunfishPassive
+        SunfishPassive,
+        DormantFossilPassive,
+        BlueRingedOctopusPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -115,6 +117,11 @@ namespace Game.Effects
         }
 
         public virtual void OnCall(Action.Action action)
+        {
+            
+        }
+
+        public virtual void OnCallStart(Action.Action action)
         {
             
         }

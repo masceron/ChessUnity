@@ -30,7 +30,7 @@ namespace Game.Managers
     }
     public enum ObserverActivateWhen: byte
     {
-        None, Captures, Moves, EndTurn, MoveGeneration, EffectApplied
+        None, Captures, Moves, StartTurn, EndTurn, MoveGeneration, EffectApplied
     }
     
     public enum Color : byte
@@ -233,7 +233,7 @@ namespace Game.Managers
         {
             observers.Remove(effect);
         }
-
+        
         public void NotifyEnd()
         {
             foreach(ISubscriber subscriber in subscribers){
@@ -242,6 +242,7 @@ namespace Game.Managers
             observers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                if (!(effect is IEndTurnEffect)) return;
                 
                 if (((IEndTurnEffect)effect).EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
                 {
@@ -288,6 +289,32 @@ namespace Game.Managers
                         effect.OnCall(MainAction);
                 });
             }
+            
+            observers.ForEach(effect =>
+            {
+                if (!(effect is IStartTurnEffect)) return;
+                
+                if (((IStartTurnEffect)effect).StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
+                {
+                    ((IStartTurnEffect)effect).OnCallStart(MainAction);
+                }
+                //The next turn is of the opponent.
+                if (SideToMove != effect.Piece.Color)
+                {
+                    if (((IStartTurnEffect)effect).StartTurnEffectType == StartTurnEffectType.StartOfAllyTurn)
+                    {
+                        ((IStartTurnEffect)effect).OnCallStart(MainAction);
+                    }
+                }
+                //The next turn is ours.
+                else
+                {
+                    if (((IStartTurnEffect)effect).StartTurnEffectType == StartTurnEffectType.StartOfEnemyTurn)
+                    {
+                        ((IStartTurnEffect)effect).OnCallStart(MainAction);
+                    }
+                }
+            });
         }
         
         public void NotifyOnMoveGen(List<Action.Action> actions)

@@ -147,10 +147,10 @@ GameObject:
   - component: {fileID: 6834757528788021756}
   - component: {fileID: 6534763432125318894}
   - component: {fileID: 5176138454778765715}
-  - component: {fileID: 1481225494997326436}
   - component: {fileID: 4519596594547230633}
+  - component: {fileID: 8952159670715563697}
   m_Layer: 5
-  m_Name: ChrysosShopItem
+  m_Name: DormantFossilItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -229,9 +229,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1481225494997326436}
-        m_TargetAssemblyTypeName: Game.UI.ChrysosShop.ChrysosShopItem, Assembly-CSharp
-        m_MethodName: OnClickBuy
+      - m_Target: {fileID: 8952159670715563697}
+        m_TargetAssemblyTypeName: UX.UI.Ingame.ChrysosShop.DormantFossilItem, Assembly-CSharp
+        m_MethodName: OnClickSummon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -241,20 +241,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1481225494997326436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3376055359114538654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 633075e678db47b4abfc8e215ffca6e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pieceName: {fileID: 7310846111465752898}
-  pieceModel: {fileID: 4745600762209128759}
 --- !u!114 &4519596594547230633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +271,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8952159670715563697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3376055359114538654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 825ebedb31034ca9b7fee723cdf2744f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Ingame.ChrysosShop.DormantFossilItem
+  pieceName: {fileID: 7310846111465752898}
+  pieceModel: {fileID: 4745600762209128759}
 --- !u!1 &6467140314541024693
 GameObject:
   m_ObjectHideFlags: 0
