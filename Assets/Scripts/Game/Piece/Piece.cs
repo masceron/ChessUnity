@@ -48,6 +48,7 @@ namespace Game.Piece
         FractureZone,
         BioluminescentBeacon,
         Sunfish
+        BottlenoseDolphin
     }
 
     public enum PieceRank : byte

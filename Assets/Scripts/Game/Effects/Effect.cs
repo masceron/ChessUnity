@@ -80,6 +80,9 @@ namespace Game.Effects
         DormantFossilPassive,
         BlueRingedOctopusPassive,
         QuickReflex
+        SunfishPassive,
+        QuickReflex,
+        Silenced
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
