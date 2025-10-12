@@ -1,5 +1,9 @@
 ﻿using Game.Managers;
 using Game.Relics;
+using Game.Relics.EyeOfMimic;
+using Game.Relics.FrostSigil;
+using Game.Relics.Pearl;
+using Game.Relics.RottingScythe;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;

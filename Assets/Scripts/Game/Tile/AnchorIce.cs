@@ -4,8 +4,6 @@ using Game.Managers;
 using Game.Action;
 using Game.Effects.Debuffs;
 using Game.Action.Internal;
-using UnityEngine;
-using Game.Common;
 
 namespace Game.Tile{
     public class AnchorIce : Formation{

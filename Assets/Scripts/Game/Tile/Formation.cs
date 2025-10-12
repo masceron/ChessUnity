@@ -1,8 +1,5 @@
 
 using Game.Piece.PieceLogic;
-using Game.Managers;
-using Game.Effects;
-using UnityEngine;
 
 namespace Game.Tile{
     public enum FormationType{

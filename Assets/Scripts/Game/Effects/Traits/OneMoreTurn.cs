@@ -1,7 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic;
-using Game.Managers;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

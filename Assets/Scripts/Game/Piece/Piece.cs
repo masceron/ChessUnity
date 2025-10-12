@@ -47,7 +47,6 @@ namespace Game.Piece
         EpauletteShark,
         FractureZone,
         BioluminescentBeacon,
-        PhantomJelly,
         Sunfish
     }
 

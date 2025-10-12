@@ -1,8 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
-using Game.Common;
-using Game.Effects.Debuffs;
 using Game.Managers;
 using UX.UI.Ingame;
 namespace Game.Relics.RottingScythe

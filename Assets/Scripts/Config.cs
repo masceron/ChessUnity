@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Piece;
 using Game.Relics;
-using UnityEngine.TextCore;
 
 public static class Config
 {

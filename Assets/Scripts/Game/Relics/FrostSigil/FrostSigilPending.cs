@@ -6,7 +6,7 @@ using Game.Effects.Debuffs;
 using Game.Managers;
 using UX.UI.Ingame;
 
-namespace Game.Relics
+namespace Game.Relics.FrostSigil
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 

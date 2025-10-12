@@ -1,8 +1,7 @@
 using Game.Action;
-using Game.Movesets;
 using Game.Action.Internal;
 
-namespace Game.Piece.PieceLogic.Construct
+namespace Game.Piece.PieceLogic.Construct.Fracture_Zone
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 

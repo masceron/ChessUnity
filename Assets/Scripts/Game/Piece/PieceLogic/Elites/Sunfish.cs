@@ -1,6 +1,5 @@
 using Game.Action.Skills;
 using Game.Movesets;
-using static Game.Common.BoardUtils;
 using Game.Effects.Buffs;
 using Game.Action.Internal;
 using Game.Effects.Traits;

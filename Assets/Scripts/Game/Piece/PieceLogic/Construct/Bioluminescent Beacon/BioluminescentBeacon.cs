@@ -1,8 +1,7 @@
-
 using Game.Action;
 using Game.Action.Internal;
 
-namespace Game.Piece.PieceLogic.Construct
+namespace Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon
 {
     /// <summary>
     /// Bioluminescent Beacon Construct

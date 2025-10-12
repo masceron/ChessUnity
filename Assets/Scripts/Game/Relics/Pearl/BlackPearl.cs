@@ -1,11 +1,7 @@
-using Game.Common;
 using Game.Managers;
-using UnityEngine;
 using UX.UI.Ingame;
-using Game.Action;
-using System.Linq;
 
-namespace Game.Relics
+namespace Game.Relics.Pearl
 {
     public class BlackPearl : RelicLogic
     {

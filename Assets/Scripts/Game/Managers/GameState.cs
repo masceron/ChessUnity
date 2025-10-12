@@ -12,6 +12,8 @@ using Game.Piece.PieceLogic.Champions;
 using Game.Piece.PieceLogic.Commanders;
 using Game.Piece.PieceLogic.Commons;
 using Game.Piece.PieceLogic.Construct;
+using Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon;
+using Game.Piece.PieceLogic.Construct.Fracture_Zone;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
