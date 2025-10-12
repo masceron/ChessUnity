@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: EnviromentData
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EnviromentsData
   enviromentsData:
-    keys: 010000000200000003000000
+    keys: 01000000020000000300000004000000
     values:
     - {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
     - {fileID: 395919914944283270, guid: 320e4c84c0b7e0344ad2dcd7ba7cd0ca, type: 3}
     - {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
+    - {fileID: 395919914944283270, guid: e560f83744548b443a88a77b22782df3, type: 3}
