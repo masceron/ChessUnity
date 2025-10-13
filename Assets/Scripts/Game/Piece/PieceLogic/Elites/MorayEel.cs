@@ -12,7 +12,6 @@ namespace Game.Piece.PieceLogic.Elites
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new MorayEelCamouflage(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new DormantFossilPassive(this)));
         }
     }
 }

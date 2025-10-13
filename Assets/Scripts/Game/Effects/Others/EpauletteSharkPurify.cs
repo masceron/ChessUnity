@@ -15,7 +15,7 @@ namespace Game.Effects.Others
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (!MatchManager.Ins.GameState.IsDay)
+            if (MatchManager.Ins.GameState.IsDay)
             {
                 ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
             }

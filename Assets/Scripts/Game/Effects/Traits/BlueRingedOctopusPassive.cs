@@ -32,6 +32,6 @@ namespace Game.Effects.Traits
             }
         }
         
-        public EndTurnEffectType EndTurnEffectType { get; set; }
+        public EndTurnEffectType EndTurnEffectType { get; }
     }
 }

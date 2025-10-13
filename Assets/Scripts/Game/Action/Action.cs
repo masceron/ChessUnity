@@ -11,14 +11,14 @@ namespace Game.Action
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Action
     {
-        public ushort Target;
-        public ushort Maker;
+        public int Target = -1;
+        public int Maker;
         public ActionResult Result = ActionResult.Succeed;
         public readonly bool DoesMoveChangePos;
 
         protected Action(int maker, bool pos = false)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             DoesMoveChangePos = pos;
         }
 

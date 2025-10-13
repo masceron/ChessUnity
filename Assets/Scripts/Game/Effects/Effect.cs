@@ -125,7 +125,7 @@ namespace Game.Effects
             
         }
 
-        public virtual void OnCallStart(Action.Action action)
+        public virtual void OnCallRelicAction(Action.Action action)
         {
             
         }

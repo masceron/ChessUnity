@@ -2110,9 +2110,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3672066846405206136}
-        m_TargetAssemblyTypeName: UX.UI.Ingame.BoardViewer, Assembly-CSharp
-        m_MethodName: EndTurn
+      - m_Target: {fileID: 6205766874983819211}
+        m_TargetAssemblyTypeName: UX.UI.Ingame.GameActions, Assembly-CSharp
+        m_MethodName: ClickEndTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
