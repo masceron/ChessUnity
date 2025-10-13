@@ -76,6 +76,7 @@ namespace Game.Effects
         OneMoreTurn,
         FractureZonePassive,
         BioluminescentBeaconPassive,
+        SunfishPassive,
         DormantFossilPassive,
         BlueRingedOctopusPassive,
         QuickReflex

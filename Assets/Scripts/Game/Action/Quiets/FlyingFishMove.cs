@@ -35,11 +35,17 @@ namespace Game.Action.Quiets
             {
                 rankFrom += rankDir;
                 fileFrom += fileDir;
+
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rankFrom, fileFrom, 1))
+                {
+                    var curP = board[IndexOf(rankOff, fileOff)];
+                    if (!(curP is BlueRingedOctopus)) continue;
+                    
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Maker))));
+                }
                 
                 var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.Color == caller.Color) continue;
-                if (p is BlueRingedOctopus) continue;
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Maker))));
                 
                 ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p)));
                 break;
