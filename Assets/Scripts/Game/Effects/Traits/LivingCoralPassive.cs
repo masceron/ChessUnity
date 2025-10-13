@@ -92,7 +92,7 @@ namespace Game.Effects.Traits
             }
         }
         
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             turnCounter++;
             if (turnCounter % Interval == 0)
@@ -100,8 +100,8 @@ namespace Game.Effects.Traits
                 SummonClownFish();
             }
             
-            if (action is { DoesMoveChangePos: true } &&
-                (action.Maker == Piece.Pos || ColorOfPiece(action.Maker) == Piece.Color))
+            if (lastMainAction is { DoesMoveChangePos: true } &&
+                (lastMainAction.Maker == Piece.Pos || ColorOfPiece(lastMainAction.Maker) == Piece.Color))
             {
                 BuffEvasionInRange();
             }

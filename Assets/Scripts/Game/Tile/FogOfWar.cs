@@ -24,7 +24,6 @@ namespace Game.Tile
         }
         void ToggleVisibility(PieceLogic piece, bool value)
         {
-            piece.isClickable = value;
             PieceManager.Ins.GetPieceGameObject(piece.Pos).GetComponent<MeshRenderer>().enabled = value;
         }
         public override FormationType GetFormationType()

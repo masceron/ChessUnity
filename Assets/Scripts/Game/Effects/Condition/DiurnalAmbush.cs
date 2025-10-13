@@ -18,7 +18,6 @@ namespace Game.Effects.Condition
         public void OnCallEnd(Action.Action action)
         {
             if (!MatchManager.Ins.GameState.IsDay) return;
-            if (action == null) return;
             if (action.Maker != Piece.Pos)
             {
                 lastUsed++;

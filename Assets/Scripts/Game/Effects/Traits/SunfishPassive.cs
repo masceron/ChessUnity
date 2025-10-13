@@ -18,7 +18,7 @@ namespace Game.Effects.Traits
             check = true;
         }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             if (check != MatchManager.Ins.GameState.IsDay) 
             {

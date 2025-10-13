@@ -14,7 +14,7 @@ namespace Game.Effects.Debuffs
         }
         
         public EndTurnEffectType EndTurnEffectType { get; }
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             var (rank, file) = RankFileOf(Piece.Pos);
             var piece = PieceOn(Piece.Pos);

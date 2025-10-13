@@ -7,8 +7,8 @@ namespace Game.Action.Captures
     {
         public NormalCapture(int f, int t) : base(f, true)
         {
-            Maker = (ushort)f;
-            Target = (ushort)t;
+            Maker = f;
+            Target = t;
         }
         protected override void Animate()
         {

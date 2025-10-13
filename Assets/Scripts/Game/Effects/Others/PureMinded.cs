@@ -7,14 +7,14 @@ namespace Game.Effects.Others
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PureMinded: Effect, IEndTurnEffect
     {
-        sbyte RoundsPerSelfPurify = 5;
+        private const sbyte RoundsPerSelfPurify = 5;
         sbyte count;
         public PureMinded(PieceLogic piece) : base(-1, 1, piece, EffectName.PureMinded)
         {   
             count = RoundsPerSelfPurify;
         }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             if (count > 0) count--;
             if (count == 0) {

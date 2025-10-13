@@ -35,26 +35,24 @@ namespace Game.Effects.Traits
             }
         }
         
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (action == null) return;
-            
-            if (action.Maker == Piece.Pos)
+            if (lastMainAction.Maker == Piece.Pos)
             {
-                TriggerRows(action.Target, Piece.Color);
+                TriggerRows(lastMainAction.Target, Piece.Color);
                 return;
             }
             
             if (MatchManager.Ins.GameState.SideToMove == Piece.Color) return;
 
-            var rowMovedTo = RankOf(action.Target);
+            var rowMovedTo = RankOf(lastMainAction.Target);
             
-            if (!rows.Contains(rowMovedTo) || ColorOfPiece(action.Target) == Piece.Color)
+            if (!rows.Contains(rowMovedTo) || ColorOfPiece(lastMainAction.Target) == Piece.Color)
             {
                 return;
             }
             
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, action.Target));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, (ushort)lastMainAction.Target));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 

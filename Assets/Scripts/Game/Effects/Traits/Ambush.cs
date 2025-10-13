@@ -1,4 +1,5 @@
-﻿using Game.Piece.PieceLogic;
+﻿using Game.Action;
+using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Traits
 {
@@ -16,7 +17,6 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action action)
         {
-            if (action == null) return;
             if (action.Maker != Piece.Pos)
             {
                 lastUsed++;

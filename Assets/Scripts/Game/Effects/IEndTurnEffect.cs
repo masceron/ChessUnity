@@ -11,6 +11,7 @@
     public interface IEndTurnEffect
     {
         public EndTurnEffectType EndTurnEffectType { get; }
+        
         public void OnCallEnd(Action.Action lastMainAction);
     }
 }
