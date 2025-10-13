@@ -9,6 +9,7 @@ namespace UX.UI.Ingame
         ThalassosResurrector,
         DeathDefianceUI,
         DormantFossilUI,
+        TimelessHourglassUI
 
     }
 
