@@ -114,9 +114,8 @@ namespace UX.UI.Ingame
 
         public void ExecuteAction(Action action)
         {
-            ActionManager.EnqueueAction(action);
             Unmark();
-            NewTurn();
+            ActionManager.EnqueueAction(action);
         }
         public static void ExecuteActionStatic(Action action)
         {

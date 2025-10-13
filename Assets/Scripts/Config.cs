@@ -28,10 +28,10 @@ public static class Config
          new PieceConfig(PieceType.FlyingFish, true, 89),
          new PieceConfig(PieceType.Anomalocaris, true, 99),
          new PieceConfig(PieceType.Swordfish, true, 101),
-        new PieceConfig(PieceType.MorayEel, true, 112),
+         new PieceConfig(PieceType.MorayEel, true, 112),
          new PieceConfig(PieceType.Stingray, true, 111),
          new PieceConfig(PieceType.SeaStar, true, 113),
-         new PieceConfig(PieceType.SeaStar, true, 10),
+         new PieceConfig(PieceType.Swordfish, true, 10),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
     };
 
