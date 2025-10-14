@@ -87,13 +87,14 @@ namespace Game.Action
             //End the turn if:
             //The action is a SkipTurn, or
             //The action is not from a relic, and if it's a skill, then the piece making it cannot have Quick Reflex.
-            if (queueAction is SkipTurn ||
-                (queueAction is not IRelicAction
-                 && !(queueAction is ISkills &&
-                      BoardUtils.PieceOn(queueAction.Maker).Effects.OfType<QuickReflex>().Any())))
-                EndTurnProcess(queueAction);
-
+            if (queueAction is not SkipTurn &&
+                (queueAction is IRelicAction
+                 || queueAction is ISkills &&
+                 BoardUtils.PieceOn(queueAction.Maker).Effects.OfType<QuickReflex>().Any())) return false;
+            
+            EndTurnProcess(queueAction);
             return true;
+
         }
 
         public static void ExecuteImmediately(Action action)
