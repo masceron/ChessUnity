@@ -24,6 +24,7 @@ namespace Game.Effects.Debuffs
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
+            if (lastMainAction is not IQuiets) return; 
             if (lastMainAction.Maker != Piece.Pos)
             {
                 TurnSinceLastMove++;
