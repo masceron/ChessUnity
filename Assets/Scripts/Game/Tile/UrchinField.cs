@@ -29,7 +29,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece)))
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece)));
         }
 
         public override void OnPieceExit(PieceLogic piece)
