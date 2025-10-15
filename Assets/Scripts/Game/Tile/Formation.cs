@@ -8,6 +8,7 @@ namespace Game.Tile{
         BubbleVent,
         AnchorIce,
         DazzlingLight,
+        UrchinField,
     }
     // public interface IHaveDuration{
     //     /// <summary>

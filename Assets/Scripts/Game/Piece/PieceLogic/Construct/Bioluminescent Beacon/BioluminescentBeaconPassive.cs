@@ -49,7 +49,7 @@ namespace Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon
 
             var posInRadius = GetPosInRadius();
 
-            DazzlingLight dazzlingLight = new DazzlingLight(-1, false, Piece.Color);
+            DazzlingLight dazzlingLight = new DazzlingLight(false, Piece.Color);
 
             foreach (var pos in posInRadius)
             {

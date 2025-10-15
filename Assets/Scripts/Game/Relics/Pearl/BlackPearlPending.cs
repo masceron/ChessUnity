@@ -66,7 +66,7 @@ namespace Game.Relics.Pearl
                 EffectName.Blinded => new Effects.Debuffs.Blinded(2, 50, piece),
                 EffectName.Stunned => new Effects.Debuffs.Stunned(1, piece),
                 EffectName.Poison => new Effects.Debuffs.Poison(2, piece),
-                EffectName.Bleeding => new Effects.Debuffs.Bleeding(piece),
+                EffectName.Bleeding => new Effects.Debuffs.Bleeding(UnityEngine.Random.Range(6, 9), piece),
                 EffectName.Bound => new Effects.Debuffs.Bound(2, piece),
                 EffectName.Taunted => new Effects.Debuffs.Taunted(2, piece),
                 _ => new Effects.Buffs.Shield(piece)

@@ -13,9 +13,8 @@ namespace Game.Tile
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DazzlingLight : Formation
     {
-        public DazzlingLight(int duration, bool haveDuration, bool color) : base(color)
+        public DazzlingLight(bool haveDuration, bool color) : base(color)
         {
-            this.duration = duration;
             this.haveDuration = haveDuration;
         }
 
