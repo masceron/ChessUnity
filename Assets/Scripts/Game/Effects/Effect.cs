@@ -79,7 +79,8 @@ namespace Game.Effects
         SunfishPassive,
         DormantFossilPassive,
         BlueRingedOctopusPassive,
-        QuickReflex
+        QuickReflex,
+        NocturnalRangeBuff
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -87,7 +88,7 @@ namespace Game.Effects
     {
         public sbyte Duration;
         public sbyte Strength;
-        public PieceLogic Piece;
+        public readonly PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
         
