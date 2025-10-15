@@ -44,7 +44,6 @@ namespace Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon
 
         public void HandlePassive()
         {
-            // chưa ổn lắm cần nghiên cứu thêm
             if (isApplied) return;
 
             var posInRadius = GetPosInRadius();
@@ -57,7 +56,6 @@ namespace Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon
                 FormationManager.Ins.SetFormation(pos, dazzlingLight);
                 if (BoardUtils.PieceOn(pos) != null)
                 {
-                    UnityEngine.Debug.Log("Trigger enter at pos " + pos);
                     FormationManager.Ins.TriggerEnter(pos);
                 }
             }

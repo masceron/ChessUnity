@@ -9,6 +9,7 @@ namespace Game.Tile{
         AnchorIce,
         DazzlingLight,
         UrchinField,
+        Saprolegnia,
     }
     // public interface IHaveDuration{
     //     /// <summary>

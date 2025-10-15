@@ -1,25 +1,25 @@
-﻿using System.Linq;
+using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic;
-using UnityEngine;
+
 namespace Game.Tile
 {
     /// <summary>
     /// Urchin Field Tile
     /// </summary>
     ///       
-    public class UrchinField : Formation
+    public class Saprolegnia : Formation
     {
-        public UrchinField(bool haveDuration, bool color) : base(color)
+        public Saprolegnia(bool haveDuration, bool color) : base(color)
         {
             this.haveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
         {
-            return FormationType.UrchinField;
+            return FormationType.Saprolegnia;
         }
 
         public override void OnFirstTurn(PieceLogic piece)
@@ -30,15 +30,9 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            //Theo Tân bảo thì bleed không cộng dồn, mà sẽ reset lại 4 turn
-            var existingBleeding = piece.Effects.OfType<Bleeding>().ToList();
 
-            foreach (var bleeding in existingBleeding)
-            {
-                ActionManager.ExecuteImmediately(new RemoveEffect(bleeding));
-            }
-
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece)));
+            if (piece.Effects.OfType<Infected>().ToList().Count != 0) return;
+            ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece)));
         }
 
         public override void OnPieceExit(PieceLogic piece)
