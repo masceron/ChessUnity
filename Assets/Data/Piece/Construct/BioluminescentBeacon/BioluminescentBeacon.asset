@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: BioluminescentBeacon
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 35
+  type: 40
   prefab: {fileID: 6542683420904778980, guid: 7816737c64d1aa04a9464c9bd6b35429, type: 3}
   rank: 1
   moveRange: 0

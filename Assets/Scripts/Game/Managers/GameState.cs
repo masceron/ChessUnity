@@ -145,6 +145,7 @@ namespace Game.Managers
                 PieceType.FractureZone => new FractureZone(piece),
                 PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 PieceType.Sunfish => new Sunfish(piece),
+                PieceType.TigerPrawn => new TigerPrawn(piece),
                 _ => null
             };
 
