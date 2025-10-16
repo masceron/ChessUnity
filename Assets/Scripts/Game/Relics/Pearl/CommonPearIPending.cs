@@ -50,7 +50,8 @@ namespace Game.Relics.Pearl
         }
         public void CompleteAction()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect()));
+            ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
+            //TODO: Sửa lại
             TileManager.Ins.UnmarkAll();
 
 
