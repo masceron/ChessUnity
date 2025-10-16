@@ -223,6 +223,46 @@ namespace Game.Common
             return pieces;
         }
 
+        public static List<PieceLogic> GetPiecesInSize(int rank, int file, int size, Corner corner, Predicate<PieceLogic> predicate)
+        {
+            var pieces = new List<PieceLogic>();
+            if (corner == Corner.BottomRight)
+            {
+                rank = rank - size / 2 + 1;
+                file = file - size / 2 + 1;
+            }
+            else if (corner == Corner.TopLeft)
+            {
+                file = file - size / 2 + 1;
+                rank = rank - size / 2;
+            }
+            else if (corner == Corner.TopRight)
+            {
+                rank = rank - size / 2;
+                file = file - size / 2;
+            }
+            else if (corner == Corner.BottomLeft)
+            {
+                rank = rank - size / 2 + 1;
+                file = file - size / 2;
+            }
+
+            for (int r = rank; r < rank + size; r++)
+            {
+                if (!VerifyBounds(r)) continue;
+                for (int f = file; f < file + size; f++)
+                {
+                    if (!VerifyBounds(f)) continue;
+                    var piece = PieceOn(IndexOf(r, f));
+                    if (piece != null && predicate(piece))
+                    {
+                        pieces.Add(piece);
+                    }
+                }
+            }
+            return pieces;
+        }
+
         public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
         {
             return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();

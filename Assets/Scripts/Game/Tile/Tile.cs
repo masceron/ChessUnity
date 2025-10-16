@@ -7,6 +7,7 @@ using Color = Game.Managers.Color;
 namespace Game.Tile
 {
 
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
@@ -15,6 +16,8 @@ namespace Game.Tile
         public Formation tileEffect;
         [SerializeField] public Color color;
 
+        // đỉnh trong ô 
+        public Corner corner { get; private set; }
         public delegate void OnPointerEnterHandler(Tile thisTile);
 
         public static OnPointerEnterHandler OnPointEnterHandle;
@@ -51,6 +54,8 @@ namespace Game.Tile
         
         public void OnPointerEnter(PointerEventData eventData)
         {
+            corner = TileManager.Ins.IndexToCorner(eventData.pointerCurrentRaycast.worldPosition, this);
+
             if (MatchManager.Ins.InputProcessor)
                 MatchManager.Ins.InputProcessor.Hover(IndexOf(rank, file));
 

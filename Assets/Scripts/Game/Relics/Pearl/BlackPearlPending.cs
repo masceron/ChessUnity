@@ -7,7 +7,9 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX.UI.Ingame;
-
+using Game.Action.Relics;
+using UnityEngine;
+using Game.Action.Skills;
 namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -19,7 +21,6 @@ namespace Game.Relics.Pearl
         {
             blackPearl = cp;
             Target = (ushort)maker;
-            Maker = (ushort)maker;
         }
 
         private Effect GetRandomBuffEffect()
@@ -31,7 +32,7 @@ namespace Game.Relics.Pearl
             
             var random = new System.Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            
+            Debug.Log("Selected Effect Name: " + selectedEffectName);
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
@@ -44,7 +45,7 @@ namespace Game.Relics.Pearl
             
             var random = new System.Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            
+            Debug.Log("Selected Effect Name: " + selectedEffectName);
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
@@ -76,21 +77,22 @@ namespace Game.Relics.Pearl
         {
             if(BoardUtils.PieceOn(Target).Color == blackPearl.Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect()));
+                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
             }
             else
             {
-                ActionManager.EnqueueAction(new ApplyEffect(GetRandomDebuffEffect()));
+                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
             }
 
-            TileManager.Ins.UnmarkAll();
 
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
             blackPearl.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
 
         }
 

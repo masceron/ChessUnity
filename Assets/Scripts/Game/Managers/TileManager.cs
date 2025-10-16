@@ -2,9 +2,18 @@
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
+using UnityEngine.EventSystems;
 
 namespace Game.Managers
 {
+    public enum Corner: byte
+    {
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight
+    }
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TileManager : Singleton<TileManager>
     {
@@ -88,13 +97,55 @@ namespace Game.Managers
                 selections[pos].gameObject.SetActive(false);
             }
         }
-
+        public Corner IndexToCorner(Vector3 hit, Tile.Tile hoveringTile)
+        {
+            if (hit.x > hoveringTile.rank && hit.z < hoveringTile.file) return Corner.BottomLeft;
+            if (hit.x > hoveringTile.rank && hit.z > hoveringTile.file) return Corner.BottomRight;
+            if (hit.x < hoveringTile.rank && hit.z > hoveringTile.file) return Corner.TopLeft;
+            if (hit.x < hoveringTile.rank && hit.z < hoveringTile.file) return Corner.TopRight;
+            return Corner.TopLeft;
+        }
         public void MarkTileInRange(Tile.Tile hoveringTile, int range, bool isMark, bool onlyMarkEnemy = false)
         {
-            if (range % 2 == 0) return; // chỉ hỗ trợ range lẻ
-
             int centerIndex = IndexOf(hoveringTile.rank, hoveringTile.file);
             if (!IsActive(centerIndex)) return;
+            if (range % 2 == 0) 
+            {
+                int startRank = hoveringTile.rank;
+                int startFile = hoveringTile.file;
+                if (hoveringTile.corner == Corner.BottomRight)
+                {
+                    startRank = startRank - range / 2 + 1;
+                    startFile = startFile - range / 2 + 1;
+                }
+                else if (hoveringTile.corner == Corner.TopLeft)
+                {
+                    startFile = startFile - range / 2 + 1;
+                    startRank = startRank - range / 2;
+                }
+                else if (hoveringTile.corner == Corner.TopRight)
+                {
+                    startRank = startRank - range / 2;
+                    startFile = startFile - range / 2;
+                }
+                else if (hoveringTile.corner == Corner.BottomLeft)
+                {
+                    startRank = startRank - range / 2 + 1;
+                    startFile = startFile - range / 2;
+                }
+
+                for (int r = startRank; r < startRank + range; r++)
+                {
+                    for (int f = startFile; f < startFile + range; f++)
+                    {
+                        int index = IndexOf(r, f);
+                        if (!IsActive(index)) continue;
+                        ApplyMarkingRule(index, isMark, onlyMarkEnemy);
+                    }
+                }
+                return;
+            } 
+
 
             int radius = range / 2;
 

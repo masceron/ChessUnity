@@ -22,6 +22,7 @@ using Game.Relics.EyeOfMimic;
 using Game.Relics.FrostSigil;
 using Game.Relics.Pearl;
 using Game.Relics.RottingScythe;
+using Game.Relics.StormCapacitor;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -44,6 +45,8 @@ namespace Game.Managers
         Black,
         None
     }
+
+
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GameState
@@ -162,6 +165,7 @@ namespace Game.Managers
                 RelicType.FrostSigil => new FrostSigil(cfg),
                 RelicType.CommonPearl => new CommonPearl(cfg),
                 RelicType.BlackPearl => new BlackPearl(cfg),
+                RelicType.StormCapacitor => new StormCapacitor(cfg),
                 _ => null
             };
             return rl;

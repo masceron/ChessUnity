@@ -47,7 +47,7 @@ namespace Game.Piece
         EpauletteShark,
         FractureZone,
         BioluminescentBeacon,
-        Sunfish
+        Sunfish,
         BottlenoseDolphin
     }
 
