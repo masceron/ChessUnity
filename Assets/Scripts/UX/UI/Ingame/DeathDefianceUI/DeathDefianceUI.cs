@@ -18,19 +18,26 @@ namespace UX.UI.Ingame.DeathDefianceUI
         [SerializeField] private GameObject EffectItem;
         // [SerializeField] private TMP_Text titleText;
 
+        private readonly EffectName[] possibleEffects = {
+            EffectName.Carapace,
+            EffectName.HardenedShield,
+            EffectName.Piercing,
+            EffectName.Shield,
+            EffectName.Camouflage,
+            EffectName.Haste,
+            EffectName.TrueBite,
+            EffectName.Evasion,
+            EffectName.Construct,
+            EffectName.Demolisher,
+            EffectName.Consume,
+            EffectName.Surpass,
+            EffectName.Ambush,
+            EffectName.QuickReflex,
+        };
         private int piecePos;
         private List<EffectName> selectedEffects = new();
         private static readonly System.Random random = new System.Random();
         
-        private readonly EffectName[] possibleEffects = {
-            EffectName.Carapace,
-            EffectName.Surpass,
-            EffectName.HardenedShield,
-            EffectName.Piercing,
-            EffectName.Ambush,
-            EffectName.Shield
-
-        };
         
         public void Load(int piecePos)
         {
@@ -77,15 +84,26 @@ namespace UX.UI.Ingame.DeathDefianceUI
 
         private Effect CreateEffect(EffectName effectName, PieceLogic piece)
         {
-
+            sbyte Duration = 5;
             return effectName switch
             {
-
-                EffectName.Carapace => new Game.Effects.Buffs.Carapace(2, piece),
-                EffectName.Surpass => new Game.Effects.Traits.Surpass(piece),
+                // Buffs
+                EffectName.Carapace => new Game.Effects.Buffs.Carapace(Duration, piece),
                 EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
-                EffectName.Piercing => new Game.Effects.Buffs.Piercing(2, piece),
+                EffectName.Piercing => new Game.Effects.Buffs.Piercing(Duration, piece),
+                EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
+                EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece, Duration),
+                EffectName.Haste => new Game.Effects.Buffs.Haste(Duration, 1, piece),
+                EffectName.TrueBite => new Game.Effects.Buffs.TrueBite(piece),
+                
+                // Traits 
+                EffectName.Evasion => new Game.Effects.Traits.Evasion(Duration, 50, piece),
+                EffectName.Construct => new Game.Effects.Traits.Construct(piece),
+                EffectName.Demolisher => new Game.Effects.Traits.Demolisher(piece),
+                EffectName.Consume => new Game.Effects.Traits.Consume(piece),
+                EffectName.Surpass => new Game.Effects.Traits.Surpass(piece),
                 EffectName.Ambush => new Game.Effects.Traits.Ambush(piece),
+                EffectName.QuickReflex => new Game.Effects.Traits.QuickReflex(piece),
                 _ => new Game.Effects.Buffs.Shield(piece)
             };
         }
