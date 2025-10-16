@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic.Swarm
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ClownFishPassive(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(this)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(this)));
         }
         
         protected override void CustomBehaviors(List<Action.Action> list)

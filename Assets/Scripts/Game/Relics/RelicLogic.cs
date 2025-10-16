@@ -8,7 +8,7 @@
     
     public abstract class RelicLogic
     {
-        protected RelicType Type;
+        public RelicType Type { get; set; }  
         protected sbyte TimeCooldown;
         public sbyte currentCooldown { get; protected set; }
         public bool Color; // false for white, true for black

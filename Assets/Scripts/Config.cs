@@ -11,7 +11,7 @@ public static class Config
         // new PieceConfig(PieceType.SeaUrchin, false, 100),
         // new PieceConfig(PieceType.ElectricEel, false, 92),
         // new PieceConfig(PieceType.Chrysos, false, 88),
-        new PieceConfig(PieceType.Archelon, false, 100),
+        // new PieceConfig(PieceType.Archelon, false, 100),
         // new PieceConfig(PieceType.Thalassos, false, 65),
         // new PieceConfig(PieceType.Pufferfish, false, 70),
         // new PieceConfig(PieceType.Lionfish, false, 99),
@@ -22,7 +22,7 @@ public static class Config
         // new PieceConfig(PieceType.GuidingSiren, false, 91),
         // new PieceConfig(PieceType.LivingCoral, false, 91),
         // new PieceConfig(PieceType.Swordfish, false, 99),
-        new PieceConfig(PieceType.SeaStar, false, 99),
+        // new PieceConfig(PieceType.SeaStar, false, 99),
         // new PieceConfig(PieceType.SeaStar, false, 90),
         // new PieceConfig(PieceType.Lionfish, false, 100),
         new PieceConfig(PieceType.ClownFish, false, 97)
@@ -38,15 +38,17 @@ public static class Config
         // new PieceConfig(PieceType.MorayEel, true, 69),
         // new PieceConfig(PieceType.Stingray, true, 96),
         // new PieceConfig(PieceType.Anglerfish, true, 93),
-        new PieceConfig(PieceType.ChamberedNautilus, true, 98),
-        new PieceConfig(PieceType.EpauletteShark, true, 96),
-        new PieceConfig(PieceType.TigerPrawn, true, 95)
+        // new PieceConfig(PieceType.ChamberedNautilus, true, 98),
+        // new PieceConfig(PieceType.EpauletteShark, true, 96),
+        new PieceConfig(PieceType.TigerPrawn, true, 95),
+        // new PieceConfig(PieceType.FlyingFish, true, 92),
+        new PieceConfig(PieceType.HammerOyster, true, 87)
         // new PieceConfig(PieceType.Barracuda, true, 101)
         // new PieceConfig(PieceType.Barracuda, true, 71),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
     };
 
-    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.RottingScythe, false, 5);
+    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 4);
     // public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
-    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 4);
+    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 4);
 }

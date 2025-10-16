@@ -146,6 +146,7 @@ namespace Game.Managers
                 PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 PieceType.Sunfish => new Sunfish(piece),
                 PieceType.TigerPrawn => new TigerPrawn(piece),
+                PieceType.HammerOyster => new HammerOyster(piece),
                 _ => null
             };
 

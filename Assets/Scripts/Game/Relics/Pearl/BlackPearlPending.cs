@@ -74,14 +74,16 @@ namespace Game.Relics.Pearl
         }
         public void CompleteAction()
         {
+            
             if(BoardUtils.PieceOn(Target).Color == blackPearl.Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect()));
+                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
             }
             else
             {
-                ActionManager.EnqueueAction(new ApplyEffect(GetRandomDebuffEffect()));
+                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
             }
+            //TODO: Sửa lại thành EnqueueAction.
 
             TileManager.Ins.UnmarkAll();
 
