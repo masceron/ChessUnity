@@ -26,11 +26,11 @@ namespace Game.Relics.SirensHarpoon
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
 
-                    if (piece.PieceRank <= PieceRank.Common)
-                    {
+                    // if (piece.PieceRank <= PieceRank.Common)
+                    // {
                         var pending = new SirensHarpoonPending(this, piece.Pos, piece.Color);
                         BoardViewer.ListOf.Add(pending);
-                    }
+                    // }
                 }
 
                 BoardViewer.Selecting = -2;

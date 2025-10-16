@@ -27,23 +27,16 @@ namespace Game.Relics.SirensHarpoon
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            if (FirstTarget == null)
             {
                 FirstTarget = hovering;
-                TileManager.Ins.MarkIfDifferntColor(FirstTarget.Color);
                 TileManager.Ins.Select(FirstTarget.Pos);
-                return;
+                TileManager.Ins.MarkAsMoveable(FirstTarget.Pos);
             }
 
-            SecondTarget = hovering;
-            TileManager.Ins.UnmarkAll();
+            //TileManager.Ins.UnmarkAll();
 
-            var ourSide = MatchManager.Ins.GameState.OurSide;
-
-            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
-
-            ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
+         
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
