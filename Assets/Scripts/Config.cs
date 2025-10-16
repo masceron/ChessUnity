@@ -25,7 +25,6 @@ public static class Config
         // new PieceConfig(PieceType.SeaStar, false, 99),
         // new PieceConfig(PieceType.SeaStar, false, 90),
         // new PieceConfig(PieceType.Lionfish, false, 100),
-        new PieceConfig(PieceType.ClownFish, false, 97)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
@@ -40,15 +39,17 @@ public static class Config
         // new PieceConfig(PieceType.Anglerfish, true, 93),
         // new PieceConfig(PieceType.ChamberedNautilus, true, 98),
         // new PieceConfig(PieceType.EpauletteShark, true, 96),
-        new PieceConfig(PieceType.TigerPrawn, true, 95),
+        // new PieceConfig(PieceType.TigerPrawn, true, 95),
         // new PieceConfig(PieceType.FlyingFish, true, 92),
-        new PieceConfig(PieceType.HammerOyster, true, 87)
         // new PieceConfig(PieceType.Barracuda, true, 101)
         // new PieceConfig(PieceType.Barracuda, true, 71),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
+        new PieceConfig(PieceType.TigerPrawn, true, 95),
+        new PieceConfig(PieceType.HammerOyster, true, 87),
+        new PieceConfig(PieceType.ClownFish, true, 97)
     };
 
-    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 4);
+    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.CommonPearl, false, 4);
     // public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
-    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 4);
+    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.CommonPearl, true, 4);
 }

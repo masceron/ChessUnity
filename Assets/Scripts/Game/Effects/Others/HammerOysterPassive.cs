@@ -22,26 +22,34 @@ namespace Game.Effects.Others
                 // ActionManager.ExecuteImmediately(new KillPiece(piecePos));
                 // TODO: Fix lỗi null khi KillPiece
                 
-                // if (Piece.Color == true)
-                // {
-                //     var blackRelic = GetRelicOf(true);
-                //     if (blackRelic != null && blackRelic.Type == RelicType.CommonPearl)
-                //     {
-                //         relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 4);
-                //         MatchManager.Ins.GameState.BlackRelic = GameState.GetRelicLogicByConfig(relicBlackConfig);
-                //         MatchManager.Ins.InputProcessor.UpdateRelic();
-                //     }
-                // }
-                // else
-                // {
-                //     var whiteRelic = GetRelicOf(false);
-                //     if (whiteRelic != null && whiteRelic.Type == RelicType.CommonPearl)
-                //     {
-                //         relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 4);
-                //         MatchManager.Ins.GameState.WhiteRelic = GameState.GetRelicLogicByConfig(relicWhiteConfig);
-                //         MatchManager.Ins.InputProcessor.UpdateRelic();
-                //     }
-                // }
+                if (Piece.Color == true)
+                {
+                    // var blackRelic = GetRelicOf(true);
+                    // if (blackRelic != null && blackRelic.Type == RelicType.CommonPearl)
+                    // {
+                    //     relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 4);
+                    //     MatchManager.Ins.GameState.BlackRelic = GameState.GetRelicLogicByConfig(relicBlackConfig);
+                    //     MatchManager.Ins.InputProcessor.UpdateRelic();
+                    // }
+                    var whiteRelic = GetRelicOf(false);
+                    if (whiteRelic != null && whiteRelic.Type == RelicType.CommonPearl)
+                    {
+                        relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 4);
+                        MatchManager.Ins.GameState.WhiteRelic = GameState.GetRelicLogicByConfig(relicWhiteConfig);
+                        MatchManager.Ins.InputProcessor.UpdateRelic();
+                    }
+                    //TODO: Sửa la thành blackRelic.
+                }
+                else
+                {
+                    var whiteRelic = GetRelicOf(false);
+                    if (whiteRelic != null && whiteRelic.Type == RelicType.CommonPearl)
+                    {
+                        relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 4);
+                        MatchManager.Ins.GameState.WhiteRelic = GameState.GetRelicLogicByConfig(relicWhiteConfig);
+                        MatchManager.Ins.InputProcessor.UpdateRelic();
+                    }
+                }
             }
         }
     }

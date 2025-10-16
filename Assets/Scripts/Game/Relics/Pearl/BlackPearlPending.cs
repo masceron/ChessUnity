@@ -68,8 +68,8 @@ namespace Game.Relics.Pearl
                 EffectName.Poison => new Effects.Debuffs.Poison(2, piece),
                 EffectName.Bleeding => new Effects.Debuffs.Bleeding(piece),
                 EffectName.Bound => new Effects.Debuffs.Bound(2, piece),
-                EffectName.Taunted => new Effects.Debuffs.Taunted(2, piece),
-                _ => new Effects.Buffs.Shield(piece)
+                EffectName.Taunted => new Effects.Debuffs.Taunted(2, piece)
+                // _ => new Effects.Buffs.Shield(piece)
             };
         }
         public void CompleteAction()
@@ -78,9 +78,11 @@ namespace Game.Relics.Pearl
             if(BoardUtils.PieceOn(Target).Color == blackPearl.Color)
             {
                 ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
+                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
             }
             else
             {
+                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
                 ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
             }
             //TODO: Sửa lại thành EnqueueAction.
