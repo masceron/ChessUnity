@@ -15,7 +15,7 @@ namespace Game.Effects.Debuffs
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             if (Strength >= 5) TimeLeft--;
             if (TimeLeft <= 0)

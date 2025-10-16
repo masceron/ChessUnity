@@ -3,9 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Piece;
-using Game.Piece.PieceLogic;
 using PrimeTween;
-using TMPro;
 using UnityEngine;
 
 namespace UX.UI.Ingame.DormantFossil
@@ -18,7 +16,8 @@ namespace UX.UI.Ingame.DormantFossil
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject pieceItem;
 
-        private List<PieceType> spawnPiece = new List<PieceType> {
+        private readonly List<PieceType> spawnPiece = new()
+        {
             PieceType.Helicoprion,
             PieceType.Anomalocaris,
             PieceType.Archelon 
@@ -37,9 +36,9 @@ namespace UX.UI.Ingame.DormantFossil
             ((RectTransform)transform.GetChild(0)).anchoredPosition = new Vector2(-50, 0);
         }
 
-        public void Load(ushort piecePos)
+        public void Load(ushort spawnPos)
         {
-            this.piecePos = piecePos;
+            piecePos = spawnPos;
             
             for (var i = 0; i < 3; ++i)
             {

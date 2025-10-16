@@ -23,13 +23,13 @@ public static class Config
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-         new PieceConfig(PieceType.MoorishIdols, true, 88),
+         new PieceConfig(PieceType.ClownFish, true, 88),
          new PieceConfig(PieceType.GuidingSiren, true, 87),
          new PieceConfig(PieceType.FlyingFish, true, 89),
          new PieceConfig(PieceType.Anomalocaris, true, 99),
          new PieceConfig(PieceType.Swordfish, true, 101),
-         new PieceConfig(PieceType.MorayEel, true, 112),
-         new PieceConfig(PieceType.Stingray, true, 111),
+         new PieceConfig(PieceType.ElectricEel, true, 112),
+         new PieceConfig(PieceType.ElectricEel, true, 111),
          new PieceConfig(PieceType.SeaStar, true, 113),
          new PieceConfig(PieceType.Swordfish, true, 10),
         // new PieceConfig(PieceType.Anglerfish, true, 93),

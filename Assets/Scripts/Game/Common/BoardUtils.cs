@@ -8,6 +8,7 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic;
+using Game.Relics;
 using UnityEngine;
 
 namespace Game.Common
@@ -158,7 +159,7 @@ namespace Game.Common
             return MatchManager.Ins.GameState.BlackCaptured;
         }
 
-        public static void Move(ushort from, ushort to)
+        public static void Move(int from, int to)
         {
             MatchManager.Ins.GameState.Move(from, to);
         }
@@ -168,14 +169,14 @@ namespace Game.Common
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
-        public static void NotifyMainAction()
+        public static void NotifyMainAction(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.Notify();
+            MatchManager.Ins.GameState.Notify(mainAction);
         }
 
-        public static void NotifyEnd()
+        public static void NotifyEnd(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.NotifyEnd();
+            MatchManager.Ins.GameState.NotifyEnd(mainAction);
         }
 
         public static void NotifyInternalAction(Action.Action action)
@@ -199,11 +200,6 @@ namespace Game.Common
         public static void RemoveObserver(Effect effect)
         {
             MatchManager.Ins.GameState.RemoveObserver(effect);
-        }
-
-        public static void SetMainAction(Action.Action action)
-        {
-            MatchManager.Ins.GameState.MainAction = action;
         }
 
         public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
@@ -230,6 +226,11 @@ namespace Game.Common
         public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
         {
             return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();
+        }
+        
+        public static RelicLogic GetRelicOf(bool side)
+        {
+            return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
     }
 }

@@ -67,12 +67,18 @@ namespace Game.Managers
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
 
-        public void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic)
+        private void MakeRelics(RelicConfig white, RelicConfig black)
+        {
+            GameState.WhiteRelic = GameState.GetRelicLogicByConfig(white);
+            GameState.BlackRelic = GameState.GetRelicLogicByConfig(black);
+        }
+
+        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic)
         {
             MakePieces(cfg);
+            MakeRelics(whiteRelic, blackRelic);
             UIManager.Ins.Load(CanvasID.Ingame);
             ActionManager.ExecuteWhenStart();
-            InputProcessor.LoadRelic(whiteRelic, blackRelic);
         }
 
         public static bool Roll(int chance)

@@ -16,7 +16,7 @@ namespace Game.Effects.Traits
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             numTurns++;
             if (numTurns % TurnsToActive == 0)

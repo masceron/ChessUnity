@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
-using Game.Relics;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,7 +12,7 @@ using static Game.Common.BoardUtils;
 namespace UX.UI.Ingame
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BoardViewer : MonoBehaviour
+    public class BoardViewer : Singleton<BoardViewer>
     {
         [SerializeField] private PieceInfoMenu pieceInfoMenu;
         [SerializeField] private PieceActions pieceActions;
@@ -32,18 +32,12 @@ namespace UX.UI.Ingame
         {
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
-            gameActions.Load(EndTurn);
             UpdateRelic();
         }
 
         private void OnEnable()
         {
             MatchManager.Ins.InputProcessor = this;
-        }
-
-        public void LoadRelic(RelicConfig whiteRelic, RelicConfig blackRelic)
-        {
-            gameActions.LoadRelic(whiteRelic, blackRelic);
         }
 
         public void UpdateRelic()
@@ -58,12 +52,6 @@ namespace UX.UI.Ingame
             direction.z = pos2;
             
             Tween.Position(mainCameraCenter, direction, 0.3f);
-        }
-        
-        public void EndTurn()
-        {
-            Unmark();
-            NewTurn();
         }
 
         private void SetPieceHover(int pos)
@@ -115,8 +103,12 @@ namespace UX.UI.Ingame
         public void ExecuteAction(Action action)
         {
             Unmark();
-            ActionManager.EnqueueAction(action);
+            if (ActionManager.EnqueueAction(action))
+            {
+                EndTurn();
+            }
         }
+        
         public static void ExecuteActionStatic(Action action)
         {
             var instance = FindAnyObjectByType<BoardViewer>();
@@ -181,10 +173,8 @@ namespace UX.UI.Ingame
             }
         }
 
-        private void NewTurn()
+        private void EndTurn()
         {
-            ActionManager.EnqueueAction(new EndTurn());
-            
             if (SideToMove() != OurSide())
             {
                 gameActions.DisableGameInteractions();
@@ -192,7 +182,6 @@ namespace UX.UI.Ingame
             else
             {
                 gameActions.EnableGameInteractions();
-                gameActions.PassTurn();
             }
         }
 
