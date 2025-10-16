@@ -7,7 +7,7 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX.UI.Ingame;
-
+using UnityEngine;
 namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -36,12 +36,14 @@ namespace Game.Relics.Pearl
 
         private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
         {
+            sbyte randomDuration = (sbyte)new System.Random().Next(2, 6);
+
             return effectName switch
             {
                 EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Game.Effects.Buffs.Carapace(2, piece),
-                EffectName.Haste => new Game.Effects.Buffs.Haste(2, 1, piece),
-                EffectName.Piercing => new Game.Effects.Buffs.Piercing(2, piece),
+                EffectName.Carapace => new Game.Effects.Buffs.Carapace(randomDuration, piece),
+                EffectName.Haste => new Game.Effects.Buffs.Haste(randomDuration, 1, piece),
+                EffectName.Piercing => new Game.Effects.Buffs.Piercing(randomDuration, piece),
                 EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
                 EffectName.TrueBite => new Game.Effects.Buffs.TrueBite(piece),
                 EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece),
@@ -50,18 +52,16 @@ namespace Game.Relics.Pearl
         }
         public void CompleteAction()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect()));
-            TileManager.Ins.UnmarkAll();
-
+            ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
 
 
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-
             commonPearl.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
-
+            Dispose();
         }
 
         public void Dispose()
