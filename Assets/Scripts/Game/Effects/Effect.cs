@@ -82,8 +82,8 @@ namespace Game.Effects
         QuickReflex,
         EntanglingTentacles,
         Silenced,
-        Charge
-
+        Charge, 
+        KelpForestPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

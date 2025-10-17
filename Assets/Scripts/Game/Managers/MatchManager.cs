@@ -25,7 +25,7 @@ namespace Game.Managers
         [NonSerialized]
         public BoardViewer InputProcessor;
 
-        private Vector2Int startingSize;
+        public Vector2Int startingSize{get; private set;}
 
         private static void MakeBoard()
         {
