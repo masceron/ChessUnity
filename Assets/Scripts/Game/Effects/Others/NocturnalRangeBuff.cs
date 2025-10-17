@@ -19,7 +19,6 @@ namespace Game.Effects.Others
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            //TODO: Remove Haste effect and moveRange = initialMoveRange.
             if (MatchManager.Ins.GameState.IsDay && !isBuff)
             {
                 isBuff = true;

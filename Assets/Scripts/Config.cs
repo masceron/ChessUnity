@@ -20,8 +20,8 @@ public static class Config
         // new PieceConfig(PieceType.MedicalLeech, false, 1),
         // new PieceConfig(PieceType.Megalodon, false, 93),
         // new PieceConfig(PieceType.GuidingSiren, false, 91),
-        // new PieceConfig(PieceType.LivingCoral, false, 91),
-        // new PieceConfig(PieceType.Swordfish, false, 99),
+        new PieceConfig(PieceType.LivingCoral, false, 91),
+        new PieceConfig(PieceType.Swordfish, false, 99),
         // new PieceConfig(PieceType.SeaStar, false, 99),
         // new PieceConfig(PieceType.SeaStar, false, 90),
         // new PieceConfig(PieceType.Lionfish, false, 100),
@@ -49,7 +49,7 @@ public static class Config
         new PieceConfig(PieceType.ClownFish, true, 97)
     };
 
-    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.CommonPearl, false, 4);
+    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SeafoamPhial, false, 4);
     // public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
     public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.CommonPearl, true, 4);
 }

@@ -17,8 +17,8 @@ namespace Game.Movesets
             var moveRange = piece.GetMoveRange(ref index);
             
             // Đi 3 ô phía trước và 2 ô phía sau
-            const int forwardRange = 3;
-            const int backwardRange = 2;
+            const int forwardRange = 2;
+            const int backwardRange = 1;
 
             switch (color)
             {
