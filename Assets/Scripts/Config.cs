@@ -44,12 +44,12 @@ public static class Config
         // new PieceConfig(PieceType.Barracuda, true, 101)
         // new PieceConfig(PieceType.Barracuda, true, 71),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
-        new PieceConfig(PieceType.TigerPrawn, true, 95),
-        new PieceConfig(PieceType.HammerOyster, true, 87),
+        // new PieceConfig(PieceType.TigerPrawn, true, 87),
+        new PieceConfig(PieceType.HammerOyster, true, 95),
         new PieceConfig(PieceType.ClownFish, true, 97)
     };
 
-    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SeafoamPhial, false, 4);
+    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.CommonPearl, false, 4);
     // public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.EyeOfMimic, true, 5);
-    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.CommonPearl, true, 4);
+    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 4);
 }
