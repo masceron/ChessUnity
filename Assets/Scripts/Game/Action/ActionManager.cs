@@ -14,6 +14,16 @@ namespace Game.Action
         BeforeEndTurn,
         AfterEndTurn
     }
+    
+    /*
+     * TODO: Issue: If a trigger causes a secondary effect that makes the trigger behind it in the queue invalid,
+     * the latter should not be active.
+     * Right now only a workaround for the case in which the piece is killed is implemented through isDead property and die() method.
+     * A more general solution needed for every cases, which now includes:
+     * - When the piece is killed.
+     * - When the piece moved away.
+     * ... And many other cases, when the piece is no longer eligible for trigger activation.
+    */
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]

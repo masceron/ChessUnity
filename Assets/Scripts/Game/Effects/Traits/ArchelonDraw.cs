@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
         public ArchelonDraw(PieceLogic piece) : base(-1, 1, piece, EffectName.ArchelonDraw)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (Distance(action.Target, Piece.Pos) > 2 || 
                 ColorOfPiece(action.Target) != Piece.Color ||

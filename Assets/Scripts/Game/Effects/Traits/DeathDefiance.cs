@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
 		{
 		}
 
-		public override void OnCall(Action.Action action)
+		public override void OnCallPieceAction(Action.Action action)
 		{
             Debug.Log("DeathDefiancsdfsdfsde: " + Piece.Pos);
 			// if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed || action.Maker == action.Target) {

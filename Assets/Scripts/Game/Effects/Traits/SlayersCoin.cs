@@ -11,7 +11,7 @@ namespace Game.Effects.Traits
         public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, EffectName.SlayersCoin)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Result == ActionResult.Failed) return;
             

@@ -14,7 +14,7 @@ namespace Game.Effects.Traits
             this.deathDefianceCount = deathDefianceCount;
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
                 return;

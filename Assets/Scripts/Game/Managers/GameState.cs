@@ -35,7 +35,7 @@ namespace Game.Managers
     }
     public enum ObserverActivateWhen: byte
     {
-        None, Captures, Moves, EndTurn, MoveGeneration, EffectApplied
+        None, Captures, Moves, SwitchTurn, MoveGeneration, EffectApplied
     }
     
     public enum Color : byte
@@ -263,7 +263,7 @@ namespace Game.Managers
             }
             observers.ForEach(effect =>
             {
-                if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
                 if (effect is not IEndTurnEffect turnEffect) return;
                 
                 if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
@@ -296,7 +296,7 @@ namespace Game.Managers
             {
                 observers.ForEach(effect =>
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCall(mainAction);
+                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCallPieceAction(mainAction);
                 });
             }
 
@@ -305,7 +305,7 @@ namespace Game.Managers
                 observers.ForEach(effect =>
                 {
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves)
-                        effect.OnCall(mainAction);
+                        effect.OnCallPieceAction(mainAction);
                 });
             }
         }

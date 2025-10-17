@@ -10,7 +10,7 @@ namespace Game.Effects.Buffs
         public TrueBite(PieceLogic piece) : base(-1, -1, piece, EffectName.TrueBite)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             
         }

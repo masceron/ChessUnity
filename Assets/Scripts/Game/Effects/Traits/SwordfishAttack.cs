@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
         public SwordfishAttack(PieceLogic piece) : base(-1, 1, piece, EffectName.SwordfishAttack)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos || action.Result == ActionResult.Failed) return;
             
