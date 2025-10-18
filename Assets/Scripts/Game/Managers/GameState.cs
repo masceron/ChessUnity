@@ -22,6 +22,7 @@ using Game.Relics.EyeOfMimic;
 using Game.Relics.FrostSigil;
 using Game.Relics.Pearl;
 using Game.Relics.RottingScythe;
+using Game.Relics.SirensHarpoon;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -162,6 +163,7 @@ namespace Game.Managers
                 RelicType.FrostSigil => new FrostSigil(cfg),
                 RelicType.CommonPearl => new CommonPearl(cfg),
                 RelicType.BlackPearl => new BlackPearl(cfg),
+                RelicType.SirensHarpoon => new SirensHarpoon(cfg),
                 _ => null
             };
             return rl;

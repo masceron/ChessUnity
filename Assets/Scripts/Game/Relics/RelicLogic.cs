@@ -3,7 +3,7 @@
     public enum RelicType
     {
         CommonPearl, BlackPearl, EyeOfMimic, FrostSigil,
-        RottingScythe, SyrensHarpoon
+        RottingScythe, SirensHarpoon
     }
     
     public abstract class RelicLogic

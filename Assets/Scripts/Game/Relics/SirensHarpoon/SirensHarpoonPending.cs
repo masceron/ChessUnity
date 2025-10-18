@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics.SirensHarpoon
@@ -27,24 +28,25 @@ namespace Game.Relics.SirensHarpoon
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null)
+            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
             {
                 FirstTarget = hovering;
                 TileManager.Ins.Select(FirstTarget.Pos);
-                TileManager.Ins.MarkAsMoveable(FirstTarget.Pos);
+                BoardViewer.Ins.MarkMove();
+                //TileManager.Ins.MarkAsMoveable(FirstTarget.Pos);
+
+                return;
             }
+            
+            TileManager.Ins.UnmarkAll();
 
-            //TileManager.Ins.UnmarkAll();
-
-         
-
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-
-            _sirensHarpoon.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-
-            ResetTargets();
+            if (BoardViewer.SelectingFunction == 0)
+            {
+                BoardViewer.Selecting = -1;
+                _sirensHarpoon.SetCooldown();
+                MatchManager.Ins.InputProcessor.UpdateRelic();
+                ResetTargets();
+            }
         }
 
         private static void ResetTargets()

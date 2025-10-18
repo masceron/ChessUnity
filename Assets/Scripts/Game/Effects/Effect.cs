@@ -80,7 +80,9 @@ namespace Game.Effects
         BlueRingedOctopusPassive,
         QuickReflex,
         ContagionCorpsePassive,
-        SunfishPassive
+        SunfishPassive,
+        Controlled,
+        PollutedRockPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
