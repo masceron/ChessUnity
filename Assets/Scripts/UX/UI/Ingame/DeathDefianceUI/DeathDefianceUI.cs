@@ -25,7 +25,6 @@ namespace UX.UI.Ingame.DeathDefianceUI
             EffectName.Shield,
             EffectName.Camouflage,
             EffectName.Haste,
-            EffectName.TrueBite,
             EffectName.Evasion,
             EffectName.Construct,
             EffectName.Demolisher,
@@ -87,14 +86,15 @@ namespace UX.UI.Ingame.DeathDefianceUI
             sbyte Duration = 5;
             return effectName switch
             {
-                // Buffs
+                // Buffs 
+                // thiếu true bite 
+                // đỏ mà ra mấy cái shield liên tục thì bất tử :<
                 EffectName.Carapace => new Game.Effects.Buffs.Carapace(Duration, piece),
                 EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
                 EffectName.Piercing => new Game.Effects.Buffs.Piercing(Duration, piece),
                 EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
                 EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece, Duration),
                 EffectName.Haste => new Game.Effects.Buffs.Haste(Duration, 1, piece),
-                EffectName.TrueBite => new Game.Effects.Buffs.TrueBite(piece),
                 
                 // Traits 
                 EffectName.Evasion => new Game.Effects.Traits.Evasion(Duration, 50, piece),

@@ -27,11 +27,10 @@ namespace Game.Piece.PieceLogic.Commanders
             getTargeted = () => targeted;
             ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
-            ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
 
             // active này sẽ chọn 1 hoặc 2 nhưng khi chọn vào thì nó sẽ đánh dấu vào con đó luôn nên
-            // khi bật lên chọn  chứ không có chọn 1 con rồi tắt đi và chọn lại 2 con
-
+            // khi bật lên chọn lần nữa thì chỉ chọn được thêm 1 con nữa thôi
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;
