@@ -83,7 +83,8 @@ namespace Game.Effects
         EntanglingTentacles,
         Silenced,
         Charge, 
-        KelpForestPassive
+        KelpForestPassive,
+        BottlenoseDolphinPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

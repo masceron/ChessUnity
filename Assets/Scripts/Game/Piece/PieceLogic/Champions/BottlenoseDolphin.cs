@@ -2,6 +2,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Effects.Buffs;
+using Game.Effects.Condition;
 using Game.Effects.Traits;
 using Game.Movesets;
 using static Game.Common.BoardUtils;
@@ -15,8 +16,7 @@ namespace Game.Piece.PieceLogic.Champions
         public BottlenoseDolphin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new QuickReflex(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Surpass(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new BottlenoseDolphinPassive(this)));
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;

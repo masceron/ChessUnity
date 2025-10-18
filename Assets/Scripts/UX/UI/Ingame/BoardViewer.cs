@@ -111,15 +111,6 @@ namespace UX.UI.Ingame
                 EndTurn();
             }
         }
-        
-        public static void ExecuteActionStatic(Action action)
-        {
-            var instance = FindAnyObjectByType<BoardViewer>();
-            if (instance)
-            {
-                instance.ExecuteAction(action);
-            }
-        }
 
         public void MarkPiece(int pos)
         {
