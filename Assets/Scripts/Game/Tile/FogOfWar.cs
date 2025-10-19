@@ -12,7 +12,7 @@ namespace Game.Tile
         }
     public override void OnPieceEnter(PieceLogic piece)
         {
-            if (piece.Color != GetColor())
+            if (piece.Color != Color)
             {
                 FormationManager.Ins.RemoveFormation(piece.Pos);
             }

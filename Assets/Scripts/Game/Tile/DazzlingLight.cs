@@ -15,8 +15,8 @@ namespace Game.Tile
     {
         public DazzlingLight(int duration, bool haveDuration, bool color) : base(color)
         {
-            this.duration = duration;
-            this.haveDuration = haveDuration;
+            this.Duration = duration;
+            this.HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()

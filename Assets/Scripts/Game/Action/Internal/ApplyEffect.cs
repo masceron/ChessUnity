@@ -29,6 +29,7 @@ namespace Game.Action.Internal
 
             if (already == null)
             {
+                // If the effect is applied as a result of an Action not from end turn trigger, increment the duration by 1.
                 if (Effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) Effect.Duration++;
                 
                 Effect.OnApply();

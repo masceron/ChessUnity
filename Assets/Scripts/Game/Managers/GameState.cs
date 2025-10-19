@@ -27,7 +27,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    public interface ISubscriber{
+    public interface ISubscriber {
         // ObserverActivateWhen GetObserverActivate();
         // ObserverPriority GetPriority();
         public void OnCall(Action.Action action);
@@ -61,9 +61,9 @@ namespace Game.Managers
         public bool IsDay { get; private set; }
         private int CurrentTurn { get; set; }
         private int countTurn;
-        private const int numberOfTurnToChange = 10;
+        private const int NumberOfTurnToChange = 10;
 
-        public readonly List<ISubscriber> subscribers = new();
+        public readonly List<ISubscriber> Subscribers = new();
 
         public System.Action<int> OnIncreaseTurn;
 
@@ -224,8 +224,12 @@ namespace Game.Managers
             var pieceB = PieceBoard[b];
             PieceBoard[b] = PieceBoard[a];
             PieceBoard[b].Pos = (ushort)b;
+            FormationManager.Ins.TriggerEnter(b);
+            FormationManager.Ins.TriggerExit(a, b);
             PieceBoard[a] = pieceB;
             PieceBoard[a].Pos = (ushort)a;
+            FormationManager.Ins.TriggerEnter(a);
+            FormationManager.Ins.TriggerExit(b, a);
         }
 
         public void FlipSideToMove()
@@ -236,7 +240,7 @@ namespace Game.Managers
                 CurrentTurn++;
                 OnIncreaseTurn?.Invoke(CurrentTurn);
 
-                if (countTurn >= numberOfTurnToChange)
+                if (countTurn >= NumberOfTurnToChange)
                 {
                     IsDay = !IsDay;
                     countTurn = 0;
@@ -258,9 +262,10 @@ namespace Game.Managers
         
         public void NotifyEnd(Action.Action mainAction)
         {
-            foreach(var subscriber in subscribers) {
+            foreach(var subscriber in Subscribers) {
                 subscriber.OnCallEnd(SideToMove);
             }
+            
             observers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
