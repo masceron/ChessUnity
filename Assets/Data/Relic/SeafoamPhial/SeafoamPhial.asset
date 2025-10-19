@@ -15,4 +15,4 @@ MonoBehaviour:
   type: 5
   key: seafoam_phial
   icon: {fileID: 0}
-  cooldown: 2
+  cooldown: 5
