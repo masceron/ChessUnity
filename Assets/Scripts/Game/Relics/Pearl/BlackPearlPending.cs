@@ -7,9 +7,8 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 using UnityEngine;
-using Game.Action.Skills;
+
 namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -67,7 +66,7 @@ namespace Game.Relics.Pearl
                 EffectName.Blinded => new Effects.Debuffs.Blinded(randomDuration, 50, piece),
                 EffectName.Stunned => new Effects.Debuffs.Stunned(randomDuration, piece),
                 EffectName.Poison => new Effects.Debuffs.Poison(randomDuration, piece),
-                EffectName.Bleeding => new Effects.Debuffs.Bleeding(piece),
+                EffectName.Bleeding => new Effects.Debuffs.Bleeding(5, piece),
                 EffectName.Bound => new Effects.Debuffs.Bound(randomDuration, piece),
                 EffectName.Taunted => new Effects.Debuffs.Taunted(randomDuration, piece),
                 _ => new Effects.Buffs.Shield(piece)
@@ -75,15 +74,9 @@ namespace Game.Relics.Pearl
         }
         public void CompleteAction()
         {
-            if(BoardUtils.PieceOn(Target).Color == blackPearl.Color)
-            {
-                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
-            }
-            else
-            {
-                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
-            }
-
+            ActionManager.ExecuteImmediately(BoardUtils.PieceOn(Target).Color == blackPearl.Color
+                ? new ApplyEffect(GetRandomBuffEffect())
+                : new ApplyEffect(GetRandomDebuffEffect()));
 
 
             BoardViewer.Selecting = -1;

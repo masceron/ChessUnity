@@ -1,11 +1,8 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic;
-using UnityEngine;
 using System.Linq;
-using Game.Effects;
-using Game.Effects.Buffs;
-using Game.Effects.Traits;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

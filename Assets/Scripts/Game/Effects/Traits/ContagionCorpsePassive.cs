@@ -3,7 +3,7 @@ using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using Game.Tile;
-using UnityEngine;
+
 namespace Game.Effects.Traits
 {
     /// <summary>

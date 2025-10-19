@@ -2,7 +2,6 @@
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
-using UnityEngine.EventSystems;
 
 namespace Game.Managers
 {

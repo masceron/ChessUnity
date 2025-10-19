@@ -1,11 +1,8 @@
 using Game.Piece.PieceLogic;
-using Game.Effects.Condition;
 using Game.Managers;
 using Game.Action.Internal;
 using Game.Action;
-using Game.Effects.Buffs;
 using Game.Effects.Traits;
-using Game.Effects.Debuffs;
 using System.Linq;
 
 namespace Game.Effects.Condition

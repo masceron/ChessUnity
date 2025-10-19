@@ -4,7 +4,6 @@ using Game.Managers;
 using Game.Piece.PieceLogic;
 using Game.Relics;
 using static Game.Common.BoardUtils;
-using static Config;
 
 namespace Game.Effects.Others
 {

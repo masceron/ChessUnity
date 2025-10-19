@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Game.Effects;
-using Game.Managers;
+﻿using Game.Managers;
 using UX.UI.Ingame;
 
 namespace Game.Relics.SeafoamPhial
