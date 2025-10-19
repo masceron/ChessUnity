@@ -14,7 +14,7 @@ namespace Game.Tile
     {
         public UrchinField(bool haveDuration, bool color) : base(color)
         {
-            this.haveDuration = haveDuration;
+            this.HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
