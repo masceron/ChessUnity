@@ -13,10 +13,14 @@ namespace Game.Effects.Debuffs
             _initSide = piece.Color;
         }
 
+        // public override void OnCall(Action.Action action)
+        // {
+        //     Piece.Color = !_initSide;
+        // }
+
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             Piece.Color = !_initSide;
-            Debug.Log("called");
         }
 
         public override void OnRemove()

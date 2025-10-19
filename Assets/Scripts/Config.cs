@@ -25,7 +25,7 @@ public static class Config
     {
          new PieceConfig(PieceType.ClownFish, true, 88),
          new PieceConfig(PieceType.GuidingSiren, true, 87),
-         //new PieceConfig(PieceType.FlyingFish, true, 89),
+         new PieceConfig(PieceType.PollutedRock, true, 89),
          //new PieceConfig(PieceType.Anomalocaris, true, 99),
          //new PieceConfig(PieceType.Swordfish, true, 101),
          //new PieceConfig(PieceType.ElectricEel, true, 112),

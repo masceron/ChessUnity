@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: MedicalLeech
-  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 20
-  prefab: {fileID: 919132149155446097, guid: f8d6e5b9474dbf043b5426f331f2abf8, type: 3}
-  rank: 2
-  moveRange: 1
-  attackRange: 1
+  m_Name: PollutedRock
+  m_EditorClassIdentifier: 
+  type: 43
+  prefab: {fileID: 919132149155446097, guid: 785359b4901f2df4d879edeb46c42fc8, type: 3}
+  rank: 1
+  moveRange: 0
+  attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_medical_leech
+  key: piece_polluted_rock
   hasSkill: 0
-  normalSkillCooldown: 0
+  normalSkillCooldown: -1

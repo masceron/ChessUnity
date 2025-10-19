@@ -17,7 +17,6 @@ namespace Game.Relics.SirensHarpoon
     public class SirensHarpoonPending : Action.Action, IPendingAble, System.IDisposable
     {
         public static PieceLogic FirstTarget;
-        public static PieceLogic SecondTarget;
         private SirensHarpoon _sirensHarpoon;
         public SirensHarpoonPending(SirensHarpoon s, int maker, bool pos = false) : base(maker, pos)
         {
@@ -29,24 +28,20 @@ namespace Game.Relics.SirensHarpoon
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            if (FirstTarget == null)
             {
                 FirstTarget = hovering;
                 TileManager.Ins.Select(FirstTarget.Pos);
-
-                return;
-            }
-
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(2, FirstTarget)));
-            
-            TileManager.Ins.UnmarkAll();
-
-            if (BoardViewer.SelectingFunction == 0)
-            {
-                BoardViewer.Selecting = -1;
-                _sirensHarpoon.SetCooldown();
-                MatchManager.Ins.InputProcessor.UpdateRelic();
-                ResetTargets();
+                ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(2, FirstTarget)));
+                TileManager.Ins.UnmarkAll();
+                
+                if (BoardViewer.SelectingFunction == 0)
+                {
+                    BoardViewer.Selecting = -1;
+                    _sirensHarpoon.SetCooldown();
+                    MatchManager.Ins.InputProcessor.UpdateRelic();
+                    ResetTargets();
+                }
             }
         }
 
@@ -54,7 +49,6 @@ namespace Game.Relics.SirensHarpoon
         private static void ResetTargets()
         {
             FirstTarget = null;
-            SecondTarget = null;
         }
 
         public void Dispose()

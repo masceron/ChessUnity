@@ -35,7 +35,6 @@ namespace Game.Piece
         SeaTurtle,
         HorseLeech,
         Megalodon,
-        MedicalLeech,
         Temperantia,
         BobtailSquid,
         LivingCoral,
@@ -48,7 +47,8 @@ namespace Game.Piece
         FractureZone,
         BioluminescentBeacon,
         Sunfish,
-        ContagionCorpse
+        ContagionCorpse,
+        PollutedRock
     }
 
     public enum PieceRank : byte

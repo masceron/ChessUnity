@@ -14,6 +14,7 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon;
 using Game.Piece.PieceLogic.Construct.Fracture_Zone;
+using Game.Piece.PieceLogic.Construct.PollutedRock;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -147,6 +148,7 @@ namespace Game.Managers
                 PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 PieceType.Sunfish => new Sunfish(piece),
                 PieceType.ContagionCorpse => new ContagionCorpse(piece),
+                PieceType.PollutedRock => new PollutedRock(piece),
                 _ => null
             };
 
