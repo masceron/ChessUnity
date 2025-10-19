@@ -22,6 +22,7 @@ using Game.Relics.EyeOfMimic;
 using Game.Relics.FrostSigil;
 using Game.Relics.Pearl;
 using Game.Relics.RottingScythe;
+using Game.Relics.SeafoamPhial;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -146,6 +147,8 @@ namespace Game.Managers
                 PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 PieceType.Sunfish => new Sunfish(piece),
                 PieceType.ContagionCorpse => new ContagionCorpse(piece),
+                PieceType.TigerPrawn => new TigerPrawn(piece),
+                PieceType.HammerOyster => new HammerOyster(piece),
                 _ => null
             };
 
@@ -156,12 +159,12 @@ namespace Game.Managers
         {
             RelicLogic rl = cfg.Type switch 
             { 
-                // RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.RottingScythe => new RottingScythe(cfg),
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.FrostSigil => new FrostSigil(cfg),
                 RelicType.CommonPearl => new CommonPearl(cfg),
                 RelicType.BlackPearl => new BlackPearl(cfg),
+                RelicType.SeafoamPhial => new SeafoamPhial(cfg),
                 _ => null
             };
             return rl;

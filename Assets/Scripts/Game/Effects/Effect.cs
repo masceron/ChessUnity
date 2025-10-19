@@ -80,7 +80,9 @@ namespace Game.Effects
         DormantFossilPassive,
         BlueRingedOctopusPassive,
         QuickReflex,
-        ContagionCorpsePassive
+        ContagionCorpsePassive,
+        NocturnalRangeBuff,
+        HammerOysterPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
