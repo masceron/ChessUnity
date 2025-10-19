@@ -105,7 +105,9 @@ namespace Game.Effects
         Silenced,
         Charge, 
         KelpForestPassive,
-        BottlenoseDolphinPassive
+        BottlenoseDolphinPassive,
+        Controlled,
+        PollutedRockPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

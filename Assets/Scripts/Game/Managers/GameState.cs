@@ -25,6 +25,7 @@ using Game.Relics.Pearl;
 using Game.Relics.RottingScythe;
 using Game.Relics.StormCapacitor;
 using Game.Relics.SeafoamPhial;
+using Game.Relics.SirensHarpoon;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -172,6 +173,7 @@ namespace Game.Managers
                 RelicType.BlackPearl => new BlackPearl(cfg),
                 RelicType.SeafoamPhial => new SeafoamPhial(cfg),
                 RelicType.StormCapacitor => new StormCapacitor(cfg),
+                RelicType.SirensHarpoon => new SirensHarpoon(cfg),
                 _ => null
             };
             return rl;

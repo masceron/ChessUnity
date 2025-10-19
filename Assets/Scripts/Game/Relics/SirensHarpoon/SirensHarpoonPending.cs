@@ -1,4 +1,4 @@
-﻿
+
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
@@ -9,18 +9,18 @@ using Game.Piece.PieceLogic;
 using UnityEngine;
 using UX.UI.Ingame;
 
-namespace Game.Relics.EyeOfMimic
+namespace Game.Relics.SirensHarpoon
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class EyeOfMimicPending : Action.Action, IPendingAble, System.IDisposable
+    public class SirensHarpoonPending : Action.Action, IPendingAble, System.IDisposable
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
-        private EyeOfMimic eyeOfMimic;
-        public EyeOfMimicPending(EyeOfMimic e, int maker, bool pos = false) : base(maker, pos)
+        private SirensHarpoon _sirensHarpoon;
+        public SirensHarpoonPending(SirensHarpoon s, int maker, bool pos = false) : base(maker, pos)
         {
-            eyeOfMimic = e;
+            _sirensHarpoon = s;
             Maker = (ushort)maker;
         }
 
@@ -31,29 +31,22 @@ namespace Game.Relics.EyeOfMimic
             if (FirstTarget == null || FirstTarget.Color == hovering.Color)
             {
                 FirstTarget = hovering;
-                TileManager.Ins.MarkIfDifferntColor(FirstTarget.Color);
                 TileManager.Ins.Select(FirstTarget.Pos);
+                BoardViewer.Ins.MarkMove();
+                //TileManager.Ins.MarkAsMoveable(FirstTarget.Pos);
+
                 return;
             }
-
-            SecondTarget = hovering;
-            Debug.Log(SecondTarget.Type);
+            
             TileManager.Ins.UnmarkAll();
 
-            var ourSide = MatchManager.Ins.GameState.OurSide;
-
-            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
-
-            ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
-
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-
-            eyeOfMimic.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-
-            ResetTargets();
+            if (BoardViewer.SelectingFunction == 0)
+            {
+                BoardViewer.Selecting = -1;
+                _sirensHarpoon.SetCooldown();
+                MatchManager.Ins.InputProcessor.UpdateRelic();
+                ResetTargets();
+            }
         }
 
         private static void ResetTargets()
@@ -66,7 +59,7 @@ namespace Game.Relics.EyeOfMimic
         {
             ResetTargets();
 
-            eyeOfMimic = null;
+            _sirensHarpoon = null;
 
             BoardViewer.SelectingFunction = 0;
         }

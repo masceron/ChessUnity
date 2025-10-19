@@ -180,5 +180,10 @@ namespace UX.UI.Ingame
         {
             SetPieceHover(pos);
         }
+
+        public void MarkMove()
+        {
+            pieceActions.ClickMove();
+        }
     }
 }
