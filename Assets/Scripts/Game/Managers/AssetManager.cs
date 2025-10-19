@@ -17,14 +17,15 @@ namespace Game.Managers
         [NonSerialized] public Dictionary<PieceType, PieceInfo> PieceData;
         [NonSerialized] public Dictionary<EffectName, EffectInfo> EffectData;
         [NonSerialized] public Dictionary<RelicType, RelicInfo> RelicData;
-        
         [NonSerialized] public Dictionary<FormationType, GameObject> EnviromentData;
         [SerializeField] public UDictionary<Color, Tile.Tile> TileData;
+
         [SerializeField] private PiecesData pieceData;
         [SerializeField] private EffectsData effectsData;
         [SerializeField] private RelicsData relicsData;
         [SerializeField] private FormationsData enviromentsData;
 
+        public RegionalsData regionalsData;
         public void Load()
         {
             PieceData = new Dictionary<PieceType, PieceInfo>(pieceData.piecesData);

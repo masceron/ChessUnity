@@ -6,6 +6,7 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Piece;
 using Game.Relics;
+using Game.Tile;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;
@@ -27,17 +28,21 @@ namespace Game.Managers
 
         private Vector2Int startingSize;
 
-        private static void MakeBoard()
+        private void MakeBoard(GameConfig cfg)
         {
             TileManager.Ins.Spawn();
             FormationManager.Ins.Intialize();
+            // For testing purpose
+            FormationManager.Ins.SetFormation(PosMap(15, startingSize), new PredatorLair(cfg.FirstSideToMove));
+            GameState.regionalEffect = new Whirlpool();
         }
 
         private void MakePieces(LineupConfig lineup)
         {
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
-            
+
+            //Chuyển từ index(0 -> max) sang pos
             foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize))))
             {
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
@@ -56,23 +61,20 @@ namespace Game.Managers
             startingSize = cfg.StartingSize;
             AssetManager.Ins.Load();
             MakeGame(cfg);
-            MakeBoard();
+            MakeBoard(cfg);
             
-            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
-                Config.relicWhiteConfig, 
-                Config.relicBlackConfig
-                );
+            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()));
             
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
 
-        public void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic)
+        public void StartGame(LineupConfig cfg)
         {
             MakePieces(cfg);
             UIManager.Ins.Load(CanvasID.Ingame);
             ActionManager.ExecuteWhenStart();
-            InputProcessor.LoadRelic(whiteRelic, blackRelic);
+            // InputProcessor.LoadRelic(whiteRelic, blackRelic);
         }
 
         public static bool Roll(int chance)

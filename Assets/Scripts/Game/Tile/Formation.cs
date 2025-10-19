@@ -11,6 +11,7 @@ namespace Game.Tile{
         BubbleVent,
         AnchorIce,
         DazzlingLight,
+        PredatorLair,
     }
     // public interface IHaveDuration{
     //     /// <summary>

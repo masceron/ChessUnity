@@ -11,7 +11,7 @@ namespace Game.Tile
         public FogOfWar(bool color) : base(color){
             
         }
-    public override void OnPieceEnter(PieceLogic piece)
+        public override void OnPieceEnter(PieceLogic piece)
         {
             if (piece.Color != GetColor())
             {

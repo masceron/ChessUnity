@@ -49,6 +49,7 @@ namespace Game.Managers
         public bool SideToMove;
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
+        public RegionalEffect regionalEffect;
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
         public int currentTurn { get; private set; }
@@ -68,7 +69,7 @@ namespace Game.Managers
             PieceBoard = new PieceLogic[maxLength * maxLength];
             ActiveBoard = new BitArray(maxLength * maxLength);
             SquareColor = new BitArray(maxLength * maxLength);
-            
+
             SideToMove = side;
 
             for (var i = 0; i < SquareColor.Count; i++)

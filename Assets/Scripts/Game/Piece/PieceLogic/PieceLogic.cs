@@ -5,6 +5,7 @@ using Game.Action;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -57,7 +58,8 @@ namespace Game.Piece.PieceLogic
             else SkillCooldown = -1;
             
             Quiets = quiets;
-            this.Captures = captures;
+            Captures = captures;
+            Debug.Log($"Pos: {Pos}, Rank: {RankOf(Pos)}, File: {FileOf(Pos)}");
         }
         public void PassTurn()
         {

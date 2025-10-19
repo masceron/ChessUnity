@@ -235,5 +235,9 @@ namespace Game.Common
             }
             return validPieces;
         }
+
+        public static Vector3 FromRankFileToWorldPos(float rank, float file){
+            return new Vector3(rank, YCoordinate, file);
+        }
     }
 }
