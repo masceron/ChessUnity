@@ -222,8 +222,9 @@ namespace Game.Managers
             PieceBoard[t].Pos = (ushort)t;
             PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
-            FormationManager.Ins.TriggerEnter(t);
             FormationManager.Ins.TriggerExit(f, t);
+            FormationManager.Ins.TriggerEnter(t);
+            
         }
         
         public void Swap(int a, int b)
