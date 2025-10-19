@@ -82,7 +82,12 @@ namespace Game.Effects
         QuickReflex,
         ContagionCorpsePassive,
         NocturnalRangeBuff,
-        HammerOysterPassive
+        HammerOysterPassive,
+        EntanglingTentacles,
+        Silenced,
+        Charge, 
+        KelpForestPassive,
+        BottlenoseDolphinPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -6,6 +6,7 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Managers;
+using UnityEngine;
 
 namespace Game.Action
 {
@@ -23,8 +24,13 @@ namespace Game.Action
         private static Queue<Action> _actionQueue;
         public static Phase CurrentPhase;
 
+        public static int WhiteSkillUses;
+        public static int BlackSkillUses;
+
         public static void Init(GameState state)
         {
+            WhiteSkillUses = 0;
+            BlackSkillUses = 0;
             _state = state;
             _actionQueue = new Queue<Action>();
             CurrentPhase = Phase.BeforeEndTurn;
@@ -44,10 +50,14 @@ namespace Game.Action
                 else if (action is not IRelicAction)
                     BoardUtils.NotifyMainAction(action);
 
+                IncrementSkillUses(action);
                 action.Execute();
             }
 
-            while (_actionQueue.TryDequeue(out var action)) action.Execute();
+            while (_actionQueue.TryDequeue(out var action)) {
+                IncrementSkillUses(action);
+                action.Execute();
+            }
         }
 
         private static void EndTurnProcess(Action mainAction)
@@ -96,9 +106,23 @@ namespace Game.Action
             return true;
 
         }
+        public static void IncrementSkillUses(Action action)
+        {
+
+            if (action is ISkills && action is not IRelicAction)
+            {
+                var makerPiece = _state.PieceBoard[action.Maker];
+                if (makerPiece != null)
+                {
+                    if (makerPiece.Color) BlackSkillUses++;
+                    else WhiteSkillUses++;
+                }
+            }
+        }
 
         public static void ExecuteImmediately(Action action)
         {
+            IncrementSkillUses(action);
             action.Execute();
         }
     }

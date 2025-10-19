@@ -89,7 +89,7 @@ namespace Game.Piece.PieceLogic
             
             Captures(list, Pos);
 
-            if (hasSkill)
+            if (hasSkill && !Effects.Any(e => e.EffectName == EffectName.Silenced))
             {
                 ((IPieceWithSkill)this).Skills(list);
             }

@@ -8,6 +8,9 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static Game.Common.BoardUtils;
+using System.Linq;
+using Game.Effects;
+using Game.Action.Skills;
 
 namespace UX.UI.Ingame
 {
@@ -106,15 +109,6 @@ namespace UX.UI.Ingame
             if (ActionManager.EnqueueAction(action))
             {
                 EndTurn();
-            }
-        }
-        
-        public static void ExecuteActionStatic(Action action)
-        {
-            var instance = FindAnyObjectByType<BoardViewer>();
-            if (instance)
-            {
-                instance.ExecuteAction(action);
             }
         }
 

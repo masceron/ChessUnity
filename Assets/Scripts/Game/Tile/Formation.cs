@@ -10,6 +10,7 @@ namespace Game.Tile{
         DazzlingLight,
         UrchinField,
         Saprolegnia,
+        Kelp,
     }
     // public interface IHaveDuration{
     //     /// <summary>

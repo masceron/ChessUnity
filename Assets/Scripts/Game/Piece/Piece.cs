@@ -50,7 +50,9 @@ namespace Game.Piece
         Sunfish,
         ContagionCorpse,
         TigerPrawn,
-        HammerOyster
+        HammerOyster,
+        BottlenoseDolphin,
+        KelpForest
     }
 
     public enum PieceRank : byte

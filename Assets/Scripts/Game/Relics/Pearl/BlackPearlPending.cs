@@ -7,7 +7,9 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX.UI.Ingame;
-
+using Game.Action.Relics;
+using UnityEngine;
+using Game.Action.Skills;
 namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -19,7 +21,6 @@ namespace Game.Relics.Pearl
         {
             blackPearl = cp;
             Target = (ushort)maker;
-            Maker = (ushort)maker;
         }
 
         private Effect GetRandomBuffEffect()
@@ -31,7 +32,7 @@ namespace Game.Relics.Pearl
             
             var random = new System.Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            
+            Debug.Log("Selected Effect Name: " + selectedEffectName);
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
@@ -44,57 +45,54 @@ namespace Game.Relics.Pearl
             
             var random = new System.Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
         private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
         {
+            sbyte randomDuration = (sbyte)new System.Random().Next(6, 8);
             return effectName switch
             {
                 EffectName.Shield => new Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Effects.Buffs.Carapace(2, piece),
-                EffectName.Haste => new Effects.Buffs.Haste(2, 1, piece),
-                EffectName.Piercing => new Effects.Buffs.Piercing(2, piece),
+                EffectName.Carapace => new Effects.Buffs.Carapace(randomDuration, piece),
+                EffectName.Haste => new Effects.Buffs.Haste(randomDuration, 1, piece),
+                EffectName.Piercing => new Effects.Buffs.Piercing(randomDuration, piece),
                 EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
                 EffectName.TrueBite => new Effects.Buffs.TrueBite(piece),
                 EffectName.Camouflage => new Effects.Buffs.Camouflage(piece),
 
 
                 // Debuffs
-                EffectName.Slow => new Effects.Debuffs.Slow(2, 1, piece),
-                EffectName.Blinded => new Effects.Debuffs.Blinded(2, 50, piece),
-                EffectName.Stunned => new Effects.Debuffs.Stunned(1, piece),
-                EffectName.Poison => new Effects.Debuffs.Poison(2, piece),
-                EffectName.Bleeding => new Effects.Debuffs.Bleeding(UnityEngine.Random.Range(6, 9), piece),
-                EffectName.Bound => new Effects.Debuffs.Bound(2, piece),
-                EffectName.Taunted => new Effects.Debuffs.Taunted(2, piece),
+                EffectName.Slow => new Effects.Debuffs.Slow(randomDuration, 1, piece),
+                EffectName.Blinded => new Effects.Debuffs.Blinded(randomDuration, 50, piece),
+                EffectName.Stunned => new Effects.Debuffs.Stunned(randomDuration, piece),
+                EffectName.Poison => new Effects.Debuffs.Poison(randomDuration, piece),
+                EffectName.Bleeding => new Effects.Debuffs.Bleeding(piece),
+                EffectName.Bound => new Effects.Debuffs.Bound(randomDuration, piece),
+                EffectName.Taunted => new Effects.Debuffs.Taunted(randomDuration, piece),
                 _ => new Effects.Buffs.Shield(piece)
             };
         }
         public void CompleteAction()
         {
-            
             if(BoardUtils.PieceOn(Target).Color == blackPearl.Color)
             {
-                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
                 ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
             }
             else
             {
                 ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
-                ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomDebuffEffect()));
             }
-            //TODO: Sửa lại thành EnqueueAction.
 
-            TileManager.Ins.UnmarkAll();
 
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
             blackPearl.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
 
         }
 
