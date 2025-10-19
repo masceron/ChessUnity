@@ -7,8 +7,26 @@ namespace Game.Effects
 {
     public enum ObserverPriority: byte
     {
-        Low, AfterAction, DefenderAction, AttackerAction, Kill
+        //Effect does not have a trigger
+        None,
+        
+        // Priorities of effect trigger when an action is taken.
+        AfterAction, DefenderAction, AttackerAction, Kill,
+        
+        //Priorities of effect trigger when ending a ply.
+        //Effects on the start of turn have to run after effects at the end of turn.
+        
+        StartTurnBuff, StartTurnDebuff, StartTurnKill, StartTurnMove,
+        
+        RegionalEffect, RealmInfluence,
+        
+        EndturnBuff, EndturnDebuff, EndturnKill, EndturnMove,
     }
+    
+    /*
+     *  The effect queue at the end of plies must look like the following:
+     *  EndTurn..., RealmInfluence, RegionalEffect, StartTurn...
+     */
     
     public enum EffectCategory: byte 
     {
@@ -125,7 +143,7 @@ namespace Game.Effects
             
         }
 
-        public virtual void OnCall(Action.Action action)
+        public virtual void OnCallPieceAction(Action.Action action)
         {
             
         }
@@ -147,7 +165,9 @@ namespace Game.Effects
 
         public string Description()
         {
-            return Localizer.GetText("effect_description", AssetManager.Ins.EffectData[EffectName].key + "_description", new object[]{this});
+            return Localizer.GetText("effect_description",
+                AssetManager.Ins.EffectData[EffectName].key + "_description",
+                new object[]{this});
         }
     }
 }

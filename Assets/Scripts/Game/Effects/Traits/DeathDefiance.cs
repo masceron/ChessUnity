@@ -15,7 +15,7 @@ namespace Game.Effects.Traits
 		this.deathDefianceCount = deathDefianceCount;
 		}
 
-		public override void OnCall(Action.Action action)
+		public override void OnCallPieceAction(Action.Action action)
 		{
 			//còn né nữa chưa tính
 			if (deathDefianceCount <= 1) return;

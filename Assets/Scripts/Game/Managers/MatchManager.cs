@@ -30,7 +30,7 @@ namespace Game.Managers
         private static void MakeBoard()
         {
             TileManager.Ins.Spawn();
-            FormationManager.Ins.Intialize();
+            FormationManager.Ins.Initialize();
         }
 
         private void MakePieces(LineupConfig lineup)

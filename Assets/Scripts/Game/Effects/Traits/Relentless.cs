@@ -15,7 +15,7 @@ namespace Game.Effects.Traits
             this.deathDefianceCount = deathDefianceCount;
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (Piece.IsDead()) return;
 			if (Piece.Effects.Any(e => e.EffectName == EffectName.Shield) 
