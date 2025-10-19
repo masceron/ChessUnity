@@ -27,7 +27,6 @@ namespace Game.Effects.Traits
             action.Result = ActionResult.Failed;
             ActionManager.EnqueueAction(new KillPiece(action.Maker));
             deathDefianceCount--;
-            Debug.Log($"deathDefianceCount: {deathDefianceCount}");
             if (deathDefianceCount <= 0)
             {
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));

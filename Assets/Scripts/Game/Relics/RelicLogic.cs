@@ -2,13 +2,19 @@
 {
     public enum RelicType
     {
-        CommonPearl, BlackPearl, EyeOfMimic, FrostSigil,
-        RottingScythe, SeafoamPhial, StormCapacitor, SirensHarpoon
+        CommonPearl,
+        BlackPearl,
+        EyeOfMimic,
+        FrostSigil,
+        RottingScythe,
+        SeafoamPhial,
+        StormCapacitor,
+        SirensHarpoon
     }
-    
+
     public abstract class RelicLogic
     {
-        public RelicType Type { get; set; }  
+        public RelicType Type { get; set; }
         protected sbyte TimeCooldown;
         public sbyte currentCooldown { get; protected set; }
         public bool Color; // false for white, true for black
@@ -22,10 +28,12 @@
         }
 
         public abstract void Activate();
+
         public void SetCooldown()
         {
             currentCooldown = TimeCooldown;
         }
+
         public void PassTurn()
         {
             if (currentCooldown > 0) currentCooldown--;
