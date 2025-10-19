@@ -7,7 +7,7 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX.UI.Ingame;
-using UnityEngine;
+
 namespace Game.Relics.Pearl
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

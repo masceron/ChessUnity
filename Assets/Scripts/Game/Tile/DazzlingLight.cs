@@ -13,10 +13,9 @@ namespace Game.Tile
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DazzlingLight : Formation
     {
-        public DazzlingLight(int duration, bool haveDuration, bool color) : base(color)
+        public DazzlingLight(bool haveDuration, bool color) : base(color)
         {
-            this.duration = duration;
-            this.haveDuration = haveDuration;
+            this.HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
@@ -27,7 +26,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(1, 100, piece)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece)));
         }
 
         public override void OnPieceExit(PieceLogic piece)

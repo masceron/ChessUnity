@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
         public SwordfishAttack(PieceLogic piece) : base(-1, 1, piece, EffectName.SwordfishAttack)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos || action.Result == ActionResult.Failed) return;
             
@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
             var pieceBehind = PieceOn(behind);
             if (pieceBehind != null && pieceBehind.Color != Piece.Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(pieceBehind)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieceBehind)));
             }
         }
     }

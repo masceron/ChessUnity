@@ -8,9 +8,6 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static Game.Common.BoardUtils;
-using System.Linq;
-using Game.Effects;
-using Game.Action.Skills;
 
 namespace UX.UI.Ingame
 {
@@ -182,6 +179,11 @@ namespace UX.UI.Ingame
         public void Hover(int pos)
         {
             SetPieceHover(pos);
+        }
+
+        public void MarkMove()
+        {
+            pieceActions.ClickMove();
         }
     }
 }

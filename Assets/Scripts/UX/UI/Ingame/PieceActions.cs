@@ -191,6 +191,7 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<IQuiets>())
             {
+                Debug.Log(_move.ToString());
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }

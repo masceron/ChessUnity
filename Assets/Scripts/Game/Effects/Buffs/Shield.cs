@@ -10,7 +10,7 @@ namespace Game.Effects.Buffs
         public Shield(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, EffectName.Shield)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
             

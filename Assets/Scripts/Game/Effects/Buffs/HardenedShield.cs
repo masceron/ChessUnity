@@ -12,7 +12,7 @@ namespace Game.Effects.Buffs
         public HardenedShield(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, EffectName.HardenedShield)
         {}
         
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
             action.Result = ActionResult.Failed;

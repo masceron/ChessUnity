@@ -48,6 +48,9 @@ namespace Game.Piece
         FractureZone,
         BioluminescentBeacon,
         Sunfish,
+        ContagionCorpse,
+        TigerPrawn,
+        HammerOyster,
         BottlenoseDolphin,
         KelpForest
     }

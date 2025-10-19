@@ -15,4 +15,4 @@ MonoBehaviour:
   type: 4
   key: rotting_scythe
   icon: {fileID: 0}
-  cooldown: 4
+  cooldown: 7

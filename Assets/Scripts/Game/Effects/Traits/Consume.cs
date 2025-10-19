@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
         public Consume(PieceLogic piece) : base(-1, 1, piece, EffectName.Consume)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Maker == Piece.Pos && action is ICaptures && action.Result != ActionResult.Failed)
             {

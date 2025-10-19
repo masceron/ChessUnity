@@ -22,7 +22,7 @@ namespace Game.Relics.Pearl
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                         var pending = new CommonPearlPending(this, piece.Pos, false);
                     BoardViewer.ListOf.Add(pending);
-                }
+                } 
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
             }

@@ -1,0 +1,51 @@
+﻿using System.Linq;
+using Game.Action;
+using Game.Action.Internal;
+using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic;
+
+namespace Game.Tile
+{
+    /// <summary>
+    /// Urchin Field Tile
+    /// </summary>
+    ///       
+    public class UrchinField : Formation
+    {
+        public UrchinField(bool haveDuration, bool color) : base(color)
+        {
+            this.HaveDuration = haveDuration;
+        }
+
+        public override FormationType GetFormationType()
+        {
+            return FormationType.UrchinField;
+        }
+
+        public override void OnFirstTurn(PieceLogic piece)
+        {
+            base.OnFirstTurn(piece);
+        }
+
+        public override void OnPieceEnter(PieceLogic piece)
+        {
+            base.OnPieceEnter(piece);
+            //Theo Tân bảo thì bleed không cộng dồn, mà sẽ reset lại 4 turn
+            var existingBleeding = piece.Effects.OfType<Bleeding>().ToList();
+
+            foreach (var bleeding in existingBleeding)
+            {
+                ActionManager.ExecuteImmediately(new RemoveEffect(bleeding));
+            }
+
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece)));
+        }
+
+        public override void OnPieceExit(PieceLogic piece)
+        {
+            base.OnPieceExit(piece);
+        }
+
+    }
+
+}

@@ -1,5 +1,4 @@
-﻿using Game.Action;
-using Game.Piece.PieceLogic;
+﻿using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Traits
 {

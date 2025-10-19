@@ -6,7 +6,6 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Managers;
-using UnityEngine;
 
 namespace Game.Action
 {
@@ -15,6 +14,16 @@ namespace Game.Action
         BeforeEndTurn,
         AfterEndTurn
     }
+    
+/*
+ * TODO: Issue: If a trigger causes a secondary effect that makes the trigger behind it in the queue invalid,
+ * the latter should not be active.
+ * Right now only a workaround for the case in which the piece is killed is implemented through isDead property and die() method.
+ * A more general solution needed for every situations, which now includes:
+ * - When the piece is killed.
+ * - When the piece moved away.
+ * ... And many other cases, when the piece is no longer eligible for trigger activation.
+*/
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -97,13 +106,14 @@ namespace Game.Action
             //End the turn if:
             //The action is a SkipTurn, or
             //The action is not from a relic, and if it's a skill, then the piece making it cannot have Quick Reflex.
-            if (queueAction is SkipTurn ||
-                (queueAction is not IRelicAction
-                 && !(queueAction is ISkills &&
-                      BoardUtils.PieceOn(queueAction.Maker).Effects.OfType<QuickReflex>().Any())))
-                EndTurnProcess(queueAction);
-
+            if (queueAction is not SkipTurn &&
+                (queueAction is IRelicAction
+                 || queueAction is ISkills &&
+                 BoardUtils.PieceOn(queueAction.Maker).Effects.OfType<QuickReflex>().Any())) return false;
+            
+            EndTurnProcess(queueAction);
             return true;
+
         }
         public static void IncrementSkillUses(Action action)
         {

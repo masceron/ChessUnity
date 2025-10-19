@@ -1,11 +1,8 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic;
-using UnityEngine;
 using System.Linq;
-using Game.Effects;
-using Game.Effects.Buffs;
-using Game.Effects.Traits;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -18,7 +15,7 @@ namespace Game.Effects.Traits
             this.deathDefianceCount = deathDefianceCount;
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (Piece.IsDead()) return;
 			if (Piece.Effects.Any(e => e.EffectName == EffectName.Shield) 
@@ -30,7 +27,6 @@ namespace Game.Effects.Traits
             action.Result = ActionResult.Failed;
             ActionManager.EnqueueAction(new KillPiece(action.Maker));
             deathDefianceCount--;
-            Debug.Log($"deathDefianceCount: {deathDefianceCount}");
             if (deathDefianceCount <= 0)
             {
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));

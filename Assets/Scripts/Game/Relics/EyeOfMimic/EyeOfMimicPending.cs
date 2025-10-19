@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics.EyeOfMimic
@@ -36,6 +37,7 @@ namespace Game.Relics.EyeOfMimic
             }
 
             SecondTarget = hovering;
+            Debug.Log(SecondTarget.Type);
             TileManager.Ins.UnmarkAll();
 
             var ourSide = MatchManager.Ins.GameState.OurSide;

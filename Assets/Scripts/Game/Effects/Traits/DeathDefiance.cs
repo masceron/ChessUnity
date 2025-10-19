@@ -3,9 +3,7 @@ using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DeathDefianceUI;
 using System.Linq;
-using Game.Effects;
-using Game.Effects.Buffs;
-using Game.Effects.Traits;
+
 namespace Game.Effects.Traits
 {
 	[Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -17,7 +15,7 @@ namespace Game.Effects.Traits
 		this.deathDefianceCount = deathDefianceCount;
 		}
 
-		public override void OnCall(Action.Action action)
+		public override void OnCallPieceAction(Action.Action action)
 		{
 			//còn né nữa chưa tính
 			if (deathDefianceCount <= 1) return;

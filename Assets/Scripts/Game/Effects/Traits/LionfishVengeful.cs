@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
         public LionfishVengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.LionfishVengeful)
         {}
         
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null) return;
             

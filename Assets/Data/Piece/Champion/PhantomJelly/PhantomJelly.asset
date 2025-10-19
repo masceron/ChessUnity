@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: PhantomJelly
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 0
-  prefab: {fileID: 0}
+  type: 36
+  prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
   rank: 0
   moveRange: 0
   attackRange: 0

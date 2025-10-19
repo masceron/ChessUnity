@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
         public ElectricEelVengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.ElectricEelVengeful)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null) return;
             

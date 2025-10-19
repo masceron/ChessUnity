@@ -39,6 +39,12 @@ namespace Game.Common
         {
             return rank * MaxLength + file;
         }
+        
+        public static bool IsAtPromotionRank(int index)
+        {
+            int rank = RankOf(index);
+            return rank == 14 || rank == 25;
+        }
 
         public static bool VerifyUpperBound(int dimension)
         {

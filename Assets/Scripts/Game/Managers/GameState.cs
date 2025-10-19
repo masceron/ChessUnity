@@ -24,12 +24,14 @@ using Game.Relics.FrostSigil;
 using Game.Relics.Pearl;
 using Game.Relics.RottingScythe;
 using Game.Relics.StormCapacitor;
+using Game.Relics.SeafoamPhial;
+using Game.Relics.SirensHarpoon;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    public interface ISubscriber{
+    public interface ISubscriber {
         // ObserverActivateWhen GetObserverActivate();
         // ObserverPriority GetPriority();
         public void OnCall(Action.Action action);
@@ -37,7 +39,7 @@ namespace Game.Managers
     }
     public enum ObserverActivateWhen: byte
     {
-        None, Captures, Moves, EndTurn, MoveGeneration, EffectApplied
+        None, Captures, Moves, SwitchTurn, MoveGeneration, EffectApplied
     }
     
     public enum Color : byte
@@ -65,9 +67,9 @@ namespace Game.Managers
         public bool IsDay { get; private set; }
         private int CurrentTurn { get; set; }
         private int countTurn;
-        private const int numberOfTurnToChange = 10;
+        private const int NumberOfTurnToChange = 10;
 
-        public readonly List<ISubscriber> subscribers = new();
+        public readonly List<ISubscriber> Subscribers = new();
 
         public System.Action<int> OnIncreaseTurn;
 
@@ -149,6 +151,9 @@ namespace Game.Managers
                 PieceType.FractureZone => new FractureZone(piece),
                 PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
                 PieceType.Sunfish => new Sunfish(piece),
+                PieceType.ContagionCorpse => new ContagionCorpse(piece),
+                PieceType.TigerPrawn => new TigerPrawn(piece),
+                PieceType.HammerOyster => new HammerOyster(piece),
                 PieceType.BottlenoseDolphin => new BottlenoseDolphin(piece),
                 PieceType.KelpForest => new KelpForest(piece),
                 _ => null
@@ -161,13 +166,14 @@ namespace Game.Managers
         {
             RelicLogic rl = cfg.Type switch 
             { 
-                // RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.RottingScythe => new RottingScythe(cfg),
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.FrostSigil => new FrostSigil(cfg),
                 RelicType.CommonPearl => new CommonPearl(cfg),
                 RelicType.BlackPearl => new BlackPearl(cfg),
+                RelicType.SeafoamPhial => new SeafoamPhial(cfg),
                 RelicType.StormCapacitor => new StormCapacitor(cfg),
+                RelicType.SirensHarpoon => new SirensHarpoon(cfg),
                 _ => null
             };
             return rl;
@@ -232,8 +238,12 @@ namespace Game.Managers
             var pieceB = PieceBoard[b];
             PieceBoard[b] = PieceBoard[a];
             PieceBoard[b].Pos = (ushort)b;
+            FormationManager.Ins.TriggerEnter(b);
+            FormationManager.Ins.TriggerExit(a, b);
             PieceBoard[a] = pieceB;
             PieceBoard[a].Pos = (ushort)a;
+            FormationManager.Ins.TriggerEnter(a);
+            FormationManager.Ins.TriggerExit(b, a);
         }
 
         public void FlipSideToMove()
@@ -244,7 +254,7 @@ namespace Game.Managers
                 CurrentTurn++;
                 OnIncreaseTurn?.Invoke(CurrentTurn);
 
-                if (countTurn >= numberOfTurnToChange)
+                if (countTurn >= NumberOfTurnToChange)
                 {
                     IsDay = !IsDay;
                     countTurn = 0;
@@ -266,12 +276,13 @@ namespace Game.Managers
         
         public void NotifyEnd(Action.Action mainAction)
         {
-            foreach(var subscriber in subscribers) {
+            foreach(var subscriber in Subscribers) {
                 subscriber.OnCallEnd(SideToMove);
             }
+            
             observers.ForEach(effect =>
             {
-                if (effect.ObserverActivateWhen != ObserverActivateWhen.EndTurn) return;
+                if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
                 if (effect is not IEndTurnEffect turnEffect) return;
                 
                 if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
@@ -304,7 +315,7 @@ namespace Game.Managers
             {
                 observers.ForEach(effect =>
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCall(mainAction);
+                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCallPieceAction(mainAction);
                 });
             }
 
@@ -313,7 +324,7 @@ namespace Game.Managers
                 observers.ForEach(effect =>
                 {
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves)
-                        effect.OnCall(mainAction);
+                        effect.OnCallPieceAction(mainAction);
                 });
             }
         }

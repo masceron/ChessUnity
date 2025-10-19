@@ -8,13 +8,13 @@ using static Game.Common.BoardUtils;
 namespace Game.Managers
 {
     public class FormationManager : Singleton<FormationManager>, ISubscriber{
-        Formation[] formations;
-        GameObject[] formationObjects;
+        private Formation[] formations;
+        private GameObject[] formationObjects;
 
-        public void Intialize(){
+        public void Initialize() {
             formations = new Formation[BoardSize];
             formationObjects = new GameObject[BoardSize];
-            MatchManager.Ins.GameState.subscribers.Add(this);
+            MatchManager.Ins.GameState.Subscribers.Add(this);
         }
         
         /// <summary>
@@ -25,8 +25,8 @@ namespace Game.Managers
         /// +Tạo class kế thừa Formation và lấp đầy implementation cho các hàm cần thiết
         /// </summary>
         public void SetFormation(int pos, Formation env){
-            int rank = RankOf(pos);
-            int file = FileOf(pos);
+            var rank = RankOf(pos);
+            var file = FileOf(pos);
             formationObjects[pos] = Instantiate(AssetManager.Ins.EnviromentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
             Quaternion.identity, this.transform);
             formations[pos] = env;
@@ -66,13 +66,13 @@ namespace Game.Managers
         /// </summary>
         public void OnCallEnd(bool endOfSide){
             
-            for(int pos = 0; pos < formations.Length; pos++){
-                Formation format = formations[pos];
+            for(var pos = 0; pos < formations.Length; pos++) {
+                var format = formations[pos];
 
-                if (format == null || !format.haveDuration || endOfSide) continue;
+                if (format is not { HaveDuration: true } || endOfSide) continue;
 
-                format.SetDuration(format.duration - 1);
-                if (format.duration <= 0){
+                format.SetDuration(format.Duration - 1);
+                if (format.Duration <= 0) {
                     RemoveFormation(pos);
                 }
             }

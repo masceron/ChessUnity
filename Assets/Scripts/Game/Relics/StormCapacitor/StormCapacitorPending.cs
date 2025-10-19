@@ -5,8 +5,7 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using UX.UI.Ingame;
-using UnityEngine;
-using Game.Action.Relics;
+
 namespace Game.Relics.StormCapacitor
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

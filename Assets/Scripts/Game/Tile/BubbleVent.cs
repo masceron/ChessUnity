@@ -13,14 +13,14 @@ namespace Game.Tile
     {
         public BubbleVent(int d, bool hd, bool color) : base(color)
         {
-            this.duration = d;
-            this.haveDuration = hd;
+            this.Duration = d;
+            this.HaveDuration = hd;
         }
 
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Bound(1, piece)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece)));
         }
 
         public override void OnPieceExit(PieceLogic piece)
@@ -28,7 +28,7 @@ namespace Game.Tile
             base.OnPieceExit(piece);
         }
 
-        override public void OnFirstTurn(PieceLogic piece)
+        public override void OnFirstTurn(PieceLogic piece)
         {
             base.OnFirstTurn(piece);
         }

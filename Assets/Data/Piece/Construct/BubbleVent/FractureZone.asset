@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: FractureZone
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 34
+  type: 39
   prefab: {fileID: 2094272152836145845, guid: 20c1aac36e866c145bd57739fd18b783, type: 3}
   rank: 1
   moveRange: 0
