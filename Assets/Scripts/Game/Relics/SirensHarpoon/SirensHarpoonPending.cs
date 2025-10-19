@@ -3,6 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Common;
+using Game.Effects.Debuffs;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Piece.PieceLogic;
@@ -32,11 +33,11 @@ namespace Game.Relics.SirensHarpoon
             {
                 FirstTarget = hovering;
                 TileManager.Ins.Select(FirstTarget.Pos);
-                BoardViewer.Ins.MarkMove();
-                //TileManager.Ins.MarkAsMoveable(FirstTarget.Pos);
 
                 return;
             }
+
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(2, FirstTarget)));
             
             TileManager.Ins.UnmarkAll();
 
@@ -49,6 +50,7 @@ namespace Game.Relics.SirensHarpoon
             }
         }
 
+        
         private static void ResetTargets()
         {
             FirstTarget = null;
