@@ -24,7 +24,7 @@ namespace Game.Relics.StormCapacitor
 
         public override void Activate()
         {
-            Debug.Log("Storm Capacitor: " + charge.Strength + "Color: " + this.Color + "OurSide: " + MatchManager.Ins.GameState.OurSide);
+            Debug.Log("Charge: " + charge.Strength);
             if (charge.Strength >= 3)
             {
                 

@@ -1,9 +1,9 @@
 using Game.Managers;
 using UX.UI.Ingame;
-
+using Game.Action.Relics;
 namespace Game.Relics.Pearl
 {
-    public class BlackPearl : RelicLogic
+    public class BlackPearl : RelicLogic, IRelicAction
     {
         public BlackPearl(RelicConfig cfg) : base(cfg)
         {

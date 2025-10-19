@@ -23,10 +23,9 @@ namespace Game.Effects.Traits
 			if (Piece.Effects.Any(e => e.EffectName == EffectName.Shield) 
 				|| Piece.Effects.Any(e => e.EffectName == EffectName.Carapace) 
 					|| Piece.Effects.Any(e => e.EffectName == EffectName.HardenedShield)) return;
-            //if (action == null || action.Target != Piece.Pos || action.Maker == action.Target)
-            //{
-            //    return;
-            //}
+			if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
+                return;
+            }
             var ui = Object.FindAnyObjectByType<DeathDefianceUI>(FindObjectsInactive.Include);
 			if (!ui)
 			{

@@ -30,6 +30,9 @@ namespace Game.Managers
             formationObjects[pos] = Instantiate(AssetManager.Ins.EnviromentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
             Quaternion.identity, this.transform);
             formations[pos] = env;
+            if (BoardUtils.PieceOn(pos) != null){
+                formations[pos].OnPieceEnter(PieceOn(pos));
+            }
         }
 
         public Formation GetFormation(int pos)
