@@ -81,7 +81,9 @@ namespace Game.Effects
         BlueRingedOctopusPassive,
         QuickReflex,
         NocturnalRangeBuff,
-        HammerOysterPassive
+        HammerOysterPassive,
+        MelibePassive,
+        Silenced
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

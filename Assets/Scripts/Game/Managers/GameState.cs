@@ -148,6 +148,7 @@ namespace Game.Managers
                 PieceType.Sunfish => new Sunfish(piece),
                 PieceType.TigerPrawn => new TigerPrawn(piece),
                 PieceType.HammerOyster => new HammerOyster(piece),
+                PieceType.Melibe => new Melibe(piece),
                 _ => null
             };
 

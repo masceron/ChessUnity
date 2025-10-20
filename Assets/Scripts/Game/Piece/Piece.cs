@@ -49,7 +49,8 @@ namespace Game.Piece
         BioluminescentBeacon,
         Sunfish,
         TigerPrawn,
-        HammerOyster
+        HammerOyster, 
+        Melibe
     }
 
     public enum PieceRank : byte

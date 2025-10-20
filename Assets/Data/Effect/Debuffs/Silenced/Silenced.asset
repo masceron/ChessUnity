@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: BioluminescentBeaconPassive
-  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 53
-  category: 3
+  m_Name: Silenced
+  m_EditorClassIdentifier: 
+  typeName: 61
+  category: 0
   stack: 1
-  priority: 1
+  priority: 0
   activeWhen: 0
-  icon: {fileID: 0}
-  key: bioluminescent_beacon_passive
+  icon: {fileID: 2800000, guid: 87c7fee981090ab408e91fcab13bb917, type: 3}
+  key: effect_silenced
