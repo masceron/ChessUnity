@@ -52,7 +52,8 @@ namespace Game.Piece
         TigerPrawn,
         HammerOyster,
         BottlenoseDolphin,
-        KelpForest
+        KelpForest,
+        MarineIguana
     }
 
     public enum PieceRank : byte

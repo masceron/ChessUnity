@@ -108,6 +108,7 @@ namespace Game.Effects
         BottlenoseDolphinPassive,
         Controlled,
         PollutedRockPassive,
+        Adaptation,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
