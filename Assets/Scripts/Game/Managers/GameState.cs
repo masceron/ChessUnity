@@ -26,6 +26,7 @@ using Game.Relics.RottingScythe;
 using Game.Relics.StormCapacitor;
 using Game.Relics.SeafoamPhial;
 using Game.Relics.SirensHarpoon;
+using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -175,6 +176,7 @@ namespace Game.Managers
                 RelicType.SeafoamPhial => new SeafoamPhial(cfg),
                 RelicType.StormCapacitor => new StormCapacitor(cfg),
                 RelicType.SirensHarpoon => new SirensHarpoon(cfg),
+                RelicType.MangroveCharm => new MangroveCharm(cfg),
                 _ => null
             };
             return rl;

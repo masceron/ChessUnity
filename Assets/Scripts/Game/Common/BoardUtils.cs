@@ -278,5 +278,23 @@ namespace Game.Common
         {
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
+
+        public static bool IsNextEachOther(PieceLogic piece)
+        {
+            var pos = piece.Pos;
+            for (var i = -1; i <= 1; i++)
+            {
+                for (var j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0) continue;
+                    var indexOff = IndexOf(RankOf(pos) + i, FileOf(pos) + j);
+
+                    if (!VerifyIndex(indexOff)) continue;
+                    var pieceOff = PieceOn(indexOff);
+                    if (pieceOff != null && pieceOff.Color == piece.Color) return true;
+                }
+            }
+            return false;
+        }
     }
 }
