@@ -1,24 +1,27 @@
 using Game.Effects;
 using Game.Piece.PieceLogic;
 using System.Collections.Generic;
+using Game.Augmentation.Set;
 using UnityEngine;
+using Game.Action;
+using Game.Action.Internal;
 
 namespace Game.Augmentation
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Augmentation
     {
-        public AugmentationType Type;
+        public AugmentationName Name;
         public AugmentationRarity Rarity;
         public AugmentationSlot Slot;
-        public AugmentationSetInfo Set;
+        public AugmentationSet Set;
         public List<Effect> PassiveEffects;
 
         protected PieceLogic Target;
 
-        public Augmentation(AugmentationType type, AugmentationRarity rarity, AugmentationSlot slot, AugmentationSetInfo set, List<Effect> passiveEffects)
+        public Augmentation(AugmentationName name, AugmentationRarity rarity, AugmentationSlot slot, AugmentationSet set, List<Effect> passiveEffects)
         {
-            Type = type;
+            Name = name;
             Rarity = rarity;
             Slot = slot;
             Set = set;
@@ -29,15 +32,25 @@ namespace Game.Augmentation
         {
             Target = target;
         }
+
+        public void ApplyPassiveEffects()
+        {
+            foreach (Effect e in PassiveEffects)
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(e));
+            }
+        }
     }
 
-    public enum AugmentationType
+    public enum AugmentationName
     {
-        OpticBoost,
-        NeuralBoost,
-        BloodBoost,
-        FinBoost,
-        ChassisBoost
+        TidalRetina,
+        ProtectiveLens,
+        HemolymphFilter,
+        AbyssalTapetum,
+        ArcherfishAccuracy,
+        RaysTail,
+        ColdBlooded
     }
 
     public enum AugmentationRarity

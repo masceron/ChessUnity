@@ -18,7 +18,7 @@ namespace UX.UI.Ingame
         public void Set(Effect effect)
         {
             var effectInfo = AssetManager.Ins.EffectData[effect.EffectName];
-            duration.text =  effect.Duration != -1 ? effect.Duration.ToString() : "";
+            duration.text =  effect.Duration > 0 ? effect.Duration.ToString() : "";
             trigger.SetText(Localizer.GetText("effect_name", effectInfo.key, null), Numerals.ToRomanNumeral(effect.Strength), effect.Description());
             
             icon.texture = effectInfo.icon;
