@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Game.Augmentation;
+using System;
+using System.Collections.Generic;
 
 namespace Game.Piece
 {
@@ -8,12 +10,14 @@ namespace Game.Piece
         public readonly PieceType Type;
         public readonly bool Color;
         public readonly ushort Index;
+        public readonly List<Augmentation.Augmentation> AugmentationInfos;
 
-        public PieceConfig(PieceType t, bool c, ushort i)
+        public PieceConfig(PieceType t, bool c, ushort i, List<Augmentation.Augmentation> Augs = null)
         {
             Type = t;
             Color = c;
             Index = i;
+            AugmentationInfos = Augs ?? new List<Augmentation.Augmentation>();
         }
 
         public bool Equals(PieceConfig other)

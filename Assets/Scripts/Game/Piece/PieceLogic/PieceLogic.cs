@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Action;
+using Game.Augmentation;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
@@ -57,7 +58,54 @@ namespace Game.Piece.PieceLogic
             
             Quiets = quiets;
             this.Captures = captures;
+
+            if (cfg.AugmentationInfos != null && cfg.AugmentationInfos.Count > 0)
+            {
+                ApplyAugmentationEffects(cfg.AugmentationInfos);
+            }
+
         }
+
+        private void ApplyAugmentationEffects(List<Augmentation.Augmentation> augmentations)
+        {
+            // 1️⃣ Thêm các effect passive của từng augmentation
+            foreach (var aug in augmentations)
+            {
+                aug.SetTarget(this);
+                if (aug.PassiveEffects == null) continue;
+                UnityEngine.Debug.Log($"[Augmentation] {Type} nhận hiệu ứng từ augmentation {aug.Type}");
+                Effects.AddRange(aug.PassiveEffects);
+            }
+
+            var setCount = new Dictionary<AugmentationSetType, int>();
+            foreach (var aug in augmentations)
+            {
+                if (aug.Set == null || aug.Set.Type == AugmentationSetType.None) continue;
+
+                if (!setCount.ContainsKey(aug.Set.Type))
+                    setCount[aug.Set.Type] = 0;
+
+                setCount[aug.Set.Type]++;
+            }
+
+            foreach (var kv in setCount)
+            {
+                var setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set;
+                if (setInfo == null) continue;
+
+                int count = kv.Value;
+
+                if (setInfo.HaveBonus && count >= setInfo.RequiredPieces)
+                {
+                    UnityEngine.Debug.Log($"[Set Bonus] {Type} nhận bonus từ set {setInfo.Type} (x{count})");
+
+                    if (setInfo.SetEffects != null)
+                        Effects.AddRange(setInfo.SetEffects);
+                }
+            }
+        }
+
+
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;

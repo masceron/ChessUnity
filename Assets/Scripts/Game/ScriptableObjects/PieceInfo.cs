@@ -1,4 +1,7 @@
+using Game.Augmentation;
 using Game.Piece;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.ScriptableObjects
@@ -20,5 +23,16 @@ namespace Game.ScriptableObjects
         [SerializeField] public string key;
         [SerializeField] public bool hasSkill;
         [SerializeField] public sbyte normalSkillCooldown;
+        [SerializeField] public AugmentationSlotMask availableSlots;
+        [Flags]
+        public enum AugmentationSlotMask 
+        { 
+            None = 0, 
+            Optic = 1 << 0, 
+            Neural = 1 << 1, 
+            Blood = 1 << 2, 
+            Fin = 1 << 3, 
+            Chassis = 1 << 4 
+        }
     }
 }
