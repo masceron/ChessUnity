@@ -4,6 +4,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
+using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
 using UnityEngine;
@@ -49,6 +50,8 @@ namespace Game.Managers
             GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
             GameState.OnIncreaseTurn += (ct) => { Debug.Log("current turn : " + ct); };
             ActionManager.Init(GameState);
+
+            new DjinnBlessing();
         }
 
         public void Init(GameConfig cfg)
@@ -57,7 +60,6 @@ namespace Game.Managers
             AssetManager.Ins.Load();
             MakeGame(cfg);
             MakeBoard();
-            
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
                 Config.relicWhiteConfig, 
                 Config.relicBlackConfig
