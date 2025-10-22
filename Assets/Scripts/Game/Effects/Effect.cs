@@ -83,7 +83,8 @@ namespace Game.Effects
         NocturnalRangeBuff,
         HammerOysterPassive,
         MelibePassive,
-        Silenced
+        Silenced,
+        BlueDragonPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

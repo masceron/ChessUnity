@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: Infected
+  m_Name: BlueDragonPassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 48
-  category: 0
+  typeName: 62
+  category: 3
   stack: 1
-  priority: 0
-  activeWhen: 0
-  icon: {fileID: 2800000, guid: 4fc4415f5985754469eb5199f9c9f3ad, type: 3}
-  key: effect_infected
+  priority: 1
+  activeWhen: 1
+  icon: {fileID: 0}
+  key: blue_dragon_passive

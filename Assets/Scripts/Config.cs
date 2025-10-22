@@ -47,7 +47,8 @@ public static class Config
         // new PieceConfig(PieceType.Barracuda, true, 71),
         // new PieceConfig(PieceType.SeaUrchin, true, 79)
         // new PieceConfig(PieceType.TigerPrawn, true, 87),
-        new PieceConfig(PieceType.Melibe, true, 86)
+        // new PieceConfig(PieceType.Melibe, true, 86),
+        new PieceConfig(PieceType.BlueDragon, true, 86)
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.CommonPearl, false, 4);

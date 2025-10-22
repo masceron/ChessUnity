@@ -50,7 +50,8 @@ namespace Game.Piece
         Sunfish,
         TigerPrawn,
         HammerOyster, 
-        Melibe
+        Melibe,
+        BlueDragon
     }
 
     public enum PieceRank : byte
