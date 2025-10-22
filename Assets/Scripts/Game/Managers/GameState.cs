@@ -149,6 +149,7 @@ namespace Game.Managers
                 PieceType.Sunfish => new Sunfish(piece),
                 PieceType.ContagionCorpse => new ContagionCorpse(piece),
                 PieceType.PollutedRock => new PollutedRock(piece),
+                PieceType.Barnacle => new Barnacle(piece),
                 _ => null
             };
 

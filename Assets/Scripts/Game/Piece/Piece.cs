@@ -48,7 +48,8 @@ namespace Game.Piece
         BioluminescentBeacon,
         Sunfish,
         ContagionCorpse,
-        PollutedRock
+        PollutedRock,
+        Barnacle
     }
 
     public enum PieceRank : byte
