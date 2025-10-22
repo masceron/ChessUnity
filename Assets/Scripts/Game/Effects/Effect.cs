@@ -31,7 +31,7 @@ namespace Game.Effects
     
     public enum EffectCategory: byte 
     {
-        Debuff, Buff, Trait, Condition
+        Debuff, Buff, Trait, Condition, Augmentation
     }
 
     public enum EffectStack : byte
@@ -109,6 +109,7 @@ namespace Game.Effects
         BottlenoseDolphinPassive,
         Controlled,
         PollutedRockPassive,
+        TidalRetinaPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

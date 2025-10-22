@@ -5,7 +5,7 @@ namespace Game.ScriptableObjects
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [CreateAssetMenu(fileName = "AugmentationInfo", menuName = "ScriptableObjects/AugmentationInfo")]
-    public class AugmentationInfo
+    public class AugmentationInfo: ScriptableObject
     {
         public AugmentationName Name;
         public AugmentationRarity Rarity;

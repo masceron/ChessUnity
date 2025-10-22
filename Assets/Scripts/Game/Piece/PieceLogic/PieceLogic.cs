@@ -140,7 +140,7 @@ namespace Game.Piece.PieceLogic
 
                 if (setInfo.HaveBonus && count >= setInfo.RequiredPieces)
                 {
-                    UnityEngine.Debug.Log($"[Set Bonus] {Type} nhận bonus từ set {setInfo.Type} (x{count})");
+                    //UnityEngine.Debug.Log($"[Set Bonus] {Type} nhận bonus từ set {setInfo.Type} (x{count})");
 
                     if (setInfo.BonusEffects != null)
                     {

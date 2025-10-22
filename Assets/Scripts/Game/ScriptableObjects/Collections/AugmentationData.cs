@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Game.ScriptableObjects.Collections
 {
-    [CreateAssetMenu(fileName = "AugmentationData", menuName = "ScriptableObjects/Collections/AugmentationData")]
-    public class AugmentationData
+    [CreateAssetMenu(fileName = "AugmentationData", menuName = "ScriptableObjects/AugmentationData")]
+    public class AugmentationData: ScriptableObject
     {
         [ShowProperties(LockObjectAtRuntime = true)]
         [SerializeField]
