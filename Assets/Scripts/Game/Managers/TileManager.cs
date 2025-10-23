@@ -1,6 +1,7 @@
 ﻿using Game.Common;
 using Game.Tile;
 using UnityEngine;
+using UnityEngine.UI;
 using static Game.Common.BoardUtils;
 
 namespace Game.Managers
@@ -19,9 +20,10 @@ namespace Game.Managers
         private Tile.Tile[] tiles;
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
+        [SerializeField] private ActiveBoardBorder boardBorder3D;
 
         private Marker[] selections;
-        
+
         private void SelectionIndicator(int pos, Tile.Tile tile)
         {
             var sel = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -45,6 +47,14 @@ namespace Game.Managers
             {
                 SpawnTile(i);
             }
+
+            UpdateBorder();
+        }
+
+        public void UpdateBorder()
+        {
+            if (boardBorder3D == null) boardBorder3D = FindFirstObjectByType<ActiveBoardBorder>();
+            boardBorder3D.UpdateBorder();
         }
 
         private void SpawnTile(int index)
