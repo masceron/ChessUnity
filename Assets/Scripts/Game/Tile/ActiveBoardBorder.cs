@@ -25,8 +25,10 @@ namespace Game.Tile
         public UnityEngine.Color middleLineColor = UnityEngine.Color.red;
         public float middleLineWidth = 0.05f;
 
+        [Header("LineRender")]
         [SerializeField] private LineRenderer borderRenderer;
         [SerializeField] private LineRenderer midLineRenderer;
+        public Material lineMaterial;
 
         private int minX, maxX, minY, maxY;
         private float borderZMin, borderZMax;
@@ -51,7 +53,7 @@ namespace Game.Tile
             lr.loop = loop;
             lr.startWidth = width;
             lr.endWidth = width;
-            lr.material = new Material(Shader.Find("Sprites/Default"));
+            lr.material = lineMaterial;
             lr.startColor = color;
             lr.endColor = color;
         }
