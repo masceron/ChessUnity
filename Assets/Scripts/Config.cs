@@ -17,7 +17,7 @@ public static class Config
         // new PieceConfig(PieceType.Lionfish, false, 99),
         // new PieceConfig(PieceType.Seahorse, false, 55),
         // new PieceConfig(PieceType.Remora, false, 91),
-         new PieceConfig(PieceType.Chrysos, false, 80, new List<Augmentation>{new TidalRetina(),new TidalRetina(),new TidalRetina(),new TidalRetina(),new TidalRetina()}),
+         new PieceConfig(PieceType.Chrysos, false, 80, new List<Augmentation>{new TidalRetina()}),
         //new PieceConfig(PieceType.BioluminescentBeacon, false, 100),
         //new PieceConfig(PieceType.GuidingSiren, false, 91)
     };

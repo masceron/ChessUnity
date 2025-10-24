@@ -849,6 +849,7 @@ MonoBehaviour:
   heightOffset: 1.2
   lineWidth: 0.1
   lineColor: {r: 0, g: 0, b: 1, a: 1}
+  tightBorder: 1
   middleLineColor: {r: 1, g: 0, b: 0, a: 1}
   middleLineWidth: 0.05
   borderRenderer: {fileID: 1590652572}
