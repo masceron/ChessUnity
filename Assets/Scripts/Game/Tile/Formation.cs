@@ -1,4 +1,8 @@
 using Game.Piece.PieceLogic;
+using Game.Effects;
+using Game.Action;
+using Game.Action.Internal;
+
 
 namespace Game.Tile
 {
@@ -64,6 +68,15 @@ namespace Game.Tile
         public virtual void OnFirstTurn(PieceLogic piece)
         {
             
+        }
+
+        protected bool ApplyEffect(PieceLogic piece, Effect effect)
+        {
+            if (piece.IsImmuneTo(this, effect)) {
+                return false;
+            }
+            ActionManager.EnqueueAction(new ApplyEffect(effect));
+            return true;
         }
     }
 }

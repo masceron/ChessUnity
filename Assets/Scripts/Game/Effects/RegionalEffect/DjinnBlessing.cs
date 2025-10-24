@@ -44,7 +44,7 @@ namespace Game.Effects.RegionalEffect
                     if (roll <= 45) {
                         ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(validPieces[randomInd], duration, strength)));
                     }
-                    else if (roll <= 45) {
+                    else if (roll <= 90) {
                         ActionManager.EnqueueAction(new ApplyEffect(GetRandomDebuffEffect(validPieces[randomInd], duration, strength)));
                     }
                     else {

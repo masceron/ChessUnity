@@ -7,6 +7,8 @@ using Game.Effects.Others;
 using Game.Action.Internal;
 using Game.Effects.Traits;
 using System.Collections.Generic;
+using Game.Effects.Buffs;
+
 namespace Game.Piece.PieceLogic.Commanders
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -28,6 +30,7 @@ namespace Game.Piece.PieceLogic.Commanders
             ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
             ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(this)));
 
             // active này sẽ chọn 1 hoặc 2 nhưng khi chọn vào thì nó sẽ đánh dấu vào con đó luôn nên
             // khi bật lên chọn lần nữa thì chỉ chọn được thêm 1 con nữa thôi

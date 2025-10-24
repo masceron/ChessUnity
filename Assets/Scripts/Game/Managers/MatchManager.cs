@@ -51,7 +51,7 @@ namespace Game.Managers
             GameState.OnIncreaseTurn += (ct) => { Debug.Log("current turn : " + ct); };
             ActionManager.Init(GameState);
 
-            new DjinnBlessing();
+            // new DjinnBlessing();
         }
 
         public void Init(GameConfig cfg)
