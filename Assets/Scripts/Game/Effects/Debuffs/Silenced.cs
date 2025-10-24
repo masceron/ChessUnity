@@ -6,7 +6,8 @@ namespace Game.Effects.Debuffs
     {
         public Silenced(PieceLogic piece) : base(-1, 1, piece, EffectName.Silenced)
         {
-            
+            piece.CanUseSkill = false;
         }
+        
     }
 }

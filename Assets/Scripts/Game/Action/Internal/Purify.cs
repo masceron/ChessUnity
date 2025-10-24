@@ -13,7 +13,9 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in BoardUtils.PieceOn(Target).Effects.Where(effect => effect.Category == EffectCategory.Debuff))
+            var piece = BoardUtils.PieceOn(Target);
+            piece.CanUseSkill = true;
+            foreach (var effect in piece.Effects.Where(effect => effect.Category == EffectCategory.Debuff))
             {
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
             }

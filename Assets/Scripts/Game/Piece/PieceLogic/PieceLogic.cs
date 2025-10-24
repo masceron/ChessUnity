@@ -25,10 +25,18 @@ namespace Game.Piece.PieceLogic
         private readonly bool hasSkill;
 
         private bool dead;
+        private bool canUseSkill;
         public bool IsDead()
         {
             return dead;
         }
+
+        public bool CanUseSkill
+        {
+            get => canUseSkill;
+            set => canUseSkill = value;
+        }
+
         public void Die()
         {
             dead = true;
@@ -47,6 +55,11 @@ namespace Game.Piece.PieceLogic
             AttackRange = info.attackRange;
             PieceRank = info.rank;
             hasSkill = info.hasSkill;
+
+            if (hasSkill)
+            {
+                canUseSkill = true;
+            }
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
@@ -89,7 +102,7 @@ namespace Game.Piece.PieceLogic
             
             Captures(list, Pos);
 
-            if (hasSkill)
+            if (hasSkill && canUseSkill)
             {
                 ((IPieceWithSkill)this).Skills(list);
             }
