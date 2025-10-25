@@ -19,6 +19,8 @@ namespace Game.Effects.Traits
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             var effect = applyEffect.Effect;
+            if (Piece != effect.Piece) return;
+            
 
             if (blockCategories.Contains(effect.Category))
             {
