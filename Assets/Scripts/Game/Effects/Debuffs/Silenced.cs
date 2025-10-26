@@ -9,5 +9,15 @@ namespace Game.Effects.Debuffs
         {
             
         }
+
+        public override void OnApply()
+        {
+            Piece.CanUseSkill = false;
+        }
+        
+        public override void OnRemove()
+        {
+            Piece.CanUseSkill = true;
+        }
     }
 }
