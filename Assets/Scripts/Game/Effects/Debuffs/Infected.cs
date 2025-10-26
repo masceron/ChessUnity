@@ -15,7 +15,7 @@ namespace Game.Effects.Debuffs
             
         }
         
-        public override void OnCall(Action.Action lastMainAction)
+        public override void OnCallPieceAction(Action.Action lastMainAction)
         {
             turnCounter++;
 

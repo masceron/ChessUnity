@@ -10,7 +10,7 @@ namespace Game.Effects.Others
         {
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Result == ActionResult.Succeed)
             {

@@ -12,7 +12,7 @@ namespace Game.Effects.Others
             
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             var targetPos = action.Target;
             var targetRank = RankOf(targetPos);

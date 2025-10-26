@@ -20,7 +20,7 @@ namespace Game.Effects.RegionalEffect
                 }
             }
             int randomInd = Random.Range(0, pieces.Count);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(pieces[randomInd])));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(5, pieces[randomInd])));
         }
     }
 }
