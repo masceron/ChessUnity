@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Game.Augmentation.Set;
 using UnityEngine;
 using Game.Effects.Buffs;
+using Game.Effects.Augmentation;
 
 namespace Game.Augmentation
 {
@@ -19,7 +20,7 @@ namespace Game.Augmentation
         {
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.None,false);
-            PassiveEffects.Add(new Haste(-1, 1, target));
+            PassiveEffects.Add(new TidalRetinaPassive(-1, 1, target));
         }
     }
 
