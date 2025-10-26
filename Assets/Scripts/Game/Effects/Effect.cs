@@ -109,7 +109,9 @@ namespace Game.Effects
         BottlenoseDolphinPassive,
         Controlled,
         PollutedRockPassive,
-        TidalRetinaPassive
+        TidalRetinaPassive,
+        MelibePassive,
+        BlueDragonPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

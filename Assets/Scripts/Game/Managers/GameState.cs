@@ -156,6 +156,8 @@ namespace Game.Managers
                 PieceType.HammerOyster => new HammerOyster(piece),
                 PieceType.BottlenoseDolphin => new BottlenoseDolphin(piece),
                 PieceType.KelpForest => new KelpForest(piece),
+                PieceType.Melibe => new Melibe(piece),
+                PieceType.BlueDragon => new BlueDragon(piece),
                 _ => null
             };
 
