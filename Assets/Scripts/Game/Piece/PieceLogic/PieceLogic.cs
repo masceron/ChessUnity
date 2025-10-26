@@ -68,12 +68,10 @@ namespace Game.Piece.PieceLogic
                 Augmentations.AddRange(cfg.Augmentations);
             }
 
-            if (Augmentations != null && Augmentations.Count > 0)
+            if (Augmentations is not { Count: > 0 }) return;
+            if (ValidAugmentation(Augmentations))
             {
-                if (ValidAugmentation(Augmentations))
-                {
-                    ApplyAugmentationEffects(Augmentations);
-                }
+                ApplyAugmentationEffects(Augmentations);
             }
 
         }
@@ -96,12 +94,7 @@ namespace Game.Piece.PieceLogic
         bool IsDulicatedSlot(List<Augmentation.Augmentation> augmentations)
         {
             var slotSet = new HashSet<Augmentation.AugmentationSlot>();
-            foreach (var ag in augmentations)
-            {
-                if (slotSet.Contains(ag.Slot)) return true;
-                slotSet.Add(ag.Slot);
-            }
-            return false;
+            return augmentations.Any(ag => !slotSet.Add(ag.Slot));
         }
         bool CanEquip(PieceInfo piece, Augmentation.Augmentation augment)
         {
@@ -125,8 +118,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (aug.Set == null || aug.Set.Type == AugmentationSetType.None) continue;
 
-                if (!setCount.ContainsKey(aug.Set.Type))
-                    setCount[aug.Set.Type] = 0;
+                setCount.TryAdd(aug.Set.Type, 0);
 
                 setCount[aug.Set.Type]++;
             }
@@ -182,7 +174,7 @@ namespace Game.Piece.PieceLogic
             
             Captures(list, Pos);
 
-            if (hasSkill && !Effects.Any(e => e.EffectName == EffectName.Silenced))
+            if (hasSkill && Effects.All(e => e.EffectName != EffectName.Silenced))
             {
                 ((IPieceWithSkill)this).Skills(list);
             }
