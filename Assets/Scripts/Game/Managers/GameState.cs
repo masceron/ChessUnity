@@ -158,6 +158,7 @@ namespace Game.Managers
                 PieceType.KelpForest => new KelpForest(piece),
                 PieceType.Melibe => new Melibe(piece),
                 PieceType.BlueDragon => new BlueDragon(piece),
+                PieceType.Fangtooth => new Fangtooth(piece),
                 _ => null
             };
 

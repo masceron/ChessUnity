@@ -24,7 +24,7 @@ public static class Config
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        // new PieceConfig(PieceType.ClownFish, true, 88),
+         new PieceConfig(PieceType.Fangtooth, true, 88),
         // new PieceConfig(PieceType.GuidingSiren, true, 87),
          //new PieceConfig(PieceType.FlyingFish, true, 89),
          //new PieceConfig(PieceType.Anomalocaris, true, 99),
