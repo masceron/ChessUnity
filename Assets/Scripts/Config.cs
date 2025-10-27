@@ -32,8 +32,8 @@ public static class Config
          //new PieceConfig(PieceType.ElectricEel, true, 112),
          //new PieceConfig(PieceType.ElectricEel, true, 111),
          //new PieceConfig(PieceType.SeaStar, true, 113),
-         //new PieceConfig(PieceType.Swordfish, true, 10),
-        // new PieceConfig(PieceType.Anglerfish, true, 93),
+         new PieceConfig(PieceType.Swordfish, true, 105),
+        new PieceConfig(PieceType.PistolShrimp, true, 93),
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);
