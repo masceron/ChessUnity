@@ -6,7 +6,7 @@ using Game.Action.Internal;
 using Game.Effects.Traits;
 
 
-namespace Game.Piece.PieceLogic.Summon
+namespace Game.Piece.PieceLogic.Commons
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Fangtooth : PieceLogic
