@@ -114,6 +114,11 @@ namespace Game.Common
             return MatchManager.Ins.GameState.ActiveBoard[pos];
         }
 
+        public static void SetActiveSquare(int pos, bool value)
+        {
+            MatchManager.Ins.GameState.ActiveBoard[pos] = value;
+        }
+
         public static bool ColorOfSquare(int pos)
         {
             return MatchManager.Ins.GameState.SquareColor[pos];

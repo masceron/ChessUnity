@@ -17,14 +17,14 @@ public static class Config
         // new PieceConfig(PieceType.Lionfish, false, 99),
         // new PieceConfig(PieceType.Seahorse, false, 55),
         // new PieceConfig(PieceType.Remora, false, 91),
-         new PieceConfig(PieceType.Chrysos, false, 80, new List<Augmentation>{new TidalRetina()}),
+         new PieceConfig(PieceType.GulperEel, false, 80, new List<Augmentation>{new TidalRetina()}),
         //new PieceConfig(PieceType.BioluminescentBeacon, false, 100),
         //new PieceConfig(PieceType.GuidingSiren, false, 91)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-         new PieceConfig(PieceType.Fangtooth, true, 88),
+         new PieceConfig(PieceType.Fangtooth, true, 81),
         // new PieceConfig(PieceType.GuidingSiren, true, 87),
          //new PieceConfig(PieceType.FlyingFish, true, 89),
          //new PieceConfig(PieceType.Anomalocaris, true, 99),

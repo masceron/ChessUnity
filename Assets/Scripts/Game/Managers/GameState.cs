@@ -159,6 +159,7 @@ namespace Game.Managers
                 PieceType.Melibe => new Melibe(piece),
                 PieceType.BlueDragon => new BlueDragon(piece),
                 PieceType.Fangtooth => new Fangtooth(piece),
+                PieceType.GulperEel => new GulperEel(piece),
                 _ => null
             };
 

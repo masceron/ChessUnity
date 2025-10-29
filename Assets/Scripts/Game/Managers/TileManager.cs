@@ -74,8 +74,16 @@ namespace Game.Managers
 
         public void DestroyTile(int index)
         {
-            Destroy(tiles[index]);
+            Destroy(tiles[index].gameObject);
             tiles[index] = null;
+
+            var prefab = AssetManager.Ins.TileData[Color.None];
+            var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
+            tile.Spawn(index);
+
+            tiles[index] = tile;
+            SelectionIndicator(index, tile);
+            SetActiveSquare(index, false);
         }
         
         public void Select(int pos)

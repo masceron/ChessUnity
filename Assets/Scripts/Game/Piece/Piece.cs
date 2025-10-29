@@ -55,7 +55,8 @@ namespace Game.Piece
         KelpForest,
         Melibe,
         BlueDragon,
-        Fangtooth
+        Fangtooth,
+        GulperEel
     }
 
     public enum PieceRank : byte
