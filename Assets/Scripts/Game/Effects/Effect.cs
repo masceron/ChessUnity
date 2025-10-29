@@ -111,7 +111,8 @@ namespace Game.Effects
         PollutedRockPassive,
         TidalRetinaPassive,
         MelibePassive,
-        BlueDragonPassive
+        BlueDragonPassive,
+        SlimeheadPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

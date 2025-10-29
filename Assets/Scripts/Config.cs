@@ -17,9 +17,11 @@ public static class Config
         // new PieceConfig(PieceType.Lionfish, false, 99),
         // new PieceConfig(PieceType.Seahorse, false, 55),
         // new PieceConfig(PieceType.Remora, false, 91),
-         new PieceConfig(PieceType.Chrysos, false, 80, new List<Augmentation>{new TidalRetina()}),
+         // new PieceConfig(PieceType.Chrysos, false, 80, new List<Augmentation>{new TidalRetina()}),
         //new PieceConfig(PieceType.BioluminescentBeacon, false, 100),
         //new PieceConfig(PieceType.GuidingSiren, false, 91)
+        new PieceConfig(PieceType.Swordfish, false, 95),
+        // new PieceConfig(PieceType.ElectricEel, false, 94),
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
@@ -32,8 +34,9 @@ public static class Config
          //new PieceConfig(PieceType.ElectricEel, true, 112),
          //new PieceConfig(PieceType.ElectricEel, true, 111),
          //new PieceConfig(PieceType.SeaStar, true, 113),
-         new PieceConfig(PieceType.Swordfish, true, 105),
-        new PieceConfig(PieceType.PistolShrimp, true, 93),
+        new PieceConfig(PieceType.Swordfish, true, 105),
+        new PieceConfig(PieceType.PistolShrimp, true, 106),
+        new PieceConfig(PieceType.Slimehead, true, 107)
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);

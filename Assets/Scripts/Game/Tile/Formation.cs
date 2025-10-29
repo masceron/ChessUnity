@@ -12,6 +12,7 @@ namespace Game.Tile
         UrchinField,
         Saprolegnia,
         Kelp,
+        NavalMines
     }
 
     // public interface IHaveDuration{
