@@ -10,9 +10,9 @@ namespace Game.Effects.Traits
     {
         private readonly List<EffectName> blockedEffects = new()
         {
-            //EffectName.Frenzied,
+            EffectName.Frenzied,
             EffectName.Controlled,
-            //EffectName.Fear,
+            EffectName.Fear,
             EffectName.Taunted
         };
         public Sanity(sbyte duration, PieceLogic owner) : base(duration, 1, owner, EffectName.Sanity)

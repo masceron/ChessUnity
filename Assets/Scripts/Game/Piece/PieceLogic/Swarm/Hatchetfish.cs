@@ -25,7 +25,7 @@ namespace Game.Piece.PieceLogic.Swarm
                         var tpos = IndexOf(trank, fileOff);
                         var pieceAt = PieceOn(tpos);
                         if (pieceAt == null || pieceAt.Color == Color) continue;
-                        Debug.Log(pieceAt.Type + " " + pieceAt.Color);
+
                         list.Add(new HatchetfishActive(Pos, tpos));
                     }
                 }

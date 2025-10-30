@@ -112,7 +112,10 @@ namespace Game.Effects
         TidalRetinaPassive,
         MelibePassive,
         BlueDragonPassive,
-        Sanity
+        Sanity,
+        Marked,
+        Fear,
+        Frenzied
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

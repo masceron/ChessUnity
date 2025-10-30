@@ -23,7 +23,7 @@ namespace Game.Action.Skills
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
             ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, PieceOn(Target))));
-            //ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, PieceOn(Target))));
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

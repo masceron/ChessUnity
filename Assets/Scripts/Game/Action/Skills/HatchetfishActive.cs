@@ -18,8 +18,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            //Apply effect Marked
-            //ActionManager.EnqueueAction(new ApplyEffect(new Marked(Target)));
+            //Apply effect Marked no duration
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, BoardUtils.PieceOn(Target))));
 
             var targetPiece = BoardUtils.PieceOn(Target);
             if (targetPiece == null) return;
