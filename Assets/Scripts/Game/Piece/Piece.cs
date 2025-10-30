@@ -56,7 +56,8 @@ namespace Game.Piece
         Melibe,
         BlueDragon,
         Fangtooth,
-        GulperEel
+        GulperEel,
+        Hatchetfish
     }
 
     public enum PieceRank : byte

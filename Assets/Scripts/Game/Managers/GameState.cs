@@ -160,6 +160,7 @@ namespace Game.Managers
                 PieceType.BlueDragon => new BlueDragon(piece),
                 PieceType.Fangtooth => new Fangtooth(piece),
                 PieceType.GulperEel => new GulperEel(piece),
+                PieceType.Hatchetfish => new Hatchetfish(piece),
                 _ => null
             };
 

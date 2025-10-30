@@ -1,0 +1,39 @@
+using Game.Action.Skills;
+using Game.Movesets;
+using UnityEngine;
+using static Game.Common.BoardUtils;
+
+namespace Game.Piece.PieceLogic.Swarm
+{
+    public class Hatchetfish : PieceLogic, IPieceWithSkill
+    {
+        public Hatchetfish(PieceConfig cfg) : base(cfg, PufferfishMoves.Quiets, PufferfishMoves.Captures)
+        {
+            Skills = list =>
+            {
+                if (SkillCooldown > 0) return;
+
+                var (rank, file) = RankFileOf(Pos);
+                for (var dr = -4; dr <= 4; dr++)
+                {
+                    var trank = rank + dr;
+                    if (!VerifyBounds(trank)) continue;
+                    for (var df = -4; df <= 4; df++)
+                    {
+                        var fileOff = file + df;
+                        if (!VerifyBounds(fileOff)) continue;
+                        var tpos = IndexOf(trank, fileOff);
+                        var pieceAt = PieceOn(tpos);
+                        if (pieceAt == null || pieceAt.Color == Color) continue;
+                        Debug.Log(pieceAt.Type + " " + pieceAt.Color);
+                        list.Add(new HatchetfishActive(Pos, tpos));
+                    }
+                }
+            };
+        }
+
+        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
+    }
+}
+
