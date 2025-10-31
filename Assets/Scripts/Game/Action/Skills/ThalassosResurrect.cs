@@ -23,7 +23,7 @@ namespace Game.Action.Skills
             var gameState = MatchManager.Ins.GameState;
             var color = ColorOfPiece(Maker);
             var collection = !color ? gameState.WhiteCaptured : gameState.BlackCaptured;
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, (ushort)Target)));
 
             collection.Remove(collection.First(e => e.Type == typeTo));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

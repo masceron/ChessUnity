@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Game.Effects;
 using Game.Common;
-using Game.Tile;
+using Game.Effects;
 using Game.Managers;
-using Game.Action.Internal;
+using Game.Tile;
 
-namespace Game.Piece.PieceLogic.Construct
+namespace Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon
 {
     /// <summary>
     /// Bioluminescent Beacon Passive Effect
@@ -45,12 +44,11 @@ namespace Game.Piece.PieceLogic.Construct
 
         public void HandlePassive()
         {
-            // chưa ổn lắm cần nghiên cứu thêm
             if (isApplied) return;
 
             var posInRadius = GetPosInRadius();
 
-            DazzlingLight dazzlingLight = new DazzlingLight(-1, false, Piece.Color);
+            DazzlingLight dazzlingLight = new DazzlingLight(false, Piece.Color);
 
             foreach (var pos in posInRadius)
             {
@@ -58,7 +56,6 @@ namespace Game.Piece.PieceLogic.Construct
                 FormationManager.Ins.SetFormation(pos, dazzlingLight);
                 if (BoardUtils.PieceOn(pos) != null)
                 {
-                    UnityEngine.Debug.Log("Trigger enter at pos " + pos);
                     FormationManager.Ins.TriggerEnter(pos);
                 }
             }

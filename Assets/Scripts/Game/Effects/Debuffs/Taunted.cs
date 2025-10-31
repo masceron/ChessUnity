@@ -13,14 +13,13 @@ namespace Game.Effects.Debuffs
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
-        
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
             var push = !Piece.Color ? PushWhite(Piece.Pos) : PushBlack(Piece.Pos);
             if (!VerifyIndex(push) || !IsActive(push) || PieceOn(push) != null) return;
-            
-            ActionManager.EnqueueAction(new NormalMove(Piece.Pos, push));
+
+            ActionManager.ExecuteImmediately(new NormalMove(Piece.Pos, push));
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, Piece)));
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
+using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
 using Game.Tile;
@@ -26,7 +27,7 @@ namespace Game.Managers
         [NonSerialized]
         public BoardViewer InputProcessor;
 
-        private Vector2Int startingSize;
+        public Vector2Int startingSize{get; private set;}
 
         private void MakeBoard(GameConfig cfg)
         {
@@ -41,9 +42,8 @@ namespace Game.Managers
         {
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
-
-            //Chuyển từ index(0 -> max) sang pos
-            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize))))
+            
+            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize), cfg.Augmentations)))
             {
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
             }
@@ -63,15 +63,32 @@ namespace Game.Managers
             MakeGame(cfg);
             MakeBoard(cfg);
             
-            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()));
+            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
+                Config.relicWhiteConfig, 
+                Config.relicBlackConfig,
+                Config.regionalEffectType
+                );
             
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
 
-        public void StartGame(LineupConfig cfg)
+        private void MakeRelics(RelicConfig white, RelicConfig black)
         {
+            GameState.WhiteRelic = GameState.GetRelicLogicByConfig(white);
+            GameState.BlackRelic = GameState.GetRelicLogicByConfig(black);
+        }
+
+        private void MakeRegionalEffect(RegionalEffectType ret)
+        {
+            GameState.MakeRegionalEffect(ret);
+        }
+
+        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, RegionalEffectType ret)
+        {
+            MakeRegionalEffect(ret);
             MakePieces(cfg);
+            MakeRelics(whiteRelic, blackRelic);
             UIManager.Ins.Load(CanvasID.Ingame);
             ActionManager.ExecuteWhenStart();
             // InputProcessor.LoadRelic(whiteRelic, blackRelic);

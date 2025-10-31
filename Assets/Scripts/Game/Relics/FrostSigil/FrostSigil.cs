@@ -1,11 +1,11 @@
+using System.Linq;
+using Game.Action;
 using Game.Common;
 using Game.Managers;
 using UnityEngine;
 using UX.UI.Ingame;
-using Game.Action;
-using System.Linq;
 
-namespace Game.Relics
+namespace Game.Relics.FrostSigil
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 

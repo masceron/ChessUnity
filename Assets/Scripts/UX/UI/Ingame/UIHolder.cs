@@ -6,7 +6,11 @@ namespace UX.UI.Ingame
     public enum IngameSubmenus
     {
         ChrysosShop,
-        ThalassosResurrector
+        ThalassosResurrector,
+        DeathDefianceUI,
+        DormantFossilUI,
+        TimelessHourglassUI
+
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

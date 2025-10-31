@@ -11,7 +11,7 @@ namespace Game.Effects.Traits
         public Demolisher(PieceLogic piece) : base(-1, 1, piece, EffectName.Demolisher)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.GetType() == typeof(DestroyConstruct) && action.Maker == Piece.Pos && action.Result != ActionResult.Failed)
             {

@@ -40,8 +40,25 @@ namespace Game.Piece
         BobtailSquid,
         LivingCoral,
         ClownFish,
+        Humilitas,
+        StoneCrab,
+        PhantomJelly,
+        ChamberedNautilus,
+        EpauletteShark,
         FractureZone,
         BioluminescentBeacon,
+        Sunfish,
+        ContagionCorpse,
+        TigerPrawn,
+        HammerOyster,
+        BottlenoseDolphin,
+        KelpForest,
+        Melibe,
+        BlueDragon,
+        Fangtooth,
+        GulperEel,
+        Hatchetfish,
+        Lizardfish
     }
 
     public enum PieceRank : byte

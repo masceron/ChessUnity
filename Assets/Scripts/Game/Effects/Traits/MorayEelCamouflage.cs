@@ -18,7 +18,7 @@ namespace Game.Effects.Traits
 
         public EndTurnEffectType EndTurnEffectType { get; }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             var rank = RankOf(Piece.Pos);
             var file = FileOf(Piece.Pos);

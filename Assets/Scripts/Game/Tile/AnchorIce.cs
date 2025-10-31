@@ -4,8 +4,6 @@ using Game.Managers;
 using Game.Action;
 using Game.Effects.Debuffs;
 using Game.Action.Internal;
-using UnityEngine;
-using Game.Common;
 
 namespace Game.Tile{
     public class AnchorIce : Formation{
@@ -23,14 +21,14 @@ namespace Game.Tile{
             stack = 0;
         }
         void OnIncreaseTurn(int currentTurn){
-            if (pieceOnFormation == null){
+            if (PieceOnFormation == null){
                 return; 
             }
             if (stack == 0){
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Slow(3, 1, pieceOnFormation)));
+                ActionManager.ExecuteImmediately(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
             }
             else if (stack == 2){
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(1, pieceOnFormation)));
+                ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(1, PieceOnFormation)));
             }
             stack++;
         }

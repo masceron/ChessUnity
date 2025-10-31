@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using PrimeTween;
@@ -12,7 +13,7 @@ using static Game.Common.BoardUtils;
 namespace UX.UI.Ingame
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BoardViewer : MonoBehaviour
+    public class BoardViewer : Singleton<BoardViewer>
     {
         [SerializeField] private PieceInfoMenu pieceInfoMenu;
         [SerializeField] private PieceActions pieceActions;
@@ -32,11 +33,17 @@ namespace UX.UI.Ingame
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
             gameActions.Load(EndTurn);
+            UpdateRelic();
         }
 
         private void OnEnable()
         {
             MatchManager.Ins.InputProcessor = this;
+        }
+
+        public void UpdateRelic()
+        {
+            gameActions.UpdateRelic();
         }
 
         private void PanTo(int pos1, int pos2)
@@ -46,12 +53,6 @@ namespace UX.UI.Ingame
             direction.z = pos2;
             
             Tween.Position(mainCameraCenter, direction, 0.3f);
-        }
-        
-        public void EndTurn()
-        {
-            Unmark();
-            NewTurn();
         }
 
         private void SetPieceHover(int pos)
@@ -93,9 +94,11 @@ namespace UX.UI.Ingame
 
         public void ExecuteAction(Action action)
         {
-            ActionManager.EnqueueAction(action);
             Unmark();
-            NewTurn();
+            if (ActionManager.EnqueueAction(action))
+            {
+                EndTurn();
+            }
         }
 
         public void MarkPiece(int pos)
@@ -135,17 +138,19 @@ namespace UX.UI.Ingame
             Selecting = pos;
             pieceActions.LoadPieceActionInfo();
             PanTo(RankOf(pos), FileOf(pos));
-
+            if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
+            pieceActions.EnablePieceInteractions();
+            MoveList.Clear();
+            PieceOn(Selecting).MoveList(MoveList);
             if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
             pieceActions.EnablePieceInteractions();
             MoveList.Clear();
             PieceOn(Selecting).MoveList(MoveList);
         }
         
-        private void NewTurn()
+        // private void NewTurn()
+        private void EndTurn()
         {
-            ActionManager.EnqueueAction(new EndTurn());
-            
             if (SideToMove() != OurSide())
             {
                 gameActions.DisableGameInteractions();
@@ -159,6 +164,11 @@ namespace UX.UI.Ingame
         public void Hover(int pos)
         {
             SetPieceHover(pos);
+        }
+
+        public void MarkMove()
+        {
+            pieceActions.ClickMove();
         }
     }
 }

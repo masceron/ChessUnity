@@ -19,7 +19,7 @@ namespace Game.Action.Skills
             var caller = PieceOn(Maker);
             var collection = !caller.Color ? WhiteCaptured() : BlackCaptured();
             
-            ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig(PieceType.SeaStar, caller.Color, Target)));
+            ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig(PieceType.SeaStar, caller.Color, (ushort)Target)));
             collection.Remove(collection.First(p => p.Type == PieceType.SeaStar));
             SetCooldown(Target, -1);
             SetCooldown(Maker, ((IPieceWithSkill) PieceOn(Maker)).TimeToCooldown);

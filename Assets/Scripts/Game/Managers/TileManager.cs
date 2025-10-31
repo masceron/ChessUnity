@@ -1,19 +1,37 @@
 ﻿using Game.Common;
 using Game.Tile;
 using UnityEngine;
+using UnityEngine.UI;
 using static Game.Common.BoardUtils;
-using System;
+
 namespace Game.Managers
 {
+    public enum Corner: byte
+    {
+        TopLeft,
+        TopRight,
+        BottomLeft,
+        BottomRight
+    }
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TileManager : Singleton<TileManager>
     {
         private Tile.Tile[] tiles;
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
+        [SerializeField] private ActiveBoardBorder boardBorder3D;
+
+        /*[SerializeField] private Button _activeTileButton;
+        public int rank, file;*/
 
         private Marker[] selections;
-        
+
+        /*private void Start()
+        {
+            _activeTileButton.onClick.AddListener(() => DestroyTile(rank, file));
+        }*/
+
         private void SelectionIndicator(int pos, Tile.Tile tile)
         {
             var sel = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -37,6 +55,114 @@ namespace Game.Managers
             {
                 SpawnTile(i);
             }
+
+            UpdateBorder();
+            SetActiveTiles();
+        }
+
+        public void SetActiveTiles()
+        {
+            if (tiles == null || tiles.Length == 0 || BoardUtils.ActiveBoard() == null) return;
+
+            for (int y = 0; y < BoardUtils.MaxLength; y++)
+            {
+                for (int x = 0; x < BoardUtils.MaxLength; x++)
+                {
+                    int index = BoardUtils.IndexOf(x, y);
+                    if (tiles[index] == null) continue;
+
+                    tiles[index].gameObject.SetActive(ShouldTileBeActive(x, y));
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Cập nhật vùng 3x3 quanh ô (x, y) sau khi active hoặc destroy.
+        /// </summary>
+        private void UpdateActiveRegion(int x, int y)
+        {
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (!VerifyBounds(nx) || !VerifyBounds(ny))
+                        continue;
+
+                    int index = BoardUtils.IndexOf(nx, ny);
+                    if (tiles[index] == null) continue;
+
+                    tiles[index].gameObject.SetActive(ShouldTileBeActive(nx, ny));
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Kiểm tra 1 ô có nên được active (hiển thị) hay không.
+        /// </summary>
+        private bool ShouldTileBeActive(int x, int y)
+        {
+            int index = BoardUtils.IndexOf(x, y);
+            if (tiles[index] == null) return false;
+
+            bool isActive = BoardUtils.IsActive(index);
+            if (isActive) return true;
+
+            // Nếu ô này chưa active, kiểm tra 8 ô xung quanh
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    if (dx == 0 && dy == 0) continue;
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (!VerifyBounds(nx) || !VerifyBounds(ny))
+                        continue;
+
+                    int neighborIndex = BoardUtils.IndexOf(nx, ny);
+                    if (BoardUtils.IsActive(neighborIndex))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public void ActivateTile(int x, int y)
+        {
+            int index = BoardUtils.IndexOf(x, y);
+            if (BoardUtils.IsActive(index)) return;
+
+            BoardUtils.SetActiveSquare(index, true);
+
+            // Nếu tile none thì đổi sang white/black
+            if (tiles[index] != null && tiles[index].color == Color.None)
+            {
+                var prefab = !ColorOfSquare(index)
+                    ? AssetManager.Ins.TileData[Color.White]
+                    : AssetManager.Ins.TileData[Color.Black];
+
+                Destroy(tiles[index].gameObject);
+                var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
+                tile.Spawn(index);
+                tiles[index] = tile;
+            }
+
+            // Cập nhật vùng hiển thị quanh ô
+            UpdateActiveRegion(x, y);
+            UpdateBorder();
+        }
+
+        public void UpdateBorder()
+        {
+            if (boardBorder3D == null) boardBorder3D = FindFirstObjectByType<ActiveBoardBorder>();
+            boardBorder3D.UpdateBorder();
         }
 
         private void SpawnTile(int index)
@@ -54,10 +180,28 @@ namespace Game.Managers
             SelectionIndicator(index, tile);
         }
 
+        public void DestroyTile(int rank, int file)
+        {
+            DestroyTile(IndexOf(rank, file));
+        }
+
         public void DestroyTile(int index)
         {
-            Destroy(tiles[index]);
+            Destroy(tiles[index].gameObject);
             tiles[index] = null;
+
+            var prefab = AssetManager.Ins.TileData[Color.None];
+            var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
+            tile.Spawn(index);
+
+            tiles[index] = tile;
+            SelectionIndicator(index, tile);
+            SetActiveSquare(index, false);
+
+            int x = BoardUtils.RankOf(index);
+            int y = BoardUtils.FileOf(index);
+            UpdateActiveRegion(x, y);
+            UpdateBorder();
         }
         
         public void Select(int pos)
@@ -65,6 +209,12 @@ namespace Game.Managers
             selections[pos].GetComponent<MeshRenderer>().material = selectionMat;
             selections[pos].GetComponent<Marker>().enabled = true;
             selections[pos].gameObject.SetActive(true);
+        }
+        public void Unselect(int pos)
+        {
+            selections[pos].GetComponent<MeshRenderer>().material = null;
+            selections[pos].GetComponent<Marker>().enabled = false;
+            selections[pos].gameObject.SetActive(false);
         }
 
         public void UnmarkAll()
@@ -82,13 +232,55 @@ namespace Game.Managers
                 selections[pos].gameObject.SetActive(false);
             }
         }
-
+        public Corner IndexToCorner(Vector3 hit, Tile.Tile hoveringTile)
+        {
+            if (hit.x > hoveringTile.rank && hit.z < hoveringTile.file) return Corner.BottomLeft;
+            if (hit.x > hoveringTile.rank && hit.z > hoveringTile.file) return Corner.BottomRight;
+            if (hit.x < hoveringTile.rank && hit.z > hoveringTile.file) return Corner.TopLeft;
+            if (hit.x < hoveringTile.rank && hit.z < hoveringTile.file) return Corner.TopRight;
+            return Corner.TopLeft;
+        }
         public void MarkTileInRange(Tile.Tile hoveringTile, int range, bool isMark, bool onlyMarkEnemy = false)
         {
-            if (range % 2 == 0) return; // chỉ hỗ trợ range lẻ
-
             int centerIndex = IndexOf(hoveringTile.rank, hoveringTile.file);
             if (!IsActive(centerIndex)) return;
+            if (range % 2 == 0) 
+            {
+                int startRank = hoveringTile.rank;
+                int startFile = hoveringTile.file;
+                if (hoveringTile.corner == Corner.BottomRight)
+                {
+                    startRank = startRank - range / 2 + 1;
+                    startFile = startFile - range / 2 + 1;
+                }
+                else if (hoveringTile.corner == Corner.TopLeft)
+                {
+                    startFile = startFile - range / 2 + 1;
+                    startRank = startRank - range / 2;
+                }
+                else if (hoveringTile.corner == Corner.TopRight)
+                {
+                    startRank = startRank - range / 2;
+                    startFile = startFile - range / 2;
+                }
+                else if (hoveringTile.corner == Corner.BottomLeft)
+                {
+                    startRank = startRank - range / 2 + 1;
+                    startFile = startFile - range / 2;
+                }
+
+                for (int r = startRank; r < startRank + range; r++)
+                {
+                    for (int f = startFile; f < startFile + range; f++)
+                    {
+                        int index = IndexOf(r, f);
+                        if (!IsActive(index)) continue;
+                        ApplyMarkingRule(index, isMark, onlyMarkEnemy);
+                    }
+                }
+                return;
+            } 
+
 
             int radius = range / 2;
 

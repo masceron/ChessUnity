@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
         
         private void InRange()
         {
-            var newInRange = new List<PieceLogic>(); 
+            var newInRange = new List<PieceLogic>();
             
             for (var rankOff = -1; rankOff <= 1; rankOff++)
             {
@@ -66,10 +66,10 @@ namespace Game.Effects.Traits
             inRange = newInRange;
         }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (action is { DoesMoveChangePos: true } &&
-                (action.Maker == Piece.Pos || ColorOfPiece(action.Maker) == Piece.Color))
+            if (lastMainAction is { DoesMoveChangePos: true } &&
+                (lastMainAction.Maker == Piece.Pos || ColorOfPiece(lastMainAction.Maker) == Piece.Color))
             {
                 InRange();
             }

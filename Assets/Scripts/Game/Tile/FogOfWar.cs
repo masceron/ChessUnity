@@ -2,7 +2,6 @@
 
 using Game.Piece.PieceLogic;
 using Game.Managers;
-using Game.Effects;
 using UnityEngine;
 namespace Game.Tile
 {
@@ -11,9 +10,9 @@ namespace Game.Tile
         public FogOfWar(bool color) : base(color){
             
         }
-        public override void OnPieceEnter(PieceLogic piece)
+    public override void OnPieceEnter(PieceLogic piece)
         {
-            if (piece.Color != GetColor())
+            if (piece.Color != Color)
             {
                 FormationManager.Ins.RemoveFormation(piece.Pos);
             }
@@ -25,7 +24,6 @@ namespace Game.Tile
         }
         void ToggleVisibility(PieceLogic piece, bool value)
         {
-            piece.isClickable = value;
             PieceManager.Ins.GetPieceGameObject(piece.Pos).GetComponent<MeshRenderer>().enabled = value;
         }
         public override FormationType GetFormationType()

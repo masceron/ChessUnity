@@ -18,19 +18,19 @@ namespace Game.Piece.PieceLogic.Swarm
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
         
-        public void OnCallEnd(Action.Action action)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
-            int rank = RankOf(Piece.Pos);
-            int file = FileOf(Piece.Pos);
+            var rank = RankOf(Piece.Pos);
+            var file = FileOf(Piece.Pos);
 
-            for (int i = 0; i < distanceToAnotherPiece.Length; i++)
+            for (var i = 0; i < distanceToAnotherPiece.Length; i++)
             {
-                int anotherPiecePos = IndexOf(rank + distanceToAnotherPiece[i].Item1, file + distanceToAnotherPiece[i].Item2);
+                var anotherPiecePos = IndexOf(rank + distanceToAnotherPiece[i].Item1, file + distanceToAnotherPiece[i].Item2);
                 var anotherPiece = PieceOn(anotherPiecePos);
 
-                if (anotherPiece != null && anotherPiece.Type == PieceType.ClownFish)
+                if (anotherPiece is { Type: PieceType.ClownFish })
                 {
-                    int middlePiecePos = IndexOf(rank + distanceToAnotherPiece[i].Item1 / 2,
+                    var middlePiecePos = IndexOf(rank + distanceToAnotherPiece[i].Item1 / 2,
                         file + distanceToAnotherPiece[i].Item2 / 2);
                     var middlePiece = PieceOn(middlePiecePos);
 

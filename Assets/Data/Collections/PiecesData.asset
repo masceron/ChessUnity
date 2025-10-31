@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PiecesData
   m_EditorClassIdentifier: 
   piecesData:
-    keys: 000102030405060708090a0b0c0d0e0f101112141315161718191a1b1c1d1e221f
+    keys: 000102030405060708090a0b0c0d0e0f101112141315161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f3031323334
     values:
     - {fileID: 11400000, guid: 639e14683bd7a5c46a18d66c1f5258bd, type: 2}
     - {fileID: 11400000, guid: 1bf88f5dd47bc934eb82c9afd3e057f3, type: 2}
@@ -47,4 +47,16 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ad72fb9635a51e74b8399ddd0bc79cf8, type: 2}
     - {fileID: 11400000, guid: 1910de8dca1804e4fbcd18ce17b28d17, type: 2}
     - {fileID: 11400000, guid: e53025b234811a74f907d4ba1fd32a35, type: 2}
-    - {fileID: 11400000, guid: 1ca70e2d6f4e56d4e96ce011d772a0c2, type: 2}
+    - {fileID: 11400000, guid: efe77d5a419ed5b4d8a5f5a42a9646d8, type: 2}
+    - {fileID: 11400000, guid: 00a53031e7ff58c4491b54e71fd474a7, type: 2}
+    - {fileID: 11400000, guid: de2dfd273cc343e4d91297dcb0bac0fc, type: 2}
+    - {fileID: 11400000, guid: 9dd22853ba631db4a9843dc3eddb06cb, type: 2}
+    - {fileID: 11400000, guid: b9658bbe63e59e044b7f9ad37bd128ea, type: 2}
+    - {fileID: 11400000, guid: 5fcdfbcefc900d748a3256bf41f1b9b6, type: 2}
+    - {fileID: 11400000, guid: b51b9274499617a498e951a2a72f9452, type: 2}
+    - {fileID: 11400000, guid: 6811c0cc91b79e941a6843ab3cd985c3, type: 2}
+    - {fileID: 11400000, guid: 8368ca79355d7bd459171d89ca91b329, type: 2}
+    - {fileID: 11400000, guid: e163091e6df408041b1d0e431beffc3e, type: 2}
+    - {fileID: 11400000, guid: f0aeee1025730204e81f7b89076f6bf1, type: 2}
+    - {fileID: 11400000, guid: 852d33ecde5ef0a4cbc73f9cd9a882f2, type: 2}
+    - {fileID: 11400000, guid: 42b51faa2cbab3044a4865c2a477e493, type: 2}

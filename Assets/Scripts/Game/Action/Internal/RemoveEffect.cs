@@ -17,6 +17,7 @@ namespace Game.Action.Internal
         protected override void ModifyGameState()
         {
             if (effect == null) { return; }
+            if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0) return;
             if (effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {
                 BoardUtils.RemoveObserver(effect);

@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic;
+using Game.Relics;
 using UnityEngine;
 
 namespace Game.Common
@@ -16,6 +18,7 @@ namespace Game.Common
     {
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
+
         public const float YCoordinate = 1.64f;
         public static int RankOf(int index)
         {
@@ -35,6 +38,12 @@ namespace Game.Common
         public static int IndexOf(int rank, int file)
         {
             return rank * MaxLength + file;
+        }
+        
+        public static bool IsAtPromotionRank(int index)
+        {
+            int rank = RankOf(index);
+            return rank == 14 || rank == 25;
         }
 
         public static bool VerifyUpperBound(int dimension)
@@ -105,6 +114,11 @@ namespace Game.Common
             return MatchManager.Ins.GameState.ActiveBoard[pos];
         }
 
+        public static void SetActiveSquare(int pos, bool value)
+        {
+            MatchManager.Ins.GameState.ActiveBoard[pos] = value;
+        }
+
         public static bool ColorOfSquare(int pos)
         {
             return MatchManager.Ins.GameState.SquareColor[pos];
@@ -156,7 +170,7 @@ namespace Game.Common
             return MatchManager.Ins.GameState.BlackCaptured;
         }
 
-        public static void Move(ushort from, ushort to)
+        public static void Move(int from, int to)
         {
             MatchManager.Ins.GameState.Move(from, to);
         }
@@ -166,14 +180,14 @@ namespace Game.Common
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
-        public static void NotifyMainAction()
+        public static void NotifyMainAction(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.Notify();
+            MatchManager.Ins.GameState.Notify(mainAction);
         }
 
-        public static void NotifyEnd()
+        public static void NotifyEnd(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.NotifyEnd();
+            MatchManager.Ins.GameState.NotifyEnd(mainAction);
         }
 
         public static void NotifyInternalAction(Action.Action action)
@@ -199,11 +213,6 @@ namespace Game.Common
             MatchManager.Ins.GameState.RemoveObserver(effect);
         }
 
-        public static void SetMainAction(Action.Action action)
-        {
-            MatchManager.Ins.GameState.MainAction = action;
-        }
-
         public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
         {
             // Get all pieces in range of (rank, file) that match the predicate
@@ -225,15 +234,54 @@ namespace Game.Common
             return pieces;
         }
 
+        public static List<PieceLogic> GetPiecesInSize(int rank, int file, int size, Corner corner, Predicate<PieceLogic> predicate)
+        {
+            var pieces = new List<PieceLogic>();
+            if (corner == Corner.BottomRight)
+            {
+                rank = rank - size / 2 + 1;
+                file = file - size / 2 + 1;
+            }
+            else if (corner == Corner.TopLeft)
+            {
+                file = file - size / 2 + 1;
+                rank = rank - size / 2;
+            }
+            else if (corner == Corner.TopRight)
+            {
+                rank = rank - size / 2;
+                file = file - size / 2;
+            }
+            else if (corner == Corner.BottomLeft)
+            {
+                rank = rank - size / 2 + 1;
+                file = file - size / 2;
+            }
+
+            for (int r = rank; r < rank + size; r++)
+            {
+                if (!VerifyBounds(r)) continue;
+                for (int f = file; f < file + size; f++)
+                {
+                    if (!VerifyBounds(f)) continue;
+                    var piece = PieceOn(IndexOf(r, f));
+                    if (piece != null && predicate(piece))
+                    {
+                        pieces.Add(piece);
+                    }
+                }
+            }
+            return pieces;
+        }
+
         public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
         {
-            List<PieceLogic> validPieces = new List<PieceLogic>();
-            foreach (PieceLogic piece in MatchManager.Ins.GameState.PieceBoard)
-            {
-                if (piece != null && piece is T && piece.Color == side)
-                    validPieces.Add(piece);
-            }
-            return validPieces;
+            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();
+        }
+        
+        public static RelicLogic GetRelicOf(bool side)
+        {
+            return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
 
         public static Vector3 FromRankFileToWorldPos(float rank, float file){

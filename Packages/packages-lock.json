@@ -91,11 +91,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.23",
+      "version": "2.0.25",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.test-framework": "1.1.9"
+        "com.unity.test-framework": "1.1.31"
       },
       "url": "https://packages.unity.com"
     },
@@ -109,7 +109,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.localization": {
-      "version": "1.5.7",
+      "version": "1.5.8",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -223,7 +223,7 @@
       }
     },
     "com.unity.splines": {
-      "version": "2.8.1",
+      "version": "2.8.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -234,8 +234,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.5.1",
-      "depth": 1,
+      "version": "1.6.0",
+      "depth": 0,
       "source": "builtin",
       "dependencies": {
         "com.unity.ext.nunit": "2.0.3",
@@ -267,7 +267,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "3c7bc1b0eb09f996b8da42da6a8aa2298eace678"
+      "hash": "48bafbda9073ae9401bde0c44d59437b2f4b62c4"
     },
     "com.unity.modules.accessibility": {
       "version": "1.0.0",

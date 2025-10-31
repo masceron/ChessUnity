@@ -7,7 +7,6 @@ namespace Game.Action
     {
         public EndTurn(): base(-1)
         {
-            Maker = 0;
             Target = 0;
         }
 

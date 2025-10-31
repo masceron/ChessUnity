@@ -48,7 +48,7 @@ namespace Game.Movesets
                 list.Add(new NormalCapture(Pos, ver1));
             }
             
-            if (ver2 > 0 && board[ver2] != null && board[ver2].Color != color)
+            if (ver2 > 0 && ver2 < board.Length && board[ver2] != null && board[ver2].Color != color)
             {
                 list.Add(new NormalCapture(Pos, ver2));
             }
