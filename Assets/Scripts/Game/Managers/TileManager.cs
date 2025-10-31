@@ -22,7 +22,15 @@ namespace Game.Managers
         [SerializeField] private Material selectionMat;
         [SerializeField] private ActiveBoardBorder boardBorder3D;
 
+        /*[SerializeField] private Button _activeTileButton;
+        public int rank, file;*/
+
         private Marker[] selections;
+
+        /*private void Start()
+        {
+            _activeTileButton.onClick.AddListener(() => DestroyTile(rank, file));
+        }*/
 
         private void SelectionIndicator(int pos, Tile.Tile tile)
         {
@@ -49,6 +57,106 @@ namespace Game.Managers
             }
 
             UpdateBorder();
+            SetActiveTiles();
+        }
+
+        public void SetActiveTiles()
+        {
+            if (tiles == null || tiles.Length == 0 || BoardUtils.ActiveBoard() == null) return;
+
+            for (int y = 0; y < BoardUtils.MaxLength; y++)
+            {
+                for (int x = 0; x < BoardUtils.MaxLength; x++)
+                {
+                    int index = BoardUtils.IndexOf(x, y);
+                    if (tiles[index] == null) continue;
+
+                    tiles[index].gameObject.SetActive(ShouldTileBeActive(x, y));
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Cập nhật vùng 3x3 quanh ô (x, y) sau khi active hoặc destroy.
+        /// </summary>
+        private void UpdateActiveRegion(int x, int y)
+        {
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (!VerifyBounds(nx) || !VerifyBounds(ny))
+                        continue;
+
+                    int index = BoardUtils.IndexOf(nx, ny);
+                    if (tiles[index] == null) continue;
+
+                    tiles[index].gameObject.SetActive(ShouldTileBeActive(nx, ny));
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Kiểm tra 1 ô có nên được active (hiển thị) hay không.
+        /// </summary>
+        private bool ShouldTileBeActive(int x, int y)
+        {
+            int index = BoardUtils.IndexOf(x, y);
+            if (tiles[index] == null) return false;
+
+            bool isActive = BoardUtils.IsActive(index);
+            if (isActive) return true;
+
+            // Nếu ô này chưa active, kiểm tra 8 ô xung quanh
+            for (int dy = -1; dy <= 1; dy++)
+            {
+                for (int dx = -1; dx <= 1; dx++)
+                {
+                    if (dx == 0 && dy == 0) continue;
+                    int nx = x + dx;
+                    int ny = y + dy;
+
+                    if (!VerifyBounds(nx) || !VerifyBounds(ny))
+                        continue;
+
+                    int neighborIndex = BoardUtils.IndexOf(nx, ny);
+                    if (BoardUtils.IsActive(neighborIndex))
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        public void ActivateTile(int x, int y)
+        {
+            int index = BoardUtils.IndexOf(x, y);
+            if (BoardUtils.IsActive(index)) return;
+
+            BoardUtils.SetActiveSquare(index, true);
+
+            // Nếu tile none thì đổi sang white/black
+            if (tiles[index] != null && tiles[index].color == Color.None)
+            {
+                var prefab = !ColorOfSquare(index)
+                    ? AssetManager.Ins.TileData[Color.White]
+                    : AssetManager.Ins.TileData[Color.Black];
+
+                Destroy(tiles[index].gameObject);
+                var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
+                tile.Spawn(index);
+                tiles[index] = tile;
+            }
+
+            // Cập nhật vùng hiển thị quanh ô
+            UpdateActiveRegion(x, y);
+            UpdateBorder();
         }
 
         public void UpdateBorder()
@@ -72,6 +180,11 @@ namespace Game.Managers
             SelectionIndicator(index, tile);
         }
 
+        public void DestroyTile(int rank, int file)
+        {
+            DestroyTile(IndexOf(rank, file));
+        }
+
         public void DestroyTile(int index)
         {
             Destroy(tiles[index].gameObject);
@@ -84,6 +197,11 @@ namespace Game.Managers
             tiles[index] = tile;
             SelectionIndicator(index, tile);
             SetActiveSquare(index, false);
+
+            int x = BoardUtils.RankOf(index);
+            int y = BoardUtils.FileOf(index);
+            UpdateActiveRegion(x, y);
+            UpdateBorder();
         }
         
         public void Select(int pos)

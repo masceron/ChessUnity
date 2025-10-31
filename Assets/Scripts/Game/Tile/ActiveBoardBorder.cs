@@ -4,6 +4,7 @@ using Game.Managers;
 using Game.Common;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Game.Tile
 {
@@ -31,20 +32,13 @@ namespace Game.Tile
         public Material lineMaterial;
 
         private int minX, maxX, minY, maxY;
-        private float borderZMin, borderZMax;
+        private float borderZMin = float.PositiveInfinity, borderZMax = float.NegativeInfinity;
+        private float borderXMin = float.PositiveInfinity, borderXMax = float.NegativeInfinity;
 
-        /*public int rank;
-        public int file;
-        public UnityEngine.UI.Button button;*/
         void Awake()
         {
             SetupLine(borderRenderer, lineWidth, lineColor, true);
             SetupLine(midLineRenderer, middleLineWidth, middleLineColor, false);
-            /*button.onClick.AddListener(() =>
-            {
-                ActiveBoard[IndexOf(rank, file)] = true;
-                UpdateBorder();
-            });*/
         }
 
         void SetupLine(LineRenderer lr, float width, UnityEngine.Color color, bool loop)
@@ -53,7 +47,7 @@ namespace Game.Tile
             lr.loop = loop;
             lr.startWidth = width;
             lr.endWidth = width;
-            lr.material = lineMaterial;
+            lr.material = lineMaterial ?? new Material(Shader.Find("Sprites/Default"));
             lr.startColor = color;
             lr.endColor = color;
         }
@@ -67,10 +61,11 @@ namespace Game.Tile
                 return;
             }
 
+            // compute min/max for middle line (kept)
             minX = boardWidth; maxX = -1; minY = boardHeight; maxY = -1;
-            for (int y = 0; y < boardHeight; y++)
+            for (int x = 0; x < boardWidth; x++)
             {
-                for (int x = 0; x < boardWidth; x++)
+                for (int y = 0; y < boardHeight; y++)
                 {
                     int index = IndexOf(x, y);
                     if (ActiveBoard[index])
@@ -90,44 +85,20 @@ namespace Game.Tile
                 return;
             }
 
+            // reset extents
+            borderXMin = float.PositiveInfinity; borderXMax = float.NegativeInfinity;
+            borderZMin = float.PositiveInfinity; borderZMax = float.NegativeInfinity;
+
             if (!tightBorder)
-            {
                 DrawMinMaxBorder();
-            }
             else
-            {
-                DrawTightOuterBorder();
-            }
+                DrawTightOuterBorder_CellBased();
 
             DrawMiddleLine();
         }
 
         private void DrawMinMaxBorder()
         {
-            minX = boardWidth; maxX = -1; minY = boardHeight; maxY = -1;
-
-            for (int y = 0; y < boardHeight; y++)
-            {
-                for (int x = 0; x < boardWidth; x++)
-                {
-                    int index = IndexOf(x, y);
-                    if (ActiveBoard[index])
-                    {
-                        if (x < minX) minX = x;
-                        if (x > maxX) maxX = x;
-                        if (y < minY) minY = y;
-                        if (y > maxY) maxY = y;
-                    }
-                }
-            }
-
-            if (maxX == -1 || maxY == -1)
-            {
-                borderRenderer.positionCount = 0;
-                midLineRenderer.positionCount = 0;
-                return;
-            }
-
             float half = 0.5f;
             Vector3[] corners = new Vector3[]
             {
@@ -141,23 +112,23 @@ namespace Game.Tile
             borderRenderer.positionCount = corners.Length;
             borderRenderer.SetPositions(corners);
 
+            borderXMin = corners.Min(c => c.x);
+            borderXMax = corners.Max(c => c.x);
             borderZMin = corners.Min(c => c.z);
             borderZMax = corners.Max(c => c.z);
-
         }
-        private void DrawTightOuterBorder()
+
+        // === NEW: cell-based exposed-edge approach then stitch edges into loop ===
+        private void DrawTightOuterBorder_CellBased()
         {
-            // We'll represent corner coordinates as integers doubled (avoid float halves).
-            // corner for tile (x,y):
-            // bl = (2*x-1, 2*y-1), tl = (2*x-1, 2*y+1), tr = (2*x+1, 2*y+1), br = (2*x+1, 2*y-1)
+            // Step 1: collect all exposed edges from each active tile.
+            // We represent vertex coords multiplied by 2 (integers) to avoid halves.
+            // Each edge stored as undirected canonical pair (min,max).
+            var edgeSet = new HashSet<(Vector2Int a, Vector2Int b)>();
 
-            // store remaining boundary edges: key = "minx_miny_maxx_maxy" (undirected),
-            // value = the original directed start vertex (so we can reconstruct adjacency).
-            var edges = new Dictionary<string, Vector2Int>();
-
-            for (int y = 0; y < boardHeight; y++)
+            for (int x = 0; x < boardWidth; x++)
             {
-                for (int x = 0; x < boardWidth; x++)
+                for (int y = 0; y < boardHeight; y++)
                 {
                     if (!IsActive(x, y)) continue;
 
@@ -166,106 +137,98 @@ namespace Game.Tile
                     Vector2Int tr = new Vector2Int(2 * x + 1, 2 * y + 1);
                     Vector2Int br = new Vector2Int(2 * x + 1, 2 * y - 1);
 
-                    TryAddEdge(edges, tl, bl); // left edge (top -> bottom)
-                    TryAddEdge(edges, bl, br); // bottom (left -> right)
-                    TryAddEdge(edges, br, tr); // right (bottom -> top)
-                    TryAddEdge(edges, tr, tl); // top (right -> left)
+                    // add exposed edges: if neighbor tile exists and active -> that edge is internal, ignored.
+                    if (!IsActive(x - 1, y)) ToggleEdge(edgeSet, tl, bl); // left
+                    if (!IsActive(x + 1, y)) ToggleEdge(edgeSet, br, tr); // right
+                    if (!IsActive(x, y + 1)) ToggleEdge(edgeSet, tr, tl); // top
+                    if (!IsActive(x, y - 1)) ToggleEdge(edgeSet, bl, br); // bottom
                 }
             }
 
-            if (edges.Count == 0)
+            if (edgeSet.Count == 0)
             {
                 borderRenderer.positionCount = 0;
                 return;
             }
 
+            // Step 2: build adjacency map for vertices from remaining edges
             var adj = new Dictionary<Vector2Int, List<Vector2Int>>();
-            foreach (var kv in edges)
+            foreach (var e in edgeSet)
             {
-                string key = kv.Key;
-                Vector2Int start = kv.Value;
-                var parts = key.Split('_').Select(int.Parse).ToArray();
-                Vector2Int a = new Vector2Int(parts[0], parts[1]);
-                Vector2Int b = new Vector2Int(parts[2], parts[3]);
-
-                Vector2Int other = (start == a) ? b : a;
-
-                if (!adj.ContainsKey(start)) adj[start] = new List<Vector2Int>();
-                if (!adj.ContainsKey(other)) adj[other] = new List<Vector2Int>();
-                adj[start].Add(other);
-                adj[other].Add(start);
+                AddAdj(adj, e.a, e.b);
+                AddAdj(adj, e.b, e.a);
             }
 
+            // Step 3: walk edges to build the outer loop(s).
+            // We'll attempt to build the outermost loop first (start from leftmost-bottommost vertex).
             var loops = new List<List<Vector2Int>>();
-            var visitedVertices = new HashSet<Vector2Int>();
+            var usedEdges = new HashSet<(Vector2Int, Vector2Int)>(); // directed visited
+            var allVertices = adj.Keys.ToList();
 
-            foreach (var kv in adj)
+            // sort starts so we pick a likely outer start first
+            var startCandidates = allVertices.OrderBy(v => v.x).ThenBy(v => v.y).ToList();
+
+            foreach (var start in startCandidates)
             {
-                var v = kv.Key;
-                if (visitedVertices.Contains(v)) continue;
+                // if all incident edges already used, skip
+                bool allUsed = true;
+                foreach (var nb in adj[start])
+                {
+                    if (!usedEdges.Contains((start, nb)) && !usedEdges.Contains((nb, start)))
+                    {
+                        allUsed = false; break;
+                    }
+                }
+                if (allUsed) continue;
+
+                // pick an initial previous such that we approach start from "outside" (a point slightly left)
+                Vector2Int prev = new Vector2Int(start.x - 1, start.y);
+                Vector2Int curr = start;
 
                 var loop = new List<Vector2Int>();
-                Vector2Int startV = v;
-                Vector2Int prev = new Vector2Int(int.MinValue, int.MinValue); // null
-                Vector2Int curr = startV;
-
+                int safety = 0;
                 while (true)
                 {
-                    loop.Add(curr);
-                    visitedVertices.Add(curr);
+                    safety++;
+                    if (safety > edgeSet.Count * 4) break; // safety break
 
-                    var neighbors = adj[curr];
-                    Vector2Int next;
-                    if (neighbors.Count == 0) break;
-                    if (neighbors.Count == 1)
-                    {
-                        next = neighbors[0]; 
-                    }
-                    else
-                    {
-                        if (prev.x == int.MinValue)
-                            next = neighbors[0];
-                        else
-                            next = (neighbors[0] == prev) ? neighbors[1] : neighbors[0];
-                    }
+                    loop.Add(curr);
+
+                    // choose next neighbor:
+                    Vector2Int next = ChooseNextNeighbor_KeepStraightThenAngle(adj, curr, prev, usedEdges);
+                    if (next == new Vector2Int(int.MinValue, int.MinValue)) break;
+
+                    // mark this directed edge visited
+                    usedEdges.Add((curr, next));
 
                     prev = curr;
                     curr = next;
 
-                    if (curr == startV) break; // closed loop
-                                               // safety break
-                    if (loop.Count > edges.Count + 10) break;
+                    if (curr == start) break; // closed
                 }
 
                 if (loop.Count >= 3)
                 {
                     var simplified = SimplifyColinear(loop);
+                    // canonical orientation CCW
+                    if (PolygonArea(simplified) < 0) simplified.Reverse();
                     loops.Add(simplified);
                 }
             }
 
+            // Step 4: choose the largest area loop as outer border (user wanted the outer outline)
             if (loops.Count == 0)
             {
                 borderRenderer.positionCount = 0;
                 return;
             }
 
-            List<Vector2Int> outer = loops[0];
-            float bestArea = Mathf.Abs(PolygonArea(outer));
-            for (int i = 1; i < loops.Count; i++)
-            {
-                float a = Mathf.Abs(PolygonArea(loops[i]));
-                if (a > bestArea)
-                {
-                    bestArea = a;
-                    outer = loops[i];
-                }
-            }
+            List<Vector2Int> outer = loops.OrderByDescending(l => Mathf.Abs(PolygonArea(l))).First();
 
+            // Step 5: convert to world positions (divide coords by 2)
             var positions = new List<Vector3>(outer.Count);
-            for (int i = 0; i < outer.Count; i++)
+            foreach (var v in outer)
             {
-                Vector2Int v = outer[i];
                 float wx = v.x / 2f;
                 float wz = v.y / 2f;
                 positions.Add(new Vector3(wx, heightOffset, wz));
@@ -275,25 +238,90 @@ namespace Game.Tile
             borderRenderer.positionCount = positions.Count;
             borderRenderer.SetPositions(positions.ToArray());
 
+            borderXMin = positions.Min(p => p.x);
+            borderXMax = positions.Max(p => p.x);
             borderZMin = positions.Min(p => p.z);
             borderZMax = positions.Max(p => p.z);
-
         }
 
-        private void TryAddEdge(Dictionary<string, Vector2Int> edges, Vector2Int a, Vector2Int b)
+        // Toggle undirected edge: add if missing, remove if present (internal edges cancel)
+        private void ToggleEdge(HashSet<(Vector2Int, Vector2Int)> set, Vector2Int a, Vector2Int b)
         {
-            Vector2Int min = (a.x < b.x || (a.x == b.x && a.y <= b.y)) ? a : b;
-            Vector2Int max = (min == a) ? b : a;
-            string key = $"{min.x}_{min.y}_{max.x}_{max.y}";
+            (Vector2Int, Vector2Int) key = (a.x < b.x || (a.x == b.x && a.y <= b.y)) ? (a, b) : (b, a);
+            if (set.Contains(key)) set.Remove(key);
+            else set.Add(key);
+        }
 
-            if (edges.ContainsKey(key))
+        private void AddAdj(Dictionary<Vector2Int, List<Vector2Int>> adj, Vector2Int from, Vector2Int to)
+        {
+            if (!adj.TryGetValue(from, out var list))
             {
-                edges.Remove(key);
+                list = new List<Vector2Int>();
+                adj[from] = list;
             }
-            else
+            if (!list.Contains(to)) list.Add(to);
+        }
+
+        // Prefer continuing straight (collinear) if possible; otherwise pick the neighbor with smallest CCW angle from incoming dir.
+        private Vector2Int ChooseNextNeighbor_KeepStraightThenAngle(Dictionary<Vector2Int, List<Vector2Int>> adj, Vector2Int curr, Vector2Int prev, HashSet<(Vector2Int, Vector2Int)> usedEdges)
+        {
+            if (!adj.TryGetValue(curr, out var neighbors) || neighbors.Count == 0)
+                return new Vector2Int(int.MinValue, int.MinValue);
+
+            // compute incoming direction vector (curr - prev)
+            var inVec = new Vector2Int(curr.x - prev.x, curr.y - prev.y);
+
+            // candidate neighbors that still have that edge unused
+            var candidates = new List<Vector2Int>();
+            foreach (var n in neighbors)
             {
-                edges[key] = a;
+                if (usedEdges.Contains((curr, n)) || usedEdges.Contains((n, curr))) // if edge already used in either direction, prefer not to reuse
+                    continue;
+                candidates.Add(n);
             }
+            if (candidates.Count == 0)
+            {
+                // if all edges used, allow reuse to try close loop
+                candidates.AddRange(neighbors);
+            }
+
+            // check for exact straight continuation (colinear and same direction)
+            foreach (var n in candidates)
+            {
+                var outVec = new Vector2Int(n.x - curr.x, n.y - curr.y);
+                if (IsColinearAndSameDir(inVec, outVec))
+                    return n;
+            }
+
+            // else choose by smallest CCW angle from incoming direction
+            float incomingAngle = Mathf.Atan2(inVec.y, inVec.x);
+            float bestDelta = float.MaxValue;
+            Vector2Int best = candidates[0];
+
+            foreach (var n in candidates)
+            {
+                var outVec = new Vector2Int(n.x - curr.x, n.y - curr.y);
+                float candAngle = Mathf.Atan2(outVec.y, outVec.x);
+                float delta = candAngle - incomingAngle;
+                while (delta < 0) delta += Mathf.PI * 2f;
+                while (delta >= Mathf.PI * 2f) delta -= Mathf.PI * 2f;
+                if (delta < bestDelta)
+                {
+                    bestDelta = delta;
+                    best = n;
+                }
+            }
+
+            return best;
+        }
+
+        private bool IsColinearAndSameDir(Vector2Int a, Vector2Int b)
+        {
+            long cross = (long)a.x * b.y - (long)a.y * b.x;
+            if (cross != 0) return false;
+            // dot > 0 => same direction
+            long dot = (long)a.x * b.x + (long)a.y * b.y;
+            return dot > 0;
         }
 
         private List<Vector2Int> SimplifyColinear(List<Vector2Int> poly)
@@ -313,7 +341,7 @@ namespace Game.Tile
                 if (cross != 0)
                     res.Add(curr);
             }
-            return res.Count > 0 ? res : new List<Vector2Int>(poly); // fallback
+            return res.Count > 0 ? res : new List<Vector2Int>(poly);
         }
 
         private float PolygonArea(List<Vector2Int> poly)
@@ -326,19 +354,30 @@ namespace Game.Tile
                 Vector2Int b = poly[(i + 1) % n];
                 sum += (long)a.x * b.y - (long)b.x * a.y;
             }
-            return sum * 0.5f; 
+            return sum * 0.5f;
         }
 
         private bool IsActive(int x, int y)
         {
-            if (x < 0 || y < 0 || x >= boardWidth || y >= boardHeight)
+            if (!BoardUtils.VerifyBounds(x) || !BoardUtils.VerifyBounds(y))
                 return false;
             return ActiveBoard[IndexOf(x, y)];
         }
 
         private void DrawMiddleLine()
         {
-            float midX = 19.5f; //middle board X
+            // middle X: center of the border extents (so midline sits inside the border)
+            float midX;
+            if (float.IsPositiveInfinity(borderXMin) || float.IsPositiveInfinity(borderXMax))
+            {
+                // fallback: center of min/max indices
+                float half = 0.5f;
+                midX = (minX + maxX + 1) / 2f - half;
+            }
+            else
+            {
+                midX = (borderXMin + borderXMax) * 0.5f;
+            }
 
             Vector3 start = new Vector3(midX, heightOffset, borderZMin);
             Vector3 end = new Vector3(midX, heightOffset, borderZMax);
@@ -350,7 +389,7 @@ namespace Game.Tile
 
         private int IndexOf(int x, int y)
         {
-            return y * boardWidth + x;
+            return BoardUtils.IndexOf(x, y);
         }
     }
 }
