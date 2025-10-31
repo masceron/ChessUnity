@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Augmentation;
+using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
 
@@ -17,7 +18,7 @@ public static class Config
         // new PieceConfig(PieceType.Lionfish, false, 99),
         // new PieceConfig(PieceType.Seahorse, false, 55),
         // new PieceConfig(PieceType.Remora, false, 91),
-         new PieceConfig(PieceType.GulperEel, false, 77, new List<Augmentation>{new TidalRetina()}),
+         new PieceConfig(PieceType.Lizardfish, false, 77, new List<Augmentation>{new TidalRetina()}),
         //new PieceConfig(PieceType.BioluminescentBeacon, false, 100),
         //new PieceConfig(PieceType.GuidingSiren, false, 91)
     };
@@ -38,4 +39,5 @@ public static class Config
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);
     public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.SirensHarpoon, true, 5);
+    public static RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
 }

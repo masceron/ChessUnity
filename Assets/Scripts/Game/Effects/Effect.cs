@@ -115,7 +115,8 @@ namespace Game.Effects
         Sanity,
         Marked,
         Fear,
-        Frenzied
+        Frenzied,
+        NativeGround
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

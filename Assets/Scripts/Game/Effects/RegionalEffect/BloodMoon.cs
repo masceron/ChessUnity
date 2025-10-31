@@ -9,6 +9,10 @@ namespace Game.Effects.RegionalEffect
 {
     public class BloodMoon : RegionalEffect
     {
+        public BloodMoon() : base(RegionalEffectType.BloodMoon)
+        {
+        }
+
         protected override void ApplyEffect(int currentTurn)
         {
             if (MatchManager.Ins.GameState.IsDay) return;
