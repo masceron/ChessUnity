@@ -12,7 +12,10 @@ namespace Game.Common
             get
             {
                 if (_instance) return _instance;
-
+                else
+                {
+                    // Debug.LogError("You should create singleton before reference");
+                }
                 // Find singleton
                 _instance = FindAnyObjectByType<T>();
 
@@ -27,10 +30,18 @@ namespace Game.Common
                 return _instance;
             }
         }
-        void Awake()
+
+        protected virtual void Awake()
         {
             Debug.Log($"New singleton of {typeof(T)}");
         }
+
+        protected virtual void OnDestroy()
+        {
+            if (_instance == this)
+                _instance = null;
+        }
+
 
     }
 }

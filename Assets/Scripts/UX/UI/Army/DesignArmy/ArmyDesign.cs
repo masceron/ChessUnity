@@ -69,20 +69,21 @@ namespace UX.UI.Army.DesignArmy
             relicSearcher.Load(armyToLoad.Relic);
         }
 
-        public void TrySave()
+        public bool TrySave()
         {
             army.Name = info.armyName.text;
             if (army.Name == string.Empty)
             {
                 notification.Open(DesignNotifications.EmptyName);
-                return;
+                return false;
             }
             if (ArmySaveLoader.Exists(army.Name))
             {
                 notification.Open(DesignNotifications.Overwrite);
-                return;
+                return false;
             }
             Save();
+            return true;
         }
 
         public void Save()

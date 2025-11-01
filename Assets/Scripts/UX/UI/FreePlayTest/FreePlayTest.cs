@@ -24,7 +24,7 @@ namespace UX.UI.FreePlayTest{
     }
     public class FreePlayTest : Singleton<FreePlayTest>
     {
-        public FreePlayConfig freePlayConfig;
+        public FreePlayConfig config;
         public List<int> boardSizes;
         [SerializeField] public UDictionary<FreePlayScene, RectTransform> panelDict;
         public ArmyDesignBoard armyDesignBoard;
@@ -41,11 +41,11 @@ namespace UX.UI.FreePlayTest{
 
         public void AddEnemy(PieceConfig pieceConfig)
         {
-            freePlayConfig.PieceConfigBlack.Add(pieceConfig);
+            config.PieceConfigBlack.Add(pieceConfig);
         }
         public void RemoveEnemy(PieceConfig pieceConfig)
         {
-            freePlayConfig.PieceConfigWhite.Add(pieceConfig);
+            config.PieceConfigWhite.Add(pieceConfig);
         }
         public void AddRegionalEffect(RegionalsData regionalsData)
         {

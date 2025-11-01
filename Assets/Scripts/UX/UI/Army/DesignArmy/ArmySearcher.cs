@@ -15,7 +15,6 @@ namespace UX.UI.Army.DesignArmy
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArmySearcher: MonoBehaviour
     {
-        [SerializeField] private PiecesData piecesData;
         [SerializeField] private TMP_InputField searchBar;
         [SerializeField] public Transform list;
         [SerializeField] public GameObject troopDisplay;
@@ -29,7 +28,7 @@ namespace UX.UI.Army.DesignArmy
         
         private void Awake()
         {
-            Data = piecesData.piecesData.Dictionary;
+            Data = AssetManager.Ins.PieceData;
             ArmyDesignBoard.Ins.OnAddTroop += (t) => FilterByCondition();
             ArmyDesignBoard.Ins.OnRemoveTroop += (t) => FilterByCondition();
             Load();
@@ -192,6 +191,7 @@ namespace UX.UI.Army.DesignArmy
         }
         // Dựa trên một vài luật mà game đưa ra, một số Piece có thể sẽ không còn đặt được, bị greyout sau đó
         private void FilterByCondition(){
+            Debug.Log("Filter");
             greyOutPieces.Clear();
             // Lọc theo một số condition 
             Dictionary<PieceInfo, int> counts = new();
@@ -201,7 +201,7 @@ namespace UX.UI.Army.DesignArmy
                 {
                     continue;
                 }
-                PieceInfo pieceInfo = AssetManager.Ins.PieceData[tr.Type];
+                PieceInfo pieceInfo = AssetManager.Ins.PieceData[tr.PieceType];
 
                 if (!counts.ContainsKey(pieceInfo))
                     counts[pieceInfo] = 0;
@@ -213,6 +213,7 @@ namespace UX.UI.Army.DesignArmy
                     {
                         if (t.rank == PieceRank.Commander)
                         {
+                            Debug.Log("Remove commander");
                             greyOutPieces.Add(t);
                         }
                     }

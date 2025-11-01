@@ -93,10 +93,7 @@ MonoBehaviour:
   model: {fileID: 1400082744471719213}
   image: {fileID: 4197783774499568729}
   trigger: {fileID: -3289124238289176407}
-  set: 0
-  rank: -1
-  file: -1
-  type: 0
+  greyMask: {fileID: 3238180522316098505}
 --- !u!114 &-3289124238289176407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.92143893, g: 1, b: 0, a: 1}
+  m_Color: {r: 0.92156863, g: 1, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

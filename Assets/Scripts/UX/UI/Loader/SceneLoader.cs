@@ -24,9 +24,7 @@ namespace UX.UI.Loader
                         MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(12, 12)));
                         break;
                     case 2:
-
                         UIManager.Ins.Load(CanvasID.FreePlayPreset);
-                        AssetManager.Ins.Load();
                         break;
                 }
             };

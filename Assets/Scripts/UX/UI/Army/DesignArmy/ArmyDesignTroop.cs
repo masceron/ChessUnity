@@ -14,21 +14,33 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public UIObject3D model;
         [SerializeField] private Image image;
         [SerializeField] private TooltipTrigger trigger;
+        [SerializeField] private Image greyMask;
         [NonSerialized] public Transform Parent;
         private Transform oldParent;
         [NonSerialized] public bool Placed;
+        [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
         [NonSerialized] public PieceInfo Piece;
         
         public void Load(PieceInfo piece, bool isGreyOut = false)
         {
+            this.isGreyOut = isGreyOut;
+            if (isGreyOut)
+            {
+                Debug.Log($"piece {piece.name} is greyed out");
+            }
             Piece = piece;
             model.ObjectPrefab = Piece.prefab.transform;
             SetTooltip();
             if (isGreyOut)
             {
-                image.color = Color.black * 0.5f;
+                greyMask.color = Color.black;
+
+            }
+            else
+            {
+                greyMask.color = Color.yellow;
             }
         }
 
@@ -47,6 +59,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (isGreyOut){ return; }
             oldParent = transform.parent;
             transform.SetParent(FindAnyObjectByType<Canvas>().transform);
             image.raycastTarget = false;
@@ -72,6 +85,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (isGreyOut){ return; }
             transform.position = eventData.position;
         }
 
@@ -83,6 +97,7 @@ namespace UX.UI.Army.DesignArmy
         
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (isGreyOut){ return; }
             FindAnyObjectByType<ArmyDesignBoard>().UnSet();
             trigger.enabled = true;
             TooltipManager.Ins.Enable();

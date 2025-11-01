@@ -32,10 +32,10 @@ namespace Game.Managers
         private void MakeBoard(GameConfig cfg)
         {
             TileManager.Ins.Spawn();
-            FormationManager.Ins.Intialize();
+            FormationManager.Ins.Initialize();
             // For testing purpose
             FormationManager.Ins.SetFormation(PosMap(15, startingSize), new PredatorLair(cfg.FirstSideToMove));
-            GameState.regionalEffect = new Whirlpool();
+            GameState.RegionalEffect = new Whirlpool();
         }
 
         private void MakePieces(LineupConfig lineup)
@@ -59,7 +59,6 @@ namespace Game.Managers
         public void Init(GameConfig cfg)
         {
             startingSize = cfg.StartingSize;
-            AssetManager.Ins.Load();
             MakeGame(cfg);
             MakeBoard(cfg);
             

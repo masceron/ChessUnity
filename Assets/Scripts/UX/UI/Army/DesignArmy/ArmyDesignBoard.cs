@@ -126,7 +126,7 @@ namespace UX.UI.Army.DesignArmy
                 Troops.Add(troop);
                 var piece = Instantiate(searcher.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
                 
-                piece.Load(searcher.Data[troop.Type]);
+                piece.Load(searcher.Data[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
             }
@@ -142,7 +142,7 @@ namespace UX.UI.Army.DesignArmy
         public void Move(int oldR, int oldF, int newR, int newF)
         {
             var old = Troops.FindIndex(t => t.Rank == oldR && t.File == oldF);
-            Troops[old] = new Troop(Troops[old].Type, newR, newF);
+            Troops[old] = new Troop(Troops[old].PieceType, newR, newF);
         }
 
         public void Remove(int r, int f)
@@ -164,6 +164,18 @@ namespace UX.UI.Army.DesignArmy
                 }
             }
             return cnt;
+        }
+        public Troop GetTroopByCoordinate(int rank, int file)
+        {
+            foreach (Troop tr in Troops)
+            {
+                if (tr.Rank == rank && tr.File == file)
+                {
+                    return tr;
+                }
+            }
+            Debug.LogError($"GetTroopByCoordinate: False coordinate {rank} {file}");
+            return new Troop(PieceType.Velkaris, 0, 0, false);
         }
     }
 }

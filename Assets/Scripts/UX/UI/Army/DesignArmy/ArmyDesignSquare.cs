@@ -43,7 +43,7 @@ namespace UX.UI.Army.DesignArmy
         public void OnDrop(PointerEventData eventData)
         {
             if (!eventData.pointerDrag.TryGetComponent<ArmyDesignTroop>(out var piece)) return;
-            var board = FindAnyObjectByType<ArmyDesignBoard>();
+            var board = FindAnyObjectByType<ArmyDesignBoard>(); //Looix
 
             if (!board.IsAllowed(rank, file)) return;
             

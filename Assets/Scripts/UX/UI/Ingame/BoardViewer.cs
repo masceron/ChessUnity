@@ -140,6 +140,13 @@ namespace UX.UI.Ingame
                         case IPendingAble pending:
                             pending.CompleteAction();
                             return;
+                        // Cách xử lý 2 target cũ
+                        /*case IDoubleSelectionSkill doubleSkill:
+                        if (doubleSkill.IsBothSelected()) { break; }
+                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
+                        ShowMoveList(action.Maker);
+                        pieceActions.MarkSkill();
+                        return; */
                     }
 
                     ExecuteAction(action);

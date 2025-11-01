@@ -44,6 +44,7 @@ namespace Game.Augmentation
 
     public enum AugmentationName
     {
+        None,
         TidalRetina,
         ProtectiveLens,
         HemolymphFilter,
