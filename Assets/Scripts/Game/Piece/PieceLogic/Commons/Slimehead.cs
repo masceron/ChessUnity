@@ -14,8 +14,6 @@ namespace Game.Piece.PieceLogic.Commons
         public Slimehead(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, FrontDefenderMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SlimeheadPassive(this)));
-            NavalMines navalMines = new NavalMines(false, Color);
-            FormationManager.Ins.SetFormation(BoardUtils.IndexOf(21, 24), navalMines);
         }
     }
 }
