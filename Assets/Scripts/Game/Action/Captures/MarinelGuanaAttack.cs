@@ -9,63 +9,58 @@ using Game.Action.Captures;
 using Game.Common;
 using Game.Movesets;
 using System.Collections.Generic;
-
+using Game.Action.Skills;
+using Game.Piece.PieceLogic;
+using static Game.Common.MoveEnumerators;
+using System.Linq;
+using Game.Effects.Buffs;
+using Game.Effects;
 
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarinelGuanaAttack: Action, ICaptures, IPendingAble
+    public class MarinelGuanaAttack: Action, IPendingAble, ISkills
     {
-        private readonly System.Func<bool> getIsActiveSkill;
-        private readonly System.Action<bool> setIsActiveSkill;
-        public MarinelGuanaAttack(int maker, int to, System.Func<bool> getIsActiveSkill, System.Action<bool> setIsActiveSkill) : base(maker, true)
+        private static PieceLogic FirstTarget;
+        private static PieceLogic SecondTarget;
+        public MarinelGuanaAttack(int maker, int to) : base(maker, false)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
-            this.getIsActiveSkill = getIsActiveSkill;
-            this.setIsActiveSkill = setIsActiveSkill;
         }
 
         protected override void ModifyGameState()
         {
 
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-
         public void CompleteAction()
         {
-            var makerPiece = PieceOn(Maker);
-            if (makerPiece == null) return;
-            var color = makerPiece.Color;        
-            if (getIsActiveSkill())
+            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+            if (FirstTarget == null) 
             {
-                ActionManager.ExecuteImmediately(new NormalCapture(Maker, Target));
-                TileManager.Ins.Select(Target);
+                FirstTarget = hovering;
+                TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
-                var (rank, file) = RankFileOf(Target);
-
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2)) {
-                    int pos = IndexOf(rankOff, fileOff);  
-                    var piece = PieceOn(pos);
-                    if (pos == Maker) continue;
-                    if (piece != null && color != piece.Color)
-                    {
-                        TileManager.Ins.MarkAsMoveable(pos);
-                        var killAction = new KillPieceAction(pos);
-                        BoardViewer.ListOf.Add(killAction);
-                    }
+                foreach (var (rankOff, fileOff) in MoveEnumerators.Around(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 2))
+                {
+                    var index = IndexOf(rankOff, fileOff);
+                    var piece = PieceOn(index);
+                    if (piece == null || piece.Color != FirstTarget.Color) continue;
+                    var newAction = new MarinelGuanaAttack(Maker, index);
+                    BoardViewer.ListOf.Add(newAction);
+                    TileManager.Ins.MarkAsMoveable(index);
                 }
-                setIsActiveSkill(false);
+                return;
             }
-            else
-            {
-                ActionManager.ExecuteImmediately(new NormalCapture(Maker, Target));
-                BoardViewer.ListOf.Clear();
-                TileManager.Ins.Select(Target);
-                MatchManager.Ins.InputProcessor.Unmark();
-                ActionManager.ExecuteImmediately(new EndTurn());
-               
-            }
-
+            SecondTarget = hovering;
+            TileManager.Ins.UnmarkAll();    
+            BoardViewer.Ins.Unmark();
+            ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
+            FirstTarget = null;
+            SecondTarget = null;
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
         }
     }
 }
