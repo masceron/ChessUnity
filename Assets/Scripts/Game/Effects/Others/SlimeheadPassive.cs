@@ -17,7 +17,7 @@ namespace Game.Effects.Others
         {
             if (action == null) return;
             
-            if (action.Target == Piece.Pos && Piece.IsDead())
+            if (action.Target == Piece.Pos && Piece.IsDead()) //TODO: Fix bug: IsDead() is checked before this piece is killed so this action doesn't happen.
             {
                 var maker = BoardUtils.PieceOn(action.Maker);
                 int buffEffect = 0;

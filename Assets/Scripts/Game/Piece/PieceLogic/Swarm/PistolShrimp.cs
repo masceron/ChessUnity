@@ -12,8 +12,8 @@ namespace Game.Piece.PieceLogic.Swarm
         private sbyte timeToCooldown;
         public PistolShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(5, this)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(5, this)));
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;

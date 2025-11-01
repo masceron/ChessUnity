@@ -35,7 +35,7 @@ public static class Config
          //new PieceConfig(PieceType.ElectricEel, true, 111),
          //new PieceConfig(PieceType.SeaStar, true, 113),
         new PieceConfig(PieceType.Swordfish, true, 105),
-        new PieceConfig(PieceType.PistolShrimp, true, 106),
+        new PieceConfig(PieceType.PistolShrimp, true, 86),
         new PieceConfig(PieceType.Slimehead, true, 107)
     };
 
