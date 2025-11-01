@@ -83,6 +83,7 @@ namespace Game.Effects
         SunfishPassive,
         Controlled,
         PollutedRockPassive,
+        Fear
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
