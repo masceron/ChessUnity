@@ -21,11 +21,15 @@ namespace UX.UI.Army.DesignArmy
         [NonSerialized] public int File = -1;
         [NonSerialized] public PieceInfo Piece;
         
-        public void Load(PieceInfo piece)
+        public void Load(PieceInfo piece, bool isGreyOut = false)
         {
             Piece = piece;
             model.ObjectPrefab = Piece.prefab.transform;
             SetTooltip();
+            if (isGreyOut)
+            {
+                image.color = Color.black * 0.5f;
+            }
         }
 
         private void SetTooltip()

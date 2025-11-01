@@ -21,7 +21,7 @@ namespace Game.Tile
 
         public override void OnPieceEnter(PieceLogic piece){
             base.OnPieceEnter(piece);
-            appliedEffect = new LongReach(pieceOnFormation);
+            appliedEffect = new LongReach(PieceOnFormation);
             ActionManager.ExecuteImmediately(new ApplyEffect(appliedEffect));
         }
 

@@ -7,6 +7,7 @@ using GameConfig = Game.Save.Stage.GameConfig;
 
 namespace UX.UI.Loader
 {
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class SceneLoader
     {
@@ -21,6 +22,11 @@ namespace UX.UI.Loader
                         break;
                     case 1:
                         MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(12, 12)));
+                        break;
+                    case 2:
+
+                        UIManager.Ins.Load(CanvasID.FreePlayPreset);
+                        AssetManager.Ins.Load();
                         break;
                 }
             };

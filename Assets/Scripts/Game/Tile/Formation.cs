@@ -12,6 +12,7 @@ namespace Game.Tile
         UrchinField,
         Saprolegnia,
         Kelp,
+        PredatorLair,
     }
 
     // public interface IHaveDuration{

@@ -1,3 +1,5 @@
+using Game.Action.Internal;
+using Game.Effects.Buffs;
 using Game.Tile;
 using Game.Piece.PieceLogic;
 using Game.Managers;
@@ -30,9 +32,10 @@ namespace Game.Action.Skills
                     FormationManager.Ins.SetFormation(IndexOf(x, y), FogOfWar);
                 }
             }
-            
+
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            MatchManager.Ins.GameState.Move(Maker, (ushort)IndexOf(rank - 3, file));
+            int steps = (PieceOn(Maker).Color == false ? -3 : 3);
+            MatchManager.Ins.GameState.Move(Maker, (ushort)IndexOf(rank - steps, file));
         }
     }
 }

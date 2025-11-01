@@ -32,6 +32,7 @@ namespace Game.Managers
             EffectData = new Dictionary<EffectName, EffectInfo>(effectsData.effectsData);
             RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
             EnviromentData = new Dictionary<FormationType, GameObject>(enviromentsData.enviromentsData);
+            Debug.Log(PieceData[PieceType.Velkaris]);
         }
     }
 }

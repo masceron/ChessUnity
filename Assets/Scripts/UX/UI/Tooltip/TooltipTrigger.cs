@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 
 namespace UX.UI.Tooltip
 {
+    //Gắn vào các ArmyTroop để hiển thị Tooltip khi hover vào quân cờ
     public class TooltipTrigger: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         private string headerLeft;
@@ -11,7 +12,7 @@ namespace UX.UI.Tooltip
         private string content;
         private Tween delay;
         private bool showing;
-        
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             delay = Tween.Delay(1f, () =>

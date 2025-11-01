@@ -939,13 +939,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48369b3fbf77a94a8825f3c23e961db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentCanvasID: 0
   canvasDict:
-    keys: 03000000040000000800000009000000
+    keys: 030000000400000008000000090000000a000000
     values:
     - {fileID: 3020086329195182827, guid: 52e0f9949abb67b4293b1304edacb925, type: 3}
     - {fileID: 8788904782196925133, guid: e9031a7dc59ce664f8fadb57dae0e325, type: 3}
     - {fileID: 6461111081555416344, guid: 4e69c5a8c2e2e21409d13fb34c8ba79d, type: 3}
     - {fileID: 1308051524528718088, guid: dba6e430f34f84f4b9705af32bd13b68, type: 3}
+    - {fileID: 8180157971106501380, guid: 2b88f87fa542f5b4e9497de7658aad4d, type: 3}
 --- !u!4 &1587264568
 Transform:
   m_ObjectHideFlags: 0

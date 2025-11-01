@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UX.UI.Army.DesignArmy;
+using UnityEngine.SceneManagement;
 
 namespace UX.UI.Army.NewArmy
 {
@@ -8,7 +9,14 @@ namespace UX.UI.Army.NewArmy
     {
         public void Create(int size)
         {
-            UIManager.Ins.Load(CanvasID.DesignArmy);
+            if (SceneManager.GetActiveScene().name == "FreePlayTest")
+            {
+                UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
+            }
+            else
+            {
+                UIManager.Ins.Load(CanvasID.DesignArmy);
+            }
             ArmyDesign.Ins.Load(size, null);
         }
 

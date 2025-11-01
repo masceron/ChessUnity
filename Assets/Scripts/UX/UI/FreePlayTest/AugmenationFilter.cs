@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+
+
+
+using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
 using Game.Piece;
@@ -13,7 +16,7 @@ using Game.Managers;
 namespace UX.UI.Army.DesignArmy
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArmySearcher: MonoBehaviour
+    public class AugmentationFilter: MonoBehaviour
     {
         [SerializeField] private PiecesData piecesData;
         [SerializeField] private TMP_InputField searchBar;

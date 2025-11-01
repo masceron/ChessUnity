@@ -1,10 +1,10 @@
-using UnityEngine;
 using Game.Action;
 using Game.Common;
 using Game.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UX.UI.Ingame
 {
@@ -13,6 +13,7 @@ namespace UX.UI.Ingame
     {
         [SerializeField] private CanvasGroup gameAction;
         [SerializeField] private Button relic;
+        [SerializeField] private TMP_Text relicCooldownText;
         [SerializeField] private Button skip;
 
         private void OnEnable()
@@ -27,6 +28,7 @@ namespace UX.UI.Ingame
         public void DisableGameInteractions()
         {
             gameAction.interactable = false;
+            relicCooldownText.gameObject.SetActive(false);
         }
 
         public void EnableGameInteractions()

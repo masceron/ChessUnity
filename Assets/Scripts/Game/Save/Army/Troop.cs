@@ -1,6 +1,8 @@
 ﻿using System;
 using Game.Piece;
 using MemoryPack;
+using Game.ScriptableObjects;
+using Game.Managers;
 
 namespace Game.Save.Army
 {
@@ -10,12 +12,13 @@ namespace Game.Save.Army
         public readonly PieceType Type;
         public readonly ushort Rank;
         public readonly ushort File;
-
-        public Troop(PieceType pieceType, int rank, int file)
+        public readonly bool Side;
+        public Troop(PieceType pieceType, int rank, int file, bool side = false)
         {
             Type = pieceType;
             Rank = (ushort) rank;
-            File = (ushort) file;
+            File = (ushort)file;
+            Side = side;
         }
 
         public int CompareTo(Troop other)
@@ -24,6 +27,10 @@ namespace Game.Save.Army
             if (Rank > other.Rank) return 1;
             if (File < other.File) return -1;
             return File > other.File ? 1 : 0;
+        }
+        public PieceInfo GetPieceInfo()
+        {
+            return AssetManager.Ins.PieceData[Type];
         }
     }
 }

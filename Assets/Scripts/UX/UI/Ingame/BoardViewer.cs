@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
-using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
@@ -22,17 +21,17 @@ namespace UX.UI.Ingame
         
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
+        public static int HoveringPos;
         
         public static int Selecting = -1;
         public static int SelectingFunction;
         private static readonly List<Action> MoveList = new();
-        private static readonly List<Action> ListOf = new();
+        public static readonly List<Action> ListOf = new();
         
         private void Start()
         {
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
-            gameActions.Load(EndTurn);
             UpdateRelic();
         }
 
@@ -57,6 +56,8 @@ namespace UX.UI.Ingame
 
         private void SetPieceHover(int pos)
         {
+            HoveringPos = pos;
+
             if (Selecting != -1) return;
             
             if (pos == -1)
@@ -88,6 +89,13 @@ namespace UX.UI.Ingame
             Selecting = -1;
             TileManager.Ins.UnmarkAll();
             pieceActions.DisablePieceInteractions();
+            foreach (var action in ListOf)
+            {
+                if (action is System.IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
             ListOf.Clear();
             SetPieceHover(-1);
         }
@@ -103,52 +111,59 @@ namespace UX.UI.Ingame
 
         public void MarkPiece(int pos)
         {
+            HoveringPos = pos;
+
             if (Selecting != -1)
             {
                 if (SelectingFunction == 0) return;
                 
-                var action = ListOf.Find(a => a.Target == pos);
-                switch (action)
+                if (SelectingFunction == 4)
                 {
-                    case null:
-                        return;
-                    case IDoubleSelectionSkill doubleSkill:
-                        if (doubleSkill.IsBothSelected()) { break; }
-                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
-                        ShowMoveList(action.Maker);
-                        pieceActions.MarkSkill();
-                        return;
-                    case IPendingAble pending:
-                        pending.CompleteAction();
-                        return;
-                }
+                    var action = ListOf.Find(a => a.Maker == pos);
+                    switch (action)
+                    {
+                        case null:
+                            return;
+                        case IPendingAble pending:
+                            pending.CompleteAction();
+                            return;
+                    }
+                    ActionManager.EnqueueAction(action);
+                } 
+                else
+                {
+                    var action = ListOf.Find(a => a.Target == pos);
+                    switch (action)
+                    {
+                        case null:
+                            return;
+                        case IPendingAble pending:
+                            pending.CompleteAction();
+                            return;
+                    }
 
-                ExecuteAction(action);
+                    ExecuteAction(action);
+                }
             }
             else
             {
-                ShowMoveList(pos);
+                var piece = PieceOn(pos);
+                if (piece == null) return;
+                
+                SetPieceHover(pos);
+                TileManager.Ins.Select(pos);
+                Selecting = pos;
+                pieceActions.LoadPieceActionInfo();
+                PanTo(RankOf(pos), FileOf(pos));
+
+                if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
+                
+                pieceActions.EnablePieceInteractions();
+                MoveList.Clear();
+                PieceOn(Selecting).MoveList(MoveList);
             }
         }
-        private void ShowMoveList(int pos){
-            var piece = PieceOn(pos);
-            if (piece == null || piece.isClickable == false) return;
-            SetPieceHover(pos);
-            TileManager.Ins.Select(pos);
-            Selecting = pos;
-            pieceActions.LoadPieceActionInfo();
-            PanTo(RankOf(pos), FileOf(pos));
-            if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
-            pieceActions.EnablePieceInteractions();
-            MoveList.Clear();
-            PieceOn(Selecting).MoveList(MoveList);
-            if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
-            pieceActions.EnablePieceInteractions();
-            MoveList.Clear();
-            PieceOn(Selecting).MoveList(MoveList);
-        }
-        
-        // private void NewTurn()
+
         private void EndTurn()
         {
             if (SideToMove() != OurSide())

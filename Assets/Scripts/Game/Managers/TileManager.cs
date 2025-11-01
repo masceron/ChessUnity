@@ -168,10 +168,10 @@ namespace Game.Managers
         private void SpawnTile(int index)
         {
             var prefab = IsActive(index)
-                ? !ColorOfSquare(index) ? 
-                    AssetManager.Ins.TileData[Color.White] : 
-                    AssetManager.Ins.TileData[Color.Black] : 
-                AssetManager.Ins.TileData[Color.None];
+                ? !ColorOfSquare(index) ?
+                    AssetManager.Ins.TileData[Color.White] :
+                    AssetManager.Ins.TileData[Color.Black] :
+                AssetManager.Ins.TileData[Color.None]; 
 
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);

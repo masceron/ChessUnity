@@ -40,7 +40,7 @@ namespace Game.Effects.RegionalEffect
             (half, half - 1),
             (half, half)
         };
-            AssetManager.Ins.regionalsData.CreateWhirlPool(FromRankFileToWorldPos(half - 1.0f / 2, half - 1.0f / 2));
+            AssetManager.Ins.RegionalsData.CreateWhirlPool(FromRankFileToWorldPos(half - 1.0f / 2, half - 1.0f / 2));
             centralIndices = centralPos.Select(p => IndexOf(p.Item1, p.Item2)).ToList();
         }
         protected override void ApplyEffect(int currentTurn)

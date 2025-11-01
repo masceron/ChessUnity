@@ -26,34 +26,34 @@ namespace Game.Relics.EyeOfMimic
 
         public void CompleteAction()
         {
-            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+            // var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
-            {
-                FirstTarget = hovering;
-                TileManager.Ins.MarkIfDifferntColor(FirstTarget.Color);
-                TileManager.Ins.Select(FirstTarget.Pos);
-                return;
-            }
+            // if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            // {
+            //     FirstTarget = hovering;
+            //     TileManager.Ins.MarkIfDifferntColor(FirstTarget.Color);
+            //     TileManager.Ins.Select(FirstTarget.Pos);
+            //     return;
+            // }
 
-            SecondTarget = hovering;
-            Debug.Log(SecondTarget.Type);
-            TileManager.Ins.UnmarkAll();
+            // SecondTarget = hovering;
+            // Debug.Log(SecondTarget.Type);
+            // TileManager.Ins.UnmarkAll();
 
-            var ourSide = MatchManager.Ins.GameState.OurSide;
+            // var ourSide = MatchManager.Ins.GameState.OurSide;
 
-            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
+            // var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
+            // var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
 
-            ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
 
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
+            // BoardViewer.Selecting = -1;
+            // BoardViewer.SelectingFunction = 0;
 
-            eyeOfMimic.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
+            // eyeOfMimic.SetCooldown();
+            // MatchManager.Ins.InputProcessor.UpdateRelic();
 
-            ResetTargets();
+            // ResetTargets();
         }
 
         private static void ResetTargets()

@@ -10,6 +10,7 @@ namespace UX.UI.Army.DesignArmy
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArmyDesign: Singleton<ArmyDesign>
     {
+        public bool choosenSide{ get; private set; }
         [SerializeField] private DesignArmyInfo info;
         [SerializeField] private ArmyDesignBoard board;
         [SerializeField] private ArmySearcher searcher;
@@ -18,6 +19,10 @@ namespace UX.UI.Army.DesignArmy
         private int size;
         private Game.Save.Army.Army army;
         
+        void Awake()
+        {
+            choosenSide = false;
+        }
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -97,6 +102,11 @@ namespace UX.UI.Army.DesignArmy
         public void SelectRelic(RelicType type)
         {
             army.Relic = new Relic(type);
+        }
+
+        public void ToggleChosenSide()
+        {
+            choosenSide = !choosenSide;
         }
     }
 }

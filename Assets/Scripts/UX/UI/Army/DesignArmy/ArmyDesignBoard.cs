@@ -1,14 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using Game.Piece;
 using Game.Save.Army;
+using Game.Common;
+using Game.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UX.UI.Army.DesignArmy
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArmyDesignBoard: MonoBehaviour
+    public class ArmyDesignBoard: Singleton<ArmyDesignBoard>
     {
         [SerializeField] private RectTransform mainTransform;
         [SerializeField] private GridLayoutGroup grid;
@@ -18,6 +21,7 @@ namespace UX.UI.Army.DesignArmy
 
         private List<ArmyDesignSquare> childSquares;
         public List<Troop> Troops;
+        public Action<Troop> OnAddTroop, OnRemoveTroop;
         public void Load(int boardSize)
         {
             Troops = new List<Troop>();
@@ -68,8 +72,8 @@ namespace UX.UI.Army.DesignArmy
         }
 
         public void SetAllowed()
-        {
-            var rankStart = size / 2;
+        { 
+            int rankStart = size / 2;
             
             for (var i = 0; i < rankStart; i++)
             {
@@ -91,7 +95,8 @@ namespace UX.UI.Army.DesignArmy
                     {
                         var idx = i * size + j;
                         var sq = childSquares[idx];
-                        if (sq.transform.childCount > 0) sq.MarkAsNotAllowed();
+                        //không được phép đặt 2 quân chồng lên nhau
+                        if (sq.transform.childCount > 0) sq.MarkAsNotAllowed(); 
                         else
                         {
                             allowed[idx] = true;
@@ -129,7 +134,9 @@ namespace UX.UI.Army.DesignArmy
 
         public void Add(int rank, int file, PieceType type)
         {
-            Troops.Add(new Troop(type, rank, file));
+            Troop newTroop = new Troop(type, rank, file);
+            Troops.Add(newTroop);
+            OnAddTroop?.Invoke(newTroop);
         }
 
         public void Move(int oldR, int oldF, int newR, int newF)
@@ -140,7 +147,23 @@ namespace UX.UI.Army.DesignArmy
 
         public void Remove(int r, int f)
         {
-            Troops.RemoveAt(Troops.FindIndex(t => t.Rank == r && t.File == f));
+            int removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
+            Troop removedTroop = Troops[removedIndex];
+            Troops.RemoveAt(removedIndex);
+            OnRemoveTroop?.Invoke(Troops[removedIndex]);
+
+        }
+        public int GetCount(Troop troop)
+        {
+            int cnt = 0;
+            foreach (Troop tr in Troops)
+            {
+                if (tr.Equals(troop))
+                {
+                    cnt++;
+                }
+            }
+            return cnt;
         }
     }
 }

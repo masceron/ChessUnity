@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
     {
         public ushort Pos;
         public bool Color;
-
+        public bool isClickable;
         public readonly List<byte> MoveRange;
         public byte AttackRange;
         public sbyte SkillCooldown;

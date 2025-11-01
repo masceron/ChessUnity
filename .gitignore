@@ -100,3 +100,5 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 .idea/
 ProjectSettings/ProjectVersion.txt
+*.fbx.meta
+Assets/Scripts/Editor/AutoLODImporter.cs
