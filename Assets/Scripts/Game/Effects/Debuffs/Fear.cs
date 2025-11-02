@@ -8,7 +8,7 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Fear: Effect, IEndTurnEffect
     {
-        public Fear(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectName.Taunted)
+        public Fear(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectName.Fear)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

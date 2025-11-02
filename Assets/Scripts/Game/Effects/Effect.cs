@@ -109,6 +109,7 @@ namespace Game.Effects
         BottlenoseDolphinPassive,
         Controlled,
         PollutedRockPassive,
+        Fear
         TidalRetinaPassive,
         MelibePassive,
         BlueDragonPassive,

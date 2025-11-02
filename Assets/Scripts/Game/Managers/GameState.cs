@@ -18,6 +18,7 @@ using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon;
 using Game.Piece.PieceLogic.Construct.Fracture_Zone;
 using Game.Piece.PieceLogic.Construct.KelpForest;
+using Game.Piece.PieceLogic.Construct.PollutedRock;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -180,6 +181,8 @@ namespace Game.Managers
                 PieceType.PistolShrimp => new PistolShrimp(piece),
                 PieceType.Slimehead => new Slimehead(piece),
                 PieceType.MarineIguana => new MarineIguana(piece),
+                PieceType.PollutedRock => new PollutedRock(piece),
+                PieceType.Barnacle => new Barnacle(piece),
                 _ => null
             };
 

@@ -61,7 +61,9 @@ namespace Game.Piece
         Lizardfish,
         PistolShrimp,
         Slimehead,
-        MarineIguana
+        MarineIguana,
+        PollutedRock,
+        Barnacle
     }
 
     public enum PieceRank : byte
