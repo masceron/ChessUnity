@@ -58,7 +58,9 @@ namespace Game.Piece
         Fangtooth,
         GulperEel,
         Hatchetfish,
-        Lizardfish
+        Lizardfish,
+        PistolShrimp,
+        Slimehead
     }
 
     public enum PieceRank : byte

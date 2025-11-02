@@ -173,6 +173,8 @@ namespace Game.Managers
                 PieceType.GulperEel => new GulperEel(piece),
                 PieceType.Hatchetfish => new Hatchetfish(piece),
                 PieceType.Lizardfish => new Lizardfish(piece),
+                PieceType.PistolShrimp => new PistolShrimp(piece),
+                PieceType.Slimehead => new Slimehead(piece),
                 _ => null
             };
 

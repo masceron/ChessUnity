@@ -116,7 +116,8 @@ namespace Game.Effects
         Marked,
         Fear,
         Frenzied,
-        NativeGround
+        NativeGround,
+        SlimeheadPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
