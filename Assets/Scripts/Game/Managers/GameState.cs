@@ -28,6 +28,7 @@ using Game.Relics.SeafoamPhial;
 using Game.Relics.SirensHarpoon;
 using UnityEngine;
 using static Game.Common.BoardUtils;
+using Game.Effects.RegionalEffect;
 
 namespace Game.Managers
 {
@@ -72,6 +73,8 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> effectObservers = new();
+        public RegionalEffect RegionalEffect;
+        private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
         private int CurrentTurn { get; set; }
         private int countTurn;
@@ -166,6 +169,10 @@ namespace Game.Managers
                 PieceType.KelpForest => new KelpForest(piece),
                 PieceType.Melibe => new Melibe(piece),
                 PieceType.BlueDragon => new BlueDragon(piece),
+                PieceType.Fangtooth => new Fangtooth(piece),
+                PieceType.GulperEel => new GulperEel(piece),
+                PieceType.Hatchetfish => new Hatchetfish(piece),
+                PieceType.Lizardfish => new Lizardfish(piece),
                 _ => null
             };
 
@@ -187,6 +194,24 @@ namespace Game.Managers
                 _ => null
             };
             return rl;
+        }
+
+        public void MakeRegionalEffect(RegionalEffectType ret)
+        {
+            RegionalEffect = GetRegionalEffectByType(ret);
+        }
+
+        public RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
+        {
+            RegionalEffect re = ret switch
+            {
+                RegionalEffectType.Whirpool => new Whirlpool(),
+                RegionalEffectType.PsionicShock => new PsionicShock(),
+                RegionalEffectType.BloodMoon => new BloodMoon(),
+                _ => null
+            };
+
+            return re;
         }
 
         public void EffectCountdown()

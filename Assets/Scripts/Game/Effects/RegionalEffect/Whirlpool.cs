@@ -11,7 +11,7 @@ namespace Game.Effects.RegionalEffect
 {
     public class Whirlpool : RegionalEffect{
         private int startTurn = 4;
-        protected Whirlpool() : base(){
+        public Whirlpool() : base(RegionalEffectType.Whirpool){
 
         }
         protected override void ApplyEffect(int currentTurn)

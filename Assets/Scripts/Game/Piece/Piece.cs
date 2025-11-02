@@ -54,7 +54,11 @@ namespace Game.Piece
         BottlenoseDolphin,
         KelpForest,
         Melibe,
-        BlueDragon
+        BlueDragon,
+        Fangtooth,
+        GulperEel,
+        Hatchetfish,
+        Lizardfish
     }
 
     public enum PieceRank : byte
