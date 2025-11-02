@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Melibe
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 44
+  type: 47
   prefab: {fileID: 5271979791856331558, guid: 4793ebc334d81b64b99ab152ac0d6093, type: 3}
   rank: 2
   moveRange: 2
@@ -22,3 +22,4 @@ MonoBehaviour:
   key: piece_melibe
   hasSkill: 0
   normalSkillCooldown: -1
+  availableSlots: 0
