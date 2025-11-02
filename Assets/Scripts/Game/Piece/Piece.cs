@@ -35,7 +35,7 @@ namespace Game.Piece
         SeaTurtle,
         HorseLeech,
         Megalodon,
-        MedicalLeech,
+        MedicinalLeech,
         Temperantia,
         BobtailSquid,
         LivingCoral,
