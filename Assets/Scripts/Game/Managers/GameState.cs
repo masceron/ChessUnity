@@ -161,6 +161,8 @@ namespace Game.Managers
                 PieceType.BottlenoseDolphin => new BottlenoseDolphin(piece),
                 PieceType.KelpForest => new KelpForest(piece),
                 PieceType.MarineIguana => new MarineIguana(piece),
+                PieceType.HumboldtSquid => new HumboldtSquid(piece),
+                PieceType.Grenadiers => new Grenadiers(piece),
                 _ => null
             };
 
@@ -320,8 +322,8 @@ namespace Game.Managers
             foreach(var subscriber in Subscribers) {
                 subscriber.OnCallEnd(SideToMove);
             }
-            
-            observers.ForEach(effect =>
+            var observersCopy = new List<Effect>(observers);
+            observersCopy.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
                 if (effect is not IEndTurnEffect turnEffect) return;

@@ -109,6 +109,8 @@ namespace Game.Effects
         Controlled,
         PollutedRockPassive,
         Adaptation,
+        HumboldtSquidPassive,
+        Frienzied,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
