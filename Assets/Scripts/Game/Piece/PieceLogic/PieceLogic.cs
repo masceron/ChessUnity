@@ -26,7 +26,7 @@ namespace Game.Piece.PieceLogic
         public readonly List<int> PreviousMoves;
         public readonly PieceType Type;
         private readonly bool hasSkill;
-        public readonly List<Augmentation.Augmentation> Augmentations;
+        private readonly List<Augmentation.Augmentation> Augmentations;
 
         private bool dead;
         public bool IsDead()
