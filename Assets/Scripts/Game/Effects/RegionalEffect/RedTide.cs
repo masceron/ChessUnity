@@ -15,7 +15,7 @@ namespace Game.Effects.RegionalEffect
     public class RedTide: RegionalEffect
     {
         private int isActive;
-        public RedTide() : base()
+        public RedTide() : base(RegionalEffectType.RedTide)
         {
             isActive = 1;
         }
