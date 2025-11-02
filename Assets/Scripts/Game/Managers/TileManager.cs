@@ -342,5 +342,23 @@ namespace Game.Managers
                 } else selections[i].gameObject.SetActive(false);
             }
         }
+
+        public void MarkNextEachPiece(bool color, int pos)
+        {
+            for (var i = -1; i <= 1; i++)
+            {
+                for (var j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0) continue;
+                    var indexOff = IndexOf(RankOf(pos) + i, FileOf(pos) + j);
+
+                    if (!VerifyIndex(indexOff)) continue;
+                    var pieceOff = PieceOn(indexOff);
+                    if (pieceOff == null) continue;
+                    if (pieceOff.Color != color) continue;
+                    MarkAsMoveable(indexOff);
+                }
+            }
+        }
     }
 }

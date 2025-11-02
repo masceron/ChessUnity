@@ -50,6 +50,8 @@ namespace Game.Managers
             GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
             GameState.OnIncreaseTurn += (ct) => { Debug.Log("current turn : " + ct); };
             ActionManager.Init(GameState);
+
+            new DjinnBlessing();
         }
 
         public void Init(GameConfig cfg)
@@ -58,7 +60,6 @@ namespace Game.Managers
             AssetManager.Ins.Load();
             MakeGame(cfg);
             MakeBoard();
-            
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
                 Config.relicWhiteConfig, 
                 Config.relicBlackConfig,

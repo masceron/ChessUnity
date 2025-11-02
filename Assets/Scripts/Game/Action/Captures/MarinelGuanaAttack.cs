@@ -1,0 +1,66 @@
+using Game.Action.Internal;
+using UnityEngine;
+using UX.UI.Ingame;
+using Game.Action.Internal.Pending;
+using Game.Managers;
+using static Game.Common.BoardUtils;
+using Game.Tile;
+using Game.Action.Captures;
+using Game.Common;
+using Game.Movesets;
+using System.Collections.Generic;
+using Game.Action.Skills;
+using Game.Piece.PieceLogic;
+using static Game.Common.MoveEnumerators;
+using System.Linq;
+using Game.Effects.Buffs;
+using Game.Effects;
+
+namespace Game.Action.Captures
+{
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class MarinelGuanaAttack: Action, IPendingAble, ISkills
+    {
+        private static PieceLogic FirstTarget;
+        private static PieceLogic SecondTarget;
+        public MarinelGuanaAttack(int maker, int to) : base(maker, false)
+        {
+            Maker = (ushort)maker;
+            Target = (ushort)to;
+        }
+
+        protected override void ModifyGameState()
+        {
+
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+        public void CompleteAction()
+        {
+            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+            if (FirstTarget == null) 
+            {
+                FirstTarget = hovering;
+                TileManager.Ins.UnmarkAll();
+                BoardViewer.ListOf.Clear();
+                foreach (var (rankOff, fileOff) in MoveEnumerators.Around(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 2))
+                {
+                    var index = IndexOf(rankOff, fileOff);
+                    var piece = PieceOn(index);
+                    if (piece == null || piece.Color != FirstTarget.Color) continue;
+                    var newAction = new MarinelGuanaAttack(Maker, index);
+                    BoardViewer.ListOf.Add(newAction);
+                    TileManager.Ins.MarkAsMoveable(index);
+                }
+                return;
+            }
+            SecondTarget = hovering;
+            TileManager.Ins.UnmarkAll();    
+            BoardViewer.Ins.Unmark();
+            ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
+            FirstTarget = null;
+            SecondTarget = null;
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+        }
+    }
+}

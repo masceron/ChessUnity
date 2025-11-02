@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: RelicsData
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.Collections.RelicsData
   relicsData:
-    keys: 0000000001000000020000000300000004000000050000000600000007000000
+    keys: 000000000100000002000000030000000400000005000000060000000700000008000000
     values:
     - {fileID: 11400000, guid: 454f558bcbc79cd4ea0d8658d3da2e48, type: 2}
     - {fileID: 11400000, guid: 3c306da708a6f2d4c9d5b86ad6e30ce6, type: 2}
@@ -23,3 +23,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: ccb47416f8841af4dbc57a4e6df3c2da, type: 2}
     - {fileID: 11400000, guid: 48af9d46ec65d974db6fac9efeec969a, type: 2}
     - {fileID: 11400000, guid: 7bb870eb965cafa47b066b5d569ced14, type: 2}
+    - {fileID: 11400000, guid: a1f75cd848251a6479a66f520a196a71, type: 2}

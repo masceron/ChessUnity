@@ -9,7 +9,8 @@
         RottingScythe,
         SeafoamPhial,
         StormCapacitor,
-        SirensHarpoon
+        SirensHarpoon,
+        MangroveCharm
     }
 
     public abstract class RelicLogic

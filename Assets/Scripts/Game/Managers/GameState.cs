@@ -6,6 +6,9 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects;
+using Game.Effects.Buffs;
+using Game.Effects.Debuffs;
+using Game.Effects.Traits;
 using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
@@ -26,6 +29,7 @@ using Game.Relics.RottingScythe;
 using Game.Relics.StormCapacitor;
 using Game.Relics.SeafoamPhial;
 using Game.Relics.SirensHarpoon;
+using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
@@ -175,6 +179,7 @@ namespace Game.Managers
                 PieceType.Lizardfish => new Lizardfish(piece),
                 PieceType.PistolShrimp => new PistolShrimp(piece),
                 PieceType.Slimehead => new Slimehead(piece),
+                PieceType.MarineIguana => new MarineIguana(piece),
                 _ => null
             };
 
@@ -193,6 +198,7 @@ namespace Game.Managers
                 RelicType.SeafoamPhial => new SeafoamPhial(cfg),
                 RelicType.StormCapacitor => new StormCapacitor(cfg),
                 RelicType.SirensHarpoon => new SirensHarpoon(cfg),
+                RelicType.MangroveCharm => new MangroveCharm(cfg),
                 _ => null
             };
             return rl;
@@ -214,6 +220,41 @@ namespace Game.Managers
             };
 
             return re;
+        }
+
+        public static Effect CreateEffect(EffectName effectName, sbyte duration,sbyte strength, PieceLogic piece)
+        {
+
+            return effectName switch
+            {
+                // Buffs 
+                EffectName.Carapace => new Game.Effects.Buffs.Carapace(duration, piece),
+                EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
+                EffectName.Piercing => new Game.Effects.Buffs.Piercing(duration, piece),
+                EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
+                EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece, strength),
+                EffectName.Haste => new Game.Effects.Buffs.Haste(duration, strength, piece),
+                
+                // Traits 
+                EffectName.Evasion => new Game.Effects.Traits.Evasion(duration, strength, piece),
+                EffectName.Construct => new Game.Effects.Traits.Construct(piece),
+                EffectName.Demolisher => new Game.Effects.Traits.Demolisher(piece),
+                EffectName.Consume => new Game.Effects.Traits.Consume(piece),
+                EffectName.Surpass => new Game.Effects.Traits.Surpass(piece),
+                EffectName.Ambush => new Game.Effects.Traits.Ambush(piece),
+                EffectName.QuickReflex => new Game.Effects.Traits.QuickReflex(piece),
+
+                // Debuffs
+                EffectName.Slow => new Game.Effects.Debuffs.Slow(strength,duration, piece),
+                EffectName.Blinded => new Game.Effects.Debuffs.Blinded(duration, strength, piece),
+                EffectName.Stunned => new Game.Effects.Debuffs.Stunned(duration, piece),
+                EffectName.Poison => new Game.Effects.Debuffs.Poison(duration, piece),
+                EffectName.Bleeding => new Game.Effects.Debuffs.Bleeding(duration, piece),
+                EffectName.Bound => new Game.Effects.Debuffs.Bound(duration, piece),
+                EffectName.Taunted => new Game.Effects.Debuffs.Taunted(duration, piece),
+
+                _ => new Game.Effects.Buffs.Shield(piece)
+            };
         }
 
         public void EffectCountdown()

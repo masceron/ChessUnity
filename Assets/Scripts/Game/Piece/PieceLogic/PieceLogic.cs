@@ -7,11 +7,22 @@ using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
 using Game.ScriptableObjects;
+using Game.Tile;
 using static Game.Common.BoardUtils;
 using static Game.ScriptableObjects.PieceInfo;
 
 namespace Game.Piece.PieceLogic
 {
+
+    // miễn nhiễm với Formation mang debuff
+    // miễn nhiễm với Formation cụ thể nào đó   
+    public enum ImmunityType
+    {
+        None,
+        FormationDebuff,
+        FormationSpecific,
+    }
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
@@ -29,6 +40,9 @@ namespace Game.Piece.PieceLogic
         private readonly List<Augmentation.Augmentation> Augmentations;
 
         private bool dead;
+
+        public List<ImmunityType> Immunities;
+        public List<FormationType> SpecificFormations;
         public bool IsDead()
         {
             return dead;
@@ -51,6 +65,8 @@ namespace Game.Piece.PieceLogic
             AttackRange = info.attackRange;
             PieceRank = info.rank;
             hasSkill = info.hasSkill;
+            Immunities = new List<ImmunityType>();
+            SpecificFormations = new List<FormationType>();
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
@@ -202,5 +218,30 @@ namespace Game.Piece.PieceLogic
             
             return Math.Max(1, range);
         }
+
+        public bool IsImmuneTo(Formation formation, Effect appliedEffect = null)
+        {
+            if (formation == null) return false;
+            
+            foreach (var immunityEffect in Effects)
+            {
+                if (immunityEffect is IImmunity immunity)
+                {
+                    if (appliedEffect != null && immunity.CheckImmunity(formation.GetFormationType(), appliedEffect)) {
+                        return true;
+                    }
+                }
+            }
+            if (Immunities.Contains(ImmunityType.FormationDebuff) && appliedEffect?.Category == EffectCategory.Debuff) {
+                return true;
+            }
+            if (Immunities.Contains(ImmunityType.FormationSpecific) && SpecificFormations.Contains(formation.GetFormationType())) {
+                return true;
+            }
+
+            return false;
+        }
+
+
     }
 }
