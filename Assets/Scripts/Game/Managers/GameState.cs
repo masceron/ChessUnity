@@ -5,6 +5,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
@@ -184,6 +185,7 @@ namespace Game.Managers
                 PieceType.PollutedRock => new PollutedRock(piece),
                 PieceType.Barnacle => new Barnacle(piece),
                 PieceType.SloaneSViperFish => new SloaneSViperfish(piece),
+                PieceType.FeatherStar => new FeatherStar(piece),
                 _ => null
             };
 
