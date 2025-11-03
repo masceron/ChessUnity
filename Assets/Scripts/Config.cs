@@ -14,7 +14,9 @@ public static class Config
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig(PieceType.ElectricEel, true, 82)
+        new PieceConfig(PieceType.ElectricEel, true, 82),
+        new PieceConfig(PieceType.SloaneSViperFish, true, 81),
+        new PieceConfig(PieceType.Lionfish, true, 79)
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);

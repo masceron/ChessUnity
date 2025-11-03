@@ -183,6 +183,7 @@ namespace Game.Managers
                 PieceType.MarineIguana => new MarineIguana(piece),
                 PieceType.PollutedRock => new PollutedRock(piece),
                 PieceType.Barnacle => new Barnacle(piece),
+                PieceType.SloaneSViperFish => new SloaneSViperfish(piece),
                 _ => null
             };
 
