@@ -64,6 +64,9 @@ namespace Game.Piece
         MarineIguana,
         PollutedRock,
         Barnacle
+        MarineIguana,
+        HumboldtSquid,
+        Grenadiers
     }
 
     public enum PieceRank : byte

@@ -183,6 +183,8 @@ namespace Game.Managers
                 PieceType.MarineIguana => new MarineIguana(piece),
                 PieceType.PollutedRock => new PollutedRock(piece),
                 PieceType.Barnacle => new Barnacle(piece),
+                PieceType.HumboldtSquid => new HumboldtSquid(piece),
+                PieceType.Grenadiers => new Grenadiers(piece),
                 _ => null
             };
 
@@ -364,6 +366,7 @@ namespace Game.Managers
             }
 
             effectObservers.ForEach(effect =>
+
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
                 if (effect is not IEndTurnEffect turnEffect) return;
