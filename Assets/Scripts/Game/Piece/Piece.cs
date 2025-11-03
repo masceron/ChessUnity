@@ -63,8 +63,7 @@ namespace Game.Piece
         Slimehead,
         MarineIguana,
         PollutedRock,
-        Barnacle
-        MarineIguana,
+        Barnacle,
         HumboldtSquid,
         Grenadiers
     }
