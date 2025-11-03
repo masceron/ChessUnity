@@ -33,13 +33,8 @@ namespace Game.Action
         private static Queue<Action> _actionQueue;
         public static Phase CurrentPhase;
 
-        public static int WhiteSkillUses;
-        public static int BlackSkillUses;
-
         public static void Init(GameState state)
         {
-            WhiteSkillUses = 0;
-            BlackSkillUses = 0;
             _state = state;
             _actionQueue = new Queue<Action>();
             CurrentPhase = Phase.BeforeEndTurn;
@@ -52,21 +47,24 @@ namespace Game.Action
 
         private static void ProcessActionWithTriggers()
         {
+            var mainAction = _actionQueue.Dequeue();
+            if (mainAction is not IRelicAction)
+            {
+                BoardUtils.NotifyMainAction(mainAction);
+            }
+
             while (_actionQueue.TryDequeue(out var action))
             {
                 if (action is IInternal)
-                    BoardUtils.NotifyInternalAction(action);
-                else if (action is not IRelicAction)
-                    BoardUtils.NotifyMainAction(action);
-
-                IncrementSkillUses(action);
+                    BoardUtils.NotifyInternalAction(mainAction);
                 action.Execute();
             }
 
-            while (_actionQueue.TryDequeue(out var action)) {
-                IncrementSkillUses(action);
-                action.Execute();
+            if (mainAction is ISkills and not IRelicAction && mainAction.Result == ActionResult.Succeed)
+            {
+                BoardUtils.IncrementSkillUses(mainAction);
             }
+            mainAction.Execute();
         }
 
         private static void EndTurnProcess(Action mainAction)
@@ -96,42 +94,26 @@ namespace Game.Action
             CurrentPhase = Phase.BeforeEndTurn;
         }
 
-        public static bool EnqueueAction(Action queueAction)
+        public static bool DoManualAction(Action action)
+        {
+            _actionQueue.Enqueue(action);
+            ProcessActionWithTriggers();
+            if (action is not SkipTurn &&
+                action is not IRelicAction && 
+                !(action is ISkills && BoardUtils.PieceOn(action.Maker).Effects.OfType<QuickReflex>().Any())) 
+                return false;
+            
+            EndTurnProcess(action);
+            return true;
+        }
+
+        public static void EnqueueAction(Action queueAction)
         {
             _actionQueue.Enqueue(queueAction);
-            if (queueAction is IInternal) return false;
-
-            ProcessActionWithTriggers();
-
-            //End the turn if:
-            //The action is a SkipTurn, or
-            //The action is not from a relic, and if it's a skill, then the piece making it cannot have Quick Reflex.
-            if (queueAction is not SkipTurn &&
-                (queueAction is IRelicAction
-                 || queueAction is ISkills &&
-                 BoardUtils.PieceOn(queueAction.Maker).Effects.OfType<QuickReflex>().Any())) return false;
-            
-            EndTurnProcess(queueAction);
-            return true;
-
-        }
-        public static void IncrementSkillUses(Action action)
-        {
-
-            if (action is ISkills && action is not IRelicAction)
-            {
-                var makerPiece = _state.PieceBoard[action.Maker];
-                if (makerPiece != null)
-                {
-                    if (makerPiece.Color) BlackSkillUses++;
-                    else WhiteSkillUses++;
-                }
-            }
         }
 
         public static void ExecuteImmediately(Action action)
         {
-            IncrementSkillUses(action);
             action.Execute();
         }
     }

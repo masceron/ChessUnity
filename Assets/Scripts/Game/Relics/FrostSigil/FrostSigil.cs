@@ -36,7 +36,6 @@ namespace Game.Relics.FrostSigil
                     
                     int pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
                     var pending = new FrostSigilPending(pos ,hoveringTile, this);
-                    var comparer = new ActionComparer();
 
                     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
                     {

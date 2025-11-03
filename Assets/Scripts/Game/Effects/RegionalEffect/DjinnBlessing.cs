@@ -15,7 +15,7 @@ namespace Game.Effects.RegionalEffect
     public class DjinnBlessing: RegionalEffect
     {
         private int isActive;
-        public DjinnBlessing() : base()
+        public DjinnBlessing() : base(RegionalEffectType.DjinnBlessing)
         {
             isActive = 1;
         }

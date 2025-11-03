@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: MedicalLeech
+  m_Name: BlueDragon
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 20
-  prefab: {fileID: 919132149155446097, guid: f8d6e5b9474dbf043b5426f331f2abf8, type: 3}
+  type: 48
+  prefab: {fileID: 4097937938846779027, guid: b5d13c97bef4649419a74a5d45caef60, type: 3}
   rank: 2
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_medical_leech
-  hasSkill: 0
-  normalSkillCooldown: 0
+  key: piece_blue_dragon
+  hasSkill: 1
+  normalSkillCooldown: 4
+  availableSlots: 0

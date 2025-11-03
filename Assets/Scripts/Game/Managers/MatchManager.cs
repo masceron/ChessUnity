@@ -39,7 +39,7 @@ namespace Game.Managers
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
             
-            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize))))
+            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize), cfg.Augmentations)))
             {
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
             }
@@ -62,7 +62,8 @@ namespace Game.Managers
             MakeBoard();
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
                 Config.relicWhiteConfig, 
-                Config.relicBlackConfig
+                Config.relicBlackConfig,
+                Config.regionalEffectType
                 );
             
             //UIManager.Ins.Load(CanvasID.LineupEdit);
@@ -75,8 +76,14 @@ namespace Game.Managers
             GameState.BlackRelic = GameState.GetRelicLogicByConfig(black);
         }
 
-        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic)
+        private void MakeRegionalEffect(RegionalEffectType ret)
         {
+            GameState.MakeRegionalEffect(ret);
+        }
+
+        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, RegionalEffectType ret)
+        {
+            MakeRegionalEffect(ret);
             MakePieces(cfg);
             MakeRelics(whiteRelic, blackRelic);
             UIManager.Ins.Load(CanvasID.Ingame);

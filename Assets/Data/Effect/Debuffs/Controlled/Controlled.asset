@@ -15,7 +15,7 @@ MonoBehaviour:
   typeName: 59
   category: 0
   stack: 1
-  priority: 0
+  priority: 1
   activeWhen: 5
   icon: {fileID: 2800000, guid: 4fc4415f5985754469eb5199f9c9f3ad, type: 3}
   key: effect_controlled

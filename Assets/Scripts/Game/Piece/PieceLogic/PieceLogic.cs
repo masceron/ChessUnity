@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Action;
+using Game.Augmentation.Set;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
+using Game.ScriptableObjects;
 using Game.Tile;
 using static Game.Common.BoardUtils;
+using static Game.ScriptableObjects.PieceInfo;
 
 namespace Game.Piece.PieceLogic
 {
@@ -34,6 +37,7 @@ namespace Game.Piece.PieceLogic
         public readonly List<int> PreviousMoves;
         public readonly PieceType Type;
         private readonly bool hasSkill;
+        private readonly List<Augmentation.Augmentation> Augmentations;
 
         private bool dead;
 
@@ -73,7 +77,88 @@ namespace Game.Piece.PieceLogic
             
             Quiets = quiets;
             this.Captures = captures;
+
+            Augmentations = new List<Augmentation.Augmentation>();
+            if (cfg.Augmentations != null)
+            {
+                Augmentations.AddRange(cfg.Augmentations);
+            }
+
+            if (Augmentations is not { Count: > 0 }) return;
+            if (ValidAugmentation(Augmentations))
+            {
+                ApplyAugmentationEffects(Augmentations);
+            }
+
         }
+
+        private bool ValidAugmentation(List<Augmentation.Augmentation> augmentations)
+        {
+            if (IsDulicatedSlot(augmentations)) return false;
+
+            var pieceInfo = AssetManager.Ins.PieceData[Type];
+            foreach (var ag in augmentations)
+            {
+                if (!CanEquip(pieceInfo, ag)) 
+                { 
+                    //UnityEngine.Debug.Log($"Can not apply augmentation slot type {ag.Slot}");
+                    return false; 
+                }
+            }
+            return true;
+        }
+        bool IsDulicatedSlot(List<Augmentation.Augmentation> augmentations)
+        {
+            var slotSet = new HashSet<Augmentation.AugmentationSlot>();
+            return augmentations.Any(ag => !slotSet.Add(ag.Slot));
+        }
+        bool CanEquip(PieceInfo piece, Augmentation.Augmentation augment)
+        {
+            return piece.availableSlots.HasFlag(
+                (AugmentationSlotMask)(1 << (int)augment.Slot)
+            );
+        }
+
+        private void ApplyAugmentationEffects(List<Augmentation.Augmentation> augmentations)
+        {
+            // 1️⃣ Thêm các effect passive của từng augmentation
+            foreach (var aug in augmentations)
+            {
+                aug.SetTarget(this);
+                if (aug.PassiveEffects == null) continue;
+                aug.ApplyPassiveEffects();
+            }
+
+            var setCount = new Dictionary<AugmentationSetType, int>();
+            foreach (var aug in augmentations)
+            {
+                if (aug.Set == null || aug.Set.Type == AugmentationSetType.None) continue;
+
+                setCount.TryAdd(aug.Set.Type, 0);
+
+                setCount[aug.Set.Type]++;
+            }
+
+            foreach (var kv in setCount)
+            {
+                var setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set;
+                if (setInfo == null) continue;
+
+                int count = kv.Value;
+
+                if (setInfo.HaveBonus && count >= setInfo.RequiredPieces)
+                {
+                    //UnityEngine.Debug.Log($"[Set Bonus] {Type} nhận bonus từ set {setInfo.Type} (x{count})");
+
+                    if (setInfo.BonusEffects != null)
+                    {
+                        setInfo.ApplyBonusEffects();
+                    }
+                }
+            }
+        }
+
+
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;
@@ -105,7 +190,7 @@ namespace Game.Piece.PieceLogic
             
             Captures(list, Pos);
 
-            if (hasSkill && !Effects.Any(e => e.EffectName == EffectName.Silenced))
+            if (hasSkill && Effects.All(e => e.EffectName != EffectName.Silenced))
             {
                 ((IPieceWithSkill)this).Skills(list);
             }

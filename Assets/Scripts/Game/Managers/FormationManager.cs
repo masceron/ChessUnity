@@ -43,9 +43,12 @@ namespace Game.Managers
         /// Nên dùng để xóa Formation
         /// </summary>
         public void RemoveFormation(int pos){
-            formations[pos] = null;
-            Destroy(formationObjects[pos]);
-            formationObjects[pos] = null;
+            if (formations[pos] != null) 
+            {
+                formations[pos] = null;
+                Destroy(formationObjects[pos]);
+                formationObjects[pos] = null;
+            }
         }
         /// <summary>
         /// Được gọi tự động bởi GameState.cs khi bất cứ quân nào dẫm phải ô có tọa độ là pos.

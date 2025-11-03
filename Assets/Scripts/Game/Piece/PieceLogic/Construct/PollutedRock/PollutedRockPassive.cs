@@ -53,8 +53,8 @@ namespace Game.Piece.PieceLogic.Construct.PollutedRock
             if (emptySpots.Count > 0)
             {
                 ushort indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
-                ActionManager.EnqueueAction(
-                    new SpawnPiece(new PieceConfig(PieceType.MedicalLeech, Piece.Color, indexToSpawn))
+                ActionManager.ExecuteImmediately(
+                    new SpawnPiece(new PieceConfig(PieceType.MedicinalLeach, Piece.Color, indexToSpawn))
                 );
             }
         }

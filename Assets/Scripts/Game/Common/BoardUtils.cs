@@ -114,6 +114,11 @@ namespace Game.Common
             return MatchManager.Ins.GameState.ActiveBoard[pos];
         }
 
+        public static void SetActiveSquare(int pos, bool value)
+        {
+            MatchManager.Ins.GameState.ActiveBoard[pos] = value;
+        }
+
         public static bool ColorOfSquare(int pos)
         {
             return MatchManager.Ins.GameState.SquareColor[pos];
@@ -177,7 +182,7 @@ namespace Game.Common
 
         public static void NotifyMainAction(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.Notify(mainAction);
+            MatchManager.Ins.GameState.NotifyMainAction(mainAction);
         }
 
         public static void NotifyEnd(Action.Action mainAction)
@@ -191,6 +196,16 @@ namespace Game.Common
             {
                 MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
             }
+        }
+
+        public static void IncrementSkillUses(Action.Action skill)
+        {
+            MatchManager.Ins.GameState.IncrementSkillUses(skill);
+        }
+
+        public static int SkillUseOf(bool color)
+        {
+            return color ? MatchManager.Ins.GameState.BlackSkillUses : MatchManager.Ins.GameState.WhiteSkillUses;
         }
 
         public static void NotifyOnMoveGen(List<Action.Action> actions)

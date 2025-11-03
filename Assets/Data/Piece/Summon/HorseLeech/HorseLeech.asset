@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   type: 27
   prefab: {fileID: 3142425345472215724, guid: ccd17018d71545943a01fc9d74f9a174, type: 3}
-  rank: 4
+  rank: 2
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}

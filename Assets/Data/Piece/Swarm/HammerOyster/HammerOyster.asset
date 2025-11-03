@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: HammerOyster
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 43
+  type: 44
   prefab: {fileID: 919132149155446097, guid: 2beb4fe94a52600499b279ac8cd0e0c8, type: 3}
   rank: 3
   moveRange: 1
@@ -22,3 +22,4 @@ MonoBehaviour:
   key: piece_hammer_oyster
   hasSkill: 0
   normalSkillCooldown: 0
+  availableSlots: 0

@@ -103,7 +103,7 @@ namespace UX.UI.Ingame
         public void ExecuteAction(Action action)
         {
             Unmark();
-            if (ActionManager.EnqueueAction(action))
+            if (ActionManager.DoManualAction(action))
             {
                 EndTurn();
             }
@@ -128,7 +128,7 @@ namespace UX.UI.Ingame
                             pending.CompleteAction();
                             return;
                     }
-                    ActionManager.EnqueueAction(action);
+                    ActionManager.DoManualAction(action);
                 } 
                 else
                 {
