@@ -49,7 +49,10 @@ namespace Game.Piece
         Sunfish,
         ContagionCorpse,
         PollutedRock,
-        Barnacle
+        Barnacle,
+        ArcticBrittleStar,
+        BrittleStar,
+        SpiderBrittleStar,
     }
 
     public enum PieceRank : byte

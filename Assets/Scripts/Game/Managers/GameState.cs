@@ -150,6 +150,9 @@ namespace Game.Managers
                 PieceType.ContagionCorpse => new ContagionCorpse(piece),
                 PieceType.PollutedRock => new PollutedRock(piece),
                 PieceType.Barnacle => new Barnacle(piece),
+                PieceType.ArcticBrittleStar => new ArcticBrittleStar(piece), 
+                PieceType.BrittleStar => new BrittleStar(piece),
+                PieceType.SpiderBrittleStar => new SpiderBrittleStar(piece),
                 _ => null
             };
 

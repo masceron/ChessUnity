@@ -83,7 +83,8 @@ namespace Game.Effects
         SunfishPassive,
         Controlled,
         PollutedRockPassive,
-        Fear
+        Fear,
+        CoffinFishVengeful
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -94,6 +95,7 @@ namespace Game.Effects
         public PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
+        public bool IsPassive;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
         private readonly ObserverPriority priority;
