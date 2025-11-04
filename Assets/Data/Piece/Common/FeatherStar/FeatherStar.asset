@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FeatherStar
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   type: 59
-  prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
+  prefab: {fileID: 5011701986001230811, guid: 850b9ed59a3b61c448717dfd5e1eaf60, type: 3}
   rank: 4
   moveRange: 2
   attackRange: 2

@@ -186,6 +186,7 @@ namespace Game.Managers
                 PieceType.Barnacle => new Barnacle(piece),
                 PieceType.SloaneSViperFish => new SloaneSViperfish(piece),
                 PieceType.FeatherStar => new FeatherStar(piece),
+                PieceType.AmoredFeatherStar => new AmoredFeatherStar(piece),
                 _ => null
             };
 
