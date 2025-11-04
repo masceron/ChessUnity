@@ -95,7 +95,6 @@ namespace Game.Effects
         public PieceLogic Piece;
         public readonly EffectName EffectName;
         public readonly EffectCategory Category;
-        public bool IsPassive;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
         private readonly ObserverPriority priority;

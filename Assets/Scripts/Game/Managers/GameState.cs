@@ -153,6 +153,7 @@ namespace Game.Managers
                 PieceType.ArcticBrittleStar => new ArcticBrittleStar(piece), 
                 PieceType.BrittleStar => new BrittleStar(piece),
                 PieceType.SpiderBrittleStar => new SpiderBrittleStar(piece),
+                PieceType.CoffinFish => new CoffinFish(piece),
                 _ => null
             };
 

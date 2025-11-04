@@ -19,7 +19,8 @@ public static class Config
         new PieceConfig(PieceType.ArcticBrittleStar, false, 101),
          new PieceConfig(PieceType.PhantomJelly, false, 80),
         new PieceConfig(PieceType.Anomalocaris, false, 100),
-        new PieceConfig(PieceType.GuidingSiren, false, 91)
+        new PieceConfig(PieceType.GuidingSiren, false, 91),
+        new PieceConfig(PieceType.CoffinFish, false, 79)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()

@@ -3,6 +3,7 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using UnityEngine;
 
 namespace Game.Effects.Traits
 {
@@ -20,7 +21,8 @@ namespace Game.Effects.Traits
             if (action == null) return;
 
             if (!MatchManager.Roll(Probability)) return;
-            if (action.Target == Piece.Pos && Piece.IsDead())
+
+            if (action.Target == Piece.Pos)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Relentless(BoardUtils.PieceOn(action.Maker), 1)));
             }
