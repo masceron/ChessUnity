@@ -50,8 +50,6 @@ namespace Game.Managers
             GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
             GameState.OnIncreaseTurn += (ct) => { Debug.Log("current turn : " + ct); };
             ActionManager.Init(GameState);
-
-            new DjinnBlessing();
         }
 
         public void Init(GameConfig cfg)
@@ -86,6 +84,7 @@ namespace Game.Managers
             MakeRegionalEffect(ret);
             MakePieces(cfg);
             MakeRelics(whiteRelic, blackRelic);
+            GameState.OnIncreaseTurn.Invoke(GameState.CurrentTurn); // Trigger turn effects at the start of the game
             UIManager.Ins.Load(CanvasID.Ingame);
             ActionManager.ExecuteWhenStart();
         }
