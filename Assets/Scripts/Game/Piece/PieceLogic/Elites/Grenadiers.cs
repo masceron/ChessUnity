@@ -14,7 +14,7 @@ namespace Game.Piece.PieceLogic.Elites
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Grenadiers : PieceLogic, IPieceWithSkill
     {
-        public Grenadiers(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, ElectricEelMoves.Captures)
+        public Grenadiers(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Blinded(-1, 50, this)));
 
@@ -25,7 +25,10 @@ namespace Game.Piece.PieceLogic.Elites
                 {
                     int startingSizeX = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.x) / 2;
                     int startingSizeY = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.y) / 2;
-                    if(file < startingSizeX || file > startingSizeX + MatchManager.Ins.startingSize.x || rank < startingSizeY || rank > startingSizeY + MatchManager.Ins.startingSize.y) continue;
+                    
+                    if(file < startingSizeX || file >= startingSizeX + MatchManager.Ins.startingSize.x
+                         || rank < startingSizeY || rank >= startingSizeY + MatchManager.Ins.startingSize.y 
+                            || TileManager.Ins.IsTileEmpty(IndexOf(rank, file))) continue;
                     list.Add(new GrenadiersActive(Pos, IndexOf(rank, file)));
                 }
             };

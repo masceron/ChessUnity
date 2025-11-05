@@ -19,7 +19,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            FormationManager.Ins.SetFormation(Target, new Kelp());
+            FormationManager.Ins.SetFormation(Target, new NavalMines(true, PieceOn(Maker).Color));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
