@@ -20,7 +20,8 @@ public static class Config
          new PieceConfig(PieceType.PhantomJelly, false, 80),
         new PieceConfig(PieceType.Anomalocaris, false, 100),
         new PieceConfig(PieceType.GuidingSiren, false, 91),
-        new PieceConfig(PieceType.CoffinFish, false, 79)
+        new PieceConfig(PieceType.CoffinFish, false, 79),
+        new PieceConfig(PieceType.SnipeEel, false, 78)
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
@@ -29,6 +30,7 @@ public static class Config
          new PieceConfig(PieceType.GuidingSiren, true, 87),
          new PieceConfig(PieceType.PollutedRock, true, 89),
          new PieceConfig(PieceType.Barnacle, true, 90),
+         new PieceConfig(PieceType.Barracuda, true, 77),
          //new PieceConfig(PieceType.Anomalocaris, true, 99),
          //new PieceConfig(PieceType.Swordfish, true, 101),
          //new PieceConfig(PieceType.ElectricEel, true, 112),

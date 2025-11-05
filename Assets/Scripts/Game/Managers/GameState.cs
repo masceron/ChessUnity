@@ -154,6 +154,7 @@ namespace Game.Managers
                 PieceType.BrittleStar => new BrittleStar(piece),
                 PieceType.SpiderBrittleStar => new SpiderBrittleStar(piece),
                 PieceType.CoffinFish => new CoffinFish(piece),
+                PieceType.SnipeEel => new SnipeEel(piece),
                 _ => null
             };
 

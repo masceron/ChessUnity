@@ -16,8 +16,8 @@ namespace Game.Effects.Debuffs
         {
             if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
             
-            if (IsPassive)
-                action.Result = ActionResult.Failed;
+            // if (IsPassive)
+            //     action.Result = ActionResult.Failed;
             ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }

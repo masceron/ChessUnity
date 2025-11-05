@@ -22,6 +22,12 @@ namespace Game.Effects.Traits
 
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
+
+            if (action.Result == ActionResult.SkipEvasion)
+            {
+                action.Result = ActionResult.Succeed;
+                return;
+            }
             
             action.Result = ActionResult.Failed;
         }

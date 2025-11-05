@@ -53,7 +53,8 @@ namespace Game.Piece
         ArcticBrittleStar,
         BrittleStar,
         SpiderBrittleStar,
-        CoffinFish
+        CoffinFish,
+        SnipeEel
     }
 
     public enum PieceRank : byte
