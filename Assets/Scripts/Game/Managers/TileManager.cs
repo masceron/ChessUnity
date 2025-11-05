@@ -360,5 +360,10 @@ namespace Game.Managers
                 }
             }
         }
+
+        public bool IsTileEmpty(int index)
+        {
+            return tiles[index] == null;
+        }
     }
 }

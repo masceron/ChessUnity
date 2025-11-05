@@ -184,6 +184,9 @@ namespace Game.Managers
                 PieceType.PollutedRock => new PollutedRock(piece),
                 PieceType.Barnacle => new Barnacle(piece),
                 PieceType.Phronima => new Phronima(piece),
+                PieceType.HumboldtSquid => new HumboldtSquid(piece),
+                PieceType.Grenadiers => new Grenadiers(piece),
+                PieceType.BlackSwallower => new BlackSwallower(piece),
                 _ => null
             };
 
@@ -370,6 +373,7 @@ namespace Game.Managers
             }
 
             effectObservers.ForEach(effect =>
+
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
                 if (effect is not IEndTurnEffect turnEffect) return;
