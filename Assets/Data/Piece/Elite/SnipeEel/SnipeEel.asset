@@ -15,8 +15,8 @@ MonoBehaviour:
   type: 48
   prefab: {fileID: 919132149155446097, guid: 128e5948eba16214aa5461062d9bcfb2, type: 3}
   rank: 5
-  moveRange: 0
-  attackRange: 0
+  moveRange: 2
+  attackRange: 2
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   key: piece_snipe_eel
