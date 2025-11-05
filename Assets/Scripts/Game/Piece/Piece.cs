@@ -65,7 +65,8 @@ namespace Game.Piece
         PollutedRock,
         Barnacle,
         HumboldtSquid,
-        Grenadiers
+        Grenadiers,
+        BlackSwallower
     }
 
     public enum PieceRank : byte

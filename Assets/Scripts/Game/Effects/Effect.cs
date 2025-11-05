@@ -121,6 +121,7 @@ namespace Game.Effects
         Adaptation,
         HumboldtSquidPassive,
         Frienzied,
+        BlackSwallowerVengeful,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

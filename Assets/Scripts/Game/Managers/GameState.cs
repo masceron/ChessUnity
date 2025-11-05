@@ -185,6 +185,7 @@ namespace Game.Managers
                 PieceType.Barnacle => new Barnacle(piece),
                 PieceType.HumboldtSquid => new HumboldtSquid(piece),
                 PieceType.Grenadiers => new Grenadiers(piece),
+                PieceType.BlackSwallower => new BlackSwallower(piece),
                 _ => null
             };
 
