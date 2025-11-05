@@ -84,8 +84,8 @@ namespace Game.Managers
             MakeRegionalEffect(ret);
             MakePieces(cfg);
             MakeRelics(whiteRelic, blackRelic);
-            GameState.OnIncreaseTurn.Invoke(GameState.CurrentTurn); // Trigger turn effects at the start of the game
             UIManager.Ins.Load(CanvasID.Ingame);
+            GameState.OnStart();
             ActionManager.ExecuteWhenStart();
         }
 

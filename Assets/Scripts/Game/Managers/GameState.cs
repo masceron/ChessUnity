@@ -284,6 +284,11 @@ namespace Game.Managers
             BlackRelic?.PassTurn();
         }
 
+        public void OnStart()
+        {
+            OnIncreaseTurn?.Invoke(CurrentTurn);
+        }
+
         public void Destroy(int pos)
         {
             var pieceAffected = PieceBoard[pos];
