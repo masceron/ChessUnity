@@ -11,7 +11,6 @@ namespace Game.Piece.PieceLogic.Elites
     {
         public SeaTurtle(PieceConfig cfg) : base(cfg, SeaTurtleMoves.Quiets, SeaTurtleMoves.Captures)
         { 
-            ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(this)));
             Skills = list =>
             {
                 if (SkillCooldown == 0) {
