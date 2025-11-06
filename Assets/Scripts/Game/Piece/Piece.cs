@@ -63,7 +63,11 @@ namespace Game.Piece
         Slimehead,
         MarineIguana,
         PollutedRock,
-        Barnacle
+        Barnacle,
+        Phronima,
+        HumboldtSquid,
+        Grenadiers,
+        BlackSwallower,
     }
 
     public enum PieceRank : byte

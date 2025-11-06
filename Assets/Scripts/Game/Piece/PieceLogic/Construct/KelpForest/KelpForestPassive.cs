@@ -12,17 +12,12 @@ using Game.Effects.Buffs;
 
 namespace Game.Piece.PieceLogic.Construct.KelpForest
 {
-
-   
     public class KelpForestPassive : Effect, IEndTurnEffect 
     {
-        private List<int> randomPos = new List<int>();
 
-        public KelpForestPassive(PieceLogic piece, sbyte countToSpawn) : base(countToSpawn, 1, piece, EffectName.KelpForestPassive)
+        public KelpForestPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.KelpForestPassive)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
-            Duration = (sbyte)(countToSpawn / 2);
-            getRandomPos();
         }
 
         public EndTurnEffectType EndTurnEffectType { get; }
@@ -36,14 +31,14 @@ namespace Game.Piece.PieceLogic.Construct.KelpForest
         {
             
             int pos = new System.Random().Next(1, MatchManager.Ins.startingSize.x * MatchManager.Ins.startingSize.y);
-            while (randomPos.Contains(pos))
+            while (!TileManager.Ins.IsTileEmpty(pos) && FormationManager.Ins.GetFormation(pos) != null)
             {
                 pos = new System.Random().Next(1, MatchManager.Ins.startingSize.x * MatchManager.Ins.startingSize.y);
             }
-            randomPos.Add(pos);
-            if (randomPos.Count > 6) return;
             int mappedPos = BoardUtils.PosMap(pos, MatchManager.Ins.startingSize);
-            FormationManager.Ins.SetFormation(mappedPos, new Kelp());
+            Kelp kelp = new Kelp(true, true);
+            kelp.SetDuration(6);
+            FormationManager.Ins.SetFormation(mappedPos, kelp);
             
         }
 
