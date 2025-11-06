@@ -206,7 +206,7 @@ namespace Game.Piece.PieceLogic
 
             if (range > MaxLength) return range;
             
-            Effect movement;
+            /*Effect movement;
             if ((movement = Effects.Find(e => e.EffectName == EffectName.Slow)) != null)
             {
                 range -= movement.Strength;
@@ -215,7 +215,20 @@ namespace Game.Piece.PieceLogic
             {
                 range += movement.Strength;
             }
-            
+
+            if ((movement = Effects.Find(e => e.EffectName == EffectName.TidalRetinaPassive)) != null)
+            {
+                range += movement.Strength;
+            }*/
+
+            foreach (var e in Effects)
+            {
+                if (e is IMoveRangeModifier modifier)
+                {
+                    range = modifier.ModifyMoveRange(range);
+                }
+            }
+
             return Math.Max(1, range);
         }
 
