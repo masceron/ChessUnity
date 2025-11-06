@@ -8,6 +8,7 @@ using System.Linq;
 using System;
 using Game.Managers;
 using Game.Piece;
+using Game.Effects.Others;
 
 namespace Game.Effects.Traits
 {
@@ -48,7 +49,8 @@ namespace Game.Effects.Traits
                     var targetPiece = PieceOn(action.Target);
                     if (targetPiece != null && (targetPiece.PieceRank == PieceRank.Elite || targetPiece.PieceRank == PieceRank.Champion || targetPiece.PieceRank == PieceRank.Commander))
                     {
-                        ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
+                        ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
+                        
                     }
                 }
             }

@@ -122,6 +122,7 @@ namespace Game.Effects
         HumboldtSquidPassive,
         Frienzied,
         BlackSwallowerVengeful,
+        KillPieceAfterSwitchTurn,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
