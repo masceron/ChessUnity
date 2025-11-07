@@ -102,3 +102,4 @@ InitTestScene*.unity*
 ProjectSettings/ProjectVersion.txt
 *.fbx.meta
 Assets/Scripts/Editor/AutoLODImporter.cs
+Assets/_Recovery
