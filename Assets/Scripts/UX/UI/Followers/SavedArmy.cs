@@ -1,6 +1,7 @@
 ﻿using Game.Save.Army;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UX.UI.Army.DesignArmy;
 
 namespace UX.UI.Followers
@@ -20,7 +21,14 @@ namespace UX.UI.Followers
 
         public void Click()
         {
-            UIManager.Ins.Load(CanvasID.DesignArmy);
+            if (SceneManager.GetActiveScene().name == "FreePlayTest")
+            {
+                UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
+            }
+            else
+            {
+                UIManager.Ins.Load(CanvasID.DesignArmy);
+            }
             ArmyDesign.Ins.Load(army.BoardSize, army);
         }
         public void ClickToFreePlayDesignArmy()

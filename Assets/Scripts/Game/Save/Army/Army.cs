@@ -1,4 +1,5 @@
-﻿using Game.Save.Relics;
+﻿using Game.Effects.RegionalEffect;
+using Game.Save.Relics;
 using MemoryPack;
 
 namespace Game.Save.Army
@@ -8,7 +9,9 @@ namespace Game.Save.Army
     {
         public string Name;
         public ushort BoardSize;
+        //Troops là array liền kề
         public Troop[] Troops;
         public Relic? Relic;
+        public Relic? EnemyRelic;
     }
 }

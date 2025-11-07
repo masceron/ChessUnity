@@ -21,7 +21,7 @@ namespace UX.UI.Loader
                         UIManager.Ins.Load(CanvasID.MainMenu); 
                         break;
                     case 1:
-                        MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(12, 12)));
+                        MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)));
                         break;
                     case 2:
                         UIManager.Ins.Load(CanvasID.FreePlayPreset);

@@ -71,7 +71,10 @@ namespace Game.Managers
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
-
+        public void InitFromPreset()
+        {
+            
+        }
         private void MakeRelics(RelicConfig white, RelicConfig black)
         {
             GameState.WhiteRelic = GameState.GetRelicLogicByConfig(white);

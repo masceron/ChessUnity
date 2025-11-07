@@ -26,7 +26,7 @@ namespace UX.UI.FreePlayTest
         [NonSerialized] public bool Placed;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
-        [NonSerialized] public AugmentationInfo Aug;
+        public AugmentationInfo Aug;
         public enum Position
         {
             Equipped,
@@ -136,10 +136,11 @@ namespace UX.UI.FreePlayTest
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            if (eventData.button != PointerEventData.InputButton.Right) return;
+            if (eventData.button == PointerEventData.InputButton.Right) return;
 
             if (slotInSearchBox)
             {
+                Debug.Log("Click");
                 foreach(AugmentationIcon icon in AugmentationManagerUI.Ins.icons)
                 {
                     if (icon.slot == this.slot)
@@ -152,8 +153,10 @@ namespace UX.UI.FreePlayTest
             }
             else if (position == Position.Equipped)
             {
-                Load(AugmentationName.None);
+                
+                // Debug.Log((AugmentationManagerUI.Ins == null) ? "Null augmentationui" : "not null");
                 AugmentationManagerUI.Ins.RemoveAugmentation(this.Aug.Slot);
+                Load(AugmentationName.None);
 
             }
             else if (position == Position.Unequipped)

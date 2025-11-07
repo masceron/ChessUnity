@@ -13,6 +13,9 @@ using UnityEngine.InputSystem;
 using Game.Managers;
 using LineupConfig = Game.Save.Stage.LineupConfig;
 using Game.ScriptableObjects.Collections;
+using Game.Common;
+using System.Linq;
+using Game.ScriptableObjects;
 
 namespace UX.UI.FreePlayTest{
     public enum FreePlayScene
@@ -24,15 +27,15 @@ namespace UX.UI.FreePlayTest{
     }
     public class FreePlayTest : Singleton<FreePlayTest>
     {
-        public FreePlayConfig config;
+        // public FreePlayConfig Config;
         public List<int> boardSizes;
         [SerializeField] public UDictionary<FreePlayScene, RectTransform> panelDict;
         public ArmyDesignBoard armyDesignBoard;
         public TMP_Text boardSizeText;
         int boardSizeIndex = 0;
-        void Awake()
+        protected override void Awake()
         {
-
+            base.Awake();
         }
         public void ChangeBoardSize(int value)
         {
@@ -41,15 +44,44 @@ namespace UX.UI.FreePlayTest{
 
         public void AddEnemy(PieceConfig pieceConfig)
         {
-            config.PieceConfigBlack.Add(pieceConfig);
+            Config.PieceConfigBlack.Add(pieceConfig);
         }
         public void RemoveEnemy(PieceConfig pieceConfig)
         {
-            config.PieceConfigWhite.Add(pieceConfig);
+            Config.PieceConfigWhite.Add(pieceConfig);
         }
         public void AddRegionalEffect(RegionalsData regionalsData)
         {
-
+            
+        }
+        public void ToGameScene()
+        {
+            Config.boardSize = ArmyDesign.Ins.army.BoardSize;
+            Config.PieceConfigWhite.Clear();
+            Config.PieceConfigBlack.Clear();
+            foreach (Troop troop in ArmyDesignBoard.Ins.Troops)
+            {
+                var augNameLst = troop.equippedAugmentation.Values.ToList();
+                List<AugmentationInfo> infos = new();
+                foreach (var name in augNameLst)
+                {
+                    infos.Add(AssetManager.Ins.AugmentationData[name]);
+                }
+                PieceConfig pieceConfig = new PieceConfig(troop.PieceType, troop.Side,
+                    (ushort)(troop.Rank*Config.boardSize + troop.File), null);
+                Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
+                if (pieceConfig.Color == false)
+                {
+                    Config.PieceConfigWhite.Add(pieceConfig);
+                }
+                else
+                {
+                    Config.PieceConfigBlack.Add(pieceConfig);
+                }
+            }
+            
+            Debug.Log($"BoardSize: {ArmyDesign.Ins.army.BoardSize}");
+            SceneLoader.LoadSceneWithLoadingScreen(1);
         }
         public void ToPresetPanel()
         {
@@ -64,45 +96,5 @@ namespace UX.UI.FreePlayTest{
         {
             UIManager.Ins.Load(CanvasID.RegionalEffect);
         }
-
-
-
-        // public void ToNextPanel()
-        // {
-        //     if (panelIndex == panelContainer.Count - 1)
-        //     {
-        //         MatchManager.Ins.isChoosingPiece = false;
-        //         // Load UI cho gameplay và SetActive(false) cho UI FreePlayTest
-        //         UIManager.Ins.Load(CanvasID.Ingame);
-        //         MatchManager.Ins.StartGame(freePlayConfig);
-        //     }
-        //     else
-        //     {
-        //         SetActivePanelIndex(panelIndex + 1);
-        //         nextButton.GetChild(0).GetComponent<TMP_Text>().text = (panelIndex == panelContainer.Count - 1) ? "Play" : "Next";
-        //     }
-
-        // }
-        // public void ToPreviousPanel()
-        // {
-        //     if (panelIndex == 0)
-        //     {
-        //         //Trở về màn hình chính
-        //         SceneLoader.LoadSceneWithLoadingScreen(0);
-        //     }
-        //     else
-        //     {
-        //         SetActivePanelIndex(panelIndex - 1);
-        //     }
-        // }
-        // void SetActivePanelIndex(int panelIndex)
-        // {
-        //     this.panelIndex = panelIndex;
-        //     for(int i = 0; i < panelContainer.Count; i++)
-        //     {
-        //         Debug.Log($"element's name: {panelContainer[i].name}");
-        //         panelContainer[i].gameObject.SetActive(i == panelIndex);
-        //     }
-        // }
     }
 }

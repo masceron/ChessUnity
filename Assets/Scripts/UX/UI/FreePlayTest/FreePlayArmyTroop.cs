@@ -21,6 +21,7 @@ namespace UX.UI.Army.DesignArmy
                 Debug.Log("Go to Augmentation");
                 UIManager.Ins.Load(CanvasID.Augmentation);
                 AugmentationManagerUI.Ins.Load(ArmyDesignBoard.Ins.GetTroopByCoordinate(Rank, File));
+                
                 return;
             }
             else if (!Placed) return;

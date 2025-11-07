@@ -6,9 +6,10 @@ using Game.Relics;
 
 public static class Config
 {
+    public static int boardSize = 12;
     public static readonly List<PieceConfig> PieceConfigWhite = new()
     {
-        //new PieceConfig(PieceType.Velkaris, false, 140),
+        // new PieceConfig(PieceType.Velkaris, false, 140),
         //new PieceConfig(PieceType.SeaUrchin, false, 100),
         // new PieceConfig(PieceType.ElectricEel, false, 92),
         // new PieceConfig(PieceType.Chrysos, false, 88),
@@ -16,7 +17,7 @@ public static class Config
         // new PieceConfig(PieceType.Thalassos, false, 65),
         // new PieceConfig(PieceType.Pufferfish, false, 70),
         // new PieceConfig(PieceType.Lionfish, false, 99),
-        // new PieceConfig(PieceType.Seahorse, false, 55),
+        new PieceConfig(PieceType.Seahorse, false, 0),
         // new PieceConfig(PieceType.Remora, false, 91),
          new PieceConfig(PieceType.Lizardfish, false, 77, new List<Augmentation>{new TidalRetina()}),
         //new PieceConfig(PieceType.BioluminescentBeacon, false, 100),
@@ -25,8 +26,8 @@ public static class Config
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-         new PieceConfig(PieceType.PhantomJelly, true, 101),
-        // new PieceConfig(PieceType.GuidingSiren, true, 87),
+        //  new PieceConfig(PieceType.PhantomJelly, true, 101),
+        new PieceConfig(PieceType.GuidingSiren, true, 87),
          //new PieceConfig(PieceType.FlyingFish, true, 89),
          //new PieceConfig(PieceType.Anomalocaris, true, 99),
          //new PieceConfig(PieceType.Swordfish, true, 101),

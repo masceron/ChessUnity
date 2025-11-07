@@ -26,35 +26,21 @@ namespace UX.UI.Army.DesignArmy
         private string lastKeyword;
         public readonly List<ArmyDesignTroop> Pool = new();
         
-        private void Awake()
+        // private void Awake()
+        // {
+        //     Data = AssetManager.Ins.PieceData;
+        //     ArmyDesignBoard.Ins.OnAddTroop += (t) => FilterByCondition();
+        //     ArmyDesignBoard.Ins.OnRemoveTroop += (t) => FilterByCondition();
+        //     FilterByCondition();
+        //     Load();
+        // }
+        public void Load()
         {
             Data = AssetManager.Ins.PieceData;
             ArmyDesignBoard.Ins.OnAddTroop += (t) => FilterByCondition();
             ArmyDesignBoard.Ins.OnRemoveTroop += (t) => FilterByCondition();
-            Load();
-        }
-        private void CheckConditionAfterAdd(Troop troop)
-        {
-        //     PieceInfo pieceInfo = AssetManager.Ins.PieceData[troop.Type];
-        //     if (pieceInfo.rank == PieceRank.Commander)
-        //     {
-        //         foreach(var info in AssetManager.Ins.PieceData){
-        //             if (info.Value.type == PieceRank.Commander){
-                        
-        //             }
-        //         }
-        //     }
-        //     else if (pieceInfo.rank == PieceRank.Champion){
-        //         if ()
-        //     }
-
-        }
-        private void CheckConditionAfterRemoval(Troop troop){
-
-        }
-        private void Load()
-        {
-            // không có filter nghĩa là lấy hết toàn bộ các Piece hiện đang sở hữu
+            lastSearchResult = Data.Values.ToList();
+            FilterByCondition();
             SearchByKeyword("");
         }
 
@@ -191,10 +177,10 @@ namespace UX.UI.Army.DesignArmy
         }
         // Dựa trên một vài luật mà game đưa ra, một số Piece có thể sẽ không còn đặt được, bị greyout sau đó
         private void FilterByCondition(){
-            Debug.Log("Filter");
             greyOutPieces.Clear();
             // Lọc theo một số condition 
             Dictionary<PieceInfo, int> counts = new();
+            
             foreach (Troop tr in ArmyDesignBoard.Ins.Troops)
             {
                 if (tr.Side != ArmyDesign.Ins.choosenSide)
@@ -213,7 +199,6 @@ namespace UX.UI.Army.DesignArmy
                     {
                         if (t.rank == PieceRank.Commander)
                         {
-                            Debug.Log("Remove commander");
                             greyOutPieces.Add(t);
                         }
                     }

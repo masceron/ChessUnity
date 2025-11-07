@@ -4,6 +4,7 @@ using Game.Save.Army;
 using Game.Save.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace UX.UI.Army.DesignArmy
 {
@@ -17,8 +18,7 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private DesignNotification notification;
         [SerializeField] private ArmyRelicSearcher relicSearcher;
         private int size;
-        private Game.Save.Army.Army army;
-        
+        public Game.Save.Army.Army army;
         void Awake()
         {
             choosenSide = false;
@@ -50,7 +50,8 @@ namespace UX.UI.Army.DesignArmy
             size = s;
             info.Load(size);
             board.Load(size);
-            
+            searcher.Load();
+            Debug.Log("Load design board");
             if (armyToLoad != null)
             {
                 LoadSave(armyToLoad.Value);
@@ -91,9 +92,15 @@ namespace UX.UI.Army.DesignArmy
             army.BoardSize = (ushort) size;
             SetTroops();
             ArmySaveLoader.Save(army);
-            UIManager.Ins.Load(CanvasID.Followers);
+            if (SceneManager.GetActiveScene().name == "FreePlayTest")
+            {
+                UIManager.Ins.Load(CanvasID.RegionalEffect);
+            }
+            else
+            {
+                UIManager.Ins.Load(CanvasID.Followers);
+            }
         }
-
         private void SetTroops()
         {
             board.Troops.Sort();
@@ -102,7 +109,14 @@ namespace UX.UI.Army.DesignArmy
 
         public void SelectRelic(RelicType type)
         {
-            army.Relic = new Relic(type);
+            if (choosenSide == false)
+            {
+                army.Relic = new Relic(type);
+            }
+            else
+            {
+                army.EnemyRelic = new Relic(type);
+            }
         }
 
         public void ToggleChosenSide()

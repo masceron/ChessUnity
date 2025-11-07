@@ -123,7 +123,7 @@ namespace UX.UI.Army.DesignArmy
             var searcher = FindAnyObjectByType<ArmySearcher>();
             foreach (var troop in troops)
             {
-                Troops.Add(troop);
+                Add(troop.Rank, troop.File, troop.PieceType);
                 var piece = Instantiate(searcher.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
                 
                 piece.Load(searcher.Data[troop.PieceType]);
@@ -134,7 +134,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void Add(int rank, int file, PieceType type)
         {
-            Troop newTroop = new Troop(type, rank, file);
+            Troop newTroop = new Troop(type, rank, file, ArmyDesign.Ins.choosenSide);
             Troops.Add(newTroop);
             OnAddTroop?.Invoke(newTroop);
         }
@@ -152,18 +152,6 @@ namespace UX.UI.Army.DesignArmy
             Troops.RemoveAt(removedIndex);
             OnRemoveTroop?.Invoke(Troops[removedIndex]);
 
-        }
-        public int GetCount(Troop troop)
-        {
-            int cnt = 0;
-            foreach (Troop tr in Troops)
-            {
-                if (tr.Equals(troop))
-                {
-                    cnt++;
-                }
-            }
-            return cnt;
         }
         public Troop GetTroopByCoordinate(int rank, int file)
         {

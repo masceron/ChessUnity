@@ -28,9 +28,15 @@ namespace Game.Managers
         [SerializeField] private FormationsData enviromentsData;
         [SerializeField] private AugmentationData augmentationData;
         public RegionalsData RegionalsData;
+
+
         protected override void Awake()
         {
             base.Awake();
+            Load();
+        }
+        public void Load()
+        {
             PieceData = new Dictionary<PieceType, PieceInfo>(pieceData.piecesData);
             EffectData = new Dictionary<EffectName, EffectInfo>(effectsData.effectsData);
             RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
