@@ -26,7 +26,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece)));
+            this.ApplyEffect(piece,new Blinded(1, 100, piece));
         }
 
         public override void OnPieceExit(PieceLogic piece)

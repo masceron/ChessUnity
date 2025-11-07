@@ -182,7 +182,7 @@ namespace Game.Common
 
         public static void NotifyMainAction(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.Notify(mainAction);
+            MatchManager.Ins.GameState.NotifyMainAction(mainAction);
         }
 
         public static void NotifyEnd(Action.Action mainAction)
@@ -196,6 +196,16 @@ namespace Game.Common
             {
                 MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
             }
+        }
+
+        public static void IncrementSkillUses(Action.Action skill)
+        {
+            MatchManager.Ins.GameState.IncrementSkillUses(skill);
+        }
+
+        public static int SkillUseOf(bool color)
+        {
+            return color ? MatchManager.Ins.GameState.BlackSkillUses : MatchManager.Ins.GameState.WhiteSkillUses;
         }
 
         public static void NotifyOnMoveGen(List<Action.Action> actions)
@@ -284,8 +294,25 @@ namespace Game.Common
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
 
-        public static Vector3 FromRankFileToWorldPos(float rank, float file){
+        public static Vector3 FromRankFileToWorldPos(float rank, float file) {
             return new Vector3(rank, YCoordinate, file);
+        }
+        public static bool IsNextEachOther(PieceLogic piece)
+        {
+            var pos = piece.Pos;
+            for (var i = -1; i <= 1; i++)
+            {
+                for (var j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0) continue;
+                    var indexOff = IndexOf(RankOf(pos) + i, FileOf(pos) + j);
+
+                    if (!VerifyIndex(indexOff)) continue;
+                    var pieceOff = PieceOn(indexOff);
+                    if (pieceOff != null && pieceOff.Color == piece.Color) return true;
+                }
+            }
+            return false;
         }
     }
 }

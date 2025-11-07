@@ -3,6 +3,7 @@ using System.Linq;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
+using UnityEngine;
 
 namespace Game.Action.Internal
 {
@@ -17,14 +18,15 @@ namespace Game.Action.Internal
 
         protected override void Animate()
         {
-            if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
-            {
-                BoardUtils.AddObserver(Effect);
-            }
         }
 
         protected override void ModifyGameState()
         {
+            if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
+            {
+                BoardUtils.AddObserver(Effect);
+            }
+            
             var already = Effect.Piece.Effects.FirstOrDefault(e => e.EffectName == Effect.EffectName);
 
             if (already == null)

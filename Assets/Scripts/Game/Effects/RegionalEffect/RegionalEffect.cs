@@ -42,6 +42,7 @@ namespace Game.Effects.RegionalEffect
         Whirpool,
         PsionicShock,
         BloodMoon,
-        DjinnBlessing
+        DjinnBlessing,
+        RedTide
     }
 }

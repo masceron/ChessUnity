@@ -6,6 +6,9 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects;
+using Game.Effects.Buffs;
+using Game.Effects.Debuffs;
+using Game.Effects.Traits;
 using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Champions;
@@ -15,6 +18,7 @@ using Game.Piece.PieceLogic.Construct;
 using Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon;
 using Game.Piece.PieceLogic.Construct.Fracture_Zone;
 using Game.Piece.PieceLogic.Construct.KelpForest;
+using Game.Piece.PieceLogic.Construct.PollutedRock;
 using Game.Piece.PieceLogic.Elites;
 using Game.Piece.PieceLogic.Summon;
 using Game.Piece.PieceLogic.Swarm;
@@ -26,23 +30,31 @@ using Game.Relics.RottingScythe;
 using Game.Relics.StormCapacitor;
 using Game.Relics.SeafoamPhial;
 using Game.Relics.SirensHarpoon;
+using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
 
 namespace Game.Managers
 {
-    public interface ISubscriber {
+    public interface ISubscriber
+    {
         // ObserverActivateWhen GetObserverActivate();
         // ObserverPriority GetPriority();
         public void OnCall(Action.Action action);
         public void OnCallEnd(bool color);
     }
-    public enum ObserverActivateWhen: byte
+
+    public enum ObserverActivateWhen : byte
     {
-        None, Captures, Moves, SwitchTurn, MoveGeneration, EffectApplied
+        None,
+        Captures,
+        Moves,
+        SwitchTurn,
+        MoveGeneration,
+        EffectApplied
     }
-    
+
     public enum Color : byte
     {
         White,
@@ -51,7 +63,6 @@ namespace Game.Managers
     }
 
 
-    
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GameState
     {
@@ -62,8 +73,11 @@ namespace Game.Managers
         public bool SideToMove;
         public RelicLogic WhiteRelic;
         public RelicLogic BlackRelic;
+        public int WhiteSkillUses;
+        public int BlackSkillUses;
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
+        private readonly List<Effect> effectObservers = new();
         public RegionalEffect RegionalEffect;
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
@@ -164,16 +178,21 @@ namespace Game.Managers
                 PieceType.GulperEel => new GulperEel(piece),
                 PieceType.Hatchetfish => new Hatchetfish(piece),
                 PieceType.Lizardfish => new Lizardfish(piece),
+                PieceType.PistolShrimp => new PistolShrimp(piece),
+                PieceType.Slimehead => new Slimehead(piece),
+                PieceType.MarineIguana => new MarineIguana(piece),
+                PieceType.PollutedRock => new PollutedRock(piece),
+                PieceType.Barnacle => new Barnacle(piece),
                 _ => null
             };
 
-            PieceBoard[piece.Index] = p;    
+            PieceBoard[piece.Index] = p;
         }
-        
+
         public static RelicLogic GetRelicLogicByConfig(RelicConfig cfg)
         {
-            RelicLogic rl = cfg.Type switch 
-            { 
+            RelicLogic rl = cfg.Type switch
+            {
                 RelicType.RottingScythe => new RottingScythe(cfg),
                 RelicType.EyeOfMimic => new EyeOfMimic(cfg),
                 RelicType.FrostSigil => new FrostSigil(cfg),
@@ -182,6 +201,7 @@ namespace Game.Managers
                 RelicType.SeafoamPhial => new SeafoamPhial(cfg),
                 RelicType.StormCapacitor => new StormCapacitor(cfg),
                 RelicType.SirensHarpoon => new SirensHarpoon(cfg),
+                RelicType.MangroveCharm => new MangroveCharm(cfg),
                 _ => null
             };
             return rl;
@@ -205,12 +225,47 @@ namespace Game.Managers
             return re;
         }
 
+        public static Effect CreateEffect(EffectName effectName, sbyte duration,sbyte strength, PieceLogic piece)
+        {
+
+            return effectName switch
+            {
+                // Buffs 
+                EffectName.Carapace => new Game.Effects.Buffs.Carapace(duration, piece),
+                EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
+                EffectName.Piercing => new Game.Effects.Buffs.Piercing(duration, piece),
+                EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
+                EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece, strength),
+                EffectName.Haste => new Game.Effects.Buffs.Haste(duration, strength, piece),
+                
+                // Traits 
+                EffectName.Evasion => new Game.Effects.Traits.Evasion(duration, strength, piece),
+                EffectName.Construct => new Game.Effects.Traits.Construct(piece),
+                EffectName.Demolisher => new Game.Effects.Traits.Demolisher(piece),
+                EffectName.Consume => new Game.Effects.Traits.Consume(piece),
+                EffectName.Surpass => new Game.Effects.Traits.Surpass(piece),
+                EffectName.Ambush => new Game.Effects.Traits.Ambush(piece),
+                EffectName.QuickReflex => new Game.Effects.Traits.QuickReflex(piece),
+
+                // Debuffs
+                EffectName.Slow => new Game.Effects.Debuffs.Slow(strength,duration, piece),
+                EffectName.Blinded => new Game.Effects.Debuffs.Blinded(duration, strength, piece),
+                EffectName.Stunned => new Game.Effects.Debuffs.Stunned(duration, piece),
+                EffectName.Poison => new Game.Effects.Debuffs.Poison(duration, piece),
+                EffectName.Bleeding => new Game.Effects.Debuffs.Bleeding(duration, piece),
+                EffectName.Bound => new Game.Effects.Debuffs.Bound(duration, piece),
+                EffectName.Taunted => new Game.Effects.Debuffs.Taunted(duration, piece),
+
+                _ => new Game.Effects.Buffs.Shield(piece)
+            };
+        }
+
         public void EffectCountdown()
         {
             foreach (var piece in PieceBoard)
             {
                 if (piece == null || piece.Color != SideToMove) continue;
-                
+
                 piece.PassTurn();
 
                 foreach (var effect in piece.Effects.Where(effect => effect.Duration >= 0))
@@ -223,6 +278,7 @@ namespace Game.Managers
                     }
                 }
             }
+
             WhiteRelic?.PassTurn();
             BlackRelic?.PassTurn();
         }
@@ -243,7 +299,7 @@ namespace Game.Managers
 
             pieceAffected.Effects.ForEach(RemoveObserver);
             pieceAffected.Die();
-            
+
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
                 pieceAffected.Color, pieceAffected.Pos));
         }
@@ -256,9 +312,8 @@ namespace Game.Managers
             PieceBoard[f] = null;
             FormationManager.Ins.TriggerExit(f, t);
             FormationManager.Ins.TriggerEnter(t);
-            
         }
-        
+
         public void Swap(int a, int b)
         {
             var pieceB = PieceBoard[b];
@@ -286,36 +341,38 @@ namespace Game.Managers
                     countTurn = 0;
                 }
             }
+
             SideToMove = !SideToMove;
         }
 
         public void AddObserver(Effect effect)
         {
-            var pos = observers.BinarySearch(effect, effect);
-            observers.Insert(pos >= 0 ? pos : ~pos, effect);
+            var pos = effectObservers.BinarySearch(effect, effect);
+            effectObservers.Insert(pos >= 0 ? pos : ~pos, effect);
         }
-        
+
         public void RemoveObserver(Effect effect)
         {
-            observers.Remove(effect);
+            effectObservers.Remove(effect);
         }
-        
+
         public void NotifyEnd(Action.Action mainAction)
         {
-            foreach(var subscriber in Subscribers) {
+            foreach (var subscriber in Subscribers)
+            {
                 subscriber.OnCallEnd(SideToMove);
             }
-            
-            observers.ForEach(effect =>
+
+            effectObservers.ForEach(effect =>
             {
                 if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
                 if (effect is not IEndTurnEffect turnEffect) return;
-                
+
                 if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
                 {
                     turnEffect.OnCallEnd(mainAction);
                 }
-                
+
                 //The next turn is ours.
                 else if (SideToMove == effect.Piece.Color)
                 {
@@ -334,12 +391,12 @@ namespace Game.Managers
                 }
             });
         }
-        
-        public void Notify(Action.Action mainAction)
+
+        public void NotifyMainAction(Action.Action mainAction)
         {
             if (mainAction is ICaptures)
             {
-                observers.ForEach(effect =>
+                effectObservers.ForEach(effect =>
                 {
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCallPieceAction(mainAction);
                 });
@@ -347,17 +404,18 @@ namespace Game.Managers
 
             if (mainAction.DoesMoveChangePos)
             {
-                observers.ForEach(effect =>
+                effectObservers.ForEach(effect =>
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves)
+                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves &&
+                        effect.Priority != ObserverPriority.AfterAction)
                         effect.OnCallPieceAction(mainAction);
                 });
             }
         }
-        
+
         public void NotifyOnMoveGen(List<Action.Action> actions)
         {
-            observers.ForEach(e =>
+            effectObservers.ForEach(e =>
             {
                 if (e.ObserverActivateWhen == ObserverActivateWhen.MoveGeneration)
                 {
@@ -368,7 +426,7 @@ namespace Game.Managers
 
         public void NotifyWhenApplyEffect(ApplyEffect action)
         {
-            observers.ForEach(e =>
+            effectObservers.ForEach(e =>
             {
                 if (e.ObserverActivateWhen == ObserverActivateWhen.EffectApplied)
                 {
@@ -376,5 +434,13 @@ namespace Game.Managers
                 }
             });
         }
+        
+        public void IncrementSkillUses(Action.Action action)
+        {
+            if (ColorOfPiece(action.Maker)) BlackSkillUses++;
+            else WhiteSkillUses++;
+        }
     }
+    
+    
 }

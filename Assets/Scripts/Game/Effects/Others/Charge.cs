@@ -1,4 +1,4 @@
-using Game.Action;
+using Game.Common;
 
 
 namespace Game.Effects.Others
@@ -11,18 +11,18 @@ namespace Game.Effects.Others
         public Charge(sbyte strength, bool color) : base(-1, strength, null, EffectName.Charge)
         {
             this.color = color;
-            lastSkillUses = color ? ActionManager.WhiteSkillUses : ActionManager.BlackSkillUses;
+            lastSkillUses = BoardUtils.SkillUseOf(color);
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
         public EndTurnEffectType EndTurnEffectType { get; }
 
         public void OnCallEnd(Action.Action lastMainAction)
         { 
-            sbyte tmp = color ? (sbyte)(ActionManager.WhiteSkillUses - lastSkillUses) : (sbyte)(ActionManager.BlackSkillUses - lastSkillUses);
+            var tmp = color ? (sbyte)(BoardUtils.SkillUseOf(false) - lastSkillUses) : (sbyte)(BoardUtils.SkillUseOf(true) - lastSkillUses);
             if (tmp > 0)
             {
                 Strength += tmp;
-                lastSkillUses = color ? ActionManager.WhiteSkillUses : ActionManager.BlackSkillUses;
+                lastSkillUses = BoardUtils.SkillUseOf(color);
             }
             if(Strength > 3) Strength = 3;
            

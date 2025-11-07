@@ -35,7 +35,7 @@ namespace Game.Piece
         SeaTurtle,
         HorseLeech,
         Megalodon,
-        MedicalLeech,
+        MedicinalLeech,
         Temperantia,
         BobtailSquid,
         LivingCoral,
@@ -58,7 +58,12 @@ namespace Game.Piece
         Fangtooth,
         GulperEel,
         Hatchetfish,
-        Lizardfish
+        Lizardfish,
+        PistolShrimp,
+        Slimehead,
+        MarineIguana,
+        PollutedRock,
+        Barnacle
     }
 
     public enum PieceRank : byte

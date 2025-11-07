@@ -1,0 +1,43 @@
+using System.Linq;
+using static Game.Common.BoardUtils;
+using Game.Piece.PieceLogic;
+using Game.Action.Internal;
+using Game.Effects;
+using Game.Effects.Debuffs;
+using UnityEngine;
+
+namespace Game.Action.Skills
+{
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class BarnacleActive: Action, ISkills
+    {
+        public BarnacleActive(int maker, int target) : base(maker)
+        {
+            Maker = (ushort)maker;
+            Target = (ushort)target;
+        }
+
+        protected override void Animate()
+        {
+
+        }
+
+        protected override void ModifyGameState()
+        {
+            foreach (var effect in PieceOn(Target).Effects
+                         .Where(effect => (effect.EffectName == EffectName.Shield
+                                           || effect.EffectName == EffectName.HardenedShield)))
+            {
+                if (effect.Duration > 0)
+                    effect.Duration -= 1;
+                else
+                {
+                    ActionManager.EnqueueAction(new RemoveEffect(effect));
+                }
+            }
+            
+            SetCooldown(Maker, -1);
+            //SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+    }
+}

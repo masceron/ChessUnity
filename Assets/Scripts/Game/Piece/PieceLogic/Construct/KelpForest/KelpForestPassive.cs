@@ -13,9 +13,7 @@ using Game.Effects.Buffs;
 namespace Game.Piece.PieceLogic.Construct.KelpForest
 {
 
-    // này vẫn còn thiếu trường hợp nếu kelp xuất hiện chỗ đã có piece thì không camouflage ngay được
-    // do chưa dùng được enqueueaction mà để executeimmediately thì nó lại lỗi
-    // chắc là do nếu mà để enqueueaction thì nó sẽ không apply effect vì nó bị cho là internal action nên không apply chắc vậy
+   
     public class KelpForestPassive : Effect, IEndTurnEffect 
     {
         private List<int> randomPos = new List<int>();

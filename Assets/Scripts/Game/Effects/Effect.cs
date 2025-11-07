@@ -95,7 +95,6 @@ namespace Game.Effects
         OneMoreTurn,
         FractureZonePassive,
         BioluminescentBeaconPassive,
-        LongReach,
         SunfishPassive,
         DormantFossilPassive,
         BlueRingedOctopusPassive,
@@ -117,7 +116,9 @@ namespace Game.Effects
         Marked,
         Fear,
         Frenzied,
-        NativeGround
+        NativeGround,
+        SlimeheadPassive,
+        Adaptation,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -130,7 +131,7 @@ namespace Game.Effects
         public readonly EffectCategory Category;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
-        private readonly ObserverPriority priority;
+        public readonly ObserverPriority Priority;
 
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectName name)
         {
@@ -141,7 +142,7 @@ namespace Game.Effects
             
             var info = AssetManager.Ins.EffectData[name];
             ObserverActivateWhen = info.activeWhen;
-            priority = info.priority;
+            Priority = info.priority;
             Category = info.category;
         }
 
@@ -172,7 +173,7 @@ namespace Game.Effects
 
         public override int Compare(Effect x, Effect y)
         {
-            return -x!.priority.CompareTo(y!.priority);
+            return -x!.Priority.CompareTo(y!.Priority);
         }
 
         public string Description()

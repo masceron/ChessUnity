@@ -26,13 +26,17 @@ namespace Game.Tile
             base.OnPieceEnter(piece);
             if (!piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
             {
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(piece)));
+                this.ApplyEffect(piece, new Camouflage(piece));
             }
         }
 
         public override void OnPieceExit(PieceLogic piece)
         {
-            ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == EffectName.Camouflage)));
+            if (piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
+            {
+                ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == EffectName.Camouflage)));
+            }
+            
             base.OnPieceExit(piece);
         }
 
