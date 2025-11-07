@@ -223,6 +223,7 @@ namespace Game.Managers
                 RegionalEffectType.Whirpool => new Whirlpool(),
                 RegionalEffectType.PsionicShock => new PsionicShock(),
                 RegionalEffectType.BloodMoon => new BloodMoon(),
+                RegionalEffectType.RedTide => new RedTide(),
                 _ => null
             };
 

@@ -14,29 +14,28 @@ namespace Game.Effects.RegionalEffect
 {
     public class RedTide: RegionalEffect
     {
+        private int startingSizeX;
+        private int startingSizeY;
         private int isActive;
         public RedTide() : base(RegionalEffectType.RedTide)
         {
-            isActive = 1;
+            isActive = 0;
+            startingSizeX = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.x) / 2;
+            startingSizeY = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.y) / 2;
+            Debug.Log("Starting Size Y: " + MatchManager.Ins.startingSize.y);
         }
         protected override void ApplyEffect(int currentTurn)
         {
-            Debug.Log("Red Tide Applied");
-            if (isActive == 1)
+            if (isActive == 9)
             {
-                int startingSizeX = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.x) / 2;
-                int startingSizeY = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.y) / 2;
+
                 var random = new System.Random();
-                int randomColumn = random.Next(1, MatchManager.Ins.startingSize.x);
+                int randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
                 Debug.Log("Random Column: " + randomColumn);
-                while(!IsColumnFull(randomColumn))
-                {
-                    randomColumn = random.Next(1, MatchManager.Ins.startingSize.x);
+                while(!IsColumnFull(randomColumn)){
+                    randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
                 }
-                for (int i = 0; i < MatchManager.Ins.startingSize.y; i++)
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Infected(PieceOn(IndexOf(randomColumn + startingSizeX, i + startingSizeY)))));
-                }
+                ApplyEffectToColumn(randomColumn);
                 isActive = 0;
             }
             isActive++;
@@ -44,13 +43,22 @@ namespace Game.Effects.RegionalEffect
 
         private bool IsColumnFull(int column)
         {
-            int startingSizeX = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.x) / 2;
-            int startingSizeY = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.y) / 2;
             for (int i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
             {
-                if(!TileManager.Ins.IsTileEmpty(IndexOf(column + startingSizeX, i))) return false;
+                Debug.Log("Checking tile: " + IndexOf(i, column + startingSizeY));
+                if(TileManager.Ins.IsTileEmpty(IndexOf(i, column + startingSizeY))) return false;
             }
             return true;
+        }
+
+        private void ApplyEffectToColumn(int column)
+        {
+            for (int i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            {
+                PieceLogic piece = PieceOn(IndexOf(i, column + startingSizeY));    
+                if(piece == null) continue;
+                ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece)));
+            }
         }
 
     }
