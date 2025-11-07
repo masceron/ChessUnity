@@ -22,4 +22,4 @@ MonoBehaviour:
   key: lizard_fish
   hasSkill: 0
   normalSkillCooldown: 0
-  availableSlots: 0
+  availableSlots: 8
