@@ -179,6 +179,7 @@ namespace Game.Piece.PieceLogic
         {
             if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
+            if (Effects.Any(e => e.EffectName == EffectName.Frienzied)) return;
             var i = 0;
 
             Quiets(list, Pos, ref i);

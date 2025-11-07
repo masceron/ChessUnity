@@ -1,19 +1,20 @@
 using Game.Managers;
-using Game.Action.Internal.Pending;
 using UnityEngine;
-namespace Game.Action.Captures
+using Game.Action.Internal.Pending; 
+namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrienziedCapture: Action, IPendingAble
+    public class FrienziedMove: Action, IPendingAble
     {
-        public FrienziedCapture(int f, int t) : base(f, true)
+        public FrienziedMove(int f, int t) : base(f, true)
         {
-            Maker = f;
-            Target = t;
+            Maker = (ushort)f;
+            Target = (ushort)t;
         }
+
         protected override void Animate()
         {
-            
+            PieceManager.Ins.Move(Maker, Target);
         }
 
         protected override void ModifyGameState()
@@ -21,10 +22,8 @@ namespace Game.Action.Captures
         }
         public void CompleteAction()
         {
-            Debug.Log("Complete FrienziedCapture");
-            PieceManager.Ins.Destroy(Target);
+            Debug.Log("Complete FrienziedMove");
             PieceManager.Ins.Move(Maker, Target);
-            MatchManager.Ins.GameState.Kill(Target);
             MatchManager.Ins.GameState.Move(Maker, Target);
             Maker = Target;
         }

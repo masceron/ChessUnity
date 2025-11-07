@@ -40,7 +40,7 @@ namespace Game.Effects.Traits
                     count++;
                 }
             }
-            if (count >= 1)
+            if (count >= 0)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Frienzied(Piece)));
                 count = 0;

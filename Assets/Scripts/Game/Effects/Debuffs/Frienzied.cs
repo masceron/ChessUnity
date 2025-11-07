@@ -7,6 +7,7 @@ using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using UnityEngine;
+using Game.Managers;
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -15,8 +16,9 @@ namespace Game.Effects.Debuffs
         private List<Action.Action> list;
         public Frienzied(PieceLogic piece) : base(-1, 1, piece, EffectName.Frienzied)
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
             list = new List<Action.Action>();
+            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+            
         }
 
         public EndTurnEffectType EndTurnEffectType { get; }
@@ -51,7 +53,7 @@ namespace Game.Effects.Debuffs
                 
                 if (nearestTarget >= 0)
                 {
-                    ActionManager.EnqueueAction(new NormalCapture(Piece.Pos, nearestTarget));
+                   new FrienziedCapture(Piece.Pos, nearestTarget).CompleteAction();
                 }
             } else if (moveTargets.Count > 0)
             {
@@ -59,7 +61,7 @@ namespace Game.Effects.Debuffs
                 var random = new System.Random();
                 var randomIndex = random.Next(0, moveTargets.Count);
                 var randomTarget = moveTargets[randomIndex];
-                ActionManager.EnqueueAction(new NormalMove(Piece.Pos, randomTarget));
+                new FrienziedMove(Piece.Pos, randomTarget).CompleteAction();
             }
 
         }

@@ -13,7 +13,7 @@ namespace Game.Piece.PieceLogic.Elites
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HumboldtSquid : PieceLogic
     {
-        public HumboldtSquid(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
+        public HumboldtSquid(PieceConfig cfg) : base(cfg, AmbushPredatorMoves.Quiets, AmbushPredatorMoves.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(this)));
