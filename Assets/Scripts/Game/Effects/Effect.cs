@@ -123,6 +123,7 @@ namespace Game.Effects
         Frienzied,
         BlackSwallowerVengeful,
         KillPieceAfterSwitchTurn,
+        ArcherfishAccuracyPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

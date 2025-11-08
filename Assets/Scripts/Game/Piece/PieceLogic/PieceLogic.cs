@@ -158,7 +158,10 @@ namespace Game.Piece.PieceLogic
             }
         }
 
-
+        public bool HasAugmentation(Augmentation.AugmentationName augmentationName)
+        {
+            return Augmentations.Any(a => a.Name == augmentationName);
+        }
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;
