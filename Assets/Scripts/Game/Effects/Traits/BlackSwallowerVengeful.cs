@@ -39,7 +39,7 @@ namespace Game.Effects.Traits
                     var random = new Random();
                     var randomPiece = pieceAround[random.Next(0, pieceAround.Count)];
                     if (randomPiece == null) return;
-                    foreach (var effect in randomPiece.Effects.Where(effect => effect.Category == EffectCategory.Debuff))
+                    foreach (var effect in randomPiece.Effects.Where(effect => effect.Category == EffectCategory.Buff))
                     {
                         ActionManager.EnqueueAction(new RemoveEffect(effect));
                     }
