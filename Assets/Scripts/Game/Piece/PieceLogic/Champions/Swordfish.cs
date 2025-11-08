@@ -17,8 +17,6 @@ namespace Game.Piece.PieceLogic.Champions
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SwordfishAttack(this)));
-            // ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(5, this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this)));
             Skills = list =>
             {
                 if (SkillCooldown == 0) list.Add(new SwordFishActive(Pos));
