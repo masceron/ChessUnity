@@ -4,6 +4,7 @@ using static Game.Common.BoardUtils;
 using System.Linq;
 using Game.Effects;
 using Game.Common;
+using UnityEngine;
 
 namespace Game.Piece.PieceLogic.Commons
 {
@@ -18,12 +19,12 @@ namespace Game.Piece.PieceLogic.Commons
                 flag = false;
                 if (SkillCooldown != 0) return;
                 var (rank, file) = RankFileOf(Pos);
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                 {
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
                     if (piece == null) continue;
-                    if (piece.Effects.Any(e => e.EffectName != EffectName.Bleeding))
+                    if (piece.Effects.Any(e => e.EffectName == EffectName.Bleeding))
                     {
                         list.Add(new SnaggletoothsActive(Pos, index, false));
                         flag = true;
