@@ -68,6 +68,7 @@ namespace Game.Piece
         HumboldtSquid,
         Grenadiers,
         BlackSwallower,
+        Snaggletooths,
     }
 
     public enum PieceRank : byte

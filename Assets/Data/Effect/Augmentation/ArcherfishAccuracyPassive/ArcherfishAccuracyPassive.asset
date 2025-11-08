@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: ArcherfishAccuracyPassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 0
-  category: 0
-  stack: 0
-  priority: 0
-  activeWhen: 0
+  typeName: 82
+  category: 4
+  stack: 1
+  priority: 1
+  activeWhen: 1
   icon: {fileID: 0}
-  key: 
+  key: Effect_Archerfish_Accuracy_Passive
