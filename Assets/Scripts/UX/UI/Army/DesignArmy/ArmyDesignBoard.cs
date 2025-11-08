@@ -7,22 +7,23 @@ using Game.Common;
 using Game.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
+using static Game.Common.BoardUtils;
+using Game.Managers;
 
 namespace UX.UI.Army.DesignArmy
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArmyDesignBoard: Singleton<ArmyDesignBoard>
+    public class ArmyDesignBoard: MonoBehaviour
     {
         [SerializeField] private RectTransform mainTransform;
         [SerializeField] private GridLayoutGroup grid;
         [SerializeField] private ArmyDesignSquare square;
-        private int size;
-        private BitArray allowed;
-
-        private List<ArmyDesignSquare> childSquares;
+        protected int size;
+        protected BitArray allowed;
+        protected List<ArmyDesignSquare> childSquares;
         public List<Troop> Troops;
         public Action<Troop> OnAddTroop, OnRemoveTroop;
-        public void Load(int boardSize)
+        public virtual void Load(int boardSize)
         {
             Troops = new List<Troop>();
             size = boardSize;
@@ -118,23 +119,22 @@ namespace UX.UI.Army.DesignArmy
             }
         }
 
-        public void LoadSave(Troop[] troops)
+        public virtual void LoadSave(Troop[] troops)
         {
-            var searcher = FindAnyObjectByType<ArmySearcher>();
+
             foreach (var troop in troops)
             {
                 Add(troop.Rank, troop.File, troop.PieceType);
-                var piece = Instantiate(searcher.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
-                
-                piece.Load(searcher.Data[troop.PieceType]);
+                var piece = Instantiate(ArmyDesign.Ins.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
+
+                piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
             }
         }
-
         public void Add(int rank, int file, PieceType type)
         {
-            Troop newTroop = new Troop(type, rank, file, ArmyDesign.Ins.choosenSide);
+            Troop newTroop = new Troop(type, rank, file);
             Troops.Add(newTroop);
             OnAddTroop?.Invoke(newTroop);
         }
@@ -152,18 +152,6 @@ namespace UX.UI.Army.DesignArmy
             Troops.RemoveAt(removedIndex);
             OnRemoveTroop?.Invoke(Troops[removedIndex]);
 
-        }
-        public Troop GetTroopByCoordinate(int rank, int file)
-        {
-            foreach (Troop tr in Troops)
-            {
-                if (tr.Rank == rank && tr.File == file)
-                {
-                    return tr;
-                }
-            }
-            Debug.LogError($"GetTroopByCoordinate: False coordinate {rank} {file}");
-            return new Troop(PieceType.Velkaris, 0, 0, false);
         }
     }
 }

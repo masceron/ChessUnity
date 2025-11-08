@@ -1,9 +1,12 @@
 using Game.Action;
 using Game.Action.Quiets;
 using Game.Managers;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
+using static Game.Common.BoardUtils;
 
 //Xuất hiện vào turn thứ 30 của ván nếu chưa kết thúc, tạo ra vòng xoáy 2x2 giữa bàn cờ, 
 //Mỗi turn hút tất cả các quân vào gần với xoáy nước 1 ô. 

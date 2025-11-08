@@ -14,14 +14,14 @@ namespace Game.Save.Army
         public readonly PieceType PieceType;
         public readonly ushort Rank;
         public readonly ushort File;
-        public readonly bool Side;
+        // public readonly bool Side;
         public Dictionary<AugmentationSlot, AugmentationName> equippedAugmentation;
-        public Troop(PieceType pieceType, int rank, int file, bool side = false)
+        public Troop(PieceType pieceType, int rank, int file)
         {
             PieceType = pieceType;
             Rank = (ushort) rank;
             File = (ushort)file;
-            Side = side;
+            // Side = side;
             equippedAugmentation = new();
         }
 

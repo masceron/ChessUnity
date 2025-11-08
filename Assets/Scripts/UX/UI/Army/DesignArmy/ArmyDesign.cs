@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Common;
 using Game.Relics;
 using Game.Save.Army;
 using Game.Save.Relics;
@@ -13,15 +14,17 @@ namespace UX.UI.Army.DesignArmy
     {
         public bool choosenSide{ get; private set; }
         [SerializeField] private DesignArmyInfo info;
-        [SerializeField] private ArmyDesignBoard board;
+        public ArmyDesignBoard board;
+        public ArmyDesignTroop troopDisplay;
         [SerializeField] private ArmySearcher searcher;
         [SerializeField] private DesignNotification notification;
         [SerializeField] private ArmyRelicSearcher relicSearcher;
-        private int size;
+        [SerializeField] private Transform nextButton;
+        [NonSerialized] public int size;
         public Game.Save.Army.Army army;
-        void Awake()
+        void Start()
         {
-            choosenSide = false;
+            nextButton?.gameObject.SetActive(false);
         }
         public void Back(InputAction.CallbackContext context)
         {
@@ -51,7 +54,6 @@ namespace UX.UI.Army.DesignArmy
             info.Load(size);
             board.Load(size);
             searcher.Load();
-            Debug.Log("Load design board");
             if (armyToLoad != null)
             {
                 LoadSave(armyToLoad.Value);
@@ -60,8 +62,8 @@ namespace UX.UI.Army.DesignArmy
             {
                 relicSearcher.Load(null);
             }
+            nextButton?.gameObject.SetActive(true);
         }
-
         private void LoadSave(Game.Save.Army.Army armyToLoad)
         {
             army = armyToLoad;
@@ -86,7 +88,17 @@ namespace UX.UI.Army.DesignArmy
             Save();
             return true;
         }
-
+        public bool TrySaveFreeTest()
+        {
+            army.Name = info.armyName.text;
+            if (army.Name == string.Empty)
+            {
+                notification.Open(DesignNotifications.EmptyName);
+                return false;
+            }
+            Save();
+            return true;
+        }
         public void Save()
         {
             army.BoardSize = (ushort) size;

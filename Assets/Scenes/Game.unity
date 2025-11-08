@@ -909,6 +909,8 @@ MonoBehaviour:
   effectsData: {fileID: 11400000, guid: 41fbcdd3b409c1a4d9eb51fd2cd34ae6, type: 2}
   relicsData: {fileID: 11400000, guid: 55677e0beededb7439a91660f177e2f3, type: 2}
   enviromentsData: {fileID: 11400000, guid: 174aa3be7320d8c4693318abc7ea6844, type: 2}
+  augmentationData: {fileID: 11400000, guid: 9ebced31df8ab6947800d88d2b50b30d, type: 2}
+  RegionalsData: {fileID: 11400000, guid: 8a3f66778a5cef149a35b65f5e948c09, type: 2}
 --- !u!1 &1587264566
 GameObject:
   m_ObjectHideFlags: 0
@@ -938,6 +940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48369b3fbf77a94a8825f3c23e961db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialCanvas: 14
+  currentCanvasID: 0
   canvasDict:
     keys: 03000000040000000800000009000000
     values:

@@ -79,7 +79,7 @@ namespace Game.Effects
         DestroyEnemyWhenMove,
         SeaTurtleCountdown,
         FrenziedVeteran,
-        TrueBite, 
+        TrueBite,
         CopyCaptureMethod,
         ClownFishPassive,
         LivingCoralPassive,
@@ -104,7 +104,7 @@ namespace Game.Effects
         HammerOysterPassive,
         EntanglingTentacles,
         Silenced,
-        Charge, 
+        Charge,
         KelpForestPassive,
         BottlenoseDolphinPassive,
         Controlled,
@@ -119,6 +119,8 @@ namespace Game.Effects
         NativeGround,
         SlimeheadPassive,
         Adaptation,
+        LongReach,
+
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

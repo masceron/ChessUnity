@@ -9,14 +9,7 @@ namespace UX.UI.Army.NewArmy
     {
         public void Create(int size)
         {
-            if (SceneManager.GetActiveScene().name == "FreePlayTest")
-            {
-                UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
-            }
-            else
-            {
-                UIManager.Ins.Load(CanvasID.DesignArmy);
-            }
+            UIManager.Ins.Load(CanvasID.DesignArmy);
             ArmyDesign.Ins.Load(size, null);
         }
 

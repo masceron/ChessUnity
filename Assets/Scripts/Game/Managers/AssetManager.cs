@@ -29,7 +29,6 @@ namespace Game.Managers
         [SerializeField] private AugmentationData augmentationData;
         public RegionalsData RegionalsData;
 
-
         protected override void Awake()
         {
             base.Awake();

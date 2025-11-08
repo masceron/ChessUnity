@@ -19,7 +19,7 @@ namespace UX.UI.FreePlayTest
         public TroopDescriptions troopDescriptions;
         public List<AugmentationIcon> icons = new();
         [HideInInspector] public Dictionary<AugmentationSlot, AugmentationName> equippedAugmentation = new();
-        public void Load(Troop selected)
+        public void Load(Troop selected, bool side)
         {
             this.SelectedTroop = selected;
             equippedAugmentation = SelectedTroop.equippedAugmentation;
@@ -34,7 +34,7 @@ namespace UX.UI.FreePlayTest
                     icon.Load(AugmentationName.None);
                 }
             }
-            sideText.text = (SelectedTroop.Side) ? "Enemy" : "Ally";
+            sideText.text = (side) ? "Enemy" : "Ally";
             nameText.text = AssetManager.Ins.PieceData[selected.PieceType].key;
             troopDescriptions.Display(AssetManager.Ins.PieceData[selected.PieceType]);
         }

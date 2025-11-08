@@ -38,7 +38,7 @@ public static class Config
         // new PieceConfig(PieceType.Anglerfish, true, 93),
     };
 
-    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);
-    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.SirensHarpoon, true, 5);
+    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 5);
+    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 5);
     public static RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
 }

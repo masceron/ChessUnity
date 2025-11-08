@@ -13,7 +13,7 @@ using Game.Managers;
 namespace UX.UI.Army.DesignArmy
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArmySearcher: MonoBehaviour
+    public class ArmySearcher: Singleton<ArmySearcher> 
     {
         [SerializeField] private TMP_InputField searchBar;
         [SerializeField] public Transform list;
@@ -37,8 +37,8 @@ namespace UX.UI.Army.DesignArmy
         public void Load()
         {
             Data = AssetManager.Ins.PieceData;
-            ArmyDesignBoard.Ins.OnAddTroop += (t) => FilterByCondition();
-            ArmyDesignBoard.Ins.OnRemoveTroop += (t) => FilterByCondition();
+            ArmyDesign.Ins.board.OnAddTroop += (t) => FilterByCondition();
+            ArmyDesign.Ins.board.OnRemoveTroop += (t) => FilterByCondition();
             lastSearchResult = Data.Values.ToList();
             FilterByCondition();
             SearchByKeyword("");
@@ -181,12 +181,8 @@ namespace UX.UI.Army.DesignArmy
             // Lọc theo một số condition 
             Dictionary<PieceInfo, int> counts = new();
             
-            foreach (Troop tr in ArmyDesignBoard.Ins.Troops)
+            foreach (Troop tr in ArmyDesign.Ins.board.Troops)
             {
-                if (tr.Side != ArmyDesign.Ins.choosenSide)
-                {
-                    continue;
-                }
                 PieceInfo pieceInfo = AssetManager.Ins.PieceData[tr.PieceType];
 
                 if (!counts.ContainsKey(pieceInfo))
@@ -221,7 +217,7 @@ namespace UX.UI.Army.DesignArmy
                 // Construct: 1 quân mỗi bên, giới hạn ở nửa bàn cờ bên mình
                 if (pieceInfo.rank == PieceRank.Construct)
                 {
-                    foreach (Troop t in ArmyDesignBoard.Ins.Troops)
+                    foreach (Troop t in ArmyDesign.Ins.board.Troops)
                     {
                         if (t.GetPieceInfo().rank == PieceRank.Construct)
                         {

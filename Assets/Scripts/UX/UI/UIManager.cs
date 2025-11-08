@@ -9,12 +9,14 @@ namespace UX.UI
     {
         MainMenu, PlayMenu, Settings, Ingame, Loading, Followers, CreateArmy,
         DesignArmy, QuitToMainMenu, LineupEdit,
-        FreePlayPreset, FreePlayDesignArmy, RegionalEffect, Augmentation
+        FreePlayPreset, FreePlayDesignArmy, RegionalEffect, Augmentation,
+        None,
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIManager : Singleton<UIManager>
     {
         private RectTransform currentCanvas;
+        public CanvasID initialCanvas = CanvasID.None;
         public CanvasID currentCanvasID;
         
         [Serializable]
@@ -22,7 +24,14 @@ namespace UX.UI
 
         [SerializeField] private CanvasDict canvasDict;
         private readonly Dictionary<CanvasID, GameObject> loadedCanvases = new();
-
+        protected override void Awake()
+        {
+            base.Awake();
+            if (initialCanvas != CanvasID.None)
+            {
+                Load(initialCanvas);
+            }
+        }
         public void Load(CanvasID id)
         {
             currentCanvasID = id;

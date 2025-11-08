@@ -12,10 +12,7 @@ namespace Game.Common
             get
             {
                 if (_instance) return _instance;
-                else
-                {
-                    // Debug.LogError("You should create singleton before reference");
-                }
+                
                 // Find singleton
                 _instance = FindAnyObjectByType<T>();
 

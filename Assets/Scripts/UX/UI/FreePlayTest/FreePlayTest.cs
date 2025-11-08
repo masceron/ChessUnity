@@ -16,6 +16,7 @@ using Game.ScriptableObjects.Collections;
 using Game.Common;
 using System.Linq;
 using Game.ScriptableObjects;
+using UX.UI.Followers;
 
 namespace UX.UI.FreePlayTest{
     public enum FreePlayScene
@@ -32,10 +33,9 @@ namespace UX.UI.FreePlayTest{
         [SerializeField] public UDictionary<FreePlayScene, RectTransform> panelDict;
         public ArmyDesignBoard armyDesignBoard;
         public TMP_Text boardSizeText;
-        int boardSizeIndex = 0;
-        protected override void Awake()
+        void Start()
         {
-            base.Awake();
+            SavedArmies.Ins.Load();
         }
         public void ChangeBoardSize(int value)
         {
@@ -52,37 +52,9 @@ namespace UX.UI.FreePlayTest{
         }
         public void AddRegionalEffect(RegionalsData regionalsData)
         {
-            
+
         }
-        public void ToGameScene()
-        {
-            Config.boardSize = ArmyDesign.Ins.army.BoardSize;
-            Config.PieceConfigWhite.Clear();
-            Config.PieceConfigBlack.Clear();
-            foreach (Troop troop in ArmyDesignBoard.Ins.Troops)
-            {
-                var augNameLst = troop.equippedAugmentation.Values.ToList();
-                List<AugmentationInfo> infos = new();
-                foreach (var name in augNameLst)
-                {
-                    infos.Add(AssetManager.Ins.AugmentationData[name]);
-                }
-                PieceConfig pieceConfig = new PieceConfig(troop.PieceType, troop.Side,
-                    (ushort)(troop.Rank*Config.boardSize + troop.File), null);
-                Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
-                if (pieceConfig.Color == false)
-                {
-                    Config.PieceConfigWhite.Add(pieceConfig);
-                }
-                else
-                {
-                    Config.PieceConfigBlack.Add(pieceConfig);
-                }
-            }
-            
-            Debug.Log($"BoardSize: {ArmyDesign.Ins.army.BoardSize}");
-            SceneLoader.LoadSceneWithLoadingScreen(1);
-        }
+    
         public void ToPresetPanel()
         {
             // Debug.Log("")

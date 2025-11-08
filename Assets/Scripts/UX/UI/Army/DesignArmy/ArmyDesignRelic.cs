@@ -17,7 +17,7 @@ namespace UX.UI.Army.DesignArmy
             image.texture = relicInfo.icon;
         }
         
-        public void OnPointerClick(PointerEventData eventData)
+        public virtual void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button != PointerEventData.InputButton.Left) return;
             ArmyRelicSearcher.Ins.Select(this);

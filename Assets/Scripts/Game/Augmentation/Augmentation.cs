@@ -50,7 +50,8 @@ namespace Game.Augmentation
         AbyssalTapetum,
         ArcherfishAccuracy,
         RaysTail,
-        ColdBlooded
+        ColdBlooded,
+        None,
     }
 
     public enum AugmentationRarity

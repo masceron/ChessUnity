@@ -24,10 +24,10 @@ namespace UX.UI.Loader
                         MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)));
                         break;
                     case 2:
-                        UIManager.Ins.Load(CanvasID.FreePlayPreset);
+                        UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
                         break;
                 }
-            };
+            }; 
         }
         public static void LoadSceneWithLoadingScreen(int id)
         {

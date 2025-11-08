@@ -18,6 +18,7 @@ namespace UX.UI.Army.DesignArmy
         [NonSerialized] public Transform Parent;
         private Transform oldParent;
         [NonSerialized] public bool Placed;
+        [NonSerialized] public bool Removable = true;
         [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
@@ -25,6 +26,10 @@ namespace UX.UI.Army.DesignArmy
         
         public void Load(PieceInfo piece, bool isGreyOut = false)
         {
+            if (piece == null)
+            {
+                Debug.LogError("ArmyDesignTroop::Load(piece) : piece is null");
+            }
             this.isGreyOut = isGreyOut;
             if (isGreyOut)
             {

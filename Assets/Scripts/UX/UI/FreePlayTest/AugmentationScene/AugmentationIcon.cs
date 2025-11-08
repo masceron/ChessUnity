@@ -75,64 +75,6 @@ namespace UX.UI.FreePlayTest
             trigger.SetText(pieceName, "", pieceDescriptions);
         }
 
-        // public void OnBeginDrag(PointerEventData eventData)
-        // {
-        //     oldParent = transform.parent;
-        //     transform.SetParent(FindAnyObjectByType<Canvas>().transform);
-        //     image.raycastTarget = false;
-        //     Parent = null;
-        //     trigger.enabled = false;
-        //     TooltipManager.Ins.Disable();
-
-        //     if (Placed) return;
-            
-        //     var searcher = FindAnyObjectByType<AugmentationFilter>();
-        //     var pool = searcher.Pool;
-        //     var idx = pool.IndexOf(this);
-        //     var obj = Instantiate(this, searcher.list);
-            
-        //     obj.transform.SetSiblingIndex(idx);
-        //     obj.GetComponent<Image>().raycastTarget = true;
-        //     obj.trigger.enabled = true;
-            
-        //     obj.Load(Aug);
-        //     pool[idx] = obj;
-        // }
-
-        // public void OnDrag(PointerEventData eventData)
-        // {
-        //     transform.position = eventData.position;
-        // }
-
-        
-        // public void OnEndDrag(PointerEventData eventData)
-        // {
-        //     FindAnyObjectByType<ArmyDesignBoard>().UnSet();
-        //     trigger.enabled = true;
-        //     TooltipManager.Ins.Enable();
-        //     if (!Parent)
-        //     {
-        //         if (!Placed)
-        //         {
-        //             Destroy(gameObject);
-        //         }
-        //         else
-        //         {
-        //             transform.SetParent(oldParent);
-        //             image.raycastTarget = true;
-        //         }
-        //     }
-        //     else
-        //     {
-        //         transform.SetParent(Parent);
-
-        //         var size = Parent.transform.GetComponent<GridLayoutGroup>().cellSize;
-        //         GetComponent<RectTransform>().sizeDelta = size;
-                
-        //         image.raycastTarget = true;
-        //         Placed = true;
-        //     }
-        // }
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -140,7 +82,6 @@ namespace UX.UI.FreePlayTest
 
             if (slotInSearchBox)
             {
-                Debug.Log("Click");
                 foreach(AugmentationIcon icon in AugmentationManagerUI.Ins.icons)
                 {
                     if (icon.slot == this.slot)
