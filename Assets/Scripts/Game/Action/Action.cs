@@ -5,7 +5,7 @@ namespace Game.Action
 {
     public enum ActionResult
     {
-        Succeed, Failed, Unblockable, SkipEvasion
+        Succeed, Failed, Unblockable
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

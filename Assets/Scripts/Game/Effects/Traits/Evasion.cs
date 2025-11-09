@@ -1,6 +1,9 @@
-﻿using Game.Action;
+﻿using System.Linq;
+using Game.Action;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -19,16 +22,21 @@ namespace Game.Effects.Traits
         public override void OnCall(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
+            Debug.Log("Evasion");
 
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 
-            if (action.Result == ActionResult.SkipEvasion)
-            {
-                action.Result = ActionResult.Succeed;
-                return;
-            }
-            
+            // if (PieceOn(action.Maker).Effects.Any(e => e.EffectName == EffectName.Bound))
+            // {
+            //     Debug.Log("found bound capture");
+            //     if (action.Result == ActionResult.SkipEvasion)
+            //     {
+            //         action.Result = ActionResult.Succeed;
+            //         return;
+            //     }
+            // }
+
             action.Result = ActionResult.Failed;
         }
     }
