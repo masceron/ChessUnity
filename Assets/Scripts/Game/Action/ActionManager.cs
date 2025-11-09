@@ -99,19 +99,19 @@ namespace Game.Action
             _actionQueue.Enqueue(action);
             ProcessActionWithTriggers();
 
-            if (action is IRelicAction)
-                return false;
-
-            if (action is ISkills)
+            switch (action)
             {
-                var maker = BoardUtils.PieceOn(action.Maker);
-                bool hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
-
-                if (hasQuickReflex)
+                case IRelicAction:
                     return false;
+                case ISkills:
+                {
+                    var maker = BoardUtils.PieceOn(action.Maker);
+                    var hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
 
-                EndTurnProcess(action);
-                return true;
+                    if (hasQuickReflex)
+                        return false;
+                    break;
+                }
             }
 
             EndTurnProcess(action);
