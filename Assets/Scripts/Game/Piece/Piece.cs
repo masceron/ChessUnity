@@ -4,7 +4,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece
 {
-    public enum PieceType : sbyte
+    public enum PieceType : byte
     {
         Velkaris,
         GuidingSiren,
