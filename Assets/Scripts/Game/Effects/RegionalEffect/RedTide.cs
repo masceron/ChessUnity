@@ -20,8 +20,8 @@ namespace Game.Effects.RegionalEffect
         public RedTide() : base(RegionalEffectType.RedTide)
         {
             isActive = 0;
-            startingSizeX = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.x) / 2;
-            startingSizeY = (BoardUtils.MaxLength - MatchManager.Ins.startingSize.y) / 2;
+            startingSizeX = (MaxLength - MatchManager.Ins.startingSize.x) / 2;
+            startingSizeY = (MaxLength - MatchManager.Ins.startingSize.y) / 2;
             Debug.Log("Starting Size Y: " + MatchManager.Ins.startingSize.y);
         }
         protected override void ApplyEffect(int currentTurn)

@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
             if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
 
             if (Distance(action.Maker, action.Target) < 3) return;
-            PieceLogic pieceTarget = BoardUtils.PieceOn(action.Maker);
+            PieceLogic pieceTarget = PieceOn(action.Maker);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy)) 
             {
                 if (!MatchManager.Roll(Probability - 15)) return;

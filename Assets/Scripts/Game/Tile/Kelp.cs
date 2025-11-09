@@ -15,7 +15,7 @@ namespace Game.Tile
         private bool pieceHaveCamouflage = false;
         public Kelp(bool haveDuration, bool color) : base(color)
         {
-            this.HaveDuration = haveDuration;
+            HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
@@ -30,7 +30,7 @@ namespace Game.Tile
             {
                 pieceHaveCamouflage = true;
             } else {
-                this.ApplyEffect(piece, new Camouflage(piece));
+                ApplyEffect(piece, new Camouflage(piece));
             }
         }
 
@@ -42,11 +42,6 @@ namespace Game.Tile
             }
             
             base.OnPieceExit(piece);
-        }
-
-        public override void OnFirstTurn(PieceLogic piece)
-        {
-            base.OnFirstTurn(piece);
         }
     }
 }
