@@ -64,7 +64,10 @@ namespace Game.Piece
         MarineIguana,
         PollutedRock,
         Barnacle,
-        Phronima
+        Phronima,
+        SloaneSViperFish,
+        FeatherStar,
+        AmoredFeatherStar
     }
 
     public enum PieceRank : byte

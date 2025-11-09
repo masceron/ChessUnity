@@ -119,6 +119,7 @@ namespace Game.Effects
         NativeGround,
         SlimeheadPassive,
         Adaptation,
+        RayTailPassive
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
