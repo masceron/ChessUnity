@@ -28,9 +28,9 @@ namespace Game.Managers
             var rank = RankOf(pos);
             var file = FileOf(pos);
             formationObjects[pos] = Instantiate(AssetManager.Ins.EnviromentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
-            Quaternion.identity, this.transform);
+            Quaternion.identity, transform);
             formations[pos] = env;
-            if (BoardUtils.PieceOn(pos) != null){
+            if (PieceOn(pos) != null){
                 formations[pos].OnPieceEnter(PieceOn(pos));
             }
         }

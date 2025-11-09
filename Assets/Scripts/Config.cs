@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Augmentation;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
@@ -16,7 +15,7 @@ public static class Config
     {
         new PieceConfig(PieceType.FeatherStar, true, 83),
         new PieceConfig(PieceType.ElectricEel, true, 82),
-        new PieceConfig(PieceType.SloaneSViperFish, true, 81),
+        new PieceConfig(PieceType.SloanesViperFish, true, 81),
         new PieceConfig(PieceType.Lionfish, true, 79),
     };
 

@@ -1,6 +1,4 @@
-using Game.Piece.PieceLogic;
 using Game.Tile;
-using Game.Effects;
 
 namespace Game.Effects
 {

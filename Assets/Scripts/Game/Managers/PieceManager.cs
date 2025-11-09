@@ -1,6 +1,5 @@
 using Game.Common;
 using Game.Piece;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 using Object = UnityEngine.Object;
 

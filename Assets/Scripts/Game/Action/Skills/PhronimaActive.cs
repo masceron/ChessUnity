@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal.Pending;
-using Game.Common;
+﻿using Game.Common;
 using UnityEngine;
 
 namespace Game.Action.Skills

@@ -26,7 +26,7 @@ namespace Game.Piece
         Anglerfish,
         Remora,
         KelpBass,
-        MedicinalLeach,
+        MedicinalLeech,
         HourglassJelly,
         Archerfish,
         MoorishIdols,
@@ -35,7 +35,6 @@ namespace Game.Piece
         SeaTurtle,
         HorseLeech,
         Megalodon,
-        MedicinalLeech,
         Temperantia,
         BobtailSquid,
         LivingCoral,
@@ -65,9 +64,9 @@ namespace Game.Piece
         PollutedRock,
         Barnacle,
         Phronima,
-        SloaneSViperFish,
+        SloanesViperFish,
         FeatherStar,
-        AmoredFeatherStar
+        ArmoredFeatherStar
     }
 
     public enum PieceRank : byte

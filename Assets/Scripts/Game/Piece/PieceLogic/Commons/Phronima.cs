@@ -1,6 +1,5 @@
 using Game.Common;
 using Game.Movesets;
-using UnityEngine;
 
 namespace Game.Piece.PieceLogic.Commons
 {
@@ -18,8 +17,8 @@ namespace Game.Piece.PieceLogic.Commons
                     {
                         if (!BoardUtils.VerifyBounds(x) || !BoardUtils.VerifyBounds(y)) continue;
                         var targetPiece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
-                        if (targetPiece == null || targetPiece.Color == this.Color) continue;
-                        list.Add(new Game.Action.Skills.PhronimaActive(Pos, targetPiece.Pos));
+                        if (targetPiece == null || targetPiece.Color == Color) continue;
+                        list.Add(new Action.Skills.PhronimaActive(Pos, targetPiece.Pos));
                     }
                 }
             };

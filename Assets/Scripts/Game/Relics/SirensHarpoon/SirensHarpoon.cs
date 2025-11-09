@@ -1,6 +1,5 @@
 using Game.Managers;
 using Game.Piece;
-using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics.SirensHarpoon

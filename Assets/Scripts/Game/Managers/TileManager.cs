@@ -1,7 +1,6 @@
 ﻿using Game.Common;
 using Game.Tile;
 using UnityEngine;
-using UnityEngine.UI;
 using static Game.Common.BoardUtils;
 
 namespace Game.Managers
@@ -62,13 +61,13 @@ namespace Game.Managers
 
         public void SetActiveTiles()
         {
-            if (tiles == null || tiles.Length == 0 || BoardUtils.ActiveBoard() == null) return;
+            if (tiles == null || tiles.Length == 0 || ActiveBoard() == null) return;
 
-            for (int y = 0; y < BoardUtils.MaxLength; y++)
+            for (int y = 0; y < MaxLength; y++)
             {
-                for (int x = 0; x < BoardUtils.MaxLength; x++)
+                for (int x = 0; x < MaxLength; x++)
                 {
-                    int index = BoardUtils.IndexOf(x, y);
+                    int index = IndexOf(x, y);
                     if (tiles[index] == null) continue;
 
                     tiles[index].gameObject.SetActive(ShouldTileBeActive(x, y));
@@ -92,7 +91,7 @@ namespace Game.Managers
                     if (!VerifyBounds(nx) || !VerifyBounds(ny))
                         continue;
 
-                    int index = BoardUtils.IndexOf(nx, ny);
+                    int index = IndexOf(nx, ny);
                     if (tiles[index] == null) continue;
 
                     tiles[index].gameObject.SetActive(ShouldTileBeActive(nx, ny));
@@ -106,10 +105,10 @@ namespace Game.Managers
         /// </summary>
         private bool ShouldTileBeActive(int x, int y)
         {
-            int index = BoardUtils.IndexOf(x, y);
+            int index = IndexOf(x, y);
             if (tiles[index] == null) return false;
 
-            bool isActive = BoardUtils.IsActive(index);
+            bool isActive = IsActive(index);
             if (isActive) return true;
 
             // Nếu ô này chưa active, kiểm tra 8 ô xung quanh
@@ -124,8 +123,8 @@ namespace Game.Managers
                     if (!VerifyBounds(nx) || !VerifyBounds(ny))
                         continue;
 
-                    int neighborIndex = BoardUtils.IndexOf(nx, ny);
-                    if (BoardUtils.IsActive(neighborIndex))
+                    int neighborIndex = IndexOf(nx, ny);
+                    if (IsActive(neighborIndex))
                         return true;
                 }
             }
@@ -136,10 +135,10 @@ namespace Game.Managers
 
         public void ActivateTile(int x, int y)
         {
-            int index = BoardUtils.IndexOf(x, y);
-            if (BoardUtils.IsActive(index)) return;
+            int index = IndexOf(x, y);
+            if (IsActive(index)) return;
 
-            BoardUtils.SetActiveSquare(index, true);
+            SetActiveSquare(index, true);
 
             // Nếu tile none thì đổi sang white/black
             if (tiles[index] != null && tiles[index].color == Color.None)
@@ -198,8 +197,8 @@ namespace Game.Managers
             SelectionIndicator(index, tile);
             SetActiveSquare(index, false);
 
-            int x = BoardUtils.RankOf(index);
-            int y = BoardUtils.FileOf(index);
+            int x = RankOf(index);
+            int y = FileOf(index);
             UpdateActiveRegion(x, y);
             UpdateBorder();
         }

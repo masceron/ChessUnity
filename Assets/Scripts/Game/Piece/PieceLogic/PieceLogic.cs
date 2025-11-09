@@ -76,7 +76,7 @@ namespace Game.Piece.PieceLogic
             else SkillCooldown = -1;
             
             Quiets = quiets;
-            this.Captures = captures;
+            Captures = captures;
 
             Augmentations = new List<Augmentation.Augmentation>();
             if (cfg.Augmentations != null)

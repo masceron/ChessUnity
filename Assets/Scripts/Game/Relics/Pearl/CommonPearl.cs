@@ -18,7 +18,7 @@ namespace Game.Relics.Pearl
             {
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
-                    if (piece == null || piece.Color != this.Color) continue;
+                    if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                         var pending = new CommonPearlPending(this, piece.Pos, false);
                     BoardViewer.ListOf.Add(pending);

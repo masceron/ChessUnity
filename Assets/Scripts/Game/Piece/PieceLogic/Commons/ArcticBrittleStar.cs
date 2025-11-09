@@ -3,7 +3,6 @@ using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Effects.Traits;
 using Game.Movesets;
-using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Commons
 {

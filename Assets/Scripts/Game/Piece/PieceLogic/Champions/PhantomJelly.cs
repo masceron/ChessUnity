@@ -2,7 +2,6 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Effects.Buffs;
-using Game.Effects.Debuffs;
 using Game.Effects.Traits;
 using Game.Movesets;
 

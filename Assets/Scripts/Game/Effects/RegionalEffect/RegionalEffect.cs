@@ -15,7 +15,7 @@ namespace Game.Effects.RegionalEffect
         public override bool Equals(object obj)
         {
             if (obj is RegionalEffect other)
-                return this.Type == other.Type;
+                return Type == other.Type;
             return false;
         }
 

@@ -26,7 +26,7 @@ namespace Game.Tile
             base.OnPieceEnter(piece);
             if (!piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
             {
-                this.ApplyEffect(piece, new Camouflage(piece));
+                ApplyEffect(piece, new Camouflage(piece));
             }
         }
 

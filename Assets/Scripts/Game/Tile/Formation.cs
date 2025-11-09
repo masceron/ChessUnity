@@ -36,12 +36,12 @@ namespace Game.Tile
 
         protected Formation(bool color)
         {
-            this.Color = color;
+            Color = color;
         }
 
         public void SetDuration(int _duration)
         {
-            this.Duration = _duration;
+            Duration = _duration;
             HaveDuration = true;
         }
 

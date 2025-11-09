@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Game.Effects
 {
     public interface IMoveRangeModifier
