@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX;
@@ -118,7 +119,12 @@ namespace Game.Effects
         NativeGround,
         SlimeheadPassive,
         Adaptation,
-        RayTailPassive
+        RayTailPassive,
+        HumboldtSquidPassive,
+        Frienzied,
+        BlackSwallowerVengeful,
+        KillPieceAfterSwitchTurn,
+        ArcherfishAccuracyPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

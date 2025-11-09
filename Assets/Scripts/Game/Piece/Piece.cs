@@ -66,7 +66,11 @@ namespace Game.Piece
         Phronima,
         SloanesViperFish,
         FeatherStar,
-        ArmoredFeatherStar
+        ArmoredFeatherStar,
+        HumboldtSquid,
+        Grenadiers,
+        BlackSwallower,
+        Snaggletooths,
     }
 
     public enum PieceRank : byte

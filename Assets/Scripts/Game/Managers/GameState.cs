@@ -185,6 +185,10 @@ namespace Game.Managers
                 PieceType.SloanesViperFish => new SloaneSViperfish(piece),
                 PieceType.FeatherStar => new FeatherStar(piece),
                 PieceType.ArmoredFeatherStar => new AmoredFeatherStar(piece),
+                PieceType.HumboldtSquid => new HumboldtSquid(piece),
+                PieceType.Grenadiers => new Grenadiers(piece),
+                PieceType.BlackSwallower => new BlackSwallower(piece),
+                PieceType.Snaggletooths => new Snaggletooths(piece),
                 _ => null
             };
 
@@ -221,6 +225,7 @@ namespace Game.Managers
                 RegionalEffectType.Whirpool => new Whirlpool(),
                 RegionalEffectType.PsionicShock => new PsionicShock(),
                 RegionalEffectType.BloodMoon => new BloodMoon(),
+                RegionalEffectType.RedTide => new RedTide(),
                 _ => null
             };
 

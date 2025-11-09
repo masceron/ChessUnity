@@ -8,7 +8,7 @@ namespace Game.Piece.PieceLogic.Construct.KelpForest
     {
         public KelpForest(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new KelpForestPassive(this, 6)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new KelpForestPassive(this)));
         }
     }
 }

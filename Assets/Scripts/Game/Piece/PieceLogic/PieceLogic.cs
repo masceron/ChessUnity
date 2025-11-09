@@ -158,7 +158,10 @@ namespace Game.Piece.PieceLogic
             }
         }
 
-
+        public bool HasAugmentation(Augmentation.AugmentationName augmentationName)
+        {
+            return Augmentations.Any(a => a.Name == augmentationName);
+        }
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;
@@ -179,6 +182,7 @@ namespace Game.Piece.PieceLogic
         {
             if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
+            if (Effects.Any(e => e.EffectName == EffectName.Frienzied)) return;
             var i = 0;
 
             Quiets(list, Pos, ref i);
