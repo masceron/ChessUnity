@@ -8,13 +8,13 @@ public static class Config
 {
     public static readonly List<PieceConfig> PieceConfigWhite = new()
     {
-        new PieceConfig(PieceType.Swordfish, false, 80),
+        new PieceConfig(PieceType.Hatchetfish, false, 80),
         new PieceConfig(PieceType.MoorishIdols, false, 94),
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig(PieceType.ElectricEel, true, 82)
+        new PieceConfig(PieceType.Phronima, true, 82)
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);

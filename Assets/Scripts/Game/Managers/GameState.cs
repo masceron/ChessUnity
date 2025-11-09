@@ -81,7 +81,7 @@ namespace Game.Managers
         public RegionalEffect RegionalEffect;
         private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
-        private int CurrentTurn { get; set; }
+        public int CurrentTurn { get; private set; }
         private int countTurn;
         private const int NumberOfTurnToChange = 10;
 
@@ -183,6 +183,7 @@ namespace Game.Managers
                 PieceType.MarineIguana => new MarineIguana(piece),
                 PieceType.PollutedRock => new PollutedRock(piece),
                 PieceType.Barnacle => new Barnacle(piece),
+                PieceType.Phronima => new Phronima(piece),
                 _ => null
             };
 
@@ -281,6 +282,11 @@ namespace Game.Managers
 
             WhiteRelic?.PassTurn();
             BlackRelic?.PassTurn();
+        }
+
+        public void OnStart()
+        {
+            OnIncreaseTurn?.Invoke(CurrentTurn);
         }
 
         public void Destroy(int pos)
