@@ -1,6 +1,4 @@
-﻿using Game.Action;
-using Game.Piece.PieceLogic;
-using Game.Action.Internal;
+﻿using Game.Piece.PieceLogic;
 using Game.Effects.Debuffs;
 
 namespace Game.Tile
@@ -15,7 +13,7 @@ namespace Game.Tile
     {
         public DazzlingLight(bool haveDuration, bool color) : base(color)
         {
-            this.haveDuration = haveDuration;
+            HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
@@ -26,7 +24,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece)));
+            ApplyEffect(piece,new Blinded(1, 100, piece));
         }
 
         public override void OnPieceExit(PieceLogic piece)

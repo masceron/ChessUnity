@@ -9,12 +9,12 @@ namespace Game.Effects.Debuffs
     public class Bleeding: Effect, IEndTurnEffect
     {
         // ReSharper disable once MemberCanBePrivate.Global
-        public byte TurnLeftToDie = 4;
+        public byte TurnLeftToDie;
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TurnSinceLastMove;
 
-        private int turnToRemoveEffect = 5;
-        
+        private const int TurnToRemoveEffect = 5;
+
         public Bleeding(int turnToDie, PieceLogic piece) : base(-1, 1, piece, EffectName.Bleeding)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
@@ -28,7 +28,7 @@ namespace Game.Effects.Debuffs
             if (lastMainAction.Maker != Piece.Pos)
             {
                 TurnSinceLastMove++;
-                if (TurnSinceLastMove <= turnToRemoveEffect) return;
+                if (TurnSinceLastMove <= TurnToRemoveEffect) return;
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }
             else

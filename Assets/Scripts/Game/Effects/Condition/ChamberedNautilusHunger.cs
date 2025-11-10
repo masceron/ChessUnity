@@ -12,7 +12,7 @@ namespace Game.Effects.Condition
             
         }
         
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Result != ActionResult.Succeed) return;
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(Piece)));

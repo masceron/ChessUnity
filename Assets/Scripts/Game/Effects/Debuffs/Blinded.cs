@@ -15,7 +15,7 @@ namespace Game.Effects.Debuffs
             Probability = probability;
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Maker != Piece.Pos) return;
             

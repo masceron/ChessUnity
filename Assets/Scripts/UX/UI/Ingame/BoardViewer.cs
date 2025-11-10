@@ -103,18 +103,9 @@ namespace UX.UI.Ingame
         public void ExecuteAction(Action action)
         {
             Unmark();
-            if (ActionManager.EnqueueAction(action))
+            if (ActionManager.DoManualAction(action))
             {
                 EndTurn();
-            }
-        }
-        
-        public static void ExecuteActionStatic(Action action)
-        {
-            var instance = FindAnyObjectByType<BoardViewer>();
-            if (instance)
-            {
-                instance.ExecuteAction(action);
             }
         }
 
@@ -137,7 +128,7 @@ namespace UX.UI.Ingame
                             pending.CompleteAction();
                             return;
                     }
-                    ActionManager.EnqueueAction(action);
+                    ActionManager.DoManualAction(action);
                 } 
                 else
                 {

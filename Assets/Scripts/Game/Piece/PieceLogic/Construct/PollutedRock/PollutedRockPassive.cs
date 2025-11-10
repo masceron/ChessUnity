@@ -1,12 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects;
-using Game.Managers;
-using Game.Tile;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Construct.PollutedRock
@@ -54,7 +49,7 @@ namespace Game.Piece.PieceLogic.Construct.PollutedRock
             {
                 ushort indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
                 ActionManager.ExecuteImmediately(
-                    new SpawnPiece(new PieceConfig(PieceType.MedicinalLeach, Piece.Color, indexToSpawn))
+                    new SpawnPiece(new PieceConfig(PieceType.MedicinalLeech, Piece.Color, indexToSpawn))
                 );
             }
         }

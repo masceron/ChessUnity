@@ -805,6 +805,7 @@ GameObject:
   - component: {fileID: 3749872128676877160}
   - component: {fileID: 4701769927585945579}
   - component: {fileID: 8163874872674846909}
+  - component: {fileID: 791184331015249720}
   m_Layer: 0
   m_Name: PlayMenu
   m_TagString: Untagged
@@ -867,10 +868,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -954,6 +955,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contents: {fileID: 8867306370808024769}
+--- !u!114 &791184331015249720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5103212258012795172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d089e3e232d84594aa23418d31fe2da1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutoScaleCanvas
 --- !u!1 &5915279667175891350
 GameObject:
   m_ObjectHideFlags: 0

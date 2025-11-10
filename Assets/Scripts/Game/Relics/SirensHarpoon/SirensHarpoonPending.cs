@@ -4,10 +4,8 @@ using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Effects.Others;
 using Game.Managers;
 using Game.Piece.PieceLogic;
-using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics.SirensHarpoon

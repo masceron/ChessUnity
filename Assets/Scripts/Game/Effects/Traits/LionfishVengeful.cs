@@ -12,11 +12,11 @@ namespace Game.Effects.Traits
         public LionfishVengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.LionfishVengeful)
         {}
         
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null) return;
             
-            if (action.Target == Piece.Pos && Piece.IsDead())
+            if (action.Target == Piece.Pos && action.Result == ActionResult.Succeed)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(3, BoardUtils.PieceOn(action.Maker))));
             }

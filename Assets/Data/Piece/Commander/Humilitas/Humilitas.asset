@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Humilitas
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 29
+  type: 34
   prefab: {fileID: 8696139033191730783, guid: e13b39f861b705d4cb990ad3ee20a3c0, type: 3}
   rank: 7
   moveRange: 2

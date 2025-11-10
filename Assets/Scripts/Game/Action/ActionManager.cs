@@ -14,6 +14,16 @@ namespace Game.Action
         BeforeEndTurn,
         AfterEndTurn
     }
+    
+/*
+ * TODO: Issue: If a trigger causes a secondary effect that makes the trigger behind it in the queue invalid,
+ * the latter should not be active.
+ * Right now only a workaround for the case in which the piece is killed is implemented through isDead property and die() method.
+ * A more general solution needed for every situations, which now includes:
+ * - When the piece is killed.
+ * - When the piece moved away.
+ * ... And many other cases, when the piece is no longer eligible for trigger activation.
+*/
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -37,17 +47,24 @@ namespace Game.Action
 
         private static void ProcessActionWithTriggers()
         {
+            var mainAction = _actionQueue.Dequeue();
+            if (mainAction is not IRelicAction)
+            {
+                BoardUtils.NotifyMainAction(mainAction);
+            }
+
             while (_actionQueue.TryDequeue(out var action))
             {
                 if (action is IInternal)
-                    BoardUtils.NotifyInternalAction(action);
-                else if (action is not IRelicAction)
-                    BoardUtils.NotifyMainAction(action);
-
+                    BoardUtils.NotifyInternalAction(mainAction);
                 action.Execute();
             }
 
-            while (_actionQueue.TryDequeue(out var action)) action.Execute();
+            if (mainAction is ISkills and not IRelicAction && mainAction.Result == ActionResult.Succeed)
+            {
+                BoardUtils.IncrementSkillUses(mainAction);
+            }
+            mainAction.Execute();
         }
 
         private static void EndTurnProcess(Action mainAction)
@@ -77,23 +94,34 @@ namespace Game.Action
             CurrentPhase = Phase.BeforeEndTurn;
         }
 
-        public static bool EnqueueAction(Action queueAction)
+        public static bool DoManualAction(Action action)
         {
-            _actionQueue.Enqueue(queueAction);
-            if (queueAction is IInternal) return false;
-
+            _actionQueue.Enqueue(action);
             ProcessActionWithTriggers();
 
-            //End the turn if:
-            //The action is a SkipTurn, or
-            //The action is not from a relic, and if it's a skill, then the piece making it cannot have Quick Reflex.
-            if (queueAction is SkipTurn ||
-                (queueAction is not IRelicAction
-                 && !(queueAction is ISkills &&
-                      BoardUtils.PieceOn(queueAction.Maker).Effects.OfType<QuickReflex>().Any())))
-                EndTurnProcess(queueAction);
+            switch (action)
+            {
+                case IRelicAction:
+                    return false;
+                case ISkills:
+                {
+                    var maker = BoardUtils.PieceOn(action.Maker);
+                    var hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
 
+                    if (hasQuickReflex)
+                        return false;
+                    break;
+                }
+            }
+
+            EndTurnProcess(action);
             return true;
+        }
+
+
+        public static void EnqueueAction(Action queueAction)
+        {
+            _actionQueue.Enqueue(queueAction);
         }
 
         public static void ExecuteImmediately(Action action)

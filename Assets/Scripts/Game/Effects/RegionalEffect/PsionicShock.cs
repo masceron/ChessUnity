@@ -8,7 +8,10 @@ using UnityEngine;
 
 namespace Game.Effects.RegionalEffect
 {
-    public class PsionicShock : RegionalEffect{
+    public class PsionicShock : RegionalEffect
+    {
+        public PsionicShock() : base(RegionalEffectType.PsionicShock){}
+
         protected override void ApplyEffect(int currentTurn)
         {
             PieceLogic[] board = MatchManager.Ins.GameState.PieceBoard;

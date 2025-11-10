@@ -20,7 +20,7 @@ namespace Game.Effects.Others
             this.radius = radius;
         }
 
-        override public void OnCall(Game.Action.Action action)
+        override public void OnCallPieceAction(Game.Action.Action action)
         {
             List<Action.Action> actionsToAdd = new List<Action.Action>();
 

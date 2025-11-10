@@ -1,7 +1,8 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic;
-using UnityEngine;
+using System.Linq;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -14,12 +15,15 @@ namespace Game.Effects.Traits
             this.deathDefianceCount = deathDefianceCount;
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
+            if (Piece.IsDead()) return;
+			if (Piece.Effects.Any(e => e.EffectName == EffectName.Shield) 
+				|| Piece.Effects.Any(e => e.EffectName == EffectName.Carapace) 
+					|| Piece.Effects.Any(e => e.EffectName == EffectName.HardenedShield)) return;
             if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
                 return;
             }
-            Debug.Log("Relentless: " + deathDefianceCount);
             action.Result = ActionResult.Failed;
             ActionManager.EnqueueAction(new KillPiece(action.Maker));
             deathDefianceCount--;

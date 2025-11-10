@@ -36,32 +36,32 @@ namespace Game.Relics.Pearl
 
         private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
         {
+            sbyte randomDuration = (sbyte)new System.Random().Next(2, 6);
+
             return effectName switch
             {
-                EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Game.Effects.Buffs.Carapace(2, piece),
-                EffectName.Haste => new Game.Effects.Buffs.Haste(2, 1, piece),
-                EffectName.Piercing => new Game.Effects.Buffs.Piercing(2, piece),
-                EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
-                EffectName.TrueBite => new Game.Effects.Buffs.TrueBite(piece),
-                EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece),
-                _ => new Game.Effects.Buffs.Shield(piece)
+                EffectName.Shield => new Effects.Buffs.Shield(piece),
+                EffectName.Carapace => new Effects.Buffs.Carapace(randomDuration, piece),
+                EffectName.Haste => new Effects.Buffs.Haste(randomDuration, 1, piece),
+                EffectName.Piercing => new Effects.Buffs.Piercing(randomDuration, piece),
+                EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
+                EffectName.TrueBite => new Effects.Buffs.TrueBite(piece),
+                EffectName.Camouflage => new Effects.Buffs.Camouflage(piece),
+                _ => new Effects.Buffs.Shield(piece)
             };
         }
         public void CompleteAction()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect()));
-            TileManager.Ins.UnmarkAll();
-
+            ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
 
 
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-
             commonPearl.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
-
+            Dispose();
         }
 
         public void Dispose()

@@ -1,5 +1,4 @@
 using Game.Managers;
-using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics.TimelessHourglass

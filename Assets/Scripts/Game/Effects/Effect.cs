@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX;
@@ -7,12 +8,30 @@ namespace Game.Effects
 {
     public enum ObserverPriority: byte
     {
-        Low, AfterAction, DefenderAction, AttackerAction, Kill
+        //Effect does not have a trigger
+        None,
+        
+        // Priorities of effect trigger when an action is taken.
+        AfterAction, DefenderAction, AttackerAction, Kill,
+        
+        //Priorities of effect trigger when ending a ply.
+        //Effects on the start of turn have to run after effects at the end of turn.
+        
+        StartTurnBuff, StartTurnDebuff, StartTurnKill, StartTurnMove,
+        
+        RegionalEffect, RealmInfluence,
+        
+        EndturnBuff, EndturnDebuff, EndturnKill, EndturnMove,
     }
+    
+    /*
+     *  The effect queue at the end of plies must look like the following:
+     *  EndTurn..., RealmInfluence, RegionalEffect, StartTurn...
+     */
     
     public enum EffectCategory: byte 
     {
-        Debuff, Buff, Trait, Condition
+        Debuff, Buff, Trait, Condition, Augmentation
     }
 
     public enum EffectStack : byte
@@ -76,14 +95,36 @@ namespace Game.Effects
         OneMoreTurn,
         FractureZonePassive,
         BioluminescentBeaconPassive,
+        SunfishPassive,
         DormantFossilPassive,
         BlueRingedOctopusPassive,
         QuickReflex,
         ContagionCorpsePassive,
-        SunfishPassive,
+        NocturnalRangeBuff,
+        HammerOysterPassive,
+        EntanglingTentacles,
+        Silenced,
+        Charge, 
+        KelpForestPassive,
+        BottlenoseDolphinPassive,
         Controlled,
         PollutedRockPassive,
+        TidalRetinaPassive,
+        MelibePassive,
+        BlueDragonPassive,
+        Sanity,
+        Marked,
         Fear,
+        Frenzied,
+        NativeGround,
+        SlimeheadPassive,
+        Adaptation,
+        RayTailPassive,
+        HumboldtSquidPassive,
+        Frienzied,
+        BlackSwallowerVengeful,
+        KillPieceAfterSwitchTurn,
+        ArcherfishAccuracyPassive,
         CoffinFishVengeful,
         SnipeEelPassive,
     }
@@ -98,7 +139,7 @@ namespace Game.Effects
         public readonly EffectCategory Category;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
-        private readonly ObserverPriority priority;
+        public readonly ObserverPriority Priority;
 
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectName name)
         {
@@ -109,7 +150,7 @@ namespace Game.Effects
             
             var info = AssetManager.Ins.EffectData[name];
             ObserverActivateWhen = info.activeWhen;
-            priority = info.priority;
+            Priority = info.priority;
             Category = info.category;
         }
 
@@ -123,7 +164,7 @@ namespace Game.Effects
             
         }
 
-        public virtual void OnCall(Action.Action action)
+        public virtual void OnCallPieceAction(Action.Action action)
         {
             
         }
@@ -140,12 +181,14 @@ namespace Game.Effects
 
         public override int Compare(Effect x, Effect y)
         {
-            return -x!.priority.CompareTo(y!.priority);
+            return -x!.Priority.CompareTo(y!.Priority);
         }
 
         public string Description()
         {
-            return Localizer.GetText("effect_description", AssetManager.Ins.EffectData[EffectName].key + "_description", new object[]{this});
+            return Localizer.GetText("effect_description",
+                AssetManager.Ins.EffectData[EffectName].key + "_description",
+                new object[]{this});
         }
     }
 }

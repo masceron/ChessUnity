@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Barnacle
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 43
+  type: 57
   prefab: {fileID: 5227270986293185192, guid: ebd65b5fc4dd55f41981eab9c7698e3f, type: 3}
   rank: 2
   moveRange: 2
@@ -22,3 +22,4 @@ MonoBehaviour:
   key: piece_barnacle
   hasSkill: 1
   normalSkillCooldown: 0
+  availableSlots: 0

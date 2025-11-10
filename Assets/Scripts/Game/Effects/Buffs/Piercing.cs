@@ -9,7 +9,7 @@ namespace Game.Effects.Buffs
         public Piercing(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectName.Piercing)
         {}
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action != null && action.Maker == Piece.Pos) action.Result = ActionResult.Unblockable;
         }

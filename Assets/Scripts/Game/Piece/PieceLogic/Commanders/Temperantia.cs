@@ -30,7 +30,7 @@ namespace Game.Piece.PieceLogic.Commanders
                     List<PieceLogic> allies = FindPiece<PieceLogic>(Color);
                     foreach(PieceLogic ally in allies){
                         if (ally.Equals(this)) { continue; }
-                        list.Add(new TemperantiaSwap(this.Pos, ally.Pos));
+                        list.Add(new TemperantiaSwap(Pos, ally.Pos));
                     }
                     
                 }
@@ -38,7 +38,7 @@ namespace Game.Piece.PieceLogic.Commanders
                     List<PieceLogic> enemies = FindPiece<PieceLogic>(!Color);
                     foreach (PieceLogic enemy in enemies)
                     {
-                        list.Add(new TemperantiaSwap(this.Pos, firstSelection, enemy.Pos));
+                        list.Add(new TemperantiaSwap(Pos, firstSelection, enemy.Pos));
                     }
                     //Reset trạng thái chọn mục tiêu
                     firstSelection = -1;

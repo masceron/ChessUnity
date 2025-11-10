@@ -6,6 +6,7 @@ using static Game.Common.BoardUtils;
 using Game.Effects.Others;
 using Game.Action.Internal;
 using Game.Effects.Traits;
+using System.Collections.Generic;
 
 namespace Game.Piece.PieceLogic.Commanders
 {
@@ -15,6 +16,8 @@ namespace Game.Piece.PieceLogic.Commanders
         private int deathDefianceCount = 4 ;
         private readonly System.Func<int> getCount;
         private readonly System.Action<int> setCount;
+        private readonly System.Func<List<int>> getTargeted;
+        private readonly List<int> targeted = new List<int>();
         private int count;
         public Humilitas(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
@@ -22,12 +25,10 @@ namespace Game.Piece.PieceLogic.Commanders
             count = 2;
             getCount = () => count;
             setCount = (v) => count = v;
+            getTargeted = () => targeted;
             ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
-            ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this)));
-
-            // active này sẽ chọn 1 hoặc 2 nhưng khi chọn vào thì sẽ bị hiệu ứng luôn những con đã chọn
-            // chứ không có chọn 1 con rồi tắt đi và chọn lại 2 con
+            ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
 
             Skills = list =>
             {
@@ -38,7 +39,8 @@ namespace Game.Piece.PieceLogic.Commanders
                     var pOn = PieceOn(idx);
                     if (pOn != null && pOn.Color != Color)
                     {
-                        list.Add(new HumilitasActive(Pos, idx, count, getCount, setCount));
+                        if (targeted.Contains(idx)) continue;
+                        list.Add(new HumilitasActive(Pos, idx, count, getCount, setCount, getTargeted));
                     }
                 }
             };

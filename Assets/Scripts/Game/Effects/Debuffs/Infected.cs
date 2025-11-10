@@ -6,22 +6,22 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
 {
-    public class Infected : Effect, IEndTurnEffect
+    public class Infected : Effect
     {
         private int turnCounter = 0;
+        
         public Infected(PieceLogic piece) : base(-1, 1, piece, EffectName.Infected)
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+            
         }
-
-        public EndTurnEffectType EndTurnEffectType { get; }
-        public void OnCallEnd(Action.Action lastMainAction)
+        
+        public override void OnCallPieceAction(Action.Action lastMainAction)
         {
             turnCounter++;
 
             if (turnCounter == 3)
             {
-                // InfectedActivate();
+                InfectedActivate();
             }
         }
 
@@ -34,7 +34,7 @@ namespace Game.Effects.Debuffs
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn == null || pOn == Piece) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Infected(pOn)));
+                ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(pOn)));
             }
         }
     }

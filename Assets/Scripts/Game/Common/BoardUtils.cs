@@ -39,6 +39,12 @@ namespace Game.Common
         {
             return rank * MaxLength + file;
         }
+        
+        public static bool IsAtPromotionRank(int index)
+        {
+            int rank = RankOf(index);
+            return rank == 14 || rank == 25;
+        }
 
         public static bool VerifyUpperBound(int dimension)
         {
@@ -108,6 +114,11 @@ namespace Game.Common
             return MatchManager.Ins.GameState.ActiveBoard[pos];
         }
 
+        public static void SetActiveSquare(int pos, bool value)
+        {
+            MatchManager.Ins.GameState.ActiveBoard[pos] = value;
+        }
+
         public static bool ColorOfSquare(int pos)
         {
             return MatchManager.Ins.GameState.SquareColor[pos];
@@ -171,7 +182,7 @@ namespace Game.Common
 
         public static void NotifyMainAction(Action.Action mainAction)
         {
-            MatchManager.Ins.GameState.Notify(mainAction);
+            MatchManager.Ins.GameState.NotifyMainAction(mainAction);
         }
 
         public static void NotifyEnd(Action.Action mainAction)
@@ -185,6 +196,16 @@ namespace Game.Common
             {
                 MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
             }
+        }
+
+        public static void IncrementSkillUses(Action.Action skill)
+        {
+            MatchManager.Ins.GameState.IncrementSkillUses(skill);
+        }
+
+        public static int SkillUseOf(bool color)
+        {
+            return color ? MatchManager.Ins.GameState.BlackSkillUses : MatchManager.Ins.GameState.WhiteSkillUses;
         }
 
         public static void NotifyOnMoveGen(List<Action.Action> actions)
@@ -223,6 +244,46 @@ namespace Game.Common
             return pieces;
         }
 
+        public static List<PieceLogic> GetPiecesInSize(int rank, int file, int size, Corner corner, Predicate<PieceLogic> predicate)
+        {
+            var pieces = new List<PieceLogic>();
+            if (corner == Corner.BottomRight)
+            {
+                rank = rank - size / 2 + 1;
+                file = file - size / 2 + 1;
+            }
+            else if (corner == Corner.TopLeft)
+            {
+                file = file - size / 2 + 1;
+                rank = rank - size / 2;
+            }
+            else if (corner == Corner.TopRight)
+            {
+                rank = rank - size / 2;
+                file = file - size / 2;
+            }
+            else if (corner == Corner.BottomLeft)
+            {
+                rank = rank - size / 2 + 1;
+                file = file - size / 2;
+            }
+
+            for (int r = rank; r < rank + size; r++)
+            {
+                if (!VerifyBounds(r)) continue;
+                for (int f = file; f < file + size; f++)
+                {
+                    if (!VerifyBounds(f)) continue;
+                    var piece = PieceOn(IndexOf(r, f));
+                    if (piece != null && predicate(piece))
+                    {
+                        pieces.Add(piece);
+                    }
+                }
+            }
+            return pieces;
+        }
+
         public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
         {
             return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();
@@ -231,6 +292,24 @@ namespace Game.Common
         public static RelicLogic GetRelicOf(bool side)
         {
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
+        }
+
+        public static bool IsNextEachOther(PieceLogic piece)
+        {
+            var pos = piece.Pos;
+            for (var i = -1; i <= 1; i++)
+            {
+                for (var j = -1; j <= 1; j++)
+                {
+                    if (i == 0 && j == 0) continue;
+                    var indexOff = IndexOf(RankOf(pos) + i, FileOf(pos) + j);
+
+                    if (!VerifyIndex(indexOff)) continue;
+                    var pieceOff = PieceOn(indexOff);
+                    if (pieceOff != null && pieceOff.Color == piece.Color) return true;
+                }
+            }
+            return false;
         }
     }
 }

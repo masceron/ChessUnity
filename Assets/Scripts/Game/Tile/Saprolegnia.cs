@@ -14,7 +14,7 @@ namespace Game.Tile
     {
         public Saprolegnia(bool haveDuration, bool color) : base(color)
         {
-            this.haveDuration = haveDuration;
+            HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
