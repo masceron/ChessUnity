@@ -18,6 +18,7 @@ public static class Config
         new PieceConfig(PieceType.Temperantia, true, 20),
         new PieceConfig(PieceType.HourglassJelly, true, 30),
         new PieceConfig(PieceType.Swordfish, true, 10),
+        new PieceConfig(PieceType.Lionfish, true, 5),
 
     };
 

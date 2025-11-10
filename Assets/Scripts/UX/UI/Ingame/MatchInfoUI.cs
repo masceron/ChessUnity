@@ -12,6 +12,7 @@ namespace UX.UI.Ingame
         void Start()
         {
             MatchManager.Ins.GameState.OnIncreaseTurn += UpdateUI;
+            UpdateUI(1);
         }
 
         

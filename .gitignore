@@ -103,3 +103,4 @@ ProjectSettings/ProjectVersion.txt
 Assets/Scripts/Editor/AutoLODImporter.cs
 Assets/_Recovery
 ChessUnity.slnx
+.vscode

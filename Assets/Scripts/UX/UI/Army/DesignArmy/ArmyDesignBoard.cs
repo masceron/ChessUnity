@@ -149,9 +149,8 @@ namespace UX.UI.Army.DesignArmy
         {
             int removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
             Troop removedTroop = Troops[removedIndex];
-            Troops.RemoveAt(removedIndex);
             OnRemoveTroop?.Invoke(Troops[removedIndex]);
-
+            Troops.RemoveAt(removedIndex);
         }
     }
 }
