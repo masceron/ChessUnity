@@ -1,11 +1,7 @@
-﻿using System;
-using Game.Action;
+﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Others;
-using Game.Managers;
 using Game.Movesets;
-using Game.Tile;
 
 namespace Game.Piece.PieceLogic.Commons
 {

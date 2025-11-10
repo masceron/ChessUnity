@@ -40,14 +40,14 @@ namespace Game.Relics.Pearl
 
             return effectName switch
             {
-                EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Game.Effects.Buffs.Carapace(randomDuration, piece),
-                EffectName.Haste => new Game.Effects.Buffs.Haste(randomDuration, 1, piece),
-                EffectName.Piercing => new Game.Effects.Buffs.Piercing(randomDuration, piece),
-                EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
-                EffectName.TrueBite => new Game.Effects.Buffs.TrueBite(piece),
-                EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece),
-                _ => new Game.Effects.Buffs.Shield(piece)
+                EffectName.Shield => new Effects.Buffs.Shield(piece),
+                EffectName.Carapace => new Effects.Buffs.Carapace(randomDuration, piece),
+                EffectName.Haste => new Effects.Buffs.Haste(randomDuration, 1, piece),
+                EffectName.Piercing => new Effects.Buffs.Piercing(randomDuration, piece),
+                EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
+                EffectName.TrueBite => new Effects.Buffs.TrueBite(piece),
+                EffectName.Camouflage => new Effects.Buffs.Camouflage(piece),
+                _ => new Effects.Buffs.Shield(piece)
             };
         }
         public void CompleteAction()

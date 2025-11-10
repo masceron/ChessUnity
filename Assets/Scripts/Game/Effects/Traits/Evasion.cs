@@ -1,7 +1,10 @@
 ﻿using Game.Action;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using System.Linq;
 using static Game.Common.BoardUtils;
+using Game.Augmentation;
+using Game.Common;
 
 namespace Game.Effects.Traits
 {
@@ -21,7 +24,14 @@ namespace Game.Effects.Traits
             if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
 
             if (Distance(action.Maker, action.Target) < 3) return;
-            if (!MatchManager.Roll(Probability)) return;
+            PieceLogic pieceTarget = PieceOn(action.Maker);
+            if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy)) 
+            {
+                if (!MatchManager.Roll(Probability - 15)) return;
+            } else
+            {
+                if (!MatchManager.Roll(Probability)) return;
+            }
             
             action.Result = ActionResult.Failed;
         }

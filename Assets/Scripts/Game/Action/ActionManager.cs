@@ -98,14 +98,26 @@ namespace Game.Action
         {
             _actionQueue.Enqueue(action);
             ProcessActionWithTriggers();
-            if (action is not SkipTurn &&
-                action is not IRelicAction && 
-                !(action is ISkills && BoardUtils.PieceOn(action.Maker).Effects.OfType<QuickReflex>().Any())) 
-                return false;
-            
+
+            switch (action)
+            {
+                case IRelicAction:
+                    return false;
+                case ISkills:
+                {
+                    var maker = BoardUtils.PieceOn(action.Maker);
+                    var hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
+
+                    if (hasQuickReflex)
+                        return false;
+                    break;
+                }
+            }
+
             EndTurnProcess(action);
             return true;
         }
+
 
         public static void EnqueueAction(Action queueAction)
         {

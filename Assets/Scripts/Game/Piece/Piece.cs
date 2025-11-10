@@ -4,7 +4,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece
 {
-    public enum PieceType : sbyte
+    public enum PieceType : byte
     {
         Velkaris,
         GuidingSiren,
@@ -26,7 +26,7 @@ namespace Game.Piece
         Anglerfish,
         Remora,
         KelpBass,
-        MedicinalLeach,
+        MedicinalLeech,
         HourglassJelly,
         Archerfish,
         MoorishIdols,
@@ -35,7 +35,6 @@ namespace Game.Piece
         SeaTurtle,
         HorseLeech,
         Megalodon,
-        MedicinalLeech,
         Temperantia,
         BobtailSquid,
         LivingCoral,
@@ -63,7 +62,15 @@ namespace Game.Piece
         Slimehead,
         MarineIguana,
         PollutedRock,
-        Barnacle
+        Barnacle,
+        Phronima,
+        SloanesViperFish,
+        FeatherStar,
+        ArmoredFeatherStar,
+        HumboldtSquid,
+        Grenadiers,
+        BlackSwallower,
+        Snaggletooths,
     }
 
     public enum PieceRank : byte

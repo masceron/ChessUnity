@@ -12,8 +12,10 @@ namespace Game.Tile
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Kelp : Formation
     {
-        public Kelp() : base(false)
+        private bool pieceHaveCamouflage = false;
+        public Kelp(bool haveDuration, bool color) : base(color)
         {
+            HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()
@@ -24,25 +26,22 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            if (!piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
+            if (piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
             {
-                this.ApplyEffect(piece, new Camouflage(piece));
+                pieceHaveCamouflage = true;
+            } else {
+                ApplyEffect(piece, new Camouflage(piece));
             }
         }
 
         public override void OnPieceExit(PieceLogic piece)
         {
-            if (piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
+            if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
             {
                 ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == EffectName.Camouflage)));
             }
             
             base.OnPieceExit(piece);
-        }
-
-        public override void OnFirstTurn(PieceLogic piece)
-        {
-            base.OnFirstTurn(piece);
         }
     }
 }

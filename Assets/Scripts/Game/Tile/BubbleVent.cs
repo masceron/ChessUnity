@@ -13,8 +13,8 @@ namespace Game.Tile
     {
         public BubbleVent(int d, bool hd, bool color) : base(color)
         {
-            this.Duration = d;
-            this.HaveDuration = hd;
+            Duration = d;
+            HaveDuration = hd;
         }
 
         public override void OnPieceEnter(PieceLogic piece)

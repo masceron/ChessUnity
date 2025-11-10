@@ -1,19 +1,13 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Action.Skills;
 using Game.Common;
-using Game.Effects.Buffs;
 using Game.Effects.Traits;
-using Game.Managers;
 using Game.Movesets;
-using Game.Tile;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static Game.Common.BoardUtils;
-using static Game.Common.MoveEnumerators;
-using UX.UI.Ingame;
+
 namespace Game.Piece.PieceLogic.Champions
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -29,7 +23,7 @@ namespace Game.Piece.PieceLogic.Champions
                 var (rank, file) = RankFileOf(Pos);
                 var piece = PieceOn(Pos);
                 var moveRange = piece.AttackRange;
-                var color = this.Color;
+                var color = Color;
                 var push = color ? 1 : -1;
 
                 foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, moveRange - 1))

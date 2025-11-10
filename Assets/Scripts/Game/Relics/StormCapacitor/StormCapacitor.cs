@@ -18,7 +18,7 @@ namespace Game.Relics.StormCapacitor
         public StormCapacitor(RelicConfig cfg) : base(cfg)
         {
             currentCooldown = 0;
-            charge = new Charge(0, this.Color);
+            charge = new Charge(0, Color);
             BoardUtils.AddObserver(charge);
         }
 

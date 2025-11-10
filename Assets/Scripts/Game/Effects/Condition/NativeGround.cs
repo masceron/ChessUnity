@@ -1,7 +1,5 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Common;
-using Game.Effects.Buffs;
 using Game.Effects.RegionalEffect;
 using Game.Managers;
 using Game.Piece.PieceLogic;
@@ -15,7 +13,7 @@ namespace Game.Effects.Condition
         private RegionalEffectType regionalEffect;
         public NativeGround(PieceLogic piece, RegionalEffectType fitRegionalEffect) : base(-1, 1, piece, EffectName.NativeGround)
         {
-            this.regionalEffect = fitRegionalEffect;
+            regionalEffect = fitRegionalEffect;
 
             ApplyEffectIfFitRegion();
         }
@@ -45,19 +43,19 @@ namespace Game.Effects.Condition
 
         private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
         {
-            sbyte duration = (sbyte)UnityEngine.Random.Range(1, 10);
+            sbyte duration = (sbyte)Random.Range(1, 10);
             sbyte strength = 1;
 
             return effectName switch
             {
-                EffectName.Shield => new Game.Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Game.Effects.Buffs.Carapace(duration, piece),
-                EffectName.Haste => new Game.Effects.Buffs.Haste(duration, strength, piece),
-                EffectName.Piercing => new Game.Effects.Buffs.Piercing(duration, piece),
-                EffectName.HardenedShield => new Game.Effects.Buffs.HardenedShield(piece),
-                EffectName.TrueBite => new Game.Effects.Buffs.TrueBite(piece),
-                EffectName.Camouflage => new Game.Effects.Buffs.Camouflage(piece),
-                _ => new Game.Effects.Buffs.Shield(piece)
+                EffectName.Shield => new Buffs.Shield(piece),
+                EffectName.Carapace => new Buffs.Carapace(duration, piece),
+                EffectName.Haste => new Buffs.Haste(duration, strength, piece),
+                EffectName.Piercing => new Buffs.Piercing(duration, piece),
+                EffectName.HardenedShield => new Buffs.HardenedShield(piece),
+                EffectName.TrueBite => new Buffs.TrueBite(piece),
+                EffectName.Camouflage => new Buffs.Camouflage(piece),
+                _ => new Buffs.Shield(piece)
             };
         }
     }

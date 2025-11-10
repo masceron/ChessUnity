@@ -1,11 +1,6 @@
 using System.Linq;
-using Game.Action;
-using Game.Action.Internal;
 using Game.Action.Skills;
-using Game.Common;
 using Game.Effects;
-using Game.Effects.Buffs;
-using Game.Effects.Traits;
 using Game.Managers;
 using Game.Movesets;
 using static Game.Common.BoardUtils;
@@ -26,7 +21,7 @@ namespace Game.Piece.PieceLogic.Summon
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null) continue;
-                    if (piece.Color == this.Color) continue;
+                    if (piece.Color == Color) continue;
 
                     bool hasShield = false;
                     foreach (var effect in PieceOn(piece.Pos).Effects

@@ -76,7 +76,7 @@ namespace Game.Piece.PieceLogic
             else SkillCooldown = -1;
             
             Quiets = quiets;
-            this.Captures = captures;
+            Captures = captures;
 
             Augmentations = new List<Augmentation.Augmentation>();
             if (cfg.Augmentations != null)
@@ -158,7 +158,10 @@ namespace Game.Piece.PieceLogic
             }
         }
 
-
+        public bool HasAugmentation(Augmentation.AugmentationName augmentationName)
+        {
+            return Augmentations.Any(a => a.Name == augmentationName);
+        }
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;
@@ -179,6 +182,7 @@ namespace Game.Piece.PieceLogic
         {
             if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
+            if (Effects.Any(e => e.EffectName == EffectName.Frienzied)) return;
             var i = 0;
 
             Quiets(list, Pos, ref i);
@@ -206,7 +210,7 @@ namespace Game.Piece.PieceLogic
 
             if (range > MaxLength) return range;
             
-            Effect movement;
+            /*Effect movement;
             if ((movement = Effects.Find(e => e.EffectName == EffectName.Slow)) != null)
             {
                 range -= movement.Strength;
@@ -215,7 +219,20 @@ namespace Game.Piece.PieceLogic
             {
                 range += movement.Strength;
             }
-            
+
+            if ((movement = Effects.Find(e => e.EffectName == EffectName.TidalRetinaPassive)) != null)
+            {
+                range += movement.Strength;
+            }*/
+
+            foreach (var e in Effects)
+            {
+                if (e is IMoveRangeModifier modifier)
+                {
+                    range = modifier.ModifyMoveRange(range);
+                }
+            }
+
             return Math.Max(1, range);
         }
 

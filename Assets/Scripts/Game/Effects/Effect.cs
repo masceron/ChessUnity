@@ -120,7 +120,12 @@ namespace Game.Effects
         SlimeheadPassive,
         Adaptation,
         LongReach,
-
+        RayTailPassive,
+        HumboldtSquidPassive,
+        Frienzied,
+        BlackSwallowerVengeful,
+        KillPieceAfterSwitchTurn,
+        ArcherfishAccuracyPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

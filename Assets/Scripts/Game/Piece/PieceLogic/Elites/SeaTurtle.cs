@@ -1,5 +1,8 @@
 using Game.Action.Skills;
 using Game.Movesets;
+using Game.Effects.Buffs;
+using Game.Action.Internal;
+using Game.Action;
 
 namespace Game.Piece.PieceLogic.Elites
 {

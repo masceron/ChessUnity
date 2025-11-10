@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
 using Game.Common;
 using Game.Effects;
 using Game.Effects.Debuffs;
@@ -13,7 +12,7 @@ namespace Game.Tile
     {
         public NavalMines(bool haveDuration, bool color) : base(color)
         {
-            this.HaveDuration = haveDuration;
+            HaveDuration = haveDuration;
         }
 
         public override FormationType GetFormationType()

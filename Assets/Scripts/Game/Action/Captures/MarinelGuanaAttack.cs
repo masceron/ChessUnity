@@ -1,20 +1,11 @@
 using Game.Action.Internal;
-using UnityEngine;
 using UX.UI.Ingame;
 using Game.Action.Internal.Pending;
 using Game.Managers;
 using static Game.Common.BoardUtils;
-using Game.Tile;
-using Game.Action.Captures;
 using Game.Common;
-using Game.Movesets;
-using System.Collections.Generic;
 using Game.Action.Skills;
 using Game.Piece.PieceLogic;
-using static Game.Common.MoveEnumerators;
-using System.Linq;
-using Game.Effects.Buffs;
-using Game.Effects;
 
 namespace Game.Action.Captures
 {
@@ -36,7 +27,7 @@ namespace Game.Action.Captures
         }
         public void CompleteAction()
         {
-            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+            var hovering = PieceOn(BoardViewer.HoveringPos);
             if (FirstTarget == null) 
             {
                 FirstTarget = hovering;

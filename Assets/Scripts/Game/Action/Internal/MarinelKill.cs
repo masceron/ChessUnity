@@ -2,7 +2,6 @@ using Game.Managers;
 using UX.UI.Ingame;
 using Game.Piece.PieceLogic;
 using Game.Action.Captures;
-using Game.Action.Skills;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Internal
 {
@@ -13,7 +12,7 @@ namespace Game.Action.Internal
         public MarinelKill(int maker, int target, int to) : base(maker, true)
         {
             Target = (ushort)target;
-            this.targetPos = to;
+            targetPos = to;
         }
         
         protected override void ModifyGameState()
