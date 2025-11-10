@@ -22,20 +22,18 @@ namespace Game.Effects.Traits
         public override void OnCall(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
-            Debug.Log("Evasion");
-
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 
-            // if (PieceOn(action.Maker).Effects.Any(e => e.EffectName == EffectName.Bound))
-            // {
-            //     Debug.Log("found bound capture");
-            //     if (action.Result == ActionResult.SkipEvasion)
-            //     {
-            //         action.Result = ActionResult.Succeed;
-            //         return;
-            //     }
-            // }
+            if (PieceOn(action.Target).Effects.Any(e => e.EffectName == EffectName.Bound))
+            {
+                var effect = PieceOn(action.Maker).Effects.Find(e => e.EffectName == EffectName.SnipeEelPassive);
+                if (effect != null)
+                {
+                    action.Result = ActionResult.Succeed;
+                    return;
+                }
+            }
 
             action.Result = ActionResult.Failed;
         }
