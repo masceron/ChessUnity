@@ -40,7 +40,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 notification.Open(DesignNotifications.Quit);
             }
-            else notification.Close();
+            else notification.Close();     
         }
 
         private void OnDisable()
@@ -80,7 +80,7 @@ namespace UX.UI.Army.DesignArmy
                 notification.Open(DesignNotifications.EmptyName);
                 return false;
             }
-            if (ArmySaveLoader.Exists(army.Name))
+            if (ArmySaveLoader.Exists(army.Name) && UIManager.Ins.GetCanvasID() == CanvasID.DesignArmy)
             {
                 notification.Open(DesignNotifications.Overwrite);
                 return false;

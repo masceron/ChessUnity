@@ -194,13 +194,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce9b85c0662ee44fbf4a0aa94c69985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ObjectPrefab: {fileID: -8679921383154817045, guid: d60adf186996dc04db524bbef9b594a8, type: 3}
+  _ObjectPrefab: {fileID: 1462369314615350922, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
   UseTargetRotation: 1
   _TargetRotation: {x: -90, y: -90, z: 0}
   _TargetOffsetX: 0
   _TargetOffsetY: 0
   _OverrideCalculatedTargetScale: 0
-  _CalculatedTargetScaleOverride: 185.81905
+  _CalculatedTargetScaleOverride: 1
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0

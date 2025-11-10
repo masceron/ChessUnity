@@ -35,7 +35,6 @@ namespace Game.Managers
             FormationManager.Ins.Initialize();
             // For testing purpose
             FormationManager.Ins.SetFormation(PosMap(15, startingSize), new PredatorLair(cfg.FirstSideToMove));
-            GameState.RegionalEffect = new Whirlpool();
         }
 
         private void MakePieces(LineupConfig lineup)
@@ -103,5 +102,9 @@ namespace Game.Managers
             var a = Random.Range(1, 101);
             return a <= chance;
         } 
+        public void CallDraw(bool side)
+        {
+            
+        }
     }
 }

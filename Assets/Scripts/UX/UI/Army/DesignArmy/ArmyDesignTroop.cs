@@ -1,4 +1,6 @@
 ﻿using System;
+using Game.Managers;
+using Game.Piece;
 using Game.ScriptableObjects;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
@@ -18,7 +20,6 @@ namespace UX.UI.Army.DesignArmy
         [NonSerialized] public Transform Parent;
         private Transform oldParent;
         [NonSerialized] public bool Placed;
-        [NonSerialized] public bool Removable = true;
         [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
@@ -36,16 +37,23 @@ namespace UX.UI.Army.DesignArmy
                 Debug.Log($"piece {piece.name} is greyed out");
             }
             Piece = piece;
-            model.ObjectPrefab = Piece.prefab.transform;
+            if (Piece.prefab == null)
+            {
+                Debug.LogError($"Piece : {Piece.name}");
+            }
+            else
+            {
+                model.ObjectPrefab = Piece.prefab.transform;
+            }
             SetTooltip();
             if (isGreyOut)
             {
-                greyMask.color = Color.black;
+                greyMask.color = UnityEngine.Color.black;
 
             }
             else
             {
-                greyMask.color = Color.yellow;
+                greyMask.color = UnityEngine.Color.yellow;
             }
         }
 

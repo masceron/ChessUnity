@@ -609,7 +609,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48369b3fbf77a94a8825f3c23e961db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialCanvas: 14
   currentCanvasID: 0
   canvasDict:
     keys: 0000000001000000040000000500000006000000070000000a000000

@@ -34,6 +34,7 @@ using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
+using UX.UI;
 
 namespace Game.Managers
 {
@@ -295,6 +296,19 @@ namespace Game.Managers
         public void Kill(int pos)
         {
             var pieceAffected = PieceBoard[pos];
+            if (pieceAffected.PieceRank == PieceRank.Commander)
+            {
+                if (pieceAffected.Color == false)
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                }
+                else
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                }
+            }
             PieceBoard[pos] = null;
 
             pieceAffected.Effects.ForEach(RemoveObserver);
@@ -334,12 +348,18 @@ namespace Game.Managers
                 countTurn++;
                 CurrentTurn++;
                 OnIncreaseTurn?.Invoke(CurrentTurn);
-
+                Debug.Log("FlipSideToMove");
+                if (countTurn == 151)
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Draw);
+                }
                 if (countTurn >= NumberOfTurnToChange)
                 {
                     IsDay = !IsDay;
                     countTurn = 0;
                 }
+                
             }
 
             SideToMove = !SideToMove;

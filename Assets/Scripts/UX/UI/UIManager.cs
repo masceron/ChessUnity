@@ -10,14 +10,15 @@ namespace UX.UI
         MainMenu, PlayMenu, Settings, Ingame, Loading, Followers, CreateArmy,
         DesignArmy, QuitToMainMenu, LineupEdit,
         FreePlayPreset, FreePlayDesignArmy, RegionalEffect, Augmentation,
+        EndGameMessage,
         None,
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIManager : Singleton<UIManager>
     {
         private RectTransform currentCanvas;
-        public CanvasID initialCanvas = CanvasID.None;
-        public CanvasID currentCanvasID;
+        // public CanvasID initialCanvas = CanvasID.None;
+        private CanvasID currentCanvasID;
         
         [Serializable]
         public class CanvasDict : UDictionary<CanvasID, Canvas> {}
@@ -27,10 +28,10 @@ namespace UX.UI
         protected override void Awake()
         {
             base.Awake();
-            if (initialCanvas != CanvasID.None)
-            {
-                Load(initialCanvas);
-            }
+            // if (initialCanvas != CanvasID.None)
+            // {
+            //     Load(initialCanvas);
+            // }
         }
         public void Load(CanvasID id)
         {

@@ -32,7 +32,7 @@ namespace UX.UI.FreePlayTest
             {
                 Troop troop = new Troop(config.Type, config.Index / Config.boardSize, config.Index % Config.boardSize);
                 EnemyTroops.Add(troop);
-                var piece = Instantiate(troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
+                var piece = Instantiate(troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<FreePlayArmyTroop>();
                 // Debug.Log($"ArmySearcher: {ArmySearcher.Ins}");
                 // Debug.Log($"piece : {piece}");
                 // Debug.Log()
@@ -71,6 +71,7 @@ namespace UX.UI.FreePlayTest
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
+                piece.Removable = true;
             }
 
         }  
