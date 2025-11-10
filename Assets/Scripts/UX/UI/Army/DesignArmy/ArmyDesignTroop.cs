@@ -19,7 +19,7 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private Image greyMask;
         [NonSerialized] public Transform Parent;
         private Transform oldParent;
-        [NonSerialized] public bool Placed;
+        public bool Placed;
         [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;

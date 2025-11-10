@@ -141,6 +141,7 @@ MonoBehaviour:
   image: {fileID: 3237309739725973384}
   trigger: {fileID: 4969182306046829432}
   greyMask: {fileID: 4205497917656264728}
+  Removable: 1
 --- !u!114 &3237309739725973384 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4197783774499568729, guid: 778969aa2960b4d45bebc38c0ab310fc, type: 3}
