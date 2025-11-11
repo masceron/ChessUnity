@@ -12,7 +12,7 @@ namespace Game.Effects.Debuffs
             
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
             

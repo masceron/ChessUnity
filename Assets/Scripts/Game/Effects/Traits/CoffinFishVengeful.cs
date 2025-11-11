@@ -16,7 +16,7 @@ namespace Game.Effects.Traits
             Probability = probability;
         }
 
-        public override void OnCall(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null) return;
 

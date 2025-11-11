@@ -4,6 +4,7 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic.Commons
 {
