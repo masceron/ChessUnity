@@ -189,6 +189,11 @@ namespace Game.Managers
                 PieceType.Grenadiers => new Grenadiers(piece),
                 PieceType.BlackSwallower => new BlackSwallower(piece),
                 PieceType.Snaggletooths => new Snaggletooths(piece),
+                PieceType.ArcticBrittleStar => new ArcticBrittleStar(piece),
+                PieceType.BrittleStar => new BrittleStar(piece),
+                PieceType.SpiderBrittleStar => new SpiderBrittleStar(piece),
+                PieceType.CoffinFish => new CoffinFish(piece),
+                PieceType.SnipeEel => new SnipeEel(piece),
                 _ => null
             };
 

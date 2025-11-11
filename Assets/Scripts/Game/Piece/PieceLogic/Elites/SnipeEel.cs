@@ -21,6 +21,9 @@ namespace Game.Piece.PieceLogic.Elites
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
                     {
                         var index = IndexOf(rankOff, fileOff);
+                        
+                        var pOn = PieceOn(index);
+                        if (pOn == null || pOn.Color == Color) continue;
                         list.Add(new SnipeEelActive(Pos, index));
                     }
                 }

@@ -5,6 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic.Swarm
 {
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CoffinFish : PieceLogic
     {
         public CoffinFish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, None.Captures)
