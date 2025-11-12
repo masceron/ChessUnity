@@ -9,13 +9,14 @@ public static class Config
     {
         new PieceConfig(PieceType.Swordfish, false, 80),
         new PieceConfig(PieceType.MoorishIdols, false, 94),
+        new PieceConfig(PieceType.FeatherStar, false, 83),
+        new PieceConfig(PieceType.SloanesViperFish, false, 81),
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig(PieceType.FeatherStar, true, 83),
-        new PieceConfig(PieceType.ElectricEel, true, 82),
-        new PieceConfig(PieceType.SloanesViperFish, true, 81),
+        new PieceConfig(PieceType.KelpBass, true,77),
+        // new PieceConfig(PieceType.ElectricEel, true, 82),
         new PieceConfig(PieceType.Lionfish, true, 79),
     };
 
