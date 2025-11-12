@@ -27,7 +27,7 @@ namespace Game.Action.Skills
                     var idx = IndexOf(rank + i, file + j);
 
                     var p = PieceOn(idx);
-                    if (p == caller) continue;
+                    if (p == caller || p.Color == caller.Color) continue;
                     if (p != null)
                     {
                         bool bleeding = false;
