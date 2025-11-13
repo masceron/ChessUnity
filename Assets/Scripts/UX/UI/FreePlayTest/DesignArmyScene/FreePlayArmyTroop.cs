@@ -29,7 +29,7 @@ namespace UX.UI.Army.DesignArmy
             else if (!Placed) return;
             else if (!Removable) return;
             Destroy(gameObject);
-            FindAnyObjectByType<ArmyDesignBoard>().Remove(Rank, File);
+            FindAnyObjectByType<FreePlayArmyBoard>().Remove(Rank, File);
         }
     }
 }
