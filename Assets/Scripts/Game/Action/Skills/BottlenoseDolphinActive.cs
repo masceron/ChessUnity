@@ -19,7 +19,7 @@ namespace Game.Action.Skills
             if (PieceOn(Target).Color != PieceOn(Maker).Color) 
             {
 
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(PieceOn(Target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(Target))));
             } 
             else
             {
