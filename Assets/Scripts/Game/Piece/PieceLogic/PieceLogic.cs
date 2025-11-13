@@ -6,6 +6,7 @@ using Game.Augmentation.Set;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
+using Game.Piece.PieceLogic.Commons;
 using Game.ScriptableObjects;
 using Game.Tile;
 using static Game.Common.BoardUtils;
@@ -35,7 +36,7 @@ namespace Game.Piece.PieceLogic
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
         public readonly List<int> PreviousMoves;
-        public readonly PieceType Type;
+        public readonly string Type;
         private readonly bool hasSkill;
         private readonly List<Augmentation.Augmentation> Augmentations;
 

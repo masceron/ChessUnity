@@ -14,14 +14,14 @@ namespace Game.Effects.Traits
         private List<PieceLogic> inRange = new();
         private readonly List<PieceLogic> evasionBuff = new();
 
-        private readonly (int, int)[] rangeSpawn = new (int, int)[4]
+        private readonly (int, int)[] rangeSpawn = new (int, int)[]
         {
             (1, 0), (0, -1),
             (-1, 0), (0, 1)
         };
         public EndTurnEffectType EndTurnEffectType { get; }
         private const int Interval = 3;
-        private int turnCounter = 0;
+        private int turnCounter;
         
         public LivingCoralPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.LivingCoralPassive)
         {
@@ -87,7 +87,7 @@ namespace Game.Effects.Traits
             {
                 ushort indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
                 ActionManager.EnqueueAction(
-                    new SpawnPiece(new PieceConfig(PieceType.ClownFish, Piece.Color, indexToSpawn))
+                    new SpawnPiece(new PieceConfig("piece_clown_fish", Piece.Color, indexToSpawn))
                 );
             }
         }

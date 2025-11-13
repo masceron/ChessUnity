@@ -19,7 +19,7 @@ namespace UX.UI.Followers
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            TroopList.Ins.DisplayInfo(obj.type);
+            TroopList.Ins.DisplayInfo(obj.key);
         }
 
         public void OnPointerExit(PointerEventData eventData)
@@ -31,7 +31,7 @@ namespace UX.UI.Followers
         {
             if (eventData.button == PointerEventData.InputButton.Left)
             {
-                TroopList.Ins.Select(obj.type);
+                TroopList.Ins.Select(obj.key);
             }
         }
     }

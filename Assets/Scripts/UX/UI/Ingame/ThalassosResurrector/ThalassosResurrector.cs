@@ -64,7 +64,7 @@ namespace UX.UI.Ingame.ThalassosResurrector
             ((RectTransform)transform.GetChild(0)).anchoredPosition = new Vector2(-50, 0);
         }
 
-        public void Choose(PieceType type)
+        public void Choose(string type)
         {
             MatchManager.Ins.InputProcessor.ExecuteAction(new ThalassosResurrect(caller, to, type));
             Disable();

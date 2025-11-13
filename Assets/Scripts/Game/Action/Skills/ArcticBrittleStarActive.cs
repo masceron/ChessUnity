@@ -1,6 +1,6 @@
 using static Game.Common.BoardUtils;
-using Game.Piece.PieceLogic;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
 

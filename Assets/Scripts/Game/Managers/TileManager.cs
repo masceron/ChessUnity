@@ -144,8 +144,8 @@ namespace Game.Managers
             if (tiles[index] != null && tiles[index].color == Color.None)
             {
                 var prefab = !ColorOfSquare(index)
-                    ? AssetManager.Ins.TileData[Color.White]
-                    : AssetManager.Ins.TileData[Color.Black];
+                    ? AssetManager.Ins.tileData[Color.White]
+                    : AssetManager.Ins.tileData[Color.Black];
 
                 Destroy(tiles[index].gameObject);
                 var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
@@ -168,9 +168,9 @@ namespace Game.Managers
         {
             var prefab = IsActive(index)
                 ? !ColorOfSquare(index) ? 
-                    AssetManager.Ins.TileData[Color.White] : 
-                    AssetManager.Ins.TileData[Color.Black] : 
-                AssetManager.Ins.TileData[Color.None];
+                    AssetManager.Ins.tileData[Color.White] : 
+                    AssetManager.Ins.tileData[Color.Black] : 
+                AssetManager.Ins.tileData[Color.None];
 
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);
@@ -189,7 +189,7 @@ namespace Game.Managers
             Destroy(tiles[index].gameObject);
             tiles[index] = null;
 
-            var prefab = AssetManager.Ins.TileData[Color.None];
+            var prefab = AssetManager.Ins.tileData[Color.None];
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);
 

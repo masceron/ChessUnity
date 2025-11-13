@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Game.Piece;
 using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.UI;
@@ -127,7 +126,7 @@ namespace UX.UI.Army.DesignArmy
             }
         }
 
-        public void Add(int rank, int file, PieceType type)
+        public void Add(int rank, int file, string type)
         {
             Troops.Add(new Troop(type, rank, file));
         }

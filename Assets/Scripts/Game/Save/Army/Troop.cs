@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Piece;
 using MemoryPack;
 
 namespace Game.Save.Army
@@ -7,13 +6,13 @@ namespace Game.Save.Army
     [MemoryPackable]
     public readonly partial struct Troop: IComparable<Troop>
     {
-        public readonly PieceType Type;
+        public readonly string Type;
         public readonly ushort Rank;
         public readonly ushort File;
 
-        public Troop(PieceType pieceType, int rank, int file)
+        public Troop(string type, int rank, int file)
         {
-            Type = pieceType;
+            Type = type;
             Rank = (ushort) rank;
             File = (ushort) file;
         }

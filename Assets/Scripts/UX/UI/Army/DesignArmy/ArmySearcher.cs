@@ -19,14 +19,18 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
 
-        public Dictionary<PieceType, PieceInfo> Data;
+        public Dictionary<string, PieceInfo> Data;
         private List<PieceInfo> lastSearchResult;
         private string lastKeyword;
         public readonly List<ArmyDesignTroop> Pool = new();
         
         private void Awake()
         {
-            Data = piecesData.piecesData.Dictionary;
+            Data = new Dictionary<string, PieceInfo>();
+            foreach (var pieceInfo in piecesData.piecesData)
+            {
+                Data.Add(pieceInfo.key, pieceInfo);
+            }
             Load();
         }
 

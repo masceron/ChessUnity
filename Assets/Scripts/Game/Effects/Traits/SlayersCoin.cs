@@ -1,7 +1,6 @@
 ﻿using Game.Action;
 using Game.Common;
 using Game.Piece.PieceLogic;
-using Game.Piece.PieceLogic.Commanders;
 
 namespace Game.Effects.Traits
 {

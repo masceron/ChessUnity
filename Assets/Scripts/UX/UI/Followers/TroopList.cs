@@ -21,7 +21,7 @@ namespace UX.UI.Followers
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
         [SerializeField] private TroopDescriptions troopDescriptions;
 
-        private Dictionary<PieceType, PieceInfo> data;
+        private Dictionary<string, PieceInfo> data;
         private List<PieceInfo> lastSearchResult;
         private string lastKeyword;
         private readonly List<TroopLogo> pool = new();
@@ -34,7 +34,11 @@ namespace UX.UI.Followers
 
         private void Awake()
         {
-            data = piecesData.piecesData.Dictionary;
+            data = new Dictionary<string, PieceInfo>();
+            foreach (var pieceInfo in piecesData.piecesData)
+            {
+                data.Add(pieceInfo.key, pieceInfo);
+            }
             SearchByKeyword("");
         }
 
@@ -44,7 +48,7 @@ namespace UX.UI.Followers
             troopDescriptions.Undisplay();
         }
 
-        public void Select(PieceType type)
+        public void Select(string type)
         {
             selecting = false;
             DisplayInfo(type);
@@ -180,7 +184,7 @@ namespace UX.UI.Followers
             }
         }
 
-        public void DisplayInfo(PieceType type)
+        public void DisplayInfo(string type)
         {
             if (selecting) return;
             

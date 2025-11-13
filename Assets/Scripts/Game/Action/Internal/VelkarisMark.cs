@@ -1,5 +1,5 @@
 ﻿using Game.Effects.Others;
-using Game.Piece.PieceLogic.Commanders;
+using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal

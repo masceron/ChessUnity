@@ -899,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e71ed85fc76b9544a863475535c4c4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileData:
+  tileData:
     keys: 000102
     values:
     - {fileID: 8816581119346735433, guid: 30edd8c16605b304db1243997f3b287d, type: 3}
@@ -908,7 +908,7 @@ MonoBehaviour:
   pieceData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   effectsData: {fileID: 11400000, guid: 41fbcdd3b409c1a4d9eb51fd2cd34ae6, type: 2}
   relicsData: {fileID: 11400000, guid: 55677e0beededb7439a91660f177e2f3, type: 2}
-  enviromentsData: {fileID: 11400000, guid: 174aa3be7320d8c4693318abc7ea6844, type: 2}
+  environmentsData: {fileID: 11400000, guid: 174aa3be7320d8c4693318abc7ea6844, type: 2}
 --- !u!1 &1587264566
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,78 +1,12 @@
+using System;
+using System.Reflection;
+using Game.Managers;
 using PrimeTween;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece
 {
-    public enum PieceType : byte
-    {
-        Velkaris,
-        GuidingSiren,
-        Barracuda,
-        SeaUrchin,
-        ElectricEel,
-        FlyingFish,
-        Chrysos,
-        Anomalocaris,
-        Archelon,
-        Thalassos,
-        Pufferfish,
-        Swordfish,
-        Lionfish,
-        MorayEel,
-        Stingray,
-        Seahorse,
-        SeaStar,
-        Anglerfish,
-        Remora,
-        KelpBass,
-        MedicinalLeech,
-        HourglassJelly,
-        Archerfish,
-        MoorishIdols,
-        Helicoprion,
-        HermitCrab,
-        SeaTurtle,
-        HorseLeech,
-        Megalodon,
-        Temperantia,
-        BobtailSquid,
-        LivingCoral,
-        ClownFish,
-        Humilitas,
-        StoneCrab,
-        PhantomJelly,
-        ChamberedNautilus,
-        EpauletteShark,
-        FractureZone,
-        BioluminescentBeacon,
-        Sunfish,
-        ContagionCorpse,
-        TigerPrawn,
-        HammerOyster,
-        BottlenoseDolphin,
-        KelpForest,
-        Melibe,
-        BlueDragon,
-        Fangtooth,
-        GulperEel,
-        Hatchetfish,
-        Lizardfish,
-        PistolShrimp,
-        Slimehead,
-        MarineIguana,
-        PollutedRock,
-        Barnacle,
-        Phronima,
-        SloanesViperFish,
-        FeatherStar,
-        ArmoredFeatherStar,
-        HumboldtSquid,
-        Grenadiers,
-        BlackSwallower,
-        Snaggletooths,
-    }
-
     public enum PieceRank : byte
     {
         None,
@@ -114,6 +48,34 @@ namespace Game.Piece
             file = fileTo;
             
             Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
+        }
+    }
+
+    public static class PieceMaker
+    {
+        private static readonly Assembly GameAssembly = Assembly.GetExecutingAssembly();
+
+        public static PieceLogic.PieceLogic Get(PieceConfig config)
+        {
+            var classname = AssetManager.Ins.PieceData[config.Type];
+            var pieceType = GameAssembly.GetType($"Game.Piece.PieceLogic.{classname.logicClassName}");
+        
+            if (pieceType == null)
+            {
+                Debug.LogError($"Could not find logic class with name: {classname.logicClassName}");
+                return null;
+            }
+
+            try
+            {
+                var instance = Activator.CreateInstance(pieceType, args:config) as PieceLogic.PieceLogic;
+                return instance;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to create instance of {classname.logicClassName}: {e.Message}");
+                return null;
+            }
         }
     }
 }

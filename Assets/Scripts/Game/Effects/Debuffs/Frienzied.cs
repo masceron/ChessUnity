@@ -1,13 +1,11 @@
 using Game.Piece.PieceLogic;
 using Game.Action;
-using Game.Action.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
-using UnityEngine;
-using Game.Managers;
+
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

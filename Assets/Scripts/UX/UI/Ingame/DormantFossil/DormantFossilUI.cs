@@ -16,11 +16,11 @@ namespace UX.UI.Ingame.DormantFossil
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject pieceItem;
 
-        private readonly List<PieceType> spawnPiece = new()
+        private readonly List<string> spawnPiece = new()
         {
-            PieceType.Helicoprion,
-            PieceType.Anomalocaris,
-            PieceType.Archelon 
+            "piece_helicoprion",
+            "piece_anomalocaris",
+            "piece_archelon" 
         };
         
         private void OnEnable()
@@ -48,9 +48,8 @@ namespace UX.UI.Ingame.DormantFossil
 
         }
 
-        public void Choose(PieceType type)
+        public void Choose(string type)
         {
-            Debug.Log("choosed");
             var color = BoardUtils.ColorOfPiece(piecePos);
             
             ActionManager.EnqueueAction(new KillPiece(piecePos));
