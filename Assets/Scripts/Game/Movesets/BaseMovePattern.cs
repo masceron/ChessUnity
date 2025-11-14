@@ -13,6 +13,8 @@ namespace Game.Movesets
 
         public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range, bool forCapture)
         {
+            if (range <= 0) return;
+
             var caller = PieceOn(pos);
             var color = caller.Color;
             var (rank, file) = RankFileOf(pos);
