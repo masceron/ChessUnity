@@ -7,9 +7,9 @@ using static Game.Common.BoardUtils;
 namespace Game.Movesets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public static class SmallChargingMoves
+    public class SmallChargingMoves : BaseMovePattern
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        /*public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
@@ -113,6 +113,41 @@ namespace Game.Movesets
 
                 return false;
             }
+        }*/
+
+        public override List<int> GenerateBaseMovePattern(int makerPos)
+        {
+            return GenerateSmallChargingMovePattern(makerPos);
+        }
+
+        private List<int> GenerateSmallChargingMovePattern(int makerPos)
+        {
+            var caller = PieceOn(makerPos);
+            var positions = new List<int>();
+            int push = caller.Color ? +1 : -1;
+            var (rank, file) = RankFileOf(makerPos);
+            // Đi 3 ô phía trước và 2 ô phía sau
+            positions.Add(IndexOf(rank + push * 3, file));
+            positions.Add(IndexOf(rank + push * 2, file));
+            positions.Add(IndexOf(rank + push * 1, file));
+            positions.Add(IndexOf(rank - push * 2, file));
+            positions.Add(IndexOf(rank - push * 1, file));
+
+            return positions;
+        }
+
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        {
+            var moveRange = PieceOn(pos).GetMoveRange(ref index);
+            var basePattern = new HashSet<int>(new SmallChargingMoves().GenerateBaseMovePattern(pos));
+            BaseMovePattern.AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false);
+        }
+
+        public static void Captures(List<Action.Action> list, int pos)
+        {
+            var attackRange = PieceOn(pos).AttackRange;
+            var basePattern = new HashSet<int>(new SmallChargingMoves().GenerateBaseMovePattern(pos));
+            BaseMovePattern.AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
         }
     }
 }

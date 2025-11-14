@@ -17,7 +17,7 @@ namespace Game.Movesets
     /// </summary>
     public class UpDoorMoves: BaseMovePattern
     {
-        private static List<int> GenerateUpDoorPattern(int makerPos)
+        private List<int> GenerateUpDoorPattern(int makerPos)
         {
             var caller = PieceOn(makerPos);
             var positions = new List<int>();
@@ -39,14 +39,14 @@ namespace Game.Movesets
         public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var moveRange = PieceOn(pos).GetMoveRange(ref index);
-            var basePattern = new HashSet<int>(GenerateUpDoorPattern(pos));
+            var basePattern = new HashSet<int>(new UpDoorMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false);
         }
 
         public static void Captures(List<Action.Action> list, int pos)
         {
             var attackRange = PieceOn(pos).AttackRange;
-            var basePattern = new HashSet<int>(GenerateUpDoorPattern(pos));
+            var basePattern = new HashSet<int>(new UpDoorMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
         }
 

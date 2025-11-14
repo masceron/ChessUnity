@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic.Elites
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeaTurtle : PieceLogic, IPieceWithSkill
     {
-        public SeaTurtle(PieceConfig cfg) : base(cfg, SeaTurtleMoves.Quiets, SeaTurtleMoves.Captures)
+        public SeaTurtle(PieceConfig cfg) : base(cfg, KingMoves.Quiets, FrontDefenderMoves.Captures)
         { 
             Skills = list =>
             {

@@ -15,8 +15,8 @@ MonoBehaviour:
   type: 49
   prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
   rank: 5
-  moveRange: 2
-  attackRange: 2
+  moveRange: 1
+  attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   key: Piece_Grenadiers

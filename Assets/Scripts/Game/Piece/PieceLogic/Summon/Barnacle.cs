@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic.Summon
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Barnacle: PieceLogic, IPieceWithSkill
     {
-        public Barnacle(PieceConfig cfg) : base(cfg, BarnacleMoves.Quiets, RookMoves.Captures)
+        public Barnacle(PieceConfig cfg) : base(cfg, ShellfishMoves.Quiets, RookMoves.Captures)
         {
 
             Skills = list =>

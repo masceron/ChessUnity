@@ -6,9 +6,9 @@ using static Game.Common.BoardUtils;
 namespace Game.Movesets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SpinningMoves
+    public class SpinningMoves : BaseMovePattern
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        /*public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var rank = RankOf(pos);
             var file = FileOf(pos);
@@ -74,6 +74,51 @@ namespace Game.Movesets
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
+        }*/
+
+        public override List<int> GenerateBaseMovePattern(int makerPos)
+        {
+            return GenerateSpinningMovePattern(makerPos);
+        }
+
+        private List<int> GenerateSpinningMovePattern(int makerPos)
+        {
+            var caller = PieceOn(makerPos);
+            var positions = new List<int>();
+            var (rank, file) = RankFileOf(makerPos);
+
+            positions.Add(IndexOf(rank + 2, file + 2));
+            positions.Add(IndexOf(rank + 2, file - 2));
+
+            positions.Add(IndexOf(rank + 1, file + 1));
+            positions.Add(IndexOf(rank + 1, file));
+            positions.Add(IndexOf(rank + 1, file - 1));
+
+            positions.Add(IndexOf(rank, file + 1));
+            positions.Add(IndexOf(rank, file - 1));
+
+            positions.Add(IndexOf(rank - 1, file + 1));
+            positions.Add(IndexOf(rank - 1, file));
+            positions.Add(IndexOf(rank - 1, file - 1));
+
+            positions.Add(IndexOf(rank - 2, file + 2));
+            positions.Add(IndexOf(rank - 2, file - 2));
+
+            return positions;
+        }
+
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        {
+            var moveRange = PieceOn(pos).GetMoveRange(ref index);
+            var basePattern = new HashSet<int>(new SpinningMoves().GenerateBaseMovePattern(pos));
+            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false);
+        }
+
+        public static void Captures(List<Action.Action> list, int pos)
+        {
+            var attackRange = PieceOn(pos).AttackRange;
+            var basePattern = new HashSet<int>(new SpinningMoves().GenerateBaseMovePattern(pos));
+            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
         }
     }
 }
