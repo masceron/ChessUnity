@@ -6,7 +6,7 @@ using Game.Piece.PieceLogic;
 
 namespace Game.Effects.Others
 {
-    public class NocturnalRangeBuff : Effect, IEndTurnEffect
+    public class NocturnalRangeBuff : Effect, IEndTurnEffect, IMoveRangeModifier
     {
         private bool isBuff = false;
         private byte initialAttackRange;
@@ -23,13 +23,21 @@ namespace Game.Effects.Others
             {
                 isBuff = true;
                 Piece.AttackRange++;
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Haste(10, 1, Piece)));
             }
             else if (!MatchManager.Ins.GameState.IsDay)
             {
                 isBuff = false;
                 Piece.AttackRange = initialAttackRange;
             }
+        }
+
+        public int ModifyMoveRange(int baseRange)
+        {
+            if (MatchManager.Ins.GameState.IsDay)
+            {
+                baseRange += Strength;
+            }
+            return baseRange;
         }
     }
 }
