@@ -335,6 +335,18 @@ MonoBehaviour:
     m_Key: effect_relentless
     m_Metadata:
       m_Items: []
+  - m_Id: 35146149952229376
+    m_Key: effect_long_reach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35155850504966144
+    m_Key: effect_coffin_fish_vengeful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35155863264038912
+    m_Key: effect_snipe_eel_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

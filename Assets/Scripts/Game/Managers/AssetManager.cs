@@ -16,27 +16,23 @@ namespace Game.Managers
         [NonSerialized] public Dictionary<string, PieceInfo> PieceData;
         [NonSerialized] public Dictionary<string, EffectInfo> EffectData;
         [NonSerialized] public Dictionary<RelicType, RelicInfo> RelicData;
-        [NonSerialized] public Dictionary<FormationType, GameObject> EnviromentData;
-        [NonSerialized] public Dictionary<AugmentationName, AugmentationInfo> AugmentationData;
-        [SerializeField] public UDictionary<Color, Tile.Tile> TileData;
-
-        
         [NonSerialized] public Dictionary<FormationType, GameObject> EnvironmentData;
+        [NonSerialized] public Dictionary<AugmentationName, AugmentationInfo> AugmentationData;
+        
         [SerializeField] public UDictionary<Color, Tile.Tile> tileData;
         [SerializeField] private PiecesData pieceData;
         [SerializeField] private EffectsData effectsData;
         [SerializeField] private RelicsData relicsData;
-        [SerializeField] private FormationsData enviromentsData;
         [SerializeField] private AugmentationData augmentationData;
-        public RegionalsData RegionalsData;
+        [SerializeField] public RegionalsData regionalsData;
         [SerializeField] private FormationsData environmentsData;
 
         protected override void Awake()
         {
-            base.Awake();
             Load();
         }
-        public void Load()
+
+        private void Load()
         {
             PieceData = new Dictionary<string, PieceInfo>();
             foreach (var piece in pieceData.piecesData)
@@ -52,9 +48,8 @@ namespace Game.Managers
             
             RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
             EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
-            EnviromentData = new Dictionary<FormationType, GameObject>(enviromentsData.enviromentsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);
-            DontDestroyOnLoad(this.gameObject);
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

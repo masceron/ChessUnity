@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UX.UI.FreePlayTest;
+using UX.UI.Army.DesignArmy;
+using UX.UI.FreePlayTest.AugmentationScene;
 
-namespace UX.UI.Army.DesignArmy
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FreePlayArmyTroop: ArmyDesignTroop, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler

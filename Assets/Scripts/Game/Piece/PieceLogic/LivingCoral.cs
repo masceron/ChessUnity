@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
         public LivingCoral(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new LivingCoralPassive(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Effects.Traits.Construct(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Construct(this)));
         }
     }
 }

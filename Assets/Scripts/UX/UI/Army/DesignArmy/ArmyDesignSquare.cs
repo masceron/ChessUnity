@@ -56,7 +56,7 @@ namespace UX.UI.Army.DesignArmy
             else
             {
                 troopDisplay.Set(rank, file);
-                board.Add(rank, file, troopDisplay.Piece.type);
+                board.Add(rank, file, troopDisplay.Piece.key);
             }
         }
     }

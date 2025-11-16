@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -16,11 +17,11 @@ namespace Game.Piece.PieceLogic
             Skills = list =>
             {
                 if (SkillCooldown > 0) return;
-                var (rank, file) = RankFileOf(Pos);
+                var (rank, file) = BoardUtils.RankFileOf(Pos);
 
                 foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                 {
-                    var index = IndexOf(rankOff, fileOff);
+                    var index = BoardUtils.IndexOf(rankOff, fileOff);
                     list.Add(new ArcticBrittleStarActive(Pos, index));
                 }
             };

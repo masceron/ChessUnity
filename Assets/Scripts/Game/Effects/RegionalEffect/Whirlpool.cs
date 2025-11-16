@@ -2,10 +2,10 @@ using Game.Action;
 using Game.Action.Quiets;
 using Game.Managers;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 //Xuất hiện vào turn thứ 30 của ván nếu chưa kết thúc, tạo ra vòng xoáy 2x2 giữa bàn cờ, 
@@ -22,22 +22,21 @@ namespace Game.Effects.RegionalEffect
     public class Whirlpool : RegionalEffect
     {
 
-        private int startTurn = 4;
-        private List<(int, int)> centralPos;
-        private List<int> centralIndices;
+        private readonly int startTurn = 4;
+        private readonly List<int> centralIndices;
         public Whirlpool() : base(RegionalEffectType.Whirpool)
         {
             // Use MaxLength to derive center coordinates (board is MaxLength x MaxLength)
-            int half = MaxLength / 2;
+            var half = MaxLength / 2;
             // Hố xoáy 2x2 nên chiếm 4 vị trí (rank, file)
-            centralPos = new List<(int, int)>(){
-            (half - 1, half - 1),
-            (half - 1, half),
-            (half, half - 1),
-            (half, half)
-        };
-            AssetManager.Ins.RegionalsData.CreateWhirlPool(FromRankFileToWorldPos(half - 1.0f / 2, half - 1.0f / 2));
-            centralIndices = centralPos.Select(p => IndexOf(p.Item1, p.Item2)).ToList();
+            var centralPos1 = new List<(int, int)>(){
+                (half - 1, half - 1),
+                (half - 1, half),
+                (half, half - 1),
+                (half, half)
+            };
+            AssetManager.Ins.regionalsData.CreateWhirlPool(FromRankFileToWorldPos(half - 1.0f / 2, half - 1.0f / 2));
+            centralIndices = centralPos1.Select(p => IndexOf(p.Item1, p.Item2)).ToList();
         }
         protected override void ApplyEffect(int currentTurn)
         {
@@ -46,20 +45,10 @@ namespace Game.Effects.RegionalEffect
                 return;
             }
 
-            List<PieceLogic> pieces = new();
-
             // Precompute their indices
-            ;
 
-            PieceLogic[] board = MatchManager.Ins.GameState.PieceBoard;
-            for (int i = 0; i < board.Length; i++)
-            {
-                var piece = board[i];
-                if (piece != null)
-                {
-                    pieces.Add(piece);
-                }
-            }
+            var board = MatchManager.Ins.GameState.PieceBoard;
+            var pieces = board.Where(piece => piece != null).ToList();
 
             // Build list of (piece, nearestCentralIndex, distance) and sort by distance asc
             var pieceInfos = new List<(PieceLogic piece, int nearestCentralIndex, int distance)>();
@@ -67,11 +56,11 @@ namespace Game.Effects.RegionalEffect
             {
                 int pos = piece.Pos;
                 // find nearest central index by chebyshev distance
-                int bestIdx = centralIndices[0];
-                int bestDist = Distance(pos, bestIdx);
+                var bestIdx = centralIndices[0];
+                var bestDist = Distance(pos, bestIdx);
                 foreach (var c in centralIndices)
                 {
-                    int d = Distance(pos, c);
+                    var d = Distance(pos, c);
                     if (d < bestDist)
                     {
                         bestDist = d;
@@ -97,23 +86,23 @@ namespace Game.Effects.RegionalEffect
                     continue;
                 }
 
-                int rank = RankOf(fromIndex);
-                int file = FileOf(fromIndex);
+                var rank = RankOf(fromIndex);
+                var file = FileOf(fromIndex);
 
-                int targetIdx = info.nearestCentralIndex;
-                int targetRank = RankOf(targetIdx);
-                int targetFile = FileOf(targetIdx);
+                var targetIdx = info.nearestCentralIndex;
+                var targetRank = RankOf(targetIdx);
+                var targetFile = FileOf(targetIdx);
 
-                int dr = targetRank - rank;
-                int df = targetFile - file;
+                var dr = targetRank - rank;
+                var df = targetFile - file;
 
                 // Compute one-step move direction
-                int stepRank = dr == 0 ? 0 : (dr > 0 ? 1 : -1);
-                int stepFile = df == 0 ? 0 : (df > 0 ? 1 : -1);
+                var stepRank = dr == 0 ? 0 : (dr > 0 ? 1 : -1);
+                var stepFile = df == 0 ? 0 : (df > 0 ? 1 : -1);
 
                 // If vector is NOT aligned vertically, horizontally or perfectly diagonal,
                 // round to the dominant cardinal direction (no diagonal rounding).
-                bool isAligned = (dr == 0) || (df == 0) || (Mathf.Abs(dr) == Mathf.Abs(df));
+                var isAligned = (dr == 0) || (df == 0) || (Mathf.Abs(dr) == Mathf.Abs(df));
                 if (!isAligned)
                 {
                     if (Mathf.Abs(dr) > Mathf.Abs(df))
@@ -128,12 +117,12 @@ namespace Game.Effects.RegionalEffect
                     }
                 }
 
-                int nextRank = rank + stepRank;
-                int nextFile = file + stepFile;
+                var nextRank = rank + stepRank;
+                var nextFile = file + stepFile;
 
                 // Verify bounds and active square
                 if (!VerifyBounds(nextRank) || !VerifyBounds(nextFile)) continue;
-                int nextIndex = IndexOf(nextRank, nextFile);
+                var nextIndex = IndexOf(nextRank, nextFile);
 
                 // Only move into empty squares, if a cell have piece, the move action is cancelled
                 if (MatchManager.Ins.GameState.PieceBoard[nextIndex] != null) continue;

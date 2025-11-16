@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using Game.Action;
 using Game.Action.Captures;
-using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 using Game.Piece.PieceLogic.Commons;
 

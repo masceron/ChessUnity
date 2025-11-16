@@ -1,8 +1,8 @@
+using Game.Augmentation;
 using UnityEngine;
 using UnityEngine.UI;
-using Game.Augmentation;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.AugmentationScene
 {
     public class AugCategoryButton : MonoBehaviour
     {

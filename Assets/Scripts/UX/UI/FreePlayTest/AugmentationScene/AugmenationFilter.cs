@@ -1,15 +1,14 @@
-
 using System.Collections.Generic;
 using System.Linq;
+using Game.Augmentation;
 using Game.Common;
+using Game.Managers;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
-using Game.Managers;
-using Game.Augmentation;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.AugmentationScene
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AugmentationFilter: Singleton<AugmentationFilter>
@@ -20,15 +19,13 @@ namespace UX.UI.FreePlayTest
         [SerializeField] public GameObject augDisplay;
         [SerializeField] private UDictionary<AugmentationSlot, AugCategoryButton> filterButtons;
 
-        private Dictionary<AugmentationName, AugmentationInfo> Data;
+        private Dictionary<AugmentationName, AugmentationInfo> data;
         private List<AugmentationInfo> lastSearchResult;
-        private string lastKeyword;
-        public readonly List<AugmentationIcon> Pool = new();
-        
-        private void Awake()
+        private readonly List<AugmentationIcon> pool = new();
+
+        protected override void Awake()
         {
-            base.Awake();
-            Data = AssetManager.Ins.AugmentationData;
+            data = AssetManager.Ins.AugmentationData;
             // không có filter nghĩa là lấy hết toàn bộ các Piece hiện đang sở hữu
             ToggleFilter(0);
         }
@@ -53,7 +50,7 @@ namespace UX.UI.FreePlayTest
                 button.Value.GreyOut();
             }
             filterButtons[filterEnum].GreyOut();
-            lastSearchResult = Data.Values.Where(p => p.Slot == filterEnum).ToList();
+            lastSearchResult = data.Values.Where(p => p.Slot == filterEnum).ToList();
             DisplaySearchResult();
             
         }
@@ -78,30 +75,29 @@ namespace UX.UI.FreePlayTest
             //         Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
             // }
 
-            lastSearchResult = Data.Values.ToList();
-            lastKeyword = start;
+            lastSearchResult = data.Values.ToList();
             DisplaySearchResult();
         }
 
         private void DisplaySearchResult()
         {
-            var needed = lastSearchResult.Count - Pool.Count;
+            var needed = lastSearchResult.Count - pool.Count;
             switch (needed)
             {
                 case > 0:
                     {
                         for (var i = 1; i <= needed; i++)
                         {
-                            Pool.Add(Instantiate(augDisplay, list).GetComponent<AugmentationIcon>());
+                            pool.Add(Instantiate(augDisplay, list).GetComponent<AugmentationIcon>());
                         }
 
                         break;
                     }
                 case < 0:
                     {
-                        for (var i = Pool.Count - 1; i > lastSearchResult.Count - 1; i--)
+                        for (var i = pool.Count - 1; i > lastSearchResult.Count - 1; i--)
                         {
-                            Pool[i].gameObject.SetActive(false);
+                            pool[i].gameObject.SetActive(false);
                         }
 
                         break;
@@ -110,7 +106,7 @@ namespace UX.UI.FreePlayTest
 
             for (var i = 0; i < lastSearchResult.Count; i++)
             {
-                var obj = Pool[i].gameObject;
+                var obj = pool[i].gameObject;
                 if (!obj.activeSelf)
                 {
                     obj.SetActive(true);
@@ -118,7 +114,7 @@ namespace UX.UI.FreePlayTest
 
                 // if (Pool[i].model.ObjectPrefab != lastSearchResult[i].prefab.transform)
                 // {
-                Pool[i].Load(lastSearchResult[i].Name);
+                pool[i].Load(lastSearchResult[i].Name);
                 // }
             }
         }

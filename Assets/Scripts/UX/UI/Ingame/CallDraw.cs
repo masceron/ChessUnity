@@ -9,9 +9,9 @@ namespace UX.UI.Ingame
         [SerializeField] private CallDraw opponent;
         [SerializeField] private Button button;
         [SerializeField] private Image targetGraphic; // usually button.image
-        [SerializeField] private UnityEngine.Color toggledColor = UnityEngine.Color.yellow;
+        [SerializeField] private Color toggledColor = Color.yellow;
 
-        private UnityEngine.Color defaultColor;
+        private Color defaultColor;
         private bool isToggled;
 
         void Awake()
@@ -26,7 +26,7 @@ namespace UX.UI.Ingame
         {
             isToggled = !isToggled;
             targetGraphic.color = isToggled ? toggledColor : defaultColor;
-            if (this.IsToggled() && opponent.IsToggled())
+            if (IsToggled() && opponent.IsToggled())
             {
                 UIManager.Ins.Load(CanvasID.EndGameMessage);
                 EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Draw);

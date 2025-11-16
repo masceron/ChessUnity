@@ -7,9 +7,8 @@ namespace Game.Effects.Others
 {
     public class EpauletteSharkPurify : Effect, IEndTurnEffect
     {
-        public EpauletteSharkPurify(PieceLogic piece) : base(-1, 1, piece, "effect_epaulette_shark_purify")
         private bool yesterdayIsDay;
-        public EpauletteSharkPurify(PieceLogic piece) : base(-1, 1, piece, EffectName.EpauletteSharkPurify)
+        public EpauletteSharkPurify(PieceLogic piece) : base(-1, 1, piece, "effect_epaulette_shark_purify")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }

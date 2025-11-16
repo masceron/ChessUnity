@@ -275,6 +275,26 @@ MonoBehaviour:
     m_Key: piece_humboldt_squid
     m_Metadata:
       m_Items: []
+  - m_Id: 35171085806735360
+    m_Key: piece_arctic_brittle_star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171291084361728
+    m_Key: piece_brittle_star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171332389867520
+    m_Key: piece_coffin_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171407073644544
+    m_Key: piece_spider_brittle_star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35179620120662016
+    m_Key: piece_snipe_eel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

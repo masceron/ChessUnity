@@ -1,14 +1,14 @@
-using UnityEngine;
 using System.Collections.Generic;
-using TMPro;
-using Game.Save.Army;
 using Game.Augmentation;
-using Game.ScriptableObjects;
-using Game.Managers;
 using Game.Common;
+using Game.Managers;
+using Game.Save.Army;
+using Game.ScriptableObjects;
+using TMPro;
+using UnityEngine;
 using UX.UI.Followers;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.AugmentationScene
 {
     public class AugmentationManagerUI : Singleton<AugmentationManagerUI>
     {
@@ -19,7 +19,7 @@ namespace UX.UI.FreePlayTest
         [HideInInspector] public Dictionary<AugmentationSlot, AugmentationName> equippedAugmentation = new();
         public void Load(Troop selected, bool side)
         {
-            this.SelectedTroop = selected;
+            SelectedTroop = selected;
             equippedAugmentation = SelectedTroop.equippedAugmentation;
             foreach(var icon in icons)
             {

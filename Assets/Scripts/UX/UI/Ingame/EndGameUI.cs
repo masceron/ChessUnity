@@ -1,18 +1,21 @@
 using Game.Common;
 using TMPro;
 
-public class EndGameUI : Singleton<EndGameUI>
+namespace UX.UI.Ingame
 {
-    public TMP_Text tmp;
-    public enum MessageID
+    public class EndGameUI : Singleton<EndGameUI>
     {
-        Lose,
-        Win,
-        Draw,
-    }
-    public void SetMessage(MessageID messageID)
-    {
-        tmp.text = messageID.ToString();
-    }
+        public TMP_Text tmp;
+        public enum MessageID
+        {
+            Lose,
+            Win,
+            Draw,
+        }
+        public void SetMessage(MessageID messageID)
+        {
+            tmp.text = messageID.ToString();
+        }
     
+    }
 }

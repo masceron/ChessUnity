@@ -1,17 +1,17 @@
-
-using Game.Common;
 using System.Collections.Generic;
-using UX.UI.Loader;
-using Game.Piece;
-using UX.UI.Army.DesignArmy;
-using Game.Save.Army;
-using UnityEngine;
-using Game.Managers;
-using Game.Effects.RegionalEffect;
 using System.Linq;
+using Game.Common;
+using Game.Effects.RegionalEffect;
+using Game.Managers;
+using Game.Piece;
+using Game.Save.Army;
 using Game.ScriptableObjects;
+using UnityEngine;
+using UX.UI.Army.DesignArmy;
+using UX.UI.FreePlayTest.DesignArmyScene;
+using UX.UI.Loader;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.RegionalRealmScene
 {
     public class RegionalManagerUI : Singleton<RegionalManagerUI>
     {

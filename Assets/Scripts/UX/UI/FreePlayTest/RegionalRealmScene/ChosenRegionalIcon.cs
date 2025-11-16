@@ -1,11 +1,11 @@
 using Game.Common;
 using Game.Effects.RegionalEffect;
+using Game.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Game.Managers;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.RegionalRealmScene
 {
     public class ChosenRegionalIcon : Singleton<ChosenRegionalIcon>, IPointerClickHandler
     {
@@ -25,10 +25,10 @@ namespace UX.UI.FreePlayTest
             }
             else
             {
-                tmp.text = AssetManager.Ins.RegionalsData.GetRegionalName(type);
+                tmp.text = AssetManager.Ins.regionalsData.GetRegionalName(type);
                 
             }
-            this.chosenRegional = type;
+            chosenRegional = type;
             Config.regionalEffectType = type;
         }
         public void OnPointerClick(PointerEventData eventData)

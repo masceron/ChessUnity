@@ -1,8 +1,8 @@
 using Game.Relics;
-using UX.UI.Army.DesignArmy;
 using UnityEngine.EventSystems;
+using UX.UI.Army.DesignArmy;
 
-namespace UI.UX.FreePlayTest
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     public class AllyRelicUI : ArmyDesignRelic
     {

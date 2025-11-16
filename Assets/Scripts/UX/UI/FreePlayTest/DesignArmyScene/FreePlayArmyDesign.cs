@@ -1,7 +1,8 @@
 using Game.Common;
 using UnityEngine;
+using UX.UI.Army.DesignArmy;
 
-namespace UX.UI.Army.DesignArmy
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [RequireComponent(typeof(ArmyDesign))]

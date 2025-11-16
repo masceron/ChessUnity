@@ -1,7 +1,7 @@
-using UX.UI.Followers;
 using UX.UI.Army.DesignArmy;
+using UX.UI.Followers;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     public class FreePlaySavedArmy : SavedArmy
     {

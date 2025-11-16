@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using Game.Managers;
 using Game.Piece;
-using UX.UI.Army.DesignArmy;
 using Game.Save.Army;
 using UnityEngine;
-using Game.Managers;
+using UX.UI.Army.DesignArmy;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     public class FreePlayArmyBoard : ArmyDesignBoard
     {
@@ -46,14 +46,14 @@ namespace UX.UI.FreePlayTest
                 }
             }
             Debug.LogError($"GetTroopByCoordinate: False coordinate {rank} {file}");
-            return (new Troop(PieceType.Velkaris, -1, -1), false);
+            return (new Troop("piece_velkaris", -1, -1), false);
         }
         public override void LoadSave(Troop[] troops)
         {
             foreach (var troop in troops)
             {
                 Add(troop.Rank, troop.File, troop.PieceType);
-                FreePlayArmyTroop piece = Instantiate(troopDisplay, childSquares[troop.Rank * size + troop.File].transform);
+                var piece = Instantiate(troopDisplay, childSquares[troop.Rank * size + troop.File].transform);
                 Debug.Log($"PieceType : {troop.PieceType}"); //Living Coral thay vi BobtailSquid
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);

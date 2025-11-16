@@ -42,12 +42,12 @@ namespace UX.UI.Army.DesignArmy
             SetTooltip();
             if (isGreyOut)
             {
-                greyMask.color = UnityEngine.Color.black;
+                greyMask.color = Color.black;
 
             }
             else
             {
-                greyMask.color = UnityEngine.Color.yellow;
+                greyMask.color = Color.yellow;
             }
         }
 

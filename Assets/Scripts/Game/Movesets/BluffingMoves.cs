@@ -1,10 +1,5 @@
 using System.Collections.Generic;
 using static Game.Common.BoardUtils;
-using Game.Action.Captures;
-using Game.Action.Quiets;
-using Game.Common;
-using UnityEngine;
-using System;
 
 namespace Game.Movesets
 {

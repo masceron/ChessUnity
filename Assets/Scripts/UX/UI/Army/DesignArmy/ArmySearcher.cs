@@ -3,7 +3,6 @@ using System.Linq;
 using Game.Common;
 using Game.Piece;
 using Game.ScriptableObjects;
-using Game.Save.Army;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,9 +18,9 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
 
-        public Dictionary<string, PieceInfo> Data;
+        private Dictionary<string, PieceInfo> data;
         private List<PieceInfo> lastSearchResult;
-        private List<PieceInfo> greyOutPieces = new();
+        private readonly List<PieceInfo> greyOutPieces = new();
         private string lastKeyword;
         public readonly List<ArmyDesignTroop> Pool = new();
         
@@ -35,21 +34,11 @@ namespace UX.UI.Army.DesignArmy
         // }
         public void Load()
         {
-            Data = AssetManager.Ins.PieceData;
-            ArmyDesign.Ins.board.OnAddTroop += (t) => FilterByCondition();
-            ArmyDesign.Ins.board.OnRemoveTroop += (t) => FilterByCondition();
-            lastSearchResult = Data.Values.ToList();
+            data = AssetManager.Ins.PieceData;
+            ArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
+            ArmyDesign.Ins.board.OnRemoveTroop += (_) => FilterByCondition();
+            lastSearchResult = data.Values.ToList();
             FilterByCondition();
-            Data = new Dictionary<string, PieceInfo>();
-            foreach (var pieceInfo in piecesData.piecesData)
-            {
-                Data.Add(pieceInfo.key, pieceInfo);
-            }
-            Load();
-        }
-
-        private void Load()
-        {
             SearchByKeyword("");
         }
 
@@ -93,7 +82,7 @@ namespace UX.UI.Army.DesignArmy
         {
             pieceFilters.Add(toFilter);
             
-            var result = Data.Values.Where(p => 
+            var result = data.Values.Where(p => 
                 pieceFilters.Contains(p.rank) && 
                 Localizer.GetText("piece_name", p.key, null).ToLower().Contains(lastKeyword)).ToList();
 
@@ -136,7 +125,7 @@ namespace UX.UI.Army.DesignArmy
             }
             else
             {
-                lastSearchResult = Data.Values.Where(p =>
+                lastSearchResult = data.Values.Where(p =>
                     pieceFilters.Contains(p.rank) &&
                     Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
             }
@@ -190,12 +179,9 @@ namespace UX.UI.Army.DesignArmy
             // Lọc theo một số condition 
             Dictionary<PieceInfo, int> counts = new();
             
-            foreach (Troop tr in ArmyDesign.Ins.board.Troops)
+            foreach (var pieceInfo in ArmyDesign.Ins.board.Troops.Select(tr => AssetManager.Ins.PieceData[tr.PieceType]))
             {
-                PieceInfo pieceInfo = AssetManager.Ins.PieceData[tr.PieceType];
-
-                if (!counts.ContainsKey(pieceInfo))
-                    counts[pieceInfo] = 0;
+                counts.TryAdd(pieceInfo, 0);
                 counts[pieceInfo]++;
                 //Chỉ có một Commander ở mỗi side, nên khi add vào thì phải grey out toàn bộ commander còn lại
                 if (pieceInfo.rank == PieceRank.Commander)
@@ -226,7 +212,7 @@ namespace UX.UI.Army.DesignArmy
                 // Construct: 1 quân mỗi bên, giới hạn ở nửa bàn cờ bên mình
                 if (pieceInfo.rank == PieceRank.Construct)
                 {
-                    foreach (Troop t in ArmyDesign.Ins.board.Troops)
+                    foreach (var t in ArmyDesign.Ins.board.Troops)
                     {
                         if (t.GetPieceInfo().rank == PieceRank.Construct)
                         {

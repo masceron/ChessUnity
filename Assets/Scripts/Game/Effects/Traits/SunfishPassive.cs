@@ -10,8 +10,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SunfishPassive: Effect, IEndTurnEffect 
     {
-        private bool active;
-        private bool check;
+        private bool wasNight;
         public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_sunfish_passive")
         {
             wasNight = !MatchManager.Ins.GameState.IsDay;

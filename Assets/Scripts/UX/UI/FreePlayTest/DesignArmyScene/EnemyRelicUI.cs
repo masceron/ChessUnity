@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace UX.UI.Army.FreePlayTest
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     public class EnemyRelicUI : MonoBehaviour
     {

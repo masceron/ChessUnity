@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Debuffs;
 using Game.Effects.Traits;
 using Game.Movesets;
 

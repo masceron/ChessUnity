@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Augmentation;
-using Game.Piece;
 using MemoryPack;
 using Game.ScriptableObjects;
 using Game.Managers;
@@ -11,12 +10,12 @@ namespace Game.Save.Army
     [MemoryPackable]
     public partial struct Troop: IComparable<Troop>
     {
-        public readonly PieceType PieceType;
+        public readonly string PieceType;
         public readonly ushort Rank;
         public readonly ushort File;
         // public readonly bool Side;
         public Dictionary<AugmentationSlot, AugmentationName> equippedAugmentation;
-        public Troop(PieceType pieceType, int rank, int file)
+        public Troop(string pieceType, int rank, int file)
         {
             PieceType = pieceType;
             Rank = (ushort) rank;

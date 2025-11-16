@@ -29,7 +29,8 @@ namespace UX.UI.Army.DesignArmy
         private readonly List<ArmyDesignRelic> pool = new();
         private RelicType? selecting;
         public Action<RelicType?> OnRelicSelecting;
-        private void Awake()
+
+        protected override void Awake()
         {
             SearchByKeyword("");
         }

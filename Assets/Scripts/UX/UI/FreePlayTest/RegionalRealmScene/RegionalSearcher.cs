@@ -1,13 +1,11 @@
-
-
-using Game.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using Game.Common;
 using Game.Effects.RegionalEffect;
-using System;
+using UnityEngine;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.RegionalRealmScene
 {
     public class RegionalSearcher : Singleton<RegionalSearcher>
     {

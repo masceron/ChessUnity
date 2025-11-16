@@ -1,11 +1,11 @@
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
     public class ProtectiveLensPassive : Effect
     {
 
-        public ProtectiveLensPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, EffectName.ProtectiveLensPassive)
+        public ProtectiveLensPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_protected_lens_passive")
         { }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Game.Action;
-using Game.Common;
 using Game.Managers;
 using static Game.Common.BoardUtils;
 using Game.Augmentation;
@@ -25,9 +24,9 @@ namespace Game.Effects.Traits
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 
-            if (PieceOn(action.Target).Effects.Any(e => e.EffectName == EffectName.Bound))
+            if (PieceOn(action.Target).Effects.Any(e => e.EffectName == "effect_bound"))
             {
-                var effect = PieceOn(action.Maker).Effects.Find(e => e.EffectName == EffectName.SnipeEelPassive);
+                var effect = PieceOn(action.Maker).Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)
                 {
                     action.Result = ActionResult.Succeed;

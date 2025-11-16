@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic
         public PollutedRock(PieceConfig cfg) : base(cfg, null, null)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new PollutedRockPassive(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Effects.Traits.Construct(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Construct(this)));
         }
     }
 

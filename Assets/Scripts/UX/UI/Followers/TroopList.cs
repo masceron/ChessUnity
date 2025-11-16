@@ -32,7 +32,7 @@ namespace UX.UI.Followers
             Close();
         }
 
-        private void Awake()
+        protected override void Awake()
         {
             data = new Dictionary<string, PieceInfo>();
             foreach (var pieceInfo in piecesData.piecesData)

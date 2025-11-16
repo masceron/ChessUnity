@@ -3,7 +3,6 @@ using Game.Action.Internal;
 using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using UnityEngine;
 
 namespace Game.Effects.Traits
 {
@@ -28,9 +27,8 @@ namespace Game.Effects.Traits
             }
 
             action.Result = ActionResult.Failed;
-            PieceLogic target = PieceOn(action.Maker);
-            if (target?.Effects != null &&
-                !target.Effects.Any(e => e.EffectName == EffectName.SnappingStrike))
+            var target = PieceOn(action.Maker);
+            if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
             {
                 ActionManager.EnqueueAction(new KillPiece(action.Maker));
             }

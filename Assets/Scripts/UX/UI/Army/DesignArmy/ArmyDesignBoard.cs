@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System;
-using Game.Piece;
 using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.UI;

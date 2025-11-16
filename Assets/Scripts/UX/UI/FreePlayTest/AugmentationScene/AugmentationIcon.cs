@@ -1,13 +1,13 @@
 using System;
-using Game.ScriptableObjects;
 using Game.Augmentation;
+using Game.Managers;
+using Game.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UX.UI.Tooltip;
-using Game.Managers;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.AugmentationScene
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AugmentationIcon: MonoBehaviour, IPointerClickHandler
@@ -52,7 +52,7 @@ namespace UX.UI.FreePlayTest
             {
                 Aug = AssetManager.Ins.AugmentationData[name];
                 position = Position.Equipped;
-                this.gameObject.SetActive(true);
+                gameObject.SetActive(true);
                 Sprite sprite = Sprite.Create(
                     Aug.Icon,
                     new Rect(0, 0, Aug.Icon.width, Aug.Icon.height),
@@ -81,10 +81,10 @@ namespace UX.UI.FreePlayTest
             {
                 foreach(AugmentationIcon icon in AugmentationManagerUI.Ins.icons)
                 {
-                    if (icon.slot == this.slot)
+                    if (icon.slot == slot)
                     {
                         AugmentationManagerUI.Ins.AddAugmentation(Aug);
-                        icon.Load(this.Aug.Name);
+                        icon.Load(Aug.Name);
                         break;
                     }
                 }
@@ -93,7 +93,7 @@ namespace UX.UI.FreePlayTest
             {
                 
                 // Debug.Log((AugmentationManagerUI.Ins == null) ? "Null augmentationui" : "not null");
-                AugmentationManagerUI.Ins.RemoveAugmentation(this.Aug.Slot);
+                AugmentationManagerUI.Ins.RemoveAugmentation(Aug.Slot);
                 Load(AugmentationName.None);
 
             }

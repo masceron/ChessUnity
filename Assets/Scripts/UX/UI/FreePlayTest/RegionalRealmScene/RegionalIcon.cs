@@ -1,10 +1,10 @@
-using UnityEngine;
-
 using Game.Effects.RegionalEffect;
-using TMPro;
 using Game.Managers;
+using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
-namespace UX.UI.FreePlayTest
+
+namespace UX.UI.FreePlayTest.RegionalRealmScene
 {
     public class RegionalIcon : MonoBehaviour, IPointerClickHandler
     {
@@ -12,7 +12,7 @@ namespace UX.UI.FreePlayTest
         private RegionalEffectType regionalType;
         public void Load(RegionalEffectType regionalType)
         {
-            tmp.text = AssetManager.Ins.RegionalsData.GetRegionalName(regionalType);
+            tmp.text = AssetManager.Ins.regionalsData.GetRegionalName(regionalType);
             this.regionalType = regionalType;
         }
         public void OnPointerClick(PointerEventData eventData)

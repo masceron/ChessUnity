@@ -155,6 +155,14 @@ MonoBehaviour:
     m_Key: piece_blue_dragon_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 35144419847966720
+    m_Key: piece_arctic_brittle_star_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35152954140921856
+    m_Key: piece_snipe_eel_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

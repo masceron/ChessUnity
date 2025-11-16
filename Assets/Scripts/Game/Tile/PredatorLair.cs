@@ -1,9 +1,7 @@
-
-
-using Game.Piece.PieceLogic;
-using Game.Effects.Buffs;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Traits;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
