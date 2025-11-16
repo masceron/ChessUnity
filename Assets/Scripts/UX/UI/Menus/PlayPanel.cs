@@ -28,7 +28,10 @@ namespace UX.UI.Menus
         {
             SceneLoader.LoadSceneWithLoadingScreen(1);
         }
-
+        public void OnClickFreePlayTest()
+        {
+            SceneLoader.LoadSceneWithLoadingScreen(2);
+        }
         public void OnClickMultiplayer()
         {
             
@@ -54,5 +57,6 @@ namespace UX.UI.Menus
             if (!context.performed) return;
             UIManager.Ins.Load(CanvasID.MainMenu);
         }
+        
     }
 }

@@ -140,6 +140,13 @@ namespace UX.UI.Ingame
                         case IPendingAble pending:
                             pending.CompleteAction();
                             return;
+                        // Cách xử lý 2 target cũ
+                        /*case IDoubleSelectionSkill doubleSkill:
+                        if (doubleSkill.IsBothSelected()) { break; }
+                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
+                        ShowMoveList(action.Maker);
+                        pieceActions.MarkSkill();
+                        return; */
                     }
 
                     ExecuteAction(action);
@@ -147,8 +154,10 @@ namespace UX.UI.Ingame
             }
             else
             {
+                // Hiển thị những vị trí trên bàn cờ có thể thực thi Action do người chơi chọn
+                // Action ở đây có thể là Move/Attack/Skill
                 var piece = PieceOn(pos);
-                if (piece == null) return;
+                if (piece == null || !piece.IsVisible) return;
                 
                 SetPieceHover(pos);
                 TileManager.Ins.Select(pos);

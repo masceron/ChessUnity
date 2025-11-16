@@ -18,14 +18,34 @@ namespace Game.Common
 
                 // Create new instance if one doesn't already exist.
                 if (_instance) return _instance;
-                
+
                 // Need to create a new GameObject to attach the singleton to.
                 var singletonObject = new GameObject();
+                Debug.Log($"New Singleton: {typeof(T)}");
                 _instance = singletonObject.AddComponent<T>();
                 singletonObject.name = typeof(T).ToString();
                 return _instance;
             }
         }
+
+        protected virtual void Awake()
+        {
+            if (_instance == null)
+            {
+                _instance = this as T;
+            }
+            else
+            {
+                Debug.LogError($"Found two instances of {typeof(T)}, second instance will be ignored");
+            }
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (_instance == this)
+                _instance = null;
+        }
+
 
     }
 }

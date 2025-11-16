@@ -1,14 +1,15 @@
 ﻿using System.Linq;
 using Game.Save.Army;
 using UnityEngine;
+using Game.Common;
 
 namespace UX.UI.Followers
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SavedArmies: MonoBehaviour
+    public class SavedArmies: Singleton<SavedArmies>
     {
-        [SerializeField] private RectTransform list;
-        [SerializeField] private SavedArmy saved;
+        [SerializeField] protected RectTransform list;
+        [SerializeField] protected SavedArmy saved;
 
         public void Load()
         {

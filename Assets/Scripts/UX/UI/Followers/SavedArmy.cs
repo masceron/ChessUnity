@@ -7,9 +7,9 @@ namespace UX.UI.Followers
 {
     public class SavedArmy: MonoBehaviour
     {
-        private Game.Save.Army.Army army;
-        [SerializeField] private TMP_Text armyName;
-        [SerializeField] private TMP_Text boardSize;
+        protected Game.Save.Army.Army army;
+        [SerializeField] protected TMP_Text armyName;
+        [SerializeField] protected TMP_Text boardSize;
 
         public void Load(Game.Save.Army.Army load)
         {
@@ -18,12 +18,16 @@ namespace UX.UI.Followers
             boardSize.text = $"{load.BoardSize} x {load.BoardSize}";
         }
 
-        public void Click()
+        public virtual void Click()
         {
             UIManager.Ins.Load(CanvasID.DesignArmy);
             ArmyDesign.Ins.Load(army.BoardSize, army);
         }
-
+        public void ClickToFreePlayDesignArmy()
+        {
+            UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
+            ArmyDesign.Ins.Load(army.BoardSize, army);
+        }
         public void Delete()
         {
             ArmySaveLoader.Remove(army.Name);

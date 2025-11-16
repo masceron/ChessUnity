@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using Game.Piece;
 using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.UI;
+using Game.Managers;
 
 namespace UX.UI.Army.DesignArmy
 {
@@ -13,12 +15,12 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private RectTransform mainTransform;
         [SerializeField] private GridLayoutGroup grid;
         [SerializeField] private ArmyDesignSquare square;
-        private int size;
-        private BitArray allowed;
-
-        private List<ArmyDesignSquare> childSquares;
+        protected int size;
+        protected BitArray allowed;
+        protected List<ArmyDesignSquare> childSquares;
         public List<Troop> Troops;
-        public void Load(int boardSize)
+        public Action<Troop> OnAddTroop, OnRemoveTroop;
+        public virtual void Load(int boardSize)
         {
             Troops = new List<Troop>();
             size = boardSize;
@@ -67,9 +69,9 @@ namespace UX.UI.Army.DesignArmy
             return allowed[rank * size + file];
         }
 
-        public void SetAllowed()
-        {
-            var rankStart = size / 2;
+        public void SetAllowed(bool isContruct)
+        { 
+            int rankStart = size / 2;
             
             for (var i = 0; i < rankStart; i++)
             {
@@ -83,7 +85,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 for (var j = 0; j < size; j++)
                 {
-                    if (i < size - 2)
+                    if (i < size - 2 && !isContruct)
                     {
                         childSquares[i * size + j].MarkAsNotAllowed();
                     }
@@ -91,7 +93,8 @@ namespace UX.UI.Army.DesignArmy
                     {
                         var idx = i * size + j;
                         var sq = childSquares[idx];
-                        if (sq.transform.childCount > 0) sq.MarkAsNotAllowed();
+                        //không được phép đặt 2 quân chồng lên nhau
+                        if (sq.transform.childCount > 0) sq.MarkAsNotAllowed(); 
                         else
                         {
                             allowed[idx] = true;
@@ -113,34 +116,38 @@ namespace UX.UI.Army.DesignArmy
             }
         }
 
-        public void LoadSave(Troop[] troops)
+        public virtual void LoadSave(Troop[] troops)
         {
-            var searcher = FindAnyObjectByType<ArmySearcher>();
+
             foreach (var troop in troops)
             {
-                Troops.Add(troop);
-                var piece = Instantiate(searcher.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
-                
-                piece.Load(searcher.Data[troop.Type]);
+                Add(troop.Rank, troop.File, troop.PieceType);
+                var piece = Instantiate(ArmyDesign.Ins.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
+
+                piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
             }
         }
-
         public void Add(int rank, int file, PieceType type)
         {
-            Troops.Add(new Troop(type, rank, file));
+            Troop newTroop = new Troop(type, rank, file); 
+            Troops.Add(newTroop);
+            OnAddTroop?.Invoke(newTroop);
         }
 
         public void Move(int oldR, int oldF, int newR, int newF)
         {
             var old = Troops.FindIndex(t => t.Rank == oldR && t.File == oldF);
-            Troops[old] = new Troop(Troops[old].Type, newR, newF);
+            Troops[old] = new Troop(Troops[old].PieceType, newR, newF);
         }
 
         public void Remove(int r, int f)
         {
-            Troops.RemoveAt(Troops.FindIndex(t => t.Rank == r && t.File == f));
+            int removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
+            Troop removedTroop = Troops[removedIndex];
+            Troops.RemoveAt(removedIndex);
+            OnRemoveTroop?.Invoke(removedTroop);
         }
     }
 }

@@ -1,4 +1,3 @@
-using UnityEngine;
 using Game.Action.Skills;
 using Game.Movesets;
 using Game.Common;
@@ -21,8 +20,6 @@ namespace Game.Piece.PieceLogic.Elites
                     for (var y = file - 4; y <= file + 4; ++y){
                         var piece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
                         if (piece == null || piece.Equals(this) || piece.PreviousMoves.Count <= 0) continue;
-                        Debug.Log("Add new candidate");
-                        // Debug.Log(PieceManager.Ins.)
                         list.Add(new HourglassJellyActive(Pos, piece.Pos));
                     }
                 }

@@ -1,10 +1,8 @@
 ﻿using Game.Action;
 using Game.Managers;
 using Game.Piece.PieceLogic;
-using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Augmentation;
-using Game.Common;
 
 namespace Game.Effects.Traits
 {

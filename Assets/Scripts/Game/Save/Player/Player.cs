@@ -7,5 +7,6 @@ namespace Game.Save.Player
     public partial struct Player
     {
         public Dictionary<string, Army.Army> SavedArmies;
+        
     }
 }

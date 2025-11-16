@@ -294,6 +294,9 @@ namespace Game.Common
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
 
+        public static Vector3 FromRankFileToWorldPos(float rank, float file) {
+            return new Vector3(rank, YCoordinate, file);
+        }
         public static bool IsNextEachOther(PieceLogic piece)
         {
             var pos = piece.Pos;

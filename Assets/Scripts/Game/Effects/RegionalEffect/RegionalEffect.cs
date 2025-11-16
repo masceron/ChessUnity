@@ -37,12 +37,13 @@ namespace Game.Effects.RegionalEffect
         }
     }
 
-    public enum RegionalEffectType 
+    public enum RegionalEffectType
     {
         Whirpool,
         PsionicShock,
         BloodMoon,
         DjinnBlessing,
-        RedTide
+        RedTide,
+        None,
     }
 }

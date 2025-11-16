@@ -22,3 +22,4 @@ MonoBehaviour:
   key: 
   hasSkill: 1
   normalSkillCooldown: 5
+  availableSlots: 0

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 using Game.Common;
 using Game.Relics;
 using Game.Save.Relics;
@@ -27,7 +28,7 @@ namespace UX.UI.Army.DesignArmy
         private string lastKeyword;
         private readonly List<ArmyDesignRelic> pool = new();
         private RelicType? selecting;
-
+        public Action<RelicType?> OnRelicSelecting;
         private void Awake()
         {
             SearchByKeyword("");
@@ -131,6 +132,7 @@ namespace UX.UI.Army.DesignArmy
                 if (selecting == relic.Relic.type) return;
             }
             selecting = relic.Relic.type;
+            OnRelicSelecting?.Invoke(selecting);
             description.Display(relic.Relic);
         }
 

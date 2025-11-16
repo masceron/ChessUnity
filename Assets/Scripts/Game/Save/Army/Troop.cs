@@ -1,21 +1,28 @@
 ﻿using System;
+using System.Collections.Generic;
+using Game.Augmentation;
 using Game.Piece;
 using MemoryPack;
+using Game.ScriptableObjects;
+using Game.Managers;
 
 namespace Game.Save.Army
 {
     [MemoryPackable]
-    public readonly partial struct Troop: IComparable<Troop>
+    public partial struct Troop: IComparable<Troop>
     {
-        public readonly PieceType Type;
+        public readonly PieceType PieceType;
         public readonly ushort Rank;
         public readonly ushort File;
-
+        // public readonly bool Side;
+        public Dictionary<AugmentationSlot, AugmentationName> equippedAugmentation;
         public Troop(PieceType pieceType, int rank, int file)
         {
-            Type = pieceType;
+            PieceType = pieceType;
             Rank = (ushort) rank;
-            File = (ushort) file;
+            File = (ushort)file;
+            // Side = side;
+            equippedAugmentation = new();
         }
 
         public int CompareTo(Troop other)
@@ -24,6 +31,15 @@ namespace Game.Save.Army
             if (Rank > other.Rank) return 1;
             if (File < other.File) return -1;
             return File > other.File ? 1 : 0;
+        }
+        public PieceInfo GetPieceInfo()
+        {
+            return AssetManager.Ins.PieceData[PieceType];
+        }
+        public void EquipAugmentation(AugmentationName aug)
+        {
+            AugmentationSlot slot = AssetManager.Ins.AugmentationData[aug].Slot;
+            equippedAugmentation[slot] = aug;
         }
     }
 }

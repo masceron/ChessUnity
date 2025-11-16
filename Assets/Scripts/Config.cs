@@ -1,25 +1,28 @@
 ﻿using System.Collections.Generic;
+using Game.Augmentation;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
 
 public static class Config
 {
+    public static int boardSize = 12;
     public static readonly List<PieceConfig> PieceConfigWhite = new()
     {
-        new PieceConfig(PieceType.Swordfish, false, 80),
-        new PieceConfig(PieceType.MoorishIdols, false, 94),
+        new PieceConfig(PieceType.BobtailSquid, false, 35),
+        new PieceConfig(PieceType.Lizardfish, false, 77, new List<Augmentation>{new TidalRetina()}),
     };
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig(PieceType.FeatherStar, true, 83),
-        new PieceConfig(PieceType.ElectricEel, true, 82),
-        new PieceConfig(PieceType.SloanesViperFish, true, 81),
-        new PieceConfig(PieceType.Lionfish, true, 79),
+        new PieceConfig(PieceType.GuidingSiren, true, 20),
+        new PieceConfig(PieceType.HourglassJelly, true, 30),
+        new PieceConfig(PieceType.Swordfish, true, 10),
+        new PieceConfig(PieceType.Lionfish, true, 5),
+
     };
 
-    public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);
-    public static readonly RelicConfig relicBlackConfig = new RelicConfig(RelicType.SirensHarpoon, true, 5);
-    public static readonly RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
+    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.BlackPearl, false, 5);
+    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.BlackPearl, true, 5);
+    public static RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
 }

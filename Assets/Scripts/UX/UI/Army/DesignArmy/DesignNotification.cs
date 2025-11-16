@@ -73,7 +73,15 @@ namespace UX.UI.Army.DesignArmy
             {
                 case DesignNotifications.Quit:
                     gameObject.SetActive(false);
-                    UIManager.Ins.Load(CanvasID.Followers);
+                    if (UIManager.Ins.GetCanvasID() == CanvasID.FreePlayDesignArmy)
+                    {
+                        UIManager.Ins.Load(CanvasID.MainMenu);
+                    }
+                    else
+                    {
+                        UIManager.Ins.Load(CanvasID.Followers);
+                    }
+                    
                     break;
                 case DesignNotifications.EmptyName:
                     gameObject.SetActive(false);

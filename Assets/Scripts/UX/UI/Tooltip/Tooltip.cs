@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 namespace UX.UI.Tooltip
 {
+    //Hiển thị Description cửa Piece
     [ExecuteInEditMode]   
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Tooltip: MonoBehaviour

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Megalodon
   m_EditorClassIdentifier: 
   type: 28
-  prefab: {fileID: 2327958776889057835, guid: 5c54a7f5b423e344494712fe86915a9b, type: 3}
+  prefab: {fileID: 919132149155446097, guid: d89e71203aa6f7b4e91988951fe15f6d, type: 3}
   rank: 7
   moveRange: 4
   attackRange: 3
@@ -22,3 +22,4 @@ MonoBehaviour:
   key: piece_megalodon
   hasSkill: 0
   normalSkillCooldown: 5
+  availableSlots: 0

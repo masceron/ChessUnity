@@ -1,7 +1,6 @@
 using Game.Effects;
 using Game.Common;
 using Game.Managers;
-using System.Collections.Generic;
 using Game.Tile;
 
 namespace Game.Piece.PieceLogic.Construct.KelpForest

@@ -1,0 +1,31 @@
+
+
+using Game.Piece.PieceLogic;
+using Game.Effects.Buffs;
+using Game.Action;
+using Game.Action.Internal;
+
+namespace Game.Tile
+{
+    public class PredatorLair : Formation{
+        private LongReach appliedEffect;
+        public PredatorLair(bool color) : base(color){
+            
+        }
+        public override FormationType GetFormationType()
+        {
+            return FormationType.PredatorLair;
+        }
+
+        public override void OnPieceEnter(PieceLogic piece){
+            base.OnPieceEnter(piece);
+            appliedEffect = new LongReach(PieceOnFormation);
+            ActionManager.ExecuteImmediately(new ApplyEffect(appliedEffect));
+        }
+
+        public override void OnPieceExit(PieceLogic piece){
+            base.OnPieceExit(piece);
+            ActionManager.ExecuteImmediately(new RemoveEffect(appliedEffect));
+        }
+    }
+}

@@ -6,7 +6,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class OneMoreTurn: Effect, IEndTurnEffect
     {
-        private bool willDie = false;
+        // private bool willDie = false;
         public EndTurnEffectType EndTurnEffectType { get; }
         public OneMoreTurn(PieceLogic piece) : base(-1, 1, piece, EffectName.OneMoreTurn)
         {

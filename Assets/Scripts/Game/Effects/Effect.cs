@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using UX;
@@ -79,7 +78,7 @@ namespace Game.Effects
         DestroyEnemyWhenMove,
         SeaTurtleCountdown,
         FrenziedVeteran,
-        TrueBite, 
+        TrueBite,
         CopyCaptureMethod,
         ClownFishPassive,
         LivingCoralPassive,
@@ -104,7 +103,7 @@ namespace Game.Effects
         HammerOysterPassive,
         EntanglingTentacles,
         Silenced,
-        Charge, 
+        Charge,
         KelpForestPassive,
         BottlenoseDolphinPassive,
         Controlled,
@@ -119,6 +118,7 @@ namespace Game.Effects
         NativeGround,
         SlimeheadPassive,
         Adaptation,
+        LongReach,
         RayTailPassive,
         HumboldtSquidPassive,
         Frienzied,

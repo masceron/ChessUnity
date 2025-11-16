@@ -31,7 +31,7 @@ namespace Game.Managers
             Quaternion.identity, transform);
             formations[pos] = env;
             if (PieceOn(pos) != null){
-                formations[pos].OnPieceEnter(PieceOn(pos));
+                formations[pos].OnCreated(PieceOn(pos));
             }
         }
 

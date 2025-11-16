@@ -8,7 +8,9 @@ namespace Game.Save.Army
     {
         public string Name;
         public ushort BoardSize;
+        //Troops là array liền kề
         public Troop[] Troops;
         public Relic? Relic;
+        public Relic? EnemyRelic;
     }
 }
