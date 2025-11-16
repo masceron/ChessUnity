@@ -46,7 +46,7 @@ namespace Game.Effects.Traits
                 else if (action.Target != Piece.Pos)
                 {
                     var targetPiece = PieceOn(action.Target);
-                    if (targetPiece != null && (targetPiece.PieceRank == PieceRank.Elite || targetPiece.PieceRank == PieceRank.Champion || targetPiece.PieceRank == PieceRank.Commander))
+                    if (targetPiece != null && targetPiece.PieceRank is PieceRank.Elite or PieceRank.Champion or PieceRank.Commander)
                     {
                         ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
                         

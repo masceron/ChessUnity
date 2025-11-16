@@ -21,8 +21,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             foreach (var effect in PieceOn(Target).Effects
-                         .Where(effect => (effect.EffectName == "effect_shield"
-                                           || effect.EffectName == "effect_hardened_shield")))
+                         .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
             {
                 if (effect.Duration > 0)
                     effect.Duration -= 1;

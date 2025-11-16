@@ -43,7 +43,7 @@ namespace Game.Common
         public static bool IsAtPromotionRank(int index)
         {
             var rank = RankOf(index);
-            return rank == 14 || rank == 25;
+            return rank is 14 or 25;
         }
 
         public static bool VerifyUpperBound(int dimension)
