@@ -7,6 +7,8 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using static Game.Common.BoardUtils;
+using UnityEngine;
+using UX.UI.Ingame;
 
 namespace Game.Piece.PieceLogic
 {

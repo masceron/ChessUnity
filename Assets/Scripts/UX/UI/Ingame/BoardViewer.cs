@@ -22,9 +22,10 @@ namespace UX.UI.Ingame
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
         public static int HoveringPos;
-        
-        public static int Selecting = -1;
-        public static int SelectingFunction;
+        // Vị trí của quân cờ đang chọn, -1 nếu chưa chọn quân nào
+        public static int Selecting = -1; 
+        // 0: Không chọn, 1: Move, 2: Attack, 3: Skill, 4: Relic
+        public static int SelectingFunction; 
         private static readonly List<Action> MoveList = new();
         public static readonly List<Action> ListOf = new();
         
@@ -33,6 +34,8 @@ namespace UX.UI.Ingame
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
             UpdateRelic();
+            Selecting = -1;
+            SelectingFunction = 0;
         }
 
         private void OnEnable()
