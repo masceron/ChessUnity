@@ -66,7 +66,6 @@ namespace Game.Managers
                 Config.relicBlackConfig,
                 Config.regionalEffectType
                 );
-            
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }

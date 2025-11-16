@@ -90,6 +90,7 @@ namespace Game.Managers
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
+            
             OurSide = ourSide;
 
             PieceBoard = new PieceLogic[maxLength * maxLength];
@@ -360,7 +361,6 @@ namespace Game.Managers
                 countTurn++;
                 CurrentTurn++;
                 OnIncreaseTurn?.Invoke(CurrentTurn);
-                Debug.Log("FlipSideToMove");
                 if (countTurn == 151)
                 {
                     UIManager.Ins.Load(CanvasID.EndGameMessage);

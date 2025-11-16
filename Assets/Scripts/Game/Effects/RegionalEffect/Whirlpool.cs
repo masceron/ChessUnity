@@ -43,7 +43,6 @@ namespace Game.Effects.RegionalEffect
         {
             if (currentTurn < startTurn)
             {
-                Debug.Log("Whirlpool is not started yet!");
                 return;
             }
 

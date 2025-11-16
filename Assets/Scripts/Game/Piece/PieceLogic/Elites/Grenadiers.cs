@@ -1,4 +1,3 @@
-using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Movesets;
@@ -7,7 +6,6 @@ using Game.Action.Skills;
 using Game.Managers;
 using Game.Common;
 using static Game.Common.BoardUtils;
-using UnityEngine;
 
 namespace Game.Piece.PieceLogic.Elites
 {

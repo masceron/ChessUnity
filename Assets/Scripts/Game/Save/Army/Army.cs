@@ -1,5 +1,4 @@
-﻿using Game.Effects.RegionalEffect;
-using Game.Save.Relics;
+﻿using Game.Save.Relics;
 using MemoryPack;
 
 namespace Game.Save.Army

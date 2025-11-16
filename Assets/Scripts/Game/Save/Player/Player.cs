@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using MemoryPack;
-using Game.Save.Army;
 
 namespace Game.Save.Player
 {
