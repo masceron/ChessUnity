@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic
 
     public class BioluminescentBeacon : Commons.PieceLogic
     {
-        public BioluminescentBeacon(PieceConfig cfg) : base(cfg, null, null)
+        public BioluminescentBeacon(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new BioluminescentBeaconPassive(this)));
         }

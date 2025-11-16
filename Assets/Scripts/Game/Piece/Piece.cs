@@ -62,7 +62,7 @@ namespace Game.Piece
         
             if (pieceType == null)
             {
-                Debug.LogError($"Could not find logic class with name: {classname.logicClassName}");
+                Debug.LogError($"Could not find logic class with key {config.Type} and name: {classname.logicClassName}");
                 return null;
             }
 

@@ -28,7 +28,7 @@ namespace Game.Effects.Traits
                 .Select(pos => BoardUtils.IndexOf(pos.Item1, pos.Item2))
                 .ToList();
 
-            Saprolegnia saprolegnia = new Saprolegnia(false, Piece.Color);
+            var saprolegnia = new Saprolegnia(false, Piece.Color);
 
             foreach (var pos in posInRadius)
             {

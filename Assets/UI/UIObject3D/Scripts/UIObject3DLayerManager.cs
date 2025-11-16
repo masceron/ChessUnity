@@ -21,13 +21,13 @@ namespace UI.UIObject3D.Scripts
             var tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset"));
             var layers = tagManager.FindProperty("layers");
 
-            if (layers == null || !layers.isArray)
+            if (layers is not { isArray: true })
             {
                 Debug.LogWarning("[UIObject3D][Warning] Unable to set up layers. You can resolve this issue by manually adding a layer named 'UIObject3D'.");
                 return;
             }
 
-            bool set = false;
+            var set = false;
 
             // start off at 8 - layers 1 - 7 cannot be set here
             for (var i = 8; i < layers.arraySize; i++)

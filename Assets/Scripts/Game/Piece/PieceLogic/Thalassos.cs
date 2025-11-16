@@ -4,15 +4,14 @@ using Game.Action.Internal.Pending;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Relics;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Thalassos: Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class Thalassos: Commons.PieceLogic, IPieceWithSkill
     {
-        public Thalassos(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)
+        public Thalassos(PieceConfig cfg) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ThalassosShielder(this)));
 
@@ -39,12 +38,9 @@ namespace Game.Piece.PieceLogic
                     }
                 }
             };
-
-            CarriedRelic = carriedRelic;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
-        public RelicLogic CarriedRelic { get; set; }
     }
 }

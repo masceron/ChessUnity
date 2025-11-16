@@ -8,7 +8,7 @@ namespace Game.Piece.PieceLogic
 
     public class PollutedRock : Commons.PieceLogic
     {
-        public PollutedRock(PieceConfig cfg) : base(cfg, null, null)
+        public PollutedRock(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new PollutedRockPassive(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Construct(this)));

@@ -162,7 +162,7 @@ namespace UI.UIObject3D.Scripts
 
                 if (target)
                 {
-                    Vector2 size = new Vector2(Mathf.Abs(Mathf.Floor(rectTransform.rect.width)), Mathf.Abs(Mathf.Floor(rectTransform.rect.height))) * RenderScale;
+                    var size = new Vector2(Mathf.Abs(Mathf.Floor(rectTransform.rect.width)), Mathf.Abs(Mathf.Floor(rectTransform.rect.height))) * RenderScale;
 
                     if (size.x == 0 || size.y == 0) size = new Vector2(256, 256);
 

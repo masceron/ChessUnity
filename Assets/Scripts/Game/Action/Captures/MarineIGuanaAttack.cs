@@ -14,7 +14,7 @@ namespace Game.Action.Captures
     {
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;
-        public MarineIguanaAttack(int maker, int to) : base(maker, false)
+        public MarineIguanaAttack(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;

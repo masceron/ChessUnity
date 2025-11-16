@@ -80,7 +80,7 @@ namespace UX.UI.Army.DesignArmy
             var searcher = FindAnyObjectByType<ArmySearcher>();
             var pool = searcher.Pool;
             var idx = pool.IndexOf(this);
-            ArmyDesignTroop obj = Instantiate(this, searcher.list);
+            var obj = Instantiate(this, searcher.list);
             
             obj.transform.SetSiblingIndex(idx);
             obj.GetComponent<Image>().raycastTarget = true;

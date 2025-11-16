@@ -85,7 +85,7 @@ namespace Game.Effects.Traits
 
             if (emptySpots.Count > 0)
             {
-                ushort indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
+                var indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
                 ActionManager.EnqueueAction(
                     new SpawnPiece(new PieceConfig("piece_clown_fish", Piece.Color, indexToSpawn))
                 );

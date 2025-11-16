@@ -17,7 +17,7 @@ namespace Game.Relics.FrostSigil
         private int probabilityBound = 25;
 
         private FrostSigil frostSigil;
-        public FrostSigilPending(int maker, Tile.Tile hoveringTile, FrostSigil fs) : base(maker, false)
+        public FrostSigilPending(int maker, Tile.Tile hoveringTile, FrostSigil fs) : base(maker)
         {
             thisTile = hoveringTile;
             Maker = (ushort)maker;

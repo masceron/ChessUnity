@@ -5,15 +5,14 @@ using Game.Action.Skills;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Relics;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GuidingSiren: Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class GuidingSiren: Commons.PieceLogic, IPieceWithSkill
     {
-        public GuidingSiren(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
+        public GuidingSiren(PieceConfig cfg) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
@@ -52,12 +51,9 @@ namespace Game.Piece.PieceLogic
                     }
                 }
             };
-
-            CarriedRelic = carriedRelic;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
-        public RelicLogic CarriedRelic { get; set; }
     }
 }

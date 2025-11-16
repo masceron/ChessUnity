@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ContagionCorpse : Commons.PieceLogic
     {
-        public ContagionCorpse(PieceConfig cfg) : base(cfg, null, null)
+        public ContagionCorpse(PieceConfig cfg) : base(cfg)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ContagionCorpsePassive(this)));
         }

@@ -24,9 +24,9 @@ namespace Game.Effects.Traits
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
 
             var (rank, file) = BoardUtils.RankFileOf(piece.Pos);
-            for (int  i = rank-radius;  i <= rank + radius;  i++)
+            for (var  i = rank-radius;  i <= rank + radius;  i++)
             {
-                for (int j = file - radius; j <= file + radius; j++)
+                for (var j = file - radius; j <= file + radius; j++)
                 {
                     if (i == rank && j == file) continue;
                     if (BoardUtils.VerifyBounds(i) 
@@ -77,7 +77,7 @@ namespace Game.Effects.Traits
             {
                 if (availableTiles.Count == 0) return (null, null);
 
-                int randIndex = Random.Range(0, availableTiles.Count);
+                var randIndex = Random.Range(0, availableTiles.Count);
                 var (randRank, randFile) = availableTiles[randIndex];
                 var formation = FormationManager.Ins.GetFormation(BoardUtils.IndexOf(randRank, randFile));
                 if (formation == null)

@@ -14,7 +14,7 @@ namespace Game.ScriptableObjects.Collections
         }
         public string GetRegionalName(RegionalEffectType type)
         {
-            string result = type switch
+            var result = type switch
             {
                 RegionalEffectType.Whirpool => "Whirpool",
                 _ => type.ToString()

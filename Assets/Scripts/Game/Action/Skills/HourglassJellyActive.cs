@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
             Maker = (ushort)maker;
             Target = (ushort)target;
-            PieceLogic piece = PieceOn(target);
+            var piece = PieceOn(target);
             destination = (ushort)piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
         }
         protected override void Animate()

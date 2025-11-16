@@ -144,7 +144,7 @@ namespace Game.Piece.PieceLogic.Commons
                 var setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set;
                 if (setInfo == null) continue;
 
-                int count = kv.Value;
+                var count = kv.Value;
 
                 if (setInfo.HaveBonus && count >= setInfo.RequiredPieces)
                 {

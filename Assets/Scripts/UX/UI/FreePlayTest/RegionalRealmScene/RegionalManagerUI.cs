@@ -4,7 +4,6 @@ using Game.Common;
 using Game.Effects.RegionalEffect;
 using Game.Managers;
 using Game.Piece;
-using Game.Save.Army;
 using Game.ScriptableObjects;
 using UnityEngine;
 using UX.UI.Army.DesignArmy;
@@ -33,7 +32,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
         {
             Config.boardSize = ArmyDesign.Ins.army.BoardSize;
             Config.PieceConfigWhite.Clear();
-            foreach (Troop troop in ArmyDesign.Ins.board.Troops)
+            foreach (var troop in ArmyDesign.Ins.board.Troops)
             {
                 var augNameLst = troop.equippedAugmentation.Values.ToList();
                 List<AugmentationInfo> infos = new();
@@ -41,8 +40,8 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 {
                     infos.Add(AssetManager.Ins.AugmentationData[name]);
                 }
-                PieceConfig pieceConfig = new PieceConfig(troop.PieceType, false,
-                    (ushort)(troop.Rank * Config.boardSize + troop.File), null);
+                var pieceConfig = new PieceConfig(troop.PieceType, false,
+                    (ushort)(troop.Rank * Config.boardSize + troop.File));
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
 

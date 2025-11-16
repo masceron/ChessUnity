@@ -1,59 +1,34 @@
-using System.Collections.Generic;
+using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Relics;
-using static Game.Common.BoardUtils;
 using UnityEngine;
-using UX.UI.Ingame;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Temperantia: Commons.PieceLogic, IRelicCarriable, IPieceWithDoubleSelectionSkill
+    public class Temperantia: Commons.PieceLogic, IPieceWithSkill
     {
-        public int firstSelection { get; set; }
-        public Temperantia(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, TemperantiaMoves.Quiets, TemperantiaMoves.Captures)
+        public Temperantia(PieceConfig cfg) : base(cfg, TemperantiaMoves.Quiets, TemperantiaMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));
-            UndyingDevotion trait = new UndyingDevotion(this);
+            var trait = new UndyingDevotion(this);
             ActionManager.ExecuteImmediately(new ApplyEffect(trait));
-
-            //Chưa chọn mục tiêu nào
-            firstSelection = -1;
 
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;
-                //Selection đầu tiên: chọn quân đồng minh
-                if (firstSelection == -1){
-                    List<Commons.PieceLogic> allies = FindPiece<Commons.PieceLogic>(Color);
-                    foreach(Commons.PieceLogic ally in allies){
-                        if (ally.Equals(this)) { continue; }
-                        list.Add(new TemperantiaSwap(Pos, ally.Pos));
-                    }
-                    
-                }
-                else{
-                    List<Commons.PieceLogic> enemies = FindPiece<Commons.PieceLogic>(!Color);
-                    foreach (Commons.PieceLogic enemy in enemies)
-                    {
-                        list.Add(new TemperantiaSwap(Pos, firstSelection, enemy.Pos));
-                    }
-                    //Reset trạng thái chọn mục tiêu
-                    firstSelection = -1;
-                }
-                
+                Debug.Log("Temperantia: choose a ally");
+                var allies = FindPiece<Commons.PieceLogic>(Color);
+                list.AddRange(from ally in allies where !ally.Equals(this) select new TemperantiaSwap(Pos, ally.Pos));
             };
-            CarriedRelic = carriedRelic;
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
-        public SkillsDelegate SecondSelection{ get; set;  }
-        public RelicLogic CarriedRelic { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Game.Movesets
             var caller = PieceOn(pos);
             var color = caller.Color;
             var (rank, file) = RankFileOf(pos);
-            int push = color ? +1 : -1;
+            var push = color ? +1 : -1;
 
             if (range > 1)
             {
@@ -28,21 +28,21 @@ namespace Game.Movesets
                 {
                     var (tRank, tFile) = RankFileOf(targetPos);
 
-                    int dr = tRank - rank;
-                    int df = tFile - file;
+                    var dr = tRank - rank;
+                    var df = tFile - file;
 
-                    for (int step = 1; step <= range - 1; step++)
+                    for (var step = 1; step <= range - 1; step++)
                     {
-                        int stepRank = dr == 0 ? 0 : step * (dr / Mathf.Abs(dr));
-                        int stepFile = df == 0 ? 0 : step * (df / Mathf.Abs(df));
+                        var stepRank = dr == 0 ? 0 : step * (dr / Mathf.Abs(dr));
+                        var stepFile = df == 0 ? 0 : step * (df / Mathf.Abs(df));
 
-                        int newRank = rank + dr + stepRank;
-                        int newFile = file + df + stepFile;
+                        var newRank = rank + dr + stepRank;
+                        var newFile = file + df + stepFile;
 
                         if (!VerifyBounds(newRank) || !VerifyBounds(newFile))
                             continue;
 
-                        int newIdx = IndexOf(newRank, newFile);
+                        var newIdx = IndexOf(newRank, newFile);
                         if (!basePositions.Contains(newIdx) && !toAdd.Contains(newIdx))
                             toAdd.Add(newIdx);
                     }
@@ -59,7 +59,7 @@ namespace Game.Movesets
                     continue;
 
                 var blocker = Pathfinder.LineBlocker(rank, file, tRank, tFile);
-                bool isClear = blocker.Item1 == -1 && blocker.Item2 == -1;
+                var isClear = blocker.Item1 == -1 && blocker.Item2 == -1;
                 var target = PieceOn(targetPos);
 
                 if (target == null)

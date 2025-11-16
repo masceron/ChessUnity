@@ -21,20 +21,20 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            bool Color = PieceOn(Maker).Color;
-            int direction = Color ? -1 : +1;
-            int steps = 0;
-            (int oldRank, int oldFile) = RankFileOf(Maker);
+            var Color = PieceOn(Maker).Color;
+            var direction = Color ? -1 : +1;
+            var steps = 0;
+            (var oldRank, var oldFile) = RankFileOf(Maker);
             
             while(IsActive(IndexOf(oldRank + (steps+1)*direction, oldFile)) && steps < 3)
             {
                 steps++;
             }
-            int finalPos = IndexOf(oldRank + steps * direction, oldFile);
+            var finalPos = IndexOf(oldRank + steps * direction, oldFile);
             MatchManager.Ins.GameState.Move(Maker, (ushort)finalPos);
             PieceManager.Ins.Move(Maker, (ushort)finalPos);
-            for (int x = oldRank; x <= oldRank + 1; ++x){
-                for (int y = oldFile - 1; y <= oldFile + 1; ++y){  
+            for (var x = oldRank; x <= oldRank + 1; ++x){
+                for (var y = oldFile - 1; y <= oldFile + 1; ++y){  
                     if (IsActive(IndexOf(x, y)))
                     {
                         Formation FogOfWar = new FogOfWar(Color);

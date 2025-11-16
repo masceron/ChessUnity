@@ -53,7 +53,7 @@ namespace UX.UI.FreePlayTest.AugmentationScene
                 Aug = AssetManager.Ins.AugmentationData[name];
                 position = Position.Equipped;
                 gameObject.SetActive(true);
-                Sprite sprite = Sprite.Create(
+                var sprite = Sprite.Create(
                     Aug.Icon,
                     new Rect(0, 0, Aug.Icon.width, Aug.Icon.height),
                     new Vector2(0.5f, 0.5f) // pivot at center
@@ -79,7 +79,7 @@ namespace UX.UI.FreePlayTest.AugmentationScene
 
             if (slotInSearchBox)
             {
-                foreach(AugmentationIcon icon in AugmentationManagerUI.Ins.icons)
+                foreach(var icon in AugmentationManagerUI.Ins.icons)
                 {
                     if (icon.slot == slot)
                     {

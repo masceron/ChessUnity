@@ -37,7 +37,7 @@ namespace Game.Save.Army
         }
         public void EquipAugmentation(AugmentationName aug)
         {
-            AugmentationSlot slot = AssetManager.Ins.AugmentationData[aug].Slot;
+            var slot = AssetManager.Ins.AugmentationData[aug].Slot;
             equippedAugmentation[slot] = aug;
         }
     }

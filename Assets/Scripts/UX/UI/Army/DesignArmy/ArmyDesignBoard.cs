@@ -70,7 +70,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void SetAllowed(bool isContruct)
         { 
-            int rankStart = size / 2;
+            var rankStart = size / 2;
             
             for (var i = 0; i < rankStart; i++)
             {
@@ -131,7 +131,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void Add(int rank, int file, string type)
         {
-            Troop newTroop = new Troop(type, rank, file); 
+            var newTroop = new Troop(type, rank, file); 
             Troops.Add(newTroop);
             OnAddTroop?.Invoke(newTroop);
         }
@@ -144,8 +144,8 @@ namespace UX.UI.Army.DesignArmy
 
         public void Remove(int r, int f)
         {
-            int removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
-            Troop removedTroop = Troops[removedIndex];
+            var removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
+            var removedTroop = Troops[removedIndex];
             Troops.RemoveAt(removedIndex);
             OnRemoveTroop?.Invoke(removedTroop);
         }

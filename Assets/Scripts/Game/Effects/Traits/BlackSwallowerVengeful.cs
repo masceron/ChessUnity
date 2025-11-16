@@ -26,7 +26,7 @@ namespace Game.Effects.Traits
             {
                 if (action.Target == Piece.Pos)
                 {
-                    List<PieceLogic> pieceAround = new List<PieceLogic>();
+                    var pieceAround = new List<PieceLogic>();
                     foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Piece.Pos), FileOf(Piece.Pos), 1))
                     {
                         var index = IndexOf(rank, file);

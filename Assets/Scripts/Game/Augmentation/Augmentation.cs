@@ -34,7 +34,7 @@ namespace Game.Augmentation
 
         public void ApplyPassiveEffects()
         {
-            foreach (Effect e in PassiveEffects)
+            foreach (var e in PassiveEffects)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(e));
             }

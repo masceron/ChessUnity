@@ -23,13 +23,13 @@ namespace Game.Effects.Traits
         private void getRandomPos() 
         {
             
-            int pos = new System.Random().Next(1, MatchManager.Ins.startingSize.x * MatchManager.Ins.startingSize.y);
+            var pos = new System.Random().Next(1, MatchManager.Ins.startingSize.x * MatchManager.Ins.startingSize.y);
             while (!TileManager.Ins.IsTileEmpty(pos) && FormationManager.Ins.GetFormation(pos) != null)
             {
                 pos = new System.Random().Next(1, MatchManager.Ins.startingSize.x * MatchManager.Ins.startingSize.y);
             }
-            int mappedPos = BoardUtils.PosMap(pos, MatchManager.Ins.startingSize);
-            Kelp kelp = new Kelp(true, true);
+            var mappedPos = BoardUtils.PosMap(pos, MatchManager.Ins.startingSize);
+            var kelp = new Kelp(true, true);
             kelp.SetDuration(6);
             FormationManager.Ins.SetFormation(mappedPos, kelp);
             

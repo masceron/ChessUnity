@@ -11,14 +11,14 @@ namespace UX.UI.Loader
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class SceneLoader
     {
-        private static bool isRegistered = false;
+        private static bool _isRegistered = false;
         public static void Start()
         {
-            if (isRegistered) { return; }
+            if (_isRegistered) { return; }
             
             sceneLoaded += (scene, _) =>
             {
-                isRegistered = true;
+                _isRegistered = true;
                 switch (scene.buildIndex)
                 {
                     case 0:

@@ -3,11 +3,10 @@ using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal.Pending;
-using Game.Piece.PieceLogic.Commanders;
 using UX.UI.Ingame;
 using UnityEngine;
 using Game.Managers;
-using System.Collections.Generic;
+using Game.Piece.PieceLogic;
 
 namespace Game.Action.Skills
 {
@@ -16,7 +15,7 @@ namespace Game.Action.Skills
     {
         private static int allyIndex = -1;
         private static int enemyIndex = -1; // -1 nếu chưa chọn enemy
-        public TemperantiaSwap(int maker, int target) : base(maker, false)
+        public TemperantiaSwap(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)target;
@@ -26,8 +25,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            PieceLogic ally = PieceOn(allyIndex);
-            PieceLogic enemy = PieceOn(enemyIndex);
+            var ally = PieceOn(allyIndex);
+            var enemy = PieceOn(enemyIndex);
             if (ally == null || enemy == null) return;
 
             // Copy danh sách buff và debuff trước khi bị xóa
@@ -64,31 +63,27 @@ namespace Game.Action.Skills
             // Nếu chưa có enemy (chỉ hành động chọn ally), set firstSelection trên commander để tương thích
             if (allyIndex == -1)
             {
-                Temperantia temperantia = PieceOn(Maker) as Temperantia;
-                if (temperantia != null)
+                if (PieceOn(Maker) is not Temperantia) return;
+                
+                Debug.Log("Temperantia: Have chosen ally, now choose target Enemy");
+                allyIndex = Target;
+                TileManager.Ins.UnmarkAll();
+                BoardViewer.ListOf.Clear();
+                var enemyPieces = FindPiece<PieceLogic>(!PieceOn(Maker).Color);
+                foreach (var e in enemyPieces)
                 {
-                    Debug.Log("Temperantia: Have chosen ally, now choose target Enemy");
-                    allyIndex = Target;
-                    TileManager.Ins.UnmarkAll();
-                    BoardViewer.ListOf.Clear();
-                    List<PieceLogic> enemyPieces = FindPiece<PieceLogic>(!PieceOn(Maker).Color);
-                    foreach (PieceLogic e in enemyPieces)
-                    {
-                        BoardViewer.ListOf.Add(new TemperantiaSwap(Maker, e.Pos));
-                        TileManager.Ins.MarkAsMoveable(e.Pos);
-                    }
+                    BoardViewer.ListOf.Add(new TemperantiaSwap(Maker, e.Pos));
+                    TileManager.Ins.MarkAsMoveable(e.Pos);
                 }
                 return;
             }
-            else
-            {
-                enemyIndex = Target;
-                Debug.Log("ExecuteAction");
-                BoardViewer.Ins.ExecuteAction(this);
-                allyIndex = -1;
-                enemyIndex = -1;
-            }
-            
+
+            enemyIndex = Target;
+            Debug.Log("ExecuteAction");
+            BoardViewer.Ins.ExecuteAction(this);
+            allyIndex = -1;
+            enemyIndex = -1;
+
         }
     }
 }

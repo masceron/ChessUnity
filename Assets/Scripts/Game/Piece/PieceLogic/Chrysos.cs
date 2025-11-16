@@ -4,17 +4,16 @@ using Game.Action.Internal.Pending;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Relics;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Chrysos: Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class Chrysos: Commons.PieceLogic, IPieceWithSkill
     {
         public byte Coin = 10;
 
-        public Chrysos(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
+        public Chrysos(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SlayersCoin(this)));
             Skills = list =>
@@ -36,8 +35,6 @@ namespace Game.Piece.PieceLogic
                     }
                 }
             };
-            
-            CarriedRelic = carriedRelic;
         }
 
         public static PieceRank UpgradableTo(PieceRank from)
@@ -80,6 +77,5 @@ namespace Game.Piece.PieceLogic
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
-        public RelicLogic CarriedRelic { get; set; }
     }
 }

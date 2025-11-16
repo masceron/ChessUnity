@@ -2,7 +2,6 @@ using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Action.Internal;
 using Game.Action;
-using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.RegionalEffect
 {
@@ -23,7 +22,7 @@ namespace Game.Effects.RegionalEffect
             {
 
                 var random = new System.Random();
-                int randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
+                var randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
                 while(!IsColumnFull(randomColumn)){
                     randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
                 }
@@ -35,7 +34,7 @@ namespace Game.Effects.RegionalEffect
 
         private bool IsColumnFull(int column)
         {
-            for (int i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
             {
                 if(TileManager.Ins.IsTileEmpty(IndexOf(i, column + startingSizeY))) return false;
             }
@@ -44,9 +43,9 @@ namespace Game.Effects.RegionalEffect
 
         private void ApplyEffectToColumn(int column)
         {
-            for (int i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
             {
-                PieceLogic piece = PieceOn(IndexOf(i, column + startingSizeY));    
+                var piece = PieceOn(IndexOf(i, column + startingSizeY));    
                 if(piece == null) continue;
                 ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece)));
             }

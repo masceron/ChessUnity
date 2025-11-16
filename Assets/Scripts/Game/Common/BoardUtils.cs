@@ -42,7 +42,7 @@ namespace Game.Common
         
         public static bool IsAtPromotionRank(int index)
         {
-            int rank = RankOf(index);
+            var rank = RankOf(index);
             return rank == 14 || rank == 25;
         }
 
@@ -268,10 +268,10 @@ namespace Game.Common
                 file = file - size / 2;
             }
 
-            for (int r = rank; r < rank + size; r++)
+            for (var r = rank; r < rank + size; r++)
             {
                 if (!VerifyBounds(r)) continue;
-                for (int f = file; f < file + size; f++)
+                for (var f = file; f < file + size; f++)
                 {
                     if (!VerifyBounds(f)) continue;
                     var piece = PieceOn(IndexOf(r, f));

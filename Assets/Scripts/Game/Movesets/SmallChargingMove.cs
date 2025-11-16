@@ -121,7 +121,7 @@ namespace Game.Movesets
         {
             var caller = PieceOn(makerPos);
             var positions = new List<int>();
-            int push = caller.Color ? +1 : -1;
+            var push = caller.Color ? +1 : -1;
             var (rank, file) = RankFileOf(makerPos);
             // Đi 3 ô phía trước và 2 ô phía sau
             positions.Add(IndexOf(rank + push * 3, file));

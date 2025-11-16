@@ -34,7 +34,7 @@ namespace Game.Effects.Traits
                 }
             }
 
-            PieceLogic pieceTarget = PieceOn(action.Maker);
+            var pieceTarget = PieceOn(action.Maker);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy)) 
             {
                 if (!MatchManager.Roll(Probability - 15)) return;

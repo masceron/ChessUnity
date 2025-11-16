@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Managers;
-using Game.Piece;
 using Game.Save.Army;
 using UnityEngine;
 using UX.UI.Army.DesignArmy;
@@ -18,9 +17,9 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             base.Load(boardSize);
             // Black pieces are preloaded from Config
             EnemyTroops = new List<Troop>();
-            foreach (PieceConfig config in Config.PieceConfigBlack)
+            foreach (var config in Config.PieceConfigBlack)
             {
-                Troop troop = new Troop(config.Type, config.Index / Config.boardSize, config.Index % Config.boardSize);
+                var troop = new Troop(config.Type, config.Index / Config.boardSize, config.Index % Config.boardSize);
                 EnemyTroops.Add(troop);
                 var piece = Instantiate(troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<FreePlayArmyTroop>();
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
@@ -31,14 +30,14 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         }
         public (Troop troop, bool side) GetTroopByCoordinate(int rank, int file)
         {
-            foreach (Troop tr in Troops)
+            foreach (var tr in Troops)
             {
                 if (tr.Rank == rank && tr.File == file)
                 {
                     return (tr, false);
                 }
             }
-            foreach (Troop tr in EnemyTroops)
+            foreach (var tr in EnemyTroops)
             {
                 if (tr.Rank == rank && tr.File == file)
                 {
