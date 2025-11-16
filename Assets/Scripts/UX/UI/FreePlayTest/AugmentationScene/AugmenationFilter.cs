@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
-using Game.Piece;
 using Game.ScriptableObjects;
-using Game.Save.Army;
 using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Game.Managers;
 using Game.Augmentation;
 
@@ -30,6 +27,7 @@ namespace UX.UI.FreePlayTest
         
         private void Awake()
         {
+            base.Awake();
             Data = AssetManager.Ins.AugmentationData;
             // không có filter nghĩa là lấy hết toàn bộ các Piece hiện đang sở hữu
             ToggleFilter(0);

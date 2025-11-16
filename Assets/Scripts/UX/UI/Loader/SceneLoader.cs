@@ -11,7 +11,7 @@ namespace UX.UI.Loader
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class SceneLoader
     {
-        public static bool isRegistered = false;
+        private static bool isRegistered = false;
         public static void Start()
         {
             if (isRegistered) { return; }
@@ -28,7 +28,7 @@ namespace UX.UI.Loader
                         MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)));
                         break;
                     case 2:
-                        UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
+                        UIManager.Ins.Load(CanvasID.FreePlayMenu);
                         break;
                 }
             };

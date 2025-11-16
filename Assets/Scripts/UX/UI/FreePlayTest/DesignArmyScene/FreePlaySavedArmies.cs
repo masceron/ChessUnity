@@ -1,7 +1,4 @@
-using System.Linq;
-using Game.Save.Army;
 using UX.UI.Followers;
-using UnityEngine;
 
 namespace UX.UI.FreePlayTest
 {

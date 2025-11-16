@@ -1,12 +1,9 @@
 using System;
 using Game.ScriptableObjects;
-using UI.UIObject3D.Scripts;
 using Game.Augmentation;
-using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UX.UI.Army.DesignArmy;
 using UX.UI.Tooltip;
 using Game.Managers;
 

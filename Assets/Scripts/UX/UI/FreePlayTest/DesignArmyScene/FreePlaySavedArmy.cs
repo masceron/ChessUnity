@@ -1,4 +1,3 @@
-using UnityEngine;
 using UX.UI.Followers;
 using UX.UI.Army.DesignArmy;
 

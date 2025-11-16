@@ -1,7 +1,6 @@
 ﻿using Game.Save.Army;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UX.UI.Army.DesignArmy;
 
 namespace UX.UI.Followers

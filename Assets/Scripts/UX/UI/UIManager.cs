@@ -11,6 +11,7 @@ namespace UX.UI
         DesignArmy, QuitToMainMenu, LineupEdit,
         FreePlayPreset, FreePlayDesignArmy, RegionalEffect, Augmentation,
         EndGameMessage,
+        FreePlayMenu,
         None,
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

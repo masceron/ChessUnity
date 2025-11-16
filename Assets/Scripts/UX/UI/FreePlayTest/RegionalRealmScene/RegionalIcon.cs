@@ -1,10 +1,4 @@
-using System;
-using Game.ScriptableObjects;
-using UI.UIObject3D.Scripts;
-using Game.Augmentation;
-using Game.Save.Army;
 using UnityEngine;
-using UnityEngine.UI;
 
 using Game.Effects.RegionalEffect;
 using TMPro;

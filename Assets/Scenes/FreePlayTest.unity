@@ -800,9 +800,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48369b3fbf77a94a8825f3c23e961db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentCanvasID: 11
   canvasDict:
-    keys: 0400000008000000090000000b0000000d0000000c00000000000000
+    keys: 0400000008000000090000000b0000000d0000000c000000000000000f000000
     values:
     - {fileID: 8788904782196925133, guid: e9031a7dc59ce664f8fadb57dae0e325, type: 3}
     - {fileID: 6461111081555416344, guid: 4e69c5a8c2e2e21409d13fb34c8ba79d, type: 3}
@@ -811,6 +810,7 @@ MonoBehaviour:
     - {fileID: 930863641129122483, guid: 99744783572daeb4db151247e825bc3a, type: 3}
     - {fileID: 1037263903781473325, guid: fe2dc8ebf8348294db8db1fd84dc6633, type: 3}
     - {fileID: 5200261467340727970, guid: dd15693434abf034abb1a333f26fd5f5, type: 3}
+    - {fileID: 2763962315627281451, guid: 4f345c643e054184996bd7ca00b921a3, type: 3}
 --- !u!4 &1555892747
 Transform:
   m_ObjectHideFlags: 0

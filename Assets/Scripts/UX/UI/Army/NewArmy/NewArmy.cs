@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 using UX.UI.Army.DesignArmy;
-using UnityEngine.SceneManagement;
 
 namespace UX.UI.Army.NewArmy
 {

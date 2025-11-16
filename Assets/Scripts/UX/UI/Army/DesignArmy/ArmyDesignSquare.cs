@@ -42,21 +42,21 @@ namespace UX.UI.Army.DesignArmy
         
         public void OnDrop(PointerEventData eventData)
         {
-            if (!eventData.pointerDrag.TryGetComponent<ArmyDesignTroop>(out var piece)) return;
-            var board = FindAnyObjectByType<ArmyDesignBoard>(); //Looix
+            if (!eventData.pointerDrag.TryGetComponent<ArmyDesignTroop>(out var troopDisplay)) return;
+            var board = FindAnyObjectByType<ArmyDesignBoard>();
 
             if (!board.IsAllowed(rank, file)) return;
             
-            piece.Parent = transform;
-            if (piece.Placed)
+            troopDisplay.Parent = transform;
+            if (troopDisplay.Placed)
             {
-                board.Move(piece.Rank, piece.File, rank, file);
-                piece.Set(rank, file);
+                board.Move(troopDisplay.Rank, troopDisplay.File, rank, file);
+                troopDisplay.Set(rank, file);
             }
             else
             {
-                piece.Set(rank, file);
-                board.Add(rank, file, piece.Piece.type);
+                troopDisplay.Set(rank, file);
+                board.Add(rank, file, troopDisplay.Piece.type);
             }
         }
     }

@@ -2,11 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using Game.Save.Army;
-using Game.Piece;
 using Game.Augmentation;
 using Game.ScriptableObjects;
 using Game.Managers;
-using UX.UI.Army.DesignArmy;
 using Game.Common;
 using UX.UI.Followers;
 

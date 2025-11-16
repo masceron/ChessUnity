@@ -1,16 +1,4 @@
-using Game.Common;
-using TMPro;
-using System.Collections.Generic;
-using UX.UI.Loader;
 using Game.Relics;
-using Game.Save.Army;
-using Game.Save.Relics;
-using UnityEngine;
-using UnityEngine.UI;
-
-using UnityEngine.InputSystem;
-using Game.Managers;
-using GameConfig = Game.Save.Stage.GameConfig;
 using UX.UI.Army.DesignArmy;
 using UnityEngine.EventSystems;
 

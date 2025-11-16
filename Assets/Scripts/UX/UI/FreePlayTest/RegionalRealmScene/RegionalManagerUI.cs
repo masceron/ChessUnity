@@ -1,23 +1,15 @@
 
 using Game.Common;
-using TMPro;
 using System.Collections.Generic;
 using UX.UI.Loader;
 using Game.Piece;
 using UX.UI.Army.DesignArmy;
-using Game.Relics;
 using Game.Save.Army;
-using Game.Save.Relics;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Game.Managers;
-using LineupConfig = Game.Save.Stage.LineupConfig;
-using Game.ScriptableObjects.Collections;
-using Game.Common;
 using Game.Effects.RegionalEffect;
 using System.Linq;
 using Game.ScriptableObjects;
-using UX.UI.Followers;
 
 namespace UX.UI.FreePlayTest
 {
@@ -27,7 +19,7 @@ namespace UX.UI.FreePlayTest
         public RegionalSearcher searcher;
         public ChosenRegionalIcon chosenRegional;
         public FreePlayArmyBoard board;
-        void Start()
+        public void Load()
         {
             enemyRelic.Load(AssetManager.Ins.RelicData[Config.relicBlackConfig.Type]);
             allyRelic.Load(AssetManager.Ins.RelicData[Config.relicWhiteConfig.Type]);

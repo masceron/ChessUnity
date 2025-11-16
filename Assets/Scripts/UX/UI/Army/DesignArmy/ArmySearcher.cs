@@ -4,7 +4,6 @@ using Game.Common;
 using Game.Piece;
 using Game.ScriptableObjects;
 using Game.Save.Army;
-using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

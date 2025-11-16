@@ -1,6 +1,4 @@
 ﻿using System;
-using Game.Managers;
-using Game.Piece;
 using Game.ScriptableObjects;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
@@ -23,7 +21,7 @@ namespace UX.UI.Army.DesignArmy
         [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
-        [NonSerialized] public PieceInfo Piece;
+        public PieceInfo Piece;
         
         public void Load(PieceInfo piece, bool isGreyOut = false)
         {
@@ -32,14 +30,10 @@ namespace UX.UI.Army.DesignArmy
                 Debug.LogError("ArmyDesignTroop::Load(piece) : piece is null");
             }
             this.isGreyOut = isGreyOut;
-            if (isGreyOut)
-            {
-                Debug.Log($"piece {piece.name} is greyed out");
-            }
             Piece = piece;
             if (Piece.prefab == null)
             {
-                Debug.LogError($"Piece : {Piece.name}");
+                Debug.LogError($"Piece : {Piece.name} has null prefab");
             }
             else
             {
@@ -77,7 +71,7 @@ namespace UX.UI.Army.DesignArmy
             transform.SetParent(FindAnyObjectByType<Canvas>().transform);
             image.raycastTarget = false;
             Parent = null;
-            FindAnyObjectByType<ArmyDesignBoard>().SetAllowed();
+            FindAnyObjectByType<ArmyDesignBoard>().SetAllowed(Piece.rank == Game.Piece.PieceRank.Construct);
             trigger.enabled = false;
             TooltipManager.Ins.Disable();
 
@@ -86,7 +80,7 @@ namespace UX.UI.Army.DesignArmy
             var searcher = FindAnyObjectByType<ArmySearcher>();
             var pool = searcher.Pool;
             var idx = pool.IndexOf(this);
-            var obj = Instantiate(this, searcher.list);
+            ArmyDesignTroop obj = Instantiate(this, searcher.list);
             
             obj.transform.SetSiblingIndex(idx);
             obj.GetComponent<Image>().raycastTarget = true;

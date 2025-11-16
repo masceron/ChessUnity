@@ -1,14 +1,9 @@
 
 
 using Game.Common;
-using TMPro;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using Game.Managers;
-using LineupConfig = Game.Save.Stage.LineupConfig;
-using Game.ScriptableObjects.Collections;
 using Game.Effects.RegionalEffect;
 using System;
 

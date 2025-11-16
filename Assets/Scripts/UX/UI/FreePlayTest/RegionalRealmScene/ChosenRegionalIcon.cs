@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Game.Managers;
-using Game.Effects.RegionalEffect;
 
 namespace UX.UI.FreePlayTest
 {

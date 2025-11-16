@@ -9,7 +9,8 @@ namespace UX.UI.FreePlayTest
         {
             if (ArmyDesign.Ins.TrySave())
             {
-                FreePlayTest.Ins.ToRegionalEffectPanel();
+                UIManager.Ins.Load(CanvasID.RegionalEffect);
+                RegionalManagerUI.Ins.Load();
             }
         }
     }

@@ -1,6 +1,5 @@
 using Game.Common;
 using TMPro;
-using UnityEngine;
 
 public class EndGameUI : Singleton<EndGameUI>
 {

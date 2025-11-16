@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System;
 using Game.Piece;
 using Game.Save.Army;
-using Game.Common;
-using Game.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.UI;
-using static Game.Common.BoardUtils;
 using Game.Managers;
 
 namespace UX.UI.Army.DesignArmy
@@ -72,7 +69,7 @@ namespace UX.UI.Army.DesignArmy
             return allowed[rank * size + file];
         }
 
-        public void SetAllowed()
+        public void SetAllowed(bool isContruct)
         { 
             int rankStart = size / 2;
             
@@ -88,7 +85,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 for (var j = 0; j < size; j++)
                 {
-                    if (i < size - 2)
+                    if (i < size - 2 && !isContruct)
                     {
                         childSquares[i * size + j].MarkAsNotAllowed();
                     }
@@ -134,7 +131,7 @@ namespace UX.UI.Army.DesignArmy
         }
         public void Add(int rank, int file, PieceType type)
         {
-            Troop newTroop = new Troop(type, rank, file);
+            Troop newTroop = new Troop(type, rank, file); 
             Troops.Add(newTroop);
             OnAddTroop?.Invoke(newTroop);
         }

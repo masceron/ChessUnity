@@ -1,7 +1,5 @@
-using Game.Managers;
 using UnityEngine;
 using UnityEngine.UI;
-using UX.UI;
 
 namespace UX.UI.Ingame
 {
