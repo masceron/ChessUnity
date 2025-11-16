@@ -28,8 +28,6 @@ namespace Editor.Worker
 
             File.WriteAllText(FactoryFilePath, fileContent);
             AssetDatabase.Refresh();
-            Debug.Log(
-                $"Successfully OVERWROTE {FactoryFilePath} with {pieces.Count} piece entries inside the '{TargetNamespace}' namespace.");
         }
 
         private static string BuildMethod(List<PieceInfo> pieces)
@@ -38,7 +36,7 @@ namespace Editor.Worker
 
             sb.AppendLine("    public static " + BaseLogicClass + " CreateLogicInstance(string key, PieceConfig cfg)");
             sb.AppendLine("        {");
-            sb.AppendLine("            switch (key)");
+            sb.AppendLine("            return key switch");
             sb.AppendLine("            {");
             
             foreach (var piece in pieces.OrderBy(p => p.key))
@@ -49,14 +47,11 @@ namespace Editor.Worker
                     continue;
                 }
 
-                sb.AppendLine($"                case \"{piece.key}\":");
-                sb.AppendLine($"                    return new {piece.logicClassName}(cfg);");
+                sb.AppendLine($"                \"{piece.key}\" => new {piece.logicClassName}(cfg),");
             }
             
-            sb.AppendLine("                default:");
-            sb.AppendLine("                    Debug.LogError($\"Unknown Piece ID: {key}\");");
-            sb.AppendLine("                    return null;");
-            sb.AppendLine("            }");
+            sb.AppendLine($"                _ => null");
+            sb.AppendLine("            };");
             sb.AppendLine("        }");
 
             return sb.ToString();
@@ -66,16 +61,13 @@ namespace Editor.Worker
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("");
-
             sb.AppendLine($"namespace {TargetNamespace}");
             sb.AppendLine("{");
 
             sb.AppendLine($"    public static class {FactoryClassName}");
             sb.AppendLine("    {");
 
-            sb.AppendLine(BuildMethod(pieces));
+            sb.Append(BuildMethod(pieces));
 
             sb.AppendLine("    }");
 

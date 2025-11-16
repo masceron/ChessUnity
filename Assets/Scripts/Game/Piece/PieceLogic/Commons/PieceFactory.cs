@@ -1,158 +1,83 @@
-using UnityEngine;
-
 namespace Game.Piece.PieceLogic.Commons
 {
     public static class PieceFactory
     {
     public static PieceLogic CreateLogicInstance(string key, PieceConfig cfg)
         {
-            switch (key)
+            return key switch
             {
-                case "piece_anglerfish":
-                    return new Anglerfish(cfg);
-                case "piece_anomalocaris":
-                    return new Anomalocaris(cfg);
-                case "piece_archelon":
-                    return new Archelon(cfg);
-                case "piece_archerfish":
-                    return new Archerfish(cfg);
-                case "piece_arctic_brittle_star":
-                    return new ArcticBrittleStar(cfg);
-                case "piece_armored_feather_star":
-                    return new ArmoredFeatherStar(cfg);
-                case "piece_barnacle":
-                    return new Barnacle(cfg);
-                case "piece_barracuda":
-                    return new Barracuda(cfg);
-                case "piece_bioluminescent_beacon":
-                    return new BioluminescentBeacon(cfg);
-                case "piece_black_swallower":
-                    return new BlackSwallower(cfg);
-                case "piece_blue_dragon":
-                    return new BlueDragon(cfg);
-                case "piece_bobtail_squid":
-                    return new BobtailSquid(cfg);
-                case "piece_bottlenose_dolphin":
-                    return new BottlenoseDolphin(cfg);
-                case "piece_brittle_star":
-                    return new BrittleStar(cfg);
-                case "piece_chambered_nautilus":
-                    return new ChamberedNautilus(cfg);
-                case "piece_chrysos":
-                    return new Chrysos(cfg);
-                case "piece_clown_fish":
-                    return new ClownFish(cfg);
-                case "piece_coffin_fish":
-                    return new CoffinFish(cfg);
-                case "piece_contagion_corpse":
-                    return new ContagionCorpse(cfg);
-                case "piece_electric_eel":
-                    return new ElectricEel(cfg);
-                case "piece_epaulette_shark":
-                    return new EpauletteShark(cfg);
-                case "piece_fangtooth":
-                    return new Fangtooth(cfg);
-                case "piece_feather_star":
-                    return new FeatherStar(cfg);
-                case "piece_flying_fish":
-                    return new FlyingFish(cfg);
-                case "piece_fracture_zone":
-                    return new FractureZone(cfg);
-                case "piece_grenadiers":
-                    return new Grenadiers(cfg);
-                case "piece_gulper_eel":
-                    return new GulperEel(cfg);
-                case "piece_hammer_oyster":
-                    return new HammerOyster(cfg);
-                case "piece_hatchetfish":
-                    return new Hatchetfish(cfg);
-                case "piece_helicoprion":
-                    return new Helicoprion(cfg);
-                case "piece_hermit_crab":
-                    return new HermitCrab(cfg);
-                case "piece_horseleech":
-                    return new HorseLeech(cfg);
-                case "piece_hourglass_jelly":
-                    return new HourglassJelly(cfg);
-                case "piece_humboldt_squid":
-                    return new HumboldtSquid(cfg);
-                case "piece_humilitas":
-                    return new Humilitas(cfg);
-                case "piece_kelp_bass":
-                    return new KelpBass(cfg);
-                case "piece_kelp_forest":
-                    return new KelpForest(cfg);
-                case "piece_lionfish":
-                    return new Lionfish(cfg);
-                case "piece_living_coral":
-                    return new LivingCoral(cfg);
-                case "piece_lizard_fish":
-                    return new Lizardfish(cfg);
-                case "piece_marine_iguana":
-                    return new MarineIguana(cfg);
-                case "piece_medicinal_leech":
-                    return new MedicinalLeech(cfg);
-                case "piece_megalodon":
-                    return new Megalodon(cfg);
-                case "piece_melibe":
-                    return new Melibe(cfg);
-                case "piece_moorish_idols":
-                    return new MoorishIdols(cfg);
-                case "piece_moray_eel":
-                    return new MorayEel(cfg);
-                case "piece_phantom_jelly":
-                    return new PhantomJelly(cfg);
-                case "piece_phronima":
-                    return new Phronima(cfg);
-                case "piece_pistol_shrimp":
-                    return new PistolShrimp(cfg);
-                case "piece_polluted_rock":
-                    return new PollutedRock(cfg);
-                case "piece_pufferfish":
-                    return new Pufferfish(cfg);
-                case "piece_remora":
-                    return new Remora(cfg);
-                case "piece_sea_star":
-                    return new SeaStar(cfg);
-                case "piece_sea_turtle":
-                    return new SeaTurtle(cfg);
-                case "piece_sea_urchin":
-                    return new SeaUrchin(cfg);
-                case "piece_seahorse":
-                    return new Seahorse(cfg);
-                case "piece_siren":
-                    return new GuidingSiren(cfg);
-                case "piece_slimehead":
-                    return new Slimehead(cfg);
-                case "piece_sloane's_viperfish":
-                    return new SloaneSViperfish(cfg);
-                case "piece_snaggletooths":
-                    return new Snaggletooths(cfg);
-                case "piece_snipe_eel":
-                    return new SnipeEel(cfg);
-                case "piece_spider_brittle_star":
-                    return new SpiderBrittleStar(cfg);
-                case "piece_stingray":
-                    return new Stingray(cfg);
-                case "piece_stonecrab":
-                    return new StoneCrab(cfg);
-                case "piece_sunfish":
-                    return new Sunfish(cfg);
-                case "piece_swordfish":
-                    return new Swordfish(cfg);
-                case "piece_temperantia":
-                    return new Temperantia(cfg);
-                case "piece_thalassos":
-                    return new Thalassos(cfg);
-                case "piece_tiger_prawn":
-                    return new TigerPrawn(cfg);
-                case "piece_velkaris":
-                    return new Velkaris(cfg);
-                default:
-                    Debug.LogError($"Unknown Piece ID: {key}");
-                    return null;
-            }
+                "piece_anglerfish" => new Anglerfish(cfg),
+                "piece_anomalocaris" => new Anomalocaris(cfg),
+                "piece_archelon" => new Archelon(cfg),
+                "piece_archerfish" => new Archerfish(cfg),
+                "piece_arctic_brittle_star" => new ArcticBrittleStar(cfg),
+                "piece_armored_feather_star" => new ArmoredFeatherStar(cfg),
+                "piece_barnacle" => new Barnacle(cfg),
+                "piece_barracuda" => new Barracuda(cfg),
+                "piece_bioluminescent_beacon" => new BioluminescentBeacon(cfg),
+                "piece_black_swallower" => new BlackSwallower(cfg),
+                "piece_blue_dragon" => new BlueDragon(cfg),
+                "piece_bobtail_squid" => new BobtailSquid(cfg),
+                "piece_bottlenose_dolphin" => new BottlenoseDolphin(cfg),
+                "piece_brittle_star" => new BrittleStar(cfg),
+                "piece_chambered_nautilus" => new ChamberedNautilus(cfg),
+                "piece_chrysos" => new Chrysos(cfg),
+                "piece_clown_fish" => new ClownFish(cfg),
+                "piece_coffin_fish" => new CoffinFish(cfg),
+                "piece_contagion_corpse" => new ContagionCorpse(cfg),
+                "piece_electric_eel" => new ElectricEel(cfg),
+                "piece_epaulette_shark" => new EpauletteShark(cfg),
+                "piece_fangtooth" => new Fangtooth(cfg),
+                "piece_feather_star" => new FeatherStar(cfg),
+                "piece_flying_fish" => new FlyingFish(cfg),
+                "piece_fracture_zone" => new FractureZone(cfg),
+                "piece_grenadiers" => new Grenadiers(cfg),
+                "piece_gulper_eel" => new GulperEel(cfg),
+                "piece_hammer_oyster" => new HammerOyster(cfg),
+                "piece_hatchetfish" => new Hatchetfish(cfg),
+                "piece_helicoprion" => new Helicoprion(cfg),
+                "piece_hermit_crab" => new HermitCrab(cfg),
+                "piece_horseleech" => new HorseLeech(cfg),
+                "piece_hourglass_jelly" => new HourglassJelly(cfg),
+                "piece_humboldt_squid" => new HumboldtSquid(cfg),
+                "piece_humilitas" => new Humilitas(cfg),
+                "piece_kelp_bass" => new KelpBass(cfg),
+                "piece_kelp_forest" => new KelpForest(cfg),
+                "piece_lionfish" => new Lionfish(cfg),
+                "piece_living_coral" => new LivingCoral(cfg),
+                "piece_lizard_fish" => new Lizardfish(cfg),
+                "piece_marine_iguana" => new MarineIguana(cfg),
+                "piece_medicinal_leech" => new MedicinalLeech(cfg),
+                "piece_megalodon" => new Megalodon(cfg),
+                "piece_melibe" => new Melibe(cfg),
+                "piece_moorish_idols" => new MoorishIdols(cfg),
+                "piece_moray_eel" => new MorayEel(cfg),
+                "piece_phantom_jelly" => new PhantomJelly(cfg),
+                "piece_phronima" => new Phronima(cfg),
+                "piece_pistol_shrimp" => new PistolShrimp(cfg),
+                "piece_polluted_rock" => new PollutedRock(cfg),
+                "piece_pufferfish" => new Pufferfish(cfg),
+                "piece_remora" => new Remora(cfg),
+                "piece_sea_star" => new SeaStar(cfg),
+                "piece_sea_turtle" => new SeaTurtle(cfg),
+                "piece_sea_urchin" => new SeaUrchin(cfg),
+                "piece_seahorse" => new Seahorse(cfg),
+                "piece_siren" => new GuidingSiren(cfg),
+                "piece_slimehead" => new Slimehead(cfg),
+                "piece_sloane's_viperfish" => new SloaneSViperfish(cfg),
+                "piece_snaggletooths" => new Snaggletooths(cfg),
+                "piece_snipe_eel" => new SnipeEel(cfg),
+                "piece_spider_brittle_star" => new SpiderBrittleStar(cfg),
+                "piece_stingray" => new Stingray(cfg),
+                "piece_stonecrab" => new StoneCrab(cfg),
+                "piece_sunfish" => new Sunfish(cfg),
+                "piece_swordfish" => new Swordfish(cfg),
+                "piece_temperantia" => new Temperantia(cfg),
+                "piece_thalassos" => new Thalassos(cfg),
+                "piece_tiger_prawn" => new TigerPrawn(cfg),
+                "piece_velkaris" => new Velkaris(cfg),
+                _ => null
+            };
         }
-
     }
 }
