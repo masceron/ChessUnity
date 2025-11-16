@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Temperantia
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 30
+  type: 29
   prefab: {fileID: 5598166101255696859, guid: b5743e98285446748982a08ad7d79d7a, type: 3}
   rank: 7
   moveRange: 4

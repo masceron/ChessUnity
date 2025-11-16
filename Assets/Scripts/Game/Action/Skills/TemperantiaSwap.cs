@@ -2,34 +2,37 @@ using Game.Action.Internal;
 using Game.Piece.PieceLogic;
 using Game.Effects;
 using static Game.Common.BoardUtils;
+using Game.Action.Internal.Pending;
+using Game.Piece.PieceLogic.Commanders;
+using UX.UI.Ingame;
+using UnityEngine;
+using Game.Managers;
+using System.Collections.Generic;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaSwap : Action, IDoubleSelectionSkill
+    public class TemperantiaSwap : Action, IPendingAble, ISkills
     {
-        private PieceLogic Ally;
-        private PieceLogic Enemy;
-        public TemperantiaSwap(int maker, int ally, int enemy = -1) : base(maker, false)
+        private static int allyIndex = -1;
+        private static int enemyIndex = -1; // -1 nếu chưa chọn enemy
+        public TemperantiaSwap(int maker, int target) : base(maker, false)
         {
             Maker = (ushort)maker;
-            Ally = PieceOn(ally);
-            
-            if (enemy != -1){
-                Target = (ushort)enemy;
-                Ally = PieceOn(ally);
-                Enemy = PieceOn(enemy);
-            }
-            else{
-                Target = (ushort)ally;
-                Ally = PieceOn(ally);
-            }
+            Target = (ushort)target;
         }
+
+
         protected override void ModifyGameState()
         {
-            // Lấy danh sách debuff của Ally và buff của Enemy
-            var allyDebuffs = Ally.Effects.FindAll(e => e.Category == EffectCategory.Debuff);
-            var enemyBuffs = Enemy.Effects.FindAll(e => e.Category == EffectCategory.Buff);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            PieceLogic ally = PieceOn(allyIndex);
+            PieceLogic enemy = PieceOn(enemyIndex);
+            if (ally == null || enemy == null) return;
+
+            // Copy danh sách buff và debuff trước khi bị xóa
+            var allyDebuffs = ally.Effects.FindAll(e => e.Category == EffectCategory.Debuff);
+            var enemyBuffs = enemy.Effects.FindAll(e => e.Category == EffectCategory.Buff);
 
             // Xóa debuff khỏi Ally và buff khỏi Enemy
             foreach (var effect in allyDebuffs)
@@ -41,24 +44,51 @@ namespace Game.Action.Skills
                 ActionManager.ExecuteImmediately(new RemoveEffect(effect));
             }
 
-            // Thêm debuff vào Enemy
+            // Thêm debuff vào Enemy (resolve Piece before applying)
             foreach (var effect in allyDebuffs)
             {
-                effect.Piece = Enemy;
+                effect.Piece = enemy;
                 ActionManager.ExecuteImmediately(new ApplyEffect(effect));
             }
 
             // Thêm buff vào Ally
             foreach (var effect in enemyBuffs)
             {
-                effect.Piece = Ally;
+                effect.Piece = ally;
                 ActionManager.ExecuteImmediately(new ApplyEffect(effect));
             }
-            
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-        public bool IsBothSelected(){
-            return Ally != null && Enemy != null;
+
+        public void CompleteAction()
+        {
+            // Nếu chưa có enemy (chỉ hành động chọn ally), set firstSelection trên commander để tương thích
+            if (allyIndex == -1)
+            {
+                Temperantia temperantia = PieceOn(Maker) as Temperantia;
+                if (temperantia != null)
+                {
+                    Debug.Log("Temperantia: Have chosen ally, now choose target Enemy");
+                    allyIndex = Target;
+                    TileManager.Ins.UnmarkAll();
+                    BoardViewer.ListOf.Clear();
+                    List<PieceLogic> enemyPieces = FindPiece<PieceLogic>(!PieceOn(Maker).Color);
+                    foreach (PieceLogic e in enemyPieces)
+                    {
+                        BoardViewer.ListOf.Add(new TemperantiaSwap(Maker, e.Pos));
+                        TileManager.Ins.MarkAsMoveable(e.Pos);
+                    }
+                }
+                return;
+            }
+            else
+            {
+                enemyIndex = Target;
+                Debug.Log("ExecuteAction");
+                BoardViewer.Ins.ExecuteAction(this);
+                allyIndex = -1;
+                enemyIndex = -1;
+            }
+            
         }
     }
 }
