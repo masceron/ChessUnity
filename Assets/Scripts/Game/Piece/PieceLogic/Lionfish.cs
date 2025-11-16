@@ -8,7 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Lionfish: PieceLogic, IPieceWithSkill
+    public class Lionfish: Commons.PieceLogic, IPieceWithSkill
     {
         public Lionfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
         {

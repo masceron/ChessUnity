@@ -1,5 +1,5 @@
 ﻿using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.ScriptableObjects;
 using UI.UIObject3D.Scripts;
 using UnityEngine;

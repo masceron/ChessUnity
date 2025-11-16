@@ -11,7 +11,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GuidingSiren: PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class GuidingSiren: Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
     {
         public GuidingSiren(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
         {

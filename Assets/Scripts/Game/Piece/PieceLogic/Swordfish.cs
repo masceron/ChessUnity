@@ -9,7 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Swordfish: PieceLogic, IPieceWithSkill
+    public class Swordfish: Commons.PieceLogic, IPieceWithSkill
     {
         public Swordfish(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {

@@ -10,7 +10,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Chrysos: PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class Chrysos: Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
     {
         public byte Coin = 10;
 

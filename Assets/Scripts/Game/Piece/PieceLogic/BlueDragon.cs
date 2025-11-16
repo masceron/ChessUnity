@@ -9,7 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
-    public class BlueDragon : PieceLogic, IPieceWithSkill
+    public class BlueDragon : Commons.PieceLogic, IPieceWithSkill
     {
         private sbyte timeToCooldown;
         public BlueDragon(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, SpinningMoves.Captures)

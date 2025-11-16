@@ -6,13 +6,12 @@ using Game.Augmentation.Set;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
-using Game.Piece.PieceLogic.Commons;
 using Game.ScriptableObjects;
 using Game.Tile;
 using static Game.Common.BoardUtils;
 using static Game.ScriptableObjects.PieceInfo;
 
-namespace Game.Piece.PieceLogic
+namespace Game.Piece.PieceLogic.Commons
 {
 
     // miễn nhiễm với Formation mang debuff
@@ -42,8 +41,8 @@ namespace Game.Piece.PieceLogic
 
         private bool dead;
 
-        public List<ImmunityType> Immunities;
-        public List<FormationType> SpecificFormations;
+        public readonly List<ImmunityType> Immunities;
+        public readonly List<FormationType> SpecificFormations;
         public bool IsDead()
         {
             return dead;
@@ -182,8 +181,8 @@ namespace Game.Piece.PieceLogic
         public void MoveList(List<Action.Action> list)
         {
             if (PieceRank == PieceRank.Construct) return;
-            if (Effects.Any(e => e.EffectName == EffectName.Stunned)) return;
-            if (Effects.Any(e => e.EffectName == EffectName.Frienzied)) return;
+            if (Effects.Any(e => e.EffectName == "effect_stunned")) return;
+            if (Effects.Any(e => e.EffectName == "effect_frenzied")) return;
             var i = 0;
 
             Quiets(list, Pos, ref i);
@@ -195,7 +194,7 @@ namespace Game.Piece.PieceLogic
             
             Captures(list, Pos);
 
-            if (hasSkill && Effects.All(e => e.EffectName != EffectName.Silenced))
+            if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced"))
             {
                 ((IPieceWithSkill)this).Skills(list);
             }
@@ -207,16 +206,16 @@ namespace Game.Piece.PieceLogic
         public int GetMoveRange(ref int index)
         {
             int range = MoveRange[index++];
-            if (Effects.Any(e => e.EffectName == EffectName.Bound)) return 0;
+            if (Effects.Any(e => e.EffectName == "effect_bound")) return 0;
 
             if (range > MaxLength) return range;
             
             /*Effect movement;
-            if ((movement = Effects.Find(e => e.EffectName == EffectName.Slow)) != null)
+            if ((movement = Effects.Find(e => e.EffectName == "effect_slow")) != null)
             {
                 range -= movement.Strength;
             }
-            if ((movement = Effects.Find(e => e.EffectName == EffectName.Haste)) != null)
+            if ((movement = Effects.Find(e => e.EffectName == "effect_haste")) != null)
             {
                 range += movement.Strength;
             }

@@ -20,7 +20,7 @@
 
 //             var effect = applyEffect.Effect;
 
-//             if (effect.EffectName is EffectName.Slow or EffectName.Haste)
+//             if (effect.EffectName is "effect_slow" or "effect_haste")
 //             {
 //                 applyEffect.Result = ActionResult.Failed;
 //             }

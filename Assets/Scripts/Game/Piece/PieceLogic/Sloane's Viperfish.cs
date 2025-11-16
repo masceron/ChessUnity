@@ -4,7 +4,7 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {
-    public class SloaneSViperfish : PieceLogic, IPieceWithSkill
+    public class SloaneSViperfish : Commons.PieceLogic, IPieceWithSkill
     {
         private sbyte timeToCooldown;
 

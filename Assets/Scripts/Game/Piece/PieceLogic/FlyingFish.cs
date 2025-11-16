@@ -8,7 +8,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FlyingFish: PieceLogic
+    public class FlyingFish: Commons.PieceLogic
     {
         public FlyingFish(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
         {

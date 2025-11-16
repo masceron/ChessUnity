@@ -6,7 +6,7 @@ namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class PollutedRock : PieceLogic
+    public class PollutedRock : Commons.PieceLogic
     {
         public PollutedRock(PieceConfig cfg) : base(cfg, null, null)
         {

@@ -19,7 +19,7 @@ namespace Game.Tile
         [Header("Border Settings")]
         public float lineWidth = 0.1f;
         public UnityEngine.Color lineColor = UnityEngine.Color.blue;
-        public bool tightBorder = false; // use Minmax or Tight Outer Border
+        public bool tightBorder; // use Minmax or Tight Outer Border
 
         [Header("Middle Line Settings")]
         public UnityEngine.Color middleLineColor = UnityEngine.Color.red;

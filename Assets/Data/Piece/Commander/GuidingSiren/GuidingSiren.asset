@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: GuidingSiren
   m_EditorClassIdentifier: 
-  pieceName: guiding siren
-  type: 1
+  key: piece_siren
   prefab: {fileID: 5439012469988241583, guid: bb0da0d2296a2cf47891b370adf31ede, type: 3}
   rank: 7
   moveRange: 5
   attackRange: 5
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_siren
   hasSkill: 1
   normalSkillCooldown: 6
+  availableSlots: 0
+  logicClassName: GuidingSiren

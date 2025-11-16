@@ -5,7 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class BrittleStar : PieceLogic
+    public class BrittleStar : Commons.PieceLogic
     {
         public BrittleStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
         {

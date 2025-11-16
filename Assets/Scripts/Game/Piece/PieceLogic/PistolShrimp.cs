@@ -5,7 +5,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
-    public class PistolShrimp : PieceLogic, IPieceWithSkill
+    public class PistolShrimp : Commons.PieceLogic, IPieceWithSkill
     {
         private sbyte timeToCooldown;
         public PistolShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)

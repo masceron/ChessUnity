@@ -7,7 +7,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class Lizardfish : PieceLogic
+    public class Lizardfish : Commons.PieceLogic
     {
         public Lizardfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {

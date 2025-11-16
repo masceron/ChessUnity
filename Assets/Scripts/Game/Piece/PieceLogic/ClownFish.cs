@@ -7,7 +7,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class ClownFish : PieceLogic
+    public class ClownFish : Commons.PieceLogic
     {
         public ClownFish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Game.Common;
-using Game.Effects;
 using Game.Tile;
 using Game.Relics;
 using Game.ScriptableObjects;
@@ -14,7 +13,7 @@ namespace Game.Managers
     public class AssetManager : Singleton<AssetManager>
     {
         [NonSerialized] public Dictionary<string, PieceInfo> PieceData;
-        [NonSerialized] public Dictionary<EffectName, EffectInfo> EffectData;
+        [NonSerialized] public Dictionary<string, EffectInfo> EffectData;
         [NonSerialized] public Dictionary<RelicType, RelicInfo> RelicData;
         
         [NonSerialized] public Dictionary<FormationType, GameObject> EnvironmentData;
@@ -32,7 +31,12 @@ namespace Game.Managers
                 PieceData.Add(piece.key, piece);
             }
             
-            EffectData = new Dictionary<EffectName, EffectInfo>(effectsData.effectsData);
+            EffectData = new Dictionary<string, EffectInfo>();
+            foreach (var effect in effectsData.effectsData)
+            {
+                EffectData.Add(effect.key, effect);
+            }
+            
             RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
             EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
         }

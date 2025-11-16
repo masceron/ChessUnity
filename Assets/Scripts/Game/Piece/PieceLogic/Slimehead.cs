@@ -5,7 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class Slimehead : PieceLogic
+    public class Slimehead : Commons.PieceLogic
     {
         public Slimehead(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, FrontDefenderMoves.Captures)
         {

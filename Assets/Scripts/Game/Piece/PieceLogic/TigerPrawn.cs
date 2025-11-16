@@ -7,7 +7,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class TigerPrawn : PieceLogic
+    public class TigerPrawn : Commons.PieceLogic
     {
         public TigerPrawn(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {

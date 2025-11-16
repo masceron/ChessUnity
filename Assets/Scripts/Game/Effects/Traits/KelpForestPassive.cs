@@ -1,6 +1,6 @@
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 
 namespace Game.Effects.Traits
@@ -8,7 +8,7 @@ namespace Game.Effects.Traits
     public class KelpForestPassive : Effect, IEndTurnEffect 
     {
 
-        public KelpForestPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.KelpForestPassive)
+        public KelpForestPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kelp_forest_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }

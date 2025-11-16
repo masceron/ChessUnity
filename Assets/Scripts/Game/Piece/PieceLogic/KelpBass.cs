@@ -5,7 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class KelpBass : PieceLogic
+    public class KelpBass : Commons.PieceLogic
     {
         public KelpBass(PieceConfig cfg) : base(cfg, BishopMoves.Quiets , KingMoves.Captures)
         {

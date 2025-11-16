@@ -4,7 +4,7 @@ using Game.Effects.Traits;
 
 namespace Game.Piece.PieceLogic
 {
-    public class DormantFossil : PieceLogic
+    public class DormantFossil : Commons.PieceLogic
     {
         public DormantFossil(PieceConfig cfg) : base(cfg)
         {

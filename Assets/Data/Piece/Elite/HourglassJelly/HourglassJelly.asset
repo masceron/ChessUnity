@@ -22,4 +22,4 @@ MonoBehaviour:
   hasSkill: 1
   normalSkillCooldown: 4
   availableSlots: 0
-  logicClassName: 
+  logicClassName: HourglassJelly

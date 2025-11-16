@@ -9,7 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
-    public class EpauletteShark : PieceLogic, IPieceWithSkill
+    public class EpauletteShark : Commons.PieceLogic, IPieceWithSkill
     {
         private sbyte timeToCooldown;
         public EpauletteShark(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)

@@ -11,7 +11,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Grenadiers : PieceLogic, IPieceWithSkill
+    public class Grenadiers : Commons.PieceLogic, IPieceWithSkill
     {
         public Grenadiers(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {

@@ -9,7 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PhantomJelly: PieceLogic, IPieceWithSkill
+    public class PhantomJelly: Commons.PieceLogic, IPieceWithSkill
     {
         public PhantomJelly(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PhantomJellyMoves.Captures)
         {

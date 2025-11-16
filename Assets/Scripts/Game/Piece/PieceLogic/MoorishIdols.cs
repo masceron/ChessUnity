@@ -6,7 +6,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MoorishIdols : PieceLogic
+    public class MoorishIdols : Commons.PieceLogic
     {
         public MoorishIdols(PieceConfig cfg) : base(cfg, UpDoorMoves.Quiets, UpDoorMoves.Captures)
         {

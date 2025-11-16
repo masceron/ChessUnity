@@ -1,6 +1,6 @@
-using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     {
         private const sbyte RoundsPerSelfPurify = 5;
         sbyte count;
-        public PureMinded(PieceLogic piece) : base(-1, 1, piece, EffectName.PureMinded)
+        public PureMinded(PieceLogic piece) : base(-1, 1, piece, "effect_pure_minded")
         {   
             count = RoundsPerSelfPurify;
         }

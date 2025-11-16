@@ -7,7 +7,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Fangtooth : PieceLogic
+    public class Fangtooth : Commons.PieceLogic
     {
         public Fangtooth(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {

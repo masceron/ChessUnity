@@ -12,7 +12,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Humilitas: PieceLogic, IPieceWithSkill
+    public class Humilitas: Commons.PieceLogic, IPieceWithSkill
     {
         private int deathDefianceCount = 4 ;
         private readonly System.Func<int> getCount;

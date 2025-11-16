@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HourglassJelly : PieceLogic, IPieceWithSkill
+    public class HourglassJelly : Commons.PieceLogic, IPieceWithSkill
     {
         
         public HourglassJelly(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)

@@ -1,7 +1,7 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -11,7 +11,7 @@ namespace Game.Effects.Traits
     {
         private Camouflage already;
 
-        public MorayEelCamouflage(PieceLogic piece) : base(-1, 1, piece, EffectName.MorayEelCamouflage)
+        public MorayEelCamouflage(PieceLogic piece) : base(-1, 1, piece, "effect_moray_eel_camouflage")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }

@@ -1,9 +1,9 @@
 using Game.Effects;
-using Game.Piece.PieceLogic;
 using System.Collections.Generic;
 using Game.Augmentation.Set;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {

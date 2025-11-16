@@ -22,4 +22,4 @@ MonoBehaviour:
   hasSkill: 0
   normalSkillCooldown: -1
   availableSlots: 0
-  logicClassName: 
+  logicClassName: BioluminescentBeacon

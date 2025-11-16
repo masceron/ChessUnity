@@ -1,10 +1,10 @@
-using Game.Piece.PieceLogic;
 using Game.Action;
 using System.Collections.Generic;
 using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
@@ -12,7 +12,7 @@ namespace Game.Effects.Debuffs
     public class Frienzied : Effect, IEndTurnEffect
     {
         private List<Action.Action> list;
-        public Frienzied(PieceLogic piece) : base(-1, 1, piece, EffectName.Frienzied)
+        public Frienzied(PieceLogic piece) : base(-1, 1, piece, "effect_frienzied")
         {
             list = new List<Action.Action>();
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;

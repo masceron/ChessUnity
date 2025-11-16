@@ -4,7 +4,7 @@ using Game.Effects.Traits;
 
 namespace Game.Piece.PieceLogic
 {
-    public class LivingCoral : PieceLogic
+    public class LivingCoral : Commons.PieceLogic
     {
         public LivingCoral(PieceConfig cfg) : base(cfg)
         {

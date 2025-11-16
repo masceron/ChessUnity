@@ -1,7 +1,7 @@
-using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Piece.PieceLogic.Commons;
 
 
 namespace Game.Effects.Others
@@ -11,7 +11,7 @@ namespace Game.Effects.Others
     {
         private int Pos;
         public EndTurnEffectType EndTurnEffectType { get; }
-        public SeaTurtleCountdown(sbyte Duration, PieceLogic piece) : base(Duration, 1, piece, EffectName.SeaTurtleCountdown)
+        public SeaTurtleCountdown(sbyte Duration, PieceLogic piece) : base(Duration, 1, piece, "effect_sea_turtle_countdown")
         {Pos = piece.Pos;}
         public void OnCallEnd(Action.Action action)
         {

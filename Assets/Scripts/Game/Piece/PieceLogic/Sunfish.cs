@@ -9,7 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Sunfish: PieceLogic, IPieceWithSkill
+    public class Sunfish: Commons.PieceLogic, IPieceWithSkill
     {
         public Sunfish(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {

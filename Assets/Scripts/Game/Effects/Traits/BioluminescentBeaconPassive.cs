@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 
 namespace Game.Effects.Traits
@@ -14,21 +14,21 @@ namespace Game.Effects.Traits
 
     public class BioluminescentBeaconPassive : Effect
     {
-        private int radius = 2;
-        private bool isApplied = false;
-        public BioluminescentBeaconPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BioluminescentBeaconPassive)
+        private readonly int radius = 2;
+        private bool isApplied;
+        public BioluminescentBeaconPassive(PieceLogic piece) : base(-1, 1, piece, "effect_bioluminescent_beacon_passive")
         {
             isApplied = false;
             HandlePassive();
         }
 
-        public List<int> GetPosInRadius()
+        private List<int> GetPosInRadius()
         {
-            List<int> positions = new List<int>();
+            var positions = new List<int>();
             var (rank, file) = BoardUtils.RankFileOf(Piece.Pos);
-            for (int i = rank - radius; i <= rank + radius; i++)
+            for (var i = rank - radius; i <= rank + radius; i++)
             {
-                for (int j = file - radius; j <= file + radius; j++)
+                for (var j = file - radius; j <= file + radius; j++)
                 {
                     if (i == rank && j == file) continue;
                     if (BoardUtils.VerifyBounds(i)
@@ -42,13 +42,13 @@ namespace Game.Effects.Traits
             return positions;
         }
 
-        public void HandlePassive()
+        private void HandlePassive()
         {
             if (isApplied) return;
 
             var posInRadius = GetPosInRadius();
 
-            DazzlingLight dazzlingLight = new DazzlingLight(false, Piece.Color);
+            var dazzlingLight = new DazzlingLight(false, Piece.Color);
 
             foreach (var pos in posInRadius)
             {

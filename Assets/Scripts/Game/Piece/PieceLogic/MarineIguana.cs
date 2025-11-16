@@ -12,7 +12,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineIguana: PieceLogic, IPieceWithSkill
+    public class MarineIguana: Commons.PieceLogic, IPieceWithSkill
     {
         public MarineIguana(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {

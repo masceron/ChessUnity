@@ -12,6 +12,7 @@ public static class Config
 
     public static readonly List<PieceConfig> PieceConfigBlack = new()
     {
+        new PieceConfig("piece_swordfish", true, 85)
     };
 
     public static readonly RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);

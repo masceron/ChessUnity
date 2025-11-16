@@ -22,4 +22,4 @@ MonoBehaviour:
   hasSkill: 1
   normalSkillCooldown: 15
   availableSlots: 0
-  logicClassName: 
+  logicClassName: GulperEel

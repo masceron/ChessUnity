@@ -6,7 +6,7 @@ namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class FractureZone : PieceLogic
+    public class FractureZone : Commons.PieceLogic
     {
         public FractureZone(PieceConfig cfg) : base(cfg)
         {

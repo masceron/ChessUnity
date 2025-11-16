@@ -6,7 +6,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Melibe : PieceLogic
+    public class Melibe : Commons.PieceLogic
     {
         public Melibe(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {

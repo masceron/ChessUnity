@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirenDebuffer: Effect, IEndTurnEffect
     {
-        public SirenDebuffer(PieceLogic p) : base(-1, 1, p, EffectName.SirenDebuffer)
+        public SirenDebuffer(PieceLogic p) : base(-1, 1, p, "effect_siren_debuffer")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             CalculateEffectRange(p.Pos);
@@ -46,7 +46,7 @@ namespace Game.Effects.Traits
                     var pOn = PieceOn(index);
                     if (pOn == null) continue;
                     
-                    if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != EffectName.Slow))
+                    if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != "effect_slow"))
                     {
                         ActionManager.EnqueueAction(new SirenDebuff(Piece.Pos, Piece.Pos, (ushort)index));
                     }

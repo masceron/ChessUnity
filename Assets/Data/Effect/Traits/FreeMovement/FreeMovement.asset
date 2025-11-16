@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 2
   activeWhen: 5
   icon: {fileID: 0}
-  key: free_movement
+  key: effect_free_movement

@@ -55,7 +55,7 @@ namespace Game.Piece
     {
         private static readonly Assembly GameAssembly = Assembly.GetExecutingAssembly();
 
-        public static PieceLogic.PieceLogic Get(PieceConfig config)
+        public static PieceLogic.Commons.PieceLogic Get(PieceConfig config)
         {
             var classname = AssetManager.Ins.PieceData[config.Type];
             var pieceType = GameAssembly.GetType($"Game.Piece.PieceLogic.{classname.logicClassName}");
@@ -68,7 +68,7 @@ namespace Game.Piece
 
             try
             {
-                var instance = Activator.CreateInstance(pieceType, args:config) as PieceLogic.PieceLogic;
+                var instance = Activator.CreateInstance(pieceType, args:config) as PieceLogic.Commons.PieceLogic;
                 return instance;
             }
             catch (Exception e)

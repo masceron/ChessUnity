@@ -7,7 +7,6 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece;
-using Game.Piece.PieceLogic;
 using Game.Relics;
 using Game.Relics.EyeOfMimic;
 using Game.Relics.FrostSigil;
@@ -20,6 +19,7 @@ using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Managers
 {
@@ -135,7 +135,7 @@ namespace Game.Managers
             RegionalEffect = GetRegionalEffectByType(ret);
         }
 
-        public RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
+        private static RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
         {
             RegionalEffect re = ret switch
             {
@@ -147,41 +147,6 @@ namespace Game.Managers
             };
 
             return re;
-        }
-
-        public static Effect CreateEffect(EffectName effectName, sbyte duration,sbyte strength, PieceLogic piece)
-        {
-
-            return effectName switch
-            {
-                // Buffs 
-                EffectName.Carapace => new Effects.Buffs.Carapace(duration, piece),
-                EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
-                EffectName.Piercing => new Effects.Buffs.Piercing(duration, piece),
-                EffectName.Shield => new Effects.Buffs.Shield(piece),
-                EffectName.Camouflage => new Effects.Buffs.Camouflage(piece, strength),
-                EffectName.Haste => new Effects.Buffs.Haste(duration, strength, piece),
-                
-                // Traits 
-                EffectName.Evasion => new Effects.Traits.Evasion(duration, strength, piece),
-                EffectName.Construct => new Effects.Traits.Construct(piece),
-                EffectName.Demolisher => new Effects.Traits.Demolisher(piece),
-                EffectName.Consume => new Effects.Traits.Consume(piece),
-                EffectName.Surpass => new Effects.Traits.Surpass(piece),
-                EffectName.Ambush => new Effects.Traits.Ambush(piece),
-                EffectName.QuickReflex => new Effects.Traits.QuickReflex(piece),
-
-                // Debuffs
-                EffectName.Slow => new Effects.Debuffs.Slow(strength,duration, piece),
-                EffectName.Blinded => new Effects.Debuffs.Blinded(duration, strength, piece),
-                EffectName.Stunned => new Effects.Debuffs.Stunned(duration, piece),
-                EffectName.Poison => new Effects.Debuffs.Poison(duration, piece),
-                EffectName.Bleeding => new Effects.Debuffs.Bleeding(duration, piece),
-                EffectName.Bound => new Effects.Debuffs.Bound(duration, piece),
-                EffectName.Taunted => new Effects.Debuffs.Taunted(duration, piece),
-
-                _ => new Effects.Buffs.Shield(piece)
-            };
         }
 
         public void EffectCountdown()

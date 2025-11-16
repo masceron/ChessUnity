@@ -10,7 +10,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChamberedNautilus : PieceLogic, IPieceWithSkill
+    public class ChamberedNautilus : Commons.PieceLogic, IPieceWithSkill
     {
         private sbyte timeToCooldown;
 

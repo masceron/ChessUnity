@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: effect_polluted_rock_passiv_
+  key: effect_polluted_rock_passive

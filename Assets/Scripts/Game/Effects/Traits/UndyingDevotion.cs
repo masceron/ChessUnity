@@ -1,6 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UndyingDevotion: Effect
     {
-        public UndyingDevotion(PieceLogic piece) : base(-1, 1, piece, EffectName.UndyingDevotion)
+        public UndyingDevotion(PieceLogic piece) : base(-1, 1, piece, "effect_undying_devotion")
         {
 
         }

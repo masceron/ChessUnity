@@ -1,4 +1,4 @@
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -10,7 +10,7 @@ namespace Game.Effects.Traits
         private bool active;
         private const byte RangeOffset = 1;
 
-        public FrenziedVeteran(PieceLogic piece) : base(-1, -1, piece, EffectName.FrenziedVeteran)
+        public FrenziedVeteran(PieceLogic piece) : base(-1, -1, piece, "effect_frenzied_veteran")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

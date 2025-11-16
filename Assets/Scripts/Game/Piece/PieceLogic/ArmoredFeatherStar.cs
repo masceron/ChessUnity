@@ -5,9 +5,9 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class AmoredFeatherStar : PieceLogic
+    public class ArmoredFeatherStar : Commons.PieceLogic
     {
-        public AmoredFeatherStar(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
+        public ArmoredFeatherStar(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));

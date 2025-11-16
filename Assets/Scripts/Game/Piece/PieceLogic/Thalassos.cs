@@ -10,7 +10,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Thalassos: PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class Thalassos: Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
     {
         public Thalassos(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)
         {

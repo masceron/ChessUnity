@@ -1,6 +1,5 @@
 using System.Linq;
 using Game.Action.Skills;
-using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -9,7 +8,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Barnacle: PieceLogic, IPieceWithSkill
+    public class Barnacle: Commons.PieceLogic, IPieceWithSkill
     {
         public Barnacle(PieceConfig cfg) : base(cfg, BarnacleMoves.Quiets, RookMoves.Captures)
         {
@@ -24,14 +23,7 @@ namespace Game.Piece.PieceLogic
                     if (piece == null) continue;
                     if (piece.Color == Color) continue;
 
-                    bool hasShield = false;
-                    foreach (var effect in PieceOn(piece.Pos).Effects
-                                 .Where(effect => (effect.EffectName == EffectName.Shield
-                                                   || effect.EffectName == EffectName.HardenedShield)))
-                    {
-                        hasShield = true;
-                        break;
-                    }
+                    var hasShield = PieceOn(piece.Pos).Effects.Any(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield");
 
                     if (hasShield)
                     {

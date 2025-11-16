@@ -1,6 +1,6 @@
 ﻿using Game.Action;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
@@ -10,7 +10,7 @@ namespace Game.Effects.Debuffs
         // ReSharper disable once MemberCanBePrivate.Global
         public readonly int Probability;
 
-        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Blinded)
+        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, "effect_blinded")
         {
             Probability = probability;
         }

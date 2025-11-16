@@ -11,7 +11,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Temperantia: PieceLogic, IRelicCarriable, IPieceWithDoubleSelectionSkill
+    public class Temperantia: Commons.PieceLogic, IRelicCarriable, IPieceWithDoubleSelectionSkill
     {
         public int firstSelection { get; set; }
         public Temperantia(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, TemperantiaMoves.Quiets, TemperantiaMoves.Captures)
@@ -28,16 +28,16 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 //Selection đầu tiên: chọn quân đồng minh
                 if (firstSelection == -1){
-                    List<PieceLogic> allies = FindPiece<PieceLogic>(Color);
-                    foreach(PieceLogic ally in allies){
+                    List<Commons.PieceLogic> allies = FindPiece<Commons.PieceLogic>(Color);
+                    foreach(Commons.PieceLogic ally in allies){
                         if (ally.Equals(this)) { continue; }
                         list.Add(new TemperantiaSwap(Pos, ally.Pos));
                     }
                     
                 }
                 else{
-                    List<PieceLogic> enemies = FindPiece<PieceLogic>(!Color);
-                    foreach (PieceLogic enemy in enemies)
+                    List<Commons.PieceLogic> enemies = FindPiece<Commons.PieceLogic>(!Color);
+                    foreach (Commons.PieceLogic enemy in enemies)
                     {
                         list.Add(new TemperantiaSwap(Pos, firstSelection, enemy.Pos));
                     }

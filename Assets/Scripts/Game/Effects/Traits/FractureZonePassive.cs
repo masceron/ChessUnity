@@ -4,7 +4,7 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
 
@@ -13,13 +13,13 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FractureZonePassive : Effect, IEndTurnEffect
     {
-        private int countToSpawnEffect = 0;
+        private int countToSpawnEffect;
         private readonly int intervalToSpawn = 2;
         private readonly int radius = 2;
         private readonly int aliveTime = 10;
         private List<(int,int)> tileInradius = new List<(int, int)>();
 
-        public FractureZonePassive(PieceLogic piece) : base(-1, 1, piece, EffectName.FractureZonePassive)
+        public FractureZonePassive(PieceLogic piece) : base(-1, 1, piece, "effect_fracture_zone_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
 

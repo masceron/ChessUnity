@@ -22,4 +22,4 @@ MonoBehaviour:
   hasSkill: 1
   normalSkillCooldown: 6
   availableSlots: 0
-  logicClassName: 
+  logicClassName: Grenadiers

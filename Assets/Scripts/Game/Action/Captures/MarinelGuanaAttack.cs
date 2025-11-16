@@ -5,7 +5,6 @@ using Game.Managers;
 using static Game.Common.BoardUtils;
 using Game.Common;
 using Game.Action.Skills;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Captures

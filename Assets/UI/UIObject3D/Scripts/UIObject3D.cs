@@ -149,7 +149,7 @@ namespace UI.UIObject3D.Scripts
         }
 
         [SerializeField, HideInInspector]
-        private Vector2 _textureSize = default(Vector2);
+        private Vector2 _textureSize;
         /// <summary>
         /// Readonly property that is used to determine the size of the texture rendered by UIObject3D
         /// (Affected by 'RenderScale')

@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 0
   activeWhen: 3
   icon: {fileID: 0}
-  key: KelpForestPassive
+  key: effect_kelp_forest_passive

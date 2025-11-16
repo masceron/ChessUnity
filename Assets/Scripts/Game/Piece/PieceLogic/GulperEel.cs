@@ -9,7 +9,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GulperEel : PieceLogic, IPieceWithSkill
+    public class GulperEel : Commons.PieceLogic, IPieceWithSkill
     {
         public GulperEel(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
         {

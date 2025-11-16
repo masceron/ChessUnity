@@ -9,9 +9,9 @@ using Game.Relics;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Velkaris : PieceLogic, IPieceWithSkill, IRelicCarriable
+    public class Velkaris : Commons.PieceLogic, IPieceWithSkill, IRelicCarriable
     {
-        public PieceLogic Marked;
+        public Commons.PieceLogic Marked;
 
         public Velkaris(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {

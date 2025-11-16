@@ -5,7 +5,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    public class Hatchetfish : PieceLogic, IPieceWithSkill
+    public class Hatchetfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Hatchetfish(PieceConfig cfg) : base(cfg, PufferfishMoves.Quiets, PufferfishMoves.Captures)
         {

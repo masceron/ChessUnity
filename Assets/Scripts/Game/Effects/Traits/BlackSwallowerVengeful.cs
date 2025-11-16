@@ -1,20 +1,20 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 using System.Collections.Generic;
 using System.Linq;
 using System;
 using Game.Piece;
 using Game.Effects.Others;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class  BlackSwallowerVengeful: Effect
     {
-        public BlackSwallowerVengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.BlackSwallowerVengeful)
+        public BlackSwallowerVengeful(PieceLogic piece) : base(-1, 1, piece, "effect_black_swallower_passive")
         {
         }
 

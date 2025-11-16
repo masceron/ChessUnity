@@ -5,7 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class HorseLeech : PieceLogic
+    public class HorseLeech : Commons.PieceLogic
     {
         public HorseLeech(PieceConfig cfg) : base(cfg, KingMoves.Quiets, HorseLeechMoves.Captures)
         {

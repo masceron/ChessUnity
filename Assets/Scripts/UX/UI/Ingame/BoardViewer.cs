@@ -3,7 +3,7 @@ using Game.Action;
 using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;

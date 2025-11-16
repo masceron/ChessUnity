@@ -1,4 +1,4 @@
-﻿using Game.Piece.PieceLogic;
+﻿using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
         private bool active;
         private const byte RangeOffset = 2;
 
-        public Ambush(PieceLogic piece) : base(-1, -1, piece, EffectName.Ambush)
+        public Ambush(PieceLogic piece) : base(-1, -1, piece, "effect_ambush")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

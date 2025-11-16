@@ -1,13 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.Augmentation
 {
     public class RaySTailPassive : Effect
     {
-        public RaySTailPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.RayTailPassive)
+        public RaySTailPassive(PieceLogic piece) : base(-1, 1, piece, "effect_ray's_tail_passive")
         {
         }
 
@@ -15,28 +15,28 @@ namespace Game.Effects.Augmentation
         {
             var targetIndex = action.Target;
             var targetPiece = PieceOn(targetIndex);
-            bool hasShield = false;
-            bool hasHardenedShield = false;
-            bool hasCarapace = false;
+            var hasShield = false;
+            var hasHardenedShield = false;
+            var hasCarapace = false;
             Effect shield = null;
-            for (int i = 0; i < targetPiece.Effects.Count; i++)
+            foreach (var t in targetPiece.Effects)
             {
-                if (targetPiece.Effects[i].EffectName == EffectName.Carapace)
+                if (t.EffectName == "effect_carapace")
                 {
                     hasCarapace = true;
                 }
 
-                if (targetPiece.Effects[i].EffectName == EffectName.HardenedShield)
+                if (t.EffectName == "effect_hardened_shield")
                 {
                     hasHardenedShield = true;
-                    shield = targetPiece.Effects[i];
+                    shield = t;
                     break;
                 }
 
-                if (targetPiece.Effects[i].EffectName == EffectName.Shield)
+                if (t.EffectName == "effect_shield")
                 {
                     hasShield = true;
-                    shield = targetPiece.Effects[i];
+                    shield = t;
                 }
             }
 

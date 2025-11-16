@@ -8,7 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArcticBrittleStar : PieceLogic, IPieceWithSkill
+    public class ArcticBrittleStar : Commons.PieceLogic, IPieceWithSkill
     {
         public ArcticBrittleStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
         {

@@ -8,7 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BobtailSquid: PieceLogic, IPieceWithSkill
+    public class BobtailSquid: Commons.PieceLogic, IPieceWithSkill
     {
         public BobtailSquid(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {

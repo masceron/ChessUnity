@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class BioluminescentBeacon : PieceLogic
+    public class BioluminescentBeacon : Commons.PieceLogic
     {
         public BioluminescentBeacon(PieceConfig cfg) : base(cfg, null, null)
         {

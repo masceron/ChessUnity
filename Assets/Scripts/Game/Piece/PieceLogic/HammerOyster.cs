@@ -7,7 +7,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class HammerOyster : PieceLogic
+    public class HammerOyster : Commons.PieceLogic
     {
         public HammerOyster(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, PawnPushMoves.Captures)
         {

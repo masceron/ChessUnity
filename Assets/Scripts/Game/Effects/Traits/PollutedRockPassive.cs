@@ -2,7 +2,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -23,7 +23,7 @@ namespace Game.Effects.Traits
             (1, 0), (0, -1),
             (-1, 0), (0, 1)
         };
-        public PollutedRockPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.PollutedRockPassive)
+        public PollutedRockPassive(PieceLogic piece) : base(-1, 1, piece, "effect_polluted_rock_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

@@ -7,7 +7,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Helicoprion: PieceLogic
+    public class Helicoprion: Commons.PieceLogic
     {
         public Helicoprion(PieceConfig cfg): base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {

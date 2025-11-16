@@ -3,7 +3,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -23,7 +23,7 @@ namespace Game.Effects.Traits
         private const int Interval = 3;
         private int turnCounter;
         
-        public LivingCoralPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.LivingCoralPassive)
+        public LivingCoralPassive(PieceLogic piece) : base(-1, 1, piece, "effect_living_coral_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
             BuffEvasionInRange();
@@ -55,7 +55,7 @@ namespace Game.Effects.Traits
 
             foreach (var pieceEntered in newInRange.Except(inRange))
             {
-                if (pieceEntered.Effects.Any(e => e.EffectName == EffectName.Evasion)) continue;
+                if (pieceEntered.Effects.Any(e => e.EffectName == "effect_evasion")) continue;
                 
                 evasionBuff.Add(pieceEntered);
                 ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, pieceEntered)));

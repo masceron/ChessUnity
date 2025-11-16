@@ -7,7 +7,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlueRingedOctopus: PieceLogic
+    public class BlueRingedOctopus: Commons.PieceLogic
     {
         public BlueRingedOctopus(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, RookMoves.Captures)
         {

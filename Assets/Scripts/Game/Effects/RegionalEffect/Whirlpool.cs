@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Quiets;
 using Game.Managers;
-using Game.Piece.PieceLogic;
 using UnityEngine;
 
 //Xuất hiện vào turn thứ 30 của ván nếu chưa kết thúc, tạo ra vòng xoáy 2x2 giữa bàn cờ, 
@@ -20,12 +19,12 @@ namespace Game.Effects.RegionalEffect
                 Debug.Log("Whirlpool is not started yet!");
                 return;
             }
-            PieceLogic[] board = MatchManager.Ins.GameState.PieceBoard;
-            foreach(PieceLogic piece in board){
-                if (piece != null) {
-                    int targetPosition = 0;
-                    ActionManager.ExecuteImmediately(new NormalMove(piece.Pos, targetPosition));
-                }
+            var board = MatchManager.Ins.GameState.PieceBoard;
+            foreach(var piece in board)
+            {
+                if (piece == null) continue;
+                const int targetPosition = 0;
+                ActionManager.ExecuteImmediately(new NormalMove(piece.Pos, targetPosition));
             }
 
         }

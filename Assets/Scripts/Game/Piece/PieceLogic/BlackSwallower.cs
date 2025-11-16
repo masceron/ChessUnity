@@ -6,7 +6,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackSwallower: PieceLogic
+    public class BlackSwallower: Commons.PieceLogic
     {
         public BlackSwallower(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, FrontDefenderMoves.Captures)
         {

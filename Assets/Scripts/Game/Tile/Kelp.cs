@@ -1,18 +1,16 @@
 using Game.Action;
-using Game.Piece.PieceLogic;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using System.Linq;
-using Game.Effects;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
-
-
+    
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Kelp : Formation
     {
-        private bool pieceHaveCamouflage = false;
+        private bool pieceHaveCamouflage;
         public Kelp(bool haveDuration, bool color) : base(color)
         {
             HaveDuration = haveDuration;
@@ -26,7 +24,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            if (piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
+            if (piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
             {
                 pieceHaveCamouflage = true;
             } else {
@@ -36,9 +34,9 @@ namespace Game.Tile
 
         public override void OnPieceExit(PieceLogic piece)
         {
-            if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == EffectName.Camouflage))
+            if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
             {
-                ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == EffectName.Camouflage)));
+                ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == "effect_camouflage")));
             }
             
             base.OnPieceExit(piece);

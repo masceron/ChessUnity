@@ -10,7 +10,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BottlenoseDolphin: PieceLogic, IPieceWithSkill
+    public class BottlenoseDolphin: Commons.PieceLogic, IPieceWithSkill
     {
         public BottlenoseDolphin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {

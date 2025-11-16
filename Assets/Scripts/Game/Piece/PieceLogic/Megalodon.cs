@@ -8,7 +8,7 @@ using Game.Relics;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Megalodon: PieceLogic, IRelicCarriable
+    public class Megalodon: Commons.PieceLogic, IRelicCarriable
     {
         public Megalodon(PieceConfig cfg, RelicLogic carriedRelic = null) : base(cfg, RookMoves.Quiets,
             MegalodonMoves.Captures)

@@ -11,7 +11,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Archelon: PieceLogic, IPieceWithSkill
+    public class Archelon: Commons.PieceLogic, IPieceWithSkill
     {
         public Archelon(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {

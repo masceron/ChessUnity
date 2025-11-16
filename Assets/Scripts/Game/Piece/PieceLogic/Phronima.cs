@@ -4,7 +4,7 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {
-    public class Phronima : PieceLogic, IPieceWithSkill
+    public class Phronima : Commons.PieceLogic, IPieceWithSkill
     {
         public Phronima(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {

@@ -1,4 +1,3 @@
-using Game.Piece.PieceLogic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Captures;
@@ -6,6 +5,7 @@ using static Game.Common.BoardUtils;
 using Game.Effects.Debuffs;
 using System.Linq;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
     public class HumboldtSquidPassive : Effect
     {
         private int count;
-        public HumboldtSquidPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.HumboldtSquidPassive)
+        public HumboldtSquidPassive(PieceLogic piece) : base(-1, 1, piece, "effect_humboldt_squid_passive")
         {
             count = 0;
 
@@ -33,7 +33,7 @@ namespace Game.Effects.Traits
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
-                if (piece.Effects.Any(e => e.EffectName == EffectName.Bleeding))
+                if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
                 {
                     count++;
                 }

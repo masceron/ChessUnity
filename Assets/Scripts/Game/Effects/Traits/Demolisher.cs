@@ -1,14 +1,14 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Demolisher: Effect
     {
-        public Demolisher(PieceLogic piece) : base(-1, 1, piece, EffectName.Demolisher)
+        public Demolisher(PieceLogic piece) : base(-1, 1, piece, "effect_demolisher")
         {}
 
         public override void OnCallPieceAction(Action.Action action)

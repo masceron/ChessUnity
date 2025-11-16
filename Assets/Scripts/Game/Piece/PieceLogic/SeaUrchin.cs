@@ -10,7 +10,7 @@ using Game.Movesets;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeaUrchin: PieceLogic
+    public class SeaUrchin: Commons.PieceLogic
     {
         public SeaUrchin(PieceConfig cfg) : base(cfg, PawnPushMoves.Quiets, PawnPushMoves.Captures)
         {

@@ -1,13 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Carapace: Effect
     {
-        public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectName.Carapace)
+        public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_carapace")
         {}
 
         public override void OnCallPieceAction(Action.Action action)

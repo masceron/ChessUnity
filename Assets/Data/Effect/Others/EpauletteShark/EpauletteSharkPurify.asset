@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: epaulette_shark_purify
+  key: effect_epaulette_shark_purify

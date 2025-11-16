@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 0
   activeWhen: 3
   icon: {fileID: 2800000, guid: 341b27067b46e574bbcfd494557f5bef, type: 3}
-  key: Sea_Turtle_Count_Down
+  key: effect_sea_turtle_countdown

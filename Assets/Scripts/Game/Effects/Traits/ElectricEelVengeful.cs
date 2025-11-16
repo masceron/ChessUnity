@@ -2,14 +2,14 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class  ElectricEelVengeful: Effect
     {
-        public ElectricEelVengeful(PieceLogic piece) : base(-1, 1, piece, EffectName.ElectricEelVengeful)
+        public ElectricEelVengeful(PieceLogic piece) : base(-1, 1, piece, "effect_electric_eel_vengeful")
         {}
 
         public override void OnCallPieceAction(Action.Action action)    

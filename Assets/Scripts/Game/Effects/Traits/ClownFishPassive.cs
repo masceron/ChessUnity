@@ -1,9 +1,8 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Effects;
 using static Game.Common.BoardUtils;
 
-namespace Game.Piece.PieceLogic
+namespace Game.Effects.Traits
 {
     public class ClownFishPassive : Effect, IEndTurnEffect
     {   
@@ -12,7 +11,7 @@ namespace Game.Piece.PieceLogic
             (2, 0), (2, 2), (0, 2), (-2, 2),
             (-2, 0), (-2, -2), (0, -2), (2, -2)
         };
-        public ClownFishPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.ClownFishPassive)
+        public ClownFishPassive(Piece.PieceLogic.Commons.PieceLogic piece) : base(-1, 1, piece, "effect_clown_fish_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }

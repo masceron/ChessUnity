@@ -1,9 +1,9 @@
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using static Game.Common.BoardUtils;
 using Game.Action;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
     {
         private bool active;
         private bool check;
-        public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.SunfishPassive)
+        public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_sunfish_passive")
         {
             active = false;
             check = true;

@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Swordfish
   m_EditorClassIdentifier: 
-  pieceName: swordfish
-  type: 11
+  key: piece_swordfish
   prefab: {fileID: 919132149155446097, guid: b9edf077500980e4f901097c8237b4d0, type: 3}
   rank: 6
   moveRange: 3
   attackRange: 3
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_swordfish
   hasSkill: 1
   normalSkillCooldown: 3
+  availableSlots: 0
+  logicClassName: Swordfish
