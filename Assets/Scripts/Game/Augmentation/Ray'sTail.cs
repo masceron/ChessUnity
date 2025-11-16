@@ -13,11 +13,11 @@ namespace Game.Augmentation
         {
             PassiveEffects = new List<Effect>();
         }
-        
+
         public override void SetTarget(PieceLogic target)
         {
             Target = target;
-            Set = new AugmentationSet(AugmentationSetType.StalkerInstinct,true);
+            Set = new AugmentationSet(AugmentationSetType.StalkerInstinct, true);
             PassiveEffects.Add(new RaySTailPassive(Target));
         }
     }
