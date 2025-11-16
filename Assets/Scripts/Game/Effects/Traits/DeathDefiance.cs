@@ -18,7 +18,6 @@ namespace Game.Effects.Traits
 		public override void OnCallPieceAction(Action.Action action)
 		{
 			//còn né nữa chưa tính
-			if (deathDefianceCount <= 1) return;
 			if(Piece.IsDead()) return;
 			if (Piece.Effects.Any(e => e.EffectName == EffectName.Shield) 
 				|| Piece.Effects.Any(e => e.EffectName == EffectName.Carapace) 
@@ -26,6 +25,7 @@ namespace Game.Effects.Traits
 			if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
                 return;
             }
+			if (deathDefianceCount <= 1) return;
             var ui = Object.FindAnyObjectByType<DeathDefianceUI>(FindObjectsInactive.Include);
 			if (!ui)
 			{

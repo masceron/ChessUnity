@@ -57,7 +57,7 @@ namespace Game.Piece.PieceLogic.Champions
 
             var piece = PieceOn(index);
             if (piece == null || piece.Color == Color) return;
-            list.Add(new MarinelGuanaAttack(Pos, index));
+            list.Add(new MarineIguanaAttack(Pos, index));
             
         }
 

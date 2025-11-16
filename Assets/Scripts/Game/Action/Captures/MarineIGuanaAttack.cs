@@ -10,11 +10,11 @@ using Game.Piece.PieceLogic;
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarinelGuanaAttack: Action, IPendingAble, ISkills
+    public class MarineIguanaAttack: Action, IPendingAble, ISkills
     {
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;
-        public MarinelGuanaAttack(int maker, int to) : base(maker, false)
+        public MarineIguanaAttack(int maker, int to) : base(maker, false)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
@@ -38,7 +38,7 @@ namespace Game.Action.Captures
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
                     if (piece == null || piece.Color != FirstTarget.Color) continue;
-                    var newAction = new MarinelGuanaAttack(Maker, index);
+                    var newAction = new MarineIguanaAttack(Maker, index);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
                 }
