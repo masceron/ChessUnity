@@ -5,6 +5,7 @@ using Game.Effects.Condition;
 using Game.Effects.Others;
 using Game.Movesets;
 using Game.Common;
+using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic.Elites
 {
