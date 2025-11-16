@@ -24,7 +24,7 @@ namespace Game.Action.Skills
             var Color = PieceOn(Maker).Color;
             var direction = Color ? -1 : +1;
             var steps = 0;
-            (var oldRank, var oldFile) = RankFileOf(Maker);
+            var (oldRank, oldFile) = RankFileOf(Maker);
             
             while(IsActive(IndexOf(oldRank + (steps+1)*direction, oldFile)) && steps < 3)
             {

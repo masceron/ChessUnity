@@ -1,5 +1,0 @@
-<linker>
-  <assembly fullname="Assembly-CSharp">
-    <type fullname="Game.Piece.PieceLogic.Commons.PieceLogic" preserve="all"/>
-  </assembly>
-</linker>

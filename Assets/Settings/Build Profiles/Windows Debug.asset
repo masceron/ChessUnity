@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Windows Release
-  m_EditorClassIdentifier: 
+  m_Name: Windows Debug
+  m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfile
   m_AssetVersion: 1
   m_BuildTarget: 19
   m_Subtarget: 2
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
-    rid: 1405300274531926083
+    rid: 589313317451595848
   m_OverrideGlobalSceneList: 0
   m_Scenes: []
   m_ScriptingDefines: []
@@ -563,6 +563,9 @@ MonoBehaviour:
     - line: '|   - m_BuildTarget: AndroidPlayer'
     - line: '|     m_APIs: 150000000b000000'
     - line: '|     m_Automatic: 0'
+    - line: '|   - m_BuildTarget: WindowsStandaloneSupport'
+    - line: '|     m_APIs: 0200000012000000'
+    - line: '|     m_Automatic: 0'
     - line: '|   m_BuildTargetVRSettings: []'
     - line: '|   m_DefaultShaderChunkSizeInMB: 16'
     - line: '|   m_DefaultShaderChunkCount: 0'
@@ -857,31 +860,31 @@ MonoBehaviour:
     - line: '|   webWasm2023: 0'
     - line: '|   webEnableSubmoduleStrippingCompatibility: 0'
     - line: '|   scriptingDefineSymbols:'
-    - line: '|     Android: '
-    - line: '|     EmbeddedLinux: '
-    - line: '|     GameCoreScarlett: '
-    - line: '|     GameCoreXboxOne: '
-    - line: '|     Kepler: '
-    - line: '|     LinuxHeadlessSimulation: '
-    - line: '|     Nintendo Switch: '
-    - line: '|     PS4: '
-    - line: '|     PS5: '
-    - line: '|     QNX: '
-    - line: '|     ReservedCFE: '
-    - line: '|     Standalone: '
-    - line: '|     VisionOS: '
-    - line: '|     WebGL: '
-    - line: '|     Windows Store Apps: '
-    - line: '|     XboxOne: '
-    - line: '|     iPhone: '
-    - line: '|     tvOS: '
+    - line: '|     Android: DOTWEEN'
+    - line: '|     EmbeddedLinux: DOTWEEN'
+    - line: '|     GameCoreScarlett: DOTWEEN'
+    - line: '|     GameCoreXboxOne: DOTWEEN'
+    - line: '|     Kepler: DOTWEEN'
+    - line: '|     LinuxHeadlessSimulation: DOTWEEN'
+    - line: '|     Nintendo Switch: DOTWEEN'
+    - line: '|     PS4: DOTWEEN'
+    - line: '|     PS5: DOTWEEN'
+    - line: '|     QNX: DOTWEEN'
+    - line: '|     ReservedCFE: DOTWEEN'
+    - line: '|     Standalone: DOTWEEN'
+    - line: '|     VisionOS: DOTWEEN'
+    - line: '|     WebGL: DOTWEEN'
+    - line: '|     Windows Store Apps: DOTWEEN'
+    - line: '|     XboxOne: DOTWEEN'
+    - line: '|     iPhone: DOTWEEN'
+    - line: '|     tvOS: DOTWEEN'
     - line: '|   additionalCompilerArguments: {}'
     - line: '|   platformArchitecture: {}'
     - line: '|   scriptingBackend:'
     - line: '|     Android: 1'
     - line: '|     Standalone: 1'
     - line: '|   il2cppCompilerConfiguration:'
-    - line: '|     Standalone: 1'
+    - line: '|     Standalone: 0'
     - line: '|   il2cppCodeGeneration: {}'
     - line: '|   il2cppStacktraceInformation: {}'
     - line: '|   managedStrippingLevel:'
@@ -997,7 +1000,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 1405300274531926083
+    - rid: 589313317451595848
       type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
       data:
         m_Development: 0

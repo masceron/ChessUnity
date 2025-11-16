@@ -1,6 +1,4 @@
-using System;
-using System.Reflection;
-using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -53,29 +51,9 @@ namespace Game.Piece
 
     public static class PieceMaker
     {
-        private static readonly Assembly GameAssembly = Assembly.GetExecutingAssembly();
-
         public static PieceLogic.Commons.PieceLogic Get(PieceConfig config)
         {
-            var classname = AssetManager.Ins.PieceData[config.Type];
-            var pieceType = GameAssembly.GetType($"Game.Piece.PieceLogic.{classname.logicClassName}");
-        
-            if (pieceType == null)
-            {
-                Debug.LogError($"Could not find logic class with key {config.Type} and name: {classname.logicClassName}");
-                return null;
-            }
-
-            try
-            {
-                var instance = Activator.CreateInstance(pieceType, args:config) as PieceLogic.Commons.PieceLogic;
-                return instance;
-            }
-            catch (Exception e)
-            {
-                Debug.LogError($"Failed to create instance of {classname.logicClassName}: {e.Message}");
-                return null;
-            }
+            return PieceFactory.CreateLogicInstance(config.Type, config);
         }
     }
 }

@@ -173,12 +173,6 @@ MonoBehaviour:
       or leaving its range.
     m_Metadata:
       m_Items: []
-  - m_Id: 16701716623577088
-    m_Localized: 'After {TurnsToActive} turns, Attack Range of this Piece increases
-      by 1 (Current : {Piece.AttackRange} ) ( {numTurns} )'
-    m_Metadata:
-      m_Items:
-      - rid: 1405300356192928012
   references:
     version: 2
     RefIds:
@@ -195,4 +189,3 @@ MonoBehaviour:
         - id: 10669455839232
         - id: 10981658857472
         - id: 12098706870272
-        - id: 16701716623577088
