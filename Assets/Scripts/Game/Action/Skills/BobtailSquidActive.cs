@@ -1,5 +1,3 @@
-using Game.Action.Internal;
-using Game.Effects.Buffs;
 using Game.Tile;
 using Game.Piece.PieceLogic;
 using Game.Managers;
@@ -18,24 +16,36 @@ namespace Game.Action.Skills
         }
         protected override void Animate()
         {
-            (int rank, int file) = RankFileOf(Maker);
-            PieceManager.Ins.Move(Maker, IndexOf(rank - 3, file));
+            // (int rank, int file) = RankFileOf(Maker);
+            // PieceManager.Ins.Move(Maker, IndexOf(rank - 3, file));
         }
         protected override void ModifyGameState()
         {
-            Debug.Log("Execute BobtailSquidActive");
-            (int rank, int file) = RankFileOf(Maker);
-            for (int x = rank; x <= rank + 1; ++x){
-                for (int y = file - 1; y <= file + 1; ++y){
-                    Formation FogOfWar = new FogOfWar(PieceOn(Maker).Color);
-                    FogOfWar.SetDuration(3);
-                    FormationManager.Ins.SetFormation(IndexOf(x, y), FogOfWar);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            bool Color = PieceOn(Maker).Color;
+            int direction = Color ? -1 : +1;
+            int steps = 0;
+            (int oldRank, int oldFile) = RankFileOf(Maker);
+            
+            while(IsActive(IndexOf(oldRank + (steps+1)*direction, oldFile)) && steps < 3)
+            {
+                steps++;
+            }
+            int finalPos = IndexOf(oldRank + steps * direction, oldFile);
+            MatchManager.Ins.GameState.Move(Maker, (ushort)finalPos);
+            PieceManager.Ins.Move(Maker, (ushort)finalPos);
+            for (int x = oldRank; x <= oldRank + 1; ++x){
+                for (int y = oldFile - 1; y <= oldFile + 1; ++y){  
+                    if (IsActive(IndexOf(x, y)))
+                    {
+                        Formation FogOfWar = new FogOfWar(Color);
+                        FogOfWar.SetDuration(3);
+                        FormationManager.Ins.SetFormation(IndexOf(x, y), FogOfWar);
+                    }
+                    
                 }
             }
-
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            int steps = (PieceOn(Maker).Color == false ? -3 : 3);
-            MatchManager.Ins.GameState.Move(Maker, (ushort)IndexOf(rank - steps, file));
+            
         }
     }
-}
+} 
