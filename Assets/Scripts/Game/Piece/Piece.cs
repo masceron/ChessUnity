@@ -71,6 +71,11 @@ namespace Game.Piece
         Grenadiers,
         BlackSwallower,
         Snaggletooths,
+        ArcticBrittleStar,
+        BrittleStar,
+        SpiderBrittleStar,
+        CoffinFish,
+        SnipeEel
     }
 
     public enum PieceRank : byte
