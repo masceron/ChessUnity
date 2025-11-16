@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.ScriptableObjects;
 using TMPro;
 using UI.UIObject3D.Scripts;

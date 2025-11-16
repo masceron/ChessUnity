@@ -1,6 +1,6 @@
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using System;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills

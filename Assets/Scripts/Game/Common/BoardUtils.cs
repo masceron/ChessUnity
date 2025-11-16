@@ -7,7 +7,7 @@ using Game.Action.Internal;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UnityEngine;
 

@@ -1,7 +1,5 @@
-
-
-using Game.Piece.PieceLogic;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using Game.Common;
 using UnityEngine.UI;

@@ -1,7 +1,7 @@
 using Game.Managers;
 using UX.UI.Ingame;
-using Game.Piece.PieceLogic;
 using Game.Action.Captures;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Internal
 {

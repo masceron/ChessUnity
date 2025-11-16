@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 0
   activeWhen: 3
   icon: {fileID: 2800000, guid: 7b5a446451e132b4993429a3eb7810ca, type: 3}
-  key: 
+  key: effect_sunfish_passive

@@ -1,5 +1,5 @@
 ﻿using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Condition
 {
@@ -10,7 +10,7 @@ namespace Game.Effects.Condition
         private bool active;
         private const byte RangeOffset = 2;
 
-        public DiurnalAmbush(PieceLogic piece) : base(-1, -1, piece, EffectName.DiurnalAmbush)
+        public DiurnalAmbush(PieceLogic piece) : base(-1, -1, piece, "effect_diurnal_ambush")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

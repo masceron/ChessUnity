@@ -5,7 +5,8 @@ using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
 using System.Collections.Generic;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
+
 namespace Game.Action.Skills
 {
     

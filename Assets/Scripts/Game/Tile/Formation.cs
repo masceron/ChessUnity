@@ -1,7 +1,8 @@
-using Game.Piece.PieceLogic;
 using Game.Effects;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
+
 using static Game.Common.BoardUtils;
 
 namespace Game.Tile

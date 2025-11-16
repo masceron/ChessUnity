@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: nocturnal_range_buff
+  key: effect_nocturnal_range_buff

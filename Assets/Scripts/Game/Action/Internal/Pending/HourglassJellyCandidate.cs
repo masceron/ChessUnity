@@ -1,6 +1,7 @@
 using Game.Action.Skills;
 using Game.Common;
 using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal.Pending
 {
@@ -14,7 +15,7 @@ namespace Game.Action.Internal.Pending
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
-            Piece.PieceLogic.PieceLogic cr = BoardUtils.PieceOn(to);
+            PieceLogic cr = BoardUtils.PieceOn(to);
 
         }
 

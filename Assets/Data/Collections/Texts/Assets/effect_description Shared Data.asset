@@ -143,8 +143,196 @@ MonoBehaviour:
     m_Key: effect_remora_marked_description
     m_Metadata:
       m_Items: []
-  - m_Id: 16701716623577088
-    m_Key: effect_frenziedveteran_description
+  - m_Id: 35140550032101376
+    m_Key: effect_bottlenose_dolphin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140550296342528
+    m_Key: effect_diurnal_ambush_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140550719967232
+    m_Key: effect_archerfish_accuracy_Passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140551034540032
+    m_Key: effect_kill_after_switch_turn_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140552552878080
+    m_Key: effect_native_ground_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140552569655296
+    m_Key: effect_clown_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140552733233152
+    m_Key: effect_blue_dragon_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140552804536320
+    m_Key: effect_silenced_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140553110720512
+    m_Key: effect_chambered_nautilus_hunger_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140554104770560
+    m_Key: effect_quick_reflex_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140554629058560
+    m_Key: ray's_tail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140554838773760
+    m_Key: effect_bioluminescent_beacon_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140554838773761
+    m_Key: effect_melibe_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140554960408576
+    m_Key: effect_humboldt_squid_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140555270787072
+    m_Key: effect_charge_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140555509862400
+    m_Key: effect_infected_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140556751376384
+    m_Key: effect_tidal_retina_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140556843651072
+    m_Key: effect_one_more_turn_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140557372133376
+    m_Key: effect_marked_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140557594431488
+    m_Key: effect_sanity_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140558596870144
+    m_Key: effect_polluted_rock_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140558865305600
+    m_Key: effect_death_defiance_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140559444119552
+    m_Key: effect_dormant_fossil_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140559452508160
+    m_Key: effect_free_movement_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140559809024000
+    m_Key: effect_sunfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140559897104384
+    m_Key: effect_black_swallower_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140560077459456
+    m_Key: effect_silence_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140560215871488
+    m_Key: effect_destroy_enemy_when_move_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140560379449344
+    m_Key: effect_pure_minded_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140561033760768
+    m_Key: effect_fracture_zone_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140561298001920
+    m_Key: effect_living_coral_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140561474162688
+    m_Key: effect_controlled_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140561553854464
+    m_Key: effect_hammer_oyster_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140562304634880
+    m_Key: effect_copy_captures_method_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140562782785536
+    m_Key: effect_epaulette_shark_purify_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140562908614656
+    m_Key: effect_undying_devotion_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140562950557696
+    m_Key: effect_kelp_forest_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140562963140608
+    m_Key: effect_construct_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140563067998208
+    m_Key: effect_frenzied_veteran_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140563235770368
+    m_Key: effect_frienzied_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140563239964672
+    m_Key: effect_nocturnal_range_buff_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140563688755200
+    m_Key: effect_true_bite_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140563713921024
+    m_Key: slimehead_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140563948802048
+    m_Key: effect_adaptation_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140564254986240
+    m_Key: effect_contagion_corpse_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140564661833728
+    m_Key: effect_sea_turtle_countdown_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140565009960960
+    m_Key: effect_frenzied_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35140565119012864
+    m_Key: effect_relentless_description
     m_Metadata:
       m_Items: []
   m_Metadata:

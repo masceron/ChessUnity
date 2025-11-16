@@ -1,16 +1,16 @@
-using Game.Piece.PieceLogic;
 using Game.Movesets;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
     public class CopyCapturesMethod : Effect
     {
-        private PieceLogic ourPiece;
-        private PieceLogic opponentPiece;
+        private readonly PieceLogic ourPiece;
+        private readonly PieceLogic opponentPiece;
         private byte ourPieceAttackRangeSaver;
         private CapturesDelegate ourPieceCapturesSaver;
 
-        public CopyCapturesMethod(PieceLogic firstPiece, PieceLogic secondPiece, sbyte duration) : base(duration, 1, firstPiece, EffectName.CopyCaptureMethod)
+        public CopyCapturesMethod(PieceLogic firstPiece, PieceLogic secondPiece, sbyte duration) : base(duration, 1, firstPiece, "effect_copy_captures_method")
         {
             Duration = duration;
             ourPiece = firstPiece;

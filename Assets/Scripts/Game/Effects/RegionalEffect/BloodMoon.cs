@@ -3,7 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 namespace Game.Effects.RegionalEffect
 {

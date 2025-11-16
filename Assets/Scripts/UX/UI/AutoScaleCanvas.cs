@@ -1,25 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(CanvasScaler))]
-public class AutoScaleCanvas : MonoBehaviour
+namespace UX.UI
 {
-    private CanvasScaler _scaler;
-
-    private void Awake()
+    [RequireComponent(typeof(CanvasScaler))]
+    public class AutoScaleCanvas : MonoBehaviour
     {
-        _scaler = GetComponent<CanvasScaler>();
-    }
+        private CanvasScaler _scaler;
 
-    private void Update()
-    {
-        if (((float)Screen.height / (float)Screen.width) <= (9f / 16f))
+        private void Awake()
         {
-            _scaler.matchWidthOrHeight = 1;
+            _scaler = GetComponent<CanvasScaler>();
         }
-        else
+
+        private void Update()
         {
-            _scaler.matchWidthOrHeight = 0;
+            if (((float)Screen.height / (float)Screen.width) <= (9f / 16f))
+            {
+                _scaler.matchWidthOrHeight = 1;
+            }
+            else
+            {
+                _scaler.matchWidthOrHeight = 0;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using Game.Piece;
+﻿using System.Collections.Generic;
 using ScrutableObjects;
 using UnityEngine;
 
@@ -11,6 +10,6 @@ namespace Game.ScriptableObjects.Collections
     {
         [ShowProperties(LockObjectAtRuntime = true)]
         [SerializeField] 
-        public UDictionary<PieceType, PieceInfo> piecesData;
+        public List<PieceInfo> piecesData;
     }
 }

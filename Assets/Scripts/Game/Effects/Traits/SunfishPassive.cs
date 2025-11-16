@@ -1,17 +1,18 @@
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using static Game.Common.BoardUtils;
 using Game.Action;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SunfishPassive: Effect, IEndTurnEffect 
     {
-        private bool wasNight;
-        public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.SunfishPassive)
+        private bool active;
+        private bool check;
+        public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_sunfish_passive")
         {
             wasNight = !MatchManager.Ins.GameState.IsDay;
         }

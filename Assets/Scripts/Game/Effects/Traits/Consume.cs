@@ -3,14 +3,14 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Consume: Effect
     {
-        public Consume(PieceLogic piece) : base(-1, 1, piece, EffectName.Consume)
+        public Consume(PieceLogic piece) : base(-1, 1, piece, "effect_consume")
         {}
 
         public override void OnCallPieceAction(Action.Action action)
@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
             {
                 var captured = BoardUtils.PieceOn(action.Target);
 
-                if (captured.Effects.Any(e => e.EffectName == EffectName.Surpass)) return;
+                if (captured.Effects.Any(e => e.EffectName == "effect_surpass")) return;
                 
                 Piece.Quiets += captured.Quiets;
                 Piece.MoveRange.Add(AssetManager.Ins.PieceData[captured.Type].moveRange);

@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: BioluminescentBeacon
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 40
+  key: piece_bioluminescent_beacon
   prefab: {fileID: 6542683420904778980, guid: 7816737c64d1aa04a9464c9bd6b35429, type: 3}
   rank: 1
   moveRange: 0
   attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: bioluminescent_beacon
   hasSkill: 0
   normalSkillCooldown: -1
+  availableSlots: 0
+  logicClassName: BioluminescentBeacon

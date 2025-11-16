@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Anglerfish
   m_EditorClassIdentifier: 
-  type: 17
+  key: piece_anglerfish
   prefab: {fileID: 919132149155446097, guid: f8d6e5b9474dbf043b5426f331f2abf8, type: 3}
   rank: 5
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_anglerfish
   hasSkill: 1
   normalSkillCooldown: 3
+  availableSlots: 0
+  logicClassName: Anglerfish

@@ -1,7 +1,7 @@
 ﻿using Game.Action.Skills;
 using Game.Common;
 using Game.Piece;
-using Game.Piece.PieceLogic.Commanders;
+using Game.Piece.PieceLogic;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.ChrysosShop;
@@ -13,7 +13,7 @@ namespace Game.Action.Internal.Pending
     {
         private PieceConfig config;
 
-        public readonly PieceType CurrentPiece;
+        public readonly string CurrentPiece;
         public readonly PieceRank UpgradeFrom;
         public readonly PieceRank UpgradableTo;
         public readonly byte Cost;

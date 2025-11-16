@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
+using Game.Piece.PieceLogic.Commons;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Dominator: Effect
     {
-        public Dominator(PieceLogic piece) : base(-1, 1, piece, EffectName.Dominator)
+        public Dominator(PieceLogic piece) : base(-1, 1, piece, "effect_dominator")
         {}
         
         public override void OnCallMoveGen(List<Action.Action> actions)

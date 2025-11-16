@@ -1,13 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.Others
 {
     public class MelibePassive : Effect
     {
-        public MelibePassive(PieceLogic piece) : base(-1, 1, piece, EffectName.MelibePassive)
+        public MelibePassive(PieceLogic piece) : base(-1, 1, piece, "effect_melibe_passive")
         {
             
         }

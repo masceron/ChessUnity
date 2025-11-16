@@ -2,16 +2,16 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.RegionalEffect;
 using Game.Managers;
-using Game.Piece.PieceLogic;
 using System.Linq;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
 namespace Game.Effects.Condition
 {
     public class NativeGround : Effect
     {
-        private RegionalEffectType regionalEffect;
-        public NativeGround(PieceLogic piece, RegionalEffectType fitRegionalEffect) : base(-1, 1, piece, EffectName.NativeGround)
+        private readonly RegionalEffectType regionalEffect;
+        public NativeGround(PieceLogic piece, RegionalEffectType fitRegionalEffect) : base(-1, 1, piece, "effect_native_ground")
         {
             regionalEffect = fitRegionalEffect;
 
@@ -25,10 +25,10 @@ namespace Game.Effects.Condition
             var e = GetRandomBuffEffect();
 
             ActionManager.ExecuteImmediately(new ApplyEffect(e));
-            Debug.Log($"Recive effect {e.EffectName} duration = {e.Duration}");
+            Debug.Log($"Receive effect {e.EffectName} duration = {e.Duration}");
         }
 
-        public Effect GetRandomBuffEffect()
+        private Effect GetRandomBuffEffect()
         {
             var buffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Buff)
@@ -41,20 +41,20 @@ namespace Game.Effects.Condition
             return CreateEffectFromName(selectedEffectName, Piece);
         }
 
-        private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
+        private Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
             sbyte duration = (sbyte)Random.Range(1, 10);
             sbyte strength = 1;
 
             return effectName switch
             {
-                EffectName.Shield => new Buffs.Shield(piece),
-                EffectName.Carapace => new Buffs.Carapace(duration, piece),
-                EffectName.Haste => new Buffs.Haste(duration, strength, piece),
-                EffectName.Piercing => new Buffs.Piercing(duration, piece),
-                EffectName.HardenedShield => new Buffs.HardenedShield(piece),
-                EffectName.TrueBite => new Buffs.TrueBite(piece),
-                EffectName.Camouflage => new Buffs.Camouflage(piece),
+                "effect_shield" => new Buffs.Shield(piece),
+                "effect_carapace" => new Buffs.Carapace(duration, piece),
+                "effect_haste" => new Buffs.Haste(duration, strength, piece),
+                "effect_piercing" => new Buffs.Piercing(duration, piece),
+                "effect_hardened_shield" => new Buffs.HardenedShield(piece),
+                "effect_true_bite" => new Buffs.TrueBite(piece),
+                "effect_camouflage" => new Buffs.Camouflage(piece),
                 _ => new Buffs.Shield(piece)
             };
         }

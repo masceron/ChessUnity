@@ -5,7 +5,7 @@ using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using UnityEngine;
 
@@ -47,29 +47,29 @@ namespace Game.Relics.Pearl
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
-        private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
+        private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            sbyte randomDuration = (sbyte)new System.Random().Next(6, 8);
+            var randomDuration = (sbyte)new System.Random().Next(6, 8);
             return effectName switch
             {
-                EffectName.Shield => new Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Effects.Buffs.Carapace(randomDuration, piece),
-                EffectName.Haste => new Effects.Buffs.Haste(randomDuration, 1, piece),
-                EffectName.Piercing => new Effects.Buffs.Piercing(randomDuration, piece),
-                EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
-                EffectName.TrueBite => new Effects.Buffs.TrueBite(piece),
-                EffectName.Camouflage => new Effects.Buffs.Camouflage(piece),
+                "effect_shield" => new Effects.Buffs.Shield(piece),
+                "effect_carapace" => new Effects.Buffs.Carapace(randomDuration, piece),
+                "effect_haste" => new Effects.Buffs.Haste(randomDuration, 1, piece),
+                "effect_piercing" => new Effects.Buffs.Piercing(randomDuration, piece),
+                "effect_hardened_shield" => new Effects.Buffs.HardenedShield(piece),
+                "effect_true_bite" => new Effects.Buffs.TrueBite(piece),
+                "effect_camouflage" => new Effects.Buffs.Camouflage(piece),
 
 
                 // Debuffs
-                EffectName.Slow => new Effects.Debuffs.Slow(randomDuration, 1, piece),
-                EffectName.Blinded => new Effects.Debuffs.Blinded(randomDuration, 50, piece),
-                EffectName.Stunned => new Effects.Debuffs.Stunned(randomDuration, piece),
-                EffectName.Poison => new Effects.Debuffs.Poison(randomDuration, piece),
-                EffectName.Bleeding => new Effects.Debuffs.Bleeding(5, piece),
-                EffectName.Bound => new Effects.Debuffs.Bound(randomDuration, piece),
-                EffectName.Taunted => new Effects.Debuffs.Taunted(randomDuration, piece),
-                _ => new Effects.Buffs.Shield(piece)
+                "effect_slow" => new Effects.Debuffs.Slow(randomDuration, 1, piece),
+                "effect_blinded" => new Effects.Debuffs.Blinded(randomDuration, 50, piece),
+                "effect_stunned" => new Effects.Debuffs.Stunned(randomDuration, piece),
+                "effect_poison" => new Effects.Debuffs.Poison(randomDuration, piece),
+                "effect_bleeding" => new Effects.Debuffs.Bleeding(5, piece),
+                "effect_bound" => new Effects.Debuffs.Bound(randomDuration, piece),
+                "effect_taunted" => new Effects.Debuffs.Taunted(randomDuration, piece),
+                _ => null
             };
         }
         public void CompleteAction()

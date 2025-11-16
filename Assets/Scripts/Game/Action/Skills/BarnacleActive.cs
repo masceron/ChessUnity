@@ -1,7 +1,6 @@
 using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
-using Game.Effects;
 
 namespace Game.Action.Skills
 {
@@ -22,8 +21,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             foreach (var effect in PieceOn(Target).Effects
-                         .Where(effect => (effect.EffectName == EffectName.Shield
-                                           || effect.EffectName == EffectName.HardenedShield)))
+                         .Where(effect => (effect.EffectName == "effect_shield"
+                                           || effect.EffectName == "effect_hardened_shield")))
             {
                 if (effect.Duration > 0)
                     effect.Duration -= 1;

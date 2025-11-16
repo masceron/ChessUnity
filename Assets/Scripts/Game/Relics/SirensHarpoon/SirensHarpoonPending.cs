@@ -5,7 +5,7 @@ using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Relics.SirensHarpoon

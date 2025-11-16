@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 2
   icon: {fileID: 0}
-  key: destroy_enemy_when_move
+  key: effect_destroy_enemy_when_move

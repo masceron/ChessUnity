@@ -2,10 +2,9 @@
 using Game.Action;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Augmentation;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -15,7 +14,7 @@ namespace Game.Effects.Traits
         // ReSharper disable once MemberCanBePrivate.Global
         public readonly int Probability;
 
-        public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Evasion)
+        public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, "effect_evasion")
         {
             Probability = probability;
         }

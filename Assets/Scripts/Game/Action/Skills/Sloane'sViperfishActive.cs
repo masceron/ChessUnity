@@ -1,5 +1,5 @@
-﻿using Game.Action.Internal;
-using Game.Effects;
+﻿using System.Linq;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
@@ -38,16 +38,11 @@ namespace Game.Action.Skills
                                 bleeding = true;
                             }
                         }
+                        var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
 
-                        if (bleeding)
-                        {
-                            ActionManager.ExecuteImmediately(new ApplyEffect(new Poison(1, p)));
-                        }
-                        else
-                        {
-                            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(5, p)));
-                        }
-                    }
+                    ActionManager.ExecuteImmediately(bleeding
+                        ? new ApplyEffect(new Poison(1, p))
+                        : new ApplyEffect(new Bleeding(5, p)));
                 }
             }
         }

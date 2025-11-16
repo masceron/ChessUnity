@@ -1,10 +1,10 @@
-﻿using Game.Action;
+﻿using System.Linq;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Effects;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
@@ -32,30 +32,10 @@ namespace Game.Tile
                 var pOn = PieceOn(index);
                 if (pOn == null) continue;
 
-                bool canBeStunned = true;
-                for (int i = 0; i < pOn.Effects.Count; i++)
-                {
-                    if (pOn.Effects[i].EffectName == EffectName.Shield
-                        || pOn.Effects[i].EffectName == EffectName.HardenedShield
-                        || pOn.Effects[i].EffectName == EffectName.Carapace)
-                    {
-                        canBeStunned = false;
-                        break;
-                    }
-                }
-                
+                var canBeStunned = pOn.Effects.All(t => t.EffectName != "effect_shield" && t.EffectName != "effect_hardened_shield" && t.EffectName != "effect_carapace");
+
                 if (canBeStunned) ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn)));
             }
-        }
-
-        public override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
-        }
-
-        public override void OnFirstTurn(PieceLogic piece)
-        {
-            base.OnFirstTurn(piece);
         }
     }
 }

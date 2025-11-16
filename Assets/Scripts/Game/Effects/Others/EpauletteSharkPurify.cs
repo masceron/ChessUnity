@@ -1,12 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
     public class EpauletteSharkPurify : Effect, IEndTurnEffect
     {
+        public EpauletteSharkPurify(PieceLogic piece) : base(-1, 1, piece, "effect_epaulette_shark_purify")
         private bool yesterdayIsDay;
         public EpauletteSharkPurify(PieceLogic piece) : base(-1, 1, piece, EffectName.EpauletteSharkPurify)
         {

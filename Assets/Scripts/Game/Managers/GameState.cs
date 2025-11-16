@@ -5,21 +5,8 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects;
 using Game.Piece;
-using Game.Piece.PieceLogic;
-using Game.Piece.PieceLogic.Champions;
-using Game.Piece.PieceLogic.Commanders;
-using Game.Piece.PieceLogic.Commons;
-using Game.Piece.PieceLogic.Construct;
-using Game.Piece.PieceLogic.Construct.Bioluminescent_Beacon;
-using Game.Piece.PieceLogic.Construct.Fracture_Zone;
-using Game.Piece.PieceLogic.Construct.KelpForest;
-using Game.Piece.PieceLogic.Construct.PollutedRock;
-using Game.Piece.PieceLogic.Elites;
-using Game.Piece.PieceLogic.Summon;
-using Game.Piece.PieceLogic.Swarm;
 using Game.Relics;
 using Game.Relics.EyeOfMimic;
 using Game.Relics.FrostSigil;
@@ -33,6 +20,7 @@ using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
 using UX.UI;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Managers
 {
@@ -78,7 +66,6 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         private readonly List<Effect> effectObservers = new();
         public RegionalEffect RegionalEffect;
-        private readonly List<Effect> observers = new();
         public bool IsDay { get; private set; }
         public int CurrentTurn { get; private set; }
         private int countTurn;
@@ -124,82 +111,7 @@ namespace Game.Managers
 
         public void SpawnPiece(PieceConfig piece)
         {
-            PieceLogic p = piece.Type switch
-            {
-                PieceType.Velkaris => new Velkaris(piece),
-                PieceType.GuidingSiren => new GuidingSiren(piece),
-                PieceType.Barracuda => new Barracuda(piece),
-                PieceType.SeaUrchin => new SeaUrchin(piece),
-                PieceType.ElectricEel => new ElectricEel(piece),
-                PieceType.FlyingFish => new FlyingFish(piece),
-                PieceType.Chrysos => new Chrysos(piece),
-                PieceType.Anomalocaris => new Anomalocaris(piece),
-                PieceType.Archelon => new Archelon(piece),
-                PieceType.Thalassos => new Thalassos(piece),
-                PieceType.Pufferfish => new Pufferfish(piece),
-                PieceType.Swordfish => new Swordfish(piece),
-                PieceType.Lionfish => new Lionfish(piece),
-                PieceType.MorayEel => new MorayEel(piece),
-                PieceType.Stingray => new Stingray(piece),
-                PieceType.Seahorse => new Seahorse(piece),
-                PieceType.SeaStar => new SeaStar(piece),
-                PieceType.Anglerfish => new Anglerfish(piece),
-                PieceType.Remora => new Remora(piece),
-                PieceType.MedicinalLeech => new MedicinalLeech(piece),
-                PieceType.KelpBass => new KelpBass(piece),
-                PieceType.HourglassJelly => new HourglassJelly(piece),
-                PieceType.Archerfish => new Archerfish(piece),
-                PieceType.MoorishIdols => new MoorishIdols(piece),
-                PieceType.Helicoprion => new Helicoprion(piece),
-                PieceType.HermitCrab => new HermitCrab(piece),
-                PieceType.SeaTurtle => new SeaTurtle(piece),
-                PieceType.HorseLeech => new HorseLeech(piece),
-                PieceType.Megalodon => new Megalodon(piece),
-                PieceType.Temperantia => new Temperantia(piece),
-                PieceType.BobtailSquid => new BobtailSquid(piece),
-                PieceType.ClownFish => new ClownFish(piece),
-                PieceType.LivingCoral => new LivingCoral(piece),
-                PieceType.Humilitas => new Humilitas(piece),
-                PieceType.StoneCrab => new StoneCrab(piece),
-                PieceType.PhantomJelly => new PhantomJelly(piece),
-                PieceType.ChamberedNautilus => new ChamberedNautilus(piece),
-                PieceType.EpauletteShark => new EpauletteShark(piece),
-                PieceType.FractureZone => new FractureZone(piece),
-                PieceType.BioluminescentBeacon => new BioluminescentBeacon(piece),
-                PieceType.Sunfish => new Sunfish(piece),
-                PieceType.ContagionCorpse => new ContagionCorpse(piece),
-                PieceType.TigerPrawn => new TigerPrawn(piece),
-                PieceType.HammerOyster => new HammerOyster(piece),
-                PieceType.BottlenoseDolphin => new BottlenoseDolphin(piece),
-                PieceType.KelpForest => new KelpForest(piece),
-                PieceType.Melibe => new Melibe(piece),
-                PieceType.BlueDragon => new BlueDragon(piece),
-                PieceType.Fangtooth => new Fangtooth(piece),
-                PieceType.GulperEel => new GulperEel(piece),
-                PieceType.Hatchetfish => new Hatchetfish(piece),
-                PieceType.Lizardfish => new Lizardfish(piece),
-                PieceType.PistolShrimp => new PistolShrimp(piece),
-                PieceType.Slimehead => new Slimehead(piece),
-                PieceType.MarineIguana => new MarineIguana(piece),
-                PieceType.PollutedRock => new PollutedRock(piece),
-                PieceType.Barnacle => new Barnacle(piece),
-                PieceType.Phronima => new Phronima(piece),
-                PieceType.SloanesViperFish => new SloaneSViperfish(piece),
-                PieceType.FeatherStar => new FeatherStar(piece),
-                PieceType.ArmoredFeatherStar => new AmoredFeatherStar(piece),
-                PieceType.HumboldtSquid => new HumboldtSquid(piece),
-                PieceType.Grenadiers => new Grenadiers(piece),
-                PieceType.BlackSwallower => new BlackSwallower(piece),
-                PieceType.Snaggletooths => new Snaggletooths(piece),
-                PieceType.ArcticBrittleStar => new ArcticBrittleStar(piece),
-                PieceType.BrittleStar => new BrittleStar(piece),
-                PieceType.SpiderBrittleStar => new SpiderBrittleStar(piece),
-                PieceType.CoffinFish => new CoffinFish(piece),
-                PieceType.SnipeEel => new SnipeEel(piece),
-                _ => null
-            };
-
-            PieceBoard[piece.Index] = p;
+            PieceBoard[piece.Index] = PieceMaker.Get(piece);
         }
 
         public static RelicLogic GetRelicLogicByConfig(RelicConfig cfg)
@@ -225,7 +137,7 @@ namespace Game.Managers
             RegionalEffect = GetRegionalEffectByType(ret);
         }
 
-        public RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
+        private static RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
         {
             RegionalEffect re = ret switch
             {
@@ -237,41 +149,6 @@ namespace Game.Managers
             };
 
             return re;
-        }
-
-        public static Effect CreateEffect(EffectName effectName, sbyte duration,sbyte strength, PieceLogic piece)
-        {
-
-            return effectName switch
-            {
-                // Buffs 
-                EffectName.Carapace => new Effects.Buffs.Carapace(duration, piece),
-                EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
-                EffectName.Piercing => new Effects.Buffs.Piercing(duration, piece),
-                EffectName.Shield => new Effects.Buffs.Shield(piece),
-                EffectName.Camouflage => new Effects.Buffs.Camouflage(piece, strength),
-                EffectName.Haste => new Effects.Buffs.Haste(duration, strength, piece),
-                
-                // Traits 
-                EffectName.Evasion => new Effects.Traits.Evasion(duration, strength, piece),
-                EffectName.Construct => new Effects.Traits.Construct(piece),
-                EffectName.Demolisher => new Effects.Traits.Demolisher(piece),
-                EffectName.Consume => new Effects.Traits.Consume(piece),
-                EffectName.Surpass => new Effects.Traits.Surpass(piece),
-                EffectName.Ambush => new Effects.Traits.Ambush(piece),
-                EffectName.QuickReflex => new Effects.Traits.QuickReflex(piece),
-
-                // Debuffs
-                EffectName.Slow => new Effects.Debuffs.Slow(strength,duration, piece),
-                EffectName.Blinded => new Effects.Debuffs.Blinded(duration, strength, piece),
-                EffectName.Stunned => new Effects.Debuffs.Stunned(duration, piece),
-                EffectName.Poison => new Effects.Debuffs.Poison(duration, piece),
-                EffectName.Bleeding => new Effects.Debuffs.Bleeding(duration, piece),
-                EffectName.Bound => new Effects.Debuffs.Bound(duration, piece),
-                EffectName.Taunted => new Effects.Debuffs.Taunted(duration, piece),
-
-                _ => new Effects.Buffs.Shield(piece)
-            };
         }
 
         public void EffectCountdown()

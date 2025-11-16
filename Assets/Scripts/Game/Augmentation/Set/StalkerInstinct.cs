@@ -1,7 +1,7 @@
 using Game.Effects.Buffs;
 using Game.Effects;
-using Game.Piece.PieceLogic;
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation.Set
 {

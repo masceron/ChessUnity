@@ -1,7 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UX;
 
 namespace Game.Effects
@@ -38,112 +37,20 @@ namespace Game.Effects
     {
         Stackable, NonStackable, Additive
     }
-
-    public enum EffectName
-    {
-        Carapace,
-        Evasion,
-        Surpass,
-        Slow,
-        Blinded,
-        Ambush,
-        VelkarisMarked,
-        SirenDebuffer,
-        VelkarisMarker,
-        Demolisher,
-        ElectricEelVengeful,
-        Stunned,
-        Shield,
-        HardenedShield,
-        Piercing,
-        SlayersCoin,
-        SnappingStrike,
-        ArchelonDraw,
-        ThalassosShielder,
-        Dominator,
-        Poison,
-        SwordfishAttack,
-        Bleeding,
-        Bound,
-        LionfishVengeful,
-        MorayEelCamouflage,
-        Camouflage,
-        Taunted,
-        Consume,
-        Solitary,
-        Extremophile,
-        Haste,
-        RemoraMarked,
-        HourglassJelly,
-        FreeMovement,
-        DestroyEnemyWhenMove,
-        SeaTurtleCountdown,
-        FrenziedVeteran,
-        TrueBite,
-        CopyCaptureMethod,
-        ClownFishPassive,
-        LivingCoralPassive,
-        PureMinded,
-        Relentless,
-        DeathDefiance,
-        ChamberedNautilusHunger,
-        EpauletteSharkPurify,
-        DiurnalAmbush,
-        Infected,
-        Construct,
-        UndyingDevotion,
-        OneMoreTurn,
-        FractureZonePassive,
-        BioluminescentBeaconPassive,
-        SunfishPassive,
-        DormantFossilPassive,
-        BlueRingedOctopusPassive,
-        QuickReflex,
-        ContagionCorpsePassive,
-        NocturnalRangeBuff,
-        HammerOysterPassive,
-        EntanglingTentacles,
-        Silenced,
-        Charge,
-        KelpForestPassive,
-        BottlenoseDolphinPassive,
-        Controlled,
-        PollutedRockPassive,
-        TidalRetinaPassive,
-        MelibePassive,
-        BlueDragonPassive,
-        Sanity,
-        Marked,
-        Fear,
-        Frenzied,
-        NativeGround,
-        SlimeheadPassive,
-        Adaptation,
-        LongReach,
-        RayTailPassive,
-        HumboldtSquidPassive,
-        Frienzied,
-        BlackSwallowerVengeful,
-        KillPieceAfterSwitchTurn,
-        ArcherfishAccuracyPassive,
-        CoffinFishVengeful,
-        SnipeEelPassive,
-        ProtectiveLensPassive,
-    }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Effect: Comparer<Effect>
     {
+        public readonly string EffectName;
         public sbyte Duration;
         public sbyte Strength;
         public PieceLogic Piece;
-        public readonly EffectName EffectName;
         public readonly EffectCategory Category;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
         public readonly ObserverPriority Priority;
 
-        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, EffectName name)
+        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, string name)
         {
             Duration = duration;
             Strength = strength;

@@ -129,7 +129,8 @@ namespace UX.UI.Army.DesignArmy
                 piece.Placed = true;
             }
         }
-        public void Add(int rank, int file, PieceType type)
+
+        public void Add(int rank, int file, string type)
         {
             Troop newTroop = new Troop(type, rank, file); 
             Troops.Add(newTroop);

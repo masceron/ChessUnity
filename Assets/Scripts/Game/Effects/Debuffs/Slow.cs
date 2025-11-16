@@ -1,4 +1,4 @@
-﻿using Game.Piece.PieceLogic;
+﻿using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
@@ -10,7 +10,7 @@ namespace Game.Effects.Debuffs
             return baseRange - Strength;
         }
     
-        public Slow(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, EffectName.Slow)
+        public Slow(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_slow")
         {}
     }
 }

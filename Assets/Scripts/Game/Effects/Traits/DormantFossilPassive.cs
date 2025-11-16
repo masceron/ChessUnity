@@ -1,4 +1,4 @@
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DormantFossil;
@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
         private const byte TurnsToActive = 2;
         private byte numTurns = TurnsToActive;
         
-        public DormantFossilPassive(PieceLogic piece) : base(-1, -1, piece, EffectName.DormantFossilPassive)
+        public DormantFossilPassive(PieceLogic piece) : base(-1, -1, piece, "effect_dormant_fossil_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

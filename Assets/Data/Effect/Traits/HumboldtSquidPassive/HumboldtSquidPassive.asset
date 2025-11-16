@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 1
   icon: {fileID: 0}
-  key: Passive_Humboldt_Squid
+  key: effect_humboldt_squid_passive

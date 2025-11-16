@@ -1,4 +1,4 @@
-﻿using Game.Piece.PieceLogic;
+﻿using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
 namespace UX.UI.Ingame

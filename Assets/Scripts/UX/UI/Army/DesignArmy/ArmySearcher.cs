@@ -19,7 +19,7 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public GameObject troopDisplay;
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
 
-        public Dictionary<PieceType, PieceInfo> Data;
+        public Dictionary<string, PieceInfo> Data;
         private List<PieceInfo> lastSearchResult;
         private List<PieceInfo> greyOutPieces = new();
         private string lastKeyword;
@@ -40,6 +40,16 @@ namespace UX.UI.Army.DesignArmy
             ArmyDesign.Ins.board.OnRemoveTroop += (t) => FilterByCondition();
             lastSearchResult = Data.Values.ToList();
             FilterByCondition();
+            Data = new Dictionary<string, PieceInfo>();
+            foreach (var pieceInfo in piecesData.piecesData)
+            {
+                Data.Add(pieceInfo.key, pieceInfo);
+            }
+            Load();
+        }
+
+        private void Load()
+        {
             SearchByKeyword("");
         }
 

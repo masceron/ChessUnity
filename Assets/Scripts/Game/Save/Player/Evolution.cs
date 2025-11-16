@@ -1,11 +1,10 @@
-﻿using Game.Piece;
-using MemoryPack;
+﻿using MemoryPack;
 
 namespace Game.Save.Player
 {
     [MemoryPackable]
     public partial struct Evolution
     {
-        private PieceType piece;
+        private string piece;
     }
 }

@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 13
   activeWhen: 3
   icon: {fileID: 2800000, guid: 17f77964f912ea1459b176afd82781ab, type: 3}
-  key: Effect_Frenzied
+  key: effect_frenzied

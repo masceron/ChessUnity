@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: fracture_zone_passive
+  key: effect_fracture_zone_passive

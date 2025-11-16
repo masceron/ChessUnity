@@ -8,20 +8,18 @@ namespace Game.ScriptableObjects
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PieceInfo : ScriptableObject
     {
-        [SerializeField] public PieceType type;
+        [SerializeField] public string key;
         [SerializeField] public GameObject prefab;
-
         [SerializeField] public PieceRank rank;
         [SerializeField] public byte moveRange;
         [SerializeField] public byte attackRange;
-        
         [SerializeField] public Texture2D movePattern;
         [SerializeField] public Texture2D capturePattern;
         
-        [SerializeField] public string key;
         [SerializeField] public bool hasSkill;
         [SerializeField] public sbyte normalSkillCooldown;
         [SerializeField] public AugmentationSlotMask availableSlots;
+        [SerializeField] public string logicClassName;
         [Flags]
         public enum AugmentationSlotMask 
         { 

@@ -3,7 +3,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using static Game.Managers.MatchManager;
 
@@ -14,7 +14,7 @@ namespace Game.Effects.Traits
     {
         private List<PieceLogic> inRange = new();
         private readonly List<PieceLogic> shielding = new();
-        public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, EffectName.ThalassosShielder)
+        public ThalassosShielder(PieceLogic piece) : base(-1, 1, piece, "effect_thalassos_shielder")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             InRange();
@@ -46,7 +46,7 @@ namespace Game.Effects.Traits
 
             foreach (var pieceEntered in newInRange.Except(inRange))
             {
-                if (pieceEntered.Effects.Any(e => e.EffectName == EffectName.Shield) || !Roll(50)) continue;
+                if (pieceEntered.Effects.Any(e => e.EffectName == "effect_shield") || !Roll(50)) continue;
                 
                 shielding.Add(pieceEntered);
                 ActionManager.EnqueueAction(new ApplyEffect(new Shield(pieceEntered)));

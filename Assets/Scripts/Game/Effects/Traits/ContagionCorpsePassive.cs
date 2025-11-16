@@ -1,7 +1,7 @@
 using System.Linq;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 
 namespace Game.Effects.Traits
@@ -13,8 +13,9 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ContagionCorpsePassive : Effect
     {
-        private int radius = 2;
-        public ContagionCorpsePassive(PieceLogic piece) : base(-1, 1, piece, EffectName.ContagionCorpsePassive)
+        private const int Radius = 2;
+
+        public ContagionCorpsePassive(PieceLogic piece) : base(-1, 1, piece, "effect_contagion_corpse_passive")
         {
             HandlePassive();
         }
@@ -22,7 +23,7 @@ namespace Game.Effects.Traits
         private void HandlePassive()
         {
 
-            var inRadius = MoveEnumerators.AroundUntil(BoardUtils.RankOf(Piece.Pos), BoardUtils.FileOf(Piece.Pos), radius);
+            var inRadius = MoveEnumerators.AroundUntil(BoardUtils.RankOf(Piece.Pos), BoardUtils.FileOf(Piece.Pos), Radius);
             var posInRadius = inRadius
                 .Select(pos => BoardUtils.IndexOf(pos.Item1, pos.Item2))
                 .ToList();

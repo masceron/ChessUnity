@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Game.Action.Internal;
 using Game.Piece;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
@@ -19,8 +19,8 @@ namespace Game.Action.Skills
             var caller = PieceOn(Maker);
             var collection = !caller.Color ? WhiteCaptured() : BlackCaptured();
             
-            ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig(PieceType.SeaStar, caller.Color, (ushort)Target)));
-            collection.Remove(collection.First(p => p.Type == PieceType.SeaStar));
+            ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, (ushort)Target)));
+            collection.Remove(collection.First(p => p.Type == "piece_sea_star"));
             SetCooldown(Target, -1);
             SetCooldown(Maker, ((IPieceWithSkill) PieceOn(Maker)).TimeToCooldown);
         }

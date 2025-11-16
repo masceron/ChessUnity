@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 0
   activeWhen: 3
   icon: {fileID: 2800000, guid: 163621af2d81ba948b9649b5eca3047f, type: 3}
-  key: effect_ambush
+  key: effect_diurnal_ambush
