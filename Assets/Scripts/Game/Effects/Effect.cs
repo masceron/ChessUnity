@@ -126,7 +126,8 @@ namespace Game.Effects
         KillPieceAfterSwitchTurn,
         ArcherfishAccuracyPassive,
         CoffinFishVengeful,
-        SnipeEelPassive
+        SnipeEelPassive,
+        ProtectiveLensPassive,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

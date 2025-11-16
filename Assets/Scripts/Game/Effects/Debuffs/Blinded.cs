@@ -1,4 +1,6 @@
 ﻿using Game.Action;
+using Game.Augmentation;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 
@@ -18,6 +20,12 @@ namespace Game.Effects.Debuffs
         public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Maker != Piece.Pos) return;
+            
+            PieceLogic pieceTarget = BoardUtils.PieceOn(action.Target);
+            if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ProtectiveLens))
+            {
+                action.Result = ActionResult.Failed;
+            }
             
             if (MatchManager.Roll(Probability))
             {
