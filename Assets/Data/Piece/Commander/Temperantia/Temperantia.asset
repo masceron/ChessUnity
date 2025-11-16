@@ -19,6 +19,7 @@ MonoBehaviour:
   attackRange: 4
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: temperantia
+  key: piece_temperantia
   hasSkill: 1
   normalSkillCooldown: 3
+  availableSlots: -1
