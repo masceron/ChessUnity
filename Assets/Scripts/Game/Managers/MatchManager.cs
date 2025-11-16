@@ -39,10 +39,6 @@ namespace Game.Managers
 
         private void MakePieces(LineupConfig lineup)
         {
-            foreach (var keyValuePair in AssetManager.Ins.PieceData)
-            {
-                PieceMaker.Get(new PieceConfig(keyValuePair.Key, false, 2));
-            }
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
             
