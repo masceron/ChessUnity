@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic.Elites
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SnipeEel : PieceLogic, IPieceWithSkill
     {
-        public SnipeEel(PieceConfig cfg) : base(cfg, SnipeEelMoves.Quiets, KingMoves.Captures)
+        public SnipeEel(PieceConfig cfg) : base(cfg, SnipeEelMoves.Quiets, None.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnipeEelPassive(this)));
             Skills = list =>
