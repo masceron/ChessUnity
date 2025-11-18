@@ -7,6 +7,7 @@ using Game.Common;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
+using Game.Relics.Commons;
 using Game.Tile;
 using UnityEngine;
 using UX.UI;
@@ -27,14 +28,14 @@ namespace Game.Managers
         [NonSerialized]
         public BoardViewer InputProcessor;
 
-        public Vector2Int startingSize{get; private set;}
+        public Vector2Int StartingSize {get; private set;}
 
         private void MakeBoard(GameConfig cfg)
         {
             TileManager.Ins.Spawn();
             FormationManager.Ins.Initialize();
             // For testing purpose
-            FormationManager.Ins.SetFormation(PosMap(15, startingSize), new PredatorLair(cfg.FirstSideToMove));
+            FormationManager.Ins.SetFormation(PosMap(15, StartingSize), new PredatorLair(cfg.FirstSideToMove));
         }
 
         private void MakePieces(LineupConfig lineup)
@@ -42,7 +43,7 @@ namespace Game.Managers
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
             
-            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, startingSize), cfg.Augmentations)))
+            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, StartingSize), cfg.Augmentations)))
             {
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
             }
@@ -57,7 +58,7 @@ namespace Game.Managers
 
         public void Init(GameConfig cfg)
         {
-            startingSize = cfg.StartingSize;
+            StartingSize = cfg.StartingSize;
             MakeGame(cfg);
             MakeBoard(cfg);
             
@@ -75,8 +76,8 @@ namespace Game.Managers
         }
         private void MakeRelics(RelicConfig white, RelicConfig black)
         {
-            GameState.WhiteRelic = GameState.GetRelicLogicByConfig(white);
-            GameState.BlackRelic = GameState.GetRelicLogicByConfig(black);
+            GameState.WhiteRelic = RelicMaker.Get(white);
+            GameState.BlackRelic = RelicMaker.Get(black);
         }
 
         private void MakeRegionalEffect(RegionalEffectType ret)

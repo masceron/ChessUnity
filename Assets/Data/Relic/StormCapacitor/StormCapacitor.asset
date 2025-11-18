@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdee4035d1e7499a89a7d83135831603, type: 3}
   m_Name: StormCapacitor
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.RelicInfo
-  type: 5
-  key: Relic_Storm_Capacitor
+  key: relic_storm_capacitor
   icon: {fileID: 0}
   cooldown: 1
+  logicClassName: StormCapacitor

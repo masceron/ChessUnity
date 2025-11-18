@@ -8,19 +8,12 @@ using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece;
 using Game.Relics;
-using Game.Relics.EyeOfMimic;
-using Game.Relics.FrostSigil;
-using Game.Relics.Pearl;
-using Game.Relics.RottingScythe;
-using Game.Relics.StormCapacitor;
-using Game.Relics.SeafoamPhial;
-using Game.Relics.SirensHarpoon;
-using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
 using UX.UI;
 using Game.Piece.PieceLogic.Commons;
+using Game.Relics.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Managers
@@ -113,24 +106,6 @@ namespace Game.Managers
         public void SpawnPiece(PieceConfig piece)
         {
             PieceBoard[piece.Index] = PieceMaker.Get(piece);
-        }
-
-        public static RelicLogic GetRelicLogicByConfig(RelicConfig cfg)
-        {
-            RelicLogic rl = cfg.Type switch
-            {
-                RelicType.RottingScythe => new RottingScythe(cfg),
-                RelicType.EyeOfMimic => new EyeOfMimic(cfg),
-                RelicType.FrostSigil => new FrostSigil(cfg),
-                RelicType.CommonPearl => new CommonPearl(cfg),
-                RelicType.BlackPearl => new BlackPearl(cfg),
-                RelicType.SeafoamPhial => new SeafoamPhial(cfg),
-                RelicType.StormCapacitor => new StormCapacitor(cfg),
-                RelicType.SirensHarpoon => new SirensHarpoon(cfg),
-                RelicType.MangroveCharm => new MangroveCharm(cfg),
-                _ => null
-            };
-            return rl;
         }
 
         public void MakeRegionalEffect(RegionalEffectType ret)
