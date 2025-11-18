@@ -29,9 +29,12 @@ namespace Game.Effects.RegionalEffect
                     if(!IsColumnFull(i)) continue;
                     columnList.Add(i);
                 }
-                var random = new System.Random();
-                var randomColumn = columnList[random.Next(columnList.Count)];   
-                ApplyEffectToColumn(randomColumn);
+                if (columnList.Count > 0)
+                {
+                    var random = new System.Random();
+                    var randomColumn = columnList[random.Next(columnList.Count)];   
+                    ApplyEffectToColumn(randomColumn);
+                }
                 isActive = 0;
             }
         }
