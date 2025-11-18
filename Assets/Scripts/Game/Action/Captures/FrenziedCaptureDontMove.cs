@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrienziedCapture: Action, IPendingAble
+    public class FrenziedCaptureDontMove: Action, IDontEndTurn
     {
-        public FrienziedCapture(int f, int t) : base(f, true)
+        public FrenziedCaptureDontMove(int f, int t) : base(f, true)
         {
             Maker = f;
             Target = t;
@@ -18,15 +18,9 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-        }
-        public void CompleteAction()
-        {
-            Debug.Log("Complete FrienziedCapture");
+            Debug.Log("Complete FrenziedCaptureDontMove");
             PieceManager.Ins.Destroy(Target);
-            PieceManager.Ins.Move(Maker, Target);
             MatchManager.Ins.GameState.Kill(Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
         }
     }
 }

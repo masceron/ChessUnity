@@ -38,9 +38,9 @@ namespace Game.Effects.Traits
                     count++;
                 }
             }
-            if (count >= 4)
+            if (count >= 5)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Frienzied(Piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Frenzied(Piece)));
                 count = 0;
             }
         }
