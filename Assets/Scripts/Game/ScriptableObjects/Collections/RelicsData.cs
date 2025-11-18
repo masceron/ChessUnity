@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using System.Collections.Generic;
+using Game.Common;
 using Game.Relics;
 using ScrutableObjects;
 using UnityEngine;
@@ -10,7 +11,6 @@ namespace Game.ScriptableObjects.Collections
     public class RelicsData: ScriptableObject
     {
         [ShowProperties(LockObjectAtRuntime = true)]
-        [SerializeField] 
-        public UDictionary<RelicType, RelicInfo> relicsData;
+        [SerializeField] public List<RelicInfo> relicsData;
     }
 }

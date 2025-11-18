@@ -3,6 +3,8 @@ using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
+using Game.Relics.Commons;
+using Game.Save.Relics;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others
@@ -22,12 +24,12 @@ namespace Game.Effects.Others
             if (!IsAtPromotionRank(piecePos)) return;
             ActionManager.EnqueueAction(new KillPiece(piecePos));
 
-            if (Piece.Color == true)
+            if (Piece.Color)
             {
                 var blackRelic = GetRelicOf(true);
-                if (blackRelic is not { Type: RelicType.CommonPearl }) return;
+                if (blackRelic is not { type: "relic_common_pearl" }) return;
                 MatchManager.Ins.GameState.BlackRelic =
-                    GameState.GetRelicLogicByConfig(new RelicConfig(RelicType.BlackPearl, true, 4));
+                    RelicMaker.Get(new RelicConfig("relic_black_pearl", true, 4));
                 // var whiteRelic = GetRelicOf(false);
                 // if (whiteRelic != null && whiteRelic.Type == RelicType.CommonPearl)
                 // {
@@ -39,9 +41,9 @@ namespace Game.Effects.Others
             else
             {
                 var whiteRelic = GetRelicOf(false);
-                if (whiteRelic is not { Type: RelicType.CommonPearl }) return;
+                if (whiteRelic is not { type: "relic_common_pearl" }) return;
                 MatchManager.Ins.GameState.WhiteRelic =
-                    GameState.GetRelicLogicByConfig(new RelicConfig(RelicType.BlackPearl, false, 4));
+                    RelicMaker.Get(new RelicConfig("relic_black_pearl", false, 4));
             }
 
             MatchManager.Ins.InputProcessor.UpdateRelic();

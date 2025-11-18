@@ -2,6 +2,7 @@
 using System.Linq;
 using System;
 using Game.Common;
+using Game.Managers;
 using Game.Relics;
 using Game.Save.Relics;
 using Game.ScriptableObjects;
@@ -27,8 +28,8 @@ namespace UX.UI.Army.DesignArmy
         private List<RelicInfo> searchResult;
         private string lastKeyword;
         private readonly List<ArmyDesignRelic> pool = new();
-        private RelicType? selecting;
-        public Action<RelicType?> OnRelicSelecting;
+        private string selecting;
+        public Action<string> OnRelicSelecting;
 
         protected override void Awake()
         {
@@ -55,7 +56,7 @@ namespace UX.UI.Army.DesignArmy
         public void Load(Relic? relic)
         {
             relicText.text = !relic.HasValue ? Localizer.GetText("game", "relic", null) 
-                : Localizer.GetText("relic_name", relicsData.relicsData[relic.Value.Type].key, null);
+                : Localizer.GetText("relic_name", AssetManager.Ins.RelicData[relic.Value.Type].key, null);
         }
 
         private void OnDisable()
@@ -78,7 +79,7 @@ namespace UX.UI.Army.DesignArmy
             }
             else
             {
-                searchResult = relicsData.relicsData.Values.Where(r => 
+                searchResult = relicsData.relicsData.Where(r => 
                     r.key.Contains(start)).ToList();
             }
             
@@ -130,9 +131,9 @@ namespace UX.UI.Army.DesignArmy
         {
             if (selecting != null)
             {
-                if (selecting == relic.Relic.type) return;
+                if (selecting == relic.Relic.key) return;
             }
-            selecting = relic.Relic.type;
+            selecting = relic.Relic.key;
             OnRelicSelecting?.Invoke(selecting);
             description.Display(relic.Relic);
         }
@@ -147,7 +148,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void SelectRelic()
         {
-            ArmyDesign.Ins.SelectRelic((RelicType)selecting);
+            ArmyDesign.Ins.SelectRelic(selecting);
             relicText.text = description.nameText.text;
             Toggle();
         }
