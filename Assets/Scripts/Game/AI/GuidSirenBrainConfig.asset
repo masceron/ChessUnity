@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe93153f6b3af047be9e5806ed09708, type: 3}
+  m_Name: GuidSirenBrainConfig
+  m_EditorClassIdentifier: Assembly-CSharp::Game.AI.BrainConfig
+  Considerations:
+  - Consideration: {fileID: 11400000, guid: 722d004ca396ee1419bc4c2a7bb2d467, type: 2}
+    Weight: 6
+  - Consideration: {fileID: 11400000, guid: a1d911d900b4b2b408689de20176fc7e, type: 2}
+    Weight: 5
+  - Consideration: {fileID: 11400000, guid: 68a110465a5fa754f95eb1c867bcd9a0, type: 2}
+    Weight: 6

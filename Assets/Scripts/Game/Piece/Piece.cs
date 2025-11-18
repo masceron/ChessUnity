@@ -1,3 +1,4 @@
+using Game.AI;
 using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using UnityEngine;
@@ -46,6 +47,7 @@ namespace Game.Piece
             file = fileTo;
             
             Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
+            GetComponent<BrainComponent>().MakerIndex = IndexOf(rank, file);
         }
     }
 

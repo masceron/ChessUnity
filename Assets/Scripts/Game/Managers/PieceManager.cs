@@ -1,3 +1,4 @@
+using Game.AI;
 using Game.Common;
 using Game.Piece;
 using static Game.Common.BoardUtils;
@@ -16,7 +17,10 @@ namespace Game.Managers
             var info = AssetManager.Ins.PieceData[config.Type];
             var prefab = info.prefab;
             var p = Instantiate(prefab, transform).AddComponent<Game.Piece.Piece>();
-            
+            var bc = p.gameObject.AddComponent<BrainComponent>();
+            bc.Config = AssetManager.Ins.BrainConfigTest;
+            bc.MakerIndex = pos;
+
             pieces[pos] = p;
             p.Spawn(pos, config.Color);
         }

@@ -7,6 +7,7 @@ using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEngine;
 using Game.Augmentation;
+using Game.AI;
 
 namespace Game.Managers
 {
@@ -26,6 +27,8 @@ namespace Game.Managers
         [SerializeField] private AugmentationData augmentationData;
         [SerializeField] public RegionalsData regionalsData;
         [SerializeField] private FormationsData environmentsData;
+
+        public BrainConfig BrainConfigTest;
 
         protected override void Awake()
         {
