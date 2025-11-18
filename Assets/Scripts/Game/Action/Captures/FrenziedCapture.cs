@@ -1,10 +1,11 @@
 using Game.Managers;
 using Game.Action.Internal.Pending;
 using UnityEngine;
+
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrenziedCapture: Action, IDontEndTurn
+    public class FrenziedCapture: Action, IDontEndTurn, ICaptures
     {
         public FrenziedCapture(int f, int t) : base(f, true)
         {
