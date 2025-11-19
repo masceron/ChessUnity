@@ -1,20 +1,20 @@
-using Game.Piece.PieceLogic;
 using Game.Action.Internal;
 using Game.Action;
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     public class Sanity : Effect, IApplyEffect
     {
-        private readonly List<EffectName> blockedEffects = new()
+        private readonly List<string> blockedEffects = new()
         {
-            EffectName.Frenzied,
-            EffectName.Controlled,
-            EffectName.Fear,
-            EffectName.Taunted
+            "effect_frenzied",
+            "effect_controlled",
+            "effect_fear",
+            "effect_taunted"
         };
-        public Sanity(sbyte duration, PieceLogic owner) : base(duration, 1, owner, EffectName.Sanity)
+        public Sanity(sbyte duration, PieceLogic owner) : base(duration, 1, owner, "effect_sanity")
         {
         }
 

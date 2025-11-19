@@ -9,10 +9,12 @@ namespace Game.Save.Stage
     {
         public readonly bool FirstSideToMove;
         public readonly bool OurSide;
+        public readonly bool CanChoosePiece;
         public readonly Vector2Int StartingSize;
 
-        public GameConfig(bool firstSideToMove, bool ourSide, Vector2Int startingSize)
+        public GameConfig(bool firstSideToMove, bool ourSide, Vector2Int startingSize, bool canChoosePiece = false)
         {
+            CanChoosePiece = canChoosePiece;
             FirstSideToMove = firstSideToMove;
             OurSide = ourSide;
             StartingSize = startingSize;

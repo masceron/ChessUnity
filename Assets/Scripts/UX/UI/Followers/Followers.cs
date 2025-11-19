@@ -24,7 +24,7 @@ namespace UX.UI.Followers
             savedArmies.Load();
         }
 
-        private void Awake()
+        protected override void Awake()
         {
             pieceButton.onValueChanged.AddListener(delegate
             {

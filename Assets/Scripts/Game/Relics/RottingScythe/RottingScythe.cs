@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Game.Effects;
 using Game.Managers;
 using UX.UI.Ingame;
 
@@ -19,7 +18,7 @@ namespace Game.Relics.RottingScythe
             {
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
-                    if (piece == null || !piece.Effects.Any(e => e.EffectName == EffectName.Infected)) continue;
+                    if (piece == null || piece.Effects.All(e => e.EffectName != "effect_infected")) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                     var pending = new RottingScythePending(this, piece.Pos, piece.Color);
                     BoardViewer.ListOf.Add(pending);

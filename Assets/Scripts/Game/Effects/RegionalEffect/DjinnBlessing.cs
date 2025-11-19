@@ -1,11 +1,10 @@
 using Game.Managers;
-using Game.Piece.PieceLogic;
 using UnityEngine;
 using Game.Action.Internal;
 using Game.Action;
-using System.Collections.Generic;
 using System.Linq;
 using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.RegionalEffect
 {
@@ -16,43 +15,76 @@ namespace Game.Effects.RegionalEffect
         {
             isActive = 1;
         }
+
+        private static Effect CreateEffect(string effectName, sbyte duration,sbyte strength, PieceLogic piece)
+        {
+
+            return effectName switch
+            {
+                // Buffs 
+                "effect_carapace" => new Buffs.Carapace(duration, piece),
+                "effect_hardened_shield" => new Buffs.HardenedShield(piece),
+                "effect_piercing" => new Buffs.Piercing(duration, piece),
+                "effect_shield" => new Buffs.Shield(piece),
+                "effect_camouflage" => new Buffs.Camouflage(piece, strength),
+                "effect_haste" => new Buffs.Haste(duration, strength, piece),
+                
+                // Traits 
+                "effect_evasion" => new Traits.Evasion(duration, strength, piece),
+                "effect_construct" => new Traits.Construct(piece),
+                "effect_demolisher" => new Traits.Demolisher(piece),
+                "effect_consume" => new Traits.Consume(piece),
+                "effect_surpass" => new Traits.Surpass(piece),
+                "effect_ambush" => new Traits.Ambush(piece),
+                "effect_quick_reflex" => new Traits.QuickReflex(piece),
+
+                // Debuffs
+                "effect_slow" => new Debuffs.Slow(strength,duration, piece),
+                "effect_blinded" => new Debuffs.Blinded(duration, strength, piece),
+                "effect_stunned" => new Debuffs.Stunned(duration, piece),
+                "effect_poison" => new Debuffs.Poison(duration, piece),
+                "effect_bleeding" => new Debuffs.Bleeding(duration, piece),
+                "effect_bound" => new Debuffs.Bound(duration, piece),
+                "effect_taunted" => new Debuffs.Taunted(duration, piece),
+
+                _ => new Buffs.Shield(piece)
+            };
+        }
         protected override void ApplyEffect(int currentTurn)
         {
             Debug.Log("isActive: " + isActive);
             if (isActive == 3)
             {
-                PieceLogic[] board = MatchManager.Ins.GameState.PieceBoard;
+                var board = MatchManager.Ins.GameState.PieceBoard;
                 
-                List<PieceLogic> validPieces = new List<PieceLogic>();
-                foreach(PieceLogic piece in board) {
-                    if (piece != null) {
-                        validPieces.Add(piece);
-                    }
-                }
-                
+                var validPieces = board.Where(piece => piece != null).ToList();
+
                 if (validPieces.Count > 0) {
-                    int randomInd = Random.Range(0, validPieces.Count);
+                    var randomInd = Random.Range(0, validPieces.Count);
                     if (validPieces[randomInd].PieceRank == PieceRank.Commander) return;
 
-                    sbyte duration = (sbyte)Random.Range(1, 10);
-                    sbyte strength = (sbyte)Random.Range(1, 10);
-                    int roll = Random.Range(1, 101);
+                    var duration = (sbyte)Random.Range(1, 10);
+                    var strength = (sbyte)Random.Range(1, 10);
+                    var roll = Random.Range(1, 101);
                     Debug.Log("roll: " + roll + " " + validPieces[randomInd].Type);
-                    if (roll <= 45) {
-                        ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(validPieces[randomInd], duration, strength)));
-                    }
-                    else if (roll <= 90) {
-                        ActionManager.EnqueueAction(new ApplyEffect(GetRandomDebuffEffect(validPieces[randomInd], duration, strength)));
-                    }
-                    else {
-                        ActionManager.EnqueueAction(new KillPiece(validPieces[randomInd].Pos));
+                    switch (roll)
+                    {
+                        case <= 45:
+                            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(validPieces[randomInd], duration, strength)));
+                            break;
+                        case <= 90:
+                            ActionManager.EnqueueAction(new ApplyEffect(GetRandomDebuffEffect(validPieces[randomInd], duration, strength)));
+                            break;
+                        default:
+                            ActionManager.EnqueueAction(new KillPiece(validPieces[randomInd].Pos));
+                            break;
                     }
                 }
                 isActive = 0;
             }
             isActive++;
         }
-        private Effect GetRandomDebuffEffect(PieceLogic piece, sbyte duration, sbyte strength)
+        private static Effect GetRandomDebuffEffect(PieceLogic piece, sbyte duration, sbyte strength)
         {
             var debuffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
@@ -61,7 +93,7 @@ namespace Game.Effects.RegionalEffect
             
             var random = new System.Random();
             var selectedEffectName = debuffEffects[random.Next(debuffEffects.Length)];
-            return GameState.CreateEffect(selectedEffectName, duration, strength, piece);
+            return CreateEffect(selectedEffectName, duration, strength, piece);
         }
         private Effect GetRandomBuffEffect(PieceLogic piece, sbyte duration, sbyte strength)
         {
@@ -72,7 +104,7 @@ namespace Game.Effects.RegionalEffect
             
             var random = new System.Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            return GameState.CreateEffect(selectedEffectName, duration, strength, piece);
+            return CreateEffect(selectedEffectName, duration, strength, piece);
         }
 
     }

@@ -42,7 +42,7 @@ namespace Game.Relics.StormCapacitor
                     hoveringTile = thisTile;
                     TileManager.Ins.MarkTileInRange(hoveringTile, size, isMark: true, onlyMarkEnemy: false);
                     
-                    int pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
+                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
                     var pending = new StormCapacitorPending(pos ,hoveringTile, this, size);
                     var comparer = new ActionComparer();
 

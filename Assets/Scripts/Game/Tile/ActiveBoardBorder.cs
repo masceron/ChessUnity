@@ -19,7 +19,7 @@ namespace Game.Tile
         [Header("Border Settings")]
         public float lineWidth = 0.1f;
         public UnityEngine.Color lineColor = UnityEngine.Color.blue;
-        public bool tightBorder = false; // use Minmax or Tight Outer Border
+        public bool tightBorder; // use Minmax or Tight Outer Border
 
         [Header("Middle Line Settings")]
         public UnityEngine.Color middleLineColor = UnityEngine.Color.red;
@@ -62,11 +62,11 @@ namespace Game.Tile
 
             // compute min/max for middle line (kept)
             minX = boardWidth; maxX = -1; minY = boardHeight; maxY = -1;
-            for (int x = 0; x < boardWidth; x++)
+            for (var x = 0; x < boardWidth; x++)
             {
-                for (int y = 0; y < boardHeight; y++)
+                for (var y = 0; y < boardHeight; y++)
                 {
-                    int index = IndexOf(x, y);
+                    var index = IndexOf(x, y);
                     if (ActiveBoard[index])
                     {
                         if (x < minX) minX = x;
@@ -98,8 +98,8 @@ namespace Game.Tile
 
         private void DrawMinMaxBorder()
         {
-            float half = 0.5f;
-            Vector3[] corners = new Vector3[]
+            var half = 0.5f;
+            var corners = new Vector3[]
             {
                 new Vector3(minX - half, heightOffset, minY - half),
                 new Vector3(minX - half, heightOffset, maxY + 1 - half),
@@ -125,16 +125,16 @@ namespace Game.Tile
             // Each edge stored as undirected canonical pair (min,max).
             var edgeSet = new HashSet<(Vector2Int a, Vector2Int b)>();
 
-            for (int x = 0; x < boardWidth; x++)
+            for (var x = 0; x < boardWidth; x++)
             {
-                for (int y = 0; y < boardHeight; y++)
+                for (var y = 0; y < boardHeight; y++)
                 {
                     if (!IsActive(x, y)) continue;
 
-                    Vector2Int bl = new Vector2Int(2 * x - 1, 2 * y - 1);
-                    Vector2Int tl = new Vector2Int(2 * x - 1, 2 * y + 1);
-                    Vector2Int tr = new Vector2Int(2 * x + 1, 2 * y + 1);
-                    Vector2Int br = new Vector2Int(2 * x + 1, 2 * y - 1);
+                    var bl = new Vector2Int(2 * x - 1, 2 * y - 1);
+                    var tl = new Vector2Int(2 * x - 1, 2 * y + 1);
+                    var tr = new Vector2Int(2 * x + 1, 2 * y + 1);
+                    var br = new Vector2Int(2 * x + 1, 2 * y - 1);
 
                     // add exposed edges: if neighbor tile exists and active -> that edge is internal, ignored.
                     if (!IsActive(x - 1, y)) ToggleEdge(edgeSet, tl, bl); // left
@@ -170,7 +170,7 @@ namespace Game.Tile
             foreach (var start in startCandidates)
             {
                 // if all incident edges already used, skip
-                bool allUsed = true;
+                var allUsed = true;
                 foreach (var nb in adj[start])
                 {
                     if (!usedEdges.Contains((start, nb)) && !usedEdges.Contains((nb, start)))
@@ -181,11 +181,11 @@ namespace Game.Tile
                 if (allUsed) continue;
 
                 // pick an initial previous such that we approach start from "outside" (a point slightly left)
-                Vector2Int prev = new Vector2Int(start.x - 1, start.y);
-                Vector2Int curr = start;
+                var prev = new Vector2Int(start.x - 1, start.y);
+                var curr = start;
 
                 var loop = new List<Vector2Int>();
-                int safety = 0;
+                var safety = 0;
                 while (true)
                 {
                     safety++;
@@ -194,7 +194,7 @@ namespace Game.Tile
                     loop.Add(curr);
 
                     // choose next neighbor:
-                    Vector2Int next = ChooseNextNeighbor_KeepStraightThenAngle(adj, curr, prev, usedEdges);
+                    var next = ChooseNextNeighbor_KeepStraightThenAngle(adj, curr, prev, usedEdges);
                     if (next == new Vector2Int(int.MinValue, int.MinValue)) break;
 
                     // mark this directed edge visited
@@ -222,14 +222,14 @@ namespace Game.Tile
                 return;
             }
 
-            List<Vector2Int> outer = loops.OrderByDescending(l => Mathf.Abs(PolygonArea(l))).First();
+            var outer = loops.OrderByDescending(l => Mathf.Abs(PolygonArea(l))).First();
 
             // Step 5: convert to world positions (divide coords by 2)
             var positions = new List<Vector3>(outer.Count);
             foreach (var v in outer)
             {
-                float wx = v.x / 2f;
-                float wz = v.y / 2f;
+                var wx = v.x / 2f;
+                var wz = v.y / 2f;
                 positions.Add(new Vector3(wx, heightOffset, wz));
             }
 
@@ -246,7 +246,7 @@ namespace Game.Tile
         // Toggle undirected edge: add if missing, remove if present (internal edges cancel)
         private void ToggleEdge(HashSet<(Vector2Int, Vector2Int)> set, Vector2Int a, Vector2Int b)
         {
-            (Vector2Int, Vector2Int) key = (a.x < b.x || (a.x == b.x && a.y <= b.y)) ? (a, b) : (b, a);
+            var key = (a.x < b.x || (a.x == b.x && a.y <= b.y)) ? (a, b) : (b, a);
             if (set.Contains(key)) set.Remove(key);
             else set.Add(key);
         }
@@ -293,15 +293,15 @@ namespace Game.Tile
             }
 
             // else choose by smallest CCW angle from incoming direction
-            float incomingAngle = Mathf.Atan2(inVec.y, inVec.x);
-            float bestDelta = float.MaxValue;
-            Vector2Int best = candidates[0];
+            var incomingAngle = Mathf.Atan2(inVec.y, inVec.x);
+            var bestDelta = float.MaxValue;
+            var best = candidates[0];
 
             foreach (var n in candidates)
             {
                 var outVec = new Vector2Int(n.x - curr.x, n.y - curr.y);
-                float candAngle = Mathf.Atan2(outVec.y, outVec.x);
-                float delta = candAngle - incomingAngle;
+                var candAngle = Mathf.Atan2(outVec.y, outVec.x);
+                var delta = candAngle - incomingAngle;
                 while (delta < 0) delta += Mathf.PI * 2f;
                 while (delta >= Mathf.PI * 2f) delta -= Mathf.PI * 2f;
                 if (delta < bestDelta)
@@ -316,27 +316,27 @@ namespace Game.Tile
 
         private bool IsColinearAndSameDir(Vector2Int a, Vector2Int b)
         {
-            long cross = (long)a.x * b.y - (long)a.y * b.x;
+            var cross = (long)a.x * b.y - (long)a.y * b.x;
             if (cross != 0) return false;
             // dot > 0 => same direction
-            long dot = (long)a.x * b.x + (long)a.y * b.y;
+            var dot = (long)a.x * b.x + (long)a.y * b.y;
             return dot > 0;
         }
 
         private List<Vector2Int> SimplifyColinear(List<Vector2Int> poly)
         {
             var res = new List<Vector2Int>();
-            int n = poly.Count;
-            for (int i = 0; i < n; i++)
+            var n = poly.Count;
+            for (var i = 0; i < n; i++)
             {
-                Vector2Int prev = poly[(i - 1 + n) % n];
-                Vector2Int curr = poly[i];
-                Vector2Int next = poly[(i + 1) % n];
+                var prev = poly[(i - 1 + n) % n];
+                var curr = poly[i];
+                var next = poly[(i + 1) % n];
 
-                Vector2Int v1 = new Vector2Int(curr.x - prev.x, curr.y - prev.y);
-                Vector2Int v2 = new Vector2Int(next.x - curr.x, next.y - curr.y);
+                var v1 = new Vector2Int(curr.x - prev.x, curr.y - prev.y);
+                var v2 = new Vector2Int(next.x - curr.x, next.y - curr.y);
 
-                long cross = (long)v1.x * v2.y - (long)v1.y * v2.x;
+                var cross = (long)v1.x * v2.y - (long)v1.y * v2.x;
                 if (cross != 0)
                     res.Add(curr);
             }
@@ -346,11 +346,11 @@ namespace Game.Tile
         private float PolygonArea(List<Vector2Int> poly)
         {
             long sum = 0;
-            int n = poly.Count;
-            for (int i = 0; i < n; i++)
+            var n = poly.Count;
+            for (var i = 0; i < n; i++)
             {
-                Vector2Int a = poly[i];
-                Vector2Int b = poly[(i + 1) % n];
+                var a = poly[i];
+                var b = poly[(i + 1) % n];
                 sum += (long)a.x * b.y - (long)b.x * a.y;
             }
             return sum * 0.5f;
@@ -370,7 +370,7 @@ namespace Game.Tile
             if (float.IsPositiveInfinity(borderXMin) || float.IsPositiveInfinity(borderXMax))
             {
                 // fallback: center of min/max indices
-                float half = 0.5f;
+                var half = 0.5f;
                 midX = (minX + maxX + 1) / 2f - half;
             }
             else
@@ -378,8 +378,8 @@ namespace Game.Tile
                 midX = (borderXMin + borderXMax) * 0.5f;
             }
 
-            Vector3 start = new Vector3(midX, heightOffset, borderZMin);
-            Vector3 end = new Vector3(midX, heightOffset, borderZMax);
+            var start = new Vector3(midX, heightOffset, borderZMin);
+            var end = new Vector3(midX, heightOffset, borderZMax);
 
             midLineRenderer.positionCount = 2;
             midLineRenderer.SetPosition(0, start);

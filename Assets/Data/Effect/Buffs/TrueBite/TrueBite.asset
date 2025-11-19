@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 2
   activeWhen: 5
   icon: {fileID: 0}
-  key: Effect_True_Bite
+  key: effect_true_bite

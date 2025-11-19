@@ -1,31 +1,31 @@
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using Game.Action.Internal;
 using Game.Action;
 using Game.Effects.Traits;
 using System.Linq;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Condition
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BottlenoseDolphinPassive: Effect, IEndTurnEffect
     {
-        private bool Surpassed, Evaded;
+        private bool surpassed, evaded;
 
-        public BottlenoseDolphinPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BottlenoseDolphinPassive)
+        public BottlenoseDolphinPassive(PieceLogic piece) : base(-1, 1, piece, "effect_bottlenose_dolphin_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
-            Surpassed = !MatchManager.Ins.GameState.IsDay && !Piece.Effects.Any(e => e.EffectName == EffectName.Surpass);
-            Evaded = !MatchManager.Ins.GameState.IsDay && !Piece.Effects.Any(e => e.EffectName == EffectName.Evasion);
-            if (!Surpassed)
+            surpassed = !MatchManager.Ins.GameState.IsDay && Piece.Effects.All(e => e.EffectName != "effect_surpass");
+            evaded = !MatchManager.Ins.GameState.IsDay && Piece.Effects.All(e => e.EffectName != "effect_evasion");
+            if (!surpassed)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Surpass(Piece)));
-                Surpassed = true;
+                surpassed = true;
             }
-            if (!Evaded)
+            if (!evaded)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, Piece)));
-                Evaded = true;
+                evaded = true;
             }
         }
 
@@ -33,29 +33,29 @@ namespace Game.Effects.Condition
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (MatchManager.Ins.GameState.IsDay && !Surpassed) 
+            if (MatchManager.Ins.GameState.IsDay && !surpassed) 
             {
-                Surpassed = true;
+                surpassed = true;
                 ActionManager.EnqueueAction(new ApplyEffect(new Surpass(Piece)));
             }
-            if (MatchManager.Ins.GameState.IsDay && !Evaded)
+            if (MatchManager.Ins.GameState.IsDay && !evaded)
             {
-                Evaded = true;
+                evaded = true;
                 ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, Piece)));
             }
 
             if (!MatchManager.Ins.GameState.IsDay)
             {
-                var surpassEffect = Piece.Effects.Find(e => e.EffectName == EffectName.Surpass);
+                var surpassEffect = Piece.Effects.Find(e => e.EffectName == "effect_surpass");
                 if (surpassEffect != null)
                     ActionManager.EnqueueAction(new RemoveEffect(surpassEffect));
                     
-                var evasionEffect = Piece.Effects.Find(e => e.EffectName == EffectName.Evasion);
+                var evasionEffect = Piece.Effects.Find(e => e.EffectName == "effect_evasion");
                 if (evasionEffect != null)
                     ActionManager.EnqueueAction(new RemoveEffect(evasionEffect));
                     
-                Surpassed = false;
-                Evaded = false;
+                surpassed = false;
+                evaded = false;
             }
 
 

@@ -5,7 +5,8 @@ using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
 using System.Collections.Generic;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
+
 namespace Game.Action.Skills
 {
     
@@ -17,7 +18,7 @@ namespace Game.Action.Skills
         private readonly System.Func<List<int>> getTargeted;
 
         public HumilitasActive(int maker, int to, int count, System.Func<int> getCount, System.Action<int> setCount,
-                    System.Func<List<int>> getTargeted) : base(maker, false)
+                    System.Func<List<int>> getTargeted) : base(maker)
         {
             Target = (ushort)to;
             this.getCount = getCount;

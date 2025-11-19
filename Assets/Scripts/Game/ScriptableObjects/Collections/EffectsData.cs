@@ -1,5 +1,4 @@
-﻿using Game.Common;
-using Game.Effects;
+﻿using System.Collections.Generic;
 using ScrutableObjects;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ namespace Game.ScriptableObjects.Collections
     public class EffectsData: ScriptableObject
     {
         [ShowProperties(LockObjectAtRuntime = true)]
-        [SerializeField] 
-        public UDictionary<EffectName, EffectInfo> effectsData;
+        [SerializeField]
+        public List<EffectInfo> effectsData;
     }
 }

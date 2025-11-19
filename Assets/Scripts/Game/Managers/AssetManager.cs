@@ -1,36 +1,55 @@
 using System;
 using System.Collections.Generic;
 using Game.Common;
-using Game.Effects;
 using Game.Tile;
-using Game.Piece;
 using Game.Relics;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEngine;
+using Game.Augmentation;
 
 namespace Game.Managers
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AssetManager : Singleton<AssetManager>
     {
-        [NonSerialized] public Dictionary<PieceType, PieceInfo> PieceData;
-        [NonSerialized] public Dictionary<EffectName, EffectInfo> EffectData;
+        [NonSerialized] public Dictionary<string, PieceInfo> PieceData;
+        [NonSerialized] public Dictionary<string, EffectInfo> EffectData;
         [NonSerialized] public Dictionary<RelicType, RelicInfo> RelicData;
+        [NonSerialized] public Dictionary<FormationType, GameObject> EnvironmentData;
+        [NonSerialized] public Dictionary<AugmentationName, AugmentationInfo> AugmentationData;
         
-        [NonSerialized] public Dictionary<FormationType, GameObject> EnviromentData;
-        [SerializeField] public UDictionary<Color, Tile.Tile> TileData;
+        [SerializeField] public UDictionary<Color, Tile.Tile> tileData;
         [SerializeField] private PiecesData pieceData;
         [SerializeField] private EffectsData effectsData;
         [SerializeField] private RelicsData relicsData;
-        [SerializeField] private FormationsData enviromentsData;
+        [SerializeField] private AugmentationData augmentationData;
+        [SerializeField] public RegionalsData regionalsData;
+        [SerializeField] private FormationsData environmentsData;
 
-        public void Load()
+        protected override void Awake()
         {
-            PieceData = new Dictionary<PieceType, PieceInfo>(pieceData.piecesData);
-            EffectData = new Dictionary<EffectName, EffectInfo>(effectsData.effectsData);
+            Load();
+        }
+
+        private void Load()
+        {
+            PieceData = new Dictionary<string, PieceInfo>();
+            foreach (var piece in pieceData.piecesData)
+            {
+                PieceData.Add(piece.key, piece);
+            }
+            
+            EffectData = new Dictionary<string, EffectInfo>();
+            foreach (var effect in effectsData.effectsData)
+            {
+                EffectData.Add(effect.key, effect);
+            }
+            
             RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
-            EnviromentData = new Dictionary<FormationType, GameObject>(enviromentsData.enviromentsData);
+            EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
+            AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

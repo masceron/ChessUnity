@@ -5,7 +5,7 @@ using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Relics.Pearl
@@ -34,20 +34,20 @@ namespace Game.Relics.Pearl
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
-        private Effect CreateEffectFromName(EffectName effectName, PieceLogic piece)
+        private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            sbyte randomDuration = (sbyte)new System.Random().Next(2, 6);
+            var randomDuration = (sbyte)new System.Random().Next(2, 6);
 
             return effectName switch
             {
-                EffectName.Shield => new Effects.Buffs.Shield(piece),
-                EffectName.Carapace => new Effects.Buffs.Carapace(randomDuration, piece),
-                EffectName.Haste => new Effects.Buffs.Haste(randomDuration, 1, piece),
-                EffectName.Piercing => new Effects.Buffs.Piercing(randomDuration, piece),
-                EffectName.HardenedShield => new Effects.Buffs.HardenedShield(piece),
-                EffectName.TrueBite => new Effects.Buffs.TrueBite(piece),
-                EffectName.Camouflage => new Effects.Buffs.Camouflage(piece),
-                _ => new Effects.Buffs.Shield(piece)
+                "effect_shield" => new Effects.Buffs.Shield(piece),
+                "effect_carapace" => new Effects.Buffs.Carapace(randomDuration, piece),
+                "effect_haste" => new Effects.Buffs.Haste(randomDuration, 1, piece),
+                "effect_piercing" => new Effects.Buffs.Piercing(randomDuration, piece),
+                "effect_hardened_shield" => new Effects.Buffs.HardenedShield(piece),
+                "effect_true_bite" => new Effects.Buffs.TrueBite(piece),
+                "effect_camouflage" => new Effects.Buffs.Camouflage(piece),
+                _ => null
             };
         }
         public void CompleteAction()

@@ -1,9 +1,8 @@
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using System.Linq;
-using Game.Effects;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills

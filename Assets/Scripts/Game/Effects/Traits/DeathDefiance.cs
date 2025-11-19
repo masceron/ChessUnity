@@ -1,8 +1,8 @@
-using Game.Piece.PieceLogic;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DeathDefianceUI;
 using System.Linq;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -10,7 +10,7 @@ namespace Game.Effects.Traits
 	public class DeathDefiance: Effect
 	{
 		private int deathDefianceCount;
-		public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, EffectName.DeathDefiance)
+		public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
 		{
 		this.deathDefianceCount = deathDefianceCount;
 		}
@@ -18,14 +18,14 @@ namespace Game.Effects.Traits
 		public override void OnCallPieceAction(Action.Action action)
 		{
 			//còn né nữa chưa tính
-			if (deathDefianceCount <= 1) return;
 			if(Piece.IsDead()) return;
-			if (Piece.Effects.Any(e => e.EffectName == EffectName.Shield) 
-				|| Piece.Effects.Any(e => e.EffectName == EffectName.Carapace) 
-					|| Piece.Effects.Any(e => e.EffectName == EffectName.HardenedShield)) return;
+			if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
+				|| Piece.Effects.Any(e => e.EffectName == "effect_carapace") 
+					|| Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
 			if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
                 return;
             }
+			if (deathDefianceCount <= 1) return;
             var ui = Object.FindAnyObjectByType<DeathDefianceUI>(FindObjectsInactive.Include);
 			if (!ui)
 			{

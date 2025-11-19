@@ -1,16 +1,13 @@
-﻿using Game.Action;
-using Game.Action.Internal;
-using Game.Effects.Buffs;
-using Game.Managers;
-using Game.Piece.PieceLogic;
+﻿using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    public class NocturnalRangeBuff : Effect, IEndTurnEffect
+    public class NocturnalRangeBuff : Effect, IEndTurnEffect, IMoveRangeModifier
     {
-        private bool isBuff = false;
-        private byte initialAttackRange;
-        public NocturnalRangeBuff(PieceLogic piece) : base(-1, 1, piece, EffectName.NocturnalRangeBuff)
+        private bool isBuff;
+        private readonly byte initialAttackRange;
+        public NocturnalRangeBuff(PieceLogic piece) : base(-1, 1, piece, "effect_nocturnal_range_buff")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
             initialAttackRange = Piece.AttackRange;
@@ -23,13 +20,21 @@ namespace Game.Effects.Others
             {
                 isBuff = true;
                 Piece.AttackRange++;
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Haste(10, 1, Piece)));
             }
             else if (!MatchManager.Ins.GameState.IsDay)
             {
                 isBuff = false;
                 Piece.AttackRange = initialAttackRange;
             }
+        }
+
+        public int ModifyMoveRange(int baseRange)
+        {
+            if (MatchManager.Ins.GameState.IsDay)
+            {
+                baseRange += Strength;
+            }
+            return baseRange;
         }
     }
 }

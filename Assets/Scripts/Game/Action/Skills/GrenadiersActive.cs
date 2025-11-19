@@ -1,7 +1,5 @@
-using Game.Action.Internal;
-using Game.Piece.PieceLogic;
-using UnityEngine;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Tile;
 

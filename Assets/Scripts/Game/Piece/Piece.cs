@@ -1,83 +1,10 @@
+using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece
 {
-    public enum PieceType : byte
-    {
-        Velkaris,
-        GuidingSiren,
-        Barracuda,
-        SeaUrchin,
-        ElectricEel,
-        FlyingFish,
-        Chrysos,
-        Anomalocaris,
-        Archelon,
-        Thalassos,
-        Pufferfish,
-        Swordfish,
-        Lionfish,
-        MorayEel,
-        Stingray,
-        Seahorse,
-        SeaStar,
-        Anglerfish,
-        Remora,
-        KelpBass,
-        MedicinalLeech,
-        HourglassJelly,
-        Archerfish,
-        MoorishIdols,
-        Helicoprion,
-        HermitCrab,
-        SeaTurtle,
-        HorseLeech,
-        Megalodon,
-        Temperantia,
-        BobtailSquid,
-        LivingCoral,
-        ClownFish,
-        Humilitas,
-        StoneCrab,
-        PhantomJelly,
-        ChamberedNautilus,
-        EpauletteShark,
-        FractureZone,
-        BioluminescentBeacon,
-        Sunfish,
-        ContagionCorpse,
-        TigerPrawn,
-        HammerOyster,
-        BottlenoseDolphin,
-        KelpForest,
-        Melibe,
-        BlueDragon,
-        Fangtooth,
-        GulperEel,
-        Hatchetfish,
-        Lizardfish,
-        PistolShrimp,
-        Slimehead,
-        MarineIguana,
-        PollutedRock,
-        Barnacle,
-        Phronima,
-        SloanesViperFish,
-        FeatherStar,
-        ArmoredFeatherStar,
-        HumboldtSquid,
-        Grenadiers,
-        BlackSwallower,
-        Snaggletooths,
-        ArcticBrittleStar,
-        BrittleStar,
-        SpiderBrittleStar,
-        CoffinFish,
-        SnipeEel
-    }
-
     public enum PieceRank : byte
     {
         None,
@@ -119,6 +46,14 @@ namespace Game.Piece
             file = fileTo;
             
             Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
+        }
+    }
+
+    public static class PieceMaker
+    {
+        public static PieceLogic.Commons.PieceLogic Get(PieceConfig config)
+        {
+            return PieceFactory.CreateLogicInstance(config.Type, config);
         }
     }
 }

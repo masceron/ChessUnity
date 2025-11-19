@@ -1,6 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
@@ -19,7 +19,7 @@ namespace Game.Action.Skills
             if (PieceOn(Target).Color != PieceOn(Maker).Color) 
             {
 
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(PieceOn(Target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(Target))));
             } 
             else
             {

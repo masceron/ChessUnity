@@ -1,23 +1,31 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Common;
 using Game.Relics;
 using Game.Save.Army;
 using Game.Save.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace UX.UI.Army.DesignArmy
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArmyDesign: Singleton<ArmyDesign>
     {
+        public bool choosenSide{ get; private set; }
         [SerializeField] private DesignArmyInfo info;
-        [SerializeField] private ArmyDesignBoard board;
+        public ArmyDesignBoard board;
+        public ArmyDesignTroop troopDisplay;
         [SerializeField] private ArmySearcher searcher;
         [SerializeField] private DesignNotification notification;
         [SerializeField] private ArmyRelicSearcher relicSearcher;
-        private int size;
-        private Game.Save.Army.Army army;
-        
+        [SerializeField] private Transform nextButton;
+        [NonSerialized] public int size;
+        public Game.Save.Army.Army army;
+        void Start()
+        {
+            nextButton?.gameObject.SetActive(false);
+        }
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -32,7 +40,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 notification.Open(DesignNotifications.Quit);
             }
-            else notification.Close();
+            else notification.Close();     
         }
 
         private void OnDisable()
@@ -45,7 +53,7 @@ namespace UX.UI.Army.DesignArmy
             size = s;
             info.Load(size);
             board.Load(size);
-            
+            searcher.Load();
             if (armyToLoad != null)
             {
                 LoadSave(armyToLoad.Value);
@@ -54,8 +62,8 @@ namespace UX.UI.Army.DesignArmy
             {
                 relicSearcher.Load(null);
             }
+            nextButton?.gameObject.SetActive(true);
         }
-
         private void LoadSave(Game.Save.Army.Army armyToLoad)
         {
             army = armyToLoad;
@@ -64,30 +72,47 @@ namespace UX.UI.Army.DesignArmy
             relicSearcher.Load(armyToLoad.Relic);
         }
 
-        public void TrySave()
+        public bool TrySave()
         {
             army.Name = info.armyName.text;
             if (army.Name == string.Empty)
             {
                 notification.Open(DesignNotifications.EmptyName);
-                return;
+                return false;
             }
-            if (ArmySaveLoader.Exists(army.Name))
+            if (ArmySaveLoader.Exists(army.Name) && UIManager.Ins.GetCanvasID() == CanvasID.DesignArmy)
             {
                 notification.Open(DesignNotifications.Overwrite);
-                return;
+                return false;
             }
             Save();
+            return true;
         }
-
+        public bool TrySaveFreeTest()
+        {
+            army.Name = info.armyName.text;
+            if (army.Name == string.Empty)
+            {
+                notification.Open(DesignNotifications.EmptyName);
+                return false;
+            }
+            Save();
+            return true;
+        }
         public void Save()
         {
             army.BoardSize = (ushort) size;
             SetTroops();
             ArmySaveLoader.Save(army);
-            UIManager.Ins.Load(CanvasID.Followers);
+            if (SceneManager.GetActiveScene().name == "FreePlayTest")
+            {
+                UIManager.Ins.Load(CanvasID.RegionalEffect);
+            }
+            else
+            {
+                UIManager.Ins.Load(CanvasID.Followers);
+            }
         }
-
         private void SetTroops()
         {
             board.Troops.Sort();
@@ -96,7 +121,19 @@ namespace UX.UI.Army.DesignArmy
 
         public void SelectRelic(RelicType type)
         {
-            army.Relic = new Relic(type);
+            if (choosenSide == false)
+            {
+                army.Relic = new Relic(type);
+            }
+            else
+            {
+                army.EnemyRelic = new Relic(type);
+            }
+        }
+
+        public void ToggleChosenSide()
+        {
+            choosenSide = !choosenSide;
         }
     }
 }

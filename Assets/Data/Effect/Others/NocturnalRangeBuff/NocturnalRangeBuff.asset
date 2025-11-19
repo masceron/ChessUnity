@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: NocturnalRangeBuff
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 58
+  typeName: 59
   category: 3
   stack: 1
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: nocturnal_range_buff
+  key: effect_nocturnal_range_buff

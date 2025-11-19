@@ -1,5 +1,5 @@
-﻿using Game.Piece.PieceLogic;
-using Game.Effects.Debuffs;
+﻿using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {

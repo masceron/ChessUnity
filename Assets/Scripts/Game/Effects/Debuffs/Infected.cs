@@ -1,16 +1,16 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
 {
     public class Infected : Effect
     {
-        private int turnCounter = 0;
+        private int turnCounter;
         
-        public Infected(PieceLogic piece) : base(-1, 1, piece, EffectName.Infected)
+        public Infected(PieceLogic piece) : base(-1, 1, piece, "effect_infected")
         {
             
         }

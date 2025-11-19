@@ -1,12 +1,12 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
     public class BlueDragonPassive : Effect
     {
-        public BlueDragonPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BlueDragonPassive)
+        public BlueDragonPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_dragon_passive")
         {
         }
 

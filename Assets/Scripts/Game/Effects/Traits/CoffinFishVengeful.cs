@@ -2,8 +2,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
-using UnityEngine;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -11,7 +10,7 @@ namespace Game.Effects.Traits
     public class CoffinFishVengeful : Effect
     {
         public readonly int Probability;
-        public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, 1, piece, EffectName.CoffinFishVengeful)
+        public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, 1, piece, "effect_coffin_fish_vengeful")
         {
             Probability = probability;
         }

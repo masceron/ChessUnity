@@ -1,0 +1,57 @@
+using System.Collections.Generic;
+using Game.Augmentation;
+using Game.Common;
+using Game.Managers;
+using Game.Save.Army;
+using Game.ScriptableObjects;
+using TMPro;
+using UnityEngine;
+using UX.UI.Followers;
+
+namespace UX.UI.FreePlayTest.AugmentationScene
+{
+    public class AugmentationManagerUI : Singleton<AugmentationManagerUI>
+    {
+        public TMP_Text sideText, nameText;
+        public Troop SelectedTroop;
+        public TroopDescriptions troopDescriptions;
+        public List<AugmentationIcon> icons = new();
+        [HideInInspector] public Dictionary<AugmentationSlot, AugmentationName> equippedAugmentation = new();
+        public void Load(Troop selected, bool side)
+        {
+            SelectedTroop = selected;
+            equippedAugmentation = SelectedTroop.equippedAugmentation;
+            foreach(var icon in icons)
+            {
+                if (equippedAugmentation.ContainsKey(icon.slot))
+                {
+                    icon.Load(equippedAugmentation[icon.slot]);
+                }
+                else
+                {
+                    icon.Load(AugmentationName.None);
+                }
+            }
+            sideText.text = (side) ? "Enemy" : "Ally";
+            nameText.text = AssetManager.Ins.PieceData[selected.PieceType].key;
+            troopDescriptions.Display(AssetManager.Ins.PieceData[selected.PieceType]);
+        }
+
+        public void AddAugmentation(AugmentationInfo aug)
+        {
+            equippedAugmentation[aug.Slot] = aug.Name;
+        }
+        public void RemoveAugmentation(AugmentationSlot slot)
+        {
+            equippedAugmentation[slot] = AugmentationName.None;
+        }
+        public void Save()
+        {
+            SelectedTroop.equippedAugmentation = equippedAugmentation;
+        }
+        public void ReturnToDesignArmy()
+        {
+            UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
+        }
+    }
+} 

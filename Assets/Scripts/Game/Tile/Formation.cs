@@ -1,8 +1,7 @@
-using Game.Piece.PieceLogic;
 using Game.Effects;
 using Game.Action;
 using Game.Action.Internal;
-
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
@@ -16,6 +15,7 @@ namespace Game.Tile
         UrchinField,
         Saprolegnia,
         Kelp,
+        PredatorLair,
         NavalMines
     }
 
@@ -50,6 +50,10 @@ namespace Game.Tile
         /// </summary>
         public abstract FormationType GetFormationType();
 
+        public virtual void OnCreated(PieceLogic piece)
+        {
+            OnPieceEnter(piece);
+        }
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
         /// </summary>
@@ -57,7 +61,6 @@ namespace Game.Tile
         {
             PieceOnFormation = piece;
         }
-
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân rời khỏi vị trí
         /// </summary>

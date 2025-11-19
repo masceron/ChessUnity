@@ -27,11 +27,11 @@ namespace Game.Managers
         public void SetFormation(int pos, Formation env){
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            formationObjects[pos] = Instantiate(AssetManager.Ins.EnviromentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
+            formationObjects[pos] = Instantiate(AssetManager.Ins.EnvironmentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
             Quaternion.identity, transform);
             formations[pos] = env;
             if (PieceOn(pos) != null){
-                formations[pos].OnPieceEnter(PieceOn(pos));
+                formations[pos].OnCreated(PieceOn(pos));
             }
         }
 

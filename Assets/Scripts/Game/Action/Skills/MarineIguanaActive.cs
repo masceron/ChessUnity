@@ -1,9 +1,9 @@
-using Game.Piece.PieceLogic;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal.Pending;
 using Game.Managers;
 using UX.UI.Ingame;
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {

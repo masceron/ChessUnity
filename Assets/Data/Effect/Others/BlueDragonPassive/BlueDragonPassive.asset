@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 1
   icon: {fileID: 0}
-  key: blue_dragon_passive
+  key: effect_blue_dragon_passive

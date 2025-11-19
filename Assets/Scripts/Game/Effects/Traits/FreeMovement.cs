@@ -1,19 +1,19 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     public class FreeMovement : Effect, IApplyEffect
     {
-        private readonly List<EffectName> blockedEffects = new()
+        private readonly List<string> blockedEffects = new()
         {
-            EffectName.Slow,
-            EffectName.Haste
+            "effect_slow",
+            "effect_haste"
         };
 
-        public FreeMovement(PieceLogic piece) : base(-1, 1, piece, EffectName.FreeMovement)
+        public FreeMovement(PieceLogic piece) : base(-1, 1, piece, "effect_free_movement")
         { }
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)

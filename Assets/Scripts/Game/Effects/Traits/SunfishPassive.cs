@@ -1,30 +1,32 @@
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using static Game.Common.BoardUtils;
 using Game.Action;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SunfishPassive: Effect, IEndTurnEffect 
     {
-        private bool active;
-        private bool check;
-        public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.SunfishPassive)
+        private bool wasNight;
+        public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_sunfish_passive")
         {
-            active = false;
-            check = true;
+            wasNight = !MatchManager.Ins.GameState.IsDay;
         }
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (check != MatchManager.Ins.GameState.IsDay) 
+            if (wasNight && MatchManager.Ins.GameState.IsDay)
             {
-                check = MatchManager.Ins.GameState.IsDay;
-                active = !active;
+                UnityEngine.Debug.Log("SunfishPassive: MakeActive");
                 MakeActive();
+                wasNight = false;
+            } 
+            else if (!wasNight && !MatchManager.Ins.GameState.IsDay)
+            {
+                wasNight = true;
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Captures;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -8,7 +8,7 @@ namespace Game.Effects.Traits
     public class SnappingStrike: Effect
     {
         public SnappingStrike(PieceLogic piece, sbyte duration = -1) : base(duration, -1, piece,
-            EffectName.SnappingStrike)
+            "effect_snapping_strike")
         {}
 
         public override void OnCallMoveGen(List<Action.Action> actions)

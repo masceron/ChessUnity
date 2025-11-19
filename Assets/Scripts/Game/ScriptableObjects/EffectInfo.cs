@@ -8,13 +8,11 @@ namespace Game.ScriptableObjects
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EffectInfo : ScriptableObject
     {
-        [SerializeField] public EffectName typeName;
+        [SerializeField] public string key;
         [SerializeField] public EffectCategory category;
         [SerializeField] public EffectStack stack;
         [SerializeField] public ObserverPriority priority;
         [SerializeField] public ObserverActivateWhen activeWhen;
         [SerializeField] public Texture2D icon;
-
-        [SerializeField] public string key;
     }
 }

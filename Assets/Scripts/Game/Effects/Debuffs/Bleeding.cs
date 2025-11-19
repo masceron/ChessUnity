@@ -1,7 +1,7 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
@@ -15,7 +15,7 @@ namespace Game.Effects.Debuffs
 
         private const int TurnToRemoveEffect = 5;
 
-        public Bleeding(int turnToDie, PieceLogic piece) : base(-1, 1, piece, EffectName.Bleeding)
+        public Bleeding(int turnToDie, PieceLogic piece) : base(-1, 1, piece, "effect_bleeding")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             TurnLeftToDie = (byte)turnToDie;

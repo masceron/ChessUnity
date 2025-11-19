@@ -36,6 +36,7 @@ namespace Game.Tile
 
         public void OnPointerClick(PointerEventData data)
         {
+            
             var processor = MatchManager.Ins.InputProcessor;
             if (!processor) return;
             switch (data.button)

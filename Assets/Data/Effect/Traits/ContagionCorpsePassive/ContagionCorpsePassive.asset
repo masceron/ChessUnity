@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: contagion_corpse_passive
+  key: effect_contagion_corpse_passive

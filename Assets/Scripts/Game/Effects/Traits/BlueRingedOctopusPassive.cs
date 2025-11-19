@@ -2,7 +2,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -11,7 +11,7 @@ namespace Game.Effects.Traits
     
     public class BlueRingedOctopusPassive : Effect, IEndTurnEffect
     {
-        public BlueRingedOctopusPassive(PieceLogic piece) : base(-1, 1, piece, EffectName.BlueRingedOctopusPassive)
+        public BlueRingedOctopusPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_ringed_octopus_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }

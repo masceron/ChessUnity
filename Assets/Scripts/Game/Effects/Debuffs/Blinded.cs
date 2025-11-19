@@ -1,8 +1,8 @@
-﻿using Game.Action;
+using Game.Action;
 using Game.Augmentation;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
@@ -12,7 +12,7 @@ namespace Game.Effects.Debuffs
         // ReSharper disable once MemberCanBePrivate.Global
         public readonly int Probability;
 
-        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, EffectName.Blinded)
+        public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, "effect_blinded")
         {
             Probability = probability;
         }
@@ -21,7 +21,7 @@ namespace Game.Effects.Debuffs
         {
             if (action == null || action.Maker != Piece.Pos) return;
             
-            PieceLogic pieceTarget = BoardUtils.PieceOn(action.Target);
+            var pieceTarget = BoardUtils.PieceOn(action.Target);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ProtectiveLens))
             {
                 action.Result = ActionResult.Failed;

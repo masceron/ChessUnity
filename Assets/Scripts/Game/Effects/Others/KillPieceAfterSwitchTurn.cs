@@ -1,6 +1,6 @@
-using Game.Piece.PieceLogic;
 using Game.Action.Internal;
 using Game.Action;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
@@ -8,7 +8,7 @@ namespace Game.Effects.Others
     public class KillPieceAfterSwitchTurn : Effect, IEndTurnEffect
     {
         public EndTurnEffectType EndTurnEffectType { get; }
-        public KillPieceAfterSwitchTurn(PieceLogic piece) : base(-1, 1, piece, EffectName.KillPieceAfterSwitchTurn)
+        public KillPieceAfterSwitchTurn(PieceLogic piece) : base(-1, 1, piece, "effect_kill_after_switch_turn")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }

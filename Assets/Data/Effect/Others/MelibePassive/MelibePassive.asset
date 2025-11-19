@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 1
   icon: {fileID: 0}
-  key: melibe_passive
+  key: effect_melibe_passive

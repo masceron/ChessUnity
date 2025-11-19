@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: BlackSwallower
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 0
+  key: piece_black_swallower
   prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
   rank: 3
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: Piece_Black_Swallower
   hasSkill: 0
   normalSkillCooldown: 0
   availableSlots: 0
+  logicClassName: BlackSwallower

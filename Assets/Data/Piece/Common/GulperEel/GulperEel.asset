@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: GulperEel
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 50
+  key: piece_gulper_eel
   prefab: {fileID: 2560844638400570401, guid: 8d365168f258cab44b15b8a92f6f1f81, type: 3}
   rank: 4
   moveRange: 2
   attackRange: 2
   movePattern: {fileID: 2800000, guid: ad44265149b40844fbe2592d1fd8d3c5, type: 3}
   capturePattern: {fileID: 2800000, guid: 6fcf5a4130b78b74fb198b33f3baea03, type: 3}
-  key: gulper_eel
   hasSkill: 1
   normalSkillCooldown: 15
   availableSlots: 0
+  logicClassName: GulperEel

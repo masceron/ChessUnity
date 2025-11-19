@@ -8,7 +8,7 @@ namespace Game.Effects.Others
     {
         private bool color;
         private int lastSkillUses;
-        public Charge(sbyte strength, bool color) : base(-1, strength, null, EffectName.Charge)
+        public Charge(sbyte strength, bool color) : base(-1, strength, null, "effect_charge")
         {
             this.color = color;
             lastSkillUses = BoardUtils.SkillUseOf(color);

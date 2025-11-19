@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 2
   activeWhen: 1
   icon: {fileID: 2800000, guid: e2b13abbb14356e45a44e11aeebc9865, type: 3}
-  key: Effect_DeathDefiance
+  key: effect_death_defiance

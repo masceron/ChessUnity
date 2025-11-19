@@ -63,11 +63,11 @@ namespace Game.Managers
         {
             if (tiles == null || tiles.Length == 0 || ActiveBoard() == null) return;
 
-            for (int y = 0; y < MaxLength; y++)
+            for (var y = 0; y < MaxLength; y++)
             {
-                for (int x = 0; x < MaxLength; x++)
+                for (var x = 0; x < MaxLength; x++)
                 {
-                    int index = IndexOf(x, y);
+                    var index = IndexOf(x, y);
                     if (tiles[index] == null) continue;
 
                     tiles[index].gameObject.SetActive(ShouldTileBeActive(x, y));
@@ -81,17 +81,17 @@ namespace Game.Managers
         /// </summary>
         private void UpdateActiveRegion(int x, int y)
         {
-            for (int dy = -1; dy <= 1; dy++)
+            for (var dy = -1; dy <= 1; dy++)
             {
-                for (int dx = -1; dx <= 1; dx++)
+                for (var dx = -1; dx <= 1; dx++)
                 {
-                    int nx = x + dx;
-                    int ny = y + dy;
+                    var nx = x + dx;
+                    var ny = y + dy;
 
                     if (!VerifyBounds(nx) || !VerifyBounds(ny))
                         continue;
 
-                    int index = IndexOf(nx, ny);
+                    var index = IndexOf(nx, ny);
                     if (tiles[index] == null) continue;
 
                     tiles[index].gameObject.SetActive(ShouldTileBeActive(nx, ny));
@@ -105,25 +105,25 @@ namespace Game.Managers
         /// </summary>
         private bool ShouldTileBeActive(int x, int y)
         {
-            int index = IndexOf(x, y);
+            var index = IndexOf(x, y);
             if (tiles[index] == null) return false;
 
-            bool isActive = IsActive(index);
+            var isActive = IsActive(index);
             if (isActive) return true;
 
             // Nếu ô này chưa active, kiểm tra 8 ô xung quanh
-            for (int dy = -1; dy <= 1; dy++)
+            for (var dy = -1; dy <= 1; dy++)
             {
-                for (int dx = -1; dx <= 1; dx++)
+                for (var dx = -1; dx <= 1; dx++)
                 {
                     if (dx == 0 && dy == 0) continue;
-                    int nx = x + dx;
-                    int ny = y + dy;
+                    var nx = x + dx;
+                    var ny = y + dy;
 
                     if (!VerifyBounds(nx) || !VerifyBounds(ny))
                         continue;
 
-                    int neighborIndex = IndexOf(nx, ny);
+                    var neighborIndex = IndexOf(nx, ny);
                     if (IsActive(neighborIndex))
                         return true;
                 }
@@ -135,7 +135,7 @@ namespace Game.Managers
 
         public void ActivateTile(int x, int y)
         {
-            int index = IndexOf(x, y);
+            var index = IndexOf(x, y);
             if (IsActive(index)) return;
 
             SetActiveSquare(index, true);
@@ -144,8 +144,8 @@ namespace Game.Managers
             if (tiles[index] != null && tiles[index].color == Color.None)
             {
                 var prefab = !ColorOfSquare(index)
-                    ? AssetManager.Ins.TileData[Color.White]
-                    : AssetManager.Ins.TileData[Color.Black];
+                    ? AssetManager.Ins.tileData[Color.White]
+                    : AssetManager.Ins.tileData[Color.Black];
 
                 Destroy(tiles[index].gameObject);
                 var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
@@ -168,9 +168,9 @@ namespace Game.Managers
         {
             var prefab = IsActive(index)
                 ? !ColorOfSquare(index) ? 
-                    AssetManager.Ins.TileData[Color.White] : 
-                    AssetManager.Ins.TileData[Color.Black] : 
-                AssetManager.Ins.TileData[Color.None];
+                    AssetManager.Ins.tileData[Color.White] : 
+                    AssetManager.Ins.tileData[Color.Black] : 
+                AssetManager.Ins.tileData[Color.None];
 
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);
@@ -189,7 +189,7 @@ namespace Game.Managers
             Destroy(tiles[index].gameObject);
             tiles[index] = null;
 
-            var prefab = AssetManager.Ins.TileData[Color.None];
+            var prefab = AssetManager.Ins.tileData[Color.None];
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);
 
@@ -197,8 +197,8 @@ namespace Game.Managers
             SelectionIndicator(index, tile);
             SetActiveSquare(index, false);
 
-            int x = RankOf(index);
-            int y = FileOf(index);
+            var x = RankOf(index);
+            var y = FileOf(index);
             UpdateActiveRegion(x, y);
             UpdateBorder();
         }
@@ -241,12 +241,12 @@ namespace Game.Managers
         }
         public void MarkTileInRange(Tile.Tile hoveringTile, int range, bool isMark, bool onlyMarkEnemy = false)
         {
-            int centerIndex = IndexOf(hoveringTile.rank, hoveringTile.file);
+            var centerIndex = IndexOf(hoveringTile.rank, hoveringTile.file);
             if (!IsActive(centerIndex)) return;
             if (range % 2 == 0) 
             {
-                int startRank = hoveringTile.rank;
-                int startFile = hoveringTile.file;
+                var startRank = hoveringTile.rank;
+                var startFile = hoveringTile.file;
                 if (hoveringTile.corner == Corner.BottomRight)
                 {
                     startRank = startRank - range / 2 + 1;
@@ -268,11 +268,11 @@ namespace Game.Managers
                     startFile = startFile - range / 2;
                 }
 
-                for (int r = startRank; r < startRank + range; r++)
+                for (var r = startRank; r < startRank + range; r++)
                 {
-                    for (int f = startFile; f < startFile + range; f++)
+                    for (var f = startFile; f < startFile + range; f++)
                     {
-                        int index = IndexOf(r, f);
+                        var index = IndexOf(r, f);
                         if (!IsActive(index)) continue;
                         ApplyMarkingRule(index, isMark, onlyMarkEnemy);
                     }
@@ -281,13 +281,13 @@ namespace Game.Managers
             } 
 
 
-            int radius = range / 2;
+            var radius = range / 2;
 
-            for (int r = hoveringTile.rank - radius; r <= hoveringTile.rank + radius; r++)
+            for (var r = hoveringTile.rank - radius; r <= hoveringTile.rank + radius; r++)
             {
-                for (int f = hoveringTile.file - radius; f <= hoveringTile.file + radius; f++)
+                for (var f = hoveringTile.file - radius; f <= hoveringTile.file + radius; f++)
                 {
-                    int index = IndexOf(r, f);
+                    var index = IndexOf(r, f);
                     if (!IsActive(index)) continue;
 
                     ApplyMarkingRule(index, isMark, onlyMarkEnemy);

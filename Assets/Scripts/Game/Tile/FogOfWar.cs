@@ -1,22 +1,35 @@
-
-
-using Game.Piece.PieceLogic;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using Game.Common;
+
 namespace Game.Tile
 {
     public class FogOfWar : Formation
     {
-        public FogOfWar(bool color) : base(color){
-            
+        public FogOfWar(bool color) : base(color)
+        {
+
         }
-    public override void OnPieceEnter(PieceLogic piece)
+        public override void OnCreated(PieceLogic piece)
+        {
+            if (piece.Color != BoardUtils.OurSide())
+            {
+                ToggleVisibility(piece, false);
+            }
+        }
+
+        public override void OnPieceEnter(PieceLogic piece)
         {
             if (piece.Color != Color)
             {
                 FormationManager.Ins.RemoveFormation(piece.Pos);
             }
-            ToggleVisibility(piece, false);
+            else
+            {
+                // Do nothing
+            }
+            
         }
         public override void OnPieceExit(PieceLogic piece)
         {
@@ -24,6 +37,7 @@ namespace Game.Tile
         }
         void ToggleVisibility(PieceLogic piece, bool value)
         {
+            piece.IsVisible = value;
             PieceManager.Ins.GetPieceGameObject(piece.Pos).GetComponent<MeshRenderer>().enabled = value;
         }
         public override FormationType GetFormationType()

@@ -3,7 +3,7 @@ using Game.Action;
 using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,9 +22,10 @@ namespace UX.UI.Ingame
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
         public static int HoveringPos;
-        
-        public static int Selecting = -1;
-        public static int SelectingFunction;
+        // Vị trí của quân cờ đang chọn, -1 nếu chưa chọn quân nào
+        public static int Selecting = -1; 
+        // 0: Không chọn, 1: Move, 2: Attack, 3: Skill, 4: Relic
+        public static int SelectingFunction; 
         private static readonly List<Action> MoveList = new();
         public static readonly List<Action> ListOf = new();
         
@@ -33,6 +34,8 @@ namespace UX.UI.Ingame
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
             pieceActions.Load(ListOf, MoveList);
             UpdateRelic();
+            Selecting = -1;
+            SelectingFunction = 0;
         }
 
         private void OnEnable()
@@ -140,6 +143,13 @@ namespace UX.UI.Ingame
                         case IPendingAble pending:
                             pending.CompleteAction();
                             return;
+                        // Cách xử lý 2 target cũ
+                        /*case IDoubleSelectionSkill doubleSkill:
+                        if (doubleSkill.IsBothSelected()) { break; }
+                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
+                        ShowMoveList(action.Maker);
+                        pieceActions.MarkSkill();
+                        return; */
                     }
 
                     ExecuteAction(action);
@@ -147,8 +157,10 @@ namespace UX.UI.Ingame
             }
             else
             {
+                // Hiển thị những vị trí trên bàn cờ có thể thực thi Action do người chơi chọn
+                // Action ở đây có thể là Move/Attack/Skill
                 var piece = PieceOn(pos);
-                if (piece == null) return;
+                if (piece is not { IsVisible: true }) return;
                 
                 SetPieceHover(pos);
                 TileManager.Ins.Select(pos);

@@ -6,12 +6,12 @@ namespace Game.Piece
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public readonly struct PieceConfig : IEquatable<PieceConfig>
     {
-        public readonly PieceType Type;
+        public readonly string Type;
         public readonly bool Color;
         public readonly ushort Index;
         public readonly List<Augmentation.Augmentation> Augmentations;
 
-        public PieceConfig(PieceType t, bool c, ushort i, List<Augmentation.Augmentation> Augs = null)
+        public PieceConfig(string t, bool c, ushort i, List<Augmentation.Augmentation> Augs = null)
         {
             Type = t;
             Color = c;
@@ -33,7 +33,7 @@ namespace Game.Piece
         {
             unchecked
             {
-                var hashCode = (int)Type;
+                var hashCode = Type.GetHashCode();
                 hashCode = (hashCode * 397) ^ Color.GetHashCode();
                 hashCode = (hashCode * 397) ^ Index.GetHashCode();
                 return hashCode;

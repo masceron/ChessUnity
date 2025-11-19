@@ -1,6 +1,6 @@
 using Game.Action;
 using Game.Action.Quiets;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
@@ -8,7 +8,7 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Fear: Effect, IEndTurnEffect
     {
-        public Fear(sbyte duration, PieceLogic piece) : base(duration, 1, piece, EffectName.Fear)
+        public Fear(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_fear")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

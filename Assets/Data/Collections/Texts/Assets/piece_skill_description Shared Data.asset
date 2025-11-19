@@ -67,6 +67,102 @@ MonoBehaviour:
     m_Key: piece_anglerfish_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 35085381483368448
+    m_Key: piece_epaulette_shark_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085382116708352
+    m_Key: piece_archerfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085383035260928
+    m_Key: piece_humilitas_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085383224004608
+    m_Key: piece_barnacle_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085383723126784
+    m_Key: piece_snaggletooths_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085384230637568
+    m_Key: piece_chambered_nautilus_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085385061109760
+    m_Key: piece_marine_iguana_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085385249853440
+    m_Key: piece_pistol_shrimp_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085385853833216
+    m_Key: piece_grenadiers_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085386822717440
+    m_Key: piece_gulper_eel_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085388768874496
+    m_Key: piece_horseleech_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085392669577216
+    m_Key: piece_bobtail_squid_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085394414407680
+    m_Key: piece_sunfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085394561208320
+    m_Key: piece_bottlenose_dolphin_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085395152605184
+    m_Key: piece_hourglass_jelly_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085395353931776
+    m_Key: piece_sloane's_viperfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085396012437504
+    m_Key: piece_hermit_crab_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085397325254656
+    m_Key: piece_sea_turtle_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085398394802176
+    m_Key: piece_temperantia_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085399355297792
+    m_Key: piece_hatchetfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085401100128256
+    m_Key: piece_phronima_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35085401792188416
+    m_Key: piece_blue_dragon_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35144419847966720
+    m_Key: piece_arctic_brittle_star_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35152954140921856
+    m_Key: piece_snipe_eel_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

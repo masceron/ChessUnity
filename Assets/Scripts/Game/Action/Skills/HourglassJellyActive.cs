@@ -1,6 +1,6 @@
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using System;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
             Maker = (ushort)maker;
             Target = (ushort)target;
-            PieceLogic piece = PieceOn(target);
+            var piece = PieceOn(target);
             destination = (ushort)piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
         }
         protected override void Animate()

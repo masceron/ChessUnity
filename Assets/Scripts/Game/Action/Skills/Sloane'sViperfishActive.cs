@@ -1,7 +1,8 @@
-﻿using Game.Action.Internal;
-using Game.Effects;
+﻿using System.Linq;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
+
 namespace Game.Action.Skills
 {
     public class SloaneSViperfishActive : Action, ISkills
@@ -27,27 +28,13 @@ namespace Game.Action.Skills
                     var idx = IndexOf(rank + i, file + j);
 
                     var p = PieceOn(idx);
-                    if (p == caller) continue;
-                    if (p != null)
-                    {
-                        bool bleeding = false;
-                        for (int e = 0; e < p.Effects.Count; e++)
-                        {
-                            if (p.Effects[e].EffectName == EffectName.Bleeding)
-                            {
-                                bleeding = true;
-                            }
-                        }
+                    if (p == null || p == caller || p.Color == caller.Color) continue;
 
-                        if (bleeding)
-                        {
-                            ActionManager.ExecuteImmediately(new ApplyEffect(new Poison(1, p)));
-                        }
-                        else
-                        {
-                            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(5, p)));
-                        }
-                    }
+                    var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
+
+                    ActionManager.ExecuteImmediately(bleeding
+                        ? new ApplyEffect(new Poison(1, p))
+                        : new ApplyEffect(new Bleeding(5, p)));
                 }
             }
         }

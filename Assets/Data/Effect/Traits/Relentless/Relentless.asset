@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: Relentless
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 43
+  typeName: 40
   category: 2
   stack: 1
   priority: 2
   activeWhen: 1
   icon: {fileID: 2800000, guid: cd84c96875d1caf45a155b0e9430ffd6, type: 3}
-  key: Effect_Relentless
+  key: effect_relentless

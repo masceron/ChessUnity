@@ -90,7 +90,7 @@ namespace UI.UIObject3D.Scripts
         void SetupEvents()
         {
             // get or add the event trigger
-            EventTrigger trigger = GetComponent<EventTrigger>() ?? gameObject.AddComponent<EventTrigger>();
+            var trigger = GetComponent<EventTrigger>() ?? gameObject.AddComponent<EventTrigger>();
 
             var onPointerDown = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
             onPointerDown.callback.AddListener(_ => beingDragged = true);

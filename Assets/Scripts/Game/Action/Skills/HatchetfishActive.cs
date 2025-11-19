@@ -1,9 +1,8 @@
 using Game.Action.Internal;
 using Game.Common;
-using Game.Effects;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
 using System.Linq;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
@@ -23,7 +22,7 @@ namespace Game.Action.Skills
             var targetPiece = BoardUtils.PieceOn(Target);
             if (targetPiece == null) return;
 
-            if (targetPiece.Effects.Any(e => e.EffectName == EffectName.Camouflage))
+            if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece)));
             }

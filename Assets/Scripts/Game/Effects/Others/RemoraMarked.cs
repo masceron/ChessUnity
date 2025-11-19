@@ -1,7 +1,7 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     public class RemoraMarked: Effect, IEndTurnEffect
     {
         private readonly PieceLogic caster;
-        public RemoraMarked(PieceLogic caster, PieceLogic piece) : base(-1, 1, piece, EffectName.RemoraMarked)
+        public RemoraMarked(PieceLogic caster, PieceLogic piece) : base(-1, 1, piece, "effect_remora_marked")
         {
             this.caster = caster;
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;

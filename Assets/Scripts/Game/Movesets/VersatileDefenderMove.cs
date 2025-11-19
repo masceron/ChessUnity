@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using Game.Action.Captures;
-using Game.Action.Quiets;
 using static Game.Common.BoardUtils;
-using Game.Common;
 
 
 namespace Game.Movesets
@@ -12,9 +9,9 @@ namespace Game.Movesets
     /// ****xxxxx****
     /// ****xxOxx****
     /// *****xxx*****
-    public static class VersatileDefenderMove
+    public class VersatileDefenderMove : BaseMovePattern
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        /*public static void Quiets(List<Action.Action> list, int pos, ref int index)
         {   
             var file = FileOf(pos);
             var rank = RankOf(pos);
@@ -153,6 +150,52 @@ namespace Game.Movesets
                 if (piece == null || piece.Color == color) return;
                 list.Add(new NormalCapture(pos, index));
             }
+        }*/
+
+        public override List<int> GenerateBaseMovePattern(int makerPos)
+        {
+            return GenerateVersatileDefenderMovePattern(makerPos);
+        }
+
+        private List<int> GenerateVersatileDefenderMovePattern(int makerPos)
+        {
+            var caller = PieceOn(makerPos);
+            var positions = new List<int>();
+            var push = caller.Color ? +1 : -1;
+            var (rank, file) = RankFileOf(makerPos);
+
+            positions.Add(IndexOf(rank + push * 2, file));
+
+            positions.Add(IndexOf(rank + push * 1, file - 2));
+            positions.Add(IndexOf(rank + push * 1, file - 1));
+            positions.Add(IndexOf(rank + push * 1, file));
+            positions.Add(IndexOf(rank + push * 1, file + 1));
+            positions.Add(IndexOf(rank + push * 1, file + 2));
+
+            positions.Add(IndexOf(rank, file - 2));
+            positions.Add(IndexOf(rank, file - 1));
+            positions.Add(IndexOf(rank, file + 1));
+            positions.Add(IndexOf(rank, file + 2));
+
+            positions.Add(IndexOf(rank - push * 1, file - 1));
+            positions.Add(IndexOf(rank - push * 1, file));
+            positions.Add(IndexOf(rank - push * 1, file + 1));
+
+            return positions;
+        }
+
+        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        {
+            var moveRange = PieceOn(pos).GetMoveRange(ref index);
+            var basePattern = new HashSet<int>(new VersatileDefenderMove().GenerateBaseMovePattern(pos));
+            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false);
+        }
+
+        public static void Captures(List<Action.Action> list, int pos)
+        {
+            var attackRange = PieceOn(pos).AttackRange;
+            var basePattern = new HashSet<int>(new VersatileDefenderMove().GenerateBaseMovePattern(pos));
+            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
         }
     }
 }

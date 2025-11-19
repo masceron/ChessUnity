@@ -19,7 +19,7 @@ namespace Game.Relics.Pearl
                 {
                     if (piece == null) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new BlackPearlPending(this, piece.Pos, false);
+                    var pending = new BlackPearlPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
                 BoardViewer.Selecting = -2;

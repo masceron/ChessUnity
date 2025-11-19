@@ -1,6 +1,8 @@
-﻿using Game.Managers;
-using Game.Piece.PieceLogic;
+﻿using Game.Common;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.ScriptableObjects;
+using TMPro;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +17,8 @@ namespace UX.UI.Ingame
         [SerializeField] private GameObject pieceInfo;
         [SerializeField] private UIObject3D pieceImage;
         [SerializeField] private RawImage pieceDemonstration;
-        
+        [SerializeField] private TMP_Text pieceName;
+        [SerializeField] private TMP_Text posText;
         private bool seeingCapture;
 
         private void Start()
@@ -39,6 +42,8 @@ namespace UX.UI.Ingame
             var pieceInformation = AssetManager.Ins.PieceData[piece.Type];
             LoadPieceModel(pieceInformation);
             LoadPieceDemonstrations(pieceInformation);
+            pieceName.text = AssetManager.Ins.PieceData[piece.Type].name;
+            posText.text = $"Rank: {BoardUtils.RankOf(piece.Pos)}, File: {BoardUtils.FileOf(piece.Pos)}, Index: {piece.Pos}";
         }
         
         private void LoadPieceModel(PieceInfo info)

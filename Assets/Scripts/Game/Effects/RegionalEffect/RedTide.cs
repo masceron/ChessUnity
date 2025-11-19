@@ -1,14 +1,7 @@
-using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic;
-using UnityEngine;
 using Game.Action.Internal;
 using Game.Action;
-using System.Collections.Generic;
-using System.Linq;
-using Game.Common;
-using Game.Piece;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.RegionalEffect
 {
@@ -22,7 +15,6 @@ namespace Game.Effects.RegionalEffect
             isActive = 0;
             startingSizeX = (MaxLength - MatchManager.Ins.startingSize.x) / 2;
             startingSizeY = (MaxLength - MatchManager.Ins.startingSize.y) / 2;
-            Debug.Log("Starting Size Y: " + MatchManager.Ins.startingSize.y);
         }
         protected override void ApplyEffect(int currentTurn)
         {
@@ -30,8 +22,7 @@ namespace Game.Effects.RegionalEffect
             {
 
                 var random = new System.Random();
-                int randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
-                Debug.Log("Random Column: " + randomColumn);
+                var randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
                 while(!IsColumnFull(randomColumn)){
                     randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
                 }
@@ -43,9 +34,8 @@ namespace Game.Effects.RegionalEffect
 
         private bool IsColumnFull(int column)
         {
-            for (int i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
             {
-                Debug.Log("Checking tile: " + IndexOf(i, column + startingSizeY));
                 if(TileManager.Ins.IsTileEmpty(IndexOf(i, column + startingSizeY))) return false;
             }
             return true;
@@ -53,9 +43,9 @@ namespace Game.Effects.RegionalEffect
 
         private void ApplyEffectToColumn(int column)
         {
-            for (int i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
             {
-                PieceLogic piece = PieceOn(IndexOf(i, column + startingSizeY));    
+                var piece = PieceOn(IndexOf(i, column + startingSizeY));    
                 if(piece == null) continue;
                 ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece)));
             }

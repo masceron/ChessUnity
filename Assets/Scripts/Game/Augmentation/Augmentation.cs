@@ -1,9 +1,9 @@
 using Game.Effects;
-using Game.Piece.PieceLogic;
 using System.Collections.Generic;
 using Game.Augmentation.Set;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
@@ -34,7 +34,7 @@ namespace Game.Augmentation
 
         public void ApplyPassiveEffects()
         {
-            foreach (Effect e in PassiveEffects)
+            foreach (var e in PassiveEffects)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(e));
             }
@@ -49,7 +49,8 @@ namespace Game.Augmentation
         AbyssalTapetum,
         ArcherfishAccuracy,
         RaysTail,
-        ColdBlooded
+        ColdBlooded,
+        None,
     }
 
     public enum AugmentationRarity

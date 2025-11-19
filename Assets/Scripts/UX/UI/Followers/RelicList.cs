@@ -25,7 +25,7 @@ namespace UX.UI.Followers
         
         private bool selecting;
 
-        private void Awake()
+        protected override void Awake()
         {
             SearchByKeyword("");
         }

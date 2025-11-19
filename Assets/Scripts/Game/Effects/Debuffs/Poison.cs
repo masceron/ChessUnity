@@ -1,6 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
@@ -10,7 +10,7 @@ namespace Game.Effects.Debuffs
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TimeLeft = 3;
 
-        public Poison(sbyte strength, PieceLogic piece) : base(-1, strength, piece, EffectName.Poison)
+        public Poison(sbyte strength, PieceLogic piece) : base(-1, strength, piece, "effect_poison")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

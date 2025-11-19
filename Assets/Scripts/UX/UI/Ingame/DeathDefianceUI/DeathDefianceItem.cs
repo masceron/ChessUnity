@@ -1,4 +1,3 @@
-using Game.Effects;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,21 +13,15 @@ namespace UX.UI.Ingame.DeathDefianceUI
         // [SerializeField] private Button selectButton;
         [SerializeField] private RawImage effectIcon;
         
-        private EffectName effectName;
+        private string effectName;
         // private DeathDefianceUI parentUI;
         
-        public void Load(EffectName effect)
+        public void Load(string effect)
         {
             effectName = effect;
-            // parentUI = parent;
             var info = AssetManager.Ins.EffectData[effect];
             effectNameText.text = Localizer.GetText("effect_name", info.key, null);
             effectIcon.texture = info.icon;
-            // effectNameText.text = effect.ToString();
-            // effectDescriptionText.text = GetEffectDescription(effect);
-            
-            // selectButton.onClick.RemoveAllListeners();
-            // selectButton.onClick.AddListener(() => parentUI.ChooseEffect(effectName));
         }
 
         public void Choose()

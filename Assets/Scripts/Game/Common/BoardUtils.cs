@@ -7,7 +7,7 @@ using Game.Action.Internal;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UnityEngine;
 
@@ -42,8 +42,8 @@ namespace Game.Common
         
         public static bool IsAtPromotionRank(int index)
         {
-            int rank = RankOf(index);
-            return rank == 14 || rank == 25;
+            var rank = RankOf(index);
+            return rank is 14 or 25;
         }
 
         public static bool VerifyUpperBound(int dimension)
@@ -268,10 +268,10 @@ namespace Game.Common
                 file = file - size / 2;
             }
 
-            for (int r = rank; r < rank + size; r++)
+            for (var r = rank; r < rank + size; r++)
             {
                 if (!VerifyBounds(r)) continue;
-                for (int f = file; f < file + size; f++)
+                for (var f = file; f < file + size; f++)
                 {
                     if (!VerifyBounds(f)) continue;
                     var piece = PieceOn(IndexOf(r, f));
@@ -294,6 +294,9 @@ namespace Game.Common
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
 
+        public static Vector3 FromRankFileToWorldPos(float rank, float file) {
+            return new Vector3(rank, YCoordinate, file);
+        }
         public static bool IsNextEachOther(PieceLogic piece)
         {
             var pos = piece.Pos;

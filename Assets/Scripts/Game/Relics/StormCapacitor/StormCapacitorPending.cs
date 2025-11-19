@@ -12,12 +12,11 @@ namespace Game.Relics.StormCapacitor
 
     public class StormCapacitorPending : Action.Action, IPendingAble, System.IDisposable
     {
-        private Tile.Tile thisTile;
-
-        private int probabilityBound = 25;
-        private int size;
+        private readonly Tile.Tile thisTile;
+        
+        private readonly int size;
         private StormCapacitor stormCapacitor;
-        public StormCapacitorPending(int maker, Tile.Tile hoveringTile, StormCapacitor sc, int size) : base(maker, false)
+        public StormCapacitorPending(int maker, Tile.Tile hoveringTile, StormCapacitor sc, int size) : base(maker)
         {
             thisTile = hoveringTile;
             Maker = (ushort)maker;

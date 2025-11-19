@@ -14,18 +14,41 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public UIObject3D model;
         [SerializeField] private Image image;
         [SerializeField] private TooltipTrigger trigger;
+        [SerializeField] private Image greyMask;
         [NonSerialized] public Transform Parent;
         private Transform oldParent;
-        [NonSerialized] public bool Placed;
+        public bool Placed;
+        [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
         [NonSerialized] public int File = -1;
-        [NonSerialized] public PieceInfo Piece;
+        public PieceInfo Piece;
         
-        public void Load(PieceInfo piece)
+        public void Load(PieceInfo piece, bool isGreyOut = false)
         {
+            if (piece == null)
+            {
+                Debug.LogError("ArmyDesignTroop::Load(piece) : piece is null");
+            }
+            this.isGreyOut = isGreyOut;
             Piece = piece;
-            model.ObjectPrefab = Piece.prefab.transform;
+            if (Piece.prefab == null)
+            {
+                Debug.LogError($"Piece : {Piece.name} has null prefab");
+            }
+            else
+            {
+                model.ObjectPrefab = Piece.prefab.transform;
+            }
             SetTooltip();
+            if (isGreyOut)
+            {
+                greyMask.color = Color.black;
+
+            }
+            else
+            {
+                greyMask.color = Color.yellow;
+            }
         }
 
         private void SetTooltip()
@@ -43,11 +66,12 @@ namespace UX.UI.Army.DesignArmy
 
         public void OnBeginDrag(PointerEventData eventData)
         {
+            if (isGreyOut){ return; }
             oldParent = transform.parent;
             transform.SetParent(FindAnyObjectByType<Canvas>().transform);
             image.raycastTarget = false;
             Parent = null;
-            FindAnyObjectByType<ArmyDesignBoard>().SetAllowed();
+            FindAnyObjectByType<ArmyDesignBoard>().SetAllowed(Piece.rank == Game.Piece.PieceRank.Construct);
             trigger.enabled = false;
             TooltipManager.Ins.Disable();
 
@@ -68,6 +92,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void OnDrag(PointerEventData eventData)
         {
+            if (isGreyOut){ return; }
             transform.position = eventData.position;
         }
 
@@ -79,6 +104,7 @@ namespace UX.UI.Army.DesignArmy
         
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (isGreyOut){ return; }
             FindAnyObjectByType<ArmyDesignBoard>().UnSet();
             trigger.enabled = true;
             TooltipManager.Ins.Enable();

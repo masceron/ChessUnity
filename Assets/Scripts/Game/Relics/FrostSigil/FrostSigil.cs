@@ -34,7 +34,7 @@ namespace Game.Relics.FrostSigil
                     hoveringTile = thisTile;
                     TileManager.Ins.MarkTileInRange(hoveringTile, 3, isMark: true, onlyMarkEnemy: false);
                     
-                    int pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
+                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
                     var pending = new FrostSigilPending(pos ,hoveringTile, this);
 
                     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))

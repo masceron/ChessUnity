@@ -3,7 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
 namespace Game.Effects.RegionalEffect
@@ -14,14 +14,14 @@ namespace Game.Effects.RegionalEffect
 
         protected override void ApplyEffect(int currentTurn)
         {
-            PieceLogic[] board = MatchManager.Ins.GameState.PieceBoard;
-            List<PieceLogic> pieces = new List<PieceLogic>();
-            foreach(PieceLogic piece in board){
+            var board = MatchManager.Ins.GameState.PieceBoard;
+            var pieces = new List<PieceLogic>();
+            foreach(var piece in board){
                 if (piece != null){
                     pieces.Add(piece);
                 }
             }
-            int randomInd = Random.Range(0, pieces.Count);
+            var randomInd = Random.Range(0, pieces.Count);
             ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(1, pieces[randomInd])));
         }
     }

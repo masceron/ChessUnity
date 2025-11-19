@@ -1,13 +1,12 @@
-
-using Game.Piece.PieceLogic;
 using Game.Managers;
 using Game.Action;
 using Game.Effects.Debuffs;
 using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile{
     public class AnchorIce : Formation{
-        private int stack = 0;
+        private int stack;
         public AnchorIce(bool color) : base(color){
             MatchManager.Ins.GameState.OnIncreaseTurn += OnIncreaseTurn;
         }

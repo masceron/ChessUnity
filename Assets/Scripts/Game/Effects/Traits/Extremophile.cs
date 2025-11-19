@@ -1,7 +1,7 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic;
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
             EffectCategory.Debuff
         };
 
-        public Extremophile(PieceLogic piece) : base(-1, 1, piece, EffectName.Extremophile)
+        public Extremophile(PieceLogic piece) : base(-1, 1, piece, "effect_extremophile")
         {}
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)

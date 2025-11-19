@@ -14,6 +14,7 @@ namespace Game.Save.Stage
         {
             WhiteConfig = whiteConfig;
             BlackConfig = blackConfig;
+            
         }
     }
 }

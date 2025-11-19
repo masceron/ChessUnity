@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: MedicinalLeech
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  type: 20
+  key: piece_medicinal_leech
   prefab: {fileID: 919132149155446097, guid: e5505f02f43e0b64292bfcd5c9dfb292, type: 3}
   rank: 2
   moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  key: piece_medicinal_leech
   hasSkill: 0
   normalSkillCooldown: 0
+  availableSlots: 0
+  logicClassName: MedicinalLeech

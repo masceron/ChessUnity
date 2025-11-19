@@ -14,7 +14,7 @@ namespace Game.Action.Internal.Pending
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
-            Piece.PieceLogic.PieceLogic cr = BoardUtils.PieceOn(to);
+            var cr = BoardUtils.PieceOn(to);
 
         }
 

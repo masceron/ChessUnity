@@ -18,4 +18,4 @@ MonoBehaviour:
   priority: 1
   activeWhen: 3
   icon: {fileID: 0}
-  key: living_coral_passive
+  key: effect_living_coral_passive

@@ -2,7 +2,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Managers;
-using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
@@ -12,7 +12,7 @@ namespace Game.Effects.Traits
     {
         private readonly int[] rows;
         
-        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, EffectName.VelkarisMarker)
+        public VelkarisMarker(PieceLogic p) : base(-1, 1, p, "effect_velkaris_marker")
         {
             rows = new int[2];
             TriggerRows(p.Pos, p.Color);

@@ -1,20 +1,18 @@
-using Game.Piece.PieceLogic;
 using Game.Action;
-using Game.Action.Internal;
 using System.Collections.Generic;
 using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
-using UnityEngine;
-using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
+
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Frienzied : Effect, IEndTurnEffect
     {
         private List<Action.Action> list;
-        public Frienzied(PieceLogic piece) : base(-1, 1, piece, EffectName.Frienzied)
+        public Frienzied(PieceLogic piece) : base(-1, 1, piece, "effect_frienzied")
         {
             list = new List<Action.Action>();
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;

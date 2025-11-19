@@ -33,7 +33,7 @@ namespace Game.Augmentation.Set
 
         public void ApplyBonusEffects()
         {
-            foreach (Effect e in BonusEffects)
+            foreach (var e in BonusEffects)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(e));
             }

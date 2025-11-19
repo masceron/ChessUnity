@@ -7,6 +7,7 @@ using Game.Common;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
+using Game.Tile;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;
@@ -28,10 +29,12 @@ namespace Game.Managers
 
         public Vector2Int startingSize{get; private set;}
 
-        private static void MakeBoard()
+        private void MakeBoard(GameConfig cfg)
         {
             TileManager.Ins.Spawn();
             FormationManager.Ins.Initialize();
+            // For testing purpose
+            FormationManager.Ins.SetFormation(PosMap(15, startingSize), new PredatorLair(cfg.FirstSideToMove));
         }
 
         private void MakePieces(LineupConfig lineup)
@@ -55,19 +58,21 @@ namespace Game.Managers
         public void Init(GameConfig cfg)
         {
             startingSize = cfg.StartingSize;
-            AssetManager.Ins.Load();
             MakeGame(cfg);
-            MakeBoard();
+            MakeBoard(cfg);
+            
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
                 Config.relicWhiteConfig, 
                 Config.relicBlackConfig,
                 Config.regionalEffectType
                 );
-            
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
-
+        public void InitFromPreset()
+        {
+            
+        }
         private void MakeRelics(RelicConfig white, RelicConfig black)
         {
             GameState.WhiteRelic = GameState.GetRelicLogicByConfig(white);
@@ -87,6 +92,7 @@ namespace Game.Managers
             UIManager.Ins.Load(CanvasID.Ingame);
             GameState.OnStart();
             ActionManager.ExecuteWhenStart();
+            // InputProcessor.LoadRelic(whiteRelic, blackRelic);
         }
 
         public static bool Roll(int chance)
@@ -94,5 +100,9 @@ namespace Game.Managers
             var a = Random.Range(1, 101);
             return a <= chance;
         } 
+        public void CallDraw(bool side)
+        {
+            
+        }
     }
 }
