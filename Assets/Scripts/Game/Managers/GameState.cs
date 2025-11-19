@@ -61,6 +61,7 @@ namespace Game.Managers
         public bool SideToMove;
         public RelicLogic WhiteRelic;
         public RelicLogic BlackRelic;
+        public PieceLogic WhiteCommander, BlackCommander;
         public int WhiteSkillUses;
         public int BlackSkillUses;
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
@@ -112,7 +113,19 @@ namespace Game.Managers
 
         public void SpawnPiece(PieceConfig piece)
         {
-            PieceBoard[piece.Index] = PieceMaker.Get(piece);
+            PieceLogic pieceLogic = PieceMaker.Get(piece);
+            PieceBoard[piece.Index] = pieceLogic;
+            if (pieceLogic.PieceRank == PieceRank.Commander)
+            {
+                if (pieceLogic.Color == false)
+                {
+                    WhiteCommander = pieceLogic;
+                }
+                else
+                {
+                    BlackCommander = pieceLogic;
+                }
+            }
         }
 
         public static RelicLogic GetRelicLogicByConfig(RelicConfig cfg)
@@ -192,19 +205,6 @@ namespace Game.Managers
         public void Kill(int pos)
         {
             var pieceAffected = PieceBoard[pos];
-            if (pieceAffected.PieceRank == PieceRank.Commander)
-            {
-                if (pieceAffected.Color == false)
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
-                }
-                else
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                }
-            }
             PieceBoard[pos] = null;
 
             pieceAffected.Effects.ForEach(RemoveObserver);
@@ -254,9 +254,17 @@ namespace Game.Managers
                     IsDay = !IsDay;
                     countTurn = 0;
                 }
-                
             }
-
+            if (SideToMove && WhiteCommander != null && WhiteCommander.IsDead())
+            {
+                UIManager.Ins.Load(CanvasID.EndGameMessage);
+                EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+            }
+            else if (!SideToMove && BlackCommander != null && BlackCommander.IsDead())
+            {
+                UIManager.Ins.Load(CanvasID.EndGameMessage);
+                EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+            }
             SideToMove = !SideToMove;
         }
 
