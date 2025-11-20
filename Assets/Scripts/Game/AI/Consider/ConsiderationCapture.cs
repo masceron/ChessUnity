@@ -5,7 +5,7 @@ using Game.Action.Captures;
 using Game.Common;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.Consider
 {
     [CreateAssetMenu(menuName = "AI/Considerations/Capture")]
     public class CaptureConsiderationSO : ConsiderationSO
@@ -24,7 +24,7 @@ namespace Game.AI
                 // Prefer using PieceRank (or map types to values via AssetManager)
                 float value = Mathf.Max(1f, (int)targetPiece.PieceRank);
                 // normalize approx: expect rank in 1..10 -> map to 0..1
-                return Mathf.Clamp01(value / 10f);
+                return Mathf.Clamp01(value / 7f) * 2;
             }
             catch
             {

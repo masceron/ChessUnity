@@ -1,29 +1,27 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Game.Action;
-using Game.Common;
 using Game.Managers;
+using Game.ScriptableObjects;
 using UnityEngine;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.AI
 {
-    // Per-piece Brain component. Assign a BrainConfig in inspector and set MakerIndex (board index).
+    // Per-piece Brain component. Set Maker (the piece this brain controls) in the inspector.
+    // AI behavior is determined by considerations defined in the piece's PieceInfo asset.
     public class BrainComponent : MonoBehaviour
     {
-        [Tooltip("Configurable list of considerations + weights")]
-        public BrainConfig Config;
-
-        [Tooltip("Maker index for the piece this Brain controls (board index)")]
-        public int MakerIndex = -1;
+        [Tooltip("The piece this Brain controls")]
+        public PieceLogic Maker;
 
         // Evaluate action as weighted average of configured considerations.
         public float Evaluate(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions)
         {
-            if (Config == null || Config.Considerations == null || action == null) return float.NegativeInfinity;
+            if (Maker == null || action == null) return float.NegativeInfinity;
+            PieceInfo pieceInfo = AssetManager.Ins.PieceData[Maker.Type];
 
             float weightedSum = 0f;
             float weightTotal = 0f;
-            foreach (var cw in Config.Considerations)
+            foreach (var cw in pieceInfo.considerations)
             {
                 if (cw.Consideration == null || cw.Weight <= 0f) continue;
                 float s = Mathf.Clamp01(cw.Consideration.Score(action, allyActions, enemyActions));
@@ -48,7 +46,7 @@ namespace Game.AI
 
             foreach (var a in actions)
             {
-                if (MakerIndex >= 0 && a.Maker != MakerIndex) continue;
+                if (Maker != null && a.Maker != Maker.Pos) continue;
 
                 float score = Evaluate(a, allyActions, enemyActions);
 
@@ -72,10 +70,8 @@ namespace Game.AI
         public List<Action.Action> GatherActionsForMaker()
         {
             var list = new List<Action.Action>();
-            if (!BoardUtils.VerifyIndex(MakerIndex)) return list;
-            var piece = BoardUtils.PieceOn(MakerIndex);
-            if (piece == null) return list;
-            try { piece.MoveList(list); } catch { }
+            if (Maker == null) return list;
+            try { Maker.MoveList(list); } catch { }
             return list;
         }
     }

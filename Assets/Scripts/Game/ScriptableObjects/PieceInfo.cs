@@ -1,6 +1,9 @@
+using Game.AI;
 using Game.Piece;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Game.AI.Consider;
 
 namespace Game.ScriptableObjects
 {
@@ -20,6 +23,10 @@ namespace Game.ScriptableObjects
         [SerializeField] public sbyte normalSkillCooldown;
         [SerializeField] public AugmentationSlotMask availableSlots;
         [SerializeField] public string logicClassName;
+
+        [SerializeField] public int baseValue;
+        [SerializeField] public List<ConsiderationWeight> considerations;
+
         [Flags]
         public enum AugmentationSlotMask 
         { 

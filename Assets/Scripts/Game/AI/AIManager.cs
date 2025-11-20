@@ -32,11 +32,8 @@ namespace Game.AI
 
             foreach (var brain in brains)
             {
-                // Validate brain's maker and piece belong to this side
-                if (!BoardUtils.VerifyIndex(brain.MakerIndex)) continue;
-                var piece = BoardUtils.PieceOn(brain.MakerIndex);
-                if (piece == null) continue;
-                if (piece.Color != sideToMove) continue;
+                if (brain.Maker == null) continue;
+                if (brain.Maker.Color != sideToMove) continue;
 
                 // Gather actions for this maker
                 var actions = brain.GatherActionsForMaker();

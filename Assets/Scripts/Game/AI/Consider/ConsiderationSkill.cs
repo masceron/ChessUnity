@@ -3,7 +3,7 @@ using Game.Action;
 using Game.Action.Skills;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.Consider
 {
     [CreateAssetMenu(menuName = "AI/Considerations/Skill")]
     public class SkillConsiderationSO : ConsiderationSO

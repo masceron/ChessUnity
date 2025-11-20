@@ -3,10 +3,10 @@ using Game.Action;
 using Game.Action.Quiets;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.Consider
 {
-    [CreateAssetMenu(menuName = "AI/Considerations/Move")]
-    public class MoveConsiderationSO : ConsiderationSO
+    [CreateAssetMenu(menuName = "AI/Considerations/Cooperative")]
+    public class CooperativeConsiderationSO : ConsiderationSO
     {
         // Score 1.0 for move (quiet) actions, 0 otherwise
         public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions)

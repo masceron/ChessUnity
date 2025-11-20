@@ -28,8 +28,6 @@ namespace Game.Managers
         [SerializeField] public RegionalsData regionalsData;
         [SerializeField] private FormationsData environmentsData;
 
-        public BrainConfig BrainConfigTest;
-
         protected override void Awake()
         {
             Load();

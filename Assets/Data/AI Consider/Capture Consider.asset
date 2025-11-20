@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1491ec95d15a11841a7975498f6d482f, type: 3}
-  m_Name: GuidSirenSkill
-  m_EditorClassIdentifier: Assembly-CSharp::Game.AI.SkillConsiderationSO
+  m_Script: {fileID: 11500000, guid: 1d7ab0edf66de7a4ebbda1b7bd60a850, type: 3}
+  m_Name: Capture Consider
+  m_EditorClassIdentifier: Assembly-CSharp::Game.AI.CaptureConsiderationSO

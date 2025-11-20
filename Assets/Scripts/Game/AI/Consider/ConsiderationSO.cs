@@ -3,7 +3,7 @@ using Game.Action;
 using Game.Action.Quiets;
 using UnityEngine;
 
-namespace Game.AI
+namespace Game.AI.Consider
 {
     // Base consideration ScriptableObject. Scores in [0,1].
     public abstract class ConsiderationSO : ScriptableObject
