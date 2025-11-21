@@ -19,18 +19,16 @@ namespace Game.AI
             if (Maker == null || action == null) return float.NegativeInfinity;
             PieceInfo pieceInfo = AssetManager.Ins.PieceData[Maker.Type];
 
-            float weightedSum = 0f;
-            float weightTotal = 0f;
+            float bestScoreConsideration = float.NegativeInfinity;
+
             foreach (var cw in pieceInfo.considerations)
             {
-                if (cw.Consideration == null || cw.Weight <= 0f) continue;
-                float s = Mathf.Clamp01(cw.Consideration.Score(action, allyActions, enemyActions));
-                weightedSum += s * cw.Weight;
-                weightTotal += cw.Weight;
+                if (cw.Consideration == null) continue;
+                float score = cw.Consideration.Score(action, allyActions, enemyActions) + cw.Weight;
+                if (score > bestScoreConsideration) bestScoreConsideration = score;
             }
 
-            if (weightTotal <= 0f) return 0f;
-            return weightedSum / weightTotal;
+            return bestScoreConsideration;
         }
 
         // Choose best action from a given list using this BrainConfig.

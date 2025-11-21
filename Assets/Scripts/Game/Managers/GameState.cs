@@ -113,6 +113,9 @@ namespace Game.Managers
         public void SpawnPiece(PieceConfig piece)
         {
             PieceBoard[piece.Index] = PieceMaker.Get(piece);
+
+            var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<Game.AI.BrainComponent>();
+            bc.Maker = PieceBoard[piece.Index];    
         }
 
         public static RelicLogic GetRelicLogicByConfig(RelicConfig cfg)

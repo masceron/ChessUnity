@@ -7,6 +7,6 @@ namespace Game.AI.Consider
     public struct ConsiderationWeight
     {
         public ConsiderationSO Consideration;
-        [Range(0f, 10f)] public float Weight;
+        [Range(-100f, 100f)] public float Weight;
     }
 }

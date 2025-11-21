@@ -17,11 +17,9 @@ namespace Game.Managers
             var info = AssetManager.Ins.PieceData[config.Type];
             var prefab = info.prefab;
             var p = Instantiate(prefab, transform).AddComponent<Game.Piece.Piece>();
-            var bc = p.gameObject.AddComponent<BrainComponent>();
 
             pieces[pos] = p;
             p.Spawn(pos, config.Color);
-            bc.Maker = PieceOn(pos);
         }
 
         /// <summary>

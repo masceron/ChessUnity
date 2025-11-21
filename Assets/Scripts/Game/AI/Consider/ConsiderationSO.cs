@@ -9,6 +9,6 @@ namespace Game.AI.Consider
     public abstract class ConsiderationSO : ScriptableObject
     {
         // Implement scoring logic using only read-only game state access.
-        public abstract float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions);
+        public abstract float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight);
     }
 }

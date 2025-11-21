@@ -8,11 +8,10 @@ namespace Game.AI.Consider
     [CreateAssetMenu(menuName = "AI/Considerations/Control")]
     public class ControlConsiderationSO : ConsiderationSO
     {
-        // Score 1.0 for move (quiet) actions, 0 otherwise
-        public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions)
+        public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight)
         {
             if (action == null) return 0f;
-            return action is IQuiets ? 1f : 0f;
+            return action is IQuiets ? 1f * weight : 0f;
         }
     }
 }
