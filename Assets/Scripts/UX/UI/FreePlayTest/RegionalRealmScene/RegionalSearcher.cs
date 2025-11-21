@@ -51,9 +51,11 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 {
                     obj.SetActive(true);
                 }
-
                 Pool[i].Load(lastSearchResult[i]);
-
+                if (lastSearchResult[i] == Config.regionalEffectType)
+                {
+                    Pool[i].Choose();
+                }
             }
         }
     }

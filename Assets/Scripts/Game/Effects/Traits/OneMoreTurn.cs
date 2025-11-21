@@ -12,7 +12,6 @@ namespace Game.Effects.Traits
         public OneMoreTurn(PieceLogic piece) : base(-1, 1, piece, "effect_one_more_turn")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
-
         }
 
         public void OnCallEnd(Action.Action lastMainAction){

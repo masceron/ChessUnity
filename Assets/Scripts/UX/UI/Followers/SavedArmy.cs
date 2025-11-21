@@ -23,11 +23,6 @@ namespace UX.UI.Followers
             UIManager.Ins.Load(CanvasID.DesignArmy);
             ArmyDesign.Ins.Load(army.BoardSize, army);
         }
-        public void ClickToFreePlayDesignArmy()
-        {
-            UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
-            ArmyDesign.Ins.Load(army.BoardSize, army);
-        }
         public void Delete()
         {
             ArmySaveLoader.Remove(army.Name);

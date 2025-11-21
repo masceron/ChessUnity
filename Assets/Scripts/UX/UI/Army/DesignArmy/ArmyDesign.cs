@@ -12,20 +12,16 @@ namespace UX.UI.Army.DesignArmy
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArmyDesign: Singleton<ArmyDesign>
     {
-        public bool choosenSide{ get; private set; }
+
         [SerializeField] private DesignArmyInfo info;
         public ArmyDesignBoard board;
         public ArmyDesignTroop troopDisplay;
         [SerializeField] private ArmySearcher searcher;
         [SerializeField] private DesignNotification notification;
         [SerializeField] private ArmyRelicSearcher relicSearcher;
-        [SerializeField] private Transform nextButton;
         [NonSerialized] public int size;
         public Game.Save.Army.Army army;
-        void Start()
-        {
-            nextButton?.gameObject.SetActive(false);
-        }
+
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -62,7 +58,6 @@ namespace UX.UI.Army.DesignArmy
             {
                 relicSearcher.Load(null);
             }
-            nextButton?.gameObject.SetActive(true);
         }
         private void LoadSave(Game.Save.Army.Army armyToLoad)
         {
@@ -72,21 +67,18 @@ namespace UX.UI.Army.DesignArmy
             relicSearcher.Load(armyToLoad.Relic);
         }
 
-        public bool TrySave()
+        public void TrySave()
         {
             army.Name = info.armyName.text;
             if (army.Name == string.Empty)
             {
                 notification.Open(DesignNotifications.EmptyName);
-                return false;
             }
             if (ArmySaveLoader.Exists(army.Name) && UIManager.Ins.GetCanvasID() == CanvasID.DesignArmy)
             {
                 notification.Open(DesignNotifications.Overwrite);
-                return false;
             }
             Save();
-            return true;
         }
         public bool TrySaveFreeTest()
         {
@@ -104,14 +96,7 @@ namespace UX.UI.Army.DesignArmy
             army.BoardSize = (ushort) size;
             SetTroops();
             ArmySaveLoader.Save(army);
-            if (SceneManager.GetActiveScene().name == "FreePlayTest")
-            {
-                UIManager.Ins.Load(CanvasID.RegionalEffect);
-            }
-            else
-            {
-                UIManager.Ins.Load(CanvasID.Followers);
-            }
+            UIManager.Ins.Load(CanvasID.Followers);
         }
         private void SetTroops()
         {
@@ -121,19 +106,8 @@ namespace UX.UI.Army.DesignArmy
 
         public void SelectRelic(RelicType type)
         {
-            if (choosenSide == false)
-            {
-                army.Relic = new Relic(type);
-            }
-            else
-            {
-                army.EnemyRelic = new Relic(type);
-            }
-        }
+            army.Relic = new Relic(type);
 
-        public void ToggleChosenSide()
-        {
-            choosenSide = !choosenSide;
         }
     }
 }

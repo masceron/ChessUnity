@@ -18,7 +18,6 @@ namespace Game.Tile
                 ToggleVisibility(piece, false);
             }
         }
-
         public override void OnPieceEnter(PieceLogic piece)
         {
             if (piece.Color != Color)

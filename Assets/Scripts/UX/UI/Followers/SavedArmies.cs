@@ -2,6 +2,7 @@
 using Game.Save.Army;
 using UnityEngine;
 using Game.Common;
+using System.Collections.Generic;
 
 namespace UX.UI.Followers
 {
@@ -10,14 +11,13 @@ namespace UX.UI.Followers
     {
         [SerializeField] protected RectTransform list;
         [SerializeField] protected SavedArmy saved;
-
         public void Load()
         {
             var dict = ArmySaveLoader.ReadAll();
-            
+
             var already = list.transform.childCount;
             var needed = dict.Count;
-            
+
             if (already < needed)
             {
                 for (var i = 1; i <= needed - already; i++)

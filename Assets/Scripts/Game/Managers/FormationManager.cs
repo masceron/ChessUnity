@@ -27,8 +27,12 @@ namespace Game.Managers
         public void SetFormation(int pos, Formation env){
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            formationObjects[pos] = Instantiate(AssetManager.Ins.EnvironmentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file), 
+            formationObjects[pos] = Instantiate(AssetManager.Ins.EnvironmentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file),
             Quaternion.identity, transform);
+            if (formations[pos] != null)
+            {
+                RemoveFormation(pos);
+            }
             formations[pos] = env;
             if (PieceOn(pos) != null){
                 formations[pos].OnCreated(PieceOn(pos));
@@ -43,8 +47,12 @@ namespace Game.Managers
         /// Nên dùng để xóa Formation
         /// </summary>
         public void RemoveFormation(int pos){
-            if (formations[pos] != null) 
+            if (formations[pos] != null)
             {
+                if (PieceOn(pos) != null)
+                {
+                    formations[pos].OnDestroyed(PieceOn(pos));
+                }
                 formations[pos] = null;
                 Destroy(formationObjects[pos]);
                 formationObjects[pos] = null;

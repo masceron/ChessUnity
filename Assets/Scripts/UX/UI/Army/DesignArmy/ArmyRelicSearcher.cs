@@ -20,14 +20,14 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private TMP_InputField searchBar;
         [SerializeField] private RectTransform mainPanel;
         [SerializeField] public Transform list;
-        [SerializeField] private ArmyDesignRelicDescription description;
+        [SerializeField] protected ArmyDesignRelicDescription description;
         [SerializeField] public ArmyDesignRelic relicDisplay;
-        [SerializeField] private TMP_Text relicText;
+        [SerializeField] protected TMP_Text relicText;
 
         private List<RelicInfo> searchResult;
         private string lastKeyword;
         private readonly List<ArmyDesignRelic> pool = new();
-        private RelicType? selecting;
+        protected RelicType? selecting;
         public Action<RelicType?> OnRelicSelecting;
 
         protected override void Awake()
@@ -38,6 +38,7 @@ namespace UX.UI.Army.DesignArmy
         public void Toggle()
         {
             container.gameObject.SetActive(!container.gameObject.activeSelf);
+            mainPanel.gameObject.SetActive(true);
         }
 
         private void OnEnable()
@@ -145,7 +146,7 @@ namespace UX.UI.Army.DesignArmy
             description.Undisplay();
         }
 
-        public void SelectRelic()
+        public virtual void SelectRelic()
         {
             ArmyDesign.Ins.SelectRelic((RelicType)selecting);
             relicText.text = description.nameText.text;
