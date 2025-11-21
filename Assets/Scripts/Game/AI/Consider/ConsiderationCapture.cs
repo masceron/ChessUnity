@@ -1,17 +1,15 @@
 using System.Collections.Generic;
-using System.Linq;
-using Game.Action;
 using Game.Action.Captures;
 using Game.Common;
-using Game.Managers;
 using UnityEngine;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.AI.Consider
 {
     [CreateAssetMenu(menuName = "AI/Considerations/Capture")]
     public class CaptureConsiderationSO : ConsiderationSO
     {
-        public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight)
+        public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight, PieceLogic maker)
         {
             if (action == null) return 0f;
             if (!(action is ICaptures)) return 0f;

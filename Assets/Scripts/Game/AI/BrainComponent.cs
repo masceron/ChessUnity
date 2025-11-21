@@ -24,7 +24,7 @@ namespace Game.AI
             foreach (var cw in pieceInfo.considerations)
             {
                 if (cw.Consideration == null) continue;
-                float score = cw.Consideration.Score(action, allyActions, enemyActions) + cw.Weight;
+                float score = cw.Consideration.Score(action, allyActions, enemyActions, cw.Weight, Maker);
                 if (score > bestScoreConsideration) bestScoreConsideration = score;
             }
 
