@@ -1,86 +1,59 @@
 using System.Collections.Generic;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MegalodonActive: Action, ISkills
+    public class MegalodonActive: Action, ISkills, IPendingAble
     {
-        private List<PieceLogic> availablePieces = new List<PieceLogic>();
-        public MegalodonActive(int maker) : base(maker)
+        private readonly System.Func<int> getCount;
+        private readonly System.Action<int> setCount;
+        private readonly System.Func<List<int>> getTargeted;
+        public MegalodonActive(int maker, int to, int count, System.Func<int> getCount, System.Action<int> setCount, 
+            System.Func<List<int>> getTargeted) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Target = (ushort)to;
+            this.getCount = getCount;
+            this.setCount = setCount;
+            this.getTargeted = getTargeted;
         }
 
-        private bool CanActive()
+        private void MakeSkill(int target)
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
-            var range = caller.AttackRange;
-            var color = caller.Color;
-            var push = !color ? -1 : 1;
-
-            bool hasAlly = false;
-            bool hasEnemy = false;
-
-            foreach (var piece in availablePieces)
+            var targetedList = getTargeted();
+            var Piece = PieceOn(Maker);
+            var Pos = Piece.Pos;
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange))
             {
-                if (piece.Color == color) hasAlly = true;
-                else hasEnemy = true;
-                
-                if (hasAlly && hasEnemy) return true;
+                var idx = IndexOf(rank, file);
+                var pOn = PieceOn(idx);
+                if (pOn != null && pOn.Color != Color)
+                {
+                    if (targeted.Contains(idx)) continue;
+                }
             }
-
-            return false;
-
         }
 
         public void SetCoolDown()
         {
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
+        
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
-            var range = caller.AttackRange;
-            var color = caller.Color;
-            var push = !color ? -1 : 1;
-
-            for (var nRank = rank - (range - 1) * push; nRank != rank + (range + 1) * push; nRank += push)
-            {
-                if (!VerifyBounds(nRank)) continue;
-                for (var nFile = file - range * push; nFile != file + range * push; nFile += push)
-                {
-                    if (!VerifyBounds(nFile)) continue;
-                    var idx = IndexOf(nRank, nFile);
-                    if (!IsActive(idx)) continue;
-
-                    var piece = PieceOn(idx);
-
-                    if (piece == null) continue;
-
-                    availablePieces.Add(piece);
-                }
-            }
-
-            if (!CanActive()) return;
-
-            foreach (var piece in availablePieces)
-            {
-                if (piece.Color == color) continue;
-                var pending = new MegalodonPending(this, caller.Pos, piece.Pos);
-                BoardViewer.ListOf.Add(pending);
-            }
-
-            BoardViewer.Selecting = -2;
-            BoardViewer.SelectingFunction = 4;
-        }
             
+        }
+
+        public void CompleteAction()
+        {
+            MakeSkill(Target);
+        }
     }
 }
