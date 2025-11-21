@@ -14,13 +14,16 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             FreePlayArmyDesign.Ins.Load(army.BoardSize, army);
             foreach(FreePlaySavedArmy savedArmy in FPSavedArmies.Ins.GetList())
             {
-                savedArmy.RemoveHighLight();
+                if(savedArmy != this)
+                {
+                    savedArmy.RemoveHighLight();
+                }
             }
             image.color = Color.white;
         }
         public void RemoveHighLight()
         {
-            image.color = new Color(229, 232, 69);
+            image.color = new Color(229/255.0f, 232/255.0f, 69/255.0f);
         }
     }
 }
