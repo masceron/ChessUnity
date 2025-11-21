@@ -9,6 +9,7 @@ namespace Game.Piece.PieceLogic
     {
         public BrittleStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 15, this)));
         }
     }
