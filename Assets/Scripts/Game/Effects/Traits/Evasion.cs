@@ -20,7 +20,7 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result == ActionResult.Failed) return;
+            if (action == null || action.Target != Piece.Pos || !action.Succeed) return;
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 
@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
                 var effect = PieceOn(action.Maker).Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)
                 {
-                    action.Result = ActionResult.Succeed;
+                    action.Succeed = true;
                     return;
                 }
             }
@@ -43,7 +43,7 @@ namespace Game.Effects.Traits
                 if (!MatchManager.Roll(Probability)) return;
             }
             
-            action.Result = ActionResult.Failed;
+            action.Succeed = false;
         }
     }
 }

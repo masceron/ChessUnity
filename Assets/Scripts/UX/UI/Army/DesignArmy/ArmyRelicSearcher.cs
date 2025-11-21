@@ -3,7 +3,6 @@ using System.Linq;
 using System;
 using Game.Common;
 using Game.Managers;
-using Game.Relics;
 using Game.Save.Relics;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;

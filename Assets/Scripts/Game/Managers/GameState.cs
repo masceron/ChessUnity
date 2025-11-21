@@ -7,7 +7,6 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece;
-using Game.Relics;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;

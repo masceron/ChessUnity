@@ -1,6 +1,5 @@
 ﻿using System;
 using Game.Common;
-using Game.Relics;
 using Game.Save.Army;
 using Game.Save.Relics;
 using UnityEngine;

@@ -3,9 +3,13 @@ using System.Collections.Generic;
 
 namespace Game.Action
 {
-    public enum ActionResult
+    
+    [Flags]
+    public enum ActionFlag: byte
     {
-        Succeed, Failed, Unblockable
+        None = 0,
+        Unblockable = 1,
+        Undodgeable = 1 << 1
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -13,7 +17,8 @@ namespace Game.Action
     {
         public int Target = -1;
         public int Maker;
-        public ActionResult Result = ActionResult.Succeed;
+        public bool Succeed = true;
+        public ActionFlag Flag = ActionFlag.None;
         public readonly bool DoesMoveChangePos;
 
         protected Action(int maker, bool pos = false)
@@ -25,7 +30,7 @@ namespace Game.Action
         public void Execute()
         {
             Animate();
-            if (Result != ActionResult.Failed)
+            if (Succeed)
             {
                 ModifyGameState();
             }

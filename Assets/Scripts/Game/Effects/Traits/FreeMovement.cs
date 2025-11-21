@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
 
             if (blockedEffects.Contains(effect.EffectName))
             {
-                applyEffect.Result = ActionResult.Failed;
+                applyEffect.Succeed = false;
             }
         }
     }

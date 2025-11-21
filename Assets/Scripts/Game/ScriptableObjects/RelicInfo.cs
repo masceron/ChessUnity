@@ -1,5 +1,4 @@
-﻿using Game.Relics;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.ScriptableObjects
 {
