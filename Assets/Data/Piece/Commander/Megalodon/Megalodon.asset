@@ -19,7 +19,7 @@ MonoBehaviour:
   attackRange: 3
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  hasSkill: 0
+  hasSkill: 1
   normalSkillCooldown: 5
   availableSlots: 0
   logicClassName: Megalodon
