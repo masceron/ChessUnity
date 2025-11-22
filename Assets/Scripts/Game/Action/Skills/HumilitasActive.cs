@@ -6,55 +6,60 @@ using UX.UI.Ingame;
 using Game.Managers;
 using System.Collections.Generic;
 using Game.Piece.PieceLogic.Commons;
+using Game.Action.Captures;
+using Game.Action;
+using Game.Common;
 
 namespace Game.Action.Skills
 {
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive: Action, ISkills, IPendingAble
+    public class HumilitasActive: Action, ISkills, IPendingAble, System.IDisposable
     {
-        private readonly System.Func<int> getCount;
-        private readonly System.Action<int> setCount;
-        private readonly System.Func<List<int>> getTargeted;
-
-        public HumilitasActive(int maker, int to, int count, System.Func<int> getCount, System.Action<int> setCount,
-                    System.Func<List<int>> getTargeted) : base(maker)
+        private static PieceLogic FirstTarget;
+        private static PieceLogic SecondTarget;
+        public HumilitasActive(int maker, int to) : base(maker)
         {
             Target = (ushort)to;
-            this.getCount = getCount;
-            this.setCount = setCount;
-            this.getTargeted = getTargeted;
         }
         protected override void ModifyGameState()
         {
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-        private void MakeSkill(int target)
-        {
-            var targetedList = getTargeted();
-            
-            if(targetedList.Contains(target))
-            {
-                return;
-            }
-            targetedList.Add(target);
-            TileManager.Ins.Unselect(target);
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(1, PieceOn(target))));
-            setCount(getCount() - 1);
-            if(getCount() <= 0)
-            {
-                BoardViewer.Ins.ExecuteAction(this); 
-                setCount(2);
-                targetedList.Clear();
-                return;
-            }
-        }
         public void CompleteAction()
         {
-            MakeSkill(Target);
+
+            var hovering = PieceOn(BoardViewer.HoveringPos);
+            if (FirstTarget == null) 
+            {
+                FirstTarget = hovering;
+                TileManager.Ins.UnmarkAll();
+                BoardViewer.ListOf.Clear();
+
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 5))
+                {
+                    var index = IndexOf(rankOff, fileOff);
+                    var piece = PieceOn(index);
+                    if (piece == null || piece.Color != FirstTarget.Color) continue;
+                    var newAction = new HumilitasActive(Maker, index);
+                    BoardViewer.ListOf.Add(newAction);
+                    TileManager.Ins.MarkAsMoveable(index);
+                }
+                return;
+            }
+            SecondTarget = hovering;
+
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget)));
+
+            BoardViewer.Ins.ExecuteAction(this);
         }
-
-
+        public void Dispose()
+        {
+            FirstTarget = null;
+            SecondTarget = null;
+            BoardViewer.SelectingFunction = 0; 
+        }
     }
 }

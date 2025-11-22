@@ -10,7 +10,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineIguanaAttack: Action, IPendingAble, ISkills
+    public class MarineIguanaAttack: Action, IPendingAble, ISkills, System.IDisposable  
     {
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;
@@ -33,7 +33,7 @@ namespace Game.Action.Captures
                 FirstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
-                foreach (var (rankOff, fileOff) in MoveEnumerators.Around(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 2))
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 2))
                 {
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
@@ -44,14 +44,16 @@ namespace Game.Action.Captures
                 }
                 return;
             }
-            SecondTarget = hovering;
-            TileManager.Ins.UnmarkAll();    
-            BoardViewer.Ins.Unmark();
+            SecondTarget = hovering; 
+        
             ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
+            BoardViewer.Ins.ExecuteAction(this);
+        }
+        public void Dispose()
+        {
             FirstTarget = null;
             SecondTarget = null;
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
+            BoardViewer.SelectingFunction = 0; 
         }
     }
 }

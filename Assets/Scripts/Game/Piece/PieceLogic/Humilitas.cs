@@ -14,19 +14,10 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Humilitas: Commons.PieceLogic, IPieceWithSkill
     {
-        private int deathDefianceCount = 4 ;
-        private readonly System.Func<int> getCount;
-        private readonly System.Action<int> setCount;
-        private readonly System.Func<List<int>> getTargeted;
-        private readonly List<int> targeted = new List<int>();
-        private int count;
+        private int deathDefianceCount;
         public Humilitas(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             deathDefianceCount = 4;
-            count = 2;
-            getCount = () => count;
-            setCount = (v) => count = v;
-            getTargeted = () => targeted;
             ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
             ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
@@ -40,8 +31,7 @@ namespace Game.Piece.PieceLogic
                     var pOn = PieceOn(idx);
                     if (pOn != null && pOn.Color != Color)
                     {
-                        if (targeted.Contains(idx)) continue;
-                        list.Add(new HumilitasActive(Pos, idx, count, getCount, setCount, getTargeted));
+                        list.Add(new HumilitasActive(Pos, idx));
                     }
                 }
             };
