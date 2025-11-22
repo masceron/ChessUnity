@@ -257,13 +257,29 @@ namespace Game.Managers
             }
             if (SideToMove && WhiteCommander != null && WhiteCommander.IsDead())
             {
-                UIManager.Ins.Load(CanvasID.EndGameMessage);
-                EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                if (WhiteCommander != null && WhiteCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                }
+                else if (BlackCommander != null && BlackCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                }
             }
             else if (!SideToMove && BlackCommander != null && BlackCommander.IsDead())
             {
-                UIManager.Ins.Load(CanvasID.EndGameMessage);
-                EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                if (BlackCommander != null && BlackCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                }
+                else if (WhiteCommander != null && WhiteCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                }
             }
             SideToMove = !SideToMove;
         }
