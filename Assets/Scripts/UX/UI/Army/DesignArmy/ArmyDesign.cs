@@ -73,23 +73,14 @@ namespace UX.UI.Army.DesignArmy
             if (army.Name == string.Empty)
             {
                 notification.Open(DesignNotifications.EmptyName);
+                return;
             }
             if (ArmySaveLoader.Exists(army.Name) && UIManager.Ins.GetCanvasID() == CanvasID.DesignArmy)
             {
                 notification.Open(DesignNotifications.Overwrite);
+                return;
             }
             Save();
-        }
-        public bool TrySaveFreeTest()
-        {
-            army.Name = info.armyName.text;
-            if (army.Name == string.Empty)
-            {
-                notification.Open(DesignNotifications.EmptyName);
-                return false;
-            }
-            Save();
-            return true;
         }
         public void Save()
         {
