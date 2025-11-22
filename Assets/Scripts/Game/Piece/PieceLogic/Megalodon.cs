@@ -3,6 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.Buffs;
 using Game.Effects.Others;
 using Game.Effects.Traits;
 using Game.Movesets;
@@ -18,6 +19,7 @@ namespace Game.Piece.PieceLogic
             MegalodonMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new FrenziedVeteran(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
 
             Skills = list =>
             {
