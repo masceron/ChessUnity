@@ -10,7 +10,8 @@ public static class Config
     {
         new PieceConfig("piece_anglerfish", false, 80),
         new PieceConfig("piece_humilitas", false, 89),
-        new PieceConfig("piece_megalodon", false, 76)
+        new PieceConfig("piece_megalodon", false, 76),
+        new PieceConfig("piece_horseleech", false, 84)
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()

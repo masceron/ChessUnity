@@ -347,6 +347,10 @@ MonoBehaviour:
     m_Key: effect_snipe_eel_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 37346810770804736
+    m_Key: effect_horse_leech_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
