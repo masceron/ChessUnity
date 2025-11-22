@@ -13,6 +13,8 @@ using UX.UI.Tooltip;
 using Color = UnityEngine.Color;
 using static Game.Common.BoardUtils;
 using static UX.UI.Ingame.BoardViewer;
+using Game.Tile;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 namespace UX.UI.Ingame
 {
@@ -191,7 +193,6 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<IQuiets>())
             {
-               // Debug.Log(_move.ToString());
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
@@ -206,6 +207,8 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<ICaptures>())
             {
+                int targetPos = ((Action)_move).Target;
+                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
@@ -220,6 +223,8 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<ISkills>())
             {
+                int targetPos = ((Action)_move).Target;
+                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }

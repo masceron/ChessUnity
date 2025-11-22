@@ -4,6 +4,7 @@ using Game.Action.Internal.Pending;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -63,14 +64,6 @@ namespace UX.UI.Ingame
 
             if (Selecting != -1) return;
             
-            if (pos == -1)
-            {
-                Hovering = null;
-                effectBar.Disable();
-                pieceInfoMenu.Disable();
-                return;
-            }
-            
             var piece = PieceOn(pos);
 
             if (piece == null || !piece.IsVisible) return;
@@ -100,7 +93,7 @@ namespace UX.UI.Ingame
                 }
             }
             ListOf.Clear();
-            SetPieceHover(-1);
+            Hover(-1);
         }
 
         public void ExecuteAction(Action action)
@@ -160,7 +153,7 @@ namespace UX.UI.Ingame
                 // Hiển thị những vị trí trên bàn cờ có thể thực thi Action do người chơi chọn
                 // Action ở đây có thể là Move/Attack/Skill
                 var piece = PieceOn(pos);
-                if (piece is not { IsVisible: true }) return;
+                if (piece is not { IsVisible: true } || FormationManager.Ins.IsHideByFog(pos, SideToMove())) return;
                 
                 SetPieceHover(pos);
                 TileManager.Ins.Select(pos);
@@ -190,6 +183,20 @@ namespace UX.UI.Ingame
 
         public void Hover(int pos)
         {
+            HoveringPos = pos;
+            if (pos == -1)
+            {
+                Hovering = null;
+                effectBar.Disable();
+                pieceInfoMenu.Disable();
+                return;
+            }
+            Formation formation = FormationManager.Ins.GetFormation(pos);
+            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar && formation.GetColor() != SideToMove())
+            {
+                return;
+            }
+            // Debug.Log(pos);
             SetPieceHover(pos);
         }
 

@@ -15,7 +15,7 @@ namespace Game.Tile
         {
             if (piece.Color != BoardUtils.OurSide())
             {
-                ToggleVisibility(piece, false);
+                // ToggleVisibility(piece, false);
             }
         }
         public override void OnPieceEnter(PieceLogic piece)
@@ -24,15 +24,10 @@ namespace Game.Tile
             {
                 FormationManager.Ins.RemoveFormation(piece.Pos);
             }
-            else
-            {
-                // Do nothing
-            }
-            
         }
         public override void OnPieceExit(PieceLogic piece)
         {
-            ToggleVisibility(piece, true);
+            // ToggleVisibility(piece, true);
         }
         void ToggleVisibility(PieceLogic piece, bool value)
         {

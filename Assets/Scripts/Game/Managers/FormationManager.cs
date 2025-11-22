@@ -88,6 +88,15 @@ namespace Game.Managers
                 }
             }
         }
-        public void OnCall(Action.Action action){}
+        public void OnCall(Action.Action action) { }
+        public bool IsHideByFog(int pos, bool sideToMove)
+        {
+            Formation formation = GetFormation(pos);
+            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar && formation.GetColor() != sideToMove)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

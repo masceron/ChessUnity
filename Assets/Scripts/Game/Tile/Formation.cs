@@ -37,7 +37,7 @@ namespace Game.Tile
             Duration = _duration;
             HaveDuration = true;
         }
-
+        public bool GetColor() => Color;
         /// <summary>
         /// Trả về FormationType tương ứng với class
         /// </summary>
