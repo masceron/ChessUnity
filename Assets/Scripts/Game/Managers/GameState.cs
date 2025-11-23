@@ -113,7 +113,7 @@ namespace Game.Managers
 
         public void SpawnPiece(PieceConfig piece)
         {
-            PieceLogic pieceLogic = PieceMaker.Get(piece);
+            var pieceLogic = PieceMaker.Get(piece);
             PieceBoard[piece.Index] = pieceLogic;
             if (pieceLogic.PieceRank == PieceRank.Commander)
             {
@@ -128,7 +128,7 @@ namespace Game.Managers
             }
             PieceBoard[piece.Index] = PieceMaker.Get(piece);
 
-            var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<Game.AI.BrainComponent>();
+            var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<AI.BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];    
         }
 
