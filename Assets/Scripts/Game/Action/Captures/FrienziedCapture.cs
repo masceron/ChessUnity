@@ -28,5 +28,10 @@ namespace Game.Action.Captures
             MatchManager.Ins.GameState.Move(Maker, Target);
             Maker = Target;
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

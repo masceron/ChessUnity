@@ -27,6 +27,11 @@ namespace Game.Action.Internal.Pending
             selector.Load(Maker, Target);
         }
 
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
+
         protected override void ModifyGameState()
         {}
     }

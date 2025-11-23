@@ -58,7 +58,7 @@ namespace Game.AI
             if (globalBest is Game.Action.Internal.Pending.IPendingAble pending)
             {
                 // Complete pending immediately for AI (many skills implement CompleteAction)
-                pending.CompleteAction();
+                pending.CompleteActionForAI();
             }
             else
             {

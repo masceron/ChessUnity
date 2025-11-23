@@ -38,5 +38,10 @@ namespace Game.Relics.SeafoamPhial
         protected override void ModifyGameState()
         {
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

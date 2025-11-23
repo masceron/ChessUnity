@@ -53,5 +53,10 @@ namespace Game.Action.Captures
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

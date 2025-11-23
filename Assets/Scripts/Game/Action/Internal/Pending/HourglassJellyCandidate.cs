@@ -23,6 +23,11 @@ namespace Game.Action.Internal.Pending
             // Di chuyển quân địch về vị trí ban đầu 
         }
 
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
+
         protected override void ModifyGameState()
         {}
     }

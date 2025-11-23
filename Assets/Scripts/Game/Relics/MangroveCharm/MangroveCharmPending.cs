@@ -65,6 +65,11 @@ namespace Game.Relics.MangroveCharm
         protected override void ModifyGameState()
         {
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 
 }

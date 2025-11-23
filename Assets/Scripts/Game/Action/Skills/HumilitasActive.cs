@@ -55,6 +55,9 @@ namespace Game.Action.Skills
             MakeSkill(Target);
         }
 
-
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

@@ -61,6 +61,11 @@ namespace Game.Relics.FrostSigil
         {
             throw new System.NotImplementedException();
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }
 

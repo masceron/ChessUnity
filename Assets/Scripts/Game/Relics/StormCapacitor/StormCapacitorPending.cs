@@ -56,6 +56,11 @@ namespace Game.Relics.StormCapacitor
         {
             throw new System.NotImplementedException();
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }
 

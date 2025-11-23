@@ -74,6 +74,11 @@ namespace Game.Relics.EyeOfMimic
         protected override void ModifyGameState()
         {
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 
 }

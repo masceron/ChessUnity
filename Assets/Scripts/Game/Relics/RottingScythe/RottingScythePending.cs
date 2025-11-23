@@ -35,5 +35,10 @@ namespace Game.Relics.RottingScythe
         protected override void ModifyGameState()
         {
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

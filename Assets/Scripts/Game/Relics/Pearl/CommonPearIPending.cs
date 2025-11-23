@@ -73,5 +73,10 @@ namespace Game.Relics.Pearl
         protected override void ModifyGameState()
         {
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

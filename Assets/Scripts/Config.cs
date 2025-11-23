@@ -9,11 +9,13 @@ public static class Config
     public static List<PieceConfig> PieceConfigWhite = new()
     {
         new PieceConfig("piece_anglerfish", false, 80),
+        new PieceConfig("piece_anglerfish", false, 86),
+
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_swordfish", true, 85)
+        new PieceConfig("piece_siren", true, 85)
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);

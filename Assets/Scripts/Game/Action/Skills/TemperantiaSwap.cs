@@ -85,5 +85,10 @@ namespace Game.Action.Skills
             enemyIndex = -1;
 
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }
