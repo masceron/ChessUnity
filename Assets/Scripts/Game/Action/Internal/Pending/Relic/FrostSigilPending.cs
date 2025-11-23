@@ -59,6 +59,11 @@ namespace Game.Action.Internal.Pending.Relic
         {
             throw new System.NotImplementedException();
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }
 

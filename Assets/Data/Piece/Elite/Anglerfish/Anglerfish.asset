@@ -23,3 +23,13 @@ MonoBehaviour:
   normalSkillCooldown: 3
   availableSlots: 0
   logicClassName: Anglerfish
+  baseValue: 0
+  considerations:
+  - Consideration: {fileID: 11400000, guid: 722d004ca396ee1419bc4c2a7bb2d467, type: 2}
+    Weight: 30
+  - Consideration: {fileID: 11400000, guid: a1d911d900b4b2b408689de20176fc7e, type: 2}
+    Weight: 10
+  - Consideration: {fileID: 11400000, guid: 7e995a4f87a84f549b705c9a4c01c767, type: 2}
+    Weight: -20
+  - Consideration: {fileID: 11400000, guid: 68a110465a5fa754f95eb1c867bcd9a0, type: 2}
+    Weight: 30
