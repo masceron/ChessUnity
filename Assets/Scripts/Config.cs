@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
-using Game.Relics;
 using Game.Relics.Commons;
 
 public static class Config

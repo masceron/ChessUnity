@@ -4,7 +4,6 @@ using Game.Save.Army;
 using Game.Save.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 
 namespace UX.UI.Army.DesignArmy
 {

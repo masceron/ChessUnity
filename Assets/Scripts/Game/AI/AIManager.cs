@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Action;
 using Game.Common;
 using Game.Managers;
 using UnityEngine;
@@ -40,7 +39,7 @@ namespace Game.AI
                 if (actions == null || actions.Count == 0) continue;
 
                 var bestForBrains = brain.ChooseBest(actions, enemySnapshot);
-                var bestForBrain = bestForBrains[UnityEngine.Random.Range(0, bestForBrains.Count)];
+                var bestForBrain = bestForBrains[Random.Range(0, bestForBrains.Count)];
                 if (bestForBrain == null) continue;
 
                 float score = brain.Evaluate(bestForBrain, actions, enemySnapshot);
@@ -55,7 +54,7 @@ namespace Game.AI
             if (globalBest == null) return;
 
             // Execute action: handle pending-able actions or normal actions
-            if (globalBest is Game.Action.Internal.Pending.IPendingAble pending)
+            if (globalBest is Action.Internal.Pending.IPendingAble pending)
             {
                 // Complete pending immediately for AI (many skills implement CompleteAction)
                 pending.CompleteAction();

@@ -1,11 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Game.Common;
 using Game.Piece;
 using Game.ScriptableObjects;
-using TMPro;
-using UnityEngine;
-using UnityEngine.UI;
 using Game.Managers;
 using UX.UI.Army.DesignArmy;
 
@@ -22,7 +18,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         }
         public override void Load()
         {
-            this.gameObject.SetActive(true);
+            gameObject.SetActive(true);
             data = AssetManager.Ins.PieceData;
             FreePlayArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
             FreePlayArmyDesign.Ins.board.OnRemoveTroop += (_) => FilterByCondition();

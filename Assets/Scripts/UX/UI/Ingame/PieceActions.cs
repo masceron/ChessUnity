@@ -13,8 +13,6 @@ using UX.UI.Tooltip;
 using Color = UnityEngine.Color;
 using static Game.Common.BoardUtils;
 using static UX.UI.Ingame.BoardViewer;
-using Game.Tile;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 namespace UX.UI.Ingame
 {

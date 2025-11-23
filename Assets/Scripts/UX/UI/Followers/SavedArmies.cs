@@ -2,7 +2,6 @@
 using Game.Save.Army;
 using UnityEngine;
 using Game.Common;
-using System.Collections.Generic;
 
 namespace UX.UI.Followers
 {

@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Common;
-using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine.EventSystems;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
@@ -32,7 +28,7 @@ namespace Game.Action.Skills
 
         public void CompleteAction()
         {
-            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+            var hovering = PieceOn(BoardViewer.HoveringPos);
 
             if (FirstTarget == null || FirstTarget.Color == hovering.Color)
             {

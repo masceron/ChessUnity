@@ -1,13 +1,11 @@
 using System;
 using Game.Common;
-using Game.Relics;
 using Game.Save.Army;
 using Game.Save.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UX.UI.FreePlayTest.RegionalRealmScene;
 using UX.UI.Army.DesignArmy;
-using UX.UI.Followers;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {

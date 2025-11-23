@@ -183,10 +183,6 @@ MonoBehaviour:
     m_Key: effect_quick_reflex
     m_Metadata:
       m_Items: []
-  - m_Id: 35116685872599040
-    m_Key: ray's_tail_passive
-    m_Metadata:
-      m_Items: []
   - m_Id: 35116686078119936
     m_Key: effect_bioluminescent_beacon_passive
     m_Metadata:
@@ -299,20 +295,12 @@ MonoBehaviour:
     m_Key: effect_frenzied_veteran
     m_Metadata:
       m_Items: []
-  - m_Id: 35116694479310848
-    m_Key: effect_frienzied
-    m_Metadata:
-      m_Items: []
   - m_Id: 35116694483505152
     m_Key: effect_nocturnal_range_buff
     m_Metadata:
       m_Items: []
   - m_Id: 35116694928101376
     m_Key: effect_true_bite
-    m_Metadata:
-      m_Items: []
-  - m_Id: 35116694957461504
-    m_Key: slimehead_passive
     m_Metadata:
       m_Items: []
   - m_Id: 35116695192342528
@@ -345,6 +333,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35155863264038912
     m_Key: effect_snipe_eel_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37713889091129344
+    m_Key: effect_ray's_tail_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37713980162052096
+    m_Key: effect_slimehead_passive
     m_Metadata:
       m_Items: []
   m_Metadata:

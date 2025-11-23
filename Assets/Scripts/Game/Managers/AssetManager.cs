@@ -6,7 +6,6 @@ using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEngine;
 using Game.Augmentation;
-using Game.AI;
 
 namespace Game.Managers
 {

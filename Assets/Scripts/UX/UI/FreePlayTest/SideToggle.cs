@@ -1,5 +1,4 @@
 using TMPro;
-using UX.UI.Army.DesignArmy;
 using UnityEngine;
 using UX.UI.FreePlayTest.DesignArmyScene;
 

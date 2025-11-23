@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic

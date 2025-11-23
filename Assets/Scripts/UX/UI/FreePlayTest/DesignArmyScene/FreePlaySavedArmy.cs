@@ -1,7 +1,5 @@
-using System;
 using UnityEngine.UI;
 using UnityEngine;
-using UX.UI.Army.DesignArmy;
 using UX.UI.Followers;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene

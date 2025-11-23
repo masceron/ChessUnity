@@ -1,6 +1,4 @@
 using UnityEngine;
-using UX.UI.Army.DesignArmy;
-using UX.UI.FreePlayTest.RegionalRealmScene;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {

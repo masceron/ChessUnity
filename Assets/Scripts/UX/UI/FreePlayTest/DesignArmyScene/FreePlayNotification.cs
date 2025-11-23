@@ -1,6 +1,5 @@
 using UnityEngine;
 using Game.Common;
-using UnityEngine.UI;
 using TMPro;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
@@ -15,11 +14,11 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         }
         public void Close()
         {
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
         public void Open()
         {
-            this.gameObject.SetActive(true);
+            gameObject.SetActive(true);
         }
         public void Save()
         {
