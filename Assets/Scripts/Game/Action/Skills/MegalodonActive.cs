@@ -50,7 +50,12 @@ namespace Game.Action.Skills
 
             ResetTargets();
         }
-        
+
+        public void CompleteActionForAI()
+        {
+            throw new NotImplementedException();
+        }
+
         private static void ResetTargets()
         {
             FirstTarget = null;
