@@ -78,7 +78,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             army.Troops = board.Troops.ToArray();
         }
 
-        public void SelectRelic(RelicType type)
+        public void SelectRelic(string type)
         {
             if (choosenSide == false)
             {

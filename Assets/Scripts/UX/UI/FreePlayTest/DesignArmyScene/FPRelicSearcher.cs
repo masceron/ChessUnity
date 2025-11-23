@@ -18,7 +18,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
     {
         public override void SelectRelic()
         {
-            FreePlayArmyDesign.Ins.SelectRelic((RelicType)selecting);
+            FreePlayArmyDesign.Ins.SelectRelic(selecting);
             relicText.text = description.nameText.text;
             Toggle();
         }

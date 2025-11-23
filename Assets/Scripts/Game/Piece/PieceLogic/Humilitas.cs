@@ -31,7 +31,7 @@ namespace Game.Piece.PieceLogic
                     var pOn = PieceOn(idx);
                     if (pOn != null && pOn.Color != Color)
                     {
-                        list.Add(new HumilitasActive(Pos, idx));
+                        //list.Add(new HumilitasActive(Pos, idx));
                     }
                 }
             };
