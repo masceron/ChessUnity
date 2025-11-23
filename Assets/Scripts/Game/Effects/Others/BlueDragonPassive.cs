@@ -12,7 +12,7 @@ namespace Game.Effects.Others
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Result == ActionResult.Succeed)
+            if (action.Succeed)
             {
                 ActionManager.ExecuteImmediately(new Purify(Piece.Pos, Piece.Pos));
             }

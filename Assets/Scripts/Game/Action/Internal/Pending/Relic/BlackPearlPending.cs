@@ -96,5 +96,10 @@ namespace Game.Action.Internal.Pending.Relic
         protected override void ModifyGameState()
         {
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 using System;
 using Game.Common;
 using Game.Managers;
-using Game.Relics;
 using Game.Save.Relics;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
@@ -21,14 +20,14 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] private TMP_InputField searchBar;
         [SerializeField] private RectTransform mainPanel;
         [SerializeField] public Transform list;
-        [SerializeField] private ArmyDesignRelicDescription description;
+        [SerializeField] protected ArmyDesignRelicDescription description;
         [SerializeField] public ArmyDesignRelic relicDisplay;
-        [SerializeField] private TMP_Text relicText;
+        [SerializeField] protected TMP_Text relicText;
 
         private List<RelicInfo> searchResult;
         private string lastKeyword;
         private readonly List<ArmyDesignRelic> pool = new();
-        private string selecting;
+        protected string selecting;
         public Action<string> OnRelicSelecting;
 
         protected override void Awake()
@@ -39,6 +38,7 @@ namespace UX.UI.Army.DesignArmy
         public void Toggle()
         {
             container.gameObject.SetActive(!container.gameObject.activeSelf);
+            mainPanel.gameObject.SetActive(true);
         }
 
         private void OnEnable()
@@ -79,8 +79,8 @@ namespace UX.UI.Army.DesignArmy
             }
             else
             {
-                searchResult = relicsData.relicsData.Where(r => 
-                    r.key.Contains(start)).ToList();
+                searchResult = AssetManager.Ins.RelicData.Values.Where(r => 
+                    Localizer.GetText("relic_name", r.key, null).Contains(start)).ToList();
             }
             
             lastKeyword = start;
@@ -146,7 +146,7 @@ namespace UX.UI.Army.DesignArmy
             description.Undisplay();
         }
 
-        public void SelectRelic()
+        public virtual void SelectRelic()
         {
             ArmyDesign.Ins.SelectRelic(selecting);
             relicText.text = description.nameText.text;

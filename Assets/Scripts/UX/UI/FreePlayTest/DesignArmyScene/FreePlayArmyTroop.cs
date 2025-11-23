@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UX.UI.Army.DesignArmy;
 using UX.UI.FreePlayTest.AugmentationScene;
+using UX.UI.Tooltip;
+using UnityEngine.UI;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
@@ -16,7 +18,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             {
                 Debug.Log("Go to Augmentation");
                 UIManager.Ins.Load(CanvasID.Augmentation);
-                var troopSide = ArmyDesign.Ins.board.GetComponent<FreePlayArmyBoard>().GetTroopByCoordinate(Rank, File);
+                var troopSide = FreePlayArmyDesign.Ins.board.GetComponent<FreePlayArmyBoard>().GetTroopByCoordinate(Rank, File);
                 AugmentationManagerUI.Ins.Load(troopSide.troop, troopSide.side);
 
                 return;
@@ -26,5 +28,31 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             Destroy(gameObject);
             FindAnyObjectByType<FreePlayArmyBoard>().Remove(Rank, File);
         }
+        public void OnBeginDrag(PointerEventData eventData)
+        {
+            if (isGreyOut){ return; }
+            oldParent = transform.parent;
+            transform.SetParent(FindAnyObjectByType<Canvas>().transform);
+            image.raycastTarget = false;
+            Parent = null;
+            FindAnyObjectByType<FreePlayArmyBoard>().SetAllowed(Piece.rank == Game.Piece.PieceRank.Construct);
+            trigger.enabled = false;
+            TooltipManager.Ins.Disable();
+
+            if (Placed) return;
+            
+            var searcher = FindAnyObjectByType<FPArmySearcher>();
+            var pool = searcher.Pool;
+            var idx = pool.IndexOf(this);
+            var obj = Instantiate(this, searcher.list);
+            
+            obj.transform.SetSiblingIndex(idx);
+            obj.GetComponent<Image>().raycastTarget = true;
+            obj.trigger.enabled = true;
+            
+            obj.Load(Piece);
+            pool[idx] = obj;
+        }
+
     }
 }

@@ -46,6 +46,11 @@ namespace Game.Action.Internal.Pending.Relic
             _timelessHourglass = null;
             BoardViewer.SelectingFunction = 0;
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 
 }

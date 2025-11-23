@@ -43,6 +43,11 @@ namespace Game.Action.Internal.Pending.Piece
             shop.Load((Chrysos)BoardUtils.PieceOn(Maker), this);
         }
 
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
+
         protected override void ModifyGameState()
         {}
     }

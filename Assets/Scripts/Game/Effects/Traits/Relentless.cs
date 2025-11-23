@@ -26,7 +26,7 @@ namespace Game.Effects.Traits
                 return;
             }
 
-            action.Result = ActionResult.Failed;
+            action.Succeed = false;
             var target = PieceOn(action.Maker);
             if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
             {

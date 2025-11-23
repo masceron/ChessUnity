@@ -1,4 +1,3 @@
-using Game.Relics;
 using Game.Relics.Commons;
 using UnityEngine.EventSystems;
 using UX.UI.Army.DesignArmy;

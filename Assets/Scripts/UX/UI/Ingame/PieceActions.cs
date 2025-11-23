@@ -144,6 +144,7 @@ namespace UX.UI.Ingame
         {
             if (SelectingFunction == 3)
             {
+                // thêm dispose vào đây được dể cleardata của chọn 2 quân được không 
                 TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;
@@ -191,7 +192,6 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<IQuiets>())
             {
-               // Debug.Log(_move.ToString());
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
@@ -206,6 +206,8 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<ICaptures>())
             {
+                int targetPos = ((Action)_move).Target;
+                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }
@@ -220,6 +222,8 @@ namespace UX.UI.Ingame
             
             foreach (var _move in moveList.OfType<ISkills>())
             {
+                int targetPos = ((Action)_move).Target;
+                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
                 listOf.Add((Action)_move);
                 TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
             }

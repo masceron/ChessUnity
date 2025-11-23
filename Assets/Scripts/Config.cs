@@ -10,14 +10,16 @@ public static class Config
     public static List<PieceConfig> PieceConfigWhite = new()
     {
         new PieceConfig("piece_anglerfish", false, 80),
+        new PieceConfig("piece_anglerfish", false, 86),
+
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_swordfish", true, 85)
+        new PieceConfig("piece_siren", true, 85)
     };
 
-    public static RelicConfig relicWhiteConfig = new RelicConfig("relic_siren_harpoon", false, 5);
-    public static RelicConfig relicBlackConfig = new RelicConfig("relic_siren_harpoon", true, 5);
+    public static RelicConfig relicWhiteConfig = new RelicConfig("relic_sirens_harpoon", false, 5);
+    public static RelicConfig relicBlackConfig = new RelicConfig("relic_sirens_harpoon", true, 5);
     public static RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
 }

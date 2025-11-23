@@ -163,6 +163,10 @@ MonoBehaviour:
     m_Key: piece_snipe_eel_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 37013498084773888
+    m_Key: piece_megalodon_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

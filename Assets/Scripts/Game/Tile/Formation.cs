@@ -19,13 +19,6 @@ namespace Game.Tile
         NavalMines
     }
 
-    // public interface IHaveDuration{
-    //     /// <summary>
-    //     /// Sử dụng cho những Formation tồn tại trong 1 khoảng thời gian
-    //     /// Logic trừ duration được thực hiện ở FormationManager, bạn chỉ cần gán duration khi khởi tạo
-    //     /// </summary>
-    //     public int duration{ get; set; }
-    // }
     public abstract class Formation
     {
         // public int pos{ get; private set; }
@@ -44,7 +37,7 @@ namespace Game.Tile
             Duration = _duration;
             HaveDuration = true;
         }
-
+        public bool GetColor() => Color;
         /// <summary>
         /// Trả về FormationType tương ứng với class
         /// </summary>
@@ -53,6 +46,10 @@ namespace Game.Tile
         public virtual void OnCreated(PieceLogic piece)
         {
             OnPieceEnter(piece);
+        }
+        public virtual void OnDestroyed(PieceLogic piece)
+        {
+            OnPieceExit(piece);
         }
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí

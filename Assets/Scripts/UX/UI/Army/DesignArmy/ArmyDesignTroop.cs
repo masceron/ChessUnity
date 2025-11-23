@@ -12,11 +12,11 @@ namespace UX.UI.Army.DesignArmy
     public class ArmyDesignTroop: MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
     {
         [SerializeField] public UIObject3D model;
-        [SerializeField] private Image image;
-        [SerializeField] private TooltipTrigger trigger;
+        [SerializeField] protected Image image;
+        [SerializeField] protected TooltipTrigger trigger;
         [SerializeField] private Image greyMask;
         [NonSerialized] public Transform Parent;
-        private Transform oldParent;
+        protected Transform oldParent;
         public bool Placed;
         [NonSerialized] public bool isGreyOut = false;
         [NonSerialized] public int Rank = -1;
@@ -63,7 +63,6 @@ namespace UX.UI.Army.DesignArmy
 
             trigger.SetText(pieceName, "", pieceDescriptions);
         }
-
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (isGreyOut){ return; }
@@ -89,7 +88,6 @@ namespace UX.UI.Army.DesignArmy
             obj.Load(Piece);
             pool[idx] = obj;
         }
-
         public void OnDrag(PointerEventData eventData)
         {
             if (isGreyOut){ return; }

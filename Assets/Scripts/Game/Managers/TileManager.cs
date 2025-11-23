@@ -364,5 +364,17 @@ namespace Game.Managers
         {
             return tiles[index] == null || tiles[index].color == Color.None;
         }
+
+        public void MarkPieceInRange(int pos, bool color, int range)
+        {
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(pos), FileOf(pos), range))
+            {
+                var idx = IndexOf(rank, file);
+                var pOn = PieceOn(idx);
+                if (pOn == null) continue;
+
+                if (pOn.Color == color) MarkAsMoveable(idx);
+            }
+        }
     }
 }

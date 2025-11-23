@@ -20,8 +20,8 @@ namespace Game.Effects.Traits
         /// <param name="action">Toàn bộ những Action kế thừa từ ICaptures sẽ được truyền vào hàm này </param>
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || PieceOn(action.Target).Color != Piece.Color || action.Result != ActionResult.Succeed) return;
-            action.Result = ActionResult.Failed;
+            if (action == null || PieceOn(action.Target).Color != Piece.Color || !action.Succeed) return;
+            action.Succeed = false;
             Debug.Log("Failed capture");
             ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(action.Target))));
         }

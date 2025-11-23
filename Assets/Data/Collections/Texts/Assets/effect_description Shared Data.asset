@@ -295,10 +295,6 @@ MonoBehaviour:
     m_Key: effect_frenzied_veteran_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35140563235770368
-    m_Key: effect_frienzied_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 35140563239964672
     m_Key: effect_nocturnal_range_buff_description
     m_Metadata:
@@ -339,12 +335,12 @@ MonoBehaviour:
     m_Key: effect_snipe_eel_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35982559834537984
-    m_Key: effect_slimehead_passive_description
+  - m_Id: 37737757918892032
+    m_Key: effect_ray's_tail_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35983073544503296
-    m_Key: effect_ray's_tail_passive_description
+  - m_Id: 37737848918511616
+    m_Key: effect_slimehead_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

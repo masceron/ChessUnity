@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Common;
-using Game.Relics;
 using ScrutableObjects;
 using UnityEngine;
 

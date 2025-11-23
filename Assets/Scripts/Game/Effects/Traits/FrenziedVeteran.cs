@@ -5,7 +5,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrenziedVeteran: Effect, IEndTurnEffect
     {
-        public const byte TurnsToActive = 3;
+        public const byte TurnsToActive = 10;
         public byte numTurns;
         private bool active;
         private const byte RangeOffset = 1;

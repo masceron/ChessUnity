@@ -10,8 +10,8 @@ namespace UX.UI.Army.DesignArmy
     {
         [NonSerialized] public RelicInfo Relic;
         [SerializeField] private RawImage image;
-        
-        public void Load(RelicInfo relicInfo)
+
+        public virtual void Load(RelicInfo relicInfo)
         {
             Relic = relicInfo;
             image.texture = relicInfo.icon;

@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Game.Action;
 using Game.Action.Captures;
 using Game.Common;
 using Game.Managers;
@@ -15,7 +14,7 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos && action is ICaptures && action.Result != ActionResult.Failed)
+            if (action.Maker == Piece.Pos && action is ICaptures && action.Succeed)
             {
                 var captured = BoardUtils.PieceOn(action.Target);
 

@@ -1,5 +1,4 @@
-﻿using Game.Action;
-using Game.Common;
+﻿using Game.Common;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 
@@ -13,7 +12,7 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Result == ActionResult.Failed) return;
+            if (!action.Succeed) return;
             
             var caller = BoardUtils.PieceOn(action.Maker);
             var captured = BoardUtils.PieceOn(action.Target);

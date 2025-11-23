@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos && action is ICaptures && action.Result == ActionResult.Failed)
+            if (action.Maker == Piece.Pos && action is ICaptures && !action.Succeed)
             {
                 var target = PieceOn(action.Target);
                 if (target != null && target.Color != Piece.Color)
@@ -38,9 +38,9 @@ namespace Game.Effects.Traits
                     count++;
                 }
             }
-            if (count >= 4)
+            if (count >= 5)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Frienzied(Piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Frenzied(Piece)));
                 count = 0;
             }
         }
