@@ -4,9 +4,9 @@ using Game.Action.Internal.Pending;
 namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrienziedMove: Action, IPendingAble
+    public class FrenziedMove: Action, IDontEndTurn
     {
-        public FrienziedMove(int f, int t) : base(f, true)
+        public FrenziedMove(int f, int t) : base(f, true)
         {
             Maker = (ushort)f;
             Target = (ushort)t;
@@ -19,11 +19,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-        }
-        public void CompleteAction()
-        {
-            Debug.Log("Complete FrienziedMove");
-            PieceManager.Ins.Move(Maker, Target);
+            Debug.Log("Complete FrenziedMove");
             MatchManager.Ins.GameState.Move(Maker, Target);
             Maker = Target;
         }

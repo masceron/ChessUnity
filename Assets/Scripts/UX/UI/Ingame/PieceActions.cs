@@ -146,6 +146,7 @@ namespace UX.UI.Ingame
         {
             if (SelectingFunction == 3)
             {
+                // thêm dispose vào đây được dể cleardata của chọn 2 quân được không 
                 TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;

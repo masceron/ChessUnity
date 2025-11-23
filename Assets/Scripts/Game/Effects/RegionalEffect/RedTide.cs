@@ -3,6 +3,8 @@ using Game.Managers;
 using Game.Action.Internal;
 using Game.Action;
 using static Game.Common.BoardUtils;
+using System.Collections.Generic;
+
 namespace Game.Effects.RegionalEffect
 {
     public class RedTide: RegionalEffect
@@ -18,18 +20,23 @@ namespace Game.Effects.RegionalEffect
         }
         protected override void ApplyEffect(int currentTurn)
         {
-            if (isActive == 9)
+            isActive++;
+            if (isActive == 10)
             {
-
-                var random = new System.Random();
-                var randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
-                while(!IsColumnFull(randomColumn)){
-                    randomColumn = random.Next(0, MatchManager.Ins.startingSize.y - 1);
+                List<int> columnList = new List<int>();
+                for (int i = 0; i < MatchManager.Ins.startingSize.y; i++)
+                {
+                    if(!IsColumnFull(i)) continue;
+                    columnList.Add(i);
                 }
-                ApplyEffectToColumn(randomColumn);
+                if (columnList.Count > 0)
+                {
+                    var random = new System.Random();
+                    var randomColumn = columnList[random.Next(columnList.Count)];   
+                    ApplyEffectToColumn(randomColumn);
+                }
                 isActive = 0;
             }
-            isActive++;
         }
 
         private bool IsColumnFull(int column)

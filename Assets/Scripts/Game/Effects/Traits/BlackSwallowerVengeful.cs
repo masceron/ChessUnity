@@ -8,6 +8,7 @@ using System;
 using Game.Piece;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
+using Game.Action.Captures;
 
 namespace Game.Effects.Traits
 {
@@ -43,7 +44,7 @@ namespace Game.Effects.Traits
                         ActionManager.EnqueueAction(new RemoveEffect(effect));
                     }
                 }
-                else if (action.Target != Piece.Pos)
+                else if (action.Target != Piece.Pos && action is ICaptures)
                 {
                     var targetPiece = PieceOn(action.Target);
                     if (targetPiece != null && targetPiece.PieceRank is PieceRank.Elite or PieceRank.Champion or PieceRank.Commander)

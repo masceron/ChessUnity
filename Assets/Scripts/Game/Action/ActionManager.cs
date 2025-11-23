@@ -7,6 +7,7 @@ using Game.Common;
 using Game.Effects.Traits;
 using Game.Managers;
 
+
 namespace Game.Action
 {
     public enum Phase
@@ -108,7 +109,7 @@ namespace Game.Action
                     var maker = BoardUtils.PieceOn(action.Maker);
                     var hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
 
-                    if (hasQuickReflex)
+                    if (hasQuickReflex || action is IDontEndTurn)
                         return false;
                     break;
                 }

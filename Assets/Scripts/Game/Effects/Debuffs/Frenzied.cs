@@ -5,17 +5,18 @@ using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
+using Game.Effects.Traits;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Frienzied : Effect, IEndTurnEffect
+    public class Frenzied : Effect, IEndTurnEffect
     {
         private List<Action.Action> list;
-        public Frienzied(PieceLogic piece) : base(-1, 1, piece, "effect_frienzied")
+        public Frenzied(PieceLogic piece) : base(-1, 1, piece, "effect_frenzied")
         {
             list = new List<Action.Action>();
-            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             
         }
 
@@ -51,7 +52,15 @@ namespace Game.Effects.Debuffs
                 
                 if (nearestTarget >= 0)
                 {
-                   new FrienziedCapture(Piece.Pos, nearestTarget).CompleteAction();
+                    var piece = PieceOn(Piece.Pos);
+                    if (piece != null && piece.Effects.Any(e => e.EffectName == "effect_snapping_strike"))
+                    {
+                        ActionManager.EnqueueAction(new FrenziedCaptureDontMove(Piece.Pos, nearestTarget));
+                    }
+                    else
+                    {
+                        ActionManager.EnqueueAction(new FrenziedCapture(Piece.Pos, nearestTarget));
+                    }
                 }
             } else if (moveTargets.Count > 0)
             {
@@ -59,7 +68,7 @@ namespace Game.Effects.Debuffs
                 var random = new System.Random();
                 var randomIndex = random.Next(0, moveTargets.Count);
                 var randomTarget = moveTargets[randomIndex];
-                new FrienziedMove(Piece.Pos, randomTarget).CompleteAction();
+                ActionManager.EnqueueAction(new FrenziedMove(Piece.Pos, randomTarget));
             }
 
         }

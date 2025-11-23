@@ -16,7 +16,7 @@ namespace Game.Effects.RegionalEffect
             isActive = 1;
         }
 
-        private static Effect CreateEffect(string effectName, sbyte duration,sbyte strength, PieceLogic piece)
+        private static Effect CreateEffect(string effectName, sbyte duration, sbyte strength, PieceLogic piece)
         {
 
             return effectName switch
@@ -30,7 +30,7 @@ namespace Game.Effects.RegionalEffect
                 "effect_haste" => new Buffs.Haste(duration, strength, piece),
                 
                 // Traits 
-                "effect_evasion" => new Traits.Evasion(duration, strength, piece),
+                "effect_evasion" => new Traits.Evasion(duration, 25, piece),
                 "effect_construct" => new Traits.Construct(piece),
                 "effect_demolisher" => new Traits.Demolisher(piece),
                 "effect_consume" => new Traits.Consume(piece),
@@ -39,8 +39,8 @@ namespace Game.Effects.RegionalEffect
                 "effect_quick_reflex" => new Traits.QuickReflex(piece),
 
                 // Debuffs
-                "effect_slow" => new Debuffs.Slow(strength,duration, piece),
-                "effect_blinded" => new Debuffs.Blinded(duration, strength, piece),
+                "effect_slow" => new Debuffs.Slow(strength, duration, piece),
+                "effect_blinded" => new Debuffs.Blinded(duration, 25, piece),
                 "effect_stunned" => new Debuffs.Stunned(duration, piece),
                 "effect_poison" => new Debuffs.Poison(duration, piece),
                 "effect_bleeding" => new Debuffs.Bleeding(duration, piece),
@@ -57,14 +57,12 @@ namespace Game.Effects.RegionalEffect
             {
                 var board = MatchManager.Ins.GameState.PieceBoard;
                 
-                var validPieces = board.Where(piece => piece != null).ToList();
+                var validPieces = board.Where(piece => piece != null && piece.PieceRank != PieceRank.Commander).ToList();
 
                 if (validPieces.Count > 0) {
                     var randomInd = Random.Range(0, validPieces.Count);
-                    if (validPieces[randomInd].PieceRank == PieceRank.Commander) return;
-
-                    var duration = (sbyte)Random.Range(1, 10);
-                    var strength = (sbyte)Random.Range(1, 10);
+                    sbyte duration = 5;
+                    sbyte strength = 1;
                     var roll = Random.Range(1, 101);
                     Debug.Log("roll: " + roll + " " + validPieces[randomInd].Type);
                     switch (roll)
