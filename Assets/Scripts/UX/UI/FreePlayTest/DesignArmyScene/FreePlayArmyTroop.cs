@@ -28,7 +28,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             Destroy(gameObject);
             FindAnyObjectByType<FreePlayArmyBoard>().Remove(Rank, File);
         }
-        public void OnBeginDrag(PointerEventData eventData)
+        public new void OnBeginDrag(PointerEventData eventData)
         {
             if (isGreyOut){ return; }
             oldParent = transform.parent;

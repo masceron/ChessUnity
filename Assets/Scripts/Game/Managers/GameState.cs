@@ -32,7 +32,8 @@ namespace Game.Managers
         Moves,
         SwitchTurn,
         MoveGeneration,
-        EffectApplied
+        EffectApplied,
+        Dead
     }
 
     public enum Color : byte
@@ -68,6 +69,8 @@ namespace Game.Managers
         public readonly List<ISubscriber> Subscribers = new();
 
         public System.Action<int> OnIncreaseTurn;
+
+        private Action.Action lastMainAction;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -175,6 +178,7 @@ namespace Game.Managers
         {
             var pieceAffected = PieceBoard[pos];
             PieceBoard[pos] = null;
+            NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
             pieceAffected.Die();
@@ -184,6 +188,7 @@ namespace Game.Managers
         {
             var pieceAffected = PieceBoard[pos];
             PieceBoard[pos] = null;
+            NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
             pieceAffected.Die();
@@ -328,6 +333,17 @@ namespace Game.Managers
                         effect.OnCallPieceAction(mainAction);
                 });
             }
+        }
+
+        private void NotifyDead(PieceLogic pieceToDie)
+        {
+            pieceToDie.Effects.ForEach(effect =>
+            {
+                if (effect.ObserverActivateWhen == ObserverActivateWhen.Dead)
+                {
+                    ((IDeadEffect)effect).OnCallDead();
+                }
+            });
         }
 
         public void NotifyOnMoveGen(List<Action.Action> actions)

@@ -13,8 +13,8 @@ namespace Game.Effects.RegionalEffect
         public BenthicStorm() : base(RegionalEffectType.BenthicStorm)
         {
             numTurns = 0;
-            startingSizeX = (MaxLength - MatchManager.Ins.startingSize.x) / 2;
-            startingSizeY = (MaxLength - MatchManager.Ins.startingSize.y) / 2;
+            startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
+            startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
         }
 
         protected override void ApplyEffect(int currentTurn)
