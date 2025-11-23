@@ -74,7 +74,7 @@ namespace UX.UI.Followers
             }
             else
             {
-                searchResult = relicsData.relicsData.Values.Where(r => 
+                searchResult = relicsData.relicsData.Where(r => 
                     r.key.Contains(start)).ToList();
             }
             

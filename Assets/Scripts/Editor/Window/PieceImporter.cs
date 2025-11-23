@@ -55,24 +55,19 @@ namespace Editor.Window
             EditorGUILayout.Space();
             
             manageScrollPos = EditorGUILayout.BeginScrollView(manageScrollPos);
-            foreach (var piece in allPieces.Where(piece => piece))
+            foreach (var piece in allPieces)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-
-                // Show the asset as an object field
+                
                 EditorGUILayout.ObjectField(piece, typeof(PieceInfo), false);
-
-                // Button to ping the asset in the Project window
+                
                 if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(piece);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
-
-        /// <summary>
-        ///     Finds all assets of type PieceInfo in the project.
-        /// </summary>
+        
         private void FindAllPieceInfos()
         {
             allPieces.Clear();
@@ -171,7 +166,7 @@ namespace Editor.Window
             if (sharedData.GetEntry(key) == null) return;
             
             sharedData.RemoveKey(key);
-            EditorUtility.SetDirty(sharedData); // Mark the asset as modified
+            EditorUtility.SetDirty(sharedData);
             Debug.Log($"Removed key '{key}' from table '{tableName}'");
         }
         

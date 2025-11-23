@@ -3,8 +3,6 @@ using Game.Managers;
 using Game.Action.Internal;
 using Game.Action;
 using static Game.Common.BoardUtils;
-using System.Collections.Generic;
-
 namespace Game.Effects.RegionalEffect
 {
     public class RedTide: RegionalEffect
@@ -15,33 +13,28 @@ namespace Game.Effects.RegionalEffect
         public RedTide() : base(RegionalEffectType.RedTide)
         {
             isActive = 0;
-            startingSizeX = (MaxLength - MatchManager.Ins.startingSize.x) / 2;
-            startingSizeY = (MaxLength - MatchManager.Ins.startingSize.y) / 2;
+            startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
+            startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
         }
         protected override void ApplyEffect(int currentTurn)
         {
-            isActive++;
-            if (isActive == 10)
+            if (isActive == 9)
             {
-                List<int> columnList = new List<int>();
-                for (int i = 0; i < MatchManager.Ins.startingSize.y; i++)
-                {
-                    if(!IsColumnFull(i)) continue;
-                    columnList.Add(i);
+
+                var random = new System.Random();
+                var randomColumn = random.Next(0, MatchManager.Ins.StartingSize.y - 1);
+                while(!IsColumnFull(randomColumn)){
+                    randomColumn = random.Next(0, MatchManager.Ins.StartingSize.y - 1);
                 }
-                if (columnList.Count > 0)
-                {
-                    var random = new System.Random();
-                    var randomColumn = columnList[random.Next(columnList.Count)];   
-                    ApplyEffectToColumn(randomColumn);
-                }
+                ApplyEffectToColumn(randomColumn);
                 isActive = 0;
             }
+            isActive++;
         }
 
         private bool IsColumnFull(int column)
         {
-            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.StartingSize.y; i++)
             {
                 if(TileManager.Ins.IsTileEmpty(IndexOf(i, column + startingSizeY))) return false;
             }
@@ -50,7 +43,7 @@ namespace Game.Effects.RegionalEffect
 
         private void ApplyEffectToColumn(int column)
         {
-            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.startingSize.y; i++)
+            for (var i = startingSizeY; i < startingSizeY + MatchManager.Ins.StartingSize.y; i++)
             {
                 var piece = PieceOn(IndexOf(i, column + startingSizeY));    
                 if(piece == null) continue;

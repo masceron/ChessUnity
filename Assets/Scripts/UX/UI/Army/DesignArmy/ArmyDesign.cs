@@ -1,6 +1,5 @@
 ﻿using System;
 using Game.Common;
-using Game.Relics;
 using Game.Save.Army;
 using Game.Save.Relics;
 using UnityEngine;
@@ -95,7 +94,7 @@ namespace UX.UI.Army.DesignArmy
             army.Troops = board.Troops.ToArray();
         }
 
-        public void SelectRelic(RelicType type)
+        public void SelectRelic(string type)
         {
             army.Relic = new Relic(type);
 

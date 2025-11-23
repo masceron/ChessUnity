@@ -61,7 +61,7 @@ namespace Game.Action
                 action.Execute();
             }
 
-            if (mainAction is ISkills and not IRelicAction && mainAction.Result == ActionResult.Succeed)
+            if (mainAction is ISkills and not IRelicAction && mainAction.Succeed)
             {
                 BoardUtils.IncrementSkillUses(mainAction);
             }

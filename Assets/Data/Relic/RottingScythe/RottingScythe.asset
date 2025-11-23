@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdee4035d1e7499a89a7d83135831603, type: 3}
   m_Name: RottingScythe
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.RelicInfo
-  type: 4
-  key: rotting_scythe
+  key: relic_rotting_scythe
   icon: {fileID: 0}
   cooldown: 7
+  logicClassName: RottingScythe

@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos && action is ICaptures && action.Result == ActionResult.Failed)
+            if (action.Maker == Piece.Pos && action is ICaptures && !action.Succeed)
             {
                 var target = PieceOn(action.Target);
                 if (target != null && target.Color != Piece.Color)

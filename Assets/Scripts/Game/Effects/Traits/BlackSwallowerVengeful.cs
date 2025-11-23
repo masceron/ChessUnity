@@ -8,7 +8,6 @@ using System;
 using Game.Piece;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
-using Game.Action.Captures;
 
 namespace Game.Effects.Traits
 {
@@ -22,36 +21,35 @@ namespace Game.Effects.Traits
         public override void OnCallPieceAction(Action.Action action)    
         {
             if (action == null) return;
+
+            if (!action.Succeed) return;
             
-            if (action.Result == ActionResult.Succeed)
+            if (action.Target == Piece.Pos)
             {
-                if (action.Target == Piece.Pos)
+                var pieceAround = new List<PieceLogic>();
+                foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Piece.Pos), FileOf(Piece.Pos), 1))
                 {
-                    var pieceAround = new List<PieceLogic>();
-                    foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Piece.Pos), FileOf(Piece.Pos), 1))
-                    {
-                        var index = IndexOf(rank, file);
-                        var pOn = PieceOn(index);
-                        if (pOn == null || pOn == Piece) continue;
-                        pieceAround.Add(pOn);
-                    }
-                    if (pieceAround.Count == 0) return;
-                    var random = new Random();
-                    var randomPiece = pieceAround[random.Next(0, pieceAround.Count)];
-                    if (randomPiece == null) return;
-                    foreach (var effect in randomPiece.Effects.Where(effect => effect.Category == EffectCategory.Buff))
-                    {
-                        ActionManager.EnqueueAction(new RemoveEffect(effect));
-                    }
+                    var index = IndexOf(rank, file);
+                    var pOn = PieceOn(index);
+                    if (pOn == null || pOn == Piece) continue;
+                    pieceAround.Add(pOn);
                 }
-                else if (action.Target != Piece.Pos && action is ICaptures)
+                if (pieceAround.Count == 0) return;
+                var random = new Random();
+                var randomPiece = pieceAround[random.Next(0, pieceAround.Count)];
+                if (randomPiece == null) return;
+                foreach (var effect in randomPiece.Effects.Where(effect => effect.Category == EffectCategory.Buff))
                 {
-                    var targetPiece = PieceOn(action.Target);
-                    if (targetPiece != null && targetPiece.PieceRank is PieceRank.Elite or PieceRank.Champion or PieceRank.Commander)
-                    {
-                        ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
+                    ActionManager.EnqueueAction(new RemoveEffect(effect));
+                }
+            }
+            else if (action.Target != Piece.Pos)
+            {
+                var targetPiece = PieceOn(action.Target);
+                if (targetPiece != null && targetPiece.PieceRank is PieceRank.Elite or PieceRank.Champion or PieceRank.Commander)
+                {
+                    ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
                         
-                    }
                 }
             }
         }

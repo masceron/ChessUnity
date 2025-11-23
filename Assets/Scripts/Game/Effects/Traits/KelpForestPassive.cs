@@ -2,7 +2,6 @@ using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
-using System.Collections.Generic;
 
 namespace Game.Effects.Traits
 {
@@ -11,7 +10,7 @@ namespace Game.Effects.Traits
 
         public KelpForestPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kelp_forest_passive")
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+            EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
 
         public EndTurnEffectType EndTurnEffectType { get; }
@@ -23,20 +22,16 @@ namespace Game.Effects.Traits
 
         private void getRandomPos() 
         {
-            List<int> posList = new List<int>();
-            for (int i = 0; i < MatchManager.Ins.startingSize.x * MatchManager.Ins.startingSize.y; i++)
+            
+            var pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
+            while (!TileManager.Ins.IsTileEmpty(pos) && FormationManager.Ins.GetFormation(pos) != null)
             {
-                var mapPos = BoardUtils.PosMap(i, MatchManager.Ins.startingSize);
-                if (!TileManager.Ins.IsTileEmpty(mapPos) && FormationManager.Ins.GetFormation(mapPos) == null)
-                {
-                    posList.Add(mapPos);
-                }
+                pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
             }
-            var random = new System.Random();
-            int mapPosSelected = posList[random.Next(posList.Count)];
+            var mappedPos = BoardUtils.PosMap(pos, MatchManager.Ins.StartingSize);
             var kelp = new Kelp(true, true);
             kelp.SetDuration(6);
-            FormationManager.Ins.SetFormation(mapPosSelected, kelp);
+            FormationManager.Ins.SetFormation(mappedPos, kelp);
             
         }
 
