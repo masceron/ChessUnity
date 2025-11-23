@@ -18,7 +18,8 @@ public static class Config
     {
         new PieceConfig("piece_swordfish", true, 85),
         new PieceConfig("piece_siren", true, 88),
-        new PieceConfig("piece_archerfish", true, 87)
+        new PieceConfig("piece_archerfish", true, 87),
+        new PieceConfig("piece_arctic_brittle_star", true, 75)
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);

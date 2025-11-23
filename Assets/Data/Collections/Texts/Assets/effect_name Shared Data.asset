@@ -351,6 +351,10 @@ MonoBehaviour:
     m_Key: effect_horse_leech_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 37769124398288896
+    m_Key: effect_pacified
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

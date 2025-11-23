@@ -1,5 +1,6 @@
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.Effects.Debuffs
 {
@@ -15,6 +16,7 @@ namespace Game.Effects.Debuffs
         public override void OnCallPieceAction(Action.Action action)
         {
             Piece.AttackRange = 0;
+            Debug.Log(Piece.Type);
         }
 
         public override void OnRemove()
