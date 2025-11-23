@@ -16,23 +16,22 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
     {
         public ArmyDesignRelic enemyRelic, allyRelic;
         public RegionalSearcher searcher;
-        public ChosenRegionalIcon chosenRegional;
+        public RegionalIcon chosenRegional;
         public FreePlayArmyBoard board;
         public void Load()
         {
             enemyRelic.Load(AssetManager.Ins.RelicData[Config.relicBlackConfig.Type]);
             allyRelic.Load(AssetManager.Ins.RelicData[Config.relicWhiteConfig.Type]);
-            chosenRegional.Load(RegionalEffectType.None);
             searcher.Load();
-            board.Load(ArmyDesign.Ins.size);
-            board.LoadSave(ArmyDesign.Ins.board.Troops.ToArray());
+            board.Load(FreePlayArmyDesign.Ins.size);
+            board.LoadSave(FreePlayArmyDesign.Ins.board.Troops.ToArray());
         }
 
         public void ToGameScene()
         {
-            Config.boardSize = ArmyDesign.Ins.army.BoardSize;
+            Config.boardSize = FreePlayArmyDesign.Ins.army.BoardSize;
             Config.PieceConfigWhite.Clear();
-            foreach (var troop in ArmyDesign.Ins.board.Troops)
+            foreach (var troop in FreePlayArmyDesign.Ins.board.Troops)
             {
                 var augNameLst = troop.equippedAugmentation.Values.ToList();
                 List<AugmentationInfo> infos = new();
@@ -47,7 +46,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
 
             }
             
-            Debug.Log($"BoardSize: {ArmyDesign.Ins.army.BoardSize}");
+            Debug.Log($"BoardSize: {FreePlayArmyDesign.Ins.army.BoardSize}");
             SceneLoader.LoadSceneWithLoadingScreen(1);
 
         }

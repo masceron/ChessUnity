@@ -13,18 +13,18 @@ namespace UX.UI.Army.DesignArmy
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArmySearcher: Singleton<ArmySearcher> 
     {
-        [SerializeField] private TMP_InputField searchBar;
+        [SerializeField] protected TMP_InputField searchBar;
         [SerializeField] public Transform list;
         [SerializeField] public GameObject troopDisplay;
-        [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
+        [SerializeField] protected UDictionary<PieceRank, Toggle> filterButtons;
 
-        private Dictionary<string, PieceInfo> data;
-        private List<PieceInfo> lastSearchResult;
-        private readonly List<PieceInfo> greyOutPieces = new();
-        private string lastKeyword;
+        protected Dictionary<string, PieceInfo> data;
+        protected List<PieceInfo> lastSearchResult;
+        protected readonly List<PieceInfo> greyOutPieces = new();
+        protected string lastKeyword;
         public readonly List<ArmyDesignTroop> Pool = new();
         
-        // private void Awake()
+        // protected void Awake()
         // {
         //     Data = AssetManager.Ins.PieceData;
         //     ArmyDesignBoard.Ins.OnAddTroop += (t) => FilterByCondition();
@@ -32,7 +32,7 @@ namespace UX.UI.Army.DesignArmy
         //     FilterByCondition();
         //     Load();
         // }
-        public void Load()
+        public virtual void Load()
         {
             data = AssetManager.Ins.PieceData;
             ArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
@@ -42,7 +42,7 @@ namespace UX.UI.Army.DesignArmy
             SearchByKeyword("");
         }
 
-        private readonly SortedSet<PieceRank> pieceFilters = new()
+        protected readonly SortedSet<PieceRank> pieceFilters = new()
         {
             PieceRank.Commander,
             PieceRank.Champion,
@@ -52,7 +52,7 @@ namespace UX.UI.Army.DesignArmy
             PieceRank.Summoned,
             PieceRank.Construct
         };
-        private void ToggleFilter(PieceRank pieceRank){
+        protected void ToggleFilter(PieceRank pieceRank){
             ToggleFilter((int)pieceRank);
         }
         //Bật tắt một filter, ví dụ lọc hoặc không lọc Commander
@@ -78,7 +78,7 @@ namespace UX.UI.Army.DesignArmy
             
         }
 
-        private void AddToFilter(PieceRank toFilter)
+        protected void AddToFilter(PieceRank toFilter)
         {
             pieceFilters.Add(toFilter);
             
@@ -94,7 +94,7 @@ namespace UX.UI.Army.DesignArmy
             DisplaySearchResult();
         }
 
-        private void RemoveFromFilter(PieceRank toRemove)
+        protected void RemoveFromFilter(PieceRank toRemove)
         {
             pieceFilters.Remove(toRemove);
             
@@ -134,7 +134,7 @@ namespace UX.UI.Army.DesignArmy
             DisplaySearchResult();
         }
 
-        private void DisplaySearchResult()
+        protected void DisplaySearchResult()
         {
             var needed = lastSearchResult.Count - Pool.Count;
             switch (needed)
@@ -174,7 +174,7 @@ namespace UX.UI.Army.DesignArmy
             }
         }
         // Dựa trên một vài luật mà game đưa ra, một số Piece có thể sẽ không còn đặt được, bị greyout sau đó
-        private void FilterByCondition(){
+        protected void FilterByCondition(){
             greyOutPieces.Clear();
             // Lọc theo một số condition 
             Dictionary<PieceInfo, int> counts = new();
