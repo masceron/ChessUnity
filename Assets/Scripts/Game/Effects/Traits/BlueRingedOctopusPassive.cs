@@ -11,6 +11,7 @@ namespace Game.Effects.Traits
     
     public class BlueRingedOctopusPassive : Effect, IEndTurnEffect
     {
+        private int LastPos = -1;
         public BlueRingedOctopusPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_ringed_octopus_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
@@ -18,14 +19,21 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action action)
         {
-            var rank = RankOf(Piece.Pos);
-            var file = FileOf(Piece.Pos);
-
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
+            if (LastPos == Piece.Pos) return;
+            if (LastPos != -1)
             {
-                var pos = IndexOf(rankOff, fileOff);
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Poison(1, PieceOn(pos))));
+                foreach(var (rank, file) in MoveEnumerators.AroundUntil(RankOf(LastPos), FileOf(LastPos), 3))
+                {
+                    Poisoned[IndexOf(rank, file)] = false;
+                }
             }
+            
+            foreach(var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Piece.Pos), FileOf(Piece.Pos), 3))
+            {
+                Poisoned[IndexOf(rank, file)] = true;
+            }
+            
+            LastPos = Piece.Pos;
         }
         
         public EndTurnEffectType EndTurnEffectType { get; }

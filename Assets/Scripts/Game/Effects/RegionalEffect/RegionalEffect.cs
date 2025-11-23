@@ -44,6 +44,7 @@ namespace Game.Effects.RegionalEffect
         BloodMoon,
         DjinnBlessing,
         RedTide,
+        BenthicStorm,
         None,
     }
 }
