@@ -23,7 +23,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 27662691078144
-    m_Localized: Guiding Siren
+    m_Localized: Siren
     m_Metadata:
       m_Items: []
   - m_Id: 27753384513536
@@ -96,6 +96,206 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35112047114981376
     m_Localized: Black Swallower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112047484080128
+    m_Localized: Epaulette Shark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112048138391552
+    m_Localized: Archerfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112049061138432
+    m_Localized: Humilitas
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112049249882112
+    m_Localized: Barnacle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112049749004288
+    m_Localized: Snaggletooths
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112050252320768
+    m_Localized: Chambered Nautilus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112051086987264
+    m_Localized: Marine Iguana
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112051271536640
+    m_Localized: Pistol Shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112051359617024
+    m_Localized: Hammer Oyster
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112051418337280
+    m_Localized: Bioluminescent Beacon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112051820990464
+    m_Localized: Lizard Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112051875516416
+    m_Localized: Grenadiers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112052844400640
+    m_Localized: Gulper Eel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112053813284864
+    m_Localized: Phantom Jelly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112053880393728
+    m_Localized: Contagion Corpse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112053922336768
+    m_Localized: Tiger Prawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112054383710208
+    m_Localized: Stonecrab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112054740226048
+    m_Localized: Melibe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112054794752000
+    m_Localized: Horseleech
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112058695454720
+    m_Localized: Bobtail Squid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112058733203456
+    m_Localized: Clown Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112059387514880
+    m_Localized: Moorish Idols
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112060201209856
+    m_Localized: Slimehead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112060436090880
+    m_Localized: Sunfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112060582891520
+    m_Localized: Bottlenose Dolphin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112060721303552
+    m_Localized: Kelp Bass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112061178482688
+    m_Localized: Hourglass Jelly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112061379809280
+    m_Localized: Sloane'S Viperfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112062038315008
+    m_Localized: Hermit Crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112063133028352
+    m_Localized: Kelp Forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112063346937856
+    m_Localized: Sea Turtle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112063418241024
+    m_Localized: Fracture Zone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112063481155584
+    m_Localized: Feather Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112063523098624
+    m_Localized: Helicoprion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112064089329664
+    m_Localized: Medicinal Leech
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112064416485376
+    m_Localized: Temperantia
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112065280512000
+    m_Localized: Megalodon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112065376980992
+    m_Localized: Hatchetfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112065850937344
+    m_Localized: Fangtooth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112067079868416
+    m_Localized: Polluted Rock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112067121811456
+    m_Localized: Phronima
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112067667070976
+    m_Localized: Living Coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112067813871616
+    m_Localized: Blue Dragon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35112068216524800
+    m_Localized: Humboldt Squid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171085806735360
+    m_Localized: Arctic Brittle Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171291084361728
+    m_Localized: Brittle Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171332389867520
+    m_Localized: Coffin Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35171407073644544
+    m_Localized: Spider Brittle Star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35179620120662016
+    m_Localized: Snipe Eel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35258112308940800
+    m_Localized: Armored Feather Star
     m_Metadata:
       m_Items: []
   references:
