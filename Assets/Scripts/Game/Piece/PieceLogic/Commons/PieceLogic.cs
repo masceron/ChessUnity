@@ -269,6 +269,11 @@ namespace Game.Piece.PieceLogic.Commons
                 value += effect.GetValueForAI();
             }
 
+            foreach (var aug in Augmentations)
+            {
+                value += aug.GetValueForAI();
+            }
+
             return value;
         }
 
