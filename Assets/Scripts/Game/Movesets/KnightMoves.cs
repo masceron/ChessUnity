@@ -9,7 +9,7 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KnightMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var (rank, file) = RankFileOf(pos);
             var caller = PieceOn(pos);
@@ -20,7 +20,7 @@ namespace Game.Movesets
                 MakeMove(rankOff, fileOff);
             }
             
-            return;
+            return 15 + 3 * maxRange;
             
             void MakeMove(int rankOff, int fileOff)
             {

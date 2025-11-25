@@ -92,11 +92,13 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var moveRange = PieceOn(pos).GetMoveRange(ref index);
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false);
+
+            return 20 + 5 * moveRange;
         }
 
         public static void Captures(List<Action.Action> list, int pos)
