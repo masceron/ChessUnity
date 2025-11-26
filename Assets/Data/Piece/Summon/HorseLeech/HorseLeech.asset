@@ -23,3 +23,5 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: HorseLeech
+  baseValue: 0
+  considerations: []

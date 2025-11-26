@@ -2,6 +2,7 @@
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
+using Game.Relics.Commons;
 
 public static class Config
 {
@@ -9,20 +10,16 @@ public static class Config
     public static List<PieceConfig> PieceConfigWhite = new()
     {
         new PieceConfig("piece_anglerfish", false, 80),
-        new PieceConfig("piece_humilitas", false, 89),
-        new PieceConfig("piece_megalodon", false, 76),
-        new PieceConfig("piece_horseleech", false, 84)
+        new PieceConfig("piece_anglerfish", false, 86),
+
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_swordfish", true, 85),
-        new PieceConfig("piece_siren", true, 88),
-        new PieceConfig("piece_archerfish", true, 87),
-        new PieceConfig("piece_arctic_brittle_star", true, 75)
+        new PieceConfig("piece_siren", true, 85)
     };
 
-    public static RelicConfig relicWhiteConfig = new RelicConfig(RelicType.SirensHarpoon, false, 5);
-    public static RelicConfig relicBlackConfig = new RelicConfig(RelicType.SirensHarpoon, true, 5);
+    public static RelicConfig relicWhiteConfig = new RelicConfig("relic_sirens_harpoon", false, 5);
+    public static RelicConfig relicBlackConfig = new RelicConfig("relic_sirens_harpoon", true, 5);
     public static RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
 }

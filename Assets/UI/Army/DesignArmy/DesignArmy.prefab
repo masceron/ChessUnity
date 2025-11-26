@@ -655,7 +655,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a0885751b8428786c32314e2f692f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   searchBar: {fileID: 1437357625558729600}
   list: {fileID: 6458923699264516085}
   troopDisplay: {fileID: 1292840448665757387, guid: 778969aa2960b4d45bebc38c0ab310fc, type: 3}
@@ -2155,7 +2154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000011416762, y: -0.8800199}
+  m_AnchoredPosition: {x: -0.000011416762, y: -0.0000150203705}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &4012162993069384159
@@ -5215,8 +5214,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2664993233127323860}
   m_HandleRect: {fileID: 1311341165499298934}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9994035
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5692,7 +5691,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.30114746}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -7, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6826236178350056273
@@ -7169,9 +7168,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 8014765278514048230}
   board: {fileID: 6158437815525748800}
+  troopDisplay: {fileID: 2545505702639453213, guid: 778969aa2960b4d45bebc38c0ab310fc, type: 3}
   searcher: {fileID: 1658454347079151339}
   notification: {fileID: 170824433299727803}
   relicSearcher: {fileID: 4354210979350759769}
+  nextButton: {fileID: 0}
 --- !u!114 &-5005890228114891248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7536,6 +7537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardSize: {fileID: 442170166194918591}
+  boardSizeButton: {fileID: 0}
   armyName: {fileID: 4788608635761603234}
 --- !u!1 &6890378425090689476
 GameObject:
@@ -8861,8 +8863,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8893983694988222538}
   m_HandleRect: {fileID: 4325737710859566319}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99812824
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

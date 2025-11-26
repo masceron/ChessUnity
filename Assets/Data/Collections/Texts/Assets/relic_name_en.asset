@@ -26,6 +26,34 @@ MonoBehaviour:
     m_Localized: Black Pearl
     m_Metadata:
       m_Items: []
+  - m_Id: 30399537312960512
+    m_Localized: Eye Of Mimic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537317154816
+    m_Localized: Storm Capacitor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537317154817
+    m_Localized: Sirens Harpoon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537321349120
+    m_Localized: Frost Sigil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537321349121
+    m_Localized: Seafoam Phial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537321349122
+    m_Localized: Rotting Scythe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399686307221504
+    m_Localized: Mangrove Charm
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

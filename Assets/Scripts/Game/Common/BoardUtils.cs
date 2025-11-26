@@ -8,7 +8,7 @@ using Game.Effects;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
-using Game.Relics;
+using Game.Relics.Commons;
 using UnityEngine;
 
 namespace Game.Common

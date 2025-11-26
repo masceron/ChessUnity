@@ -23,6 +23,34 @@ MonoBehaviour:
     m_Key: relic_black_pearl
     m_Metadata:
       m_Items: []
+  - m_Id: 30399537312960512
+    m_Key: relic_eye_of_mimic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537317154816
+    m_Key: relic_storm_capacitor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537317154817
+    m_Key: relic_sirens_harpoon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537321349120
+    m_Key: relic_frost_sigil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537321349121
+    m_Key: relic_seafoam_phial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399537321349122
+    m_Key: relic_rotting_scythe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 30399686307221504
+    m_Key: relic_mangrove_charm
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

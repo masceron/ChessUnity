@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdee4035d1e7499a89a7d83135831603, type: 3}
   m_Name: CommonPearl
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.RelicInfo
-  type: 0
   key: relic_common_pearl
   icon: {fileID: 2800000, guid: 65c8dfb7dcd643648bf5a45c655230f4, type: 3}
   cooldown: 4
+  logicClassName: CommonPearl

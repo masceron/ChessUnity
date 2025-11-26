@@ -107,10 +107,6 @@ MonoBehaviour:
     m_Key: piece_gulper_eel_skill_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35085388768874496
-    m_Key: piece_horseleech_skill_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 35085392669577216
     m_Key: piece_bobtail_squid_skill_description
     m_Metadata:

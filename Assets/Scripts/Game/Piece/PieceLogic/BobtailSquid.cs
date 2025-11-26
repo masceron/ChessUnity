@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     {
         public BobtailSquid(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 20, this)));
             
             Skills = list =>
             {

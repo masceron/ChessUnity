@@ -7,20 +7,12 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece;
-using Game.Relics;
-using Game.Relics.EyeOfMimic;
-using Game.Relics.FrostSigil;
-using Game.Relics.Pearl;
-using Game.Relics.RottingScythe;
-using Game.Relics.StormCapacitor;
-using Game.Relics.SeafoamPhial;
-using Game.Relics.SirensHarpoon;
-using Game.Relics.MangroveCharm;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 using Game.Effects.RegionalEffect;
 using UX.UI;
 using Game.Piece.PieceLogic.Commons;
+using Game.Relics.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Managers
@@ -40,7 +32,8 @@ namespace Game.Managers
         Moves,
         SwitchTurn,
         MoveGeneration,
-        EffectApplied
+        EffectApplied,
+        Dead
     }
 
     public enum Color : byte
@@ -61,6 +54,7 @@ namespace Game.Managers
         public bool SideToMove;
         public RelicLogic WhiteRelic;
         public RelicLogic BlackRelic;
+        public PieceLogic WhiteCommander, BlackCommander;
         public int WhiteSkillUses;
         public int BlackSkillUses;
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
@@ -75,6 +69,8 @@ namespace Game.Managers
         public readonly List<ISubscriber> Subscribers = new();
 
         public System.Action<int> OnIncreaseTurn;
+
+        private Action.Action lastMainAction;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -112,25 +108,23 @@ namespace Game.Managers
 
         public void SpawnPiece(PieceConfig piece)
         {
-            PieceBoard[piece.Index] = PieceMaker.Get(piece);
-        }
-
-        public static RelicLogic GetRelicLogicByConfig(RelicConfig cfg)
-        {
-            RelicLogic rl = cfg.Type switch
+            var pieceLogic = PieceMaker.Get(piece);
+            PieceBoard[piece.Index] = pieceLogic;
+            if (pieceLogic.PieceRank == PieceRank.Commander)
             {
-                RelicType.RottingScythe => new RottingScythe(cfg),
-                RelicType.EyeOfMimic => new EyeOfMimic(cfg),
-                RelicType.FrostSigil => new FrostSigil(cfg),
-                RelicType.CommonPearl => new CommonPearl(cfg),
-                RelicType.BlackPearl => new BlackPearl(cfg),
-                RelicType.SeafoamPhial => new SeafoamPhial(cfg),
-                RelicType.StormCapacitor => new StormCapacitor(cfg),
-                RelicType.SirensHarpoon => new SirensHarpoon(cfg),
-                RelicType.MangroveCharm => new MangroveCharm(cfg),
-                _ => null
-            };
-            return rl;
+                if (pieceLogic.Color == false)
+                {
+                    WhiteCommander = pieceLogic;
+                }
+                else
+                {
+                    BlackCommander = pieceLogic;
+                }
+            }
+            PieceBoard[piece.Index] = PieceMaker.Get(piece);
+
+            var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<AI.BrainComponent>();
+            bc.Maker = PieceBoard[piece.Index];    
         }
 
         public void MakeRegionalEffect(RegionalEffectType ret)
@@ -184,6 +178,7 @@ namespace Game.Managers
         {
             var pieceAffected = PieceBoard[pos];
             PieceBoard[pos] = null;
+            NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
             pieceAffected.Die();
@@ -192,20 +187,8 @@ namespace Game.Managers
         public void Kill(int pos)
         {
             var pieceAffected = PieceBoard[pos];
-            if (pieceAffected.PieceRank == PieceRank.Commander)
-            {
-                if (pieceAffected.Color == false)
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
-                }
-                else
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                }
-            }
             PieceBoard[pos] = null;
+            NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
             pieceAffected.Die();
@@ -254,9 +237,33 @@ namespace Game.Managers
                     IsDay = !IsDay;
                     countTurn = 0;
                 }
-                
             }
-
+            if (SideToMove && WhiteCommander != null && WhiteCommander.IsDead())
+            {
+                if (WhiteCommander != null && WhiteCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                }
+                else if (BlackCommander != null && BlackCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                }
+            }
+            else if (!SideToMove && BlackCommander != null && BlackCommander.IsDead())
+            {
+                if (BlackCommander != null && BlackCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                }
+                else if (WhiteCommander != null && WhiteCommander.IsDead())
+                {
+                    UIManager.Ins.Load(CanvasID.EndGameMessage);
+                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                }
+            }
             SideToMove = !SideToMove;
         }
 
@@ -326,6 +333,17 @@ namespace Game.Managers
                         effect.OnCallPieceAction(mainAction);
                 });
             }
+        }
+
+        private void NotifyDead(PieceLogic pieceToDie)
+        {
+            pieceToDie.Effects.ForEach(effect =>
+            {
+                if (effect.ObserverActivateWhen == ObserverActivateWhen.Dead)
+                {
+                    ((IDeadEffect)effect).OnCallDead();
+                }
+            });
         }
 
         public void NotifyOnMoveGen(List<Action.Action> actions)

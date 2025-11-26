@@ -2,11 +2,9 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -21,34 +19,24 @@ namespace Game.Piece.PieceLogic
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;
+                var caller = PieceOn(Pos);
+                var push = caller.Color ? +1 : -1;
                 var (rank, file) = RankFileOf(Pos);
-                var piece = PieceOn(Pos);
-                var moveRange = piece.AttackRange;
-                var color = Color;
-                var push = color ? 1 : -1;
 
-                foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, moveRange - 1))
-                    MakeSkill(list, IndexOf(rankOff, fileOff));
-                foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, moveRange - 1))
-                    MakeSkill(list, IndexOf(rankOff, fileOff));
+                MakeSkill(list, IndexOf(rank + push * 1, file));
 
-                var verticalEnumerator = color ? MoveEnumerators.Up(rank, file, moveRange - 1) : MoveEnumerators.Down(rank, file, moveRange - 1);
-                foreach (var (rankOff, fileOff) in verticalEnumerator)
-                    MakeSkill(list, IndexOf(rankOff, fileOff));
+                MakeSkill(list, IndexOf(rank, file - 1));
+                MakeSkill(list, IndexOf(rank, file + 1));
 
-                var startRank = rank + push;
-                var endRank = rank + push * moveRange;
-                var step = push;
-                
-                for (var rankOff = startRank; rankOff != endRank + step; rankOff += step)
-                {
-                
-                    var distance = Mathf.Abs(rankOff - rank);
-                    for (var fileOff = file - distance; fileOff != file + distance + 1; fileOff += 1)
-                    {
-                        MakeSkill(list, IndexOf(rankOff, fileOff));
-                    }
-                }
+                MakeSkill(list, IndexOf(rank - push * 1, file - 1));
+                MakeSkill(list, IndexOf(rank - push * 1, file));
+                MakeSkill(list, IndexOf(rank - push * 1, file + 1));
+
+                MakeSkill(list, IndexOf(rank - push * 2, file - 2));
+                MakeSkill(list, IndexOf(rank - push * 2, file - 1));
+                MakeSkill(list, IndexOf(rank - push * 2, file));
+                MakeSkill(list, IndexOf(rank - push * 2, file + 1));
+                MakeSkill(list, IndexOf(rank - push * 2, file + 2));
             };
         }
 

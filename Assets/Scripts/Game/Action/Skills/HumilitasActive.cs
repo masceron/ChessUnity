@@ -6,7 +6,6 @@ using UX.UI.Ingame;
 using Game.Managers;
 using System.Collections.Generic;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 
 namespace Game.Action.Skills
 {
@@ -56,6 +55,9 @@ namespace Game.Action.Skills
             MakeSkill(Target);
         }
 
-        
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

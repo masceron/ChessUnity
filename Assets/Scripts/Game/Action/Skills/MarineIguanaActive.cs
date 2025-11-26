@@ -42,5 +42,10 @@ namespace Game.Action.Skills
 
             BoardViewer.SelectingFunction = 2;
         }
+
+        public void CompleteActionForAI()
+        {
+            //Implement for AI automatically
+        }
     }
 }

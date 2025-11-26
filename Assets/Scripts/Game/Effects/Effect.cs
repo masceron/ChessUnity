@@ -99,5 +99,7 @@ namespace Game.Effects
                 AssetManager.Ins.EffectData[EffectName].key + "_description",
                 new object[]{this});
         }
+
+        public virtual int GetValueForAI(){ return 0; }
     }
 }

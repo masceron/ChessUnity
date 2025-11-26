@@ -59,7 +59,7 @@ namespace Editor.Window
 
             // --- List of all effects ---
             manageScrollPos = EditorGUILayout.BeginScrollView(manageScrollPos);
-            foreach (var effect in allEffects.Where(effect => effect))
+            foreach (var effect in allEffects)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
                 

@@ -259,6 +259,33 @@ namespace Game.Piece.PieceLogic.Commons
             return false;
         }
 
+        public int GetValueForAI()
+        {
+            int value = RankToValue(PieceRank);
+            value += AssetManager.Ins.PieceData[Type].baseValue;
+
+            foreach (var effect in Effects)
+            {
+                value += effect.GetValueForAI();
+            }
+
+            return value;
+        }
+
+        private int RankToValue(PieceRank rank)
+        {
+            switch (rank)
+            {
+                case PieceRank.Swarm:     return 50;
+                case PieceRank.Common:    return 70;
+                case PieceRank.Elite:     return 120;
+                case PieceRank.Champion:  return 200;
+                case PieceRank.Commander: return 1000;
+                case PieceRank.Construct: return 150;
+                case PieceRank.Summoned:  return 300;
+                default: return 0;
+            }
+        }
 
     }
 }

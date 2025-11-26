@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
+using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -15,6 +17,12 @@ namespace Game.Effects.Traits
         {
             for (var i = 0; i < actions.Count; i++)
             {
+                if (PieceOn(actions[i].Maker).Effects
+                    .All(e => e.EffectName != "effect_snapping_strike"))
+                {
+                    continue;
+                }
+                
                 if (actions[i] is NormalCapture capture)
                 {
                     actions[i] = new Action.Captures.SnappingStrike(capture.Maker, capture.Target);

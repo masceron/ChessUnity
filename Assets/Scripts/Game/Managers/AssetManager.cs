@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using Game.Common;
 using Game.Tile;
-using Game.Relics;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEngine;
@@ -15,7 +14,7 @@ namespace Game.Managers
     {
         [NonSerialized] public Dictionary<string, PieceInfo> PieceData;
         [NonSerialized] public Dictionary<string, EffectInfo> EffectData;
-        [NonSerialized] public Dictionary<RelicType, RelicInfo> RelicData;
+        [NonSerialized] public Dictionary<string, RelicInfo> RelicData;
         [NonSerialized] public Dictionary<FormationType, GameObject> EnvironmentData;
         [NonSerialized] public Dictionary<AugmentationName, AugmentationInfo> AugmentationData;
         
@@ -46,10 +45,14 @@ namespace Game.Managers
                 EffectData.Add(effect.key, effect);
             }
             
-            RelicData = new Dictionary<RelicType, RelicInfo>(relicsData.relicsData);
+            RelicData = new Dictionary<string, RelicInfo>();
+            foreach (var relic in relicsData.relicsData)
+            {
+                RelicData.Add(relic.key, relic);
+            }
+            
             EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

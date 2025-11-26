@@ -12,9 +12,9 @@ namespace Game.Effects.Buffs
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result != ActionResult.Succeed) return;
+            if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
             
-            action.Result = ActionResult.Failed;
+            action.Succeed = false;
             
             if (Strength > 1) Strength--;
             else

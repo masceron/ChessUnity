@@ -14,7 +14,7 @@ namespace Game.Common
                 if (_instance) return _instance;
                 
                 // Find singleton
-                _instance = FindAnyObjectByType<T>();
+                _instance = FindFirstObjectByType<T>();
 
                 // Create new instance if one doesn't already exist.
                 if (_instance) return _instance;
@@ -33,6 +33,7 @@ namespace Game.Common
             if (_instance == null)
             {
                 _instance = this as T;
+                // Debug.Log($"New Singleton: {typeof(T)}");
             }
             else
             {
@@ -45,7 +46,5 @@ namespace Game.Common
             if (_instance == this)
                 _instance = null;
         }
-
-
     }
 }

@@ -99,7 +99,7 @@ namespace UX.UI.FreePlayTest.AugmentationScene
             }
             else if (position == Position.Unequipped)
             {
-                AugmentationFilter.Ins.ToggleFilter(slot);
+                // AugmentationFilter.Ins.ToggleFilter(slot);
             }
             
 
