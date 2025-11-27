@@ -315,5 +315,34 @@ namespace Game.Common
             }
             return false;
         }
+
+        // Return a list of white or black pieces with a specific effect.
+        // Use this function even when you want to grab a number of effects by using .Count. 
+        public static List<PieceLogic> FindPiecesWithEffectName(bool side, string effectName)
+        {
+            List<PieceLogic> withEffect = new List<PieceLogic>();
+            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            {
+                if (piece.Color == side && piece.Effects.Any(effect => effect.EffectName == effectName))
+                {
+                    withEffect.Add(piece);
+                }
+            }
+            return withEffect;
+        }
+
+        public static List<Effect> EffectWithEffectCategory(PieceLogic piece, EffectCategory effectCategory)
+        {
+            List<Effect> effectsWithEffectCategory = new List<Effect>();
+            foreach (var effect in piece.Effects)
+            {
+                if (effect.Category == effectCategory)
+                {
+                    effectsWithEffectCategory.Add(effect);
+                }
+            }
+            return effectsWithEffectCategory;
+        }
+        
     }
 }
