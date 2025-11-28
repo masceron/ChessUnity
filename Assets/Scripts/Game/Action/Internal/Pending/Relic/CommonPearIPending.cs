@@ -81,7 +81,7 @@ namespace Game.Action.Internal.Pending.Relic
             int minBuff = int.MaxValue;
             foreach (var piece in listPieces)
             {
-                int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff);
+                int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile");
                 if (coutBuff < minBuff)
                 {
                     minBuff = coutBuff;

@@ -8,6 +8,8 @@ using Game.Piece.PieceLogic.Commons;
 using System;
 using Game.Common;
 using Game.Effects.Traits;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Game.Action.Skills
 {
@@ -61,7 +63,70 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            // throw new System.NotImplementedException();
+            var listPieces = new List<PieceLogic>();
+            
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 5))
+            {
+                var idx = IndexOf(rank, file);
+                var pOn = PieceOn(idx);
+                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                {
+                    if(pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                    listPieces.Add(pOn);
+                }
+            }
+            // neu khong co quan nao
+            if (listPieces.Count == 0) return;
+            // neu co dung mot quan
+            if (listPieces.Count == 1)
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, listPieces[0])));
+                SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+                return;
+            }
+            // neu co nhieu quan           
+            listPieces.Sort((a, b) => 
+                AssetManager.Ins.PieceData[b.Type].baseValue
+                    .CompareTo(AssetManager.Ins.PieceData[a.Type].baseValue));
+            
+            var selectedPieces = new List<PieceLogic>();
+            
+            int topValue = AssetManager.Ins.PieceData[listPieces[0].Type].baseValue;
+            var topGroup = listPieces.Where(p => 
+                AssetManager.Ins.PieceData[p.Type].baseValue == topValue).ToList();
+            
+            if (topGroup.Count >= 2)
+            {
+                int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
+                int idx2;
+                do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); } 
+                while (idx2 == idx1);
+                
+                selectedPieces.Add(topGroup[idx1]);
+                selectedPieces.Add(topGroup[idx2]);
+            }
+            else
+            {
+                selectedPieces.Add(listPieces[0]);
+                
+                if (listPieces.Count > 1)
+                {
+                    int secondValue = AssetManager.Ins.PieceData[listPieces[1].Type].baseValue;
+                    var secondGroup = listPieces.Where(p => 
+                        AssetManager.Ins.PieceData[p.Type].baseValue == secondValue).ToList();
+                    if(secondGroup.Count == 0) return;
+                    int idx = UnityEngine.Random.Range(0, secondGroup.Count);
+                    selectedPieces.Add(secondGroup[idx]);
+                }   
+            }
+            
+            foreach (var piece in selectedPieces)
+            {
+                UnityEngine.Debug.Log("Taunting piece: " + piece.Type);
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
+            }
+            
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }
