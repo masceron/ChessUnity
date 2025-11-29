@@ -86,14 +86,14 @@ namespace Game.Action.Skills
             }
             // neu co nhieu quan           
             listPieces.Sort((a, b) => 
-                AssetManager.Ins.PieceData[b.Type].baseValue
-                    .CompareTo(AssetManager.Ins.PieceData[a.Type].baseValue));
+                b.GetValueForAI()
+                    .CompareTo(a.GetValueForAI()));
             
             var selectedPieces = new List<PieceLogic>();
             
-            int topValue = AssetManager.Ins.PieceData[listPieces[0].Type].baseValue;
+            int topValue = listPieces[0].GetValueForAI();
             var topGroup = listPieces.Where(p => 
-                AssetManager.Ins.PieceData[p.Type].baseValue == topValue).ToList();
+                p.GetValueForAI() == topValue).ToList();
             
             if (topGroup.Count >= 2)
             {
@@ -111,9 +111,9 @@ namespace Game.Action.Skills
                 
                 if (listPieces.Count > 1)
                 {
-                    int secondValue = AssetManager.Ins.PieceData[listPieces[1].Type].baseValue;
+                    int secondValue = listPieces[1].GetValueForAI();
                     var secondGroup = listPieces.Where(p => 
-                        AssetManager.Ins.PieceData[p.Type].baseValue == secondValue).ToList();
+                        p.GetValueForAI() == secondValue).ToList();
                     if(secondGroup.Count == 0) return;
                     int idx = UnityEngine.Random.Range(0, secondGroup.Count);
                     selectedPieces.Add(secondGroup[idx]);
