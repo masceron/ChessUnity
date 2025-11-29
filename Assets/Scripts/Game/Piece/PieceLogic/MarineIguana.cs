@@ -6,6 +6,7 @@ using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+using System.Linq;
 
 namespace Game.Piece.PieceLogic
 {
@@ -19,35 +20,21 @@ namespace Game.Piece.PieceLogic
             Skills = list =>
             {
                 if (SkillCooldown != 0) return;
-                var caller = PieceOn(Pos);
-                var push = caller.Color ? +1 : -1;
-                var (rank, file) = RankFileOf(Pos);
 
-                MakeSkill(list, IndexOf(rank + push * 1, file));
-
-                MakeSkill(list, IndexOf(rank, file - 1));
-                MakeSkill(list, IndexOf(rank, file + 1));
-
-                MakeSkill(list, IndexOf(rank - push * 1, file - 1));
-                MakeSkill(list, IndexOf(rank - push * 1, file));
-                MakeSkill(list, IndexOf(rank - push * 1, file + 1));
-
-                MakeSkill(list, IndexOf(rank - push * 2, file - 2));
-                MakeSkill(list, IndexOf(rank - push * 2, file - 1));
-                MakeSkill(list, IndexOf(rank - push * 2, file));
-                MakeSkill(list, IndexOf(rank - push * 2, file + 1));
-                MakeSkill(list, IndexOf(rank - push * 2, file + 2));
+                var listActions = new List<Action.Action>();
+                BluffingMoves.Captures(listActions, Pos);
+                if (listActions.Count > 1)
+                {
+                    listActions = listActions.Distinct(new ActionComparer()).ToList();
+                }
+                var captureTargets = listActions.OfType<ICaptures>()
+                .Select(c => ((Action.Action)c).Target)
+                .ToList();
+                foreach (var target in captureTargets)
+                {
+                    list.Add(new MarineIguanaActive(Pos, target));
+                }
             };
-        }
-
-
-        private void MakeSkill(List<Action.Action> list, int index)
-        {
-
-            var piece = PieceOn(index);
-            if (piece == null || piece.Color == Color) return;
-            list.Add(new MarineIguanaAttack(Pos, index));
-            
         }
 
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
