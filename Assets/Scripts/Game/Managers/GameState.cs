@@ -177,6 +177,7 @@ namespace Game.Managers
         public void Destroy(int pos)
         {
             var pieceAffected = PieceBoard[pos];
+            // if (pieceAffected == null) return;
             PieceBoard[pos] = null;
             NotifyDead(pieceAffected);
 
@@ -187,6 +188,7 @@ namespace Game.Managers
         public void Kill(int pos)
         {
             var pieceAffected = PieceBoard[pos];
+            // if (pieceAffected == null) return;
             PieceBoard[pos] = null;
             NotifyDead(pieceAffected);
 
