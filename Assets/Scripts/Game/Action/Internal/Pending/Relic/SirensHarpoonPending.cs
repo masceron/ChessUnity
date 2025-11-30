@@ -33,7 +33,7 @@ namespace Game.Action.Internal.Pending.Relic
             _sirensHarpoon = null;
             BoardViewer.SelectingFunction = 0;
         }
-
+        
         protected override void ModifyGameState()
         {
         }
