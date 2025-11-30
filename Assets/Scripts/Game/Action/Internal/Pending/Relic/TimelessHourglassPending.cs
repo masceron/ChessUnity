@@ -1,7 +1,12 @@
 ﻿using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
+using static Game.Common.BoardUtils;
+using System.Linq;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Action.Internal.Pending.Relic
 {
@@ -49,8 +54,39 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void CompleteActionForAI()
         {
-            //Implement for AI automatically
+            if (_timelessHourglass == null) return;
+
+            // Gather all pieces
+            var pieces = MatchManager.Ins.GameState.PieceBoard
+                .Where(p => p != null)
+                .ToList();
+
+            if (pieces.Count == 0) return;
+
+            bool relicColor = _timelessHourglass.Color;
+
+            // Candidates: allies with cooldown >= 2, enemies with cooldown == 1
+            var candidates = new List<PieceLogic>();
+            foreach (var p in pieces)
+            {
+                if (p.Color == relicColor)
+                {
+                    if (p.SkillCooldown >= 2) candidates.Add(p);
+                }
+                else
+                {
+                    if (p.SkillCooldown == 1) candidates.Add(p);
+                }
+            }
+
+            if (candidates.Count == 0) return;
+            
+            var bestScore = candidates.Max((p) => p.GetValueForAI());
+            var top = candidates.Where(p => p.GetValueForAI() == bestScore).ToList();
+            var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
+
+            Target = (ushort)chosen.Pos;
+            ActionManager.DoManualAction(this);
         }
     }
-
 }
