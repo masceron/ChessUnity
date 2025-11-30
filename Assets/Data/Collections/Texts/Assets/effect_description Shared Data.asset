@@ -351,6 +351,10 @@ MonoBehaviour:
     m_Key: effect_pacified_description
     m_Metadata:
       m_Items: []
+  - m_Id: 40184003090714624
+    m_Key: effect_black_swallower_vengeful_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
