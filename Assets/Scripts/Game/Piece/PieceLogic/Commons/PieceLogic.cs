@@ -37,7 +37,7 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly List<int> PreviousMoves;
         public readonly string Type;
         private readonly bool hasSkill;
-        private readonly List<Augmentation.Augmentation> Augmentations;
+        public readonly List<Augmentation.Augmentation> Augmentations;
 
         private bool dead;
 

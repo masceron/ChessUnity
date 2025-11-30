@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
 
             Skills = list =>
             {
-                if (SkillCooldown != 0) return;
+                if (SkillCooldown != 0 || FindPiece<Commons.PieceLogic>(!Color).Count == 0) return; 
                 Debug.Log("Temperantia: choose a ally");
                 var allies = FindPiece<Commons.PieceLogic>(Color);
                 list.AddRange(from ally in allies where !ally.Equals(this) select new TemperantiaSwap(Pos, ally.Pos));
