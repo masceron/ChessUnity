@@ -35,7 +35,6 @@ namespace Game.Relics
                     BoardViewer.SelectingFunction = 4;
                 }
             }
-
         }
     }
 }
