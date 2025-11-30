@@ -7,6 +7,7 @@ using UX.UI.Ingame;
 using UnityEngine;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using System.Linq; // <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
@@ -21,7 +22,7 @@ namespace Game.Action.Skills
             Target = (ushort)target;
         }
 
-
+        // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
         protected override void ModifyGameState()
         {
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
@@ -88,7 +89,41 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            //Implement for AI automatically
+            // Resolve maker and side
+            var makerPiece = PieceOn(Maker);
+            if (makerPiece == null) return;
+            var side = makerPiece.Color;
+
+            // Gather ally and enemy pieces
+            var allies = FindPiece<PieceLogic>(side);
+            var enemies = FindPiece<PieceLogic>(!side);
+
+            if (allies == null || allies.Count == 0) return;
+            if (enemies == null || enemies.Count == 0) return;
+
+            // Count buffs on each piece
+            int CountBuffs(PieceLogic p) => p.Effects.Count(e => e.Category == EffectCategory.Buff);
+
+            // Find minimum buff count among allies
+            var minBuff = allies.Min(CountBuffs);
+            var candidatesA = allies.Where(p => CountBuffs(p) == minBuff).ToList();
+            // Find maximum buff count among enemies
+            var maxBuff = enemies.Max(CountBuffs);
+            var candidatesB = enemies.Where(p => CountBuffs(p) == maxBuff).ToList();
+
+            if (candidatesA.Count == 0 || candidatesB.Count == 0) return;
+
+            // Choose selection (random if multiple)
+            PieceLogic chosenAlly = candidatesA.Count == 1 ? candidatesA[0] : candidatesA[Random.Range(0, candidatesA.Count)];
+            PieceLogic chosenEnemy = candidatesB.Count == 1 ? candidatesB[0] : candidatesB[Random.Range(0, candidatesB.Count)];
+            allyIndex = chosenAlly.Pos;
+            enemyIndex = chosenEnemy.Pos;
+
+            // Execute effect now
+            BoardViewer.Ins.ExecuteAction(this);
+            // Reset static indices
+            allyIndex = -1;
+            enemyIndex = -1;
         }
     }
 }

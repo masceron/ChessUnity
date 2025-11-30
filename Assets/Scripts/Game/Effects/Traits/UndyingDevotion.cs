@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
         {
             if (action == null || PieceOn(action.Target).Color != Piece.Color || !action.Succeed) return;
             action.Succeed = false;
-            Debug.Log("Failed capture");
+            Debug.Log("[UndyingDevotion] Failed capture");
             ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(action.Target))));
         }
     }

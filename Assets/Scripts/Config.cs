@@ -9,17 +9,18 @@ public static class Config
     public static int boardSize = 12;
     public static List<PieceConfig> PieceConfigWhite = new()
     {
-        new PieceConfig("piece_anglerfish", false, 80),
-        new PieceConfig("piece_anglerfish", false, 86),
-
+        new PieceConfig("piece_siren", false, 25),
+        new PieceConfig("piece_bobtail_squid", false, 26),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_siren", true, 85)
+        new PieceConfig("piece_pufferfish", true, 16),
+        // new PieceConfig("piece_anglerfish", false, 17),
+        new PieceConfig("piece_thalassos", true, 17),
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig("relic_sirens_harpoon", false, 5);
     public static RelicConfig relicBlackConfig = new RelicConfig("relic_sirens_harpoon", true, 5);
-    public static RegionalEffectType regionalEffectType = RegionalEffectType.Whirpool;
+    public static RegionalEffectType regionalEffectType = RegionalEffectType.None;
 }
