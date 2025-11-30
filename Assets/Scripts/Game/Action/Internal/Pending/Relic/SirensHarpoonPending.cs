@@ -23,7 +23,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void CompleteAction()
         {
-            ActivateRelic();
+            ActivateRelic(Maker);
         }
 
 
@@ -34,10 +34,10 @@ namespace Game.Action.Internal.Pending.Relic
         }
 
 
-        public void ActivateRelic()
+        public void ActivateRelic(int maker)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(1, BoardUtils.PieceOn(Maker))));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(BoardUtils.PieceOn(Maker))));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(1, BoardUtils.PieceOn(maker))));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(BoardUtils.PieceOn(maker))));
 
             _sirensHarpoon.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();
@@ -69,7 +69,25 @@ namespace Game.Action.Internal.Pending.Relic
 
             if (listPieces.Count == 1)
             {
-
+                ActivateRelic(listPieces[0].Pos);
+                return;
+            }
+            
+            listPieces.Sort((a, b) => 
+                b.GetValueForAI().CompareTo(a.GetValueForAI())
+            );
+            
+            int topValue = listPieces[0].GetValueForAI();
+            var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
+            
+            if (topGroup.Count == 1)
+            {
+                ActivateRelic(topGroup[0].Pos);
+            }
+            else
+            {
+                int idx = UnityEngine.Random.Range(0, topGroup.Count);
+                ActivateRelic(topGroup[idx].Pos);
             }
         }
     }
