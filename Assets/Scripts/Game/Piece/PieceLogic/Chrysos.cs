@@ -31,7 +31,7 @@ namespace Game.Piece.PieceLogic
                     var cost = CalculateCost(piece.PieceRank, upgradableTo);
                     if (Coin >= cost)
                     {
-                        list.Add(new ChrysosUpgradeCandidate(Pos, i, cost));
+                        list.Add(new ChrysosUpgradeCandidate(Pos, i, cost, this));
                     }
                 }
             };
