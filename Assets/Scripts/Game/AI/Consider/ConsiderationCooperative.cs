@@ -3,6 +3,7 @@ using Game.Action.Quiets;
 using UnityEngine;
 using Game.Piece.PieceLogic.Commons;
 using Game.Common;
+using Game.Managers;
 
 namespace Game.AI.Consider
 {
@@ -36,7 +37,7 @@ namespace Game.AI.Consider
                     }
                 }
             }
-            return scaleValue * weight;
+            return scaleValue * weight + TileManager.Ins.GetTileValue(action.Target);
         }
     }
 }

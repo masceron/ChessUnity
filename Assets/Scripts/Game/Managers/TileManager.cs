@@ -37,6 +37,12 @@ namespace Game.Managers
             return tiles[pos];
         }
 
+        public int GetTileValue(int pos)
+        {
+            if (!BoardUtils.VerifyIndex(pos)) return -1000;
+            return tiles[pos].GetTileValue();
+        }
+
         private void SelectionIndicator(int pos, Tile.Tile tile)
         {
             var sel = GameObject.CreatePrimitive(PrimitiveType.Cube);

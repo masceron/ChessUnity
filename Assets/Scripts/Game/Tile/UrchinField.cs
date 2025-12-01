@@ -46,6 +46,10 @@ namespace Game.Tile
             base.OnPieceExit(piece);
         }
 
+        public override int GetValueForAI()
+        {
+            return -20;
+        }
     }
 
 }
