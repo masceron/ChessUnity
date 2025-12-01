@@ -6,12 +6,13 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
+using Game.AI;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class SirensHarpoonPending : Action, IPendingAble, System.IDisposable
+    public class SirensHarpoonPending : Action, IPendingAble, System.IDisposable, IAIAction
     {
         private SirensHarpoon _sirensHarpoon;
 

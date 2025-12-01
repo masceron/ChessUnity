@@ -1,10 +1,11 @@
 ﻿using Game.Action.Internal;
+using Game.AI;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class BlueDragonActive : Action, ISkills
+    public class BlueDragonActive : Action, ISkills, IAIAction
     {
         public BlueDragonActive(int maker, int target) : base(maker)
         {
@@ -18,5 +19,9 @@ namespace Game.Action.Skills
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
         
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

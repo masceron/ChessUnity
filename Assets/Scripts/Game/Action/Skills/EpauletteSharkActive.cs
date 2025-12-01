@@ -1,10 +1,11 @@
 ﻿
 using Game.Action.Internal;
+using Game.AI;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class EpauletteSharkActive : Action, ISkills
+    public class EpauletteSharkActive : Action, ISkills, IAIAction
     {
         public EpauletteSharkActive(int maker, int target) : base(maker)
         {
@@ -17,5 +18,10 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(new KillPiece(Target));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
+        
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
+        }   
     }
 }

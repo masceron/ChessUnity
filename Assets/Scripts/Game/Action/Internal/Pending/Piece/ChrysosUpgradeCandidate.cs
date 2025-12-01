@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.Action.Skills;
+using Game.AI;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
@@ -13,7 +14,7 @@ using UX.UI.Ingame.ChrysosShop;
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate: Action, IPendingAble, IInternal, ISkills
+    public class ChrysosUpgradeCandidate: Action, IPendingAble, IInternal, ISkills, IAIAction
     {
         private PieceConfig config;
 

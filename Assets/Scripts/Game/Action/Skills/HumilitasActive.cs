@@ -10,11 +10,12 @@ using Game.Common;
 using Game.Effects.Traits;
 using System.Collections.Generic;
 using System.Linq;
+using Game.AI;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive: Action, ISkills, IPendingAble, System.IDisposable
+    public class HumilitasActive: Action, ISkills, IPendingAble, System.IDisposable, IAIAction
     {
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;

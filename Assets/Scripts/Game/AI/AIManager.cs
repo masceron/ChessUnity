@@ -54,10 +54,10 @@ namespace Game.AI
             if (globalBest == null) return;
 
             // Execute action: handle pending-able actions or normal actions
-            if (globalBest is Action.Internal.Pending.IPendingAble pending)
+            if (globalBest is IAIAction aiAction)
             {
                 // Complete pending immediately for AI (many skills implement CompleteAction)
-                pending.CompleteActionForAI();
+                aiAction.CompleteActionForAI();
             }
             else
             {

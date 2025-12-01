@@ -7,12 +7,13 @@ using static Game.Common.BoardUtils;
 using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.AI;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TimelessHourglassPending : Action, System.IDisposable, IPendingAble
+    public class TimelessHourglassPending : Action, System.IDisposable, IPendingAble, IAIAction
     {
         private TimelessHourglass _timelessHourglass;
         public TimelessHourglassPending(TimelessHourglass t, int maker, bool pos = false) : base(maker, pos)

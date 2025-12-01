@@ -1,11 +1,12 @@
 using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
+using Game.AI;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BarnacleActive: Action, ISkills
+    public class BarnacleActive: Action, ISkills, IAIAction
     {
         public BarnacleActive(int maker, int target) : base(maker)
         {
@@ -33,6 +34,11 @@ namespace Game.Action.Skills
             
             SetCooldown(Maker, -1);
             //SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
