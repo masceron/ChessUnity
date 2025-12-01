@@ -28,5 +28,8 @@ namespace Game.Relics
             BoardViewer.Selecting = -2;
             BoardViewer.SelectingFunction = 4;
         }
+
+        public override void ActiveForAI()
+        {}
     }
 }

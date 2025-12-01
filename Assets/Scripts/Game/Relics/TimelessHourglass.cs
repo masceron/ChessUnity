@@ -1,5 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
+using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
 
@@ -33,5 +37,48 @@ namespace Game.Relics
                 BoardViewer.SelectingFunction = 4;
             }
         }
+
+        public override void ActiveForAI()
+        {
+            // Gather all pieces
+            var pieces = MatchManager.Ins.GameState.PieceBoard
+                .Where(p => p != null)
+                .ToList();
+
+            if (pieces.Count == 0) return;
+
+            bool relicColor = this.Color;
+
+            // Candidates: allies with cooldown >= 2, enemies with cooldown == 1
+            var candidates = new List<PieceLogic>();
+            foreach (var piece in pieces)
+            {
+                if (piece.Color == relicColor)
+                {
+                    if (piece.SkillCooldown >= 2) candidates.Add(piece);
+                }
+                else
+                {
+                    if (piece.SkillCooldown == 1) candidates.Add(piece);
+                }
+            }
+
+            if (candidates.Count == 0) return;
+            
+            var bestScore = candidates.Max((p) => p.GetValueForAI());
+            var top = candidates.Where(p => p.GetValueForAI() == bestScore).ToList();
+            var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
+
+            var pending = new TimelessHourglassPending(this, chosen.Pos, chosen.Color);
+            if (pending is IPendingAble p)
+            {
+                p.CompleteAction();
+            }
+            else
+            {
+                BoardViewer.Ins.ExecuteAction(pending);
+            }
+        }
+    
     }
 }

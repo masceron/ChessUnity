@@ -4,12 +4,13 @@ using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.AI;
+using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class StormCapacitorPending : Action, IPendingAble, System.IDisposable, IAIAction
+    public class StormCapacitorPending : Action, IPendingAble, System.IDisposable, IRelicAction
     {
         private readonly Tile.Tile thisTile;
         
@@ -54,11 +55,6 @@ namespace Game.Action.Internal.Pending.Relic
         protected override void ModifyGameState()
         {
             throw new System.NotImplementedException();
-        }
-
-        public void CompleteActionForAI()
-        {
-            //Implement for AI automatically
         }
     }
 }

@@ -39,5 +39,8 @@ namespace Game.Relics
                 Debug.Log("Eye of Mimic is on cooldown for " + currentCooldown + " more turns.");
             }
         }
+
+        public override void ActiveForAI()
+        {}
     }
 }
