@@ -31,6 +31,12 @@ namespace Game.Managers
             _activeTileButton.onClick.AddListener(() => DestroyTile(rank, file));
         }*/
 
+        public Tile.Tile GetTile(int pos)
+        {
+            if (!BoardUtils.VerifyIndex(pos)) return null;
+            return tiles[pos];
+        }
+
         private void SelectionIndicator(int pos, Tile.Tile tile)
         {
             var sel = GameObject.CreatePrimitive(PrimitiveType.Cube);

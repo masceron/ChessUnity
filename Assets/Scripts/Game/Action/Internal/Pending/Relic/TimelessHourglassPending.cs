@@ -8,12 +8,13 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.AI;
+using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TimelessHourglassPending : Action, System.IDisposable, IPendingAble, IAIAction
+    public class TimelessHourglassPending : Action, System.IDisposable, IPendingAble, IRelicAction
     {
         private TimelessHourglass _timelessHourglass;
         public TimelessHourglassPending(TimelessHourglass t, int maker, bool pos = false) : base(maker, pos)
@@ -53,41 +54,41 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.SelectingFunction = 0;
         }
 
-        public void CompleteActionForAI()
-        {
-            if (_timelessHourglass == null) return;
+        // public void CompleteActionForAI()
+        // {
+        //     if (_timelessHourglass == null) return;
 
-            // Gather all pieces
-            var pieces = MatchManager.Ins.GameState.PieceBoard
-                .Where(p => p != null)
-                .ToList();
+        //     // Gather all pieces
+        //     var pieces = MatchManager.Ins.GameState.PieceBoard
+        //         .Where(p => p != null)
+        //         .ToList();
 
-            if (pieces.Count == 0) return;
+        //     if (pieces.Count == 0) return;
 
-            bool relicColor = _timelessHourglass.Color;
+        //     bool relicColor = _timelessHourglass.Color;
 
-            // Candidates: allies with cooldown >= 2, enemies with cooldown == 1
-            var candidates = new List<PieceLogic>();
-            foreach (var p in pieces)
-            {
-                if (p.Color == relicColor)
-                {
-                    if (p.SkillCooldown >= 2) candidates.Add(p);
-                }
-                else
-                {
-                    if (p.SkillCooldown == 1) candidates.Add(p);
-                }
-            }
+        //     // Candidates: allies with cooldown >= 2, enemies with cooldown == 1
+        //     var candidates = new List<PieceLogic>();
+        //     foreach (var p in pieces)
+        //     {
+        //         if (p.Color == relicColor)
+        //         {
+        //             if (p.SkillCooldown >= 2) candidates.Add(p);
+        //         }
+        //         else
+        //         {
+        //             if (p.SkillCooldown == 1) candidates.Add(p);
+        //         }
+        //     }
 
-            if (candidates.Count == 0) return;
+        //     if (candidates.Count == 0) return;
             
-            var bestScore = candidates.Max((p) => p.GetValueForAI());
-            var top = candidates.Where(p => p.GetValueForAI() == bestScore).ToList();
-            var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
+        //     var bestScore = candidates.Max((p) => p.GetValueForAI());
+        //     var top = candidates.Where(p => p.GetValueForAI() == bestScore).ToList();
+        //     var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
-            Target = (ushort)chosen.Pos;
-            ActionManager.DoManualAction(this);
-        }
+        //     Target = (ushort)chosen.Pos;
+        //     ActionManager.DoManualAction(this);
+        // }
     }
 }

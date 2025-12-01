@@ -1,4 +1,7 @@
-﻿namespace Game.Relics.Commons
+﻿using Game.Action;
+using Game.Relics.Commons;
+
+namespace Game.Relics.Commons
 {
     public abstract class RelicLogic
     {
@@ -24,6 +27,11 @@
         public void PassTurn()
         {
             if (currentCooldown > 0) currentCooldown--;
+        }
+
+        public virtual void ActiveForAI()
+        {
+            
         }
     }
 

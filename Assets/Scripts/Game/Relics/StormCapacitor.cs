@@ -59,5 +59,10 @@ namespace Game.Relics
             }
 
         }
+
+        public override void ActiveForAI()
+        {
+            
+        }
     }
 }
