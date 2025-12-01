@@ -25,5 +25,10 @@ namespace Game.Effects.Traits
             Debug.Log("[UndyingDevotion] Failed capture");
             ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(action.Target))));
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 150;
+        }
     }
 }

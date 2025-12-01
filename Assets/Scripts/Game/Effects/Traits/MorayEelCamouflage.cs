@@ -80,5 +80,9 @@ namespace Game.Effects.Traits
             ActionManager.EnqueueAction(new RemoveEffect(already));
             already = null;
         }
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 25;
+        }
     }
 }

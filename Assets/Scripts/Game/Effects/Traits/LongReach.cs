@@ -14,6 +14,11 @@ namespace Game.Effects.Traits{
         {
             Piece.AttackRange -= 2;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + Strength * 15 + Duration * 5;
+        }
     }
 }
 

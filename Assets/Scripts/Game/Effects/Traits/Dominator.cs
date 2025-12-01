@@ -16,5 +16,10 @@ namespace Game.Effects.Traits
             actions.RemoveAll(action =>
                 action is ICaptures && PieceOn(action.Maker).PieceRank <= PieceOn(action.Target).PieceRank);
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 50;
+        }
     }
 }

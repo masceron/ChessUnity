@@ -18,5 +18,10 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 0;
+        }
     }
 }

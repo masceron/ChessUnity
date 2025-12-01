@@ -38,5 +38,10 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 30;
+        }
     }
 }

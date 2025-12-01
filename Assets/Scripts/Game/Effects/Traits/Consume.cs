@@ -24,5 +24,10 @@ namespace Game.Effects.Traits
                 Piece.MoveRange.Add(AssetManager.Ins.PieceData[captured.Type].moveRange);
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() +20;
+        }
     }
 }
