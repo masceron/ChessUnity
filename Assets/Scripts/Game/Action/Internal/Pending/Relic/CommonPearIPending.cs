@@ -6,11 +6,12 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
+using Game.AI;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearlPending : Action, System.IDisposable, IPendingAble
+    public class CommonPearlPending : Action, System.IDisposable, IPendingAble, IAIAction
     {
         private CommonPearl commonPearl;
         

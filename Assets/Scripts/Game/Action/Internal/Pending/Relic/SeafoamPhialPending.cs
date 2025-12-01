@@ -10,11 +10,12 @@ using Game.Relics;
 using UX.UI.Ingame;
 using UnityEngine;
 using static Game.Common.BoardUtils;
+using Game.AI;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeafoamPhialPending : Action, IPendingAble, System.IDisposable
+    public class SeafoamPhialPending : Action, IPendingAble, System.IDisposable, IAIAction
     {
         private SeafoamPhial seafoamPhial;
 

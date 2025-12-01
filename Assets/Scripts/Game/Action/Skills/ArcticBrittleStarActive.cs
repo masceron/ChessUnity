@@ -3,10 +3,11 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
+using Game.AI;
 
 namespace Game.Action.Skills
 {
-    public class ArcticBrittleStarActive : Action, ISkills
+    public class ArcticBrittleStarActive : Action, ISkills, IAIAction
     {
         private Tile.Tile hoveringTile;
         public ArcticBrittleStarActive(int maker, int to) : base(maker)
@@ -22,6 +23,11 @@ namespace Game.Action.Skills
             FormationManager.Ins.SetFormation(Target, AnchorIce);
             
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

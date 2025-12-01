@@ -1,3 +1,4 @@
+using Game.AI;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -5,7 +6,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class GulperEelActive : Action, ISkills
+    public class GulperEelActive : Action, ISkills, IAIAction
     {
         public GulperEelActive(int maker, int target) : base(maker)
         {
@@ -20,6 +21,10 @@ namespace Game.Action.Skills
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
+
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
-

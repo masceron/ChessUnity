@@ -3,10 +3,11 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using System.Linq;
 using Game.Piece.PieceLogic.Commons;
+using Game.AI;
 
 namespace Game.Action.Skills
 {
-    public class HatchetfishActive : Action, ISkills
+    public class HatchetfishActive : Action, ISkills, IAIAction
     {
         public HatchetfishActive(int maker, int target) : base(maker)
         {
@@ -29,6 +30,10 @@ namespace Game.Action.Skills
 
             BoardUtils.SetCooldown(Maker, ((IPieceWithSkill)BoardUtils.PieceOn(Maker)).TimeToCooldown);
         }
+
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
-

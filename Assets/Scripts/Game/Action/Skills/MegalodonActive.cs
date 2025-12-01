@@ -6,11 +6,12 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
+using Game.AI;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MegalodonActive: Action, ISkills, IPendingAble, IDisposable
+    public class MegalodonActive: Action, ISkills, IPendingAble, IDisposable, IAIAction
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
