@@ -7,5 +7,11 @@ namespace Game.Effects.Debuffs
     {
         public Stunned(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_stunned")
         {}
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
+        }
+
     }
 }

@@ -23,5 +23,10 @@ namespace Game.Effects.Debuffs
         {
             Piece.AttackRange = lastAttackRange;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 30;
+        }
     }
 }

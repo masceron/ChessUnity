@@ -26,5 +26,10 @@ namespace Game.Effects.Others
             ActionManager.EnqueueAction(new ApplyEffect(new Infected(maker)));
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, maker)));
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
+        }
     }
 }

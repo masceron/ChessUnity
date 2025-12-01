@@ -37,5 +37,11 @@ namespace Game.Effects.Debuffs
                 ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(pOn)));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 200;
+        }
+    
     }
 }

@@ -22,5 +22,10 @@ namespace Game.Effects.Debuffs
             ActionManager.ExecuteImmediately(new NormalMove(Piece.Pos, push));
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, Piece)));
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 30;
+        }
     }
 }

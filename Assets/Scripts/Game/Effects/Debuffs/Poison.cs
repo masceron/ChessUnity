@@ -25,5 +25,11 @@ namespace Game.Effects.Debuffs
         }
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 80 - Strength * 10;
+        }
+    
     }
 }

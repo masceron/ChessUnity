@@ -25,5 +25,10 @@ namespace Game.Effects.Others
 
         public EndTurnEffectType EndTurnEffectType { get; }
 
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 90;
+        }
+    
     }
 }

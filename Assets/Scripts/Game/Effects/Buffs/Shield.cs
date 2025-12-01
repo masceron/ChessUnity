@@ -22,5 +22,10 @@ namespace Game.Effects.Buffs
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 30;
+        }
     }
 }
