@@ -36,13 +36,15 @@ namespace Game.Action.Skills
                 var pOn = PieceOn(index);
                 if (pOn == null || pOn.Pos == Maker || pOn.PieceRank != PieceRank.Swarm 
                     || pOn.Color == PieceOn(Maker).Color) continue;
-                if (pOn.GetValueForAI() > maxPoint)
+                
+                int AIValue = pOn.GetValueForAI();
+                if (AIValue > maxPoint)
                 {
                     bestPieces.Clear();
                     bestPieces.Add(pOn);
-                    maxPoint = pOn.GetValueForAI();
+                    maxPoint = AIValue;
                 }
-                else if (pOn.GetValueForAI() == maxPoint) bestPieces.Add(pOn);
+                else if (AIValue == maxPoint) bestPieces.Add(pOn);
             }
 
             if (bestPieces.Count == 0)
