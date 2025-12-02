@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
@@ -38,7 +41,101 @@ namespace Game.Relics
                 Debug.Log("Eye of Mimic is on cooldown for " + currentCooldown + " more turns.");
             }
         }
+
         public override void ActiveForAI()
-        {}
+        {
+            List<PieceLogic> ourPieces = new List<PieceLogic>();
+            List<PieceLogic> enemyPieces = new List<PieceLogic>();
+            
+            PieceLogic ourPiece = null;
+            PieceLogic enemyPiece = null;
+            
+            int minMoveset = int.MaxValue;
+            int maxMoveset = int.MinValue;
+            
+            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            {
+                if (piece == null) continue;
+                int ourIndex = 0;
+                int enemyIndex = 0;
+                if (piece.Color == MatchManager.Ins.GameState.OurSide)
+                {
+                    int pieceMoveset = piece.GetMoveRange(ref ourIndex);
+                    if (pieceMoveset < minMoveset)
+                    {
+                        minMoveset = pieceMoveset;
+                        ourPieces.Clear();
+                        ourPieces.Add(piece);
+                    }
+                    else if (pieceMoveset == minMoveset)
+                    {
+                        ourPieces.Add(piece);
+                    }
+                }
+                else
+                {
+                    int pieceMoveset = piece.GetMoveRange(ref enemyIndex);
+                    if (pieceMoveset > maxMoveset)
+                    {
+                        maxMoveset = pieceMoveset;
+                        enemyPieces.Clear();
+                        enemyPieces.Add(piece);
+                    }
+                    else if (pieceMoveset == maxMoveset)
+                    {
+                        enemyPieces.Add(piece);
+                    }
+                }
+            }
+
+            if (ourPieces.Count == 0)
+            {
+                //
+            }
+            else if (ourPieces.Count == 1)
+            {
+                ourPiece = ourPieces[0];
+            }
+            else
+            {
+                ourPiece = ourPieces[Random.Range(0, ourPieces.Count)];
+            }
+
+            if (enemyPieces.Count == 0)
+            {
+                //
+            }
+            else if (enemyPieces.Count == 1)
+            {
+                enemyPiece = enemyPieces[0];
+            }
+            else
+            {
+                enemyPiece = enemyPieces[Random.Range(0, enemyPieces.Count)];
+            }
+
+            if (ourPiece != null && enemyPiece != null)
+            {
+                var ourPending = new EyeOfMimicPending(this, ourPiece.Pos, ourPiece.Color);
+                if (ourPending is IPendingAble op)
+                {
+                    op.CompleteAction();
+                }
+                else
+                {
+                    BoardViewer.Ins.ExecuteAction(ourPending);
+                }
+                
+                var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos, enemyPiece.Color);
+                if (ourPending is IPendingAble ep)
+                {
+                    ep.CompleteAction();
+                }
+                else
+                {
+                    BoardViewer.Ins.ExecuteAction(enemyPending);
+                }
+            }
+        }
     }
 }
