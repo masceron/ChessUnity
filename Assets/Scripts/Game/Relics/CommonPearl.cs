@@ -39,6 +39,7 @@ namespace Game.Relics
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
             var listPieces = allPieces.Where(p => p != null && p.Color == this.Color).ToList();
             int minBuff = int.MaxValue;
+            int minValue = int.MaxValue;
             foreach (var piece in listPieces)
             {
                 int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile");
@@ -46,8 +47,13 @@ namespace Game.Relics
                 {
                     minBuff = coutBuff;
                 }
+                if (piece.GetValueForAI() < minValue)
+                {
+                    minValue = piece.GetValueForAI();
+                }
             }
-            var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
+            var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff && p.GetValueForAI() == minValue).ToList();
+            if (bestPiece.Count == 0) return;
             var random = new System.Random();
             var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
 

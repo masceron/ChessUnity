@@ -3,6 +3,11 @@ using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
+using System.Linq;
+using Game.Effects;
+using Game.Action.Internal.Pending;
+using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Relics
 {
@@ -30,6 +35,38 @@ namespace Game.Relics
         }
 
         public override void ActiveForAI()
-        {}
+        {
+            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var listPiecesA = allPieces.Where(p => p != null && p.Color == this.Color).ToList();
+            var listPiecesB = allPieces.Where(p => p != null && p.Color != this.Color).ToList();
+
+            if (listPiecesA.Count == 0 || listPiecesB.Count == 0) return;
+            int minBuffA = listPiecesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile"));
+            int minValueA = listPiecesA.Min(p => p.GetValueForAI());
+
+            int maxValueB = listPiecesB.Max(p => p.GetValueForAI());
+
+            var bestPiecesA = listPiecesA.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA && p.GetValueForAI() == minValueA).ToList();
+            var bestPiecesB = listPiecesB.Where(p => p.GetValueForAI() == maxValueB &&
+                                                 p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5 &&
+                                                  !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+
+            PieceLogic selectedPiece = null;
+            if (bestPiecesB.Count != 0) {
+                var random = new System.Random();
+                selectedPiece = bestPiecesB[random.Next(bestPiecesB.Count)];
+            } else if (bestPiecesA.Count != 0) {
+                var random = new System.Random();
+                selectedPiece = bestPiecesA[random.Next(bestPiecesA.Count)];
+            } else {
+                return;
+            }
+            if (selectedPiece == null) return;
+            var pending = new BlackPearlPending(this, selectedPiece.Pos);
+            if (pending is IPendingAble p)
+            {
+                p.CompleteAction();
+            }
+        }
     }
 }
