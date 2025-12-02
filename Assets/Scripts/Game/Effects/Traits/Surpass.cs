@@ -7,5 +7,10 @@ namespace Game.Effects.Traits
     {
         public Surpass(PieceLogic piece) : base(-1, 1, piece, "effect_surpass")
         {}
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace Game.Movesets
             }
         }
 
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
@@ -61,7 +61,7 @@ namespace Game.Movesets
                 MakeCapture(rank - i, file - i);
             }
 
-            return;
+            return 15 + 5 * effectiveMoveRange;
 
             void MakeCapture(int tRank, int tFile)
             {

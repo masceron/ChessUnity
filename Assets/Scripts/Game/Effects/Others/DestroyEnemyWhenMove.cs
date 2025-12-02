@@ -37,5 +37,10 @@ namespace Game.Effects.Others
                 ActionManager.EnqueueAction(new KillPiece(target.Pos));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 130;
+        }
     }
 }

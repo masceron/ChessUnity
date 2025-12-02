@@ -37,6 +37,11 @@ namespace Game.Tile
         {
             return FormationType.BubbleVent;
         }
+
+        public override int GetValueForAI()
+        {
+            return -10;
+        }
     }
 
 

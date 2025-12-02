@@ -46,5 +46,10 @@ namespace Game.Effects.Others
 
             MatchManager.Ins.InputProcessor.UpdateRelic();
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 0;
+        }
     }
 }

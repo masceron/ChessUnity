@@ -25,5 +25,10 @@ namespace Game.Tile
             base.OnPieceExit(piece);
             ActionManager.ExecuteImmediately(new RemoveEffect(appliedEffect));
         }
+
+        public override int GetValueForAI()
+        {
+            return 40;
+        }
     }
 }

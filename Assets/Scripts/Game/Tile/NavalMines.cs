@@ -44,5 +44,10 @@ namespace Game.Tile
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn)));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return -150;
+        }
     }
 }

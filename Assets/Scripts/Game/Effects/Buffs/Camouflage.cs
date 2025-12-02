@@ -16,5 +16,10 @@ namespace Game.Effects.Buffs
             
             actions.RemoveAll(a => BoardUtils.Distance(a.Maker, Piece.Pos) >= 3 && a.Target == Piece.Pos);
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 10;
+        }
     }
 }

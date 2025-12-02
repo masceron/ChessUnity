@@ -7,7 +7,7 @@ namespace Game.Movesets
 {
     public class MegalodonMoves
     {
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var caller = PieceOn(pos);
             var color = caller.Color;
@@ -33,7 +33,8 @@ namespace Game.Movesets
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
-                
+
+            return 10 + 10 * range;
         }
     }
     

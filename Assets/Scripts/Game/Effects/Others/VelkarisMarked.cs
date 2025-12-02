@@ -7,6 +7,9 @@ namespace Game.Effects.Others
     {
         public VelkarisMarked(PieceLogic piece) : base(-1, 1, piece, "effect_velkaris_marked")
         {}
-        
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 80;
+        }
     }
 }

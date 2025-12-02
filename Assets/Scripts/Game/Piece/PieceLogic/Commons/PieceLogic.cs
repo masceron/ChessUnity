@@ -286,6 +286,11 @@ namespace Game.Piece.PieceLogic.Commons
             return value;
         }
 
+        public int GetCapturesValue()
+        {
+            return Captures(new List<Action.Action>(), Pos);
+        }
+
         private int RankToValue(PieceRank rank)
         {
             switch (rank)

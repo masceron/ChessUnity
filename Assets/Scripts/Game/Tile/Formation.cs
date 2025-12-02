@@ -79,5 +79,7 @@ namespace Game.Tile
             ActionManager.EnqueueAction(new ApplyEffect(effect));
             return true;
         }
+
+        public virtual int GetValueForAI(){return 0;}
     }
 }

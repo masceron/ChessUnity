@@ -19,5 +19,10 @@ namespace Game.Effects.Traits
             
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 100;
+        }
     }
 }

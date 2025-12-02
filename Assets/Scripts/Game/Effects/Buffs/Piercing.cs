@@ -13,5 +13,10 @@ namespace Game.Effects.Buffs
         {
             if (action != null && action.Maker == Piece.Pos) action.Flag |= ActionFlag.Unblockable;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 30;
+        }
     }
 }

@@ -26,5 +26,9 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new ApplyEffect(new Relentless(BoardUtils.PieceOn(action.Maker), 1)));
             }
         }
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
+        }
     }
 }

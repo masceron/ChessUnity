@@ -268,11 +268,12 @@ namespace Game.Movesets
             return 40 + 5 * moveRange;
         }
 
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var attackRange = PieceOn(pos).AttackRange;
             var basePattern = new HashSet<int>(new AmbushPredatorMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
+            return 40 + 5 * attackRange;
         }
 
     }

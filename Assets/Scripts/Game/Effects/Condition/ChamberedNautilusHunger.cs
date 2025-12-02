@@ -17,5 +17,11 @@ namespace Game.Effects.Condition
             if (action is not { Succeed: true }) return;
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(Piece)));
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 25;
+        }
+
     }
 }

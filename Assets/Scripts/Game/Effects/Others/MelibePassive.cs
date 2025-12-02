@@ -32,5 +32,10 @@ namespace Game.Effects.Others
                 ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(pieceOnRight)));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 30;
+        }
     }
 }

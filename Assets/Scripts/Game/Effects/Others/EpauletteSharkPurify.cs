@@ -22,5 +22,10 @@ namespace Game.Effects.Others
             }
             yesterdayIsDay = MatchManager.Ins.GameState.IsDay;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 30;
+        }
     }
 }

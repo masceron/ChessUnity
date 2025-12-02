@@ -7,23 +7,28 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SwordfishAttack: Effect
+    public class SwordfishAttack : Effect
     {
         public SwordfishAttack(PieceLogic piece) : base(-1, 1, piece, "effect_swordfish_capture")
-        {}
+        { }
 
         public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos || !action.Succeed) return;
-            
+
             var behind = !Piece.Color ? PushWhite(action.Target) : PushBlack(action.Target);
             if (!VerifyIndex(behind)) return;
-            
+
             var pieceBehind = PieceOn(behind);
             if (pieceBehind != null && pieceBehind.Color != Piece.Color)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieceBehind)));
             }
+        }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 80;
         }
     }
 }

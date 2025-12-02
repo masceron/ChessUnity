@@ -36,6 +36,11 @@ namespace Game.Tile
         {
             base.OnFirstTurn(piece);
         }
+
+        public override int GetValueForAI()
+        {
+            return -40;
+        }
     }
 }
 

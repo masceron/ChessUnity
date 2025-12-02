@@ -38,5 +38,10 @@ namespace Game.Tile
         {
             return FormationType.FogOfWar;
         }
+
+        public override int GetValueForAI()
+        {
+            return 20;
+        }
     }
 }

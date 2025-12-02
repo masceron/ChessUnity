@@ -31,5 +31,11 @@ namespace Game.Effects.Debuffs
                 action.Succeed = false;
             }
         }
+        
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 20;
+        }
+    
     }
 }

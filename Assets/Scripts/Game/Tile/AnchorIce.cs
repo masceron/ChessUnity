@@ -31,5 +31,9 @@ namespace Game.Tile{
             }
             stack++;
         }
+        public override int GetValueForAI()
+        {
+            return -50;
+        }
     }
 }

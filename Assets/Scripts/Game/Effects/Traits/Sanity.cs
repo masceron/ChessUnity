@@ -28,6 +28,11 @@ namespace Game.Effects.Traits
                 applyEffect.Succeed = false;
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 40;
+        }
     }
 }
 
