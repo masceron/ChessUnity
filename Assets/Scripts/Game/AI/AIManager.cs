@@ -23,6 +23,7 @@ namespace Game.AI
 
             if (relic != null && relic.currentCooldown == 0)
             {
+                Debug.Log("Use relic " + relic.type);
                 relic.ActiveForAI();
             }
 

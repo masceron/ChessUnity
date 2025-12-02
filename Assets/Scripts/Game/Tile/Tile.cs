@@ -71,6 +71,7 @@ namespace Game.Tile
 
         public int GetTileValue()
         {
+            if (tileEffect == null) return 0;
             return tileEffect.GetValueForAI();
         }
     }

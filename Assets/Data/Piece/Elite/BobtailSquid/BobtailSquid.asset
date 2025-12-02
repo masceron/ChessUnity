@@ -23,7 +23,7 @@ MonoBehaviour:
   normalSkillCooldown: 5
   availableSlots: 0
   logicClassName: BobtailSquid
-  baseValue: 50
+  baseValue: 0
   considerations:
   - Consideration: {fileID: 11400000, guid: 722d004ca396ee1419bc4c2a7bb2d467, type: 2}
     Weight: -20
