@@ -1,6 +1,9 @@
 ﻿
+using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.AI;
+using Game.Common;
+using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
@@ -21,7 +24,45 @@ namespace Game.Action.Skills
         
         public void CompleteActionForAI()
         {
-            throw new System.NotImplementedException();
+            List<PieceLogic> bestPieces = new List<PieceLogic>();
+            PieceLogic bestPiece = null;
+            int maxPoint = int.MinValue;
+            
+            var (rank, file) = RankFileOf(Maker);
+
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+            {
+                var index = IndexOf(rankOff, fileOff);
+                var pOn = PieceOn(index);
+                if (pOn == null || pOn.Pos == Maker || pOn.PieceRank != PieceRank.Swarm 
+                    || pOn.Color == PieceOn(Maker).Color) continue;
+                if (pOn.GetValueForAI() > maxPoint)
+                {
+                    bestPieces.Clear();
+                    bestPieces.Add(pOn);
+                    maxPoint = pOn.GetValueForAI();
+                }
+                else if (pOn.GetValueForAI() == maxPoint) bestPieces.Add(pOn);
+            }
+
+            if (bestPieces.Count == 0)
+            {
+                //
+            }
+            else if (bestPieces.Count == 1)
+            {
+                bestPiece = bestPieces[0];
+            }
+            else
+            {
+                bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+            }
+
+            if (bestPiece != null)
+            {
+                ActionManager.EnqueueAction(new KillPiece(bestPiece.Pos));
+                SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            }
         }   
     }
 }
