@@ -41,7 +41,7 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color == PieceOn(Maker).Color).ToList();
+            var listPieces = allPieces.Where(p => p != null && p.Color != PieceOn(Maker).Color).ToList();
 
             if (listPieces.Count == 0) return;
             int maxValue = listPieces.Max(p => p.GetValueForAI());
