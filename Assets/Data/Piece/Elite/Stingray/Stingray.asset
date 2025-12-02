@@ -20,6 +20,8 @@ MonoBehaviour:
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 1
-  normalSkillCooldown: 0
+  normalSkillCooldown: 4
   availableSlots: 0
   logicClassName: Stingray
+  baseValue: 0
+  considerations: []
