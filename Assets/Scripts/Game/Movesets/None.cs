@@ -10,8 +10,9 @@ namespace Game.Movesets
             return 0;
         }
 
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
+            return 0;
         }
 
         public static void Skills(List<Action.Action> list)

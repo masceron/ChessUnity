@@ -42,11 +42,12 @@ namespace Game.Movesets
             return 20 + 5 * moveRange;
         }
 
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var attackRange = PieceOn(pos).AttackRange;
             var basePattern = new HashSet<int>(new UpDoorMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
+            return 20 + 5 * attackRange;
         }
 
         public override List<int> GenerateBaseMovePattern(int makerPos)

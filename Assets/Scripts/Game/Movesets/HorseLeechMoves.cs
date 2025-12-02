@@ -8,7 +8,7 @@ namespace Game.Movesets
 {
     public static class HorseLeechMoves
     {
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
@@ -31,6 +31,7 @@ namespace Game.Movesets
                 
                 list.Add(new HorseLeechAttack(pos, index));
             }
+            return 10 + 10 * attackRange;
         }
     }
 
