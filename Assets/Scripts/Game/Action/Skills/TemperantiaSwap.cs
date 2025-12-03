@@ -80,7 +80,6 @@ namespace Game.Action.Skills
             }
 
             enemyIndex = Target;
-            Debug.Log("ExecuteAction");
             BoardViewer.Ins.ExecuteAction(this);
             allyIndex = -1;
             enemyIndex = -1;
