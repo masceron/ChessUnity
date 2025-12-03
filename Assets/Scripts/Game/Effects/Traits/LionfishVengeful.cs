@@ -21,5 +21,10 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(3, BoardUtils.PieceOn(action.Maker))));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
+        }
     }
 }

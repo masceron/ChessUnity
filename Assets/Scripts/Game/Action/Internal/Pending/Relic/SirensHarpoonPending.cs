@@ -6,12 +6,14 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
+using Game.AI;
+using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class SirensHarpoonPending : Action, IPendingAble, System.IDisposable
+    public class SirensHarpoonPending : Action, IPendingAble, System.IDisposable, IRelicAction
     {
         private SirensHarpoon _sirensHarpoon;
 
@@ -48,47 +50,47 @@ namespace Game.Action.Internal.Pending.Relic
 
         }
 
-        public void CompleteActionForAI()
-        {
-            //Implement for AI automatically
-            var listPieces = new List<PieceLogic>();
+        // public void CompleteActionForAI()
+        // {
+        //     //Implement for AI automatically
+        //     var listPieces = new List<PieceLogic>();
 
-            for (var i = 0; i < BoardUtils.BoardSize; ++i)
-            {
-                var piece = BoardUtils.PieceOn(i);
-                if (piece == null || piece.Color == _sirensHarpoon.Color) continue;
+        //     for (var i = 0; i < BoardUtils.BoardSize; ++i)
+        //     {
+        //         var piece = BoardUtils.PieceOn(i);
+        //         if (piece == null || piece.Color == _sirensHarpoon.Color) continue;
 
-                if (piece.Effects.Any(e => (
-                        e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity"))
-                   ) continue;
+        //         if (piece.Effects.Any(e => (
+        //                 e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity"))
+        //            ) continue;
 
-                listPieces.Add(piece);
-            }
+        //         listPieces.Add(piece);
+        //     }
 
-            if (listPieces.Count == 0) return;
+        //     if (listPieces.Count == 0) return;
 
-            if (listPieces.Count == 1)
-            {
-                ActivateRelic(listPieces[0].Pos);
-                return;
-            }
+        //     if (listPieces.Count == 1)
+        //     {
+        //         ActivateRelic(listPieces[0].Pos);
+        //         return;
+        //     }
             
-            listPieces.Sort((a, b) => 
-                b.GetValueForAI().CompareTo(a.GetValueForAI())
-            );
+        //     listPieces.Sort((a, b) => 
+        //         b.GetValueForAI().CompareTo(a.GetValueForAI())
+        //     );
             
-            int topValue = listPieces[0].GetValueForAI();
-            var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
+        //     int topValue = listPieces[0].GetValueForAI();
+        //     var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
             
-            if (topGroup.Count == 1)
-            {
-                ActivateRelic(topGroup[0].Pos);
-            }
-            else
-            {
-                int idx = UnityEngine.Random.Range(0, topGroup.Count);
-                ActivateRelic(topGroup[idx].Pos);
-            }
-        }
+        //     if (topGroup.Count == 1)
+        //     {
+        //         ActivateRelic(topGroup[0].Pos);
+        //     }
+        //     else
+        //     {
+        //         int idx = UnityEngine.Random.Range(0, topGroup.Count);
+        //         ActivateRelic(topGroup[idx].Pos);
+        //     }
+        // }
     }
 }

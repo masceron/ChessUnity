@@ -36,5 +36,10 @@ namespace Game.Effects.Others
             }
             return baseRange;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 40;
+        }
     }
 }

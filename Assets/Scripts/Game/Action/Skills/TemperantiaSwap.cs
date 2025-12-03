@@ -8,11 +8,12 @@ using UnityEngine;
 using Game.Managers;
 using Game.Piece.PieceLogic;
 using System.Linq; // <-- thêm để dùng LINQ
+using Game.AI;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaSwap : Action, IPendingAble, ISkills
+    public class TemperantiaSwap : Action, IPendingAble, ISkills, IAIAction
     {
         private static int allyIndex = -1;
         private static int enemyIndex = -1; // -1 nếu chưa chọn enemy

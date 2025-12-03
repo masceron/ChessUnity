@@ -3,16 +3,19 @@ using Game.Action.Quiets;
 using UnityEngine;
 using Game.Piece.PieceLogic.Commons;
 using Game.Common;
+using Game.Managers;
+using Game.Action.Captures;
+using Game.Action.Skills;
 
 namespace Game.AI.Consider
 {
     [CreateAssetMenu(menuName = "AI/Considerations/Cooperative")]
     public class CooperativeConsiderationSO : ConsiderationSO
     {
+        private const int threatenedTilePenalty = 10;
         public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight, PieceLogic maker)
         {
-            if (action == null) return 0f;
-            if (action is not IQuiets) return 0;
+            if (action == null || action is not IQuiets) return 0f;
 
             float scaleValue = 1f;
             
@@ -36,7 +39,13 @@ namespace Game.AI.Consider
                     }
                 }
             }
-            return scaleValue * weight;
+
+            int value = Mathf.FloorToInt(scaleValue * weight + TileManager.Ins.GetTileValue(action.Target));
+            foreach (var ea in enemyActions)
+            {
+                if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;
+            }
+            return value;
         }
     }
 }

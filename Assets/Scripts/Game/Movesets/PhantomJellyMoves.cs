@@ -14,11 +14,12 @@ namespace Game.Movesets
         
         }
     
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
+            var range = caller.AttackRange;
 
             var color = caller.Color;
             //var attackRange = caller.AttackRange;
@@ -42,7 +43,7 @@ namespace Game.Movesets
                 }
             }
 
-            return;
+            return 30 + 5 * range;
             
             void MakeCapture(int rankOff, int fileOff)
             {

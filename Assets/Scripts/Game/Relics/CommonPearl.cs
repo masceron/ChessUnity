@@ -1,4 +1,7 @@
-﻿using Game.Action.Internal.Pending.Relic;
+﻿using System.Linq;
+using Game.Action.Internal.Pending;
+using Game.Action.Internal.Pending.Relic;
+using Game.Effects;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
@@ -6,7 +9,7 @@ using UX.UI.Ingame;
 namespace Game.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearl: RelicLogic
+    public class CommonPearl : RelicLogic
     {
         public CommonPearl(RelicConfig cfg) : base(cfg)
         {
@@ -22,11 +25,39 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                        var pending = new CommonPearlPending(this, piece.Pos);
+                    var pending = new CommonPearlPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
-                } 
+                }
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
+            }
+        }
+
+        public override void ActiveForAI()
+        {
+            UnityEngine.Debug.Log("CompleteActionForAI");
+            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var listPieces = allPieces.Where(p => p != null && p.Color == this.Color).ToList();
+            int minBuff = int.MaxValue;
+            foreach (var piece in listPieces)
+            {
+                int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile");
+                if (coutBuff < minBuff)
+                {
+                    minBuff = coutBuff;
+                }
+            }
+            var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
+            var random = new System.Random();
+            var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
+
+            var pending = new CommonPearlPending(this, selectedPiece.Pos);
+            if (pending is IPendingAble p)
+            {
+                p.CompleteAction();
+            } else
+            {
+                BoardViewer.Ins.ExecuteAction(pending);
             }
         }
     }

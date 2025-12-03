@@ -5,7 +5,5 @@
     public interface IPendingAble
     {
         public void CompleteAction();
-
-        public void CompleteActionForAI();
     }
 }

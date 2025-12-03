@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿﻿using System.Linq;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
+using Game.AI;
 
 namespace Game.Action.Skills
 {
-    public class SloaneSViperfishActive : Action, ISkills
+    public class SloaneSViperfishActive : Action, ISkills, IAIAction
     {
         public SloaneSViperfishActive(int maker) : base(maker)
         {
@@ -37,6 +38,11 @@ namespace Game.Action.Skills
                         : new ApplyEffect(new Bleeding(5, p)));
                 }
             }
+        }
+
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

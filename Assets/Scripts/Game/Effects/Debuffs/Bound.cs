@@ -7,5 +7,9 @@ namespace Game.Effects.Debuffs
     {
         public Bound(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_bound")
         {}
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 10;
+        }
     }
 }

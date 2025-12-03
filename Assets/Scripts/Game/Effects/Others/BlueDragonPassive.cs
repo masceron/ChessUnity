@@ -17,5 +17,10 @@ namespace Game.Effects.Others
                 ActionManager.ExecuteImmediately(new Purify(Piece.Pos, Piece.Pos));
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 10;
+        }
     }
 }

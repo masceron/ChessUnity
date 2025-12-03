@@ -18,5 +18,10 @@ namespace Game.Effects.Traits
             
             action.Target = Piece.Pos;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 100;
+        }
     }
 }

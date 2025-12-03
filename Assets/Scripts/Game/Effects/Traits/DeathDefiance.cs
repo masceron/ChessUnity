@@ -40,5 +40,10 @@ namespace Game.Effects.Traits
 			ui.Load(Piece.Pos);
 			deathDefianceCount--;
 		}
+
+		public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 80;
+        }
 	}
 }

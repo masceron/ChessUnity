@@ -9,7 +9,10 @@ namespace Game.Effects.Traits
         {
             
         }
-
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 20;
+        }
         
     }
 }

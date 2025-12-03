@@ -26,5 +26,10 @@ namespace Game.Effects.Debuffs
         {
             Piece.Color = initSide;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 0;
+        }
     }
 }

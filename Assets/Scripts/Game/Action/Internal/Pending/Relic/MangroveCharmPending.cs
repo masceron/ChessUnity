@@ -4,12 +4,14 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
+using Game.AI;
+using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class MangroveCharmPending : Action, IPendingAble, System.IDisposable
+    public class MangroveCharmPending : Action, IPendingAble, System.IDisposable, IRelicAction
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
@@ -63,10 +65,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
         }
 
-        public void CompleteActionForAI()
-        {
-            //Implement for AI automatically
-        }
     }
 
 }

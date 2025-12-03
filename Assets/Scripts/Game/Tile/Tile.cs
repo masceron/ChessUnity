@@ -68,5 +68,11 @@ namespace Game.Tile
             if (MatchManager.Ins.InputProcessor) 
                 MatchManager.Ins.InputProcessor.Hover(-1);
         }
+
+        public int GetTileValue()
+        {
+            if (tileEffect == null) return 0;
+            return tileEffect.GetValueForAI();
+        }
     }
 }

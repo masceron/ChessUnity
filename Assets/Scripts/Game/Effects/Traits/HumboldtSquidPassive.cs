@@ -28,7 +28,7 @@ namespace Game.Effects.Traits
                 {
                     ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target)));
                 }
-                
+
             }
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
@@ -43,6 +43,11 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new ApplyEffect(new Frenzied(Piece)));
                 count = 0;
             }
+        }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 30;
         }
     }
 }

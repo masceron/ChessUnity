@@ -44,5 +44,10 @@ namespace Game.Effects.Traits
             
             action.Succeed = false;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 2 * Probability;
+        }
     }
 }

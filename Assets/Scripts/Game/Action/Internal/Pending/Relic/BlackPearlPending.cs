@@ -6,11 +6,14 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UnityEngine;
 using UX.UI.Ingame;
+using Game.AI;
+using Game.Action.Relics;
+
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackPearlPending : Action, System.IDisposable, IPendingAble
+    public class BlackPearlPending : Action, System.IDisposable, IPendingAble, IRelicAction
     {
         private BlackPearl blackPearl;
         
@@ -95,11 +98,6 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void ModifyGameState()
         {
-        }
-
-        public void CompleteActionForAI()
-        {
-            //Implement for AI automatically
         }
     }
 }

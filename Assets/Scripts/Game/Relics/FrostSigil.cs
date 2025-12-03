@@ -6,6 +6,9 @@ using Game.Managers;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
+using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
+using Game.Action.Internal.Pending;
 
 namespace Game.Relics
 {
@@ -35,9 +38,9 @@ namespace Game.Relics
 
                     hoveringTile = thisTile;
                     TileManager.Ins.MarkTileInRange(hoveringTile, 3, isMark: true, onlyMarkEnemy: false);
-                    
+
                     var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    var pending = new FrostSigilPending(pos ,hoveringTile, this);
+                    var pending = new FrostSigilPending(pos, hoveringTile, this);
 
                     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
                     {
@@ -48,6 +51,55 @@ namespace Game.Relics
             else
             {
                 Debug.Log("Frost Sigil is on cooldown for " + currentCooldown + "more turn");
+            }
+        }
+
+        public override void ActiveForAI()
+        {
+            var bestAreas = new List<(int rank, int file, List<PieceLogic> enemies)>();
+            int maxEnemyCount = 0;
+
+            for (int rank = 1; rank < BoardUtils.MaxLength; rank++)
+            {
+                for (int file = 1; file < BoardUtils.MaxLength; file++)
+                {
+                    var enemies = BoardUtils.GetPiecesInRadius(
+                        rank,
+                        file,
+                        3,
+                        piece => piece.Color != MatchManager.Ins.GameState.OurSide);
+
+                    int count = enemies.Count;
+
+                    if (count > maxEnemyCount)
+                    {
+                        bestAreas.Clear();
+                        bestAreas.Add((rank, file, enemies));
+                        maxEnemyCount = count;
+                    }
+                    else if (count == maxEnemyCount && count > 0)
+                    {
+                        bestAreas.Add((rank, file, enemies));
+                    }
+                }
+            }
+            if (bestAreas.Count == 0)
+            {
+                Debug.Log("No enemies found");
+                return;  
+            } 
+
+            var bestArea = bestAreas[Random.Range(0, bestAreas.Count)];
+            var pos = BoardUtils.IndexOf(bestArea.rank, bestArea.file);
+            var hoveringTile = TileManager.Ins.GetTile(pos);
+
+            var pending = new FrostSigilPending(pos, hoveringTile, this);
+            if (pending is IPendingAble p)
+            {
+                p.CompleteAction();
+            } else
+            {
+                BoardViewer.Ins.ExecuteAction(pending);
             }
         }
     }

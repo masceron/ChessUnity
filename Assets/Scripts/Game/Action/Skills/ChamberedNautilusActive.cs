@@ -1,4 +1,5 @@
 ﻿using Game.Action.Internal;
+using Game.AI;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -6,7 +7,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChamberedNautilusActive : Action, ISkills
+    public class ChamberedNautilusActive : Action, ISkills, IAIAction
     {
         public ChamberedNautilusActive(int maker, int target) : base(maker)
         {
@@ -18,6 +19,11 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, PieceOn(Target))));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+
+        public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

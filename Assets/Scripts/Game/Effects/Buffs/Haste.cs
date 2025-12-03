@@ -11,5 +11,10 @@ namespace Game.Effects.Buffs
         {
             return baseRange + Strength;
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + Strength * 15 + Duration * 5;
+        }
     }
 }

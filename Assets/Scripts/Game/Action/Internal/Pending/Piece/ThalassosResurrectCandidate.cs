@@ -7,11 +7,12 @@ using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.ThalassosResurrector;
 using static Game.Common.BoardUtils;
+using Game.AI;
 
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosResurrectCandidate: Action, IPendingAble, IInternal, ISkills
+    public class ThalassosResurrectCandidate: Action, IPendingAble, IInternal, ISkills, IAIAction
     {
         public ThalassosResurrectCandidate(int maker, int pos) : base(maker)
         {

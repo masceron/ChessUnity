@@ -72,7 +72,7 @@ namespace Game.Movesets
             }
         }
 
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
@@ -120,7 +120,7 @@ namespace Game.Movesets
                 if (!MakeCapture(IndexOf(rankOff, fileOff))) break;
             }
             
-            return;
+            return 15 + 5 * moveRange;
 
             bool MakeCapture(int index)
             {

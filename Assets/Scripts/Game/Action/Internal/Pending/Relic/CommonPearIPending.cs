@@ -6,11 +6,13 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
+using Game.AI;
+using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearlPending : Action, System.IDisposable, IPendingAble
+    public class CommonPearlPending : Action, System.IDisposable, IPendingAble, IRelicAction
     {
         private CommonPearl commonPearl;
         
@@ -73,28 +75,28 @@ namespace Game.Action.Internal.Pending.Relic
 
 
 
-        public void CompleteActionForAI()
-        {
-            UnityEngine.Debug.Log("CompleteActionForAI");
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color == commonPearl.Color).ToList();
-            int minBuff = int.MaxValue;
-            foreach (var piece in listPieces)
-            {
-                int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile");
-                if (coutBuff < minBuff)
-                {
-                    minBuff = coutBuff;
-                }
-            }
-            var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
-            var random = new System.Random();
-            var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
-            var effect = GetRandomBuffEffect(selectedPiece);
-            if (effect == null) return;
-            ActionManager.ExecuteImmediately(new ApplyEffect(effect));
-            commonPearl.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
+        // public void CompleteActionForAI()
+        // {
+        //     UnityEngine.Debug.Log("CompleteActionForAI");
+        //     var allPieces = MatchManager.Ins.GameState.PieceBoard;
+        //     var listPieces = allPieces.Where(p => p != null && p.Color == commonPearl.Color).ToList();
+        //     int minBuff = int.MaxValue;
+        //     foreach (var piece in listPieces)
+        //     {
+        //         int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile");
+        //         if (coutBuff < minBuff)
+        //         {
+        //             minBuff = coutBuff;
+        //         }
+        //     }
+        //     var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
+        //     var random = new System.Random();
+        //     var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
+        //     var effect = GetRandomBuffEffect(selectedPiece);
+        //     if (effect == null) return;
+        //     ActionManager.ExecuteImmediately(new ApplyEffect(effect));
+        //     commonPearl.SetCooldown();
+        //     MatchManager.Ins.InputProcessor.UpdateRelic();
+        // }
     }
 }

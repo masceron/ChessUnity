@@ -39,5 +39,9 @@ namespace Game.Effects.Debuffs
             }
 
         }
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 20 - TurnLeftToDie * 10;
+        }
     }
 }

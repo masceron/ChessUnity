@@ -25,5 +25,10 @@ namespace Game.Effects.Buffs
                 applyEffect.Succeed = false;
             }
         }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 30;
+        }
     }
 }

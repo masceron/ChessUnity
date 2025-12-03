@@ -63,7 +63,7 @@ namespace Game.Movesets
             }
         }
 
-        public static void Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos)
         {
             var rank = RankOf(pos);
             var file = FileOf(pos);
@@ -102,7 +102,7 @@ namespace Game.Movesets
                 if (!MakeCapture(IndexOf(rankOff, fileOff))) break;
             }
 
-            return;
+            return 20 + 5 * moveRange;
             
             bool MakeCapture(int index)
             {

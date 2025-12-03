@@ -19,6 +19,14 @@ namespace Game.AI
         // Entry: ask AI to pick and execute single best action for sideToMove.
         public void PlayBestActionForSide(bool sideToMove)
         {
+            var relic = sideToMove ? MatchManager.Ins.GameState.BlackRelic: MatchManager.Ins.GameState.WhiteRelic;
+
+            if (relic != null && relic.currentCooldown == 0)
+            {
+                Debug.Log("Use relic " + relic.type);
+                relic.ActiveForAI();
+            }
+
             var brains = FindObjectsByType<BrainComponent>(FindObjectsSortMode.None);
             if (brains == null || brains.Length == 0) return;
 
@@ -54,10 +62,10 @@ namespace Game.AI
             if (globalBest == null) return;
 
             // Execute action: handle pending-able actions or normal actions
-            if (globalBest is Action.Internal.Pending.IPendingAble pending)
+            if (globalBest is IAIAction aiAction)
             {
                 // Complete pending immediately for AI (many skills implement CompleteAction)
-                pending.CompleteActionForAI();
+                aiAction.CompleteActionForAI();
             }
             else
             {

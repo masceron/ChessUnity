@@ -11,12 +11,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Movesets;
 using Game.Action.Captures;
+using Game.AI;
 
 
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineIguanaActive: Action, IPendingAble, ISkills, System.IDisposable  
+    public class MarineIguanaActive: Action, IPendingAble, ISkills, System.IDisposable, IAIAction
     {
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;
