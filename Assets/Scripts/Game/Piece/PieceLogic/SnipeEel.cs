@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SnipeEel : Commons.PieceLogic, IPieceWithSkill
     {
-        public SnipeEel(PieceConfig cfg) : base(cfg, SnipeEelMoves.Quiets, None.Captures)
+        public SnipeEel(PieceConfig cfg) : base(cfg, RangerMove.Quiets, RangerMove.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnipeEelPassive(this)));
             Skills = list =>

@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ElectricEel : Commons.PieceLogic, IPieceWithSkill
     {
-        public ElectricEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, ElectricEelMoves.Captures)
+        public ElectricEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, SmallPredatorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ElectricEelVengeful(this)));
             

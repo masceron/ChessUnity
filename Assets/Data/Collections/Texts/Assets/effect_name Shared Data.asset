@@ -343,6 +343,18 @@ MonoBehaviour:
     m_Key: effect_slimehead_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 37785165465915392
+    m_Key: effect_horse_leech_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37785165558190080
+    m_Key: effect_pacified
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40160134246174720
+    m_Key: effect_black_swallower_vengeful
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

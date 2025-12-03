@@ -53,7 +53,6 @@ namespace Game.Managers
             
             EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);
-            DontDestroyOnLoad(gameObject);
         }
     }
 }

@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: BlackSwallowerVengeful
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  typeName: 80
+  key: effect_black_swallower_vengeful
   category: 2
   stack: 1
   priority: 1
-  activeWhen: 1
+  activeWhen: 6
   icon: {fileID: 2800000, guid: 8663d5c15e0eaf64eb054a286921a3e6, type: 3}
-  key: effect_black_swallower_passive

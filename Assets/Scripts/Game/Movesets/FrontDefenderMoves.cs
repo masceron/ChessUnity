@@ -9,7 +9,7 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrontDefenderMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, ref int index)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
@@ -60,7 +60,7 @@ namespace Game.Movesets
             }
             
             
-            return;
+            return 20 + 5 * effectiveMoveRange;
             
             void MakeMove(int rankOff, int fileOff)
             {

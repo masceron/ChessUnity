@@ -39,6 +39,23 @@ namespace Game.Augmentation
                 ActionManager.EnqueueAction(new ApplyEffect(e));
             }
         }
+
+        public virtual int GetValueForAI() { return RarityValue(); }
+
+        protected int RarityValue()
+        {
+            return Rarity switch
+            {
+                AugmentationRarity.Basic => 15,
+                AugmentationRarity.Rare => 30,
+                AugmentationRarity.Epic => 50,
+                AugmentationRarity.Heroic => 70,
+                AugmentationRarity.Legendary => 100,
+                AugmentationRarity.Cursed => 150,
+                AugmentationRarity.Corrupted => 300,
+                _ => 0
+            };
+        }
     }
 
     public enum AugmentationName

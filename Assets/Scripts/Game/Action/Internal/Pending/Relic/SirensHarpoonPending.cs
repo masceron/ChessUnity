@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
@@ -11,8 +13,8 @@ namespace Game.Action.Internal.Pending.Relic
 
     public class SirensHarpoonPending : Action, IPendingAble, System.IDisposable
     {
-        public static PieceLogic FirstTarget;
         private SirensHarpoon _sirensHarpoon;
+
         public SirensHarpoonPending(SirensHarpoon s, int maker, bool pos = false) : base(maker, pos)
         {
             _sirensHarpoon = s;
@@ -21,48 +23,72 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void CompleteAction()
         {
-            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
-
-            if (FirstTarget == null)
-            {
-                FirstTarget = hovering;
-                TileManager.Ins.Select(FirstTarget.Pos);
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(2, FirstTarget)));
-                TileManager.Ins.UnmarkAll();
-                
-                if (BoardViewer.SelectingFunction == 0)
-                {
-                    BoardViewer.Selecting = -1;
-                    _sirensHarpoon.SetCooldown();
-                    MatchManager.Ins.InputProcessor.UpdateRelic();
-                    ResetTargets();
-                }
-            }
+            ActivateRelic(Maker);
         }
 
-        
-        private static void ResetTargets()
-        {
-            FirstTarget = null;
-        }
 
         public void Dispose()
         {
-            ResetTargets();
-
             _sirensHarpoon = null;
-
             BoardViewer.SelectingFunction = 0;
+        }
+
+
+        public void ActivateRelic(int maker)
+        {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(1, BoardUtils.PieceOn(maker))));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(BoardUtils.PieceOn(maker))));
+
+            _sirensHarpoon.SetCooldown();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
 
         protected override void ModifyGameState()
         {
+
         }
 
         public void CompleteActionForAI()
         {
             //Implement for AI automatically
+            var listPieces = new List<PieceLogic>();
+
+            for (var i = 0; i < BoardUtils.BoardSize; ++i)
+            {
+                var piece = BoardUtils.PieceOn(i);
+                if (piece == null || piece.Color == _sirensHarpoon.Color) continue;
+
+                if (piece.Effects.Any(e => (
+                        e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity"))
+                   ) continue;
+
+                listPieces.Add(piece);
+            }
+
+            if (listPieces.Count == 0) return;
+
+            if (listPieces.Count == 1)
+            {
+                ActivateRelic(listPieces[0].Pos);
+                return;
+            }
+            
+            listPieces.Sort((a, b) => 
+                b.GetValueForAI().CompareTo(a.GetValueForAI())
+            );
+            
+            int topValue = listPieces[0].GetValueForAI();
+            var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
+            
+            if (topGroup.Count == 1)
+            {
+                ActivateRelic(topGroup[0].Pos);
+            }
+            else
+            {
+                int idx = UnityEngine.Random.Range(0, topGroup.Count);
+                ActivateRelic(topGroup[idx].Pos);
+            }
         }
     }
-
 }

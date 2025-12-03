@@ -269,6 +269,20 @@ namespace Game.Piece.PieceLogic.Commons
                 value += effect.GetValueForAI();
             }
 
+            foreach (var aug in Augmentations)
+            {
+                value += aug.GetValueForAI();
+            }
+            
+            value += GetQuitesValue();
+
+            return value;
+        }
+
+        public int GetQuitesValue()
+        {
+            int i = 0;
+            int value = Quiets(new List<Action.Action>(), Pos, ref i);
             return value;
         }
 

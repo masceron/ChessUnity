@@ -10,7 +10,7 @@ namespace Game.Relics.Commons
                 "relic_common_pearl" => new CommonPearl(cfg),
                 "relic_eye_of_mimic" => new EyeOfMimic(cfg),
                 "relic_frost_sigil" => new FrostSigil(cfg),
-                "relic_mangrove_Charm" => new MangroveCharm(cfg),
+                "relic_mangrove_charm" => new MangroveCharm(cfg),
                 "relic_rotting_scythe" => new RottingScythe(cfg),
                 "relic_seafoam_phial" => new SeafoamPhial(cfg),
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),

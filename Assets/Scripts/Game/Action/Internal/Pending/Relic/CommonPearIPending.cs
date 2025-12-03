@@ -5,6 +5,7 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Relic
 {
@@ -19,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
             Target = (ushort)maker;
             Maker = (ushort)maker;
         }
-        public Effect GetRandomBuffEffect()
+        public Effect GetRandomBuffEffect(PieceLogic piece)
         {
             var buffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Buff)
@@ -29,7 +30,7 @@ namespace Game.Action.Internal.Pending.Relic
             var random = new System.Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
             
-            return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
+            return CreateEffectFromName(selectedEffectName, piece);
         }
 
         private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
@@ -50,7 +51,7 @@ namespace Game.Action.Internal.Pending.Relic
         }
         public void CompleteAction()
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect()));
+            ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target))));
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -70,9 +71,30 @@ namespace Game.Action.Internal.Pending.Relic
         {
         }
 
+
+
         public void CompleteActionForAI()
         {
-            //Implement for AI automatically
+            UnityEngine.Debug.Log("CompleteActionForAI");
+            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var listPieces = allPieces.Where(p => p != null && p.Color == commonPearl.Color).ToList();
+            int minBuff = int.MaxValue;
+            foreach (var piece in listPieces)
+            {
+                int coutBuff = piece.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile");
+                if (coutBuff < minBuff)
+                {
+                    minBuff = coutBuff;
+                }
+            }
+            var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
+            var random = new System.Random();
+            var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
+            var effect = GetRandomBuffEffect(selectedPiece);
+            if (effect == null) return;
+            ActionManager.ExecuteImmediately(new ApplyEffect(effect));
+            commonPearl.SetCooldown();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
     }
 }

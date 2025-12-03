@@ -6,6 +6,7 @@ using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+using Game.Action.Skills;
 
 namespace Game.Piece.PieceLogic
 {
@@ -29,7 +30,7 @@ namespace Game.Piece.PieceLogic
                     var pOn = PieceOn(idx);
                     if (pOn != null && pOn.Color != Color)
                     {
-                        //list.Add(new HumilitasActive(Pos, idx));
+                        list.Add(new HumilitasActive(Pos, idx));
                     }
                 }
             };
