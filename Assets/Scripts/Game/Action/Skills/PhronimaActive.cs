@@ -1,10 +1,13 @@
 ﻿using Game.Common;
 using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     public class PhronimaActive : Action, ISkills
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -50 : 0;
+
         private const int increaseDuration = 2;
         public PhronimaActive(int from, int to) : base(from)
         {
@@ -29,4 +32,3 @@ namespace Game.Action.Skills
         }
     }
 }
-

@@ -2,6 +2,6 @@
 {
     public interface ISkills
     {
-        
+        public int AIPenaltyValue {get;}
     }
 }

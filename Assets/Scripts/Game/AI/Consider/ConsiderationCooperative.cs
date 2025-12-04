@@ -43,7 +43,16 @@ namespace Game.AI.Consider
             int value = Mathf.FloorToInt(scaleValue * weight + TileManager.Ins.GetTileValue(action.Target));
             foreach (var ea in enemyActions)
             {
-                if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;
+                //if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;
+                if (ea.Target == action.Target && ea is ICaptures)
+                {
+                    value = PenaltyAction.PenaltyMoveToCapture(maker, value);
+                }
+
+                if (ea.Target == action.Target && ea is ISkills skills)
+                {
+                    value = PenaltyAction.PenaltyMoveToSkill(skills, value);
+                }
             }
             return value;
         }

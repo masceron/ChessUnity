@@ -15,6 +15,7 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TemperantiaSwap : Action, IPendingAble, ISkills, IAIAction
     {
+        public int AIPenaltyValue => 0;
         private static int allyIndex = -1;
         private static int enemyIndex = -1; // -1 nếu chưa chọn enemy
         public TemperantiaSwap(int maker, int target) : base(maker)

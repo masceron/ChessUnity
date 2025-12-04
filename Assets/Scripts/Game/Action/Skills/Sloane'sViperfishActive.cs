@@ -8,6 +8,8 @@ namespace Game.Action.Skills
 {
     public class SloaneSViperfishActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -25 : 0;
+
         public SloaneSViperfishActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;
