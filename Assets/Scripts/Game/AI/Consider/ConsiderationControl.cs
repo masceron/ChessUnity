@@ -27,7 +27,7 @@ namespace Game.AI.Consider
 
                 if (ea.Target == action.Target && ea is ISkills skills)
                 {
-                    value = PenaltyAction.PenaltyMoveToSkill(skills, value);
+                    value = PenaltyAction.PenaltyMoveToSkill(skills, maker, value);
                 }
             }
 

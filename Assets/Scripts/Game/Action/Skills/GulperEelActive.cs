@@ -8,7 +8,10 @@ namespace Game.Action.Skills
 {
     public class GulperEelActive : Action, ISkills, IAIAction
     {
-        public int AIPenaltyValue => 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return 0;
+        }
 
         public GulperEelActive(int maker, int target) : base(maker)
         {

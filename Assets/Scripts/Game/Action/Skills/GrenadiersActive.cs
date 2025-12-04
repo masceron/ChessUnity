@@ -10,7 +10,12 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GrenadiersActive: Action, ISkills, IAIAction
     {
-        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -60 : 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            return pieceAI.Color != maker.Color ? -60 : 0;
+        }
 
         public GrenadiersActive(int maker, int target) : base(maker)
         {

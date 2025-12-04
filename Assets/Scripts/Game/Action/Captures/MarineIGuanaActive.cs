@@ -19,7 +19,10 @@ namespace Game.Action.Captures
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MarineIguanaActive: Action, IPendingAble, ISkills, System.IDisposable, IAIAction
     {
-        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -50 : 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return pieceAI.Color != PieceOn(Maker).Color ? -50 : 0;
+        }
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;
         public MarineIguanaActive(int maker, int to) : base(maker)

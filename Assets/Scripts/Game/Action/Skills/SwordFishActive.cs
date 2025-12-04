@@ -8,7 +8,10 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SwordFishActive: Action, ISkills
     {
-        public int AIPenaltyValue => 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return 0;
+        }
         public SwordFishActive(int maker) : base(maker, true)
         {
             Maker = (ushort)maker;

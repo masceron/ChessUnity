@@ -10,7 +10,12 @@ namespace Game.Action.Skills
 {
     public class HatchetfishActive : Action, ISkills, IAIAction
     {
-        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -15 : 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            return pieceAI.Color != maker.Color ? -15 : 0;
+        }
 
         public HatchetfishActive(int maker, int target) : base(maker)
         {
