@@ -1,10 +1,14 @@
-using Game.Managers;
+using Game.Action.Internal;
+using Game.Common;
+using Game.Effects.Debuffs;
+using System.Linq;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
-using Game.Tile;
 using Game.AI;
-
-
+using System.Collections.Generic;
+using Game.Managers;
+using static Game.Common.BoardUtils;
+using UX.UI.Ingame;
+using Game.Tile;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -24,7 +28,27 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            throw new System.NotImplementedException();
+            var listPieces = new List<PieceLogic>();
+            
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 3))
+            {
+                var idx = IndexOf(rank, file);
+                var pOn = PieceOn(idx);
+                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                {
+
+                    listPieces.Add(pOn);
+                }
+            }
+            if (listPieces.Count == 0) return;
+            int maxValue = listPieces.Max(p => p.GetValueForAI());
+            var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+            if (bestPieces.Count == 0) return;
+            var random = new System.Random();
+            var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+            
+            FormationManager.Ins.SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }
