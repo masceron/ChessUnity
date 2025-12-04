@@ -8,15 +8,12 @@ namespace Game.Action.Skills
 {
     public class EpauletteSharkActive : Action, ISkills, IAIAction
     {
-        public int AIPenaltyValue
+        public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            get
-            {
-                var targetPiece = PieceOn(Target);
-                return targetPiece != null
-                        && targetPiece.Color != PieceOn(Maker)?.Color
-                        && targetPiece.PieceRank == PieceRank.Swarm ? -50 : 0;
-            }
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+
+            return pieceAI.Color != maker.Color && pieceAI.PieceRank == PieceRank.Swarm ? -50 : 0;
         }
 
         public EpauletteSharkActive(int maker, int target) : base(maker)

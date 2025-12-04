@@ -27,9 +27,9 @@ namespace Game.AI.Consider
             }
         }
 
-        public static int PenaltyMoveToSkill(ISkills enemySkill, int currentValue)
+        public static int PenaltyMoveToSkill(ISkills enemySkill, PieceLogic maker, int currentValue)
         {
-            currentValue += enemySkill.AIPenaltyValue;
+            currentValue += enemySkill.AIPenaltyValue(maker);
             return currentValue;
         }
     }

@@ -8,7 +8,10 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HermitCrabSwap: Action, ISkills, IAIAction
     {
-        public int AIPenaltyValue => 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return 0;
+        }
         public HermitCrabSwap(int maker, int to) : base(maker, true)
         {
             Target = (ushort)to;
