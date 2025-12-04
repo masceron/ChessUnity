@@ -13,6 +13,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MegalodonActive: Action, ISkills, IPendingAble, IDisposable, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target)?.Color != PieceOn(Maker)?.Color ? -40 : 0;
+
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
         private bool Color;

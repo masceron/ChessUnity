@@ -14,6 +14,7 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrectCandidate: Action, IPendingAble, IInternal, ISkills, IAIAction
     {
+        public int AIPenaltyValue => 0;
         public ThalassosResurrectCandidate(int maker, int pos) : base(maker)
         {
             Maker = (ushort)maker;

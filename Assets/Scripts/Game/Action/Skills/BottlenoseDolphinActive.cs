@@ -9,6 +9,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BottlenoseDolphinActive: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => 0;
+
         public BottlenoseDolphinActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;

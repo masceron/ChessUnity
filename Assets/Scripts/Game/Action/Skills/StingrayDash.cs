@@ -10,6 +10,7 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class StingrayDash: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -30 : 0;
         public StingrayDash(int maker, int to) : base(maker, true)
         {
             Target = (ushort)to;

@@ -8,6 +8,7 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SunfishActive : Action, ISkills
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -10 : 0;
         private readonly int Range;
         public SunfishActive(int maker,int range) : base(maker, true)
         {

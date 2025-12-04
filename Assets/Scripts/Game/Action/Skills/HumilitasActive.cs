@@ -15,8 +15,9 @@ using Game.AI;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive: Action, ISkills, IPendingAble, System.IDisposable, IAIAction
+    public class HumilitasActive : Action, ISkills, IPendingAble, System.IDisposable, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target)?.Color != PieceOn(Maker)?.Color ? 20 : 0;
         private static PieceLogic FirstTarget;
         private static PieceLogic SecondTarget;
         public HumilitasActive(int maker, int to) : base(maker)
@@ -33,7 +34,7 @@ namespace Game.Action.Skills
         public void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
-            if (FirstTarget == null) 
+            if (FirstTarget == null)
             {
                 FirstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
@@ -49,8 +50,8 @@ namespace Game.Action.Skills
                 }
                 return;
             }
-            SecondTarget = hovering; 
-            
+            SecondTarget = hovering;
+
             ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget)));
             ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget)));
             BoardViewer.Ins.ExecuteAction(this);
@@ -59,20 +60,20 @@ namespace Game.Action.Skills
         {
             FirstTarget = null;
             SecondTarget = null;
-            BoardViewer.SelectingFunction = 0; 
+            BoardViewer.SelectingFunction = 0;
         }
 
         public void CompleteActionForAI()
         {
             var listPieces = new List<PieceLogic>();
-            
+
             foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 5))
             {
                 var idx = IndexOf(rank, file);
                 var pOn = PieceOn(idx);
                 if (pOn != null && pOn.Color != PieceOn(Maker).Color)
                 {
-                    if(pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                    if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
                     listPieces.Add(pOn);
                 }
             }
@@ -86,47 +87,47 @@ namespace Game.Action.Skills
                 return;
             }
             // neu co nhieu quan           
-            listPieces.Sort((a, b) => 
+            listPieces.Sort((a, b) =>
                 b.GetValueForAI()
                     .CompareTo(a.GetValueForAI()));
-            
+
             var selectedPieces = new List<PieceLogic>();
-            
+
             int topValue = listPieces[0].GetValueForAI();
-            var topGroup = listPieces.Where(p => 
+            var topGroup = listPieces.Where(p =>
                 p.GetValueForAI() == topValue).ToList();
-            
+
             if (topGroup.Count >= 2)
             {
                 int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
                 int idx2;
-                do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); } 
+                do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
                 while (idx2 == idx1);
-                
+
                 selectedPieces.Add(topGroup[idx1]);
                 selectedPieces.Add(topGroup[idx2]);
             }
             else
             {
                 selectedPieces.Add(listPieces[0]);
-                
+
                 if (listPieces.Count > 1)
                 {
                     int secondValue = listPieces[1].GetValueForAI();
-                    var secondGroup = listPieces.Where(p => 
+                    var secondGroup = listPieces.Where(p =>
                         p.GetValueForAI() == secondValue).ToList();
-                    if(secondGroup.Count == 0) return;
+                    if (secondGroup.Count == 0) return;
                     int idx = UnityEngine.Random.Range(0, secondGroup.Count);
                     selectedPieces.Add(secondGroup[idx]);
-                }   
+                }
             }
-            
+
             foreach (var piece in selectedPieces)
             {
                 UnityEngine.Debug.Log("Taunting piece: " + piece.Type);
                 ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
             }
-            
+
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

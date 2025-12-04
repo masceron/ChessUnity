@@ -11,6 +11,7 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SnaggletoothsActive: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color == PieceOn(Maker).Color ? 10 : 0;
         private bool flag;
         public SnaggletoothsActive(int maker, int to, bool flag) : base(maker)
         {

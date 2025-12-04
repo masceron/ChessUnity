@@ -4,11 +4,14 @@ using Game.Effects.Debuffs;
 using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using Game.AI;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     public class HatchetfishActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -15 : 0;
+
         public HatchetfishActive(int maker, int target) : base(maker)
         {
             Maker = maker;

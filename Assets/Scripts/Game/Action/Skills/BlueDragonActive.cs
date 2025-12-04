@@ -7,6 +7,8 @@ namespace Game.Action.Skills
 {
     public class BlueDragonActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -15 : 0;
+
         public BlueDragonActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;

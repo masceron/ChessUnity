@@ -9,6 +9,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChrysosUpgrade: Action, ISkills
     {
+        public int AIPenaltyValue => 0;
+
         private readonly PieceConfig target;
         private readonly byte cost;
 

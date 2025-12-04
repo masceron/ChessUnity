@@ -8,6 +8,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class VelkarisKill: Action, ISkills
     {
+        public int AIPenaltyValue => 0;
+
         public VelkarisKill(int p, ushort f, ushort t) : base(p)
         {
             Maker = f;

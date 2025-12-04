@@ -7,6 +7,7 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PhantomJellyActive: Action, ISkills
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -30 : 0;
         public PhantomJellyActive(int maker) : base(maker, true)
         {
             Maker = (ushort)maker;

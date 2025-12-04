@@ -9,6 +9,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArchelonShield: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color == PieceOn(Maker).Color ? 15 : 0;
+
         public ArchelonShield(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;

@@ -9,6 +9,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArcherfishActive: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -15 : 0;
+
         public ArcherfishActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
@@ -36,4 +38,3 @@ namespace Game.Action.Skills
 
     }
 }
-

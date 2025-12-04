@@ -16,6 +16,7 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChrysosUpgradeCandidate: Action, IPendingAble, IInternal, ISkills, IAIAction
     {
+        public int AIPenaltyValue => 0;
         private PieceConfig config;
 
         public readonly string CurrentPiece;

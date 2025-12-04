@@ -7,6 +7,8 @@ namespace Game.Action.Skills
 {
     public class AnglerfishTaunt: Action, ISkills
     {
+        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -10 : 0;
+
         public AnglerfishTaunt(int maker, int to) : base(maker)
         {
             Target = (ushort)to;

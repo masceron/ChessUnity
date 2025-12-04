@@ -8,6 +8,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BarnacleActive: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue => 0;
+
         public BarnacleActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
