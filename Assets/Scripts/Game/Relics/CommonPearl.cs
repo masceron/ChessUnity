@@ -52,7 +52,8 @@ namespace Game.Relics
                     minValue = piece.GetValueForAI();
                 }
             }
-            var bestPiece = listPieces.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff && p.GetValueForAI() == minValue).ToList();
+            var bestPieceValues = listPieces.Where(p => p.GetValueForAI() == minValue).ToList();
+            var bestPiece = bestPieceValues.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
             if (bestPiece.Count == 0) return;
             var random = new System.Random();
             var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
