@@ -37,19 +37,19 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPiecesA = allPieces.Where(p => p != null && p.Color == this.Color).ToList();
-            var listPiecesB = allPieces.Where(p => p != null && p.Color != this.Color).ToList();
+            var listPiecesA = allPieces.Where(p => p != null && p.Color == this.Color && p.Effects.Any(e => e.EffectName != "effect_extremophile")).ToList();
+            var listPiecesB = allPieces.Where(p => p != null && p.Color != this.Color && p.Effects.Any(e => e.EffectName != "effect_extremophile")).ToList();
 
             if (listPiecesA.Count == 0 || listPiecesB.Count == 0) return;
-            int minBuffA = listPiecesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff && e.EffectName != "effect_extremophile"));
+            int minBuffA = listPiecesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
             int minValueA = listPiecesA.Min(p => p.GetValueForAI());
 
             int maxValueB = listPiecesB.Max(p => p.GetValueForAI());
 
-            var bestPiecesA = listPiecesA.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA && p.GetValueForAI() == minValueA).ToList();
-            var bestPiecesB = listPiecesB.Where(p => p.GetValueForAI() == maxValueB &&
-                                                 p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5 &&
-                                                  !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var bestPiecesValuesA = listPiecesA.Where(p => p.GetValueForAI() == minValueA).ToList();
+            var bestPiecesA = bestPiecesValuesA.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA).ToList();
+            var bestPiecesValuesB = listPiecesB.Where(p => p.GetValueForAI() == maxValueB).ToList();
+            var bestPiecesB = bestPiecesValuesB.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5).ToList();
 
             PieceLogic selectedPiece = null;
             if (bestPiecesB.Count != 0) {
@@ -66,6 +66,9 @@ namespace Game.Relics
             if (pending is IPendingAble p)
             {
                 p.CompleteAction();
+            } else
+            {
+                BoardViewer.Ins.ExecuteAction(pending);
             }
         }
     }
