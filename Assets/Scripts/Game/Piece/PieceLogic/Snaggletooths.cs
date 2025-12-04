@@ -8,29 +8,36 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Snaggletooths: Commons.PieceLogic, IPieceWithSkill
+    public class Snaggletooths : Commons.PieceLogic, IPieceWithSkill
     {
         public Snaggletooths(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 var flag1 = false;
                 if (SkillCooldown != 0) return;
-                var (rank, file) = RankFileOf(Pos);
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
+                if (isPlayer)
                 {
-                    var index = IndexOf(rankOff, fileOff);
-                    var piece = PieceOn(index);
-                    if (piece == null) continue;
-                    if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
+                    var (rank, file) = RankFileOf(Pos);
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                     {
-                        list.Add(new SnaggletoothsActive(Pos, index, false));
-                        flag1 = true;
+                        var index = IndexOf(rankOff, fileOff);
+                        var piece = PieceOn(index);
+                        if (piece == null) continue;
+                        if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
+                        {
+                            list.Add(new SnaggletoothsActive(Pos, index, false));
+                            flag1 = true;
+                        }
+                    }
+                    if (!flag1)
+                    {
+                        list.Add(new SnaggletoothsActive(Pos, Pos, true));
                     }
                 }
-                if (!flag1)
+                else
                 {
-                    list.Add(new SnaggletoothsActive(Pos, Pos, true));
+                    //query for AI in here
                 }
             };
         }

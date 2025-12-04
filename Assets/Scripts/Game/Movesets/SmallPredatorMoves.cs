@@ -28,20 +28,20 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
         {
             var moveRange = PieceOn(pos).GetMoveRange(ref index);
             var basePattern = new HashSet<int>(new SmallPredatorMoves().GenerateSmallPredatorMovesPattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false);
+            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, isPlayer: isPlayer);
 
             return 20 + 5 * moveRange;
         }
 
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var attackRange = PieceOn(pos).AttackRange;
             var basePattern = new HashSet<int>(new SmallPredatorMoves().GenerateSmallPredatorMovesPattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true);
+            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, isPlayer: isPlayer);
             return 20 + 5 * attackRange;
         }
     }

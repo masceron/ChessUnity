@@ -9,25 +9,31 @@ namespace Game.Piece.PieceLogic
     {
         public Hatchetfish(PieceConfig cfg) : base(cfg, PufferfishMoves.Quiets, PufferfishMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
-
-                var (rank, file) = RankFileOf(Pos);
-                for (var dr = -4; dr <= 4; dr++)
+                if (isPlayer)
                 {
-                    var trank = rank + dr;
-                    if (!VerifyBounds(trank)) continue;
-                    for (var df = -4; df <= 4; df++)
+                    var (rank, file) = RankFileOf(Pos);
+                    for (var dr = -4; dr <= 4; dr++)
                     {
-                        var fileOff = file + df;
-                        if (!VerifyBounds(fileOff)) continue;
-                        var tpos = IndexOf(trank, fileOff);
-                        var pieceAt = PieceOn(tpos);
-                        if (pieceAt == null || pieceAt.Color == Color) continue;
+                        var trank = rank + dr;
+                        if (!VerifyBounds(trank)) continue;
+                        for (var df = -4; df <= 4; df++)
+                        {
+                            var fileOff = file + df;
+                            if (!VerifyBounds(fileOff)) continue;
+                            var tpos = IndexOf(trank, fileOff);
+                            var pieceAt = PieceOn(tpos);
+                            if (pieceAt == null || pieceAt.Color == Color) continue;
 
-                        list.Add(new HatchetfishActive(Pos, tpos));
+                            list.Add(new HatchetfishActive(Pos, tpos));
+                        }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

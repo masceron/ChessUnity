@@ -176,27 +176,30 @@ namespace Game.Piece.PieceLogic.Commons
         /// <summary>
         /// Thêm vào tham số list những Action có thể thực thi. Ví dụ: Moves, Captures, ISkills <br/>
         /// List này sau đó sẽ được hiển thị lên Board bởi BoardViewer
+        /// isPlayer là để phân biệt người dùng hay AI
+        /// excludeEmptyTile = false thì sẽ lấy cả những ô không có target, mục đích là để lấy enemySnapshot để đánh giá điểm cho action của Maker
+        /// excludeEmptyTile = true thì sẽ là logic thông thường, để mark những ô có thể đi/ăn/skill
         /// </summary>
         /// <param name="list"></param>
-        public void MoveList(List<Action.Action> list)
+        public void MoveList(List<Action.Action> list, bool isPlayer = true, bool excludeEmptyTile = true)
         {
             if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == "effect_stunned")) return;
             if (Effects.Any(e => e.EffectName == "effect_frenzied")) return;
             var i = 0;
 
-            Quiets(list, Pos, ref i);
+            Quiets(list, Pos, ref i, isPlayer);
             
             if (MoveRange.Count > 1)
             {
                 list = list.Distinct(new ActionComparer()).ToList();
             }
             
-            Captures(list, Pos);
+            Captures(list, Pos, excludeEmptyTile);
 
             if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced"))
             {
-                ((IPieceWithSkill)this).Skills(list);
+                ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
             
             CustomBehaviors(list);
@@ -282,13 +285,13 @@ namespace Game.Piece.PieceLogic.Commons
         public int GetQuitesValue()
         {
             int i = 0;
-            int value = Quiets(new List<Action.Action>(), Pos, ref i);
+            int value = Quiets(new List<Action.Action>(), Pos, ref i, isPlayer: true);
             return value;
         }
 
         public int GetCapturesValue()
         {
-            return Captures(new List<Action.Action>(), Pos);
+            return Captures(new List<Action.Action>(), Pos, excludeEmptyTile: false);
         }
 
         private int RankToValue(PieceRank rank)

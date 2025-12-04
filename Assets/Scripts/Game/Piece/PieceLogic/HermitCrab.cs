@@ -8,18 +8,26 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HermitCrab: Commons.PieceLogic, IPieceWithSkill
+    public class HermitCrab : Commons.PieceLogic, IPieceWithSkill
     {
         public HermitCrab(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                var (rank, file) = RankFileOf(Pos);
 
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                if (isPlayer)
                 {
-                    MakeSkill(list, IndexOf(rankOff, fileOff));
+                    var (rank, file) = RankFileOf(Pos);
+
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    {
+                        MakeSkill(list, IndexOf(rankOff, fileOff));
+                    }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

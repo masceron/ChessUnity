@@ -16,25 +16,31 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new EpauletteSharkPurify(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new DiurnalAmbush(this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-
-                var (rank, file) = RankFileOf(Pos);
-
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                if (isPlayer)
                 {
-                    var index = IndexOf(rankOff, fileOff);
-                    var pOn = PieceOn(index);
-                    if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
-                    if (pOn.Color != Color)
+                    var (rank, file) = RankFileOf(Pos);
+
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                     {
-                        list.Add(new EpauletteSharkActive(Pos, index));
+                        var index = IndexOf(rankOff, fileOff);
+                        var pOn = PieceOn(index);
+                        if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
+                        if (pOn.Color != Color)
+                        {
+                            list.Add(new EpauletteSharkActive(Pos, index));
+                        }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }
-        
+
         sbyte IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;

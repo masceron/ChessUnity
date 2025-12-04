@@ -8,7 +8,7 @@ namespace Game.Movesets
 {
     public static class HorseLeechMoves
     {
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
@@ -24,12 +24,18 @@ namespace Game.Movesets
             {
                 var index = IndexOf(rankOff, fileOff);
                 var piece = PieceOn(index);
-                if (piece == null || 
-                    piece.Color == color || 
-                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
-                    return;
-                
-                list.Add(new HorseLeechAttack(pos, index));
+                if (piece == null && !isPlayer)
+                {
+                    list.Add(new HorseLeechAttack(pos, index));
+                }
+                else if (piece != null)
+                {
+                    if (piece.Color == color ||
+                        Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
+                        return;
+                    list.Add(new HorseLeechAttack(pos, index));
+                }
+
             }
             return 10 + 10 * attackRange;
         }

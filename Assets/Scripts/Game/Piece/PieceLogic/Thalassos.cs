@@ -9,33 +9,40 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Thalassos: Commons.PieceLogic, IPieceWithSkill
+    public class Thalassos : Commons.PieceLogic, IPieceWithSkill
     {
         public Thalassos(PieceConfig cfg) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ThalassosShielder(this)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
 
-                for (var rankOff = -1; rankOff <= 1; rankOff++)
+                if (isPlayer)
                 {
-                    var rank = RankOf(Pos) + rankOff;
-                    if (!VerifyBounds(rank)) continue;
-
-                    for (var fileOff = -1; fileOff <= 1; fileOff++)
+                    for (var rankOff = -1; rankOff <= 1; rankOff++)
                     {
-                        if (rankOff == 0 && fileOff == 0) continue;
-                        var file = FileOf(Pos) + fileOff;
-                        if (!VerifyBounds(file)) continue;
-                        var posTo = IndexOf(rank, file);
+                        var rank = RankOf(Pos) + rankOff;
+                        if (!VerifyBounds(rank)) continue;
 
-                        if (PieceOn(posTo) == null)
+                        for (var fileOff = -1; fileOff <= 1; fileOff++)
                         {
-                            list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                            if (rankOff == 0 && fileOff == 0) continue;
+                            var file = FileOf(Pos) + fileOff;
+                            if (!VerifyBounds(file)) continue;
+                            var posTo = IndexOf(rank, file);
+
+                            if (PieceOn(posTo) == null)
+                            {
+                                list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                            }
                         }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

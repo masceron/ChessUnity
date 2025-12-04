@@ -8,19 +8,26 @@ namespace Game.Piece.PieceLogic
     {
         public Phronima(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                var (rank, file) = BoardUtils.RankFileOf(Pos);
-                for (var x = rank - 3; x <= rank + 3; ++x)
+                if (isPlayer)
                 {
-                    for (var y = file - 3; y <= file + 3; ++y)
+                    var (rank, file) = BoardUtils.RankFileOf(Pos);
+                    for (var x = rank - 3; x <= rank + 3; ++x)
                     {
-                        if (!BoardUtils.VerifyBounds(x) || !BoardUtils.VerifyBounds(y)) continue;
-                        var targetPiece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
-                        if (targetPiece == null || targetPiece.Color == Color) continue;
-                        list.Add(new Action.Skills.PhronimaActive(Pos, targetPiece.Pos));
+                        for (var y = file - 3; y <= file + 3; ++y)
+                        {
+                            if (!BoardUtils.VerifyBounds(x) || !BoardUtils.VerifyBounds(y)) continue;
+                            var targetPiece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
+                            if (targetPiece == null || targetPiece.Color == Color) continue;
+                            list.Add(new Action.Skills.PhronimaActive(Pos, targetPiece.Pos));
+                        }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

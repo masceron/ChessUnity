@@ -8,7 +8,7 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class GuidingSirenMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
@@ -42,7 +42,7 @@ namespace Game.Movesets
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
@@ -72,6 +72,9 @@ namespace Game.Movesets
                 var pieceOn = PieceOn(tPos);
                 
                 if (pieceOn != null && pieceOn.Color != color)
+                {
+                    list.Add(new NormalCapture(pos, tPos));
+                } else if (pieceOn == null && !isPlayer)
                 {
                     list.Add(new NormalCapture(pos, tPos));
                 }

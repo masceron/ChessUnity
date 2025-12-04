@@ -69,7 +69,7 @@ namespace Game.AI
         {
             var list = new List<Action.Action>();
             if (Maker == null) return list;
-            try { Maker.MoveList(list); } catch { }
+            try { Maker.MoveList(list, isPlayer: false ,excludeEmptyTile: true); } catch { }
             return list;
         }
     }
