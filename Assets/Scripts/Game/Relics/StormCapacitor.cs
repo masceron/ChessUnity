@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.Linq;
 using Game.Action;
+using Game.Action.Internal;
 using Game.Action.Internal.Pending.Relic;
 using Game.Common;
+using Game.Effects.Debuffs;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -62,7 +65,29 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            
+            int maxSize = 0;
+            List<int> topGroup = new List<int>();
+            for (int i = 0; i < BoardUtils.BoardSize; ++i)
+            {
+                var (rank, file) = BoardUtils.RankFileOf(i);
+                var pieces = BoardUtils.GetPiecesInRadius(rank, file, size, p => p != null && p.Color != Color);
+
+                if (pieces.Count > maxSize)
+                {
+                    maxSize = pieces.Count;
+                    topGroup.Clear();
+                }
+                
+                if (pieces.Count == maxSize) topGroup.Add(i);
+            }
+
+            var pos = topGroup[UnityEngine.Random.Range(0, topGroup.Count() - 1)];
+            var maxArea = BoardUtils.GetPiecesInRadius(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), size, p => p != null && p.Color != Color);
+            foreach (var piece in maxArea)
+            {
+                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));
+            }
+
         }
     }
 }
