@@ -9,7 +9,13 @@ namespace Game.Action.Skills
 {
     public class ArcticBrittleStarActive : Action, ISkills, IAIAction
     {
-        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -5 : 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            if (pieceAI.Color != maker.Color) return -5;
+            return 0;
+        }
 
         private Tile.Tile hoveringTile;
         public ArcticBrittleStarActive(int maker, int to) : base(maker)
