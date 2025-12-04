@@ -8,7 +8,13 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HourglassJellyActive: Action, ISkills
     {
-        public int AIPenaltyValue => PieceOn(Target).Color != PieceOn(Maker).Color ? -25 : 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            if (pieceAI.Color != maker.Color) return -25;
+            return 0;
+        }
         private ushort destination;
         public HourglassJellyActive(int maker, int target) : base(maker, true)
         {
