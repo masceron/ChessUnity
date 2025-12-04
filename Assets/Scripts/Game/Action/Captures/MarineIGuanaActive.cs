@@ -68,7 +68,7 @@ namespace Game.Action.Captures
         {
             UnityEngine.Debug.Log("CompleteActionForAI");
             var listActions = new List<Action>();
-            BluffingMoves.Captures(listActions, Maker);
+            BluffingMoves.Captures(listActions, Maker, isPlayer: true);
             if (listActions.Count > 1)
             {
                 listActions = listActions.Distinct(new ActionComparer()).ToList();

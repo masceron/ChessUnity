@@ -11,7 +11,7 @@ using Game.Action.Skills;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Humilitas: Commons.PieceLogic, IPieceWithSkill
+    public class Humilitas : Commons.PieceLogic, IPieceWithSkill
     {
         private int deathDefianceCount;
         public Humilitas(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
@@ -21,17 +21,24 @@ namespace Game.Piece.PieceLogic
             ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
             ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 5))
+                if (isPlayer)
                 {
-                    var idx = IndexOf(rank, file);
-                    var pOn = PieceOn(idx);
-                    if (pOn != null && pOn.Color != Color)
+                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 5))
                     {
-                        list.Add(new HumilitasActive(Pos, idx));
+                        var idx = IndexOf(rank, file);
+                        var pOn = PieceOn(idx);
+                        if (pOn != null && pOn.Color != Color)
+                        {
+                            list.Add(new HumilitasActive(Pos, idx));
+                        }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

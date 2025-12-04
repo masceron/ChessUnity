@@ -9,13 +9,13 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrontDefenderMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
             var color = caller.Color;
-            
+
             var effectiveMoveRange = caller.GetMoveRange(ref index);
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, effectiveMoveRange))
@@ -52,21 +52,21 @@ namespace Game.Movesets
                 {
                     MakeMove(rankOff, fileOff);
                 }
-            
+
                 foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, effectiveMoveRange))
                 {
                     MakeMove(rankOff, fileOff);
                 }
             }
-            
-            
+
+
             return 20 + 5 * effectiveMoveRange;
-            
+
             void MakeMove(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
                 if (!IsActive(index)) return;
-                
+
                 var piece = PieceOn(index);
                 if (piece != null ||
                     Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
@@ -75,7 +75,7 @@ namespace Game.Movesets
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
@@ -117,7 +117,7 @@ namespace Game.Movesets
                 {
                     if (!MakeCapture(IndexOf(rankOff, fileOff))) break;
                 }
-            
+
                 foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, moveRange))
                 {
                     if (!MakeCapture(IndexOf(rankOff, fileOff))) break;
@@ -125,11 +125,22 @@ namespace Game.Movesets
             }
 
             return 20 + 5 * moveRange;
-            
+
             bool MakeCapture(int index)
             {
                 var p = PieceOn(index);
-                if (p == null) return true;
+                if (p == null)
+                {
+                    if (!isPlayer)
+                    {
+                        list.Add(new NormalCapture(pos, index));
+                        return false;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
                 if (!IsActive(index)) return false;
                 if (p.Color != color)
                 {
@@ -139,6 +150,6 @@ namespace Game.Movesets
                 return false;
             }
         }
-        
+
     }
 }

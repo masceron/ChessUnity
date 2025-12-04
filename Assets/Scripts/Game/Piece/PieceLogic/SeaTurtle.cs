@@ -9,10 +9,16 @@ namespace Game.Piece.PieceLogic
     {
         public SeaTurtle(PieceConfig cfg) : base(cfg, KingMoves.Quiets, FrontDefenderMoves.Captures)
         { 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0) {
+                if (SkillCooldown > 0) return;
+                if (isPlayer)
+                {
                     list.Add(new SeaTurtleActive(Pos));
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
             

@@ -17,13 +17,21 @@ namespace Game.Piece.PieceLogic
             Marked = null;
             SkillCooldown = -1;
             ActionManager.ExecuteImmediately(new ApplyEffect(new VelkarisMarker(this)));
-            
-            Skills = list =>
+
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0 && Marked != null)
+                if (isPlayer)
                 {
-                    list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
+                    if (SkillCooldown == 0 && Marked != null)
+                    {
+                        list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
+                    }
                 }
+                else
+                {
+                    //query for AI in here
+                }
+
             };
         }
 

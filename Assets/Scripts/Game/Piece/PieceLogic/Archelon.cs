@@ -18,21 +18,26 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this, 3)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ArchelonDraw(this)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-
-                var (rank, file) = RankFileOf(Pos);
-
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                if (isPlayer)
                 {
-                    var index = IndexOf(rankOff, fileOff);
-                    var pOn = PieceOn(index);
-                    if (pOn == null || pOn == this) continue;
-                    if (pOn.Color == Color)
+                    var (rank, file) = RankFileOf(Pos);
+
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                     {
-                        list.Add(new ArchelonShield(Pos, index));
+                        var index = IndexOf(rankOff, fileOff);
+                        var pOn = PieceOn(index);
+                        if (pOn == null || pOn == this) continue;
+                        if (pOn.Color == Color)
+                        {
+                            list.Add(new ArchelonShield(Pos, index));
+                        }
                     }
+                } else 
+                {
+                    //query for AI in here
                 }
             };
         }

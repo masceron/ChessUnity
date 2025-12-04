@@ -14,9 +14,16 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Dominator(this)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                list.Add(new PufferfishExplode(Pos));
+                if (SkillCooldown > 0) return;
+                if (isPlayer)
+                {
+                    list.Add(new PufferfishExplode(Pos));
+                } else
+                {
+                    //query for AI in here
+                }
             };
         }
 

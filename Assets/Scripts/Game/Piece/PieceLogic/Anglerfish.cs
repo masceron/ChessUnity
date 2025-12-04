@@ -10,40 +10,46 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Anglerfish: Commons.PieceLogic, IPieceWithSkill
+    public class Anglerfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Anglerfish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PawnPushMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
-            
-            Skills = list =>
+
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                
-                if (!Color)
+                if (isPlayer)
                 {
-                    foreach (var (rank, file) in MoveEnumerators.Up(RankOf(Pos), FileOf(Pos), 3))
+                    if (!Color)
                     {
-                        var idx = IndexOf(rank, file);
-                        var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != Color)
+                        foreach (var (rank, file) in MoveEnumerators.Up(RankOf(Pos), FileOf(Pos), 3))
                         {
-                            list.Add(new AnglerfishTaunt(Pos, idx));
+                            var idx = IndexOf(rank, file);
+                            var pOn = PieceOn(idx);
+                            if (pOn != null && pOn.Color != Color)
+                            {
+                                list.Add(new AnglerfishTaunt(Pos, idx));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (var (rank, file) in MoveEnumerators.Down(RankOf(Pos), FileOf(Pos), 3))
+                        {
+                            var idx = IndexOf(rank, file);
+                            var pOn = PieceOn(idx);
+                            if (pOn != null && pOn.Color != Color)
+                            {
+                                list.Add(new AnglerfishTaunt(Pos, idx));
+                            }
                         }
                     }
                 }
                 else
                 {
-                    foreach (var (rank, file) in MoveEnumerators.Down(RankOf(Pos), FileOf(Pos), 3))
-                    {
-                        var idx = IndexOf(rank, file);
-                        var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != Color)
-                        {
-                            list.Add(new AnglerfishTaunt(Pos, idx));
-                        }
-                    }
+                    //query for AI in here
                 }
             };
         }

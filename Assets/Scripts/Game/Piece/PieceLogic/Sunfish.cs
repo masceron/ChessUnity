@@ -9,18 +9,27 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Sunfish: Commons.PieceLogic, IPieceWithSkill
+    public class Sunfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Sunfish(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new SunfishPassive(this)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0) 
+                if (SkillCooldown > 0) return;
+                if (isPlayer)
                 {
-                    list.Add(new SunfishActive(Pos, 4));
+                    if (SkillCooldown == 0)
+                    {
+                        list.Add(new SunfishActive(Pos, 4));
+                    }
+
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

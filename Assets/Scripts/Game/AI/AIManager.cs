@@ -88,7 +88,7 @@ namespace Game.AI
                 if (p.Color == side) continue;
                 try
                 {
-                    p.MoveList(list);
+                    p.MoveList(list, isPlayer: false, excludeEmptyTile: false);
                 }
                 catch { }
             }

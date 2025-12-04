@@ -7,7 +7,7 @@ namespace Game.Movesets
 {
     public class MegalodonMoves
     {
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var caller = PieceOn(pos);
             var color = caller.Color;

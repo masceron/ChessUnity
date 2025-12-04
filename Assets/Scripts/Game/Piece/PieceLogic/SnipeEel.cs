@@ -15,22 +15,31 @@ namespace Game.Piece.PieceLogic
         public SnipeEel(PieceConfig cfg) : base(cfg, RangerMove.Quiets, RangerMove.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnipeEelPassive(this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0) {
-                    var (rank, file) = RankFileOf(Pos);
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
+                if (SkillCooldown != 0) return;
+                if (isPlayer)
+                {
+                    if (SkillCooldown == 0)
                     {
-                        var index = IndexOf(rankOff, fileOff);
-                        
-                        var pOn = PieceOn(index);
-                        if (pOn == null || pOn.Color == Color) continue;
-                        list.Add(new SnipeEelActive(Pos, index));
+                        var (rank, file) = RankFileOf(Pos);
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
+                        {
+                            var index = IndexOf(rankOff, fileOff);
+
+                            var pOn = PieceOn(index);
+                            if (pOn == null || pOn.Color == Color) continue;
+                            list.Add(new SnipeEelActive(Pos, index));
+                        }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }
-        
+
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
