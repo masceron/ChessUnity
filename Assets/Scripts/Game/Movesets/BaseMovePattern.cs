@@ -55,7 +55,7 @@ namespace Game.Movesets
             foreach (var targetPos in basePositions)
             {
                 var (tRank, tFile) = RankFileOf(targetPos);
-                if (!VerifyBounds(tRank) || !VerifyBounds(tFile))
+                if (!VerifyBounds(tRank) || !VerifyBounds(tFile) || !IsActive(targetPos))
                     continue;
 
                 var blocker = Pathfinder.LineBlocker(rank, file, tRank, tFile);
