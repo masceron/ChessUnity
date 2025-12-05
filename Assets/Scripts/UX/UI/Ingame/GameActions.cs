@@ -40,8 +40,12 @@ namespace UX.UI.Ingame
         public void UpdateRelic()
         {
             var relicLogic = BoardUtils.GetRelicOf(MatchManager.Ins.GameState.OurSide);
-            if (relicLogic == null) return;
-            
+            if (relicLogic == null) 
+            {
+                relicCooldownText.gameObject.SetActive(false);
+                relic.interactable = false;
+                return;
+            }
             relicCooldownText.gameObject.SetActive(relicLogic.currentCooldown != 0);
             relic.interactable = relicLogic.currentCooldown == 0;
             relicCooldownText.text = relicLogic.currentCooldown.ToString();
