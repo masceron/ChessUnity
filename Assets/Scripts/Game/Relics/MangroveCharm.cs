@@ -132,6 +132,9 @@ namespace Game.Relics
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos1))));
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos2))));
             }
+            
+            SetCooldown();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
     }
 }
