@@ -20,7 +20,7 @@ public static class Config
         new PieceConfig("piece_thalassos", true, 17),
     };
 
-    public static RelicConfig relicWhiteConfig = new RelicConfig("relic_sirens_harpoon", false, 5);
+    public static RelicConfig relicWhiteConfig = new RelicConfig("relic_storm_capacitor", false, 5);
     public static RelicConfig relicBlackConfig = new RelicConfig("relic_sirens_harpoon", true, 5);
     public static RegionalEffectType regionalEffectType = RegionalEffectType.None;
 }

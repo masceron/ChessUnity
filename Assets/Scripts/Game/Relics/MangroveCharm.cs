@@ -26,6 +26,7 @@ namespace Game.Relics
         }
         public override void Activate()
         {
+            if (Charge)
             if (currentCooldown == 0)
             {
                 

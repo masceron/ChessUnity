@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -27,9 +28,8 @@ namespace Game.Piece.PieceLogic
                 }
 
             };
-
         }
-
+        
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.AI;
 using Game.Effects.Debuffs;
@@ -31,7 +32,13 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            throw new System.NotImplementedException();
+            var A = new List<(int pos, int deltaCooldown)>();
+            var B = new List<(int pos, int deltaCooldown)>();
+            for (int i = 0; i < BoardSize; ++i)
+            {
+                var piece = PieceOn(i);
+                if (piece == null || piece.Color != PieceOn(Maker).Color) continue;
+            }
         }
     }
 }

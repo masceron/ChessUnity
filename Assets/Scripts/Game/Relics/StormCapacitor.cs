@@ -70,7 +70,7 @@ namespace Game.Relics
             for (int i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var (rank, file) = BoardUtils.RankFileOf(i);
-                var pieces = BoardUtils.GetPiecesInRadius(rank, file, size, p => p != null && p.Color != Color);
+                var pieces = BoardUtils.GetPiecesInSize(rank, file, size, p => p != null && p.Color != Color);
 
                 if (pieces.Count > maxSize)
                 {
