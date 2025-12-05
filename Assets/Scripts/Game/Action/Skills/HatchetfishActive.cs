@@ -7,6 +7,7 @@ using Game.AI;
 using System.Collections.Generic;
 using Game.Managers;
 using static Game.Common.BoardUtils;
+using UX.UI.Ingame;
 namespace Game.Action.Skills
 {
     public class HatchetfishActive : Action, ISkills, IAIAction
@@ -78,11 +79,13 @@ namespace Game.Action.Skills
 
 
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, selectedPiece)));
+            //ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, selectedPiece)));
+            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece)));
 
             if (selectedPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
+                //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
+                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
             }
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

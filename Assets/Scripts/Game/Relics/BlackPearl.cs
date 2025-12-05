@@ -37,16 +37,16 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPiecesA = allPieces.Where(p => p != null && p.Color == this.Color && p.Effects.Any(e => e.EffectName != "effect_extremophile")).ToList();
-            var listPiecesB = allPieces.Where(p => p != null && p.Color != this.Color && p.Effects.Any(e => e.EffectName != "effect_extremophile")).ToList();
+            var listPiecesA = allPieces.Where(p => p != null && p.Color == this.Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var listPiecesB = allPieces.Where(p => p != null && p.Color != this.Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
 
             if (listPiecesA.Count == 0 || listPiecesB.Count == 0) return;
-            int minBuffA = listPiecesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
             int minValueA = listPiecesA.Min(p => p.GetValueForAI());
 
             int maxValueB = listPiecesB.Max(p => p.GetValueForAI());
 
             var bestPiecesValuesA = listPiecesA.Where(p => p.GetValueForAI() == minValueA).ToList();
+            int minBuffA = bestPiecesValuesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
             var bestPiecesA = bestPiecesValuesA.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA).ToList();
             var bestPiecesValuesB = listPiecesB.Where(p => p.GetValueForAI() == maxValueB).ToList();
             var bestPiecesB = bestPiecesValuesB.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5).ToList();
