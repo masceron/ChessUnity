@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.AI;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
@@ -37,8 +38,42 @@ namespace Game.Action.Skills
             for (int i = 0; i < BoardSize; ++i)
             {
                 var piece = PieceOn(i);
-                if (piece == null || piece.Color != PieceOn(Maker).Color) continue;
+                if (piece == null) continue;
+                if (piece is not IPieceWithSkill) continue;
+                
+                var deltaCooldown = ((IPieceWithSkill)PieceOn(i)).TimeToCooldown - piece.SkillCooldown;
+                if (piece.Color == PieceOn(Maker).Color)
+                    A.Add( (i, deltaCooldown) );
+                else 
+                    B.Add( (i, deltaCooldown) );
             }
+
+            if (A.Count > 0 && B.Count > 0)
+            {
+                int type = UnityEngine.Random.Range(0, 1);
+                if (type == 0)
+                {
+                    int idx = UnityEngine.Random.Range(0, A.Count - 1);
+                    SetCooldown(PieceOn(A[idx].pos).Pos, 0);
+                }
+                else
+                {
+                    int idx = UnityEngine.Random.Range(0, B.Count - 1);
+                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos))));
+                }
+            }
+            else if (A.Count > 0)
+            {
+                int idx = UnityEngine.Random.Range(0, A.Count - 1);
+                SetCooldown(PieceOn(A[idx].pos).Pos, 0);
+            }
+            else if (B.Count > 0)
+            {
+                int idx = UnityEngine.Random.Range(0, B.Count - 1);
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos))));
+            }
+            
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }
