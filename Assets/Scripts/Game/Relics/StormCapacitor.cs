@@ -65,12 +65,13 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
+            if (charge.Strength < 3) return;
             int maxSize = 0;
             List<int> topGroup = new List<int>();
             for (int i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var (rank, file) = BoardUtils.RankFileOf(i);
-                var pieces = BoardUtils.GetPiecesInSize(rank, file, size, p => p != null && p.Color != Color);
+                var pieces = BoardUtils.GetPiecesInSize(rank, file, size, Corner.BottomRight, p => p != null && p.Color != Color);
 
                 if (pieces.Count > maxSize)
                 {
@@ -82,12 +83,13 @@ namespace Game.Relics
             }
 
             var pos = topGroup[UnityEngine.Random.Range(0, topGroup.Count() - 1)];
-            var maxArea = BoardUtils.GetPiecesInRadius(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), size, p => p != null && p.Color != Color);
+            var maxArea = BoardUtils.GetPiecesInSize(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), size, Corner.BottomRight, p => p != null && p.Color != Color);
             foreach (var piece in maxArea)
             {
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));
             }
-
+            
+            charge.Strength = 0;
         }
     }
 }
