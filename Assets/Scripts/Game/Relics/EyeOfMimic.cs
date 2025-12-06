@@ -56,11 +56,9 @@ namespace Game.Relics
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
-                int ourIndex = 0;
-                int enemyIndex = 0;
                 if (piece.Color == MatchManager.Ins.GameState.OurSide)
                 {
-                    int pieceMoveset = piece.GetMoveRange(ref ourIndex);
+                    int pieceMoveset = piece.GetQuitesValue();
                     if (pieceMoveset < minMoveset)
                     {
                         minMoveset = pieceMoveset;
@@ -74,7 +72,7 @@ namespace Game.Relics
                 }
                 else
                 {
-                    int pieceMoveset = piece.GetMoveRange(ref enemyIndex);
+                    int pieceMoveset = piece.GetQuitesValue();
                     if (pieceMoveset > maxMoveset)
                     {
                         maxMoveset = pieceMoveset;
