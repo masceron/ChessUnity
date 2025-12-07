@@ -23,3 +23,7 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: Pufferfish
+  baseValue: 0
+  considerations:
+  - Consideration: {fileID: 11400000, guid: a1d911d900b4b2b408689de20176fc7e, type: 2}
+    Weight: 59

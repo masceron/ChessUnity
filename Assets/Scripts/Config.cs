@@ -15,9 +15,9 @@ public static class Config
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_pufferfish", true, 16),
+        new PieceConfig("piece_stingray", true, 16),
         // new PieceConfig("piece_anglerfish", false, 17),
-        new PieceConfig("piece_thalassos", true, 17),
+        new PieceConfig("piece_archelon", true, 17),
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig("relic_sirens_harpoon", false, 5);
