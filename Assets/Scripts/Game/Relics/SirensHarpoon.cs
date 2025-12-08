@@ -50,6 +50,7 @@ namespace Game.Relics
             {
                 var piece = BoardUtils.PieceOn(i);
                 if (piece == null || piece.Color == this.Color) continue;
+                if (piece.PieceRank > PieceRank.Common) continue;
 
                 if (piece.Effects.Any(e => (
                         e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity"))

@@ -16,7 +16,8 @@ namespace Game.Tile
         Saprolegnia,
         Kelp,
         PredatorLair,
-        NavalMines
+        NavalMines,
+        SiltCloud
     }
 
     public abstract class Formation
