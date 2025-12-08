@@ -4,7 +4,7 @@ namespace Game.Effects.Traits{
     public class LongReach : Effect
     {
 
-        public LongReach(PieceLogic piece) : base(-1, 1, piece, "effect_long_reach")
+        public LongReach(PieceLogic piece, sbyte duration = 1) : base(duration, 1, piece, "effect_long_reach")
         {
             piece.AttackRange += 2;
 

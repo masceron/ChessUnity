@@ -20,8 +20,10 @@ MonoBehaviour:
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 1
-  normalSkillCooldown: 4
+  normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: Stingray
   baseValue: 0
-  considerations: []
+  considerations:
+  - Consideration: {fileID: 11400000, guid: 68a110465a5fa754f95eb1c867bcd9a0, type: 2}
+    Weight: 61
