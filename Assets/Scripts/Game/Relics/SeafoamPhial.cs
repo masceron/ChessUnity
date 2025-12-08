@@ -84,14 +84,17 @@ namespace Game.Relics
                 }
             }
 
-            var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
-            if (pending is IPendingAble p)
+            if (targetPiece != null)
             {
-                p.CompleteAction();
-            }
-            else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
+                var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
+                if (pending is IPendingAble p)
+                {
+                    p.CompleteAction();
+                }
+                else
+                {
+                    BoardViewer.Ins.ExecuteAction(pending);
+                }
             }
 
         }
