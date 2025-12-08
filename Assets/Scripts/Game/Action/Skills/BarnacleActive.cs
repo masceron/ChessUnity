@@ -4,6 +4,7 @@ using Game.Action.Internal;
 using Game.AI;
 using Game.Effects;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Action.Skills
@@ -64,6 +65,11 @@ namespace Game.Action.Skills
                 }
             }
             SetCooldown(Maker, -1);
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

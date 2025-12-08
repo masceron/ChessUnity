@@ -65,6 +65,11 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new KillPiece(bestPiece.Pos));
                 SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
             }
-        }   
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

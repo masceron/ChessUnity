@@ -90,5 +90,10 @@ namespace Game.Action.Skills
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
