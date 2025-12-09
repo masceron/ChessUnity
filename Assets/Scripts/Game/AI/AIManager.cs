@@ -3,6 +3,7 @@ using Game.Common;
 using Game.Managers;
 using UnityEngine;
 using UnityEngine.UI;
+using UX.UI.Ingame;
 
 namespace Game.AI
 {
@@ -194,6 +195,22 @@ namespace Game.AI
         }
 
         /// <summary>
+        /// Instantiates and displays a single TileScore at a given board position.
+        /// </summary>
+        /// <param name="position">The board position to display the score at.</param>
+        /// <param name="score">The score to display.</param>
+        private void ShowScoreAtPosition(int position, float score)
+        {
+            TileScore tileScoreInstance = Instantiate(tileScorePrefab, canvas);
+            spawnedTileScores.Add(tileScoreInstance);
+
+            var (rank, file) = BoardUtils.RankFileOf(position);
+            tileScoreInstance.SetPosition(rank, file);
+            tileScoreInstance.SetScore(Mathf.RoundToInt(score));
+            tileScoreInstance.Show();
+        }
+
+        /// <summary>
         /// Instantiates and displays a single TileScore for a given action without clearing previous ones.
         /// </summary>
         /// <param name="action">The action to display the score for.</param>
@@ -201,14 +218,7 @@ namespace Game.AI
         private void ShowScoreForAction(Action.Action action, float score)
         {
             if (action == null) return;
-
-            TileScore tileScoreInstance = Instantiate(tileScorePrefab, canvas);
-            spawnedTileScores.Add(tileScoreInstance);
-
-            var (rank, file) = BoardUtils.RankFileOf(action.Target);
-            tileScoreInstance.SetPosition(rank, file);
-            tileScoreInstance.SetScore(Mathf.RoundToInt(score));
-            tileScoreInstance.Show();
+            ShowScoreAtPosition(action.Target, score);
         }
 
 
@@ -255,9 +265,29 @@ namespace Game.AI
             if (actions == null || actions.Count == 0) return;
 
             var enemySnapshot = GenerateEnemySnapshot(piece.Color);
+            var targetScores = new Dictionary<int, float>();
+
             foreach (var action in actions)
             {
-                ShowScoreForAction(action, targetBrain.Evaluate(action, actions, enemySnapshot));
+                float score = targetBrain.Evaluate(action, actions, enemySnapshot);
+                int targetPos = action.Target;
+
+                if (targetScores.TryGetValue(targetPos, out float existingScore))
+                {
+                    if (score > existingScore)
+                    {
+                        targetScores[targetPos] = score;
+                    }
+                }
+                else
+                {
+                    targetScores.Add(targetPos, score);
+                }
+            }
+
+            foreach (var (targetPos, score) in targetScores)
+            {
+                ShowScoreAtPosition(targetPos, score);
             }
         }
 
@@ -267,10 +297,15 @@ namespace Game.AI
             if (showScoreOnHover)
             {
                 showScoreButton.GetComponentInChildren<Text>().text = "Hide Score";
+                if (BoardViewer.Selecting != -1)
+                {
+                    ShowPieceActionScore(BoardViewer.Selecting);
+                }
             }
             else
             {
-                showScoreButton.GetComponentInChildren<Text>().text = "Show Score";    
+                showScoreButton.GetComponentInChildren<Text>().text = "Show Score";   
+                ClearTileScores(); 
             }
         }
     }
