@@ -2,6 +2,7 @@
 using Game.Common;
 using Game.Managers;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.AI
 {
@@ -11,12 +12,20 @@ namespace Game.AI
         public static AIManager Ins { get; private set; }
         [SerializeField] private Transform canvas;
         [SerializeField] private TileScore tileScorePrefab;
-        [SerializeField] private List<TileScore> spawnedTileScores = new List<TileScore>(); 
+        [SerializeField] private List<TileScore> spawnedTileScores = new(); 
+        [SerializeField] private bool showScoreOnHover;
+        [SerializeField] private Button showScoreButton, playActionButton;
 
         private void Awake()
         {
             if (Ins != null && Ins != this) { Destroy(this); return; }
             Ins = this;
+        }
+
+        void Start()
+        {
+            playActionButton.onClick.AddListener(UIMethod_PlayBestAction);
+            showScoreButton.onClick.AddListener(ShowScoreToggle);
         }
 
         /// <summary>
@@ -36,27 +45,6 @@ namespace Game.AI
         {
             bool sideToMove = MatchManager.Ins.GameState.SideToMove;
             AIPlayAndExecuteBestAction(sideToMove);
-        }
-
-        public void PlayBestActionForSide(bool sideToMove)
-        {
-            AIUseRelic(sideToMove);
-            
-            // Prepare enemy snapshot (all actions of opposite side)
-            var enemySnapshot = GenerateEnemySnapshot(sideToMove);
-
-            Action.Action globalBest = AIPlayBestAction(sideToMove, enemySnapshot, out float globalBestScore);
-            // Execute action: handle pending-able actions or normal actions
-            if (globalBest is IAIAction aiAction)
-            {
-                // Complete pending immediately for AI (many skills implement CompleteAction)
-                aiAction.CompleteActionForAI();
-            }
-            else
-            {
-                // Use BoardViewer to execute to preserve UI / turn flow
-                UX.UI.Ingame.BoardViewer.Ins.ExecuteAction(globalBest);
-            }
         }
 
         private void AIPlayAndExecuteBestAction(bool sideToMove)
@@ -100,6 +88,28 @@ namespace Game.AI
                 Debug.Log("Use relic " + relic.type);
                 relic.ActiveForAI();
             }
+        }
+
+        // Build snapshot of enemy actions (opposite of side)
+        private List<Action.Action> GenerateEnemySnapshot(bool side)
+        {
+            var list = new List<Action.Action>();
+            var state = MatchManager.Ins.GameState;
+            if (state == null) return list;
+
+            for (int i = 0; i < BoardUtils.BoardSize; i++)
+            {
+                var p = state.PieceBoard[i];
+                if (p == null) continue;
+                if (p.Color == side) continue;
+                try
+                {
+                    p.MoveList(list, isPlayer: false, excludeEmptyTile: false);
+                }
+                catch { }
+            }
+
+            return list;
         }
 
         /// <summary>
@@ -167,14 +177,7 @@ namespace Game.AI
                 foreach (var action in actions)
                 {
                     float score = brain.Evaluate(action, actions, enemySnapshot);
-
-                    TileScore tileScoreInstance = Instantiate(tileScorePrefab, canvas);
-                    spawnedTileScores.Add(tileScoreInstance);
-
-                    var (rank, file) = BoardUtils.RankFileOf(action.Target);
-                    tileScoreInstance.SetPosition(rank, file);
-                    tileScoreInstance.SetScore(Mathf.RoundToInt(score));
-                    tileScoreInstance.Show();
+                    ShowScoreForAction(action, score);
                 }
             }
         }
@@ -186,24 +189,33 @@ namespace Game.AI
         /// <param name="score">The score of the action.</param>
         private void AIShowScoreAction(Action.Action action, float score)
         {
-            ClearTileScores(); // Clear previous scores before showing new one
+            ClearTileScores(); 
+            ShowScoreForAction(action, score);
+        }
 
+        /// <summary>
+        /// Instantiates and displays a single TileScore for a given action without clearing previous ones.
+        /// </summary>
+        /// <param name="action">The action to display the score for.</param>
+        /// <param name="score">The score of the action.</param>
+        private void ShowScoreForAction(Action.Action action, float score)
+        {
             if (action == null) return;
 
-            // Instantiate and set up TileScore for the best action
             TileScore tileScoreInstance = Instantiate(tileScorePrefab, canvas);
             spawnedTileScores.Add(tileScoreInstance);
 
             var (rank, file) = BoardUtils.RankFileOf(action.Target);
             tileScoreInstance.SetPosition(rank, file);
-            tileScoreInstance.SetScore(Mathf.RoundToInt(score)); // Convert float score to int
+            tileScoreInstance.SetScore(Mathf.RoundToInt(score));
             tileScoreInstance.Show();
         }
+
 
         /// <summary>
         /// Clears all currently displayed TileScore objects from the board.
         /// </summary>
-        private void ClearTileScores()
+        public void ClearTileScores()
         {
             foreach (var ts in spawnedTileScores)
             {
@@ -212,26 +224,54 @@ namespace Game.AI
             spawnedTileScores.Clear();
         }
 
-        // Build snapshot of enemy actions (opposite of side)
-        private List<Action.Action> GenerateEnemySnapshot(bool side)
+        /// <summary>
+        /// Shows the action scores for a specific piece when hovering over it.
+        /// Controlled by the 'showScoreOnHover' flag.
+        /// </summary>
+        /// <param name="pos">The board position of the piece.</param>
+        public void ShowPieceActionScore(int pos)
         {
-            var list = new List<Action.Action>();
-            var state = MatchManager.Ins.GameState;
-            if (state == null) return list;
+            if (!showScoreOnHover) return;
 
-            for (int i = 0; i < BoardUtils.BoardSize; i++)
+            ClearTileScores();
+
+            var piece = BoardUtils.PieceOn(pos);
+            if (piece == null) return;
+
+            var brains = FindObjectsByType<BrainComponent>(FindObjectsSortMode.None);
+            BrainComponent targetBrain = null;
+            foreach (var brain in brains)
             {
-                var p = state.PieceBoard[i];
-                if (p == null) continue;
-                if (p.Color == side) continue;
-                try
+                if (brain.Maker != null && brain.Maker.Pos == pos)
                 {
-                    p.MoveList(list, isPlayer: false, excludeEmptyTile: false);
+                    targetBrain = brain;
+                    break;
                 }
-                catch { }
             }
 
-            return list;
+            if (targetBrain == null) return;
+
+            var actions = targetBrain.GatherActionsForMaker();
+            if (actions == null || actions.Count == 0) return;
+
+            var enemySnapshot = GenerateEnemySnapshot(piece.Color);
+            foreach (var action in actions)
+            {
+                ShowScoreForAction(action, targetBrain.Evaluate(action, actions, enemySnapshot));
+            }
+        }
+
+        private void ShowScoreToggle()
+        {
+            showScoreOnHover = !showScoreOnHover;
+            if (showScoreOnHover)
+            {
+                showScoreButton.GetComponentInChildren<Text>().text = "Hide Score";
+            }
+            else
+            {
+                showScoreButton.GetComponentInChildren<Text>().text = "Show Score";    
+            }
         }
     }
 }

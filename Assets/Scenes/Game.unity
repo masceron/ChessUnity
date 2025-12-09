@@ -1032,7 +1032,7 @@ GameObject:
   - component: {fileID: 578288904}
   - component: {fileID: 578288903}
   m_Layer: 5
-  m_Name: Button (Legacy)
+  m_Name: Play Action Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1101,19 +1101,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 578288904}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1021236564}
-        m_TargetAssemblyTypeName: Game.AI.AIManager, Assembly-CSharp
-        m_MethodName: UIMethod_PlayBestAction
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &578288904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1580,6 +1568,9 @@ MonoBehaviour:
   canvas: {fileID: 773333542}
   tileScorePrefab: {fileID: 12064993}
   spawnedTileScores: []
+  showScoreOnHover: 0
+  showScoreButton: {fileID: 1514684063}
+  playActionButton: {fileID: 578288903}
 --- !u!4 &1021236565
 Transform:
   m_ObjectHideFlags: 0
@@ -1696,7 +1687,7 @@ GameObject:
   - component: {fileID: 1514684064}
   - component: {fileID: 1514684063}
   m_Layer: 5
-  m_Name: Button (Legacy) (1)
+  m_Name: Show Score Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1765,19 +1756,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1514684064}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1021236564}
-        m_TargetAssemblyTypeName: Game.AI.AIManager, Assembly-CSharp
-        m_MethodName: UIMethod_ShowAllScores
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1514684064
 MonoBehaviour:
   m_ObjectHideFlags: 0
