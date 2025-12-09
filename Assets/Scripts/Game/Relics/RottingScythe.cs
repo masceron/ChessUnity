@@ -1,8 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
+using Game.Common;
 using Game.Managers;
+using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
+using static Game.Common.BoardUtils;
 
 namespace Game.Relics
 {
@@ -31,6 +37,100 @@ namespace Game.Relics
         }
 
         public override void ActiveForAI()
-        {}
+        {
+            PieceLogic bestPiece = null;
+            List<PieceLogic> bestPieces = new List<PieceLogic>();
+            
+            List<PieceLogic> piecesInfected = FindPiecesWithEffectName(MatchManager.Ins.GameState.OurSide, "effect_infected");
+            List<PieceLogic> enemyPiecesInfected = FindPiecesWithEffectName(!MatchManager.Ins.GameState.OurSide, "effect_infected");
+            piecesInfected.AddRange(enemyPiecesInfected);
+
+            foreach (var piece in piecesInfected)
+            {
+                if (piece != null && piece.PieceRank == PieceRank.Commander && piece.Color == !MatchManager.Ins.GameState.OurSide)
+                {
+                    bestPiece = piece;
+                    break;
+                }
+            }
+            
+            // If no enemy commander found, evaluate based on surrounding pieces
+            if (bestPiece == null)
+            {
+                bool allOurPiecesAbove2 = true;
+                
+                foreach (var piece in piecesInfected)
+                {
+                    var (rank, file) = RankFileOf(piece.Pos);
+                    
+                    int ourPieceCount = 0;
+                    int enemyPieceCount = 0;
+                    int maxEnemyPieceCount = int.MinValue;
+                    
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
+                    {
+                        var index = IndexOf(rankOff, fileOff);
+                        var pOn = PieceOn(index);
+                        
+                        if (pOn != null && pOn.Color == MatchManager.Ins.GameState.OurSide 
+                                        && pOn.Pos != piece.Pos)
+                        {
+                            ourPieceCount++;
+                        }
+                        else if (pOn != null && pOn.Color == !MatchManager.Ins.GameState.OurSide 
+                                             && pOn.Pos != piece.Pos)
+                        {
+                            enemyPieceCount++;
+                        }
+                    }
+                    
+                    if (ourPieceCount < 2) allOurPiecesAbove2 = false;
+                    
+                    if (enemyPieceCount > maxEnemyPieceCount && enemyPieceCount > 0)
+                    {
+                        bestPieces.Clear();
+                        bestPieces.Add(piece);
+                        maxEnemyPieceCount = enemyPieceCount;
+                    }
+                    else if (enemyPieceCount == maxEnemyPieceCount)
+                    {
+                        bestPieces.Add(piece);
+                    }
+                    
+                }
+                
+                if (allOurPiecesAbove2)
+                {
+                    return;
+                }
+                
+                if (bestPieces.Count == 1)
+                {
+                    bestPiece = bestPieces[0];
+                }
+                else if (bestPieces.Count > 1)
+                {
+                    bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                }
+                else if (bestPieces.Count == 0)
+                {
+                    //
+                }
+            }
+            
+            if (bestPieces != null)
+            {
+                var pending = new RottingScythePending(this, bestPiece.Pos, bestPiece.Color);
+                if (pending is IPendingAble p)
+                {
+                    p.CompleteAction();
+                }
+                else
+                {
+                    BoardViewer.Ins.ExecuteAction(pending);
+                }
+            }
+            
+        }
     }
 }
