@@ -163,6 +163,10 @@ MonoBehaviour:
     m_Key: piece_megalodon_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 43867173090983936
+    m_Key: piece_eyeshade_sculpin_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

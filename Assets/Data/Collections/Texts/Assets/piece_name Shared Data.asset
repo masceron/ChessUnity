@@ -295,6 +295,10 @@ MonoBehaviour:
     m_Key: piece_armored_feather_star
     m_Metadata:
       m_Items: []
+  - m_Id: 43893164517588992
+    m_Key: piece_eyeshade_sculpin
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

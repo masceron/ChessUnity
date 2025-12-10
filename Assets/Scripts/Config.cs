@@ -18,6 +18,7 @@ public static class Config
         new PieceConfig("piece_stingray", true, 16),
         // new PieceConfig("piece_anglerfish", false, 17),
         new PieceConfig("piece_archelon", true, 17),
+        new PieceConfig("piece_eyeshade_sculpin", true, 18),
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig("relic_storm_capacitor", false, 5);
