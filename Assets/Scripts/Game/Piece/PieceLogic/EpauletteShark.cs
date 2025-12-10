@@ -1,4 +1,5 @@
-﻿using Game.Action;
+﻿using System.Collections.Generic;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
@@ -37,6 +38,46 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     //query for AI in here
+                    List<Commons.PieceLogic> bestPieces = new List<Commons.PieceLogic>();
+                    Commons.PieceLogic bestPiece = null;
+                    int maxPoint = int.MinValue;
+            
+                    var (rank, file) = RankFileOf(Pos);
+
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    {
+                        var index = IndexOf(rankOff, fileOff);
+                        var pOn = PieceOn(index);
+                        if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm 
+                            || pOn.Color == Color) continue;
+                
+                        int AIValue = pOn.GetValueForAI();
+                        if (AIValue > maxPoint)
+                        {
+                            bestPieces.Clear();
+                            bestPieces.Add(pOn);
+                            maxPoint = AIValue;
+                        }
+                        else if (AIValue == maxPoint) bestPieces.Add(pOn);
+                    }
+
+                    if (bestPieces.Count == 0)
+                    {
+                        //
+                    }
+                    else if (bestPieces.Count == 1)
+                    {
+                        bestPiece = bestPieces[0];
+                    }
+                    else
+                    {
+                        bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                    }
+
+                    if (bestPiece != null)
+                    {
+                        list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
+                    }
                 }
             };
         }
