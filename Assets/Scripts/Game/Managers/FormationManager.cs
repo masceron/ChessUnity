@@ -1,5 +1,6 @@
 
 
+using Game.Augmentation;
 using Game.Common;
 using Game.Tile;
 using UnityEngine;
@@ -92,7 +93,8 @@ namespace Game.Managers
         public bool IsHideByFog(int pos, bool sideToMove)
         {
             Formation formation = GetFormation(pos);
-            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar && formation.GetColor() != sideToMove)
+            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar 
+                && formation.GetColor() != sideToMove && AbyssalTapetum.IsSomePiecesHaveThisAugmentation(sideToMove) == false)
             {
                 return true;
             }

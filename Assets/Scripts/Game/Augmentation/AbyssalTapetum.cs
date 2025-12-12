@@ -24,6 +24,7 @@ namespace Game.Augmentation
         }
         public static bool IsSomePiecesHaveThisAugmentation(bool side)
         {
+            affectedPieces.RemoveAll((e) => e == null || e.IsDead());
             foreach (PieceLogic pieceLogic in affectedPieces)
             {
                 if (pieceLogic.Color == side)

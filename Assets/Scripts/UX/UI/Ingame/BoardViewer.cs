@@ -136,13 +136,6 @@ namespace UX.UI.Ingame
                         case IPendingAble pending:
                             pending.CompleteAction();
                             return;
-                        // Cách xử lý 2 target cũ
-                        /*case IDoubleSelectionSkill doubleSkill:
-                        if (doubleSkill.IsBothSelected()) { break; }
-                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
-                        ShowMoveList(action.Maker);
-                        pieceActions.MarkSkill();
-                        return; */
                     }
 
                     ExecuteAction(action);
@@ -155,7 +148,7 @@ namespace UX.UI.Ingame
                 var piece = PieceOn(pos);
                 if (piece is not { IsVisible: true } || FormationManager.Ins.IsHideByFog(pos, SideToMove())) return;
                 
-                SetPieceHover(pos);
+                Hover(pos);
                 TileManager.Ins.Select(pos);
                 Selecting = pos;
                 pieceActions.LoadPieceActionInfo();
@@ -191,8 +184,8 @@ namespace UX.UI.Ingame
                 pieceInfoMenu.Disable();
                 return;
             }
-            Formation formation = FormationManager.Ins.GetFormation(pos);
-            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar && formation.GetColor() != SideToMove())
+
+            if (FormationManager.Ins.IsHideByFog(pos, SideToMove()))
             {
                 return;
             }

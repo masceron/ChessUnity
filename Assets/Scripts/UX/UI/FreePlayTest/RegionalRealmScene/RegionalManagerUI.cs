@@ -36,7 +36,8 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 List<AugmentationInfo> infos = new();
                 foreach (var name in augNameLst)
                 {
-                    infos.Add(AssetManager.Ins.AugmentationData[name]);
+                    AugmentationInfo info = AssetManager.Ins.AugmentationData[name];
+                    infos.Add(info);
                 }
                 var pieceConfig = new PieceConfig(troop.PieceType, false,
                     (ushort)(troop.Rank * Config.boardSize + troop.File));
@@ -46,7 +47,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             }
             
             Debug.Log($"BoardSize: {FreePlayArmyDesign.Ins.army.BoardSize}");
-            SceneLoader.LoadSceneWithLoadingScreen(1);
+            SceneLoader.LoadFreePlay(LoadCanvasByFunc.chosenGameMode);
 
         }
         public void ToDesignArmyPanel()
