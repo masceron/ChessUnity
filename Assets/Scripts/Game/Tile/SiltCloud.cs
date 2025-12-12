@@ -8,7 +8,7 @@ namespace Game.Tile
     public class SiltCloud : Formation
     {
         
-        public SiltCloud(bool haveDuration, bool color) : base(color)
+        public SiltCloud(bool haveDuration)
         {
             HaveDuration = haveDuration;
         }

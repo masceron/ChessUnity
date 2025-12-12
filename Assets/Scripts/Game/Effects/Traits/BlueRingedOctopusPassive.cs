@@ -1,42 +1,114 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using UnityEditor;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     
-    public class BlueRingedOctopusPassive : Effect, IEndTurnEffect
+    public class BlueRingedOctopusPassive : Effect
     {
-        private int LastPos = -1;
         public BlueRingedOctopusPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_ringed_octopus_passive")
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+
         }
 
-        public void OnCallEnd(Action.Action action)
+        public override void OnCallPieceAction(Action.Action action)
         {
-            if (LastPos == Piece.Pos) return;
-            if (LastPos != -1)
+            var activeBoard = ActiveBoard();
+            if (action.Maker == Piece.Pos)
             {
-                foreach(var (rank, file) in MoveEnumerators.AroundUntil(RankOf(LastPos), FileOf(LastPos), 3))
+                var pos1 = action.Maker;
+                var pos2 = action.Target;
+
+                var (first1, first2) = RankFileOf(pos1);
+                var (second1, second2) = RankFileOf(pos2);
+
+                var pushX = Math.Sign(second1 - first1);
+                var pushY = Math.Sign(second2 - first2);
+
+                var curX = first1;
+                var curY = first2;
+
+                HashSet<int> effectedPieces = new HashSet<int>();
+                while(true) 
                 {
-                    Poisoned[IndexOf(rank, file)] = false;
+                    var p = PieceOn(IndexOf(curX, curY));
+                    if (p != null && p.Color != Piece.Color) 
+                        effectedPieces.Add(IndexOf(curX, curY));
+
+                    for (int x = -1; x <= 1; x++)
+                    {
+                        for (int y = -1; y <= 1; y++)
+                        {
+                            var (rank, file) = (curX + x, curY + y);
+                            if (!VerifyBounds(rank) || !VerifyBounds(file)) continue;
+                            var piece = PieceOn(IndexOf(rank, file));
+                            if (piece == null || piece.Color == Piece.Color) continue;
+
+                            effectedPieces.Add(IndexOf(rank, file));
+                        }
+                    }
+                    curX += pushX; 
+                    curY += pushY;
+                    
+                    if (curX == second1 && curY == second2) break;
+                }
+
+                foreach (var piece in effectedPieces)
+                {
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(piece))));
                 }
             }
-            
-            foreach(var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Piece.Pos), FileOf(Piece.Pos), 3))
+            else
             {
-                Poisoned[IndexOf(rank, file)] = true;
+                var initActive = new List<int>();
+
+                for (int x = -1; x <= 1; ++x)
+                {
+                    for (int y = -1; y <= 1; ++y)
+                    {
+                        var (rank, file) = (RankOf(Piece.Pos) + x, FileOf(Piece.Pos) + y);
+                        if (activeBoard[IndexOf(rank, file)])
+                        {
+                            activeBoard[IndexOf(rank, file)] = false;
+                            initActive.Add(IndexOf(rank, file));
+                        }
+                    }
+                }
+
+                if (activeBoard[action.Target] == false || activeBoard[action.Maker] == false)
+                {
+                    foreach (var pos in initActive)
+                        activeBoard[pos] = true;
+                    
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Maker))));
+                    return;
+                }
+                
+                var blocker = Pathfinder.LineBlocker(
+                    RankOf(action.Maker), FileOf(action.Maker), RankOf(action.Target), FileOf(action.Target)
+                );
+                
+                if (blocker.Item1 != -1)
+                {
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Maker))));
+                }
+                
+                foreach (var pos in initActive)
+                    activeBoard[pos] = true;
+                
             }
-            
-            LastPos = Piece.Pos;
         }
         
-        public EndTurnEffectType EndTurnEffectType { get; }
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 50;

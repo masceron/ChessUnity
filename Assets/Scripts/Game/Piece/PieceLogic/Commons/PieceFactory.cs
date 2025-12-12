@@ -76,6 +76,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_thalassos" => new Thalassos(cfg),
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
+                "piece_blue_ringed_octopus" => new BlueRingedOctopus(cfg),
                 _ => null
             };
         }

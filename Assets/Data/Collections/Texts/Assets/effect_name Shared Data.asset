@@ -355,6 +355,10 @@ MonoBehaviour:
     m_Key: effect_black_swallower_vengeful
     m_Metadata:
       m_Items: []
+  - m_Id: 44478021397958656
+    m_Key: effect_blue_ringed_octopus_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

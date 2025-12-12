@@ -295,6 +295,14 @@ MonoBehaviour:
     m_Key: piece_armored_feather_star
     m_Metadata:
       m_Items: []
+  - m_Id: 44500426677866496
+    m_Key: piece_blueringed_octopus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44501772650991616
+    m_Key: piece_blue_ringed_octopus
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
