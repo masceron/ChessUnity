@@ -11,8 +11,9 @@ namespace UX.UI.Ingame
     {
         public static bool isPause = false;
         [SerializeField] private Image targetGraphic;
-        void Start()
+        protected override void Awake()
         {
+            base.Awake();
             gameObject.SetActive(false);
         }
         public void OnClick()
