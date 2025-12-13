@@ -5,6 +5,7 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Condition;
 using Game.Effects.Others;
+using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -38,45 +39,59 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     //query for AI in here
-                    List<Commons.PieceLogic> bestPieces = new List<Commons.PieceLogic>();
-                    Commons.PieceLogic bestPiece = null;
-                    int maxPoint = int.MinValue;
+                    if (excludeEmptyTile)
+                    {
+                        List<Commons.PieceLogic> bestPieces = new List<Commons.PieceLogic>();
+                        Commons.PieceLogic bestPiece = null;
+                        int maxPoint = int.MinValue;
             
-                    var (rank, file) = RankFileOf(Pos);
+                        var (rank, file) = RankFileOf(Pos);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
-                    {
-                        var index = IndexOf(rankOff, fileOff);
-                        var pOn = PieceOn(index);
-                        if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm 
-                            || pOn.Color == Color) continue;
-                
-                        int AIValue = pOn.GetValueForAI();
-                        if (AIValue > maxPoint)
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                         {
-                            bestPieces.Clear();
-                            bestPieces.Add(pOn);
-                            maxPoint = AIValue;
+                            var index = IndexOf(rankOff, fileOff);
+                            var pOn = PieceOn(index);
+                            if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm 
+                                || pOn.Color == Color) continue;
+                
+                            int AIValue = pOn.GetValueForAI();
+                            if (AIValue > maxPoint)
+                            {
+                                bestPieces.Clear();
+                                bestPieces.Add(pOn);
+                                maxPoint = AIValue;
+                            }
+                            else if (AIValue == maxPoint) bestPieces.Add(pOn);
                         }
-                        else if (AIValue == maxPoint) bestPieces.Add(pOn);
-                    }
 
-                    if (bestPieces.Count == 0)
-                    {
-                        //
-                    }
-                    else if (bestPieces.Count == 1)
-                    {
-                        bestPiece = bestPieces[0];
+                        if (bestPieces.Count == 0)
+                        {
+                            //
+                        }
+                        else if (bestPieces.Count == 1)
+                        {
+                            bestPiece = bestPieces[0];
+                        }
+                        else
+                        {
+                            bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                        }
+
+                        if (bestPiece != null)
+                        {
+                            list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
+                        }
                     }
                     else
                     {
-                        bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
-                    }
-
-                    if (bestPiece != null)
-                    {
-                        list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
+                        var (rank, file) = RankFileOf(Pos);
+                        
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                        {
+                            var index = IndexOf(rankOff, fileOff);
+                            if (!IsActive(IndexOf(rankOff, fileOff))) continue;
+                            list.Add(new EpauletteSharkActive(Pos, index));
+                        }
                     }
                 }
             };
