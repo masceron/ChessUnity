@@ -359,6 +359,10 @@ MonoBehaviour:
     m_Key: effect_shortreach_description
     m_Metadata:
       m_Items: []
+  - m_Id: 45012315973844992
+    m_Key: effect_hemolymph_filter_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
