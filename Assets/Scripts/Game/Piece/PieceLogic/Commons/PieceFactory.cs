@@ -77,6 +77,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
                 "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
+                "piece_pegasus_smooth" => new PegasusSmooth(cfg),
                 _ => null
             };
         }

@@ -8,7 +8,7 @@ namespace Game.Effects.Debuffs
     {
 
         private byte lastAttackRange;
-        public Pacified(PieceLogic piece) : base(-1, 1, piece, "effect_pacified")
+        public Pacified(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_pacified")
         {
             lastAttackRange = Piece.AttackRange;
         }

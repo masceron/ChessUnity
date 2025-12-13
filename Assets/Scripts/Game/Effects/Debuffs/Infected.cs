@@ -1,5 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Augmentation;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -15,12 +16,17 @@ namespace Game.Effects.Debuffs
             
         }
         
-        public override void OnCallPieceAction(Action.Action lastMainAction)
+        public override void OnCallPieceAction(Action.Action action)
         {
             turnCounter++;
 
-            if (turnCounter == 3)
+            if (turnCounter % 3 == 0)
             {
+                var pieceTarget = PieceOn(action.Target);
+                if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.HemolymphFilter))
+                {
+                    return;
+                }
                 InfectedActivate();
             }
         }
@@ -28,13 +34,13 @@ namespace Game.Effects.Debuffs
         private void InfectedActivate()
         {
             var (rank, file) = RankFileOf(Piece.Pos);
-            ActionManager.ExecuteImmediately(new KillPiece(Piece.Pos));
+            ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
             {
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn == null || pOn == Piece) continue;
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(pOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Infected(pOn)));
             }
         }
 

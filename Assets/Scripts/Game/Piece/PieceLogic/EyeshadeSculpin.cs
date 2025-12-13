@@ -17,6 +17,7 @@ namespace Game.Piece.PieceLogic
 
         public EyeshadeSculpin(PieceConfig cfg) : base(cfg, AmbushPredatorMoves.Quiets, AmbushPredatorMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -36,7 +37,7 @@ namespace Game.Piece.PieceLogic
                 {
                     //query for AI in here
                     var listPieces = new List<Commons.PieceLogic>(); 
-
+                    
                     foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 4))
                     {
                         var idx = IndexOf(rank, file);
@@ -60,27 +61,27 @@ namespace Game.Piece.PieceLogic
                     listPieces.Sort((a, b) =>
                         b.GetValueForAI()
                             .CompareTo(a.GetValueForAI()));
-
+                    
                     var selectedPieces = new List<Commons.PieceLogic>();
-
+                    
                     int topValue = listPieces[0].GetValueForAI();
                     var topGroup = listPieces.Where(p =>
                         p.GetValueForAI() == topValue).ToList();
-
+                    
                     if (topGroup.Count >= 2)
                     {
                         int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
                         int idx2;
                         do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
                         while (idx2 == idx1);
-
+                    
                         selectedPieces.Add(topGroup[idx1]);
                         selectedPieces.Add(topGroup[idx2]);
                     }
                     else
                     {
                         selectedPieces.Add(listPieces[0]);
-
+                    
                         if (listPieces.Count > 1)
                         {
                             int secondValue = listPieces[1].GetValueForAI();
@@ -91,7 +92,7 @@ namespace Game.Piece.PieceLogic
                             selectedPieces.Add(secondGroup[idx]);
                         }
                     }
-
+                    
                     foreach (var piece in selectedPieces)
                     {
                         list.Add(new EyeshadeSculpinActive(Pos, piece.Pos));

@@ -299,6 +299,10 @@ MonoBehaviour:
     m_Key: piece_eyeshade_sculpin
     m_Metadata:
       m_Items: []
+  - m_Id: 44167666258378752
+    m_Key: piece_pegasus_smooth
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
