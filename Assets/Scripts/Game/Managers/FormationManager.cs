@@ -2,6 +2,7 @@
 
 using Game.Augmentation;
 using Game.Common;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -93,8 +94,17 @@ namespace Game.Managers
         public bool IsHideByFog(int pos, bool sideToMove)
         {
             Formation formation = GetFormation(pos);
+            bool haveAbyssalTapetum = false;
+            foreach(PieceLogic pieceLogic in MatchManager.Ins.GameState.PieceBoard)
+            {
+                if (pieceLogic != null && pieceLogic.Color == sideToMove && pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum))
+                {
+                    haveAbyssalTapetum = true;
+                    break;
+                }
+            }
             if (formation != null && formation.GetFormationType() == FormationType.FogOfWar 
-                && formation.GetColor() != sideToMove && AbyssalTapetum.IsSomePiecesHaveThisAugmentation(sideToMove) == false)
+                && formation.GetColor() != sideToMove && !haveAbyssalTapetum)
             {
                 return true;
             }

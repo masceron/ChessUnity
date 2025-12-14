@@ -9,7 +9,6 @@ namespace Game.Augmentation
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AbyssalTapetum : Augmentation
     {
-        private readonly static List<PieceLogic> affectedPieces = new();
         public AbyssalTapetum() : base(AugmentationName.AbyssalTapetum, AugmentationRarity.Cursed, AugmentationSlot.Optic, null, null)
         {
             PassiveEffects = new List<Effect>();
@@ -18,21 +17,8 @@ namespace Game.Augmentation
         public override void SetTarget(PieceLogic target)
         {
             Target = target;
-            affectedPieces.Add(target);
             Set = new AugmentationSet(AugmentationSetType.StalkerInstinct, true);
             PassiveEffects.Add(new AbyssalTapetumPassive(Target));
-        }
-        public static bool IsSomePiecesHaveThisAugmentation(bool side)
-        {
-            affectedPieces.RemoveAll((e) => e == null || e.IsDead());
-            foreach (PieceLogic pieceLogic in affectedPieces)
-            {
-                if (pieceLogic.Color == side)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }
