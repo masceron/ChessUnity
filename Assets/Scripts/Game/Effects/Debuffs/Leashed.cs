@@ -10,8 +10,10 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Leashed: Effect
     {
-        public Leashed(PieceLogic piece) : base(-1, 1, piece, "effect_leashed")
+        public readonly int Position;
+        public Leashed(PieceLogic piece, int position) : base(-1, 1, piece, "effect_leashed")
         {
+            Position = position;
         }
 
         public override void OnCallMoveGen(List<Action.Action> actions)
@@ -20,7 +22,7 @@ namespace Game.Effects.Debuffs
             
             actions.RemoveAll(action => 
                 action.Maker == Piece.Pos && 
-                Distance(action.Target, Piece.Pos) > 3
+                Distance(action.Target, Position) > 3
             );
         }
         
