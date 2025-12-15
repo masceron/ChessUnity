@@ -35,7 +35,7 @@ namespace Game.Piece.PieceLogic
                     {
                         for (int i = 0; i < BoardSize; ++i)
                         {
-                            if (IsActive(i))
+                            if (IsActive(i) && i != Pos)
                             {
                                 list.Add(new TemperantiaSwap(Pos, i));
                             }

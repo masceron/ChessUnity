@@ -42,7 +42,7 @@ namespace Game.Piece.PieceLogic
                         {
                             for (var y = file - 4; y <= file + 4; ++y)
                             {
-                                if (VerifyBounds(x) && VerifyBounds(y) && IsActive(IndexOf(x, y)))
+                                if (VerifyBounds(x) && VerifyBounds(y) && IsActive(IndexOf(x, y)) && IndexOf(x, y) != Pos)
                                 {
                                     list.Add(new HourglassJellyActive(Pos, IndexOf(x, y)));
                                 }
