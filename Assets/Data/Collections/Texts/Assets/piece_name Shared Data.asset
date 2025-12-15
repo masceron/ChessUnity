@@ -303,6 +303,14 @@ MonoBehaviour:
     m_Key: piece_blue_ringed_octopus
     m_Metadata:
       m_Items: []
+  - m_Id: 44611232987926528
+    m_Key: piece_dormant_fossil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44712614424268800
+    m_Key: piece_spinster_wrasse
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

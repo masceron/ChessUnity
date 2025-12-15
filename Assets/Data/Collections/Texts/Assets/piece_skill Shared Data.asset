@@ -163,6 +163,10 @@ MonoBehaviour:
     m_Key: piece_megalodon_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 44686056036814848
+    m_Key: piece_spinster_wrasse_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

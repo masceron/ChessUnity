@@ -359,6 +359,14 @@ MonoBehaviour:
     m_Key: effect_blue_ringed_octopus_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 44691809522995200
+    m_Key: effect_protective_lens_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 44738162672324608
+    m_Key: effect_cold_blooded_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

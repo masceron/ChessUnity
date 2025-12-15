@@ -46,7 +46,7 @@ namespace Game.Action.Internal
                         var strongerEffect = weakerEffect == already ? Effect : already;
                         var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
                         already.Duration = (sbyte)newDuration;
-                        UnityEngine.Debug.Log(already.Duration);
+                        //UnityEngine.Debug.Log(already.Duration);
                         break;
                     case EffectStack.NonStackable: default:
                         break;
