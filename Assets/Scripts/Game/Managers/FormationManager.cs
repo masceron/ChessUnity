@@ -1,5 +1,6 @@
 
 
+using System.Linq;
 using Game.Augmentation;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
@@ -94,6 +95,7 @@ namespace Game.Managers
         public bool IsHideByFog(int pos, bool sideToMove)
         {
             Formation formation = GetFormation(pos);
+            PieceLogic pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
             bool haveAbyssalTapetum = false;
             foreach(PieceLogic pieceLogic in MatchManager.Ins.GameState.PieceBoard)
             {
@@ -104,7 +106,8 @@ namespace Game.Managers
                 }
             }
             if (formation != null && formation.GetFormationType() == FormationType.FogOfWar 
-                && formation.GetColor() != sideToMove && !haveAbyssalTapetum)
+                && formation.GetColor() != sideToMove && !haveAbyssalTapetum 
+                && !pieceInPos.Effects.Any(e => e.EffectName == "effect_marked"))
             {
                 return true;
             }
