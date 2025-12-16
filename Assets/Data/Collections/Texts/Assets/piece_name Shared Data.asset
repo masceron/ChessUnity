@@ -303,6 +303,10 @@ MonoBehaviour:
     m_Key: piece_pegasus_smooth
     m_Metadata:
       m_Items: []
+  - m_Id: 46052458822336512
+    m_Key: piece_porcelain_crab
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

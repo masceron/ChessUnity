@@ -10,7 +10,9 @@ public static class Config
     public static List<PieceConfig> PieceConfigWhite = new()
     {
         // new PieceConfig("piece_siren", false, 25),
-        // new PieceConfig("piece_bobtail_squid", false, 26),
+        new PieceConfig("piece_bobtail_squid", false, 26),
+        new PieceConfig("piece_hatchetfish", false, 21),
+        new PieceConfig("piece_blue_dragon", false, 22),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
@@ -19,7 +21,8 @@ public static class Config
         new PieceConfig("piece_flying_fish", false, 17),
         // new PieceConfig("piece_archelon", true, 17),
         new PieceConfig("piece_eyeshade_sculpin", true, 18),
-        new PieceConfig("piece_pegasus_smooth", true, 19)
+        new PieceConfig("piece_pegasus_smooth", true, 19),
+        new PieceConfig("piece_porcelain_crab", true, 20)
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig("relic_storm_capacitor", false, 5);

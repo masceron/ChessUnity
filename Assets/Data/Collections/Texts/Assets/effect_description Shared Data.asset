@@ -363,6 +363,10 @@ MonoBehaviour:
     m_Key: effect_hemolymph_filter_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 46052934561267712
+    m_Key: effect_vigorouse_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
