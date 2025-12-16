@@ -307,6 +307,10 @@ MonoBehaviour:
     m_Key: piece_porcelain_crab
     m_Metadata:
       m_Items: []
+  - m_Id: 46087358451515392
+    m_Key: piece_umbrella_slug
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,5 +16,5 @@ MonoBehaviour:
   category: 1
   stack: 1
   priority: 0
-  activeWhen: 0
+  activeWhen: 1
   icon: {fileID: 2800000, guid: 17f77964f912ea1459b176afd82781ab, type: 3}

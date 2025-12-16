@@ -367,6 +367,10 @@ MonoBehaviour:
     m_Key: effect_vigorouse_description
     m_Metadata:
       m_Items: []
+  - m_Id: 46054427930624000
+    m_Key: effect_vigorous_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
