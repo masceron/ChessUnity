@@ -311,6 +311,14 @@ MonoBehaviour:
     m_Key: piece_spinster_wrasse
     m_Metadata:
       m_Items: []
+  - m_Id: 46522858594947072
+    m_Key: piece_frog_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46538502791024640
+    m_Key: piece_thread_pipefish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

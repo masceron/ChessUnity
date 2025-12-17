@@ -367,6 +367,10 @@ MonoBehaviour:
     m_Key: effect_cold_blooded_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 46514751244390400
+    m_Key: effect_thread_pipefish_effect
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

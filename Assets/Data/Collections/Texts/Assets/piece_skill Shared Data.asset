@@ -167,6 +167,10 @@ MonoBehaviour:
     m_Key: piece_spinster_wrasse_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 46511944378404864
+    m_Key: piece_thread_pipefish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
