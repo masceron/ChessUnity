@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Effects.Buffs;
+using Game.Effects;
 
 namespace Game.Action.Skills
 {
@@ -31,7 +32,7 @@ namespace Game.Action.Skills
                 .ToList();
             foreach (var piece in picked)
             {
-                // ActionManager.EnqueueAction(new ApplyEffect(new Momentum(1, piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece)));
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

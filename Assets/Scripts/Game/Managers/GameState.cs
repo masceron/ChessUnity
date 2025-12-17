@@ -33,6 +33,7 @@ namespace Game.Managers
         SwitchTurn,
         MoveGeneration,
         EffectApplied,
+        SkillUsed,
         Dead
     }
 
@@ -372,6 +373,13 @@ namespace Game.Managers
         
         public void IncrementSkillUses(Action.Action action)
         {
+            effectObservers.ForEach(e =>
+            {
+                if (e.ObserverActivateWhen == ObserverActivateWhen.SkillUsed)
+                {
+                    ((ISkillUsedEffect)e).OnCallSkillUsed(action);
+                }
+            });
             if (ColorOfPiece(action.Maker)) BlackSkillUses++;
             else WhiteSkillUses++;
         }

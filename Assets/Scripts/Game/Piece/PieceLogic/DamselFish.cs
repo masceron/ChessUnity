@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic
     {
         public DamselFish(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
-            // ActionManager.ExecuteImmediately(new ApplyEffect(new Momentum(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Momentum(this)));
             
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -25,7 +25,7 @@ namespace Game.Piece.PieceLogic
                 {
                     if (SkillCooldown == 0)
                     {
-                        // list.Add(new DamselFishActive(Pos));
+                        list.Add(new DamselFishActive(Pos));
                     }
                 }
                 else

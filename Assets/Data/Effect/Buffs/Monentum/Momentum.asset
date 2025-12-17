@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: Rally
+  m_Name: Momentum
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_rally
+  key: effect_momentum
   category: 1
   stack: 1
   priority: 1
-  activeWhen: 1
-  icon: {fileID: 2800000, guid: 163621af2d81ba948b9649b5eca3047f, type: 3}
+  activeWhen: 6
+  icon: {fileID: 2800000, guid: 4598e095029c03d43b22a7ef4322a698, type: 3}
