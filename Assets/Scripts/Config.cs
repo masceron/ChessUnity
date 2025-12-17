@@ -13,6 +13,7 @@ public static class Config
         new PieceConfig("piece_bobtail_squid", false, 26),
         new PieceConfig("piece_hatchetfish", false, 21),
         new PieceConfig("piece_blue_dragon", false, 22),
+        new PieceConfig("piece_umbrella_slug", false, 23),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()

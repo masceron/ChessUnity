@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: MelibePassive
+  m_Name: UmbrellaSlugSpecialAbility
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_melibe_passive
+  key: effect_umbrella_slug_special_ability
   category: 3
   stack: 1
-  priority: 8
+  priority: 0
   activeWhen: 2
   icon: {fileID: 0}
