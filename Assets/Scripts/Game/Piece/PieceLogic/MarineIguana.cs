@@ -40,10 +40,7 @@ namespace Game.Piece.PieceLogic
                 }
                 else
                 {
-                    //query for AI in here
-                    if (!excludeEmptyTile)
-                    {
-                        var listActions = new List<Action.Action>();
+                    var listActions = new List<Action.Action>();
                         BluffingMoves.Captures(listActions, Pos, isPlayer: true);
                         if (listActions.Count > 1)
                         {
@@ -52,21 +49,16 @@ namespace Game.Piece.PieceLogic
                         var captureTargets = listActions.OfType<ICaptures>()
                         .Select(c => ((Action.Action)c).Target)
                         .ToList();
+                        
+                    if (!excludeEmptyTile)
+                    {
                         foreach (var target in captureTargets)
-                        {                            
+                        {
                             list.Add(new MarineIguanaActive(Pos, target));
                         }
+                        return;
                     }
 
-                    var listActions = new List<Action.Action>();
-                    BluffingMoves.Captures(listActions, Pos, isPlayer: true);
-                    if (listActions.Count > 1)
-                    {
-                        listActions = listActions.Distinct(new ActionComparer()).ToList();
-                    }
-                    var captureTargets = listActions.OfType<ICaptures>()
-                    .Select(c => ((Action.Action)c).Target)
-                    .ToList();
                     if (captureTargets.Count == 0) return;
                     int firstTarget = captureTargets[0];
                     int secondTarget = -1;
