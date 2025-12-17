@@ -39,7 +39,7 @@ namespace Game.Effects.Others
 
         public override int GetValueForAI()
         {
-            return base.GetValueForAI() + 40;
+            return base.GetValueForAI() - 20;
         }
     }
 }

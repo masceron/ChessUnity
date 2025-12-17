@@ -42,7 +42,7 @@ namespace Game.Effects.Condition
 
         public override int GetValueForAI()
         {
-            return base.GetValueForAI() + 30;    
+            return base.GetValueForAI() - 20;    
         }
     }
 }

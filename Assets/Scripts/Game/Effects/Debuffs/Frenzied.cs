@@ -25,9 +25,9 @@ namespace Game.Effects.Debuffs
         {
             if (Piece.IsDead() || PieceOn(Piece.Pos) != Piece) return;
             list.Clear();
-            Piece.Captures(list, Piece.Pos, excludeEmptyTile: false);
+            Piece.Captures(list, Piece.Pos, excludeEmptyTile: true);
             Piece.Color = !Piece.Color;
-            Piece.Captures(list, Piece.Pos, excludeEmptyTile: false);
+            Piece.Captures(list, Piece.Pos, excludeEmptyTile: true);
             Piece.Color = !Piece.Color;
             var i = 0;
             Piece.Quiets(list, Piece.Pos, ref i, isPlayer: true);
