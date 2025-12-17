@@ -8,7 +8,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PorcelainCrab : Commons.PieceLogic
     {
-        public PorcelainCrab(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
+        public PorcelainCrab(PieceConfig cfg) : base(cfg, ShellfishMoves.Quiets, ShellfishMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Vigorous(this)));
