@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: Momentum
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: 
-  category: 0
-  stack: 0
+  key: piece_momentum
+  category: 1
+  stack: 1
   priority: 0
   activeWhen: 0
   icon: {fileID: 0}

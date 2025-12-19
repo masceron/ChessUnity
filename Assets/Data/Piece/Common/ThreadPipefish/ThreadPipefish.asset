@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ThreadPipefish
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_thread_pipefish
-  prefab: {fileID: 0}
+  prefab: {fileID: 1595995625458198561, guid: d186433dfe0c3f84eaa12ece907353a6, type: 3}
   rank: 4
   moveRange: 2
   attackRange: 0
