@@ -23,7 +23,7 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            
+            throw new System.NotImplementedException();
         }
     }
 }

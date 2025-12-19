@@ -375,6 +375,10 @@ MonoBehaviour:
     m_Key: piece_momentum
     m_Metadata:
       m_Items: []
+  - m_Id: 47062339064483840
+    m_Key: effect_momentum
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
