@@ -30,25 +30,21 @@ namespace Game.Piece.PieceLogic
                     // 8 directions: N, S, E, W, NE, NW, SE, SW
                     int[] dRank = {-1, 1, 0, 0, -1, -1, 1, 1};
                     int[] dFile = {0, 0, -1, 1, -1, 1, -1, 1};
-                    
+                    int step = 4;
                     for (int dir = 0; dir < 8; dir++)
                     {
-                        for (int step = 1; step <= 4; step++)
-                        {
-                            int r = rank + dRank[dir] * step;
-                            int f = file + dFile[dir] * step;
-                            
-                            if (!VerifyBounds(r) || !VerifyBounds(f)) break;
-                            
-                            int idx = IndexOf(r, f);
-                            if (!IsActive(idx)) break;
-                            
-                            var piece = PieceOn(idx);
-                            
-                            // Nếu gặp quân ta thì dừng (bị chặn)
-                            if (piece != null && piece.Color == Color) break;
-                            list.Add(new FrilledSharkActive(Pos, dRank[dir], dFile[dir]));
-                        }
+                        int r = rank + dRank[dir] * step;
+                        int f = file + dFile[dir] * step;
+                        
+                        if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
+                        
+                        int idx = IndexOf(r, f);
+                        if (!IsActive(idx)) continue;
+                        
+                        var piece = PieceOn(idx);
+                        // Nếu có quân đứng đúng ở ô lướt thì không lướt được
+                        if (piece != null) continue;
+                        list.Add(new FrilledSharkActive(Pos, dRank[dir], dFile[dir]));
                     }
                 }
             };

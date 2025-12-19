@@ -97,6 +97,7 @@ namespace Game.Managers
         {
             Formation formation = GetFormation(pos);
             PieceLogic pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
+            if (pieceInPos == null){ return false; }
             bool haveAbyssalTapetum = false;
             foreach(PieceLogic pieceLogic in MatchManager.Ins.GameState.PieceBoard)
             {

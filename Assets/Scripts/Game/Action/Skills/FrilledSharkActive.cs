@@ -19,6 +19,7 @@ namespace Game.Action.Skills
         {
             this.dfile = dfile;
             this.drank = drank;
+            Target = IndexOf(RankOf(Maker) + drank * 4, FileOf(Maker) + dfile * 4);
         }
         protected override void ModifyGameState()
         {
@@ -34,7 +35,6 @@ namespace Game.Action.Skills
                     ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn)));
                 }
             }
-            Target = IndexOf(rank, file);
             ActionManager.EnqueueAction(new NormalMove(Maker, Target));
         }
         public int AIPenaltyValue(PieceLogic pieceAI)
