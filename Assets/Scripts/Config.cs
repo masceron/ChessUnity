@@ -16,7 +16,7 @@ public static class Config
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_bobtail_squid", true, 16),
+        new PieceConfig("piece_cabezon", true, 16),
         new PieceConfig("piece_anglerfish", true, 17),
         // new PieceConfig("piece_archelon", true, 17),
     };

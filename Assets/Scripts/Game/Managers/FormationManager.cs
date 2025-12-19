@@ -30,6 +30,7 @@ namespace Game.Managers
         public void SetFormation(int pos, Formation env){
             var rank = RankOf(pos);
             var file = FileOf(pos);
+            env.SetPositon(pos);
             formationObjects[pos] = Instantiate(AssetManager.Ins.EnvironmentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file),
             Quaternion.identity, transform);
             if (formations[pos] != null)
@@ -46,6 +47,7 @@ namespace Game.Managers
         {
             return formations[pos];
         }
+        
         /// <summary>
         /// Nên dùng để xóa Formation
         /// </summary>
@@ -79,11 +81,10 @@ namespace Game.Managers
         /// Được gọi tự động bởi GameState.cs khi kết thúc turn, muc đích hiện tại để xử lý duration
         /// </summary>
         public void OnCallEnd(bool endOfSide){
-            
             for(var pos = 0; pos < formations.Length; pos++) {
                 var format = formations[pos];
 
-                if (format is not { HaveDuration: true } || endOfSide) continue;
+                if (format is not { HaveDuration: true } || endOfSide != format.GetColor()) continue;
 
                 format.SetDuration(format.Duration - 1);
                 if (format.Duration <= 0) {

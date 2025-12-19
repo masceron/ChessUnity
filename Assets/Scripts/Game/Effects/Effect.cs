@@ -30,7 +30,7 @@ namespace Game.Effects
     
     public enum EffectCategory: byte 
     {
-        Debuff, Buff, Trait, Condition, Augmentation
+        Debuff, Buff, Trait, Condition, Augmentation, SpecialAbility
     }
 
     public enum EffectStack : byte
@@ -85,7 +85,7 @@ namespace Game.Effects
 
         public virtual void OnCallMoveGen(List<Action.Action> actions)
         {
-            
+
         }
 
         public override int Compare(Effect x, Effect y)
