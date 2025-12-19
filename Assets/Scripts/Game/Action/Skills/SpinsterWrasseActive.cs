@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.AI;
@@ -44,13 +47,18 @@ namespace Game.Action.Skills
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
 
-            ActionManager.ExecuteImmediately(new Purify(Maker, FirstTarget.Pos));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(SecondTarget)));
+            ApplyEffect(FirstTarget, SecondTarget);
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
             ResetTargets();
+        }
+
+        private void ApplyEffect(PieceLogic firstTarget, PieceLogic secondTarget)
+        {
+            ActionManager.ExecuteImmediately(new Purify(Maker, firstTarget.Pos));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(secondTarget)));
         }
 
         private static void ResetTargets()
@@ -66,7 +74,45 @@ namespace Game.Action.Skills
         }
         public void CompleteActionForAI()
         {
-            throw new NotImplementedException();
+            var listA = GetPiecesInRadius(RankOf(Maker), FileOf(Maker), 5, p => p != null && p.Color == PieceOn(Maker).Color);
+            
+            listA.Sort((a, b) =>
+            {
+                int buffCountA = 0, buffCountB = 0;
+                foreach (var effect in a.Effects)
+                {
+                    if (effect.Category == Effects.EffectCategory.Debuff)
+                        buffCountA++;
+                }
+
+                foreach (var effect in b.Effects)
+                {
+                    if (effect.Category == Effects.EffectCategory.Debuff)
+                        buffCountB++;
+                }
+
+                return buffCountA.CompareTo(buffCountB);
+            });
+
+            var listB = new List<PieceLogic>();
+            for (int i = 0; i < BoardSize; ++i)
+            {
+                var piece = PieceOn(i);
+                if (piece == null || piece.Color != PieceOn(Maker).Color || piece.Effects.Any(
+                        e => e.EffectName == "effect_extremophiles" || e.EffectName == "effect_Adaptation"))
+                    continue;
+                
+                listB.Add(piece);
+            }
+            
+            if (listA.Count == 0) return;
+            
+            listB.Sort((a, b) => b.GetValueForAI().CompareTo(a.GetValueForAI()));
+            
+            var idxA = UnityEngine.Random.Range(0, listA.Count - 1);
+            var idxB = UnityEngine.Random.Range(0, listB.Count - 1);
+            ApplyEffect(PieceOn(idxA), PieceOn(idxB));
+            
         }
         
         

@@ -36,7 +36,7 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            var listPieces = GetPiecesInRadius(RankOf(Target), FileOf(Target), 3, p => p != null && p.Color != PieceOn(Target).Color);
+            var listPieces = GetPiecesInRadius(RankOf(Maker), FileOf(Maker), 3, p => p != null && p.Color != PieceOn(Maker).Color);
             if (listPieces.Count == 0) return;
             
             listPieces.Sort((a, b) =>
