@@ -76,6 +76,7 @@ namespace Game.Action.Skills
         {
             var listA = GetPiecesInRadius(RankOf(Maker), FileOf(Maker), 5, p => p != null && p.Color == PieceOn(Maker).Color);
             
+            if (listA.Count == 0) return;
             listA.Sort((a, b) =>
             {
                 int buffCountA = 0, buffCountB = 0;
@@ -105,7 +106,7 @@ namespace Game.Action.Skills
                 listB.Add(piece);
             }
             
-            if (listA.Count == 0) return;
+            if (listB.Count == 0) return;
             
             listB.Sort((a, b) => b.GetValueForAI().CompareTo(a.GetValueForAI()));
             
