@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FrilledShark
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_frilled_shark
-  prefab: {fileID: 919132149155446097, guid: 413a76b8c837b3d4abdfa8a931d163a7, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 217b1cff3a42c64478ffc1ef5b756f71, type: 3}
   rank: 6
   moveRange: 2
   attackRange: 2
