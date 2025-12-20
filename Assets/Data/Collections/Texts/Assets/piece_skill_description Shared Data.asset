@@ -167,6 +167,10 @@ MonoBehaviour:
     m_Key: piece_eyeshade_sculpin_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 47437828463185920
+    m_Key: piece_damsel_fish_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

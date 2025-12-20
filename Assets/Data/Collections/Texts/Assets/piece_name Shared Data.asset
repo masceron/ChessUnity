@@ -299,6 +299,14 @@ MonoBehaviour:
     m_Key: piece_frilled_shark
     m_Metadata:
       m_Items: []
+  - m_Id: 47464494451314688
+    m_Key: piece_damsel_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464494510034944
+    m_Key: piece_penpoint_gunnel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

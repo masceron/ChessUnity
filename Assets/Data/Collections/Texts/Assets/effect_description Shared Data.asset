@@ -371,6 +371,26 @@ MonoBehaviour:
     m_Key: effect_umbrella_slug_special_ability_description
     m_Metadata:
       m_Items: []
+  - m_Id: 47464611862466560
+    m_Key: effect_penpoint_gunnel_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611879243776
+    m_Key: effect_momentum_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611883438080
+    m_Key: effect_leashed_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611887632384
+    m_Key: effect_manta_spine_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611887632385
+    m_Key: effect_rally_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
