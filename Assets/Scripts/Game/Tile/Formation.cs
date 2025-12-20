@@ -29,6 +29,7 @@ namespace Game.Tile
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
 
+        protected Formation() {}
         protected Formation(bool color)
         {
             Color = color;

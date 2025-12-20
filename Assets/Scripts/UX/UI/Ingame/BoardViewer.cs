@@ -186,7 +186,7 @@ namespace UX.UI.Ingame
             if (pos == -1)
             {
                 Hovering = null;
-                effectBar.Disable();
+                //effectBar.Disable();
                 pieceInfoMenu.Disable();
                 return;
             }

@@ -1,11 +1,12 @@
-﻿using Game.Common;
+﻿using Game.AI;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class PhronimaActive : Action, ISkills
+    public class PhronimaActive : Action, ISkills, IAIAction
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -21,7 +22,7 @@ namespace Game.Action.Skills
             Target = to;
         }
 
-        protected override void ModifyGameState()
+        private void ApplyEffect(int pos)
         {
             var targetPiece = BoardUtils.PieceOn(Target);
 
@@ -36,6 +37,38 @@ namespace Game.Action.Skills
                     Debug.Log($"[PhronimaActive] Effect {effect.EffectName} on piece {targetPiece.Type} at position {Target} has infinite duration, skipping duration increase.");
                 }
             }
+        }
+        protected override void ModifyGameState()
+        {
+            ApplyEffect(Target);
+        }
+
+        public void CompleteActionForAI()
+        {
+            var listPieces = GetPiecesInRadius(RankOf(Maker), FileOf(Maker), 3, p => p != null && p.Color != PieceOn(Maker).Color);
+            if (listPieces.Count == 0) return;
+            
+            listPieces.Sort((a, b) =>
+            {
+                int buffCountA = 0, buffCountB = 0;
+                foreach (var effect in a.Effects)
+                {
+                    if (effect.Category == Effects.EffectCategory.Buff)
+                        buffCountA++;
+                }
+
+                foreach (var effect in b.Effects)
+                {
+                    if (effect.Category == Effects.EffectCategory.Buff)
+                        buffCountB++;
+                }
+
+                return buffCountA.CompareTo(buffCountB);
+            });
+
+            var idx = UnityEngine.Random.Range(0, listPieces.Count - 1);
+            
+            ApplyEffect(listPieces[idx].Pos);
         }
     }
 }

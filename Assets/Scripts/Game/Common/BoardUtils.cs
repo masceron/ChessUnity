@@ -18,7 +18,6 @@ namespace Game.Common
     {
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
-        public static bool[] Poisoned;
 
         public const float YCoordinate = 1.64f;
         public static int RankOf(int index)
