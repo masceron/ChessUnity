@@ -15,6 +15,6 @@ MonoBehaviour:
   key: effect_manta_spine_passive
   category: 4
   stack: 1
-  priority: 3
+  priority: 1
   activeWhen: 1
   icon: {fileID: 0}
