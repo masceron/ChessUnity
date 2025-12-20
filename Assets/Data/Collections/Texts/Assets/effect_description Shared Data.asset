@@ -355,6 +355,26 @@ MonoBehaviour:
     m_Key: effect_black_swallower_vengeful_description
     m_Metadata:
       m_Items: []
+  - m_Id: 43892959793610752
+    m_Key: effect_shortreach_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 45012315973844992
+    m_Key: effect_hemolymph_filter_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46052934561267712
+    m_Key: effect_vigorouse_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46054427930624000
+    m_Key: effect_vigorous_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46491246572830720
+    m_Key: effect_umbrella_slug_special_ability_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
