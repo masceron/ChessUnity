@@ -48,7 +48,7 @@ namespace Game.AI
             AIPlayAndExecuteBestAction(sideToMove);
         }
 
-        private void AIPlayAndExecuteBestAction(bool sideToMove)
+        public void AIPlayAndExecuteBestAction(bool sideToMove)
         {
             AIUseRelic(sideToMove);
 

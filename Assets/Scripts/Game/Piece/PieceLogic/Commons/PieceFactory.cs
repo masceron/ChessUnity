@@ -28,6 +28,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_contagion_corpse" => new ContagionCorpse(cfg),
                 "piece_electric_eel" => new ElectricEel(cfg),
                 "piece_epaulette_shark" => new EpauletteShark(cfg),
+                "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
                 "piece_fangtooth" => new Fangtooth(cfg),
                 "piece_feather_star" => new FeatherStar(cfg),
                 "piece_flying_fish" => new FlyingFish(cfg),
@@ -54,10 +55,12 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_melibe" => new Melibe(cfg),
                 "piece_moorish_idols" => new MoorishIdols(cfg),
                 "piece_moray_eel" => new MorayEel(cfg),
+                "piece_pegasus_smooth" => new PegasusSmooth(cfg),
                 "piece_phantom_jelly" => new PhantomJelly(cfg),
                 "piece_phronima" => new Phronima(cfg),
                 "piece_pistol_shrimp" => new PistolShrimp(cfg),
                 "piece_polluted_rock" => new PollutedRock(cfg),
+                "piece_porcelain_crab" => new PorcelainCrab(cfg),
                 "piece_pufferfish" => new Pufferfish(cfg),
                 "piece_remora" => new Remora(cfg),
                 "piece_sea_star" => new SeaStar(cfg),
@@ -77,11 +80,8 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_temperantia" => new Temperantia(cfg),
                 "piece_thalassos" => new Thalassos(cfg),
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
-                "piece_velkaris" => new Velkaris(cfg),
-                "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
-                "piece_pegasus_smooth" => new PegasusSmooth(cfg),
-                "piece_porcelain_crab" => new PorcelainCrab(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
+                "piece_velkaris" => new Velkaris(cfg),
                 _ => null
             };
         }
