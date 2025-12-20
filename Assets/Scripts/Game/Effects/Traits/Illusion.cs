@@ -20,12 +20,6 @@ namespace Game.Effects.Traits
         {
             for (var i = 0; i < actions.Count; i++)
             {
-                if (PieceOn(actions[i].Maker).Effects
-                    .All(e => e.EffectName != "effect_illusion"))
-                {
-                    continue;
-                }
-                
                 if (actions[i] is NormalCapture capture)
                 {
                     actions[i] = new Action.Captures.IllusionCapture(capture.Maker, capture.Target);
@@ -37,9 +31,23 @@ namespace Game.Effects.Traits
         {
             foreach (var effect in Piece.Effects.ToList())
             {
-                if (effect.EffectName != "effect_illusion")
+                UnityEngine.Debug.Log("Illusion OnApply RemoveEffect: " + effect.EffectName);
+                if (effect.EffectName == "effect_illusion")
                 {
-                    ActionManager.EnqueueAction(new RemoveEffect(effect));
+                    continue;
+                }
+                if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0)
+                {
+                    if (effect.ObserverActivateWhen != ObserverActivateWhen.None)
+                    {
+                        RemoveObserver(effect);
+                    }
+                    effect.OnRemove();
+                    Piece.Effects.Remove(effect);
+                }
+                else
+                {
+                    ActionManager.ExecuteImmediately(new RemoveEffect(effect));
                 }
             }
         }
