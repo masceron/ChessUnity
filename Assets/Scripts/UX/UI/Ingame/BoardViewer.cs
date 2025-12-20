@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
+using Game.AI;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -19,6 +20,8 @@ namespace UX.UI.Ingame
         [SerializeField] private PieceActions pieceActions;
         [SerializeField] private GameActions gameActions;
         [SerializeField] private EffectBar effectBar;
+
+        private AIManager aiManager;
         
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
@@ -33,6 +36,7 @@ namespace UX.UI.Ingame
         private void Start()
         {
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
+            aiManager = AIManager.Ins;
             pieceActions.Load(ListOf, MoveList);
             UpdateRelic();
             Selecting = -1;
@@ -69,7 +73,7 @@ namespace UX.UI.Ingame
             if (piece == null || !piece.IsVisible) return;
 
             Hovering = piece;
-            
+
             pieceInfoMenu.SetUpPieceInfo(piece);
             effectBar.SetUpStatusEffects(piece);
         }
@@ -84,6 +88,7 @@ namespace UX.UI.Ingame
         {
             Selecting = -1;
             TileManager.Ins.UnmarkAll();
+            aiManager.ClearTileScores();
             pieceActions.DisablePieceInteractions();
             foreach (var action in ListOf)
             {
@@ -108,6 +113,7 @@ namespace UX.UI.Ingame
         public void MarkPiece(int pos)
         {
             HoveringPos = pos;
+            aiManager.ShowPieceActionScore(pos);
 
             if (Selecting != -1)
             {
