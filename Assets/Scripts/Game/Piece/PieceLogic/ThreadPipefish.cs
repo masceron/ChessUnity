@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic
     {
         public ThreadPipefish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
 

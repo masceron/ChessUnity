@@ -391,6 +391,22 @@ MonoBehaviour:
     m_Key: effect_rally
     m_Metadata:
       m_Items: []
+  - m_Id: 47461044611108864
+    m_Key: effect_cold_blooded_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47461044715966464
+    m_Key: effect_protective_lens_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47461044724355072
+    m_Key: effect_thread_pipefish_effect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47461044766298112
+    m_Key: effect_blue_ringed_octopus_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

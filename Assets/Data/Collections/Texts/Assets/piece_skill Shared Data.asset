@@ -171,6 +171,14 @@ MonoBehaviour:
     m_Key: piece_damsel_fish_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 47458237753511936
+    m_Key: piece_thread_pipefish_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47458237787066368
+    m_Key: piece_spinster_wrasse_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     {
         public SpinsterWrasse(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, None.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
 

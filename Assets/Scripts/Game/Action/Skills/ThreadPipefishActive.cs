@@ -5,6 +5,7 @@ using static Game.Common.BoardUtils;
 using Game.AI;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
@@ -22,6 +23,11 @@ namespace Game.Action.Skills
         }
 
         public void CompleteActionForAI()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
         {
             throw new System.NotImplementedException();
         }

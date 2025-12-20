@@ -307,6 +307,26 @@ MonoBehaviour:
     m_Key: piece_penpoint_gunnel
     m_Metadata:
       m_Items: []
+  - m_Id: 47484796170326016
+    m_Key: piece_thread_pipefish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796220657664
+    m_Key: piece_frog_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796224851968
+    m_Key: piece_spinster_wrasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796224851969
+    m_Key: piece_dormant_fossil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796229046272
+    m_Key: piece_blue_ringed_octopus
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

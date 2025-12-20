@@ -115,7 +115,11 @@ namespace Game.Action.Skills
             ApplyEffect(PieceOn(idxA), PieceOn(idxB));
             
         }
-        
-        
+
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
