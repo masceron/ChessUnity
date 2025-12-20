@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Augmentation;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics;
@@ -9,15 +10,15 @@ public static class Config
     public static int boardSize = 12;
     public static List<PieceConfig> PieceConfigWhite = new()
     {
-        new PieceConfig("piece_siren", false, 25),
-        new PieceConfig("piece_bobtail_squid", false, 26),
+        // new PieceConfig("piece_siren", false, 25),
+        new PieceConfig("piece_bobtail_squid", false, 26, new List<Augmentation>{new AbyssalTapetum()}),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_stingray", true, 16),
-        // new PieceConfig("piece_anglerfish", false, 17),
-        new PieceConfig("piece_archelon", true, 17),
+        new PieceConfig("piece_cabezon", true, 16),
+        new PieceConfig("piece_anglerfish", true, 17),
+        // new PieceConfig("piece_archelon", true, 17),
     };
 
     public static RelicConfig relicWhiteConfig = new RelicConfig("relic_storm_capacitor", false, 5);

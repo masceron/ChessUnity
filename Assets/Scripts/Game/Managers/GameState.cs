@@ -19,8 +19,6 @@ namespace Game.Managers
 {
     public interface ISubscriber
     {
-        // ObserverActivateWhen GetObserverActivate();
-        // ObserverPriority GetPriority();
         public void OnCall(Action.Action action);
         public void OnCallEnd(bool color);
     }
@@ -33,7 +31,8 @@ namespace Game.Managers
         SwitchTurn,
         MoveGeneration,
         EffectApplied,
-        Dead
+        Dead,
+        Block,
     }
 
     public enum Color : byte
@@ -268,13 +267,13 @@ namespace Game.Managers
             }
             SideToMove = !SideToMove;
         }
-
+        // Được gọi tự động bởi action ApplyEffect
         public void AddObserver(Effect effect)
         {
             var pos = effectObservers.BinarySearch(effect, effect);
             effectObservers.Insert(pos >= 0 ? pos : ~pos, effect);
         }
-
+        // Được gọi tự động bởi action RemoveEffect
         public void RemoveObserver(Effect effect)
         {
             effectObservers.Remove(effect);
@@ -370,6 +369,16 @@ namespace Game.Managers
             });
         }
         
+        public void NotifyBlock(Block action)
+        {
+            effectObservers.ForEach(e =>
+            {
+                if (e is IBlockEffect blockEffect)
+                {
+                    blockEffect.OnCallBlocked(action);
+                }
+            });
+        }
         public void IncrementSkillUses(Action.Action action)
         {
             if (ColorOfPiece(action.Maker)) BlackSkillUses++;

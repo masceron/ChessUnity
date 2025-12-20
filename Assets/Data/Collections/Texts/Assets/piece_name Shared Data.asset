@@ -295,6 +295,10 @@ MonoBehaviour:
     m_Key: piece_armored_feather_star
     m_Metadata:
       m_Items: []
+  - m_Id: 46452577354113024
+    m_Key: piece_frilled_shark
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -28,9 +28,14 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
         }
         public void Choose()
         {
+            RegionalIcon previous = RegionalManagerUI.Ins.chosenRegional;
+            if (previous == this)
+            {
+                return;
+            }
             image.color = UnityEngine.Color.yellow;
             Config.regionalEffectType = regionalType;
-            RegionalIcon previous = RegionalManagerUI.Ins.chosenRegional;
+            
             if (previous != null)
             {
                 previous.ResetColor();

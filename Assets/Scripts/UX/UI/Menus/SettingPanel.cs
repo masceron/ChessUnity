@@ -7,9 +7,10 @@ namespace UX.UI.Menus
     public class SettingPanel : MonoBehaviour
     {
         public static float AIvsAIplayspeed = 1f;
+        public SpeedSwitcher speedSwitcher;
         void Awake()
         {
-            AIvsAIplayspeed = PlayerPrefs.GetFloat("AIvsAIplayspeed");
+            speedSwitcher.SetValue(PlayerPrefs.GetInt("AIvsAIplayspeed"));
         }
         public void OnClickBack(InputAction.CallbackContext context)
         {

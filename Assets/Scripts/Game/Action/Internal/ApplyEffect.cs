@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Game.Common;
 using Game.Effects;
 using Game.Managers;
 
@@ -23,7 +22,7 @@ namespace Game.Action.Internal
         {
             if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {
-                BoardUtils.AddObserver(Effect);
+                MatchManager.Ins.GameState.AddObserver(Effect);
             }
             
             var already = Effect.Piece.Effects.FirstOrDefault(e => e.EffectName == Effect.EffectName);

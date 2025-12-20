@@ -7,6 +7,7 @@ using Game.Common;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics.Commons;
+using Game.Save.Stage;
 using Game.Tile;
 using UnityEngine;
 using UX.UI;
@@ -18,6 +19,12 @@ using Random = UnityEngine.Random;
 
 namespace Game.Managers
 {
+    public enum GameMode
+    {
+        AIvsAI,
+        PlayerVsAI,
+        PlayerVsPlayer,
+    }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MatchManager: Singleton<MatchManager>
     {
@@ -34,7 +41,7 @@ namespace Game.Managers
             TileManager.Ins.Spawn();
             FormationManager.Ins.Initialize();
             // For testing purpose
-            //FormationManager.Ins.SetFormation(PosMap(15, StartingSize), new PredatorLair(cfg.FirstSideToMove));
+            FormationManager.Ins.SetFormation(PosMap(15, StartingSize), new HydroidThicket(cfg.FirstSideToMove));
         }
 
         private void MakePieces(LineupConfig lineup)
@@ -55,24 +62,32 @@ namespace Game.Managers
             ActionManager.Init(GameState);
         }
 
-        public void Init(GameConfig cfg)
+        public void Init(GameConfig cfg, GameMode gameMode = GameMode.PlayerVsPlayer)
         {
             StartingSize = cfg.StartingSize;
             MakeGame(cfg);
             MakeBoard(cfg);
-            
-            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()), 
-                Config.relicWhiteConfig, 
+
+            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()),
+                Config.relicWhiteConfig,
                 Config.relicBlackConfig,
                 Config.regionalEffectType
-                );
+            );
+            if (gameMode == GameMode.AIvsAI)
+            {
+                this.gameObject.AddComponent<AIvsAIController>();
+            }
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
-        public void InitFromPreset()
-        {
-            
-        }
+        // public void InitForFreePlay(GameConfig cfg, GameMode gameMode)
+        // {
+        //     Init(cfg);
+        //     if (gameMode == GameMode.AIvsAI)
+        //     {
+        //         this.gameObject.AddComponent<AIvsAIController>();
+        //     }
+        // }
         private void MakeRelics(RelicConfig white, RelicConfig black)
         {
             GameState.WhiteRelic = RelicMaker.Get(white);

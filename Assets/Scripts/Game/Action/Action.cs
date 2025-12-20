@@ -26,7 +26,7 @@ namespace Game.Action
             Maker = maker;
             DoesMoveChangePos = pos;
         }
-
+        
         public void Execute()
         {
             Animate();

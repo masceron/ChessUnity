@@ -17,14 +17,15 @@ namespace Game.Tile
         Kelp,
         PredatorLair,
         NavalMines,
-        SiltCloud
+        SiltCloud,
+        HydroidThicket,
     }
 
     public abstract class Formation
     {
-        // public int pos{ get; private set; }
+        public int Pos{ get; private set; }
         protected readonly bool Color;
-        protected PieceLogic PieceOnFormation { get; private set; }
+        public PieceLogic PieceOnFormation { get; protected set; }
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
 
@@ -32,7 +33,14 @@ namespace Game.Tile
         {
             Color = color;
         }
-
+        /// <summary>
+        /// Hiện hàm này được gọi chủ động bởi FormationManager::SetFormation() nên mọi người không cần phải động tới
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetPositon(int index)
+        {
+            Pos = index;
+        }
         public void SetDuration(int _duration)
         {
             Duration = _duration;
@@ -43,7 +51,10 @@ namespace Game.Tile
         /// Trả về FormationType tương ứng với class
         /// </summary>
         public abstract FormationType GetFormationType();
-
+        /// <summary>
+        /// Được gọi 1 lần duy nhất sau khi tạo Formation, thường dùng để gây effect lên quân đứng sẵn trên đó
+        /// </summary>
+        /// <param name="piece"></param>
         public virtual void OnCreated(PieceLogic piece)
         {
             OnPieceEnter(piece);

@@ -57,7 +57,7 @@ namespace Game.Action
             while (_actionQueue.TryDequeue(out var action))
             {
                 if (action is IInternal)
-                    BoardUtils.NotifyInternalAction(mainAction);
+                    BoardUtils.NotifyInternalAction(action);
                 action.Execute();
             }
 
