@@ -89,6 +89,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_spinster_wrasse" => new SpinsterWrasse(cfg),
                 "piece_thread_pipefish" => new ThreadPipefish(cfg),
                 "piece_frogfish" => new FrogFish(cfg),
+                "piece_marine_flatworm" => new MarineFlatworm(cfg),
                 _ => null
             };
         }
