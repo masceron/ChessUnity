@@ -24,8 +24,8 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -20;
             return 0;
         }
-        private static PieceLogic FirstTarget;
-        private static PieceLogic SecondTarget;
+        public static PieceLogic FirstTarget;
+        public static PieceLogic SecondTarget;
         public HumilitasActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
@@ -71,70 +71,70 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            var listPieces = new List<PieceLogic>();
+            // var listPieces = new List<PieceLogic>();
 
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 5))
-            {
-                var idx = IndexOf(rank, file);
-                var pOn = PieceOn(idx);
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
-                {
-                    if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
-                    listPieces.Add(pOn);
-                }
-            }
-            // neu khong co quan nao
-            if (listPieces.Count == 0) return;
-            // neu co dung mot quan
-            if (listPieces.Count == 1)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, listPieces[0])));
-                SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-                return;
-            }
-            // neu co nhieu quan           
-            listPieces.Sort((a, b) =>
-                b.GetValueForAI()
-                    .CompareTo(a.GetValueForAI()));
+            // foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 5))
+            // {
+            //     var idx = IndexOf(rank, file);
+            //     var pOn = PieceOn(idx);
+            //     if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+            //     {
+            //         if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+            //         listPieces.Add(pOn);
+            //     }
+            // }
+            // // neu khong co quan nao
+            // if (listPieces.Count == 0) return;
+            // // neu co dung mot quan
+            // if (listPieces.Count == 1)
+            // {
+            //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, listPieces[0])));
+            //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            //     return;
+            // }
+            // // neu co nhieu quan           
+            // listPieces.Sort((a, b) =>
+            //     b.GetValueForAI()
+            //         .CompareTo(a.GetValueForAI()));
 
-            var selectedPieces = new List<PieceLogic>();
+            // var selectedPieces = new List<PieceLogic>();
 
-            int topValue = listPieces[0].GetValueForAI();
-            var topGroup = listPieces.Where(p =>
-                p.GetValueForAI() == topValue).ToList();
+            // int topValue = listPieces[0].GetValueForAI();
+            // var topGroup = listPieces.Where(p =>
+            //     p.GetValueForAI() == topValue).ToList();
 
-            if (topGroup.Count >= 2)
-            {
-                int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
-                int idx2;
-                do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
-                while (idx2 == idx1);
+            // if (topGroup.Count >= 2)
+            // {
+            //     int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
+            //     int idx2;
+            //     do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
+            //     while (idx2 == idx1);
 
-                selectedPieces.Add(topGroup[idx1]);
-                selectedPieces.Add(topGroup[idx2]);
-            }
-            else
-            {
-                selectedPieces.Add(listPieces[0]);
+            //     selectedPieces.Add(topGroup[idx1]);
+            //     selectedPieces.Add(topGroup[idx2]);
+            // }
+            // else
+            // {
+            //     selectedPieces.Add(listPieces[0]);
 
-                if (listPieces.Count > 1)
-                {
-                    int secondValue = listPieces[1].GetValueForAI();
-                    var secondGroup = listPieces.Where(p =>
-                        p.GetValueForAI() == secondValue).ToList();
-                    if (secondGroup.Count == 0) return;
-                    int idx = UnityEngine.Random.Range(0, secondGroup.Count);
-                    selectedPieces.Add(secondGroup[idx]);
-                }
-            }
+            //     if (listPieces.Count > 1)
+            //     {
+            //         int secondValue = listPieces[1].GetValueForAI();
+            //         var secondGroup = listPieces.Where(p =>
+            //             p.GetValueForAI() == secondValue).ToList();
+            //         if (secondGroup.Count == 0) return;
+            //         int idx = UnityEngine.Random.Range(0, secondGroup.Count);
+            //         selectedPieces.Add(secondGroup[idx]);
+            //     }
+            // }
 
-            foreach (var piece in selectedPieces)
-            {
-                UnityEngine.Debug.Log("Taunting piece: " + piece.Type);
-                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
-            }
+            // foreach (var piece in selectedPieces)
+            // {
+            //     UnityEngine.Debug.Log("Taunting piece: " + piece.Type);
+            //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
+            // }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            // SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

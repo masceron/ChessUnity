@@ -33,6 +33,7 @@ namespace Game.Managers
         EffectApplied,
         Dead,
         Block,
+        SkillUsed
     }
 
     public enum Color : byte
@@ -381,6 +382,13 @@ namespace Game.Managers
         }
         public void IncrementSkillUses(Action.Action action)
         {
+            effectObservers.ForEach(e =>
+            {
+                if (e.ObserverActivateWhen == ObserverActivateWhen.SkillUsed)
+                {
+                    ((ISkillUsedEffect)e).OnCallSkillUsed(action);
+                }
+            });
             if (ColorOfPiece(action.Maker)) BlackSkillUses++;
             else WhiteSkillUses++;
         }
