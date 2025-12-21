@@ -407,6 +407,22 @@ MonoBehaviour:
     m_Key: effect_blue_ringed_octopus_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 47930263492939776
+    m_Key: effect_illusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47930266940657664
+    m_Key: effect_frilled_shark_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47930266957434880
+    m_Key: effect_cabezon_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47930266957434881
+    m_Key: effect_abyssal_tapetum_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
