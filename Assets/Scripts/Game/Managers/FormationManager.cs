@@ -1,6 +1,9 @@
 
 
+using System.Linq;
+using Game.Augmentation;
 using Game.Common;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -27,6 +30,7 @@ namespace Game.Managers
         public void SetFormation(int pos, Formation env){
             var rank = RankOf(pos);
             var file = FileOf(pos);
+            env.SetPositon(pos);
             formationObjects[pos] = Instantiate(AssetManager.Ins.EnvironmentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file),
             Quaternion.identity, transform);
             if (formations[pos] != null)
@@ -43,6 +47,7 @@ namespace Game.Managers
         {
             return formations[pos];
         }
+        
         /// <summary>
         /// Nên dùng để xóa Formation
         /// </summary>
@@ -76,11 +81,10 @@ namespace Game.Managers
         /// Được gọi tự động bởi GameState.cs khi kết thúc turn, muc đích hiện tại để xử lý duration
         /// </summary>
         public void OnCallEnd(bool endOfSide){
-            
             for(var pos = 0; pos < formations.Length; pos++) {
                 var format = formations[pos];
 
-                if (format is not { HaveDuration: true } || endOfSide) continue;
+                if (format is not { HaveDuration: true } || endOfSide != format.GetColor()) continue;
 
                 format.SetDuration(format.Duration - 1);
                 if (format.Duration <= 0) {
@@ -92,7 +96,20 @@ namespace Game.Managers
         public bool IsHideByFog(int pos, bool sideToMove)
         {
             Formation formation = GetFormation(pos);
-            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar && formation.GetColor() != sideToMove)
+            PieceLogic pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
+            if (pieceInPos == null){ return false; }
+            bool haveAbyssalTapetum = false;
+            foreach(PieceLogic pieceLogic in MatchManager.Ins.GameState.PieceBoard)
+            {
+                if (pieceLogic != null && pieceLogic.Color == sideToMove && pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum))
+                {
+                    haveAbyssalTapetum = true;
+                    break;
+                }
+            }
+            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar 
+                && formation.GetColor() != sideToMove && !haveAbyssalTapetum 
+                && !pieceInPos.Effects.Any(e => e.EffectName == "effect_marked"))
             {
                 return true;
             }

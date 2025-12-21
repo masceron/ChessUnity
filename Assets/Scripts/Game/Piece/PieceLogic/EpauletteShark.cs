@@ -1,4 +1,5 @@
-﻿using Game.Action;
+﻿using System.Collections.Generic;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
@@ -16,25 +17,85 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new EpauletteSharkPurify(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new DiurnalAmbush(this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-
-                var (rank, file) = RankFileOf(Pos);
-
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                if (isPlayer)
                 {
-                    var index = IndexOf(rankOff, fileOff);
-                    var pOn = PieceOn(index);
-                    if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
-                    if (pOn.Color != Color)
+                    var (rank, file) = RankFileOf(Pos);
+
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                     {
-                        list.Add(new EpauletteSharkActive(Pos, index));
+                        var index = IndexOf(rankOff, fileOff);
+                        var pOn = PieceOn(index);
+                        if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
+                        if (pOn.Color != Color)
+                        {
+                            list.Add(new EpauletteSharkActive(Pos, index));
+                        }
+                    }
+                }
+                else
+                {
+                    //query for AI in here
+                    if (excludeEmptyTile)
+                    {
+                        List<Commons.PieceLogic> bestPieces = new List<Commons.PieceLogic>();
+                        Commons.PieceLogic bestPiece = null;
+                        int maxPoint = int.MinValue;
+            
+                        var (rank, file) = RankFileOf(Pos);
+
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                        {
+                            var index = IndexOf(rankOff, fileOff);
+                            var pOn = PieceOn(index);
+                            if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm 
+                                || pOn.Color == Color) continue;
+                
+                            int AIValue = pOn.GetValueForAI();
+                            if (AIValue > maxPoint)
+                            {
+                                bestPieces.Clear();
+                                bestPieces.Add(pOn);
+                                maxPoint = AIValue;
+                            }
+                            else if (AIValue == maxPoint) bestPieces.Add(pOn);
+                        }
+
+                        if (bestPieces.Count == 0)
+                        {
+                            //
+                        }
+                        else if (bestPieces.Count == 1)
+                        {
+                            bestPiece = bestPieces[0];
+                        }
+                        else
+                        {
+                            bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                        }
+
+                        if (bestPiece != null)
+                        {
+                            list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
+                        }
+                    }
+                    else
+                    {
+                        var (rank, file) = RankFileOf(Pos);
+                        
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                        {
+                            var index = IndexOf(rankOff, fileOff);
+                            if (!IsActive(IndexOf(rankOff, fileOff))) continue;
+                            list.Add(new EpauletteSharkActive(Pos, index));
+                        }
                     }
                 }
             };
         }
-        
+
         sbyte IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;

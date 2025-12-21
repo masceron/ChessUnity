@@ -21,8 +21,8 @@ namespace Game.Effects.Others
         {
             if (ourPiece == null || opponentPiece == null) return;
 
-            ourPieceAttackRangeSaver = ourPiece.AttackRange;
-            ourPiece.AttackRange = opponentPiece.AttackRange;
+            ourPieceAttackRangeSaver = ourPiece.AttackRange();
+            ourPiece.SetAttackRange(opponentPiece.AttackRange());
 
             ourPieceCapturesSaver = ourPiece.Captures;
             ourPiece.Captures = opponentPiece.Captures;
@@ -32,7 +32,7 @@ namespace Game.Effects.Others
         {
             if (ourPiece != null)
             {
-                ourPiece.AttackRange = ourPieceAttackRangeSaver;
+                ourPiece.SetAttackRange(ourPieceAttackRangeSaver);
                 ourPiece.Captures = ourPieceCapturesSaver;
             }
         }

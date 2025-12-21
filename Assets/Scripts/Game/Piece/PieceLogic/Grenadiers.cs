@@ -17,18 +17,26 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Blinded(-1, 50, this)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
+
+                if (isPlayer)
                 {
-                    var startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
-                    var startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
-                    
-                    if(file < startingSizeX || file >= startingSizeX + MatchManager.Ins.StartingSize.x
-                         || rank < startingSizeY || rank >= startingSizeY + MatchManager.Ins.StartingSize.y 
-                            || TileManager.Ins.IsTileEmpty(IndexOf(rank, file))) continue;
-                    list.Add(new GrenadiersActive(Pos, IndexOf(rank, file)));
+                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
+                    {
+                        var startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
+                        var startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
+
+                        if (file < startingSizeX || file >= startingSizeX + MatchManager.Ins.StartingSize.x
+                             || rank < startingSizeY || rank >= startingSizeY + MatchManager.Ins.StartingSize.y
+                                || TileManager.Ins.IsTileEmpty(IndexOf(rank, file))) continue;
+                        list.Add(new GrenadiersActive(Pos, IndexOf(rank, file)));
+                    }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

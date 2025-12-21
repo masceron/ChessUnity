@@ -1,12 +1,10 @@
 using System.Linq;
-using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
-using Game.AI;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic

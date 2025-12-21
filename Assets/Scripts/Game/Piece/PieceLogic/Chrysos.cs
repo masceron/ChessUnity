@@ -16,24 +16,31 @@ namespace Game.Piece.PieceLogic
         public Chrysos(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SlayersCoin(this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
-                var pieceBoard = PieceBoard();
-                for (var i = 0; i < BoardSize; i++)
+                if (isPlayer)
                 {
-                    var piece = pieceBoard[i];
-                    if (piece == null || piece.Color != Color) continue;
-                
-                    var upgradableTo = UpgradableTo(piece.PieceRank);
-                    if (upgradableTo == PieceRank.None) continue;
-                
-                    var cost = CalculateCost(piece.PieceRank, upgradableTo);
-                    if (Coin >= cost)
+                    var pieceBoard = PieceBoard();
+                    for (var i = 0; i < BoardSize; i++)
                     {
-                        list.Add(new ChrysosUpgradeCandidate(Pos, i, cost, this));
+                        var piece = pieceBoard[i];
+                        if (piece == null || piece.Color != Color) continue;
+                    
+                        var upgradableTo = UpgradableTo(piece.PieceRank);
+                        if (upgradableTo == PieceRank.None) continue;
+                    
+                        var cost = CalculateCost(piece.PieceRank, upgradableTo);
+                        if (Coin >= cost)
+                        {
+                            list.Add(new ChrysosUpgradeCandidate(Pos, i, cost, this));
+                        }
                     }
+                } else
+                {
+                    // query for AI
                 }
+                
             };
         }
 

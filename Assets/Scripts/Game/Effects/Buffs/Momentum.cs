@@ -1,9 +1,10 @@
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+
 namespace Game.Effects.Buffs
 {
-    public class Momentum: Effect
+    public class Momentum: Effect, ISkillUsedEffect
     {
         public Momentum(sbyte duration, PieceLogic piece) : base(duration, -1, piece, "effect_momentum")
         {}
@@ -23,6 +24,11 @@ namespace Game.Effects.Buffs
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 20;
+        }
+
+        public void OnCallSkillUsed(Action.Action skill)
+        {
+            Piece.SkillCooldown--;
         }
     }
 }

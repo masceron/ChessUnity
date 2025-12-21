@@ -9,26 +9,26 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KingMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
-            
-            var effectiveMoveRange = caller.GetMoveRange(ref index);
+
+            var effectiveMoveRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, effectiveMoveRange))
             {
                 MakeMove(rankOff, fileOff);
             }
-            
+
             return 10 + 10 * effectiveMoveRange;
-            
+
             void MakeMove(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
                 if (!IsActive(index)) return;
-                
+
                 var piece = PieceOn(index);
                 if (piece != null ||
                     Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
@@ -37,14 +37,14 @@ namespace Game.Movesets
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
 
             var color = caller.Color;
-            var attackRange = caller.AttackRange;
+            var attackRange = caller.GetAttackRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, attackRange))
             {
@@ -52,17 +52,24 @@ namespace Game.Movesets
             }
 
             return 10 + 10 * attackRange;
-            
+
             void MakeCapture(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
                 var piece = PieceOn(index);
-                
-                if (piece == null || 
-                    piece.Color == color || 
-                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
+                if (piece == null && !isPlayer)
+                {
+                    list.Add(new NormalCapture(pos, index));
                     return;
-                list.Add(new NormalCapture(pos, index));
+                }
+                else if (piece != null)
+                {
+                    if (piece.Color == color ||
+                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
+                        return;
+                    list.Add(new NormalCapture(pos, index));
+                }
+
             }
         }
     }

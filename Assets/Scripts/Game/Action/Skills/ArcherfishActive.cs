@@ -10,6 +10,16 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArcherfishActive: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+
+            // Skill này chỉ tác động lên quân địch.
+            // Nếu quân của AI (pieceAI) khác màu với người tạo skill, nó sẽ bị phạt.
+            return pieceAI.Color != maker.Color ? -15 : 0;
+        }
+
         public ArcherfishActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
@@ -50,4 +60,3 @@ namespace Game.Action.Skills
 
     }
 }
-

@@ -12,6 +12,7 @@ namespace UX.UI.Loader
     public static class SceneLoader
     {
         private static bool _isRegistered = false;
+        private static GameMode chosenGameMode = GameMode.PlayerVsAI;
         public static void Start()
         {
             if (_isRegistered) { return; }
@@ -25,7 +26,7 @@ namespace UX.UI.Loader
                         UIManager.Ins.Load(CanvasID.MainMenu);
                         break;
                     case 1:
-                        MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)));
+                        MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)), chosenGameMode);
                         break;
                     case 2:
                         UIManager.Ins.Load(CanvasID.FreePlayMenu);
@@ -39,7 +40,11 @@ namespace UX.UI.Loader
             UIManager.Ins.Load(CanvasID.Loading);
             UIManager.Ins.StartCoroutine(Load(id));
         }
-        
+        public static void LoadFreePlay(GameMode gameMode)
+        {
+            LoadSceneWithLoadingScreen(1);
+            chosenGameMode = gameMode;
+        }
         private static IEnumerator Load(int id)
         {
             var op = LoadSceneAsync(id, LoadSceneMode.Single);

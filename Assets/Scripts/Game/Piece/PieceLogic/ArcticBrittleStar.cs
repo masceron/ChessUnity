@@ -15,15 +15,22 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 15, this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
-                var (rank, file) = BoardUtils.RankFileOf(Pos);
 
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                if (isPlayer)
                 {
-                    var index = BoardUtils.IndexOf(rankOff, fileOff);
-                    list.Add(new ArcticBrittleStarActive(Pos, index));
+                    var (rank, file) = BoardUtils.RankFileOf(Pos);
+
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    {
+                        var index = BoardUtils.IndexOf(rankOff, fileOff);
+                        list.Add(new ArcticBrittleStarActive(Pos, index));
+                    }
+                } else
+                {
+                    //query for AI in here
                 }
             };
         }

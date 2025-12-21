@@ -66,7 +66,7 @@ namespace UX.UI.FreePlayTest.AugmentationScene
 
         private void SetTooltip()
         {
-            var pieceName = "Beautiful name";
+            var pieceName = Aug.name;
             var pieceDescriptions = "This is a description";
 
             trigger.SetText(pieceName, "", pieceDescriptions);

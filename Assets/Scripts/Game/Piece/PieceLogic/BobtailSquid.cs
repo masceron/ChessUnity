@@ -14,12 +14,21 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 20, this)));
             
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0)
+                if (SkillCooldown > 0) return;
+
+                if (isPlayer)
                 {
-                    list.Add(new BobtailSquidActive(Pos, Pos));
+                    if (SkillCooldown == 0)
+                    {
+                        list.Add(new BobtailSquidActive(Pos, Pos));
+                    }
+                } else
+                {
+                    //query for AI in here
                 }
+                
             };
         }
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }

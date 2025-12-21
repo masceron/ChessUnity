@@ -1,7 +1,10 @@
-﻿using Game.Action;
+﻿using System.Linq;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
+using Game.Action.Skills;
 using Game.Effects.Traits;
+using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -9,32 +12,113 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Thalassos: Commons.PieceLogic, IPieceWithSkill
+    public class Thalassos : Commons.PieceLogic, IPieceWithSkill
     {
         public Thalassos(PieceConfig cfg) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ThalassosShielder(this)));
 
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
 
-                for (var rankOff = -1; rankOff <= 1; rankOff++)
+                if (isPlayer)
                 {
-                    var rank = RankOf(Pos) + rankOff;
-                    if (!VerifyBounds(rank)) continue;
-
-                    for (var fileOff = -1; fileOff <= 1; fileOff++)
+                    for (var rankOff = -1; rankOff <= 1; rankOff++)
                     {
-                        if (rankOff == 0 && fileOff == 0) continue;
-                        var file = FileOf(Pos) + fileOff;
-                        if (!VerifyBounds(file)) continue;
-                        var posTo = IndexOf(rank, file);
+                        var rank = RankOf(Pos) + rankOff;
+                        if (!VerifyBounds(rank)) continue;
 
-                        if (PieceOn(posTo) == null)
+                        for (var fileOff = -1; fileOff <= 1; fileOff++)
                         {
-                            list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                            if (rankOff == 0 && fileOff == 0) continue;
+                            var file = FileOf(Pos) + fileOff;
+                            if (!VerifyBounds(file)) continue;
+                            var posTo = IndexOf(rank, file);
+
+                            if (PieceOn(posTo) == null)
+                            {
+                                list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                            }
                         }
+                    }
+                }
+                else
+                {
+                    //query for AI in here
+                    if (!excludeEmptyTile)
+                    {
+                        for (var rankOff = -1; rankOff <= 1; rankOff++)
+                        {
+                            var rank = RankOf(Pos) + rankOff;
+                            for (var fileOff = -1; fileOff <= 1; fileOff++)
+                            {
+                                if (rankOff == 0 && fileOff == 0) continue;
+                                var file = FileOf(Pos) + fileOff;
+                                var posTo = IndexOf(rank, file);
+
+                                if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
+                                {
+                                    list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                                }
+                            }
+                        }
+                        return;
+                    }
+                    // captured list for the maker's side
+                    var capturedList = Color ? MatchManager.Ins.GameState.BlackCaptured : MatchManager.Ins.GameState.WhiteCaptured;
+                    if (capturedList == null || capturedList.Count == 0) return;
+
+                    // Filter candidates: only Common or Swarm rank
+                    var candidates = capturedList.ToList()
+                        .Where(cfg =>
+                        {
+                            try
+                            {
+                                var info = AssetManager.Ins.PieceData[cfg.Type];
+                                return info.rank == PieceRank.Common || info.rank == PieceRank.Swarm;
+                            }
+                            catch
+                            {
+                                return false;
+                            }
+                        })
+                        .ToList();
+                    if (candidates.Count == 0) return;
+
+                    // Find empty squares around Maker within radius 1
+                    var (r0, f0) = RankFileOf(Pos);
+                    var emptySquares = new System.Collections.Generic.List<int>();
+                    for (int dr = -1; dr <= 1; dr++)
+                    {
+                        for (int df = -1; df <= 1; df++)
+                        {
+                            int rr = r0 + dr;
+                            int ff = f0 + df;
+                            if (!VerifyBounds(rr) || !VerifyBounds(ff)) continue;
+                            int idx = IndexOf(rr, ff);
+                            if (!IsActive(idx)) continue;
+                            if (PieceOn(idx) == null) emptySquares.Add(idx);
+                        }
+                    }
+                    if (emptySquares.Count == 0) return;
+
+                    // Pick best candidate
+                    var bestScore = candidates.Max((p) => PieceMaker.Get(p).GetValueForAI());
+                    var top = candidates.Where(c => PieceMaker.Get(c).GetValueForAI() == bestScore).ToList();
+                    var chosenPiece = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
+
+                    // Pick random empty square
+                    var chosenSquare = emptySquares[UnityEngine.Random.Range(0, emptySquares.Count)];
+
+                    // Spawn piece immediately
+                    list.Add(new ThalassosResurrect(Pos, chosenSquare, chosenPiece.Type));
+
+                    // Remove the resurrected piece from captured list
+                    var toRemove = capturedList.FirstOrDefault(c => c.Type == chosenPiece.Type && c.Color == chosenPiece.Color);
+                    if (toRemove != null)
+                    {
+                        capturedList.Remove(toRemove);
                     }
                 }
             };

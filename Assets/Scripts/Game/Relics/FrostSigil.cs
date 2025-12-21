@@ -63,6 +63,7 @@ namespace Game.Relics
             {
                 for (int file = 1; file < BoardUtils.MaxLength; file++)
                 {
+                    if (!BoardUtils.IsActive(BoardUtils.IndexOf(rank, file))) continue;
                     var enemies = BoardUtils.GetPiecesInRadius(
                         rank,
                         file,
@@ -83,9 +84,9 @@ namespace Game.Relics
                     }
                 }
             }
+            
             if (bestAreas.Count == 0)
             {
-                Debug.Log("No enemies found");
                 return;  
             } 
 

@@ -15,9 +15,17 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SwordfishAttack(this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0) list.Add(new SwordFishActive(Pos));
+                if (SkillCooldown > 0) return;
+                if (isPlayer)
+                {
+                    list.Add(new SwordFishActive(Pos));
+                }
+                else
+                {
+                    //query for AI in here
+                }
             };
         }
 

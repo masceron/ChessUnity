@@ -23,3 +23,7 @@ MonoBehaviour:
   normalSkillCooldown: 4
   availableSlots: 0
   logicClassName: HourglassJelly
+  baseValue: 0
+  considerations:
+  - Consideration: {fileID: 11400000, guid: 68a110465a5fa754f95eb1c867bcd9a0, type: 2}
+    Weight: 71

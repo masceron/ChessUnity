@@ -9,10 +9,10 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class RookMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var piece = PieceOn(pos);
-            var moveRange = piece.GetMoveRange(ref index);
+            var moveRange = piece.GetMoveRange();
 
             var (rank, file) = RankFileOf(pos);
             
@@ -51,11 +51,11 @@ namespace Game.Movesets
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.AttackRange;
+            var moveRange = piece.GetAttackRange();
 
             var (rank, file) = RankFileOf(pos);
             
@@ -84,7 +84,14 @@ namespace Game.Movesets
             bool MakeCapture(int index)
             {
                 var p = PieceOn(index);
-                if (p == null) return true;
+                if (p == null) 
+                {
+                    if (!isPlayer)
+                    {
+                        list.Add(new NormalCapture(pos, index));
+                    }
+                    return true;
+                }
                 if (!IsActive(index)) return false;
                 if (p.Color != color)
                 {

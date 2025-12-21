@@ -1,5 +1,4 @@
-﻿
-using Game.Action.Internal;
+﻿using Game.Action.Internal;
 using Game.AI;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -21,7 +20,12 @@ namespace Game.Action.Skills
         
         public void CompleteActionForAI()
         {
+            
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
             throw new System.NotImplementedException();
-        }   
+        }
     }
 }

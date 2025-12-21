@@ -5,8 +5,6 @@ using static Game.Common.BoardUtils;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Game.Piece;
-using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits

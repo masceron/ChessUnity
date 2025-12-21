@@ -355,28 +355,56 @@ MonoBehaviour:
     m_Key: effect_black_swallower_vengeful_description
     m_Metadata:
       m_Items: []
-  - m_Id: 44501890192166912
-    m_Key: effect_blue_ringed_octopus_passive_description
+  - m_Id: 43892959793610752
+    m_Key: effect_shortreach_description
     m_Metadata:
       m_Items: []
-  - m_Id: 44715678317203456
-    m_Key: effect_protective_lens_passive_description
+  - m_Id: 45012315973844992
+    m_Key: effect_hemolymph_filter_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 44762031437172736
+  - m_Id: 46054427930624000
+    m_Key: effect_vigorous_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46491246572830720
+    m_Key: effect_umbrella_slug_special_ability_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611862466560
+    m_Key: effect_penpoint_gunnel_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611879243776
+    m_Key: effect_momentum_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611883438080
+    m_Key: effect_leashed_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611887632384
+    m_Key: effect_manta_spine_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611887632385
+    m_Key: effect_rally_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484913417900032
     m_Key: effect_cold_blooded_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 46538620042792960
+  - m_Id: 47484913476620288
+    m_Key: effect_protective_lens_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484913480814592
     m_Key: effect_thread_pipefish_effect_description
     m_Metadata:
       m_Items: []
-  - m_Id: 46576090801295360
-    m_Key: piece_momentum_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 47086207871275008
-    m_Key: effect_momentum_description
+  - m_Id: 47484913531146240
+    m_Key: effect_blue_ringed_octopus_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

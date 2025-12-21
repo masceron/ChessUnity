@@ -8,22 +8,30 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeaStar: Commons.PieceLogic, IPieceWithSkill
+    public class SeaStar : Commons.PieceLogic, IPieceWithSkill
     {
         public SeaStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown != 0 ||
-                    (!Color ? WhiteCaptured() : BlackCaptured()).All(p => p.Type != "piece_sea_star")) return;
-                var (startRank, startFile) = RankFileOf(Pos);
-                foreach (var (rank, file) in MoveEnumerators.Around(startRank, startFile, 1))
+                if (SkillCooldown != 0) return;
+                if (isPlayer)
                 {
-                    var idx = IndexOf(rank, file);
-                    if (PieceOn(idx) == null)
+                    if (SkillCooldown != 0 ||
+                        (!Color ? WhiteCaptured() : BlackCaptured()).All(p => p.Type != "piece_sea_star")) return;
+                    var (startRank, startFile) = RankFileOf(Pos);
+                    foreach (var (rank, file) in MoveEnumerators.Around(startRank, startFile, 1))
                     {
-                        list.Add(new SeaStarResurrect(Pos, idx));
+                        var idx = IndexOf(rank, file);
+                        if (PieceOn(idx) == null)
+                        {
+                            list.Add(new SeaStarResurrect(Pos, idx));
+                        }
                     }
+                }
+                else
+                {
+                    //query for AI in here
                 }
             };
         }

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
+using Game.AI;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +19,8 @@ namespace UX.UI.Ingame
         [SerializeField] private PieceActions pieceActions;
         [SerializeField] private GameActions gameActions;
         [SerializeField] private EffectBar effectBar;
+
+        private AIManager aiManager;
         
         private Transform mainCameraCenter;
         public static PieceLogic Hovering;
@@ -33,6 +35,7 @@ namespace UX.UI.Ingame
         private void Start()
         {
             mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
+            aiManager = AIManager.Ins;
             pieceActions.Load(ListOf, MoveList);
             UpdateRelic();
             Selecting = -1;
@@ -69,7 +72,7 @@ namespace UX.UI.Ingame
             if (piece == null || !piece.IsVisible) return;
 
             Hovering = piece;
-            
+
             pieceInfoMenu.SetUpPieceInfo(piece);
             effectBar.SetUpStatusEffects(piece);
         }
@@ -84,6 +87,7 @@ namespace UX.UI.Ingame
         {
             Selecting = -1;
             TileManager.Ins.UnmarkAll();
+            aiManager.ClearTileScores();
             pieceActions.DisablePieceInteractions();
             foreach (var action in ListOf)
             {
@@ -108,6 +112,7 @@ namespace UX.UI.Ingame
         public void MarkPiece(int pos)
         {
             HoveringPos = pos;
+            aiManager.ShowPieceActionScore(pos);
 
             if (Selecting != -1)
             {
@@ -136,13 +141,6 @@ namespace UX.UI.Ingame
                         case IPendingAble pending:
                             pending.CompleteAction();
                             return;
-                        // Cách xử lý 2 target cũ
-                        /*case IDoubleSelectionSkill doubleSkill:
-                        if (doubleSkill.IsBothSelected()) { break; }
-                        ((IPieceWithDoubleSelectionSkill)PieceOn(action.Maker)).firstSelection = action.Target;
-                        ShowMoveList(action.Maker);
-                        pieceActions.MarkSkill();
-                        return; */
                     }
 
                     ExecuteAction(action);
@@ -155,7 +153,7 @@ namespace UX.UI.Ingame
                 var piece = PieceOn(pos);
                 if (piece is not { IsVisible: true } || FormationManager.Ins.IsHideByFog(pos, SideToMove())) return;
                 
-                SetPieceHover(pos);
+                Hover(pos);
                 TileManager.Ins.Select(pos);
                 Selecting = pos;
                 pieceActions.LoadPieceActionInfo();
@@ -191,8 +189,8 @@ namespace UX.UI.Ingame
                 pieceInfoMenu.Disable();
                 return;
             }
-            Formation formation = FormationManager.Ins.GetFormation(pos);
-            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar && formation.GetColor() != SideToMove())
+
+            if (FormationManager.Ins.IsHideByFog(pos, SideToMove()))
             {
                 return;
             }

@@ -7,6 +7,13 @@ namespace Game.Action.Skills
 {
     public class BlueDragonActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null) return 0;
+            return pieceAI.Color != maker.Color ? -15 : 0;
+        }
+
         public BlueDragonActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
@@ -21,7 +28,7 @@ namespace Game.Action.Skills
         
         public void CompleteActionForAI()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

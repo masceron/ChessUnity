@@ -355,28 +355,56 @@ MonoBehaviour:
     m_Key: effect_black_swallower_vengeful
     m_Metadata:
       m_Items: []
-  - m_Id: 44478021397958656
-    m_Key: effect_blue_ringed_octopus_passive
+  - m_Id: 43869090995208192
+    m_Key: effect_shortreach
     m_Metadata:
       m_Items: []
-  - m_Id: 44691809522995200
-    m_Key: effect_protective_lens_passive
+  - m_Id: 44988447158665216
+    m_Key: effect_hemolymph_filter_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 44738162672324608
+  - m_Id: 46030559132221440
+    m_Key: effect_vigorous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 46467377766039552
+    m_Key: effect_umbrella_slug_special_ability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47440743076646912
+    m_Key: effect_penpoint_gunnel_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47440743122784256
+    m_Key: effect_momentum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47440743126978560
+    m_Key: effect_leashed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47440743131172864
+    m_Key: effect_manta_spine_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47440743131172865
+    m_Key: effect_rally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47461044611108864
     m_Key: effect_cold_blooded_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 46514751244390400
+  - m_Id: 47461044715966464
+    m_Key: effect_protective_lens_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47461044724355072
     m_Key: effect_thread_pipefish_effect
     m_Metadata:
       m_Items: []
-  - m_Id: 46552221927395328
-    m_Key: piece_momentum
-    m_Metadata:
-      m_Items: []
-  - m_Id: 47062339064483840
-    m_Key: effect_momentum
+  - m_Id: 47461044766298112
+    m_Key: effect_blue_ringed_octopus_passive
     m_Metadata:
       m_Items: []
   m_Metadata:

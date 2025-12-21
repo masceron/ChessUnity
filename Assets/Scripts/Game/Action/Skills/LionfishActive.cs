@@ -8,6 +8,13 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class LionfishActive: Action, ISkills
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null) return 0;
+            return pieceAI.Color != maker.Color ? -20 : 0;
+        }
+
         public LionfishActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;

@@ -1,5 +1,6 @@
 ﻿using Game.AI;
 using Game.Common;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -7,6 +8,14 @@ namespace Game.Action.Skills
 {
     public class PhronimaActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            if (pieceAI.Color != maker.Color) return -50;
+            return 0;
+        }
+
         private const int increaseDuration = 2;
         public PhronimaActive(int from, int to) : base(from)
         {
@@ -15,7 +24,7 @@ namespace Game.Action.Skills
 
         private void ApplyEffect(int pos)
         {
-            var targetPiece = BoardUtils.PieceOn(Target);
+            var targetPiece = PieceOn(Target);
 
             foreach (var effect in targetPiece.Effects)
             {
@@ -57,10 +66,9 @@ namespace Game.Action.Skills
                 return buffCountA.CompareTo(buffCountB);
             });
 
-            var idx = UnityEngine.Random.Range(0, listPieces.Count - 1);
+            var idx = Random.Range(0, listPieces.Count - 1);
             
             ApplyEffect(listPieces[idx].Pos);
         }
     }
 }
-

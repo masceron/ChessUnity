@@ -54,6 +54,7 @@ namespace Game.Effects.Traits
             {
                 if (FormationManager.Ins.GetFormation(pos) != null) continue;
                 FormationManager.Ins.SetFormation(pos, dazzlingLight);
+                // Trigger không cần thiết, hàm TriggerEnter được gọi tự động
                 if (BoardUtils.PieceOn(pos) != null)
                 {
                     FormationManager.Ins.TriggerEnter(pos);

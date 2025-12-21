@@ -9,6 +9,13 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChamberedNautilusActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null) return 0;
+            return pieceAI.Color != maker.Color ? -5 : 0;
+        }
+
         public ChamberedNautilusActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
@@ -23,7 +30,7 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

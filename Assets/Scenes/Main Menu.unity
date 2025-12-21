@@ -666,7 +666,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasDict:
-    keys: 0000000001000000040000000500000006000000070000000a000000
+    keys: 00000000010000000400000005000000060000000700000002000000
     values:
     - {fileID: 5200261467340727970, guid: dd15693434abf034abb1a333f26fd5f5, type: 3}
     - {fileID: 2366123022056309205, guid: 232b407e1606a7740985dac70f2aeb02, type: 3}
@@ -674,7 +674,7 @@ MonoBehaviour:
     - {fileID: 4440579021869029674, guid: 2b22338add1d3b148be7a6539aec99b0, type: 3}
     - {fileID: 5774262851841734894, guid: 1be7b8ece04da264abcdad1784db8ac3, type: 3}
     - {fileID: 1308051524528718088, guid: e52d696deee765941a0b19e34bd4ec2b, type: 3}
-    - {fileID: 5158559864929147220, guid: 243f7f31a3981304ba8d80cfc06a4f1b, type: 3}
+    - {fileID: 4830197545302833462, guid: ec30b0ea98e950c4aa27067669eb4589, type: 3}
 --- !u!4 &1974437283
 Transform:
   m_ObjectHideFlags: 0
