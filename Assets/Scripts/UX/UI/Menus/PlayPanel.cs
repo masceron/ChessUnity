@@ -23,6 +23,36 @@ namespace UX.UI.Menus
                 Tween.Rotation(content.transform, Vector3.zero, 0.25f);
             }
         }
+
+        public void OnClickAssignments()
+        {
+            UIManager.Ins.Load(CanvasID.Followers);
+        }
+
+        public void OnClickTrainingGround()
+        {
+            UIManager.Ins.Load(CanvasID.TrainingGround);
+        }
+
+        public void OnClickTrader()
+        {
+            UIManager.Ins.Load(CanvasID.Trader);
+        }
+
+        public void OnClickMurkyTower()
+        {
+            UIManager.Ins.Load(CanvasID.MurkyTower);
+        }
+
+        public void OnClickOutworldInvaders()
+        {
+            UIManager.Ins.Load(CanvasID.OutworldInvader);
+        }
+
+        public void OnClickVault()
+        {
+            UIManager.Ins.Load(CanvasID.Vault); 
+        }
         
         public void OnClickCampaign()
         {

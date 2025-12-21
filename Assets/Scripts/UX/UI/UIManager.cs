@@ -12,6 +12,7 @@ namespace UX.UI
         FreePlayPreset, FreePlayDesignArmy, RegionalEffect, Augmentation,
         EndGameMessage,
         FreePlayMenu,
+        StartGame, Assignment, MurkyTower, OutworldInvader, TrainingGround, Trader, Vault,
         None,
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
