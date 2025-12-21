@@ -56,11 +56,13 @@ namespace Game.Piece.PieceLogic
                             }
                         }
                     }
-                    if (listPieces.Count > 0)
-                    {
-                        int randomIndex = Random.Range(0, listPieces.Count);
-                        list.Add(new SnaggletoothsActive(Pos, listPieces[randomIndex].Pos, true));
-                    }
+                    int maxValue = listPieces.Max(p => p.GetValueForAI());
+                    var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+                    if (bestPieces.Count == 0) return;
+
+                    var random = new System.Random();
+                    var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+                    list.Add(new SnaggletoothsActive(Pos, selectedPiece.Pos, true));
                     
                 }
             };
