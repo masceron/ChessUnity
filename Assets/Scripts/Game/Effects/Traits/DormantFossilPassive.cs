@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
     
     public class DormantFossilPassive : Effect, IEndTurnEffect
     {
-        private const byte TurnsToActive = 1;
+        private const byte TurnsToActive = 15;
         private byte numTurns = TurnsToActive;
         
         public DormantFossilPassive(PieceLogic piece) : base(-1, -1, piece, "effect_dormant_fossil_passive")
@@ -41,6 +41,7 @@ namespace Game.Effects.Traits
             if (numTurns == 0)
             {
                 ActivePassive();
+                numTurns = TurnsToActive;
             }
         }
         

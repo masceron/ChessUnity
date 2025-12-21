@@ -42,8 +42,11 @@ namespace UX.UI.Ingame.DormantFossil
             
             for (var i = 0; i < 3; ++i)
             {
-                Instantiate(pieceItem, chooseField.transform, true);
-                chooseField.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
+                if (chooseField.transform.childCount < 3)
+                {
+                    Instantiate(pieceItem, chooseField.transform, true);
+                    chooseField.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
+                }
             }
 
         }
@@ -52,8 +55,8 @@ namespace UX.UI.Ingame.DormantFossil
         {
             var color = BoardUtils.ColorOfPiece(piecePos);
             
-            ActionManager.EnqueueAction(new KillPiece(piecePos));
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(type, color, piecePos)));
+            ActionManager.ExecuteImmediately(new KillPiece(piecePos));
+            ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig(type, color, piecePos)));
             
             Disable();
         }

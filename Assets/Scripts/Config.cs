@@ -12,6 +12,7 @@ public static class Config
         new PieceConfig("piece_siren", false, 25),
         new PieceConfig("piece_bobtail_squid", false, 26),
         new PieceConfig("piece_thread_pipefish", false, 27),
+        new PieceConfig("piece_dormant_fossil", false, 28),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
