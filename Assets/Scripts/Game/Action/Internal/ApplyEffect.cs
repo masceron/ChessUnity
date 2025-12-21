@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using Game.Common;
 using Game.Effects;
 using Game.Managers;
 
@@ -21,9 +20,11 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
+            if (Effect.Piece.IsImmuneToEffect(Effect.EffectName)) return;
+            
             if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {
-                BoardUtils.AddObserver(Effect);
+                MatchManager.Ins.GameState.AddObserver(Effect);
             }
             
             var already = Effect.Piece.Effects.FirstOrDefault(e => e.EffectName == Effect.EffectName);
@@ -46,7 +47,7 @@ namespace Game.Action.Internal
                         var strongerEffect = weakerEffect == already ? Effect : already;
                         var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
                         already.Duration = (sbyte)newDuration;
-                        //UnityEngine.Debug.Log(already.Duration);
+                        UnityEngine.Debug.Log(already.Duration);
                         break;
                     case EffectStack.NonStackable: default:
                         break;

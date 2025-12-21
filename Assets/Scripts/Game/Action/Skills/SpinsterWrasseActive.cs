@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
@@ -115,7 +114,11 @@ namespace Game.Action.Skills
             ApplyEffect(PieceOn(idxA), PieceOn(idxB));
             
         }
-        
-        
+
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

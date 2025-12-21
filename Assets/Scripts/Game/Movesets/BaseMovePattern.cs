@@ -11,7 +11,7 @@ namespace Game.Movesets
     {
         public abstract List<int> GenerateBaseMovePattern(int makerPos);
 
-        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range, bool forCapture)
+        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range, bool forCapture, bool isPlayer)
         {
             if (range <= 0) return;
 
@@ -55,7 +55,7 @@ namespace Game.Movesets
             foreach (var targetPos in basePositions)
             {
                 var (tRank, tFile) = RankFileOf(targetPos);
-                if (!VerifyBounds(tRank) || !VerifyBounds(tFile))
+                if (!VerifyBounds(tRank) || !VerifyBounds(tFile) || !IsActive(targetPos))
                     continue;
 
                 var blocker = Pathfinder.LineBlocker(rank, file, tRank, tFile);
@@ -66,6 +66,8 @@ namespace Game.Movesets
                 {
                     if (!forCapture && isClear)
                         list.Add(new NormalMove(pos, targetPos));
+                    if (forCapture && isClear && !isPlayer) // add capture để nếu đi vào đây thì sẽ bị phạt
+                        list.Add(new NormalCapture(pos, targetPos));
                 }
                 else if (target.Color != color)
                 {

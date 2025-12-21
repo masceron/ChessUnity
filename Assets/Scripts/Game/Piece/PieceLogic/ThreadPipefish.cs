@@ -1,9 +1,5 @@
-using Game.Action;
-using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Common;
-using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -15,7 +11,7 @@ namespace Game.Piece.PieceLogic
     {
         public ThreadPipefish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
 

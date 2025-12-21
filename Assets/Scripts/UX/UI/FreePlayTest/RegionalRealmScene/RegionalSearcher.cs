@@ -15,8 +15,9 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
         private List<RegionalEffectType> lastSearchResult;
         public void Load()
         {
+            // lastSearchResult = new List<RegionalEffectType>() { RegionalEffectType.None };
             lastSearchResult = Enum.GetValues(typeof(RegionalEffectType)).Cast<RegionalEffectType>().ToList();
-            lastSearchResult.Remove(RegionalEffectType.None);
+            // lastSearchResult.RemoveAt(lastSearchResult.Count - 1);
             DisplaySearchResult();
         }
         private void DisplaySearchResult()

@@ -14,11 +14,20 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ElectricEelVengeful(this)));
             
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0)
+                if (SkillCooldown > 0) return;
+
+                if (isPlayer)
                 {
-                    list.Add(new ElectricEelActive(Pos));
+                    if (SkillCooldown == 0)
+                    {
+                        list.Add(new ElectricEelActive(Pos));
+                    }
+                }
+                else
+                {
+                    
                 }
             };
         }

@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -11,20 +10,27 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BottlenoseDolphin: Commons.PieceLogic, IPieceWithSkill
+    public class BottlenoseDolphin : Commons.PieceLogic, IPieceWithSkill
     {
         public BottlenoseDolphin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new QuickReflex(this)));
             ActionManager.EnqueueAction(new ApplyEffect(new BottlenoseDolphinPassive(this)));
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                if (isPlayer)
                 {
-                    if (piece == null) continue;
+                    foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                    {
+                        if (piece == null) continue;
 
-                    list.Add(new BottlenoseDolphinActive(Pos, piece.Pos));
+                        list.Add(new BottlenoseDolphinActive(Pos, piece.Pos));
+                    }
+                }
+                else
+                {
+                    //query for AI in here
                 }
 
             };

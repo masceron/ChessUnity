@@ -4,5 +4,10 @@ namespace Game.Effects
     {
         public int ModifyMoveRange(int baseRange);
     }
+
+    public interface IAttackRangeModifier
+    {
+        public int ModifyAttackRange(int baseRange);
+    }
 }
 

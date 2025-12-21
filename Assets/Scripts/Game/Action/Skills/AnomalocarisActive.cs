@@ -8,6 +8,13 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AnomalocarisActive: Action, ISkills
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            if (PieceOn(Maker) == null || pieceAI == null) return 0;
+            if (pieceAI.Color != PieceOn(Maker).Color) return -10;
+            return 0;
+        }
+
         public AnomalocarisActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;

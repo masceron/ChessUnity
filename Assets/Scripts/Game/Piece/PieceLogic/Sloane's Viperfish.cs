@@ -10,9 +10,17 @@ namespace Game.Piece.PieceLogic
 
         public SloaneSViperfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown == 0) list.Add(new SloaneSViperfishActive(Pos));
+                if (SkillCooldown != 0) return;
+                if (isPlayer)
+                {
+                    list.Add(new SloaneSViperfishActive(Pos));
+                }
+                else
+                {
+                    //query for AI in here
+                }
             };
         }
 

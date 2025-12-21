@@ -12,13 +12,13 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeaTurtleMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        public static void Quiets(List<Action.Action> list, int pos)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
             
-            var effectiveMoveRange = caller.GetMoveRange(ref index);
+            var effectiveMoveRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, effectiveMoveRange))
             {
@@ -44,7 +44,7 @@ namespace Game.Movesets
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.AttackRange;
+            var moveRange = piece.GetAttackRange();
 
             var (rank, file) = RankFileOf(pos);
 

@@ -44,7 +44,7 @@ namespace Game.Relics
             // Find allied pieces with the most debuffs
             foreach (var piece in allPieces)
             {
-                if (piece != null && piece.Color == this.Color)
+                if (piece != null && piece.Color == Color)
                 {
                     int debuffCount = BoardUtils.EffectWithEffectCategory(piece, EffectCategory.Debuff).Count;
                     if (debuffCount > maxDebuff)
@@ -84,14 +84,17 @@ namespace Game.Relics
                 }
             }
 
-            var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
-            if (pending is IPendingAble p)
+            if (targetPiece != null)
             {
-                p.CompleteAction();
-            }
-            else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
+                var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
+                if (pending is IPendingAble p)
+                {
+                    p.CompleteAction();
+                }
+                else
+                {
+                    BoardViewer.Ins.ExecuteAction(pending);
+                }
             }
 
         }

@@ -10,6 +10,12 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class StingrayDash: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null) return 0;
+            return pieceAI.Color != maker.Color ? -30 : 0;
+        }
         public StingrayDash(int maker, int to) : base(maker, true)
         {
             Target = (ushort)to;
@@ -43,15 +49,13 @@ namespace Game.Action.Skills
             }
             
             MatchManager.Ins.GameState.Move(Maker, Target);
-
             Maker = Target;
-            
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
         
         public void CompleteActionForAI()
         {
-            throw new System.NotImplementedException();
+            
         }
     
     }

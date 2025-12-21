@@ -67,6 +67,7 @@ namespace Game.Augmentation
         ArcherfishAccuracy,
         RaysTail,
         ColdBlooded,
+        MantaSpine,
         None,
     }
 

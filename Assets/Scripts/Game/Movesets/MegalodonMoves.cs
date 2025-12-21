@@ -7,11 +7,11 @@ namespace Game.Movesets
 {
     public class MegalodonMoves
     {
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var caller = PieceOn(pos);
             var color = caller.Color;
-            var range = caller.AttackRange;
+            var range = caller.GetAttackRange();
             var (startRank, startFile) = RankFileOf(pos);
             
             var push = !color ? -1 : 1;

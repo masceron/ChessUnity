@@ -7,6 +7,14 @@ namespace Game.Action.Skills
 {
     public class AnglerfishTaunt: Action, ISkills
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            if (pieceAI.Color != maker.Color) return -10;
+            return 0;
+        }
+
         public AnglerfishTaunt(int maker, int to) : base(maker)
         {
             Target = (ushort)to;

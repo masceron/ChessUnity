@@ -19,8 +19,6 @@ namespace Game.Managers
 {
     public interface ISubscriber
     {
-        // ObserverActivateWhen GetObserverActivate();
-        // ObserverPriority GetPriority();
         public void OnCall(Action.Action action);
         public void OnCallEnd(bool color);
     }
@@ -33,7 +31,9 @@ namespace Game.Managers
         SwitchTurn,
         MoveGeneration,
         EffectApplied,
-        Dead
+        Dead,
+        Block,
+        SkillUsed
     }
 
     public enum Color : byte
@@ -268,13 +268,13 @@ namespace Game.Managers
             }
             SideToMove = !SideToMove;
         }
-
+        // Được gọi tự động bởi action ApplyEffect
         public void AddObserver(Effect effect)
         {
             var pos = effectObservers.BinarySearch(effect, effect);
             effectObservers.Insert(pos >= 0 ? pos : ~pos, effect);
         }
-
+        // Được gọi tự động bởi action RemoveEffect
         public void RemoveObserver(Effect effect)
         {
             effectObservers.Remove(effect);
@@ -322,7 +322,9 @@ namespace Game.Managers
             {
                 effectObservers.ForEach(effect =>
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCallPieceAction(mainAction);
+                    if (effect.disabled) return;
+                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures)
+                        effect.OnCallPieceAction(mainAction);
                 });
             }
 
@@ -330,6 +332,7 @@ namespace Game.Managers
             {
                 effectObservers.ForEach(effect =>
                 {
+                    if (effect.disabled) return;
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves &&
                         effect.Priority != ObserverPriority.AfterAction)
                         effect.OnCallPieceAction(mainAction);
@@ -341,6 +344,7 @@ namespace Game.Managers
         {
             pieceToDie.Effects.ForEach(effect =>
             {
+                if (effect.disabled) return;
                 if (effect.ObserverActivateWhen == ObserverActivateWhen.Dead)
                 {
                     ((IDeadEffect)effect).OnCallDead();
@@ -352,6 +356,7 @@ namespace Game.Managers
         {
             effectObservers.ForEach(e =>
             {
+                if (e.disabled) return;
                 if (e.ObserverActivateWhen == ObserverActivateWhen.MoveGeneration)
                 {
                     e.OnCallMoveGen(actions);
@@ -363,6 +368,7 @@ namespace Game.Managers
         {
             effectObservers.ForEach(e =>
             {
+                if (e.disabled) return;
                 if (e.ObserverActivateWhen == ObserverActivateWhen.EffectApplied)
                 {
                     ((IApplyEffect)e).OnCallApplyEffect(action);
@@ -370,8 +376,27 @@ namespace Game.Managers
             });
         }
         
+        public void NotifyBlock(Block action)
+        {
+            effectObservers.ForEach(e =>
+            {
+                if (e.disabled) return;
+                if (e is IBlockEffect blockEffect)
+                {
+                    blockEffect.OnCallBlocked(action);
+                }
+            });
+        }
         public void IncrementSkillUses(Action.Action action)
         {
+            effectObservers.ForEach(e =>
+            {
+                if (e.disabled) return;
+                if (e.ObserverActivateWhen == ObserverActivateWhen.SkillUsed)
+                {
+                    ((ISkillUsedEffect)e).OnCallSkillUsed(action);
+                }
+            });
             if (ColorOfPiece(action.Maker)) BlackSkillUses++;
             else WhiteSkillUses++;
         }

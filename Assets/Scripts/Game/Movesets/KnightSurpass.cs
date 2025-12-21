@@ -9,11 +9,11 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KnightSurpass
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var (rank, file) = RankFileOf(pos);
             var caller = PieceOn(pos);
-            var maxRange = caller.GetMoveRange(ref index);
+            var maxRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
             {
@@ -35,12 +35,12 @@ namespace Game.Movesets
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos)
+        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
             var (rank, file) = RankFileOf(pos);
             var caller = PieceOn(pos);
             var color = caller.Color;
-            var maxRange = caller.AttackRange;
+            var maxRange = caller.GetAttackRange();
             
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
             {
@@ -54,11 +54,17 @@ namespace Game.Movesets
                 var index = IndexOf(rankOff, fileOff);
                 var piece = PieceOn(index);
                 
-                if (piece == null || 
-                    piece.Color == color ||
+                if (piece == null && !isPlayer)
+                {
+                    list.Add(new NormalCapture(pos, index));
+                }
+                else if (piece != null)
+                {
+                    if (piece.Color == color ||
                     Distance(pos, index) != maxRange)
-                    return;
-                list.Add(new NormalCapture(pos, index));
+                        return;
+                    list.Add(new NormalCapture(pos, index));
+                }
             }
         }
     }

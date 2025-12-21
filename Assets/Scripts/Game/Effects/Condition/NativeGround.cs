@@ -43,7 +43,7 @@ namespace Game.Effects.Condition
 
         private Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var duration = (sbyte)Random.Range(1, 10);
+            var duration = (sbyte)Random.Range(1, 11);
             sbyte strength = 1;
 
             return effectName switch
@@ -57,6 +57,11 @@ namespace Game.Effects.Condition
                 "effect_camouflage" => new Buffs.Camouflage(piece),
                 _ => new Buffs.Shield(piece)
             };
+        }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() - 30;
         }
     }
 }

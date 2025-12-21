@@ -12,7 +12,7 @@ namespace UX.UI.Menus
 
         public void OnClickSettings()
         {
-            //UIManager.UIManager.Ins.Load(CanvasID.Settings);
+            UIManager.Ins.Load(CanvasID.Settings);
         }
 
         public void OnClickExit()

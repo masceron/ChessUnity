@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.AI;
 using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
@@ -11,6 +10,11 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BottlenoseDolphinActive: Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return 0;
+        }
+
         public BottlenoseDolphinActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;

@@ -2161,7 +2161,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -7, y: 0}
+  m_SizeDelta: {x: -7, y: -521}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1717518498640568963
 MonoBehaviour:
@@ -2176,17 +2176,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 15
-    m_Right: 15
+    m_Left: 40
+    m_Right: 40
     m_Top: 15
     m_Bottom: 15
-  m_ChildAlignment: 1
+  m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
   m_CellSize: {x: 75, y: 75}
-  m_Spacing: {x: 15, y: 15}
-  m_Constraint: 0
-  m_ConstraintCount: 2
+  m_Spacing: {x: 40, y: 40}
+  m_Constraint: 1
+  m_ConstraintCount: 4
 --- !u!114 &7018310089668959598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2194,7 +2194,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6418032316649236383}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
@@ -2611,7 +2611,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.FreePlayTest.AugmentationFilter
   piecesData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   searchBar: {fileID: 7135450943067050701}
-  list: {fileID: 3652838566404815749}
+  list: {fileID: 6446844157689713984}
   augDisplay: {fileID: 4229435191405760859, guid: c6247e143963f1447ad7383dfd12d582, type: 3}
   filterButtons:
     keys: 0000000001000000020000000300000004000000

@@ -3,11 +3,20 @@ using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 using Game.AI;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
     public class SloaneSViperfishActive : Action, ISkills, IAIAction
     {
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            if (pieceAI.Color != maker.Color) return -25;
+            return 0;
+        }
+
         public SloaneSViperfishActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;

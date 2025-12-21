@@ -7,16 +7,19 @@ using UX.UI.Ingame;
 using UnityEngine;
 using Game.Managers;
 using Game.Piece.PieceLogic;
-using System.Linq; // <-- thêm để dùng LINQ
-using Game.AI;
+// <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaSwap : Action, IPendingAble, ISkills, IAIAction
+    public class TemperantiaSwap : Action, IPendingAble, ISkills
     {
-        private static int allyIndex = -1;
-        private static int enemyIndex = -1; // -1 nếu chưa chọn enemy
+        public int AIPenaltyValue(PieceLogic p)
+        {
+            return 0;
+        }
+        public static int allyIndex = -1;
+        public static int enemyIndex = -1; // -1 nếu chưa chọn enemy
         public TemperantiaSwap(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
@@ -58,6 +61,10 @@ namespace Game.Action.Skills
                 effect.Piece = ally;
                 ActionManager.ExecuteImmediately(new ApplyEffect(effect));
             }
+
+            // Reset static indices
+            allyIndex = -1;
+            enemyIndex = -1;
         }
 
         public void CompleteAction()
@@ -81,50 +88,7 @@ namespace Game.Action.Skills
             }
 
             enemyIndex = Target;
-            Debug.Log("ExecuteAction");
             BoardViewer.Ins.ExecuteAction(this);
-            allyIndex = -1;
-            enemyIndex = -1;
-
-        }
-
-        public void CompleteActionForAI()
-        {
-            // Resolve maker and side
-            var makerPiece = PieceOn(Maker);
-            if (makerPiece == null) return;
-            var side = makerPiece.Color;
-
-            // Gather ally and enemy pieces
-            var allies = FindPiece<PieceLogic>(side);
-            var enemies = FindPiece<PieceLogic>(!side);
-
-            if (allies == null || allies.Count == 0) return;
-            if (enemies == null || enemies.Count == 0) return;
-
-            // Count buffs on each piece
-            int CountBuffs(PieceLogic p) => p.Effects.Count(e => e.Category == EffectCategory.Buff);
-
-            // Find minimum buff count among allies
-            var minBuff = allies.Min(CountBuffs);
-            var candidatesA = allies.Where(p => CountBuffs(p) == minBuff).ToList();
-            // Find maximum buff count among enemies
-            var maxBuff = enemies.Max(CountBuffs);
-            var candidatesB = enemies.Where(p => CountBuffs(p) == maxBuff).ToList();
-
-            if (candidatesA.Count == 0 || candidatesB.Count == 0) return;
-
-            // Choose selection (random if multiple)
-            PieceLogic chosenAlly = candidatesA.Count == 1 ? candidatesA[0] : candidatesA[Random.Range(0, candidatesA.Count)];
-            PieceLogic chosenEnemy = candidatesB.Count == 1 ? candidatesB[0] : candidatesB[Random.Range(0, candidatesB.Count)];
-            allyIndex = chosenAlly.Pos;
-            enemyIndex = chosenEnemy.Pos;
-
-            // Execute effect now
-            BoardViewer.Ins.ExecuteAction(this);
-            // Reset static indices
-            allyIndex = -1;
-            enemyIndex = -1;
         }
     }
 }

@@ -13,30 +13,34 @@ namespace Game.Piece.PieceLogic
     {
         public GulperEel(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
         {
-            Skills = list =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
-
-                var (rank, file) = RankFileOf(Pos);
-                for (var dr = -1; dr <= 1; dr++)
+                if (isPlayer)
                 {
-                    var trank = rank + dr;
-                    if (!VerifyBounds(trank)) continue;
-                    for (var df = -1; df <= 1; df++)
+                    var (rank, file) = RankFileOf(Pos);
+                    for (var dr = -1; dr <= 1; dr++)
                     {
-                        var fileOff = file + df;
-                        if (!VerifyBounds(fileOff)) continue;
-                        var tpos = IndexOf(trank, fileOff);
-                        var pieceAt = PieceOn(tpos);
-                        if (pieceAt != null) continue;
+                        var trank = rank + dr;
+                        if (!VerifyBounds(trank)) continue;
+                        for (var df = -1; df <= 1; df++)
+                        {
+                            var fileOff = file + df;
+                            if (!VerifyBounds(fileOff)) continue;
+                            var tpos = IndexOf(trank, fileOff);
+                            var pieceAt = PieceOn(tpos);
+                            if (pieceAt != null) continue;
 
-                        list.Add(new GulperEelActive(Pos, tpos));
+                            list.Add(new GulperEelActive(Pos, tpos));
+                        }
                     }
                 }
-
-
+                else
+                {
+                    //query for AI in here
+                }
             };
-            
+
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
 

@@ -21,7 +21,7 @@ MonoBehaviour:
   capturePattern: {fileID: 0}
   hasSkill: 1
   normalSkillCooldown: 5
-  availableSlots: 0
+  availableSlots: 1
   logicClassName: BobtailSquid
   baseValue: 0
   considerations:
