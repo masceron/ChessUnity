@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Quiets;
-using Game.Effects.Traits;
 using Game.Common;
+using Game.Effects.Traits;
 using UnityEngine;
 using Game.Piece;
 namespace Game.Effects.Augmentation
@@ -16,7 +18,7 @@ namespace Game.Effects.Augmentation
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            UnityEngine.Debug.Log("MantaSpinePassive OnCallPieceAction");
+            Debug.Log("MantaSpinePassive OnCallPieceAction");
             if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
             action.Succeed = false;
             var targetPiece = PieceOn(action.Target);
@@ -57,7 +59,7 @@ namespace Game.Effects.Augmentation
                     for (int i = 0; i < countToSelect; i++)
                     {
                         if (available.Count == 0) break;
-                        int randomIdx = UnityEngine.Random.Range(0, available.Count);
+                        int randomIdx = Random.Range(0, available.Count);
                         selectedIndices.Add(available[randomIdx]);
                         available.RemoveAt(randomIdx);
                     }

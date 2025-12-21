@@ -17,7 +17,7 @@ namespace UX.UI.Ingame
         public void OnClick()
         {
             isPause = !isPause;
-            targetGraphic.color = isPause ? UnityEngine.Color.yellow : UnityEngine.Color.white;
+            targetGraphic.color = isPause ? Color.yellow : Color.white;
         }
         public void Enable()
         {

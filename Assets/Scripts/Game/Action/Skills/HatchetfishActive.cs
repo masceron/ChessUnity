@@ -20,9 +20,9 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             //Apply effect Marked no duration
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, PieceOn(Target))));
 
-            var targetPiece = BoardUtils.PieceOn(Target);
+            var targetPiece = PieceOn(Target);
             if (targetPiece == null) return;
 
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
@@ -30,7 +30,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece)));
             }
 
-            BoardUtils.SetCooldown(Maker, ((IPieceWithSkill)BoardUtils.PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
         public void CompleteActionForAI()

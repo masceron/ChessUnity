@@ -37,7 +37,7 @@ namespace Game.Relics
         {
             UnityEngine.Debug.Log("CompleteActionForAI");
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color == this.Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var listPieces = allPieces.Where(p => p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
             int minValue = int.MaxValue;
             foreach (var piece in listPieces)
             {

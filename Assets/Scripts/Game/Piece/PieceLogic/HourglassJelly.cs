@@ -20,13 +20,13 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) { return; }
                 if (isPlayer)
                 {
-                    var (rank, file) = BoardUtils.RankFileOf(Pos);
+                    var (rank, file) = RankFileOf(Pos);
 
                     for (var x = rank - 4; x <= rank + 4; ++x)
                     {
                         for (var y = file - 4; y <= file + 4; ++y)
                         {
-                            var piece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
+                            var piece = PieceOn(IndexOf(x, y));
                             if (piece == null || piece.Equals(this) || piece.PreviousMoves.Count <= 0) continue;
                             list.Add(new HourglassJellyActive(Pos, piece.Pos));
                         }
@@ -37,7 +37,7 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (!excludeEmptyTile)
                     {
-                        var (rank, file) = BoardUtils.RankFileOf(Pos);
+                        var (rank, file) = RankFileOf(Pos);
                         for (var x = rank - 4; x <= rank + 4; ++x)
                         {
                             for (var y = file - 4; y <= file + 4; ++y)

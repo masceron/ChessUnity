@@ -72,7 +72,7 @@ namespace Game.AI
             }
             else
             {
-                UX.UI.Ingame.BoardViewer.Ins.ExecuteAction(bestAction);
+                BoardViewer.Ins.ExecuteAction(bestAction);
             }
         }
 

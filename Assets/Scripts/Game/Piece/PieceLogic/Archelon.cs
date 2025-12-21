@@ -65,7 +65,7 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
 
                             var piece = PieceOn(IndexOf(r, f));
-                            if (piece == null || piece.Color != this.Color) continue;
+                            if (piece == null || piece.Color != Color) continue;
 
                             // Filter: no Shield, Hardened Shield, or Extremophile effect
                             if (piece.Effects.Any(e => e.EffectName == "effect_shield" || 

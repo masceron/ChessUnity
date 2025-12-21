@@ -92,7 +92,7 @@ namespace Game.Piece.PieceLogic
                                 int idx = IndexOf(curR, curF);
                                 var p = PieceOn(idx);
                                 if (p == null) continue;
-                                if (p.Color == this.Color) continue;
+                                if (p.Color == Color) continue;
                                 // enemy found on path
                                 foundEnemy = true;
                                 int val = p.GetValueForAI();

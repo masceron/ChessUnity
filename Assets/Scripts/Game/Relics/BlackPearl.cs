@@ -36,8 +36,8 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPiecesA = allPieces.Where(p => p != null && p.Color == this.Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
-            var listPiecesB = allPieces.Where(p => p != null && p.Color != this.Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var listPiecesA = allPieces.Where(p => p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var listPiecesB = allPieces.Where(p => p != null && p.Color != Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
 
             if (listPiecesA.Count == 0 || listPiecesB.Count == 0) return;
             int minValueA = listPiecesA.Min(p => p.GetValueForAI());

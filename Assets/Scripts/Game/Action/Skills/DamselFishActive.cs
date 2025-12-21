@@ -24,7 +24,7 @@ namespace Game.Action.Skills
         {   
             var Pieces = FindPiece<PieceLogic>(PieceOn(Maker).Color);
             var picked = Pieces
-                .OrderBy(_ => UnityEngine.Random.value)  
+                .OrderBy(_ => Random.value)  
                 .Take(Mathf.Min(3, Pieces.Count))                
                 .ToList();
             foreach (var piece in picked)

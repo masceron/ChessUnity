@@ -74,7 +74,7 @@ namespace Game.Managers
             );
             if (gameMode == GameMode.AIvsAI)
             {
-                this.gameObject.AddComponent<AIvsAIController>();
+                gameObject.AddComponent<AIvsAIController>();
             }
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);

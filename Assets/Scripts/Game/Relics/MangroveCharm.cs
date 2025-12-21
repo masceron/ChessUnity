@@ -31,7 +31,7 @@ namespace Game.Relics
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null) continue;
-                    if (!BoardUtils.IsNextEachOther(piece)) continue;
+                    if (!IsNextEachOther(piece)) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                     var pending = new MangroveCharmPending(this, piece.Pos, piece.Color);
                     BoardViewer.ListOf.Add(pending);
@@ -121,13 +121,13 @@ namespace Game.Relics
 
             if (bestDuoNoExtremofiles.Count == 0)
             {
-                var best = bestDuo[UnityEngine.Random.Range(0, bestDuo.Count - 1)];
+                var best = bestDuo[Random.Range(0, bestDuo.Count - 1)];
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos1))));
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos2))));
             }
             else
             {
-                var best = bestDuoNoExtremofiles[UnityEngine.Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
+                var best = bestDuoNoExtremofiles[Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos1))));
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos2))));
             }

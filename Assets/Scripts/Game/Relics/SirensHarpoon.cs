@@ -49,7 +49,7 @@ namespace Game.Relics
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var piece = BoardUtils.PieceOn(i);
-                if (piece == null || piece.Color == this.Color) continue;
+                if (piece == null || piece.Color == Color) continue;
                 if (piece.PieceRank > PieceRank.Common) continue;
 
                 if (piece.Effects.Any(e => (
