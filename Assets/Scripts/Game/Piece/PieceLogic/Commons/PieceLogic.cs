@@ -210,7 +210,7 @@ namespace Game.Piece.PieceLogic.Commons
             
             Captures(list, Pos, excludeEmptyTile);
 
-            if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced"))
+            if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced") && Effects.All(e => e.EffectName == "effect_illusion"))
             {
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
