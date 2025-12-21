@@ -322,7 +322,9 @@ namespace Game.Managers
             {
                 effectObservers.ForEach(effect =>
                 {
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures) effect.OnCallPieceAction(mainAction);
+                    if (effect.disabled) return;
+                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures)
+                        effect.OnCallPieceAction(mainAction);
                 });
             }
 
@@ -330,6 +332,7 @@ namespace Game.Managers
             {
                 effectObservers.ForEach(effect =>
                 {
+                    if (effect.disabled) return;
                     if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves &&
                         effect.Priority != ObserverPriority.AfterAction)
                         effect.OnCallPieceAction(mainAction);
@@ -341,6 +344,7 @@ namespace Game.Managers
         {
             pieceToDie.Effects.ForEach(effect =>
             {
+                if (effect.disabled) return;
                 if (effect.ObserverActivateWhen == ObserverActivateWhen.Dead)
                 {
                     ((IDeadEffect)effect).OnCallDead();
@@ -352,6 +356,7 @@ namespace Game.Managers
         {
             effectObservers.ForEach(e =>
             {
+                if (e.disabled) return;
                 if (e.ObserverActivateWhen == ObserverActivateWhen.MoveGeneration)
                 {
                     e.OnCallMoveGen(actions);
@@ -363,6 +368,7 @@ namespace Game.Managers
         {
             effectObservers.ForEach(e =>
             {
+                if (e.disabled) return;
                 if (e.ObserverActivateWhen == ObserverActivateWhen.EffectApplied)
                 {
                     ((IApplyEffect)e).OnCallApplyEffect(action);
@@ -374,6 +380,7 @@ namespace Game.Managers
         {
             effectObservers.ForEach(e =>
             {
+                if (e.disabled) return;
                 if (e is IBlockEffect blockEffect)
                 {
                     blockEffect.OnCallBlocked(action);
@@ -384,6 +391,7 @@ namespace Game.Managers
         {
             effectObservers.ForEach(e =>
             {
+                if (e.disabled) return;
                 if (e.ObserverActivateWhen == ObserverActivateWhen.SkillUsed)
                 {
                     ((ISkillUsedEffect)e).OnCallSkillUsed(action);

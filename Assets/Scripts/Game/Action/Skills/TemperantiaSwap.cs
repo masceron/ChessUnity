@@ -7,8 +7,7 @@ using UX.UI.Ingame;
 using UnityEngine;
 using Game.Managers;
 using Game.Piece.PieceLogic;
-using System.Linq; // <-- thêm để dùng LINQ
-using Game.AI;
+// <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {

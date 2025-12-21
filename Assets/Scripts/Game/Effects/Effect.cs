@@ -46,6 +46,7 @@ namespace Game.Effects
         public sbyte Strength;
         public PieceLogic Piece;
         public readonly EffectCategory Category;
+        public bool disabled = false;
         
         public readonly ObserverActivateWhen ObserverActivateWhen;
         public readonly ObserverPriority Priority;

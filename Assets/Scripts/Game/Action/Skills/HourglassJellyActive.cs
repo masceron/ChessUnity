@@ -2,10 +2,6 @@ using Game.Managers;
 using System;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.AI;
-using System.Linq;
-using UnityEngine;
-using UX.UI.Ingame;
 
 namespace Game.Action.Skills
 {

@@ -9,12 +9,12 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BishopMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var piece = PieceOn(pos);
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            var maxRange = piece.GetMoveRange(ref index);
+            var maxRange = piece.GetMoveRange();
             
             foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, maxRange))
             {
@@ -55,7 +55,7 @@ namespace Game.Movesets
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.AttackRange;
+            var moveRange = piece.GetAttackRange();
 
             var (rank, file) = RankFileOf(pos);
             

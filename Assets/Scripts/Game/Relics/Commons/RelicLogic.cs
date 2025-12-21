@@ -1,7 +1,4 @@
-﻿using Game.Action;
-using Game.Relics.Commons;
-
-namespace Game.Relics.Commons
+﻿namespace Game.Relics.Commons
 {
     public abstract class RelicLogic
     {

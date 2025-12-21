@@ -1,7 +1,6 @@
 using System;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
-using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
@@ -21,12 +20,11 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public static PieceLogic FirstTarget;
-        public static PieceLogic SecondTarget;
-        private bool Color;
-        public MegalodonActive(int maker, int to, bool color) : base(maker)
+        private static PieceLogic _firstTarget;
+        private static PieceLogic _secondTarget;
+
+        public MegalodonActive(int maker, int to) : base(maker)
         {
-            Color = color;
             Target = (ushort)to;
         }
 
@@ -39,20 +37,20 @@ namespace Game.Action.Skills
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            if (_firstTarget == null || _firstTarget.Color == hovering.Color)
             {
-                FirstTarget = hovering;
+                _firstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
-                TileManager.Ins.Select(FirstTarget.Pos);
-                TileManager.Ins.MarkPieceInRange(Maker, !FirstTarget.Color, PieceOn(Maker).AttackRange);
+                TileManager.Ins.Select(_firstTarget.Pos);
+                TileManager.Ins.MarkPieceInRange(Maker, !_firstTarget.Color, PieceOn(Maker).AttackRange());
                 return;
             }
 
-            SecondTarget = hovering;
+            _secondTarget = hovering;
             TileManager.Ins.UnmarkAll();
             
-            ActionManager.ExecuteImmediately(new KillPiece(FirstTarget.Pos));
-            ActionManager.ExecuteImmediately(new KillPiece(SecondTarget.Pos));
+            ActionManager.ExecuteImmediately(new KillPiece(_firstTarget.Pos));
+            ActionManager.ExecuteImmediately(new KillPiece(_secondTarget.Pos));
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -67,8 +65,8 @@ namespace Game.Action.Skills
 
         private static void ResetTargets()
         {
-            FirstTarget = null;
-            SecondTarget = null;
+            _firstTarget = null;
+            _secondTarget = null;
         }
         
         public void Dispose()

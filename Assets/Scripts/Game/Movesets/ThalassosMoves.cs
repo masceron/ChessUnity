@@ -9,13 +9,13 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class ThalassosMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var rank = RankOf(pos);
             var file = FileOf(pos);
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.GetMoveRange(ref index);
+            var moveRange = piece.GetMoveRange();
 
             var push = !color ? -1 : 1;
 
@@ -69,7 +69,7 @@ namespace Game.Movesets
             var file = FileOf(pos);
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.AttackRange;
+            var moveRange = piece.GetAttackRange();
 
             var push = !color ? -1 : 1;
 

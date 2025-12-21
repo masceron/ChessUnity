@@ -1,13 +1,7 @@
 ﻿using Game.Common;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
-using System.Linq;
-using System.Collections.Generic;
-using UnityEngine;
-using Game.AI;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic

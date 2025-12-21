@@ -5,11 +5,7 @@ using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using System;
 using Game.Common;
-using Game.Effects.Traits;
-using System.Collections.Generic;
-using System.Linq;
 using Game.AI;
 
 namespace Game.Action.Skills

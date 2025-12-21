@@ -5,7 +5,6 @@ using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 namespace Game.Effects.Debuffs
 {
@@ -25,12 +24,9 @@ namespace Game.Effects.Debuffs
         {
             if (Piece.IsDead() || PieceOn(Piece.Pos) != Piece) return;
             list.Clear();
-            Piece.Captures(list, Piece.Pos, excludeEmptyTile: true);
             Piece.Color = !Piece.Color;
             Piece.Captures(list, Piece.Pos, excludeEmptyTile: true);
-            Piece.Color = !Piece.Color;
-            var i = 0;
-            Piece.Quiets(list, Piece.Pos, ref i, isPlayer: true);
+            Piece.Quiets(list, Piece.Pos, isPlayer: true);
             if (list.Count > 1)
             {
                 list = list.Distinct(new ActionComparer()).ToList();

@@ -1,5 +1,3 @@
-using Game.Action;
-
 namespace Game.Effects
 {
     public interface ISkillUsedEffect

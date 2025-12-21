@@ -1,9 +1,3 @@
-using System;
-using System.Linq;
-using Game.Common;
-using Game.Effects;
-using Game.Managers;
-
 namespace Game.Action.Internal
 {
     public class Block : Action, IInternal

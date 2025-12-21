@@ -5,7 +5,6 @@ using Game.Movesets;
 using Game.Effects.SpecialAbility;
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic

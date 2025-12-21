@@ -1,5 +1,4 @@
 using Game.Action.Internal;
-using Game.Action;
 using UX.UI.Ingame;
 using Game.Action.Internal.Pending;
 using Game.Managers;
@@ -7,10 +6,6 @@ using static Game.Common.BoardUtils;
 using Game.Common;
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
-using System.Collections.Generic;
-using System.Linq;
-using Game.Movesets;
-using Game.Action.Captures;
 using Game.AI;
 
 

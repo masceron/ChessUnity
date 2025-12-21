@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Linq;
+﻿using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;

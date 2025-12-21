@@ -1,13 +1,8 @@
-﻿using System.Linq;
-using Game.Action.Skills;
-using Game.Managers;
-using Game.Piece;
+﻿using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.ThalassosResurrector;
-using static Game.Common.BoardUtils;
-using Game.AI;
 
 namespace Game.Action.Internal.Pending.Piece
 {

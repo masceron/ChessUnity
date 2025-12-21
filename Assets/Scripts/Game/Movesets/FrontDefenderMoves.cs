@@ -9,14 +9,14 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrontDefenderMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
             var color = caller.Color;
 
-            var effectiveMoveRange = caller.GetMoveRange(ref index);
+            var effectiveMoveRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, effectiveMoveRange))
             {
@@ -79,7 +79,7 @@ namespace Game.Movesets
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
-            var moveRange = piece.AttackRange;
+            var moveRange = piece.GetAttackRange();
 
             var (rank, file) = RankFileOf(pos);
 

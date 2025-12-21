@@ -1,16 +1,10 @@
 ﻿// Assets/Scripts/Game/Action/Internal/Pending/Relic/SeafoamPhialPending.cs
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Game.Effects;
+
 using Game.Effects.Buffs;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using UnityEngine;
 using static Game.Common.BoardUtils;
-using Game.AI;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic

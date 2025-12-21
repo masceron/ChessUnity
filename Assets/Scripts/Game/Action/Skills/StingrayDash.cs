@@ -4,9 +4,6 @@ using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using UX.UI.Ingame;
-using System.Linq;
-using UnityEngine;
 
 namespace Game.Action.Skills
 {
