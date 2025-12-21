@@ -327,6 +327,30 @@ MonoBehaviour:
     m_Key: piece_blue_ringed_octopus
     m_Metadata:
       m_Items: []
+  - m_Id: 47844340902187008
+    m_Key: piece_umbrella_slug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47844340981878784
+    m_Key: piece_porcelain_crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47844340986073088
+    m_Key: piece_eyeshade_sculpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47844341002850304
+    m_Key: piece_marine_flatworm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47844341162233856
+    m_Key: piece_cabezon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47844341166428160
+    m_Key: piece_pegasus_smooth
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
