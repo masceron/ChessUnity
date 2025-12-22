@@ -14,7 +14,8 @@ public static class Config
         new PieceConfig("piece_hatchetfish", false, 21),
         new PieceConfig("piece_blue_dragon", false, 22),
         new PieceConfig("piece_umbrella_slug", false, 23),
-        new PieceConfig("piece_pencil_urchin", false, 24)
+        new PieceConfig("piece_pencil_urchin", false, 24),
+        new PieceConfig("piece_long_snouted_seahorse", false, 25)
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()

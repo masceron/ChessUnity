@@ -167,6 +167,14 @@ MonoBehaviour:
     m_Key: piece_eyeshade_sculpin_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 48286337759150080
+    m_Key: piece_pencil_urchin_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48286522568572928
+    m_Key: piece_long_snouted_seahorse_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -315,6 +315,10 @@ MonoBehaviour:
     m_Key: piece_pencil_urchin
     m_Metadata:
       m_Items: []
+  - m_Id: 48313128582348800
+    m_Key: piece_long_snouted_seahorse
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
