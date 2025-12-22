@@ -80,6 +80,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_pegasus_smooth" => new PegasusSmooth(cfg),
                 "piece_porcelain_crab" => new PorcelainCrab(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
+                "piece_pencil_urchin" => new PencilUrchin(cfg),
                 _ => null
             };
         }

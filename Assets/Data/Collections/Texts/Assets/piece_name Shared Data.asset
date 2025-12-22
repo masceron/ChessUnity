@@ -311,6 +311,10 @@ MonoBehaviour:
     m_Key: piece_umbrella_slug
     m_Metadata:
       m_Items: []
+  - m_Id: 48285032886009856
+    m_Key: piece_pencil_urchin
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
