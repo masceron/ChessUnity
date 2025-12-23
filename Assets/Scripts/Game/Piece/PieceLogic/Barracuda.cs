@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic
         public Barracuda(PieceConfig cfg) : base(cfg, BarracudaMoves.Quiets, BarracudaMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(this)));
         }
     }

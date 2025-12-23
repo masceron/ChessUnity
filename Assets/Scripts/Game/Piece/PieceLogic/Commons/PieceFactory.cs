@@ -56,7 +56,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_melibe" => new Melibe(cfg),
                 "piece_moorish_idols" => new MoorishIdols(cfg),
                 "piece_moray_eel" => new MorayEel(cfg),
-                "piece_pegasus_smooth" => new PegasusSmooth(cfg),
+                "piece_pegasus_seamoth" => new PegasusSeamoth(cfg),
                 "piece_penpoint_gunnel" => new PenpointGunnel(cfg),
                 "piece_phantom_jelly" => new PhantomJelly(cfg),
                 "piece_phronima" => new Phronima(cfg),

@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic
         public GuidingSiren(PieceConfig cfg) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SirenDebuffer(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

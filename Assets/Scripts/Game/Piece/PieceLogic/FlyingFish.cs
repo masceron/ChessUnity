@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FlyingFish: Commons.PieceLogic
     {
-        public FlyingFish(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
+        public FlyingFish(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, KnightSurpass.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }

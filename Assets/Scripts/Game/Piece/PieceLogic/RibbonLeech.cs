@@ -7,9 +7,9 @@ namespace Game.Piece.PieceLogic
 {
     public class RibbonLeech : Commons.PieceLogic
     {
-        public RibbonLeech(PieceConfig cfg) : base(cfg, KingMoves.Quiets, HorseLeechMoves.Captures)
+        public RibbonLeech(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KnightMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));   
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));   
         }
     }
 }

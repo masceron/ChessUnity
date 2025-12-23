@@ -8,12 +8,12 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class PegasusSmooth : Commons.PieceLogic
+    public class PegasusSeamoth : Commons.PieceLogic
     {
-        public PegasusSmooth(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, KingMoves.Captures)
+        public PegasusSeamoth(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
         
         protected override void CustomBehaviors(List<Action.Action> list)
