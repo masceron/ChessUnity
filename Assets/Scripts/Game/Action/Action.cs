@@ -3,13 +3,20 @@ using System.Collections.Generic;
 
 namespace Game.Action
 {
-    
+
     [Flags]
-    public enum ActionFlag: byte
+    public enum ActionFlag : byte
     {
         None = 0,
         Unblockable = 1,
-        Undodgeable = 1 << 1
+        Undodgeable = 1 << 1,
+
+    }
+    public enum ResultFlag
+    {
+        Success,
+        Blocked,
+        Dodged,
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

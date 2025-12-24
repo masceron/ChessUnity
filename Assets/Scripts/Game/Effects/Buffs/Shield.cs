@@ -14,7 +14,7 @@ namespace Game.Effects.Buffs
         {
             if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
             
-            action.Succeed = false;
+            // action.Succeed = false;
             ActionManager.EnqueueAction(new Block(Piece.Pos, action));
 
             if (Strength > 1) Strength--;

@@ -407,6 +407,10 @@ MonoBehaviour:
     m_Key: effect_blue_ringed_octopus_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 49021536695738368
+    m_Key: effect_illusion_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
