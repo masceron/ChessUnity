@@ -19,7 +19,7 @@ public static class Config
     {
         new PieceConfig("piece_stingray", true, 16),
         new PieceConfig("piece_cutthroat_eel", true, 17),
-        new PieceConfig("piece_archelon", true, 18),
+        new PieceConfig("piece_flowerhorn_cichlid", true, 18),
         // new PieceConfig("piece_eyeshade_sculpin", true, 18),
     };
 

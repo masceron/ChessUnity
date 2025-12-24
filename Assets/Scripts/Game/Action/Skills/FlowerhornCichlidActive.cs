@@ -39,7 +39,7 @@ namespace Game.Action.Skills
                     }
                 }
                 int finalRankOfMaker = finalRankOfTarget == RankOf(Target) ? RankOf(Target) - direction : RankOf(Target);
-                ActionManager.EnqueueAction(new NormalMove(Target, IndexOf(finalRankOfTarget, RankOf(Target))));
+                ActionManager.EnqueueAction(new NormalMove(Target, IndexOf(finalRankOfTarget, FileOf(Target))));
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn)));
                 ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(finalRankOfMaker, FileOf(Target))));
             }

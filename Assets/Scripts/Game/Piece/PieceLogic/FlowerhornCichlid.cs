@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
                 {
                     if (Color)
                     {
-                        for (int rank = RankOf(Pos) + 1; rank < Math.Min(MaxLength, RankOf(Pos) + 3); ++rank)
+                        for (int rank = RankOf(Pos) + 1; rank <= Math.Min(MaxLength - 1, RankOf(Pos) + 3); ++rank)
                         {
                             if (IsActive(IndexOf(rank, FileOf(Pos))) == false) { return; }
                             int target = IndexOf(rank, FileOf(Pos));
