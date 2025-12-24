@@ -15,7 +15,7 @@ MonoBehaviour:
   key: piece_flowerhorn_cichlid
   prefab: {fileID: 919132149155446097, guid: 05cb3f3a2b18a264cae0c5e67a515eb5, type: 3}
   rank: 5
-  moveRange: 2
+  moveRange: 5
   attackRange: 2
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
