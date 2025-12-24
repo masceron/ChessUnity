@@ -24,7 +24,7 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var listActions = new List<Action.Action>();
-                    BluffingMoves.Captures(listActions, Pos, isPlayer: true);
+                    BluffingMoves.Captures(listActions, Pos, excludeEmptyTile: true);
                     if (listActions.Count > 1)
                     {
                         listActions = listActions.Distinct(new ActionComparer()).ToList();
@@ -40,7 +40,7 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     var listActions = new List<Action.Action>();
-                        BluffingMoves.Captures(listActions, Pos, isPlayer: true);
+                        BluffingMoves.Captures(listActions, Pos, excludeEmptyTile: true);
                         if (listActions.Count > 1)
                         {
                             listActions = listActions.Distinct(new ActionComparer()).ToList();

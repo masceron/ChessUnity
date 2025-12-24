@@ -13,10 +13,11 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SirensHarpoon _sirensHarpoon;
 
-        public SirensHarpoonPending(SirensHarpoon s, int maker, bool pos = false) : base(maker, pos)
+        public SirensHarpoonPending(SirensHarpoon s, int target, bool pos = false) : base(s.CommanderPiece.Pos, pos)
         {
             _sirensHarpoon = s;
-            Maker = (ushort)maker;
+
+            Target = (ushort)target;
         }
 
         public void CompleteAction()
@@ -34,8 +35,8 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void ActivateRelic(int maker)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(1, BoardUtils.PieceOn(maker))));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(maker))));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target))));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target))));
 
             _sirensHarpoon.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();

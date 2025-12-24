@@ -84,7 +84,7 @@ namespace Game.AI
         {
             var relic = sideToMove ? MatchManager.Ins.GameState.BlackRelic : MatchManager.Ins.GameState.WhiteRelic;
 
-            if (relic != null && relic.currentCooldown == 0)
+            if (relic != null && relic.CurrentCooldown == 0)
             {
                 Debug.Log("Use relic " + relic.type);
                 relic.ActiveForAI();
