@@ -8,6 +8,7 @@ namespace Game.Effects.Traits
         private byte lastUsed;
         private bool active;
         private const byte RangeOffset = 2;
+        private const byte TurnsToActive = 3;
 
         public Ambush(PieceLogic piece) : base(-1, -1, piece, "effect_ambush")
         {
@@ -19,7 +20,7 @@ namespace Game.Effects.Traits
             if (action.Maker != Piece.Pos)
             {
                 lastUsed++;
-                if (lastUsed < 6 || active) return;
+                if (lastUsed < TurnsToActive || active) return;
                 active = true;
                 Piece.AttackRange += RangeOffset;
             }
