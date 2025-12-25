@@ -1,4 +1,5 @@
 ﻿using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 
@@ -12,7 +13,8 @@ namespace Game.Effects.Buffs
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
+            if (action == null || action.Target != Piece.Pos || !action.Succeed 
+                || (action.Flag & ActionFlag.Unblockable) != 0 || action is not ICaptures) return;
             
             action.Succeed = false;
             ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));
