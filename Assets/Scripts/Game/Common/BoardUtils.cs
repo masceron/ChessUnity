@@ -297,6 +297,11 @@ namespace Game.Common
         {
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
+        
+        public static PieceLogic GetCommanderOf(bool side)
+        {
+            return side ? MatchManager.Ins.GameState.BlackCommander : MatchManager.Ins.GameState.WhiteCommander;
+        }
 
         public static Vector3 FromRankFileToWorldPos(float rank, float file) {
             return new Vector3(rank, YCoordinate, file);

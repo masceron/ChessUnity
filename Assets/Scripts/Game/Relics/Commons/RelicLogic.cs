@@ -15,14 +15,7 @@ namespace Game.Relics.Commons
         {
             get
             {
-                foreach (PieceLogic p in BoardUtils.PieceBoard())
-                {
-                    if (p == null) continue;
-                    if (p.PieceRank != PieceRank.Commander) continue;
-                    if (p.Color != Color) continue;
-                    return p;
-                }
-                return null;
+                return BoardUtils.GetCommanderOf(Color);
             }
         }
 
