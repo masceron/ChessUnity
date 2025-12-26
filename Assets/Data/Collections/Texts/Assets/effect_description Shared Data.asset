@@ -363,16 +363,48 @@ MonoBehaviour:
     m_Key: effect_hemolymph_filter_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 46052934561267712
-    m_Key: effect_vigorouse_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 46054427930624000
     m_Key: effect_vigorous_description
     m_Metadata:
       m_Items: []
   - m_Id: 46491246572830720
     m_Key: effect_umbrella_slug_special_ability_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611862466560
+    m_Key: effect_penpoint_gunnel_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611879243776
+    m_Key: effect_momentum_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611883438080
+    m_Key: effect_leashed_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611887632384
+    m_Key: effect_manta_spine_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464611887632385
+    m_Key: effect_rally_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484913417900032
+    m_Key: effect_cold_blooded_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484913476620288
+    m_Key: effect_protective_lens_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484913480814592
+    m_Key: effect_thread_pipefish_effect_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484913531146240
+    m_Key: effect_blue_ringed_octopus_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

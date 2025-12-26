@@ -8,12 +8,12 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class MorayEelMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        public static void Quiets(List<Action.Action> list, int pos)
         {
             var rank = RankOf(pos);
             var file = FileOf(pos);
             var piece = PieceOn(pos);
-            var effectiveMoveRange = piece.GetMoveRange(ref index);
+            var effectiveMoveRange = piece.GetMoveRange();
             
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= effectiveMoveRange; rankOff--)
             {

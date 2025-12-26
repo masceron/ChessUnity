@@ -9,7 +9,7 @@ namespace Game.Movesets
 
     public static class PhantomJellyMoves
     {
-        public static void Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static void Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
         
         }
@@ -19,10 +19,9 @@ namespace Game.Movesets
             var file = FileOf(pos);
             var rank = RankOf(pos);
             var caller = PieceOn(pos);
-            var range = caller.AttackRange;
+            var range = caller.GetAttackRange();
 
             var color = caller.Color;
-            //var attackRange = caller.AttackRange;
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
             {

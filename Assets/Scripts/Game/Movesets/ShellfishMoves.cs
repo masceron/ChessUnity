@@ -6,11 +6,11 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ShellfishMoves : BaseMovePattern
     {
-        /*public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        /*public static void Quiets(List<Action.Action> list, int pos)
         {
             var (rank, file) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var moveRange = piece.GetMoveRange(ref index);
+            var moveRange = piece.GetMoveRange();
             var color = piece.Color;
 
             int[] dr = { -1, 0, 1, 0 };
@@ -72,9 +72,9 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
-            var moveRange = PieceOn(pos).GetMoveRange(ref index);
+            var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new ShellfishMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, isPlayer: isPlayer);
 
@@ -83,7 +83,7 @@ namespace Game.Movesets
 
         public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
-            var attackRange = PieceOn(pos).AttackRange;
+            var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new ShellfishMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, isPlayer: isPlayer);
             return 30 + 5 * attackRange;

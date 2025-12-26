@@ -11,7 +11,7 @@ namespace Game.Movesets
         {
             var caller = PieceOn(pos);
             var color = caller.Color;
-            var range = caller.AttackRange;
+            var range = caller.GetAttackRange();
             var (startRank, startFile) = RankFileOf(pos);
             
             var push = !color ? -1 : 1;

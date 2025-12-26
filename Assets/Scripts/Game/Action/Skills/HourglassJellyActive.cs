@@ -2,15 +2,11 @@ using Game.Managers;
 using System;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.AI;
-using System.Linq;
-using UnityEngine;
-using UX.UI.Ingame;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HourglassJellyActive: Action, ISkills, IAIAction
+    public class HourglassJellyActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -47,24 +43,24 @@ namespace Game.Action.Skills
             MatchManager.Ins.GameState.Move(Target, destination);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-        public void CompleteActionForAI()
-        {
-            var makerPiece = PieceOn(Maker);
-            if (makerPiece == null) return;
+        // public void CompleteActionForAI()
+        // {
+        //     var makerPiece = PieceOn(Maker);
+        //     if (makerPiece == null) return;
 
-            var (r, f) = RankFileOf(Maker);
-            var enemies = GetPiecesInRadius(r, f, 4, p => p != null && p.Color != makerPiece.Color);
+        //     var (r, f) = RankFileOf(Maker);
+        //     var enemies = GetPiecesInRadius(r, f, 4, p => p != null && p.Color != makerPiece.Color);
 
-            int bestScore = enemies.Max(p => p.GetValueForAI());
-            var top = enemies.Where(p => p.GetValueForAI() == bestScore).ToList();
-            var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
+        //     int bestScore = enemies.Max(p => p.GetValueForAI());
+        //     var top = enemies.Where(p => p.GetValueForAI() == bestScore).ToList();
+        //     var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
-            Target = (ushort)chosen.Pos;
-            var targetPiece = PieceOn(Target);
-            if (targetPiece == null) return;
-            destination = (ushort)targetPiece.PreviousMoves[Math.Max(0, targetPiece.PreviousMoves.Count - 5)];
+        //     Target = (ushort)chosen.Pos;
+        //     var targetPiece = PieceOn(Target);
+        //     if (targetPiece == null) return;
+        //     destination = (ushort)targetPiece.PreviousMoves[Math.Max(0, targetPiece.PreviousMoves.Count - 5)];
 
-            BoardViewer.Ins.ExecuteAction(this);
-        }
+        //     BoardViewer.Ins.ExecuteAction(this);
+        // }
     }
 }

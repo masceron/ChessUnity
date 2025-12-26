@@ -4,7 +4,6 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.AI;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic

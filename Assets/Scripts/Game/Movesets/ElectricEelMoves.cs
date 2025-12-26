@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
@@ -14,7 +13,6 @@ namespace Game.Movesets
 
         private List<int> GeneratePillarMovePattern(int makerPos)
         {
-            var caller = PieceOn(makerPos);
             var positions = new List<int>();
             //int push = caller.Color ? +1 : -1;
             var (rank, file) = RankFileOf(makerPos);
@@ -45,9 +43,9 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
-            var moveRange = PieceOn(pos).GetMoveRange(ref index);
+            var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new ElectricEelMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, isPlayer: isPlayer);
 
@@ -56,7 +54,7 @@ namespace Game.Movesets
 
         public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
-            var attackRange = PieceOn(pos).AttackRange;
+            var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new ElectricEelMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, isPlayer: isPlayer);
             return 50 + 5 * attackRange;

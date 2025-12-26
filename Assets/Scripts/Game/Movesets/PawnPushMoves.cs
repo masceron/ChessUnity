@@ -9,12 +9,12 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class PawnPushMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var piece = PieceOn(pos);
             var color = piece.Color;
             var (rank, file) = RankFileOf(pos);
-            var moveRange = piece.GetMoveRange(ref index);
+            var moveRange = piece.GetMoveRange();
 
             switch (color)
             {
@@ -52,7 +52,7 @@ namespace Game.Movesets
             var piece = PieceOn(pos);
             var color = piece.Color;
             var (rank, file) = RankFileOf(pos);
-            var moveRange = piece.AttackRange;
+            var moveRange = piece.GetAttackRange();
 
             switch (color)
             {

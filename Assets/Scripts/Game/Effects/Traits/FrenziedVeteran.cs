@@ -3,7 +3,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrenziedVeteran: Effect, IEndTurnEffect
+    public class FrenziedVeteran: Effect, IEndTurnEffect, IAttackRangeModifier
     {
         public const byte TurnsToActive = 10;
         public byte numTurns;
@@ -18,22 +18,23 @@ namespace Game.Effects.Traits
         public void OnCallEnd(Action.Action lastMainAction)
         {
             numTurns++;
-            if (numTurns % TurnsToActive == 0)
-            {
-                Piece.AttackRange++;
-            }
         }
-
-        public override void OnRemove()
-        {
-            if (active) Piece.AttackRange -= RangeOffset;
-        }
-
+        
         public EndTurnEffectType EndTurnEffectType { get; set; }
 
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 60;
+        }
+
+        public int ModifyAttackRange(int baseRange)
+        {
+            if (numTurns % TurnsToActive == 0)
+            {
+                return baseRange + RangeOffset;
+            }
+
+            else return baseRange;
         }
     }
 }

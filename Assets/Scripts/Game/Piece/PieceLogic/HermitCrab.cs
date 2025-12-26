@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Action.Skills;
 using Game.Common;
@@ -28,6 +29,33 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     //query for AI in here
+                    if (!excludeEmptyTile)
+                    {
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
+                        {
+                            int index = IndexOf(rankOff, fileOff);
+                            if (index != Pos)
+                            {
+                                list.Add(new HermitCrabSwap(Pos, index));
+                            }
+
+                        }
+                        return;
+                    }
+                    int rank = RankOf(Pos);
+                    int file = FileOf(Pos);
+                    List<int> candidates = new();
+                    for(int i = rank - 3; i < rank + 3; ++i)
+                    {
+                        for(int j = file - 3; j < file + 3; ++j)
+                        {
+                            if (!VerifyBounds(file) || !VerifyBounds(rank)) { continue; }
+                            if (PieceOn(IndexOf(i, j)) != null){ candidates.Add(IndexOf(i, j)); }
+                        }
+                    }
+                    var r = new Random();
+                    list.Add(new HermitCrabSwap(Pos, candidates[r.Next(candidates.Count)]));
+                
                 }
             };
         }

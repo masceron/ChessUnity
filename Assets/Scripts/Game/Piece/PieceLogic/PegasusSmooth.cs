@@ -5,7 +5,6 @@ using Game.Action.Quiets;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
 using Game.Movesets;
-using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {

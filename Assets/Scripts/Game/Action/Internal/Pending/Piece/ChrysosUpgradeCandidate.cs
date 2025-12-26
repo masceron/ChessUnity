@@ -118,7 +118,7 @@ namespace Game.Action.Internal.Pending.Piece
                 where piece.rank == UpgradableTo select piece.key).ToList();
             if (UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(CurrentPiece);
                 
-            int idx = UnityEngine.Random.Range(0, upgradableTo.Count);
+            int idx = Random.Range(0, upgradableTo.Count);
                 
             if (topGroup.Count == 1)
             {
@@ -126,7 +126,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
             else
             {
-                var p = UnityEngine.Random.Range(0, topGroup.Count);
+                var p = Random.Range(0, topGroup.Count);
                 ActivateSkill(allyPieces[p], upgradableTo[idx], 5);
             }
         }

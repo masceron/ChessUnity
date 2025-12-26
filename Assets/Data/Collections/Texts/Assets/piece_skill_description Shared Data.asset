@@ -175,6 +175,18 @@ MonoBehaviour:
     m_Key: piece_long_snouted_seahorse_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 47437828463185920
+    m_Key: piece_damsel_fish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47458130182197248
+    m_Key: piece_thread_pipefish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47458130198974464
+    m_Key: piece_spinster_wrasse_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

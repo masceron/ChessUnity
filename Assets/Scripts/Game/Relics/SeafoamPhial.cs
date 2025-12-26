@@ -44,7 +44,7 @@ namespace Game.Relics
             // Find allied pieces with the most debuffs
             foreach (var piece in allPieces)
             {
-                if (piece != null && piece.Color == this.Color)
+                if (piece != null && piece.Color == Color)
                 {
                     int debuffCount = BoardUtils.EffectWithEffectCategory(piece, EffectCategory.Debuff).Count;
                     if (debuffCount > maxDebuff)

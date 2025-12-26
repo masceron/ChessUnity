@@ -14,7 +14,7 @@ namespace Game.Movesets
             var p = PieceOn(pos);
             var color = p.Color;
 
-            var attackRange = p.AttackRange;
+            var attackRange = p.GetAttackRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, attackRange))
             {

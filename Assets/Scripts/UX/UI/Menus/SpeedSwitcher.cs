@@ -11,9 +11,12 @@ namespace UX.UI.Menus
         public void NextValue()
         {
             index = (index + 1) % values.Length;
+            SetValue(index);
+        }
+        public void SetValue(int index)
+        {
             SettingPanel.AIvsAIplayspeed = values[index];
-            PlayerPrefs.SetFloat("AIvsAIplayspeed", SettingPanel.AIvsAIplayspeed);
-            
+            PlayerPrefs.SetInt("AIvsAIplayspeed", index);
             delayTMP.text = values[index].ToString();
         }
     }

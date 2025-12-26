@@ -18,7 +18,6 @@ namespace Game.Common
     {
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
-        public static bool[] Poisoned;
 
         public const float YCoordinate = 1.64f;
         public static int RankOf(int index)
@@ -196,6 +195,10 @@ namespace Game.Common
             if (action is ApplyEffect applyEffect)
             {
                 MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
+            }
+            else if (action is Block block)
+            {
+                MatchManager.Ins.GameState.NotifyBlock(block);
             }
         }
 

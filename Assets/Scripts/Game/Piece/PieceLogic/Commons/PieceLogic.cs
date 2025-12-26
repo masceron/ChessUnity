@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Action;
 using Game.Augmentation.Set;
 using Game.Effects;
 using Game.Managers;
@@ -29,8 +28,8 @@ namespace Game.Piece.PieceLogic.Commons
         public ushort Pos;
         public bool Color;
         public bool IsVisible = true;
-        public readonly List<byte> MoveRange;
-        public byte AttackRange;
+        private byte moveRange;
+        private byte attackRange;
         public sbyte SkillCooldown;
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
@@ -39,11 +38,30 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly string Type;
         private readonly bool hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
-
         private bool dead;
-
         public readonly List<ImmunityType> Immunities;
         public readonly List<FormationType> SpecificFormations;
+
+        public byte MoveRange()
+        {
+            return moveRange;
+        }
+        
+        public byte AttackRange()
+        {
+            return attackRange;
+        }
+
+        public void SetMoveRange(byte newRange)
+        {
+            moveRange = newRange;
+        }
+
+        public void SetAttackRange(byte newRange)
+        {
+            attackRange = newRange;
+        }
+        
         public bool IsDead()
         {
             return dead;
@@ -62,8 +80,8 @@ namespace Game.Piece.PieceLogic.Commons
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
-            MoveRange = new List<byte> { info.moveRange };
-            AttackRange = info.attackRange;
+            moveRange =  info.moveRange;
+            attackRange = info.attackRange;
             PieceRank = info.rank;
             hasSkill = info.hasSkill;
             Immunities = new List<ImmunityType>();
@@ -187,18 +205,12 @@ namespace Game.Piece.PieceLogic.Commons
             if (PieceRank == PieceRank.Construct) return;
             if (Effects.Any(e => e.EffectName == "effect_stunned")) return;
             if (Effects.Any(e => e.EffectName == "effect_frenzied")) return;
-            var i = 0;
 
-            Quiets(list, Pos, ref i, isPlayer);
-            
-            if (MoveRange.Count > 1)
-            {
-                list = list.Distinct(new ActionComparer()).ToList();
-            }
+            Quiets(list, Pos, isPlayer);
             
             Captures(list, Pos, excludeEmptyTile);
 
-            if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced"))
+            if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced") && Effects.All(e => e.EffectName == "effect_illusion"))
             {
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
@@ -207,33 +219,36 @@ namespace Game.Piece.PieceLogic.Commons
             NotifyOnMoveGen(list);
         }
 
-        public int GetMoveRange(ref int index)
+        public int GetMoveRange()
         {
-            int range = MoveRange[index++];
+            int range = moveRange;
             if (Effects.Any(e => e.EffectName == "effect_bound")) return 0;
 
             if (range > MaxLength) return range;
-            
-            /*Effect movement;
-            if ((movement = Effects.Find(e => e.EffectName == "effect_slow")) != null)
-            {
-                range -= movement.Strength;
-            }
-            if ((movement = Effects.Find(e => e.EffectName == "effect_haste")) != null)
-            {
-                range += movement.Strength;
-            }
-
-            if ((movement = Effects.Find(e => e.EffectName == EffectName.TidalRetinaPassive)) != null)
-            {
-                range += movement.Strength;
-            }*/
 
             foreach (var e in Effects)
             {
                 if (e is IMoveRangeModifier modifier)
                 {
                     range = modifier.ModifyMoveRange(range);
+                }
+            }
+
+            return Math.Max(1, range);
+        }
+
+        public int GetAttackRange()
+        {
+            int range = attackRange;
+            if (Effects.Any(e => e.EffectName == "effect_pacified")) return 0;
+
+            if (range > MaxLength) return range;
+
+            foreach (var e in Effects)
+            {
+                if (e is IAttackRangeModifier modifier)
+                {
+                    range = modifier.ModifyAttackRange(range);
                 }
             }
 
@@ -296,8 +311,7 @@ namespace Game.Piece.PieceLogic.Commons
 
         public int GetQuitesValue()
         {
-            int i = 0;
-            int value = Quiets(new List<Action.Action>(), Pos, ref i, isPlayer: true);
+            var value = Quiets(new List<Action.Action>(), Pos, isPlayer: true);
             return value;
         }
 

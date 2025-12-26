@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.AI;
@@ -32,7 +30,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic maker)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void CompleteActionForAI()

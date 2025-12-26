@@ -6,7 +6,7 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PufferfishMoves : BaseMovePattern
     {
-        /*public static void Quiets(List<Action.Action> list, int pos, ref int index)
+        /*public static void Quiets(List<Action.Action> list, int pos)
         {
             var caller = PieceOn(pos);
             var color = caller.Color;
@@ -92,9 +92,9 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
-            var moveRange = PieceOn(pos).GetMoveRange(ref index);
+            var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, isPlayer: isPlayer);
 
@@ -103,7 +103,7 @@ namespace Game.Movesets
 
         public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
         {
-            var attackRange = PieceOn(pos).AttackRange;
+            var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
             AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, isPlayer: isPlayer);
             return 20 + 5 * attackRange;

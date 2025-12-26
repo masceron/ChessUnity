@@ -33,13 +33,13 @@ namespace Game.Managers
 
         public Tile.Tile GetTile(int pos)
         {
-            if (!BoardUtils.VerifyIndex(pos)) return null;
+            if (!VerifyIndex(pos)) return null;
             return tiles[pos];
         }
 
         public int GetTileValue(int pos)
         {
-            if (!BoardUtils.VerifyIndex(pos)) return -1000;
+            if (!VerifyIndex(pos)) return -1000;
             return tiles[pos].GetTileValue();
         }
 

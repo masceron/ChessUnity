@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Buffs;
-using Game.Effects.Others;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -21,19 +19,19 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new FrenziedVeteran(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
 
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
                     if (!CanActive()) return;
-                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange))
+                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange()))
                     {
                         var idx = IndexOf(rank, file);
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new MegalodonActive(Pos, idx, Color));
+                        list.Add(new MegalodonActive(Pos, idx));
 
                     }
                 }
@@ -51,7 +49,7 @@ namespace Game.Piece.PieceLogic
         {
             bool hasAlly = false;
             bool hasEnemy = false;
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange))
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange()))
             {
                 var idx = IndexOf(rank, file);
                 var pOn = PieceOn(idx);

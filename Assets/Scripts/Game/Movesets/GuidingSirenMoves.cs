@@ -8,11 +8,11 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class GuidingSirenMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, ref int index, bool isPlayer)
+        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
         {
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
-            var effectiveMoveRange = p.GetMoveRange(ref index);
+            var effectiveMoveRange = p.GetMoveRange();
             
             for (var i = 1; i <= effectiveMoveRange; i++)
             {
@@ -47,7 +47,7 @@ namespace Game.Movesets
             var (rank, file) = RankFileOf(pos);
             var p = PieceOn(pos);
             var color = p.Color;
-            var effectiveMoveRange = p.AttackRange;
+            var effectiveMoveRange = p.GetAttackRange();
             
             for (var i = 1; i <= effectiveMoveRange; i++)
             {

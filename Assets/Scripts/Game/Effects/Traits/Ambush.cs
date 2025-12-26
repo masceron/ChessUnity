@@ -3,7 +3,7 @@
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Ambush: Effect, IEndTurnEffect
+    public class Ambush: Effect, IEndTurnEffect, IAttackRangeModifier
     {
         private byte lastUsed;
         private bool active;
@@ -22,25 +22,28 @@ namespace Game.Effects.Traits
                 lastUsed++;
                 if (lastUsed < TurnsToActive || active) return;
                 active = true;
-                Piece.AttackRange += RangeOffset;
             }
             else if (active)
             {
                 active = false;
                 lastUsed = 0;
-                Piece.AttackRange -= RangeOffset;
             }
-        }
-
-        public override void OnRemove()
-        {
-            if (active) Piece.AttackRange -= RangeOffset;
         }
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 30;
+        }
+
+        public int ModifyAttackRange(int baseRange)
+        {
+            if (active)
+            {
+                return baseRange + RangeOffset;
+            }
+
+            return baseRange;
         }
     }
 }
