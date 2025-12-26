@@ -15,7 +15,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            FormationManager.Ins.SetFormation(Target, new UrchinField(false, false));
+            FormationManager.Ins.SetFormation(Target, new UrchinField(false, PieceOn(Maker).Color));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
