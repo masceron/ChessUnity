@@ -34,7 +34,7 @@ namespace Game.Piece.PieceLogic.Commons
         public sbyte SkillCooldown;
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
-        private HashSet<String> immuneEffectNames = new HashSet<String>();
+        // private HashSet<String> immuneEffectNames = new HashSet<String>();
         public readonly List<int> PreviousMoves;
         public readonly string Type;
         private readonly bool hasSkill;
@@ -263,16 +263,16 @@ namespace Game.Piece.PieceLogic.Commons
             return false;
         }
 
-        public bool IsImmuneToEffect(String appliedEffectName)
-        {
-            if (immuneEffectNames.Contains(appliedEffectName)) return true;
-            return false;
-        }
-
-        public void ImmuneEffect(String effectName)
-        {
-            immuneEffectNames.Add(effectName);
-        }
+        // public bool IsImmuneToEffect(String appliedEffectName)
+        // {
+        //     if (immuneEffectNames.Contains(appliedEffectName)) return true;
+        //     return false;
+        // }
+        //
+        // public void ImmuneEffect(String effectName)
+        // {
+        //     immuneEffectNames.Add(effectName);
+        // }
 
         public int GetValueForAI()
         {

@@ -12,14 +12,14 @@ namespace Game.Effects.Buffs
         {
         }
 
-        public override void OnCallPieceAction(Action.Action action)
-        {
-            if (action != null && action is NormalCapture && action.Target == Piece.Pos)
-            {
-                var capturer = BoardUtils.PieceOn(action.Maker);
-                capturer.ImmuneEffect("effect_consume");
-            }
-        }
+        // public override void OnCallPieceAction(Action.Action action)
+        // {
+        //     if (action != null && action is NormalCapture && action.Target == Piece.Pos)
+        //     {
+        //         var capturer = BoardUtils.PieceOn(action.Maker);
+        //         capturer.ImmuneEffect("effect_consume");
+        //     }
+        // }
         
         
         public override int GetValueForAI()
