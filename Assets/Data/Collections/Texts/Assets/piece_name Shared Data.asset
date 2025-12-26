@@ -335,6 +335,30 @@ MonoBehaviour:
     m_Key: piece_long_snouted_seahorse
     m_Metadata:
       m_Items: []
+  - m_Id: 49583201699725312
+    m_Key: piece_umbrella_slug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49583201745862656
+    m_Key: piece_porcelain_crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49583201750056960
+    m_Key: piece_eyeshade_sculpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49583201758445568
+    m_Key: piece_marine_flatworm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49583201833943040
+    m_Key: piece_cabezon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49583201833943041
+    m_Key: piece_pegasus_smooth
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
