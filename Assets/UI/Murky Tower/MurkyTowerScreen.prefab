@@ -271,7 +271,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8580972977362094575}
   m_Direction: 0
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -313,7 +313,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 253, y: 18}
+  m_AnchoredPosition: {x: 208, y: 1030}
   m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &7229029204972147553
@@ -398,9 +398,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 141475458725460441}
-        m_TargetAssemblyTypeName: UX.UI.FreePlayTest.RegionalManagerUI, Assembly-CSharp
-        m_MethodName: ToDesignArmyPanel
+      - m_Target: {fileID: 3922040935483326226}
+        m_TargetAssemblyTypeName: UX.UI.MurkyTower.MurkyTowerUI, Assembly-CSharp
+        m_MethodName: OnClickReturn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -409,7 +409,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
 --- !u!114 &171926142587356226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 531385129951317322}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.9999999
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 1037263903781473325}
   - component: {fileID: 7745592653003792899}
   - component: {fileID: 5132169580603496036}
-  - component: {fileID: 141475458725460441}
+  - component: {fileID: 3922040935483326226}
   m_Layer: 5
   m_Name: MurkyTowerScreen
   m_TagString: Untagged
@@ -655,7 +655,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &141475458725460441
+--- !u!114 &3922040935483326226
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -664,14 +664,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 842600221554187690}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5aca02965e33fd4896c7a6e7168bad5, type: 3}
+  m_Script: {fileID: 11500000, guid: 923d6f97028e68142a09649f6889fd49, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.FreePlayTest.RegionalManagerUI
-  enemyRelic: {fileID: 0}
-  allyRelic: {fileID: 0}
-  searcher: {fileID: 0}
-  chosenRegional: {fileID: 0}
-  board: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.MurkyTower.MurkyTowerUI
 --- !u!1 &1210451602119987987
 GameObject:
   m_ObjectHideFlags: 0
@@ -2072,7 +2067,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8493102938350498870
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2175,7 +2170,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 141475458725460441}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: UX.UI.FreePlayTest.RegionalManagerUI, Assembly-CSharp
         m_MethodName: ToGameScene
         m_Mode: 1
@@ -3248,8 +3243,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8194299276483375569}
   m_HandleRect: {fileID: 4062074657167835241}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.9999999
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

@@ -1,3 +1,4 @@
+using Game.Common;
 using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +7,7 @@ using UX.UI.Loader;
 namespace UX.UI.Menus
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PlayPanel : MonoBehaviour
+    public class StartGame : Singleton<StartGame>
     {
         [SerializeField] private RectTransform contents;
         private void OnEnable()
@@ -51,7 +52,7 @@ namespace UX.UI.Menus
 
         public void OnClickVault()
         {
-            UIManager.Ins.Load(CanvasID.Vault); 
+            UIManager.Ins.Load(CanvasID.Vault);
         }
         
         public void OnClickCampaign()
@@ -86,6 +87,11 @@ namespace UX.UI.Menus
         {
             if (!context.performed) return;
             UIManager.Ins.Load(CanvasID.MainMenu);
+        }
+
+        public void OnClickReturn()
+        {
+            UIManager.Ins.LoadPreviousCanvas();
         }
         
     }

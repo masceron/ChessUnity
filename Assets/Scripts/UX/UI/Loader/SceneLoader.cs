@@ -31,6 +31,9 @@ namespace UX.UI.Loader
                     case 2:
                         UIManager.Ins.Load(CanvasID.FreePlayMenu);
                         break;
+                    case 3:
+                        UIManager.Ins.Load(CanvasID.StartGame);
+                        break;
                 }
             };
         }

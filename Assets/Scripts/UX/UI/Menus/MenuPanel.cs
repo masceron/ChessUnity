@@ -8,7 +8,7 @@ namespace UX.UI.Menus
     {
         public void OnClickPlay()
         {
-            UIManager.Ins.Load(CanvasID.StartGame);
+            SceneLoader.LoadSceneWithLoadingScreen(3);
         }
 
         public void OnClickSettings()

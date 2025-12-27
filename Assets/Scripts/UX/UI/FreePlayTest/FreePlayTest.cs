@@ -14,7 +14,6 @@ namespace UX.UI.FreePlayTest{
         DesignArmy,
         Augmentation,
         RegionalEffect,
-        
     }
     public class FreePlayTest : Singleton<FreePlayTest>
     {

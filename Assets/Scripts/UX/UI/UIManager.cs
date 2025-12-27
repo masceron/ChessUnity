@@ -21,6 +21,7 @@ namespace UX.UI
         private RectTransform currentCanvas;
         // public CanvasID initialCanvas = CanvasID.None;
         private CanvasID currentCanvasID;
+        private CanvasID previousCanvasID;
         
         [Serializable]
         public class CanvasDict : UDictionary<CanvasID, Canvas> {}
@@ -37,6 +38,7 @@ namespace UX.UI
         }
         public void Load(CanvasID id)
         {
+            previousCanvasID = currentCanvasID;
             currentCanvasID = id;
             if (currentCanvas)
             {
@@ -59,9 +61,16 @@ namespace UX.UI
             currentCanvas = canvasToLoad.GetComponent<RectTransform>();
             currentCanvas.name = canvasToLoad.name;
         }
+
+        public void LoadPreviousCanvas()
+        {
+            Load(previousCanvasID);
+        }
         public CanvasID GetCanvasID()
         {
             return currentCanvasID;
         }
+        
+        
     }
 }
