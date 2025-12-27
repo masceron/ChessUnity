@@ -6,7 +6,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class PhronimaActive : Action, ISkills, IAIAction
+    public class PhronimaActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -43,32 +43,6 @@ namespace Game.Action.Skills
             ApplyEffect(Target);
         }
 
-        public void CompleteActionForAI()
-        {
-            var listPieces = GetPiecesInRadius(RankOf(Maker), FileOf(Maker), 3, p => p != null && p.Color != PieceOn(Maker).Color);
-            if (listPieces.Count == 0) return;
-            
-            listPieces.Sort((a, b) =>
-            {
-                int buffCountA = 0, buffCountB = 0;
-                foreach (var effect in a.Effects)
-                {
-                    if (effect.Category == Effects.EffectCategory.Buff)
-                        buffCountA++;
-                }
-
-                foreach (var effect in b.Effects)
-                {
-                    if (effect.Category == Effects.EffectCategory.Buff)
-                        buffCountB++;
-                }
-
-                return buffCountA.CompareTo(buffCountB);
-            });
-
-            var idx = Random.Range(0, listPieces.Count - 1);
-            
-            ApplyEffect(listPieces[idx].Pos);
-        }
+       
     }
 }

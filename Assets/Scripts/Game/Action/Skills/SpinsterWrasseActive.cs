@@ -13,7 +13,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SpinsterWrasseActive : Action, ISkills, IPendingAble, IDisposable, IAIAction
+    public class SpinsterWrasseActive : Action, ISkills, IPendingAble, IDisposable
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
