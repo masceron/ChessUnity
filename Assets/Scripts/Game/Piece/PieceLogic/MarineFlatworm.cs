@@ -20,7 +20,7 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                 {
-
+                    list.Add(new MarineFlatwormActive(Pos, Pos));
                 }
                 else
                 {
