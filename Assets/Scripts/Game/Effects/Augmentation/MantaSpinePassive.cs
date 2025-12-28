@@ -8,6 +8,7 @@ using Game.Common;
 using Game.Effects.Traits;
 using UnityEngine;
 using Game.Piece;
+using System.Linq;
 namespace Game.Effects.Augmentation
 {
     public class MantaSpinePassive : Effect
@@ -18,8 +19,20 @@ namespace Game.Effects.Augmentation
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            Debug.Log("MantaSpinePassive OnCallPieceAction");
-            if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
+            if (action == null || 
+                action.Target != Piece.Pos || 
+                action.Maker == Piece.Pos || 
+                (action.Flag & ActionFlag.Unblockable) != 0) 
+                return;
+            
+            var hasBlockingEffect = Piece.Effects.Any(e => 
+                e.EffectName == "effect_shield" || 
+                e.EffectName == "effect_hardened_shield" || 
+                e.EffectName == "effect_carapace");
+            
+            if (hasBlockingEffect) return;
+            
+            if (!action.Succeed) return;
             action.Succeed = false;
             var targetPiece = PieceOn(action.Target);
             if (targetPiece != null)
