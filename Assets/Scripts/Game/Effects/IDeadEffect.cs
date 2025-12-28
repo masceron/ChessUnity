@@ -1,7 +1,9 @@
-﻿namespace Game.Effects
+﻿using Game.Piece.PieceLogic.Commons;
+
+namespace Game.Effects
 {
     public interface IDeadEffect
     {
-        public void OnCallDead();
+        public void OnCallDead(PieceLogic pieceToDie);
     }
 }
