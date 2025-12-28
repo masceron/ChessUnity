@@ -4,7 +4,7 @@ namespace UX.UI.Vault
 {
     public class Vault : MonoBehaviour
     {
-        public void OnClickReturn()
+        public void OnClickPrevious()
         {
             UIManager.Ins.LoadPreviousCanvas();
         }

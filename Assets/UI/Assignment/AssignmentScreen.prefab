@@ -124,7 +124,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5773775389065450554}
         m_TargetAssemblyTypeName: UX.UI.Assignments.AssignmentsUI, Assembly-CSharp
-        m_MethodName: OnClickReturn
+        m_MethodName: OnClickPrevious
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

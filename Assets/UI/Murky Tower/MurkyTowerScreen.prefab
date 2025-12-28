@@ -400,7 +400,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3922040935483326226}
         m_TargetAssemblyTypeName: UX.UI.MurkyTower.MurkyTowerUI, Assembly-CSharp
-        m_MethodName: OnClickReturn
+        m_MethodName: OnClickPrevious
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

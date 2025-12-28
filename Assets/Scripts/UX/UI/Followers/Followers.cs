@@ -86,7 +86,7 @@ namespace UX.UI.Followers
             UIManager.Ins.Load(CanvasID.CreateArmy);
         }
         
-        public void OnClickReturn()
+        public void OnClickPrevious()
         {
             UIManager.Ins.LoadPreviousCanvas();
         }

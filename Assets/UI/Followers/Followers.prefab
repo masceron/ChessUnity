@@ -3651,7 +3651,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2922965318947267967}
         m_TargetAssemblyTypeName: UX.UI.Followers.Followers, Assembly-CSharp
-        m_MethodName: OnClickReturn
+        m_MethodName: OnClickPrevious
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -5,7 +5,7 @@ namespace UX.UI.MurkyTower
 {
     public class MurkyTowerUI : MonoBehaviour
     {
-        public void OnClickReturn()
+        public void OnClickPrevious()
         {
             UIManager.Ins.LoadPreviousCanvas();
         }

@@ -572,7 +572,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 673807658099762131}
         m_TargetAssemblyTypeName: UX.UI.Vault.Vault, Assembly-CSharp
-        m_MethodName: OnClickReturn
+        m_MethodName: OnClickPrevious
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1044,7 +1044,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return
+  m_text: Previous
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 7452384786563238665}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9999896
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3898,7 +3898,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8014659623505787048}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9999875
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

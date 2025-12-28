@@ -6,7 +6,7 @@ namespace UX.UI.Assignments
 
     public class AssignmentsUI : MonoBehaviour
     {
-        public void OnClickReturn()
+        public void OnClickPrevious()
         {
             UIManager.Ins.LoadPreviousCanvas();
         }
