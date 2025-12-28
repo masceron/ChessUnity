@@ -4,7 +4,7 @@ using Game.Action.Skills;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-
+using Game.Effects.SpecialAbility;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     {
         public MarineFlatworm(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
         {
-
+            ActionManager.EnqueueAction(new ApplyEffect(new MarineFlatwormPassive(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
