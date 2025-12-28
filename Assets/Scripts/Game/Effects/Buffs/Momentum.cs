@@ -28,7 +28,10 @@ namespace Game.Effects.Buffs
 
         public void OnCallSkillUsed(Action.Action skill)
         {
-            Piece.SkillCooldown--;
+            if (action is ISkills)
+            {
+                ((IPieceWithSkill)Piece).TimeToCooldown--;
+            }
         }
     }
 }
