@@ -78,12 +78,17 @@ namespace UX.UI.Followers
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            UIManager.Ins.Load(CanvasID.PlayMenu);
+            UIManager.Ins.Load(CanvasID.StartGame);
         }
 
         public void CreateArmy()
         {
             UIManager.Ins.Load(CanvasID.CreateArmy);
+        }
+        
+        public void OnClickReturn()
+        {
+            UIManager.Ins.LoadPreviousCanvas();
         }
     }
 }

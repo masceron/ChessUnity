@@ -15,7 +15,7 @@ namespace UX.UI.Menus
             for (var i = 0; i < contents.childCount; i++)
             {
                 var content = contents.GetChild(i);
-                content.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
+                //content.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
                 content.transform.rotation = new Quaternion
                 {
                     eulerAngles = new Vector3(0, 90, 0)
@@ -27,7 +27,7 @@ namespace UX.UI.Menus
 
         public void OnClickAssignments()
         {
-            UIManager.Ins.Load(CanvasID.Followers);
+            UIManager.Ins.Load(CanvasID.Assignment);
         }
 
         public void OnClickTrainingGround()
