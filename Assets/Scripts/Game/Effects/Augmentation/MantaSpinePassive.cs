@@ -24,7 +24,7 @@ namespace Game.Effects.Augmentation
                 action.Maker == Piece.Pos || 
                 (action.Flag & ActionFlag.Unblockable) != 0) 
                 return;
-            
+            if (action != ICaptures) return;
             var hasBlockingEffect = Piece.Effects.Any(e => 
                 e.EffectName == "effect_shield" || 
                 e.EffectName == "effect_hardened_shield" || 

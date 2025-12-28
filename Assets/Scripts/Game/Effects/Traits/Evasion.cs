@@ -20,6 +20,7 @@ namespace Game.Effects.Traits
         public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || !action.Succeed) return;
+            if (action != ICaptures) return;
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 
