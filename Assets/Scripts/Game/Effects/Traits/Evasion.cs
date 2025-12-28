@@ -3,7 +3,7 @@ using Game.Managers;
 using static Game.Common.BoardUtils;
 using Game.Augmentation;
 using Game.Piece.PieceLogic.Commons;
-
+using Game.Action.Captures;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -20,7 +20,7 @@ namespace Game.Effects.Traits
         public override void OnCallPieceAction(Action.Action action)
         {
             if (action == null || action.Target != Piece.Pos || !action.Succeed) return;
-            if (action != ICaptures) return;
+            if (action is not ICaptures) return;
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 

@@ -9,6 +9,7 @@ using Game.Effects.Traits;
 using UnityEngine;
 using Game.Piece;
 using System.Linq;
+using Game.Action.Captures;
 namespace Game.Effects.Augmentation
 {
     public class MantaSpinePassive : Effect
@@ -24,7 +25,7 @@ namespace Game.Effects.Augmentation
                 action.Maker == Piece.Pos || 
                 (action.Flag & ActionFlag.Unblockable) != 0) 
                 return;
-            if (action != ICaptures) return;
+            if (action is not ICaptures) return;
             var hasBlockingEffect = Piece.Effects.Any(e => 
                 e.EffectName == "effect_shield" || 
                 e.EffectName == "effect_hardened_shield" || 
