@@ -18,7 +18,7 @@ namespace Game.Effects.Traits
             
             if (action.Target == Piece.Pos && action.Succeed)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(BoardUtils.PieceOn(action.Maker), Piece.Pos)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(BoardUtils.PieceOn(action.Maker), Piece.Pos, -1)));
             }
         }
 

@@ -16,8 +16,11 @@ namespace Game.Effects.Traits
         {
         }
 
-        public void OnCallDead()
+        public void OnCallDead(PieceLogic pieceToDie)
         {
+            if (pieceToDie != Piece) {
+                return;
+            }
             UnityEngine.Debug.Log("BlackSwallowerVengeful OnCallDead");
             var pieceAround = new List<PieceLogic>();
             foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Piece.Pos), FileOf(Piece.Pos), 1))
