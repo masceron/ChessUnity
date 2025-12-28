@@ -20,7 +20,7 @@ namespace Game.Effects.Traits
         {
             for (var i = 0; i < actions.Count; i++)
             {
-                if (actions[i] is NormalCapture capture)
+                if (actions[i] is NormalCapture capture && capture.Maker == Piece.Pos)
                 {
                     actions[i] = new Action.Captures.IllusionCapture(capture.Maker, capture.Target);
                 }
