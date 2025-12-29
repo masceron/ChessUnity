@@ -12,10 +12,10 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SohalSurgeonfishActive: Action, ISkills
     {
-        public SohalSurgeonfishActive(int maker) : base(maker)
+        public SohalSurgeonfishActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Target = (ushort)target;
         }
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -23,15 +23,7 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 6))
-            {
-                var idx = IndexOf(rank, file);
-                var pOn = PieceOn(idx);
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color && pOn.Effects.Any(e => e.EffectName == "effect_slow"))
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Leashed(pOn, pOn.Pos, 5)));
-                }
-            }
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(Target), Target, 5)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

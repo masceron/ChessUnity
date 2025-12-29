@@ -6,7 +6,12 @@ using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-
+using Game.Effects.Augmentation;
+using Game.Effects.Buffs;
+using Game.Action.Internal;
+using Game.Action;
+using System.Linq;
+using Game.Common;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -19,10 +24,14 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    if (VerifyIndex(Pos))
+                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 6))
                     {
-                        UnityEngine.Debug.Log($"SohalSurgeonfish - Applying effect to piece at index {Pos}");
-                        list.Add(new SohalSurgeonfishActive(Pos));
+                        var idx = IndexOf(rank, file);
+                        var pOn = PieceOn(idx);
+                        if (pOn != null && pOn.Color != PieceOn(Pos).Color && pOn.Effects.Any(e => e.EffectName == "effect_slow"))
+                        {
+                            list.Add(new SohalSurgeonfishActive(Pos, idx));
+                        }
                     }
                 }
                 else
