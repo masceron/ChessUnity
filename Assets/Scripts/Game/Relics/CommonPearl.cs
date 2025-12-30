@@ -14,12 +14,12 @@ namespace Game.Relics
         public CommonPearl(RelicConfig cfg) : base(cfg)
         {
             TimeCooldown = cfg.TimeCooldown;
-            currentCooldown = 0;
+            CurrentCooldown = 0;
         }
 
         public override void Activate()
         {
-            if (currentCooldown == 0)
+            if (CurrentCooldown == 0)
             {
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {

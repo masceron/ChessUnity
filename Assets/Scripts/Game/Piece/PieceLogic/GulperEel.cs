@@ -41,7 +41,7 @@ namespace Game.Piece.PieceLogic
                 }
             };
 
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
 
         public SkillsDelegate Skills { get; set; }

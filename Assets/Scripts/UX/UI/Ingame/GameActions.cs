@@ -46,9 +46,9 @@ namespace UX.UI.Ingame
                 relic.interactable = false;
                 return;
             }
-            relicCooldownText.gameObject.SetActive(relicLogic.currentCooldown != 0);
-            relic.interactable = relicLogic.currentCooldown == 0;
-            relicCooldownText.text = relicLogic.currentCooldown.ToString();
+            relicCooldownText.gameObject.SetActive(relicLogic.CurrentCooldown != 0);
+            relic.interactable = relicLogic.CurrentCooldown == 0;
+            relicCooldownText.text = relicLogic.CurrentCooldown.ToString();
         }
 
         public void ClickEndTurn()

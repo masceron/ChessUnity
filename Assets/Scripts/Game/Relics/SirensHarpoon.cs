@@ -19,11 +19,11 @@ namespace Game.Relics
             type = config.Type;
             Color = config.Color;
             TimeCooldown = 2;
-            currentCooldown = 0;
+            CurrentCooldown = 0;
         }
         public override void Activate()
         {
-            if (currentCooldown == 0)
+            if (CurrentCooldown == 0)
             {
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
@@ -33,7 +33,7 @@ namespace Game.Relics
                     if (piece.Color != Color && piece.PieceRank <= PieceRank.Common)
                     {
                         TileManager.Ins.MarkAsMoveable(piece.Pos);
-                        var pending = new SirensHarpoonPending(this, piece.Pos, piece.Color);
+                        var pending = new SirensHarpoonPending(this, piece.Pos);
                         BoardViewer.ListOf.Add(pending);
                     }
                     BoardViewer.Selecting = -2;
@@ -69,7 +69,7 @@ namespace Game.Relics
             var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
             int idx = UnityEngine.Random.Range(0, topGroup.Count);
             
-            var pending = new SirensHarpoonPending(this, topGroup[idx].Pos, topGroup[idx].Color);
+            var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
             if (pending is IPendingAble p)
             {
                 p.CompleteAction();

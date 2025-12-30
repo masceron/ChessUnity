@@ -11,7 +11,7 @@ namespace Game.Movesets
     {
         public abstract List<int> GenerateBaseMovePattern(int makerPos);
 
-        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range, bool forCapture, bool isPlayer)
+        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range, bool forCapture, bool excludeEmptyTile, bool isSurpass = false)
         {
             if (range <= 0) return;
 
@@ -58,15 +58,19 @@ namespace Game.Movesets
                 if (!VerifyBounds(tRank) || !VerifyBounds(tFile) || !IsActive(targetPos))
                     continue;
 
-                var blocker = Pathfinder.LineBlocker(rank, file, tRank, tFile);
-                var isClear = blocker.Item1 == -1 && blocker.Item2 == -1;
+                var isClear = true;
+                if (!isSurpass)
+                {
+                    var blocker = Pathfinder.LineBlocker(rank, file, tRank, tFile);
+                    isClear = blocker.Item1 == -1 && blocker.Item2 == -1;
+                }
                 var target = PieceOn(targetPos);
 
                 if (target == null)
                 {
                     if (!forCapture && isClear)
                         list.Add(new NormalMove(pos, targetPos));
-                    if (forCapture && isClear && !isPlayer) // add capture để nếu đi vào đây thì sẽ bị phạt
+                    if (forCapture && isClear && !excludeEmptyTile) // add capture để nếu đi vào đây thì sẽ bị phạt
                         list.Add(new NormalCapture(pos, targetPos));
                 }
                 else if (target.Color != color)

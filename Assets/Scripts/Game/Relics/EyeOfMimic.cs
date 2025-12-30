@@ -17,11 +17,11 @@ namespace Game.Relics
             type = config.Type;
             Color = config.Color;
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
-            currentCooldown = 0;
+            CurrentCooldown = 0;
         }
         public override void Activate()
         {
-            if (currentCooldown == 0)
+            if (CurrentCooldown == 0)
             {
                 
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
@@ -38,7 +38,7 @@ namespace Game.Relics
             }
             else
             {
-                Debug.Log("Eye of Mimic is on cooldown for " + currentCooldown + " more turns.");
+                Debug.Log("Eye of Mimic is on cooldown for " + CurrentCooldown + " more turns.");
             }
         }
 

@@ -19,12 +19,12 @@ namespace Game.Relics
         private Tile.Tile hoveringTile;
         public FrostSigil(RelicConfig cfg) : base(cfg)
         {
-            currentCooldown = 0;
+            CurrentCooldown = 0;
         }
 
         public override void Activate()
         {
-            if (currentCooldown == 0)
+            if (CurrentCooldown == 0)
             {
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
@@ -50,7 +50,7 @@ namespace Game.Relics
             }
             else
             {
-                Debug.Log("Frost Sigil is on cooldown for " + currentCooldown + "more turn");
+                Debug.Log("Frost Sigil is on cooldown for " + CurrentCooldown + "more turn");
             }
         }
 
