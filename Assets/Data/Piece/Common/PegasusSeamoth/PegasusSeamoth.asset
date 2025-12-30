@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: PegasusSmooth
+  m_Name: PegasusSeamoth
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  key: piece_pegasus_smooth
+  key: piece_pegasus_seamoth
   prefab: {fileID: 395919914944283270, guid: 9ef6e952b55666c499bd151a1cccdd8a, type: 3}
   rank: 4
   moveRange: 1
@@ -22,6 +22,6 @@ MonoBehaviour:
   hasSkill: 0
   normalSkillCooldown: 0
   availableSlots: 0
-  logicClassName: PegasusSmooth
+  logicClassName: PegasusSeamoth
   baseValue: 0
   considerations: []

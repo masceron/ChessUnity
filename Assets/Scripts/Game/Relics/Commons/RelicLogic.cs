@@ -1,5 +1,4 @@
 ﻿using Game.Common;
-using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Relics.Commons

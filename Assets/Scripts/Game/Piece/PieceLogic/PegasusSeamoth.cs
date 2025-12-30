@@ -3,7 +3,6 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Effects.Buffs;
-using Game.Effects.Traits;
 using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
@@ -22,7 +21,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (list[i] is IQuiets)
                 {
-                    list[i] = new PegasusSmoothMove(Pos, list[i].Target);
+                    list[i] = new PegasusSeamothMove(Pos, list[i].Target);
                 }
             }
         }

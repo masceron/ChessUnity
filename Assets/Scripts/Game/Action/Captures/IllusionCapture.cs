@@ -1,5 +1,3 @@
-using Game.Managers;
-using UnityEngine;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;

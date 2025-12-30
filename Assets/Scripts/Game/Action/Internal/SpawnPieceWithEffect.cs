@@ -1,7 +1,6 @@
 using Game.Managers;
 using Game.Piece;
 using Game.Effects;
-using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal

@@ -411,6 +411,14 @@ MonoBehaviour:
     m_Key: effect_illusion
     m_Metadata:
       m_Items: []
+  - m_Id: 51110936780918784
+    m_Key: effect_powderbluetang_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51110937103880192
+    m_Key: effect_marine_flatworm_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

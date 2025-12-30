@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.ScriptableObjects;
+using Game.ScriptableObjects.Collections;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
@@ -51,6 +52,7 @@ namespace Editor.Window
                 "This list shows all PieceInfo assets in your project.", MessageType.Info);
 
             if (GUILayout.Button("Refresh List")) FindAllPieceInfos();
+            if (GUILayout.Button("Reimport List")) SyncWithCentralData();
 
             EditorGUILayout.Space();
             
@@ -78,6 +80,31 @@ namespace Editor.Window
                 var piece = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
                 if (piece) allPieces.Add(piece);
             }
+        }
+        
+        private void SyncWithCentralData()
+        {
+            var dataGuids = AssetDatabase.FindAssets("t:PiecesData");
+            if (dataGuids.Length == 0)
+            {
+                Debug.LogError("No central data object for PieceInfo found.");
+                return;
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(dataGuids[0]);
+            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(path);
+
+            if (!centralData) return;
+            
+            centralData.piecesData ??= new List<PieceInfo>();
+            
+            centralData.piecesData.Clear();
+            centralData.piecesData.AddRange(allPieces);
+            
+            EditorUtility.SetDirty(centralData);
+            AssetDatabase.SaveAssets();
+            
+            Debug.Log($"PieceManager: Rebuilt PiecesData list. Total items: {centralData.piecesData.Count}");
         }
         
         private void DrawValidateTab()

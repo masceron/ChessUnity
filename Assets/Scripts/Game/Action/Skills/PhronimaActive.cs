@@ -1,6 +1,4 @@
-﻿using Game.AI;
-using Game.Common;
-using Game.Piece.PieceLogic.Commons;
+﻿using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 

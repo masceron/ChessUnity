@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Game.Action.Captures;
 using Game.Common;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits

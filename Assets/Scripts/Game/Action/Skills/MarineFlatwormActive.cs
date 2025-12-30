@@ -1,10 +1,8 @@
-using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
 using Game.Piece;
 using static Game.Common.BoardUtils;
 using Game.Piece.PieceLogic.Commons;
-using Game.AI;  
 
 namespace Game.Action.Skills
 {

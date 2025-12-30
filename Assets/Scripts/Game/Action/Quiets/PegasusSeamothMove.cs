@@ -6,9 +6,9 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PegasusSmoothMove : Action, IQuiets
+    public class PegasusSeamothMove : Action, IQuiets
     {
-        public PegasusSmoothMove(int maker, int to) : base(maker, true)
+        public PegasusSeamothMove(int maker, int to) : base(maker, true)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using Game.AI;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills

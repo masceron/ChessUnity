@@ -191,6 +191,18 @@ MonoBehaviour:
     m_Key: piece_cutthroat_eel_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 51108022586888192
+    m_Key: piece_sohal_surgeonfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51108022607859712
+    m_Key: piece_pencil_urchin_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51108022612054016
+    m_Key: piece_long_snouted_seahorse_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

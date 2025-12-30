@@ -4,7 +4,6 @@ using Game.Tile;
 using Game.Managers;
 using Game.Action;
 using Game.Action.Internal;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {

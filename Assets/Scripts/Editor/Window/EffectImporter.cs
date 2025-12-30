@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Game.ScriptableObjects;
+using Game.ScriptableObjects.Collections;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
@@ -54,6 +55,7 @@ namespace Editor.Window
                 MessageType.Info);
 
             if (GUILayout.Button("Refresh List")) FindAllEffectInfos();
+            if (GUILayout.Button("Reimport List")) SyncWithCentralData();
 
             EditorGUILayout.Space();
 
@@ -79,9 +81,34 @@ namespace Editor.Window
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-                EffectInfo effect = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
-                if (effect != null) allEffects.Add(effect);
+                var effect = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
+                if (effect) allEffects.Add(effect);
             }
+            
+        }
+        
+        private void SyncWithCentralData()
+        {
+            var dataGuids = AssetDatabase.FindAssets("t:EffectsData");
+            if (dataGuids.Length == 0)
+            {
+                Debug.LogError("No central data object for EffectInfo found.");
+                return;
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(dataGuids[0]);
+            var centralData = AssetDatabase.LoadAssetAtPath<EffectsData>(path);
+
+            if (!centralData) return;
+            centralData.effectsData ??= new List<EffectInfo>();
+            
+            centralData.effectsData.Clear();
+            centralData.effectsData.AddRange(allEffects);
+            
+            EditorUtility.SetDirty(centralData);
+            AssetDatabase.SaveAssets();
+
+            Debug.Log($"EffectManager: Rebuilt EffectsData list. Total items: {centralData.effectsData.Count}");
         }
 
         private void DrawValidateTab()
