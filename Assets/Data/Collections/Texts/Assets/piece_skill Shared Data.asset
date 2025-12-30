@@ -179,12 +179,16 @@ MonoBehaviour:
     m_Key: piece_spinster_wrasse_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 48127780603072512
-    m_Key: piece_frilled_shark_skill
+  - m_Id: 48994865489895424
+    m_Key: piece_marine_flatworm_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 48127780645015552
-    m_Key: piece_marine_flatworm_skill
+  - m_Id: 49001913946464256
+    m_Key: piece_flowerhorn_cichlid_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49001914042933248
+    m_Key: piece_cutthroat_eel_skill
     m_Metadata:
       m_Items: []
   m_Metadata:

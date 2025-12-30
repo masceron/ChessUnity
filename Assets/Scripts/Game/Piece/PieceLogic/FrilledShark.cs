@@ -10,7 +10,6 @@ using static Game.Common.BoardUtils;
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
     public class FrilledShark : Commons.PieceLogic, IPieceWithSkill
     {
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
