@@ -84,14 +84,6 @@ namespace Game.Tile
             
         }
 
-        protected bool ApplyEffect(PieceLogic piece, Effect effect)
-        {
-            if (piece.IsImmuneTo(this, effect)) {
-                return false;
-            }
-            ActionManager.EnqueueAction(new ApplyEffect(effect));
-            return true;
-        }
 
         public virtual int GetValueForAI(){return 0;}
     }

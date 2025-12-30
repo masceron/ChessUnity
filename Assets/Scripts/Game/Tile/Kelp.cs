@@ -28,7 +28,7 @@ namespace Game.Tile
             {
                 pieceHaveCamouflage = true;
             } else {
-                ApplyEffect(piece, new Camouflage(piece));
+                ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(piece)));
             }
         }
 

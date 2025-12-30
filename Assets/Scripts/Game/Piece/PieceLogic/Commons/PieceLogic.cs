@@ -255,28 +255,25 @@ namespace Game.Piece.PieceLogic.Commons
             return Math.Max(1, range);
         }
 
-        public bool IsImmuneTo(Formation formation, Effect appliedEffect = null)
+        public bool IsImmuneToFormationEffect(FormationType formationType, Effect appliedEffect)
         {
-            if (formation == null) return false;
+            if (formationType == FormationType.None || appliedEffect == null) return false;
             
-            foreach (var immunityEffect in Effects)
+            if (Immunities.Contains(ImmunityType.FormationDebuff) && 
+                appliedEffect.Category == EffectCategory.Debuff)
             {
-                if (immunityEffect is IImmunity immunity)
-                {
-                    if (appliedEffect != null && immunity.CheckImmunity(formation.GetFormationType(), appliedEffect)) {
-                        return true;
-                    }
-                }
-            }
-            if (Immunities.Contains(ImmunityType.FormationDebuff) && appliedEffect?.Category == EffectCategory.Debuff) {
-                return true;
-            }
-            if (Immunities.Contains(ImmunityType.FormationSpecific) && SpecificFormations.Contains(formation.GetFormationType())) {
                 return true;
             }
 
+            if (Immunities.Contains(ImmunityType.FormationSpecific) && 
+                SpecificFormations.Contains(formationType))
+            {
+                return true;
+            }
+            
             return false;
         }
+        
 
         public bool IsImmuneToEffect(String appliedEffectName)
         {
@@ -287,6 +284,31 @@ namespace Game.Piece.PieceLogic.Commons
         public void ImmuneEffect(String effectName)
         {
             immuneEffectNames.Add(effectName);
+        }
+
+        public void AddImmunity(ImmunityType immunityType)
+        {
+            if (!Immunities.Contains(immunityType))
+            {
+                Immunities.Add(immunityType);
+            }
+        }
+
+        public void RemoveImmunity(ImmunityType immunityType)
+        {
+            Immunities.Remove(immunityType);
+        }
+
+        public void AddSpecificFormation(FormationType formationType)
+        {
+            if (!SpecificFormations.Contains(formationType))
+            {
+                SpecificFormations.Add(formationType);
+            }
+        }
+        public void RemoveSpecificFormation(FormationType formationType)
+        {
+            SpecificFormations.Remove(formationType);
         }
 
         public int GetValueForAI()
