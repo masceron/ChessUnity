@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chrysos
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -373,7 +373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce9b85c0662ee44fbf4a0aa94c69985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ObjectPrefab: {fileID: -8679921383154817045, guid: c68c2d911c895d94dbc1d4a5ab6903b9, type: 3}
+  _ObjectPrefab: {fileID: 0}
   UseTargetRotation: 1
   _TargetRotation: {x: -90, y: -90, z: 0}
   _TargetOffsetX: 0
@@ -383,7 +383,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -3.5
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 170, y: 170}
+  _textureSize: {x: 0, y: 0}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 1

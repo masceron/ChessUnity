@@ -122,12 +122,12 @@ namespace Game.Action.Internal.Pending.Piece
                 
             if (topGroup.Count == 1)
             {
-                ActivateSkill(allyPieces[0], upgradableTo[idx], 5);
+                ActivateSkill(allyPieces[0], upgradableTo[idx], cost);
             }
             else
             {
-                var p = Random.Range(0, topGroup.Count);
-                ActivateSkill(allyPieces[p], upgradableTo[idx], 5);
+                var p = UnityEngine.Random.Range(0, topGroup.Count);
+                ActivateSkill(allyPieces[p], upgradableTo[idx], cost);
             }
         }
 
