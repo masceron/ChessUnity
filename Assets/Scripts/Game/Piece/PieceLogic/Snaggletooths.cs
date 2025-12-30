@@ -45,14 +45,8 @@ namespace Game.Piece.PieceLogic
                         var (rank, file) = RankFileOf(Pos);
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                         {
-                            var index = IndexOf(rankOff, fileOff);
-                            var piece = PieceOn(index);
-                            if (piece == null) continue;
-                            if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
-                            {
-                                list.Add(new SnaggletoothsActive(Pos, index, false));
-                                listPieces.Add(piece);
-                            }
+                            list.Add(new SnaggletoothsActive(Pos, IndexOf(rankOff, fileOff), false));
+
                         }
                     }
                     int maxValue = listPieces.Max(p => p.GetValueForAI());

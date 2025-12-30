@@ -347,9 +347,21 @@ namespace Game.Managers
                 if (effect.disabled) return;
                 if (effect.ObserverActivateWhen == ObserverActivateWhen.Dead)
                 {
-                    ((IDeadEffect)effect).OnCallDead();
+                    ((IDeadEffect)effect).OnCallDead(pieceToDie);
                 }
             });
+
+            foreach (var piece in PieceBoard)
+            {
+                if (piece == null || piece == pieceToDie || piece.IsDead()) continue;
+                piece.Effects.ForEach(effect =>
+                {
+                    if (effect is IDeadEffect deadEffect)
+                    {
+                        deadEffect.OnCallDead(pieceToDie);
+                    }
+                });
+            }
         }
 
         public void NotifyOnMoveGen(List<Action.Action> actions)

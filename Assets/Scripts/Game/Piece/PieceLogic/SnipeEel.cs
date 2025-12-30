@@ -44,8 +44,6 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            var piece = PieceOn(index);
-                            if (piece == null || piece.Color == Color) continue;
                             list.Add(new SnipeEelActive(Pos, index));
                         }
                     }
