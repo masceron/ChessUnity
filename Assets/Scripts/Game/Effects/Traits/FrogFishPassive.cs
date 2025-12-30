@@ -20,10 +20,11 @@ namespace Game.Effects.Traits
         public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos) return;
-            var curFormation = FormationManager.Ins.GetFormation(action.Maker);
-            if (curFormation == null || curFormation is not PredatorLair) return;
+            if (action.Maker == action.Target) return;
+            var targetFormation = FormationManager.Ins.GetFormation(action.Target);
+            if (targetFormation == null || targetFormation is not PredatorLair) return;
             
-            var (rank, file) = RankFileOf(action.Maker);
+            var (rank, file) = RankFileOf(action.Target);
             foreach (var (nRank, nFile) in MoveEnumerators.AroundUntil(rank, file, 2))
             {
                 var piece = PieceOn(IndexOf(nRank, nFile));
@@ -32,5 +33,6 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, piece)));
             }
         }
+        
     }
 }

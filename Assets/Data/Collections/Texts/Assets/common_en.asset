@@ -66,6 +66,46 @@ MonoBehaviour:
     m_Localized: Select
     m_Metadata:
       m_Items: []
+  - m_Id: 48067486364258304
+    m_Localized: Credits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48071254585692160
+    m_Localized: Assignments
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48072791353511936
+    m_Localized: Training Ground
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48073051383582720
+    m_Localized: Trader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48073274558304256
+    m_Localized: Murky Tower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48073410613137408
+    m_Localized: Followers
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48073553320136704
+    m_Localized: Outworld Invaders
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48073646844727296
+    m_Localized: Vault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48111683158986752
+    m_Localized: Start Game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48113236557221888
+    m_Localized: Free Play Test
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

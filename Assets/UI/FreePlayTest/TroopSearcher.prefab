@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -611,6 +612,9 @@ MonoBehaviour:
   model: {fileID: 1531311441220413129}
   image: {fileID: 7584121526983133335}
   trigger: {fileID: 5791590763339389489}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &5791590763339389489
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,7 +947,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34a0885751b8428786c32314e2f692f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  piecesData: {fileID: 11400000, guid: 6452cc477dd37f04397e915a2294337d, type: 2}
   searchBar: {fileID: 2697759910736909169}
   list: {fileID: 4868936336278974364}
   troopDisplay: {fileID: 1292840448665757387, guid: 778969aa2960b4d45bebc38c0ab310fc, type: 3}
@@ -1351,6 +1354,9 @@ MonoBehaviour:
   model: {fileID: 6858841914305011998}
   image: {fileID: 4026706367589565775}
   trigger: {fileID: 7382536935239875334}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7382536935239875334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1546,6 +1552,9 @@ MonoBehaviour:
   model: {fileID: 1119746008577868064}
   image: {fileID: 2801617074369246097}
   trigger: {fileID: 5565940327186431281}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &5565940327186431281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1831,6 +1840,9 @@ MonoBehaviour:
   model: {fileID: 1094870433881363920}
   image: {fileID: 1722412247855782435}
   trigger: {fileID: 4326297144259654964}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &4326297144259654964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2148,6 +2160,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2274,6 +2287,9 @@ MonoBehaviour:
   model: {fileID: 780017798811485824}
   image: {fileID: 6983204775534989233}
   trigger: {fileID: 1694239155838668367}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &1694239155838668367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2690,6 +2706,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2816,6 +2833,9 @@ MonoBehaviour:
   model: {fileID: 4029048210714950440}
   image: {fileID: 8355644018613995871}
   trigger: {fileID: 5006187556027561167}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &5006187556027561167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3038,7 +3058,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 0, y: 0}
+  _textureSize: {x: 125, y: 125}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 0
@@ -3325,6 +3345,9 @@ MonoBehaviour:
   model: {fileID: 3137437689692344437}
   image: {fileID: 1577564421720820867}
   trigger: {fileID: 397358329075197356}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &397358329075197356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3625,7 +3648,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 0, y: 0}
+  _textureSize: {x: 125, y: 125}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 0
@@ -3854,6 +3877,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3920,7 +3944,7 @@ RectTransform:
   m_Father: {fileID: 8113457283437222267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4624,6 +4648,9 @@ MonoBehaviour:
   model: {fileID: 3666041557836598956}
   image: {fileID: 4855097139871095226}
   trigger: {fileID: 8653895971568735225}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &8653895971568735225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5048,7 +5075,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 0, y: 0}
+  _textureSize: {x: 125, y: 125}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 0
@@ -5155,6 +5182,9 @@ MonoBehaviour:
   model: {fileID: 518968864139452871}
   image: {fileID: 8907980116981214808}
   trigger: {fileID: 92217627360148399}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &92217627360148399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5957,6 +5987,9 @@ MonoBehaviour:
   model: {fileID: 4199252091370751926}
   image: {fileID: 9058689040604211979}
   trigger: {fileID: 3557131549773112607}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &3557131549773112607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6322,6 +6355,9 @@ MonoBehaviour:
   model: {fileID: 3624631046457253165}
   image: {fileID: 5344885908293474512}
   trigger: {fileID: 647335210998924902}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &647335210998924902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6535,6 +6571,9 @@ MonoBehaviour:
   model: {fileID: 6389375270357414607}
   image: {fileID: 7000431883073099222}
   trigger: {fileID: 6249412967908026975}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &6249412967908026975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6820,6 +6859,9 @@ MonoBehaviour:
   model: {fileID: 2121865386581652824}
   image: {fileID: 4984762930527582141}
   trigger: {fileID: 976443901484160221}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &976443901484160221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6925,6 +6967,9 @@ MonoBehaviour:
   model: {fileID: 7614120321934763300}
   image: {fileID: 5820784489249182786}
   trigger: {fileID: 1689205143385750152}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &1689205143385750152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7030,6 +7075,9 @@ MonoBehaviour:
   model: {fileID: 6699672519800491872}
   image: {fileID: 2205657205218283820}
   trigger: {fileID: 6930954149135255371}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &6930954149135255371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7247,6 +7295,9 @@ MonoBehaviour:
   model: {fileID: 3748633517228215775}
   image: {fileID: 5702479088825777502}
   trigger: {fileID: 2370771873999917690}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &2370771873999917690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7352,6 +7403,9 @@ MonoBehaviour:
   model: {fileID: 5560117454052182052}
   image: {fileID: 4738278770208679644}
   trigger: {fileID: 392382754957092541}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &392382754957092541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7547,6 +7601,9 @@ MonoBehaviour:
   model: {fileID: 276534897963296134}
   image: {fileID: 4477120817193501979}
   trigger: {fileID: 3493249498787767136}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &3493249498787767136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7657,7 +7714,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 0, y: 0}
+  _textureSize: {x: 125, y: 125}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 0
@@ -7854,6 +7911,9 @@ MonoBehaviour:
   model: {fileID: 6291033615363446690}
   image: {fileID: 8742473974585554211}
   trigger: {fileID: 7197374246355020044}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7197374246355020044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8186,6 +8246,9 @@ MonoBehaviour:
   model: {fileID: 3372540949616198846}
   image: {fileID: 1981238158114446960}
   trigger: {fileID: 1862826463154332761}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &1862826463154332761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8291,6 +8354,9 @@ MonoBehaviour:
   model: {fileID: 8103661463007281918}
   image: {fileID: 3214388346223258998}
   trigger: {fileID: 7527530734959708279}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7527530734959708279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8486,6 +8552,9 @@ MonoBehaviour:
   model: {fileID: 6968739325015368708}
   image: {fileID: 1497170839648901239}
   trigger: {fileID: 7729028695236391066}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7729028695236391066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8515,7 +8584,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6944672648983082951
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8888,6 +8957,9 @@ MonoBehaviour:
   model: {fileID: 201913932105790057}
   image: {fileID: 3831618037039886299}
   trigger: {fileID: 8434935200192791186}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &8434935200192791186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9317,6 +9389,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -9443,6 +9516,9 @@ MonoBehaviour:
   model: {fileID: 4880008944640639727}
   image: {fileID: 9113443721996826231}
   trigger: {fileID: 1670481316839092404}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &1670481316839092404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9930,6 +10006,9 @@ MonoBehaviour:
   model: {fileID: 62353566304538752}
   image: {fileID: 7284713707688655793}
   trigger: {fileID: 4729998830764052886}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &4729998830764052886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10045,6 +10124,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10176,7 +10256,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 0, y: 0}
+  _textureSize: {x: 125, y: 125}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 0
@@ -10495,6 +10575,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -10870,6 +10951,9 @@ MonoBehaviour:
   model: {fileID: 1949244375987171634}
   image: {fileID: 8944602182205625069}
   trigger: {fileID: 544681482610653514}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &544681482610653514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10987,6 +11071,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -11178,7 +11263,7 @@ MonoBehaviour:
   _CameraFOV: 35
   _CameraDistance: -4.56
   _AlwaysLookAtTarget: 0
-  _textureSize: {x: 0, y: 0}
+  _textureSize: {x: 125, y: 125}
   _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
   ClearGLBufferBeforeRendering: 0
   LimitFrameRate: 0
@@ -11375,6 +11460,9 @@ MonoBehaviour:
   model: {fileID: 8061456412130525571}
   image: {fileID: 7351150505719446763}
   trigger: {fileID: 6878931140924178444}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &6878931140924178444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12114,6 +12202,9 @@ MonoBehaviour:
   model: {fileID: 1273186526759347366}
   image: {fileID: 8116716606327930795}
   trigger: {fileID: 7701282636138206417}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7701282636138206417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12421,6 +12512,9 @@ MonoBehaviour:
   model: {fileID: 4257241239618242673}
   image: {fileID: 1235525183465565627}
   trigger: {fileID: 7871191974642483468}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7871191974642483468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12638,6 +12732,9 @@ MonoBehaviour:
   model: {fileID: 2502178416082468138}
   image: {fileID: 7341597795512278269}
   trigger: {fileID: 7957837519021631755}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &7957837519021631755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12833,6 +12930,9 @@ MonoBehaviour:
   model: {fileID: 703232616155884252}
   image: {fileID: 4146310485696068876}
   trigger: {fileID: 1871369611157021393}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &1871369611157021393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13128,6 +13228,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -13254,6 +13355,9 @@ MonoBehaviour:
   model: {fileID: 3059910330625188336}
   image: {fileID: 4418524444237745301}
   trigger: {fileID: 6524584099112344075}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &6524584099112344075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13359,6 +13463,9 @@ MonoBehaviour:
   model: {fileID: 793669724871460171}
   image: {fileID: 419472443512202799}
   trigger: {fileID: 8942503875023391511}
+  greyMask: {fileID: 0}
+  Placed: 0
+  Piece: {fileID: 0}
 --- !u!114 &8942503875023391511
 MonoBehaviour:
   m_ObjectHideFlags: 0

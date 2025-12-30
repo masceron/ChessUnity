@@ -1,4 +1,5 @@
 using UnityEngine;
+using UX.UI.Loader;
 
 namespace UX.UI.Menus
 {
@@ -7,12 +8,17 @@ namespace UX.UI.Menus
     {
         public void OnClickPlay()
         {
-            UIManager.Ins.Load(CanvasID.PlayMenu);
+            SceneLoader.LoadSceneWithLoadingScreen(3);
         }
 
         public void OnClickSettings()
         {
             UIManager.Ins.Load(CanvasID.Settings);
+        }
+
+        public void OnClickFreePlayTest()
+        {
+            SceneLoader.LoadSceneWithLoadingScreen(2);
         }
 
         public void OnClickExit()
