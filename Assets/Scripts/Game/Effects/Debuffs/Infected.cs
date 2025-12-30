@@ -7,28 +7,13 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
 {
-    public class Infected : Effect
+    public class Infected : Effect, IEndTurnEffect
     {
         private int turnCounter;
         
         public Infected(PieceLogic piece) : base(-1, 1, piece, "effect_infected")
         {
-            
-        }
-        
-        public override void OnCallPieceAction(Action.Action action)
-        {
-            turnCounter++;
-
-            if (turnCounter % 3 == 0)
-            {
-                var pieceTarget = PieceOn(action.Target);
-                if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.HemolymphFilter))
-                {
-                    return;
-                }
-                InfectedActivate();
-            }
+            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
 
         private void InfectedActivate()
@@ -48,6 +33,21 @@ namespace Game.Effects.Debuffs
         {
             return base.GetValueForAI() - 200;
         }
-    
+
+        public EndTurnEffectType EndTurnEffectType { get; }
+        public void OnCallEnd(Action.Action lastMainAction)
+        {
+            turnCounter++;
+
+            if (turnCounter % 3 == 0)
+            {
+                var pieceTarget = PieceOn(lastMainAction.Target);
+                if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.HemolymphFilter))
+                {
+                    return;
+                }
+                InfectedActivate();
+            }
+        }
     }
 }

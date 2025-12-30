@@ -31,7 +31,6 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_damsel_fish" => new DamselFish(cfg),
                 "piece_electric_eel" => new ElectricEel(cfg),
                 "piece_epaulette_shark" => new EpauletteShark(cfg),
-                "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
                 "piece_fangtooth" => new Fangtooth(cfg),
                 "piece_feather_star" => new FeatherStar(cfg),
                 "piece_flowerhorn_cichlid" => new FlowerhornCichlid(cfg),
@@ -66,7 +65,6 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_phronima" => new Phronima(cfg),
                 "piece_pistol_shrimp" => new PistolShrimp(cfg),
                 "piece_polluted_rock" => new PollutedRock(cfg),
-                "piece_porcelain_crab" => new PorcelainCrab(cfg),
                 "piece_pufferfish" => new Pufferfish(cfg),
                 "piece_remora" => new Remora(cfg),
                 "piece_sea_star" => new SeaStar(cfg),
@@ -88,8 +86,12 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_thalassos" => new Thalassos(cfg),
                 "piece_thread_pipefish" => new ThreadPipefish(cfg),
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
-                "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
+                "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
+                "piece_porcelain_crab" => new PorcelainCrab(cfg),
+                "piece_umbrella_slug" => new UmbrellaSlug(cfg),
+                "piece_pencil_urchin" => new PencilUrchin(cfg),
+                "piece_long_snouted_seahorse" => new LongSnoutedSeahorse(cfg),
                 _ => null
             };
         }

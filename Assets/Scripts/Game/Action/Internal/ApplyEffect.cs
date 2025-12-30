@@ -20,7 +20,7 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            if (Effect.Piece.IsImmuneToEffect(Effect.EffectName)) return;
+            // if (Effect.Piece.IsImmuneToEffect(Effect.EffectName)) return;
             
             if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {

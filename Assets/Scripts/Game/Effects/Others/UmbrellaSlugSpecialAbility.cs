@@ -22,64 +22,22 @@ namespace Game.Effects.Others
             if (action is not NormalMove move || BoardUtils.PieceOn(move.Maker) != Piece) return;
             var (rank, file) = BoardUtils.RankFileOf(move.Target);
             
-            var pieceUp = BoardUtils.PieceOn(BoardUtils.IndexOf(rank + 1, file));
-            var pieceDown = BoardUtils.PieceOn(BoardUtils.IndexOf(rank - 1, file));
-            var pieceLeft = BoardUtils.PieceOn(BoardUtils.IndexOf(rank, file - 1));
-            var pieceRight = BoardUtils.PieceOn(BoardUtils.IndexOf(rank, file + 1));
-            
-            if (pieceUp != null && pieceUp.Color == Piece.Color && MatchManager.Roll(probability))
+            foreach (var (rankoff, fileoff) in MoveEnumerators.AroundUntil(rank, file , 1))
             {
-                Effect poison = pieceUp.Effects.Find(effect => effect.EffectName == "effect_poison");
-                if (poison != null)
+                PieceLogic piece = BoardUtils.PieceOn(BoardUtils.IndexOf(rankoff, fileoff));
+                if (piece != null && piece.Color == Piece.Color && MatchManager.Roll(probability))
                 {
-                    poison.Strength -= 1;
-                    if (poison.Strength <= 0)
+                    Effect poison = piece.Effects.Find(effect => effect.EffectName == "effect_poison");
+                    if (poison != null)
                     {
-                        ActionManager.EnqueueAction(new RemoveEffect(poison));
+                        poison.Strength -= 1;
+                        if (poison.Strength <= 0)
+                        {
+                            ActionManager.EnqueueAction(new RemoveEffect(poison));
+                        }
                     }
                 }
             }
-            
-            if (pieceDown != null && pieceDown.Color == Piece.Color && MatchManager.Roll(probability))
-            {
-                Effect poison = pieceDown.Effects.Find(effect => effect.EffectName == "effect_poison");
-                if (poison != null)
-                {
-                    poison.Strength -= 1;
-                    if (poison.Strength <= 0)
-                    {
-                        ActionManager.EnqueueAction(new RemoveEffect(poison));
-                    }
-                }
-            }
-            
-            if (pieceLeft != null && pieceLeft.Color == Piece.Color && MatchManager.Roll(probability))
-            {
-                Effect poison = pieceLeft.Effects.Find(effect => effect.EffectName == "effect_poison");
-                if (poison != null)
-                {
-                    poison.Strength -= 1;
-                    if (poison.Strength <= 0)
-                    {
-                        ActionManager.EnqueueAction(new RemoveEffect(poison));
-                    }
-                }
-            }
-            
-            if (pieceRight != null && pieceRight.Color == Piece.Color && MatchManager.Roll(probability))
-            {
-                Effect poison = pieceRight.Effects.Find(effect => effect.EffectName == "effect_poison");
-                if (poison != null)
-                {
-                    poison.Strength -= 1;
-                    if (poison.Strength <= 0)
-                    {
-                        ActionManager.EnqueueAction(new RemoveEffect(poison));
-                    }
-                }
-            }
-            
-            
         }
     }
 }

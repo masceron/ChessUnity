@@ -14,8 +14,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EyeshadeSculpinActive : Action, ISkills, IAIAction, IPendingAble, IDisposable
     {
-        private static PieceLogic FirstTarget;
-        private static PieceLogic SecondTarget;
+        public PieceLogic FirstTarget;
+        public PieceLogic SecondTarget;
         
         public EyeshadeSculpinActive(int maker, int target) : base(maker)
         {
