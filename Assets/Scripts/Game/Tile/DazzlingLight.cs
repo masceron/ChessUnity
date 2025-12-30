@@ -1,5 +1,8 @@
 ﻿using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using Game.Action;
+using Game.Action.Internal;
+using Game.Effects;
 
 namespace Game.Tile
 {
@@ -24,7 +27,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ApplyEffect(piece,new Blinded(1, 100, piece));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(1, 100, piece), FormationType.DazzlingLight));
         }
 
         public override void OnPieceExit(PieceLogic piece)

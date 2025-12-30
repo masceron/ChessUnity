@@ -2,6 +2,7 @@
 using System.Linq;
 using Game.Effects;
 using Game.Managers;
+using Game.Tile;
 
 namespace Game.Action.Internal
 {
@@ -9,9 +10,17 @@ namespace Game.Action.Internal
     public class ApplyEffect: Action, IInternal
     {
         public readonly Effect Effect;
+
+        public readonly FormationType SourceFormationType;
+
         public ApplyEffect(Effect e) : base(-1)
         {
             Effect = e;
+        }
+        public ApplyEffect(Effect e, FormationType formationType = FormationType.None) : base(-1)
+        {
+            Effect = e;
+            SourceFormationType = formationType;
         }
 
         protected override void Animate()
@@ -20,7 +29,9 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            // if (Effect.Piece.IsImmuneToEffect(Effect.EffectName)) return;
+            if (Effect.Piece.IsImmuneToEffect(Effect.EffectName)) return;
+            if (Effect.Piece.IsImmuneToFormationEffect(SourceFormationType, Effect)) return;
+        
             
             if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
             {

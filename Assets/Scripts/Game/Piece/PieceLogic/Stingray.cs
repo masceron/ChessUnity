@@ -4,6 +4,10 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using static Game.Common.BoardUtils;
+using Game.Effects.Buffs;
+using Game.Action.Internal;
+using Game.Action;
+using Game.Effects.Debuffs;
 
 namespace Game.Piece.PieceLogic
 {
@@ -12,6 +16,7 @@ namespace Game.Piece.PieceLogic
     {
         public Stingray(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Slow(-1, 3, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

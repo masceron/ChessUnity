@@ -5,18 +5,21 @@ using Game.Tile;
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Adaptation: Effect, IImmunity
+    public class Adaptation: Effect
     {
         public Adaptation(PieceLogic piece) : base(-1, 1, piece, "effect_adaptation")
         {}
 
-        public bool CheckImmunity(FormationType formationType, Effect effect)
+        public override void OnApply()
         {
-            if (effect.Category == EffectCategory.Debuff)
-            {
-                return true;
-            }
-            return false;
+            base.OnApply();
+            Piece.AddImmunity(ImmunityType.FormationDebuff);
+        }
+        
+        public override void OnRemove()
+        {
+            base.OnRemove();
+            Piece.RemoveImmunity(ImmunityType.FormationDebuff);
         }
 
     }
