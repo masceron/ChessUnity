@@ -89,9 +89,10 @@ namespace Game.Effects
 
         }
 
+        //Return y compareTo x to make sure the list sort ascending.
         public override int Compare(Effect x, Effect y)
         {
-            return -x!.Priority.CompareTo(y!.Priority);
+            return -y!.Priority.CompareTo(x!.Priority);
         }
 
         public string Description()

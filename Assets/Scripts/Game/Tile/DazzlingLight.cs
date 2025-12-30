@@ -2,7 +2,6 @@
 using Game.Piece.PieceLogic.Commons;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects;
 
 namespace Game.Tile
 {

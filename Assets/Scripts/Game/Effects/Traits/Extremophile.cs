@@ -1,5 +1,6 @@
 ﻿using Game.Action.Internal;
 using System.Collections.Generic;
+using Game.Action;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
@@ -23,7 +24,7 @@ namespace Game.Effects.Traits
 
             if (blockCategories.Contains(effect.Category))
             {
-                applyEffect.Succeed = false;
+                applyEffect.Result = ResultFlag.Blocked;
             }
         }
 

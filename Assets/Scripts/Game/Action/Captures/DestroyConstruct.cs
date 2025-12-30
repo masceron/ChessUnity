@@ -1,4 +1,6 @@
-﻿using Game.Managers;
+﻿using Game.Common;
+using Game.Managers;
+using Game.Piece;
 
 namespace Game.Action.Captures
 {

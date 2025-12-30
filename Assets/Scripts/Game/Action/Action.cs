@@ -17,6 +17,7 @@ namespace Game.Action
         Success,
         Blocked,
         Dodged,
+        Missed
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -24,7 +25,7 @@ namespace Game.Action
     {
         public int Target = -1;
         public int Maker;
-        public bool Succeed = true;
+        public ResultFlag Result = ResultFlag.Success;
         public ActionFlag Flag = ActionFlag.None;
         public readonly bool DoesMoveChangePos;
 
@@ -37,15 +38,17 @@ namespace Game.Action
         public void Execute()
         {
             Animate();
-            if (Succeed)
-            {
-                ModifyGameState();
-            }
+            ModifyGameState();
         }
 
         protected virtual void Animate()
         {
             
+        }
+
+        public bool IsValid()
+        {
+            return Result == ResultFlag.Success;
         }
         protected abstract void ModifyGameState();
     }

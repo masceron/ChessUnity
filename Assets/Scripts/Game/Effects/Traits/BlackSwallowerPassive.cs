@@ -7,7 +7,7 @@ using Game.Action.Internal;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class  BlackSwallowerPassive: Effect
+    public class BlackSwallowerPassive: Effect
     {
         public BlackSwallowerPassive(PieceLogic piece) : base(-1, 1, piece, "effect_black_swallower_passive")
         {
@@ -17,15 +17,14 @@ namespace Game.Effects.Traits
         {
             if (action == null) return;
 
-            if (!action.Succeed) return;
+            if (action.Result != ResultFlag.Success) return;
+
+            if (action.Maker == Piece.Pos) return;
             
-            if (action.Target != Piece.Pos)
+            var targetPiece = PieceOn(action.Target);
+            if (targetPiece is { PieceRank: PieceRank.Elite or PieceRank.Champion or PieceRank.Commander })
             {
-                var targetPiece = PieceOn(action.Target);
-                if (targetPiece != null && targetPiece.PieceRank is PieceRank.Elite or PieceRank.Champion or PieceRank.Commander)
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
-                }
+                ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
             }
         }
 

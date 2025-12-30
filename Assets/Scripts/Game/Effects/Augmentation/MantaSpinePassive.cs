@@ -33,8 +33,8 @@ namespace Game.Effects.Augmentation
             
             if (hasBlockingEffect) return;
             
-            if (!action.Succeed) return;
-            action.Succeed = false;
+            if (action.Result != ResultFlag.Success) return;
+            action.Result = ResultFlag.Dodged;
             var targetPiece = PieceOn(action.Target);
             if (targetPiece != null)
             {

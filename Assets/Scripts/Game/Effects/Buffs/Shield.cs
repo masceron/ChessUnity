@@ -12,10 +12,9 @@ namespace Game.Effects.Buffs
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
+            if (action == null || action.Target != Piece.Pos || action.Result != ResultFlag.Success || (action.Flag & ActionFlag.Unblockable) != 0) return;
             
-            // action.Succeed = false;
-            ActionManager.EnqueueAction(new Block(Piece.Pos, action));
+            action.Result = ResultFlag.Blocked;
 
             if (Strength > 1) Strength--;
             else

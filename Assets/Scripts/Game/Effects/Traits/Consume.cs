@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Game.Action;
 using Game.Action.Captures;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
@@ -13,15 +14,12 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos && action is ICaptures && action.Succeed)
+            if (action.Maker == Piece.Pos && action is ICaptures && action.Result == ResultFlag.Success)
             {
                 var captured = BoardUtils.PieceOn(action.Target);
 
-                if (captured.Effects.Any(e => e.EffectName == "effect_surpass" 
-                                              || e.EffectName == "effect_vigorous")) return;
+                if (captured.Effects.Any(e => e.EffectName is "effect_surpass" or "effect_vigorous")) return;
                 
-                // Piece.Quiets += captured.Quiets;
-                // Piece.MoveRange.Add(AssetManager.Ins.PieceData[captured.Type].moveRange);
                 Piece.Quiets = captured.Quiets;
             }
         }

@@ -201,10 +201,6 @@ namespace Game.Common
             {
                 MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
             }
-            else if (action is Block block)
-            {
-                MatchManager.Ins.GameState.NotifyBlock(block);
-            }
         }
 
         public static void IncrementSkillUses(Action.Action skill)

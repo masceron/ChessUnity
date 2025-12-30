@@ -9,17 +9,19 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class CabezonPassive : Effect, IBlockEffect
+    public class CabezonPassive : Effect
     {
         public CabezonPassive(PieceLogic piece) : base(-1, 1, piece, "effect_cabezon_passive")
         {
 
         }
-        public void OnCallBlocked(Block action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             Debug.Log("[Cabezon] passive activated");
-            if (action.Maker != Piece.Pos) { return; }
-            ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target))));
+            if (action.Maker == Piece.Pos || action.Result == ResultFlag.Blocked)
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target))));
+            }
         }
     }
 }

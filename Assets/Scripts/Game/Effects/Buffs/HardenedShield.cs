@@ -14,8 +14,8 @@ namespace Game.Effects.Buffs
         
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
-            action.Succeed = false;
+            if (action == null || action.Target != Piece.Pos || action.Result != ResultFlag.Success || (action.Flag & ActionFlag.Unblockable) != 0) return;
+            action.Result = ResultFlag.Blocked;
             
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker))));
 

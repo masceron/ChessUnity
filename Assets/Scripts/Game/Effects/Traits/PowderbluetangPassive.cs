@@ -20,7 +20,7 @@ namespace Game.Effects.Traits
         {
             if (action.Maker == Piece.Pos && 
                 action.DoesMoveChangePos && 
-                action.Succeed && 
+                action.Result == ResultFlag.Success && 
                 count > 0 && 
                 FormationManager.Ins.GetFormation(action.Target) is HydroidThicket)
             {

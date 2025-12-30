@@ -12,9 +12,9 @@ namespace Game.Effects.Others
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.Succeed)
+            if (action.Result == ResultFlag.Success)
             {
-                ActionManager.ExecuteImmediately(new Purify(Piece.Pos, Piece.Pos));
+                ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
             }
         }
 

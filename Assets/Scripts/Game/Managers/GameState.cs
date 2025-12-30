@@ -418,17 +418,6 @@ namespace Game.Managers
             });
         }
         
-        public void NotifyBlock(Block action)
-        {
-            effectObservers.ForEach(e =>
-            {
-                if (e.disabled) return;
-                if (e is IBlockEffect blockEffect)
-                {
-                    blockEffect.OnCallBlocked(action);
-                }
-            });
-        }
         public void IncrementSkillUses(Action.Action action)
         {
             effectObservers.ForEach(e =>

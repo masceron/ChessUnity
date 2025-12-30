@@ -1,3 +1,4 @@
+using Game.Action;
 using Game.Augmentation;
 using Game.Common;
 using Game.Managers;
@@ -23,12 +24,12 @@ namespace Game.Effects.Debuffs
             var pieceTarget = BoardUtils.PieceOn(action.Target);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ProtectiveLens))
             {
-                action.Succeed = false;
+                action.Result = ResultFlag.Missed;
             }
             
             if (MatchManager.Roll(Probability))
             {
-                action.Succeed = false;
+                action.Result = ResultFlag.Missed;
             }
         }
         

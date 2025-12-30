@@ -8,18 +8,18 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class FrilledSharkPassive : Effect, IBlockEffect
+    public class FrilledSharkPassive : Effect
     {
         public FrilledSharkPassive(PieceLogic piece) : base(-1, 1, piece, "effect_frilled_shark_passive")
         {
 
         }
-        public void OnCallBlocked(Block action)
+        public override void OnCallPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos) { return; }
-            PieceLogic pieceOn = PieceOn(action.Target);
-            if (pieceOn == null){ return; }
-            if (PieceOn(action.Target).Effects.Any(e => e is Relentless))
+            var pieceOn = PieceOn(action.Target);
+            if (pieceOn == null) { return; }
+            if (pieceOn.Effects.Any(e => e is Relentless) && !pieceOn.IsDead())
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn)));
             }

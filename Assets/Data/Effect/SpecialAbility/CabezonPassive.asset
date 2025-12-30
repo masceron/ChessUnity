@@ -15,6 +15,6 @@ MonoBehaviour:
   key: effect_cabezon_passive
   category: 5
   stack: 1
-  priority: 0
-  activeWhen: 6
+  priority: 1
+  activeWhen: 1
   icon: {fileID: 2800000, guid: a8eee2e2ddbbcaa4fa19ee691ffa56e3, type: 3}

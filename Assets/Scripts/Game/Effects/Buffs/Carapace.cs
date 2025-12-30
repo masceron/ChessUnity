@@ -13,10 +13,10 @@ namespace Game.Effects.Buffs
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || !action.Succeed 
+            if (action == null || action.Target != Piece.Pos || action.Result != ResultFlag.Success 
                 || (action.Flag & ActionFlag.Unblockable) != 0 || action is not ICaptures) return;
             
-            action.Succeed = false;
+            action.Result = ResultFlag.Blocked;
             ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));
             ActionManager.EnqueueAction(new RemoveEffect(this));
             

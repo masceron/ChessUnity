@@ -1,3 +1,4 @@
+using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 
@@ -22,7 +23,7 @@ namespace Game.Effects.Buffs
 
             if (effect.EffectName is "effect_evasion")
             {
-                applyEffect.Succeed = false;
+                applyEffect.Result = ResultFlag.Dodged;
             }
         }
 

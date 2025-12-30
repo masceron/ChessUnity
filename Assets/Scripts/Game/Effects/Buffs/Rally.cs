@@ -10,15 +10,10 @@ namespace Game.Effects.Buffs
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action == null || !action.Succeed || (action.Flag & ActionFlag.Unblockable) != 0) return;
+            if (action == null || action.Result != ResultFlag.Success || (action.Flag & ActionFlag.Unblockable) != 0) return;
             if (PieceOn(action.Maker).Color != Piece.Color) return;
             if (Distance(action.Maker, Piece.Pos) > 4) return;
             if (Piece.SkillCooldown > 0) Piece.SkillCooldown--;
-        }
-
-        public override int GetValueForAI()
-        {
-            return base.GetValueForAI();
         }
     }
 }

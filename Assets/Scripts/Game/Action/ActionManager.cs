@@ -15,99 +15,98 @@ namespace Game.Action
         BeforeEndTurn,
         AfterEndTurn
     }
-    
-/*
- * TODO: Issue: If a trigger causes a secondary effect that makes the trigger behind it in the queue invalid,
- * the latter should not be active.
- * Right now only a workaround for the case in which the piece is killed is implemented through isDead property and die() method.
- * A more general solution needed for every situations, which now includes:
- * - When the piece is killed.
- * - When the piece moved away.
- * ... And many other cases, when the piece is no longer eligible for trigger activation.
-*/
+
+    public struct StackAction
+    {
+        public readonly Action Action;
+        public bool TriggerCalled;
+
+        public StackAction(Action action)
+        {
+            Action = action;
+            TriggerCalled = false;
+        }
+        
+        public static bool operator !=(StackAction s1, StackAction s2) 
+        {
+            return !ReferenceEquals(s1.Action, s2.Action);
+        }
+
+        public static bool operator ==(StackAction s1, StackAction s2)
+        {
+            return ReferenceEquals(s1.Action, s2.Action);
+        }
+
+        private bool Equals(StackAction other)
+        {
+            return ReferenceEquals(Action, other.Action);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is StackAction other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return Action.GetHashCode();
+        }
+    }
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class ActionManager
     {
         private static GameState _state;
-        private static Queue<Action> _actionQueue;
+        private static Stack<StackAction> _actionStack;
         public static Phase CurrentPhase;
 
         public static void Init(GameState state)
         {
             _state = state;
-            _actionQueue = new Queue<Action>();
+            _actionStack = new Stack<StackAction>();
             CurrentPhase = Phase.BeforeEndTurn;
         }
 
         public static void ExecuteWhenStart()
         {
-            while (_actionQueue.TryDequeue(out var action)) action.Execute();
+            while (_actionStack.TryPop(out var stackAction)) stackAction.Action.Execute();
         }
 
-        private static void ProcessActionWithTriggers()
+        private static void ProcessStack()
         {
-            var mainAction = _actionQueue.Dequeue();
-            if (mainAction is not IRelicAction)
+            while (_actionStack.Count > 0)
             {
-                BoardUtils.NotifyMainAction(mainAction);
-            }
+                var currentAction = _actionStack.Peek();
+                
+                if (!currentAction.TriggerCalled)
+                {
+                    currentAction.TriggerCalled = true;
 
-            while (_actionQueue.TryDequeue(out var action))
-            {
-                if (action is IInternal)
-                    BoardUtils.NotifyInternalAction(action);
-                action.Execute();
-            }
-
-            if (mainAction is ISkills and not IRelicAction && mainAction.Succeed)
-            {
-                BoardUtils.IncrementSkillUses(mainAction);
-            }
-            mainAction.Execute();
-        }
-
-        private static void EndTurnProcess(Action mainAction)
-        {
-            //End the current turn.
-            new EndTurn().Execute();
-            CurrentPhase = Phase.AfterEndTurn;
-
-            //Process durations.
-            _state.EffectCountdown();
-            while (_actionQueue.TryDequeue(out var action))
-            {
-                BoardUtils.NotifyInternalAction(action);
-                action.Execute();
-            }
-
-            //Call triggers when ending turn.
-            BoardUtils.NotifyEnd(mainAction);
-
-            //Execute actions caused by end turn triggers.
-            while (_actionQueue.TryDequeue(out var action))
-            {
-                BoardUtils.NotifyInternalAction(action);
-                action.Execute();
-            }
-
-            CurrentPhase = Phase.BeforeEndTurn;
-            
-            BoardUtils.NotifyStart(mainAction);
-
-            while (_actionQueue.TryDequeue(out var action))
-            {
-                BoardUtils.NotifyInternalAction(action);
-                action.Execute();
+                    if (currentAction.Action is IInternal)
+                    {
+                        BoardUtils.NotifyInternalAction(currentAction.Action);
+                    }
+                    
+                    if (_actionStack.Peek() != currentAction)
+                    {
+                        continue; 
+                    }
+                }
+                
+                if (!currentAction.Action.IsValid())
+                {
+                    _actionStack.Pop();
+                    continue;
+                }
+                
+                _actionStack.Pop(); 
+                currentAction.Action.Execute();
             }
         }
-
-        public static bool DoManualAction(Action action)
+        
+        private static bool ShouldEndTurn(Action action)
         {
-            _actionQueue.Enqueue(action);
-            ProcessActionWithTriggers();
-
             switch (action)
             {
                 case IRelicAction:
@@ -123,14 +122,58 @@ namespace Game.Action
                 }
             }
 
+            return true;
+        }
+
+        private static void EndTurnProcess(Action mainAction)
+        {
+            new EndTurn().Execute();
+            CurrentPhase = Phase.AfterEndTurn;
+            
+            BoardUtils.NotifyEnd(mainAction);
+            ProcessStack();
+            
+            _state.EffectCountdown();
+            ProcessStack();
+            
+            CurrentPhase = Phase.BeforeEndTurn;
+            BoardUtils.NotifyStart(mainAction);
+            ProcessStack();
+        }
+        
+        private static void ProcessMainActionSequence()
+        {
+            if (_actionStack.Count == 0) return;
+
+            var mainAction = _actionStack.Peek().Action;
+            
+            if (mainAction is not IRelicAction)
+            {
+                BoardUtils.NotifyMainAction(mainAction);
+            }
+            
+            ProcessStack();
+            
+            if (mainAction is ISkills and not IRelicAction && mainAction.Result == ResultFlag.Success)
+            {
+                BoardUtils.IncrementSkillUses(mainAction);
+            }
+        }
+
+        public static bool DoManualAction(Action action)
+        {
+            _actionStack.Push(new StackAction(action));
+            ProcessMainActionSequence();
+
+            if (!ShouldEndTurn(action)) return false;
+            
             EndTurnProcess(action);
             return true;
         }
 
-
         public static void EnqueueAction(Action queueAction)
         {
-            _actionQueue.Enqueue(queueAction);
+            _actionStack.Push(new StackAction(queueAction));
         }
 
         public static void ExecuteImmediately(Action action)

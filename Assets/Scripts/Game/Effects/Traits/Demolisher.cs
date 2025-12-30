@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
 
         public override void OnCallPieceAction(Action.Action action)
         {
-            if (action.GetType() == typeof(DestroyConstruct) && action.Maker == Piece.Pos && action.Succeed)
+            if (action.GetType() == typeof(DestroyConstruct) && action.Maker == Piece.Pos && action.Result == ResultFlag.Success)
             {
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }

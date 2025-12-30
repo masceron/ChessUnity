@@ -419,6 +419,10 @@ MonoBehaviour:
     m_Key: effect_marine_flatworm_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 51230998158299136
+    m_Key: effect_cabezon_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
