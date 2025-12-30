@@ -13,8 +13,8 @@ namespace Game.Piece.PieceLogic
     {
         public Sunfish(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new SunfishPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new SunfishPassive(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

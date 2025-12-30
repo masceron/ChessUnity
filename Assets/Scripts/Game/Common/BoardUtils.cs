@@ -190,6 +190,11 @@ namespace Game.Common
             MatchManager.Ins.GameState.NotifyEnd(mainAction);
         }
 
+        public static void NotifyStart(Action.Action mainAction)
+        {
+            MatchManager.Ins.GameState.NotifyStart(mainAction);
+        }
+
         public static void NotifyInternalAction(Action.Action action)
         {
             if (action is ApplyEffect applyEffect)
@@ -259,17 +264,17 @@ namespace Game.Common
             else if (corner == Corner.TopLeft)
             {
                 file = file - size / 2 + 1;
-                rank = rank - size / 2;
+                rank -= size / 2;
             }
             else if (corner == Corner.TopRight)
             {
-                rank = rank - size / 2;
-                file = file - size / 2;
+                rank -= size / 2;
+                file -= size / 2;
             }
             else if (corner == Corner.BottomLeft)
             {
                 rank = rank - size / 2 + 1;
-                file = file - size / 2;
+                file -= size / 2;
             }
 
             for (var r = rank; r < rank + size; r++)
@@ -328,15 +333,7 @@ namespace Game.Common
         // Use this function even when you want to grab a number of effects by using .Count. 
         public static List<PieceLogic> FindPiecesWithEffectName(bool side, string effectName)
         {
-            List<PieceLogic> withEffect = new List<PieceLogic>();
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
-            {
-                if (piece.Color == side && piece.Effects.Any(effect => effect.EffectName == effectName))
-                {
-                    withEffect.Add(piece);
-                }
-            }
-            return withEffect;
+            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece.Color == side && piece.Effects.Any(effect => effect.EffectName == effectName)).ToList();
         }
 
         public static List<Effect> EffectWithEffectCategory(PieceLogic piece, EffectCategory effectCategory)

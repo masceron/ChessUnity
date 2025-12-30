@@ -316,6 +316,36 @@ namespace Game.Managers
             });
         }
 
+        public void NotifyStart(Action.Action mainAction)
+        {
+            effectObservers.ForEach(effect =>
+            {
+                if (effect is not IStartTurnEffect startTurnEffect) return;
+                
+                if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
+                {
+                    startTurnEffect.OnCallStart(mainAction);
+                }
+
+                //The next turn is ours.
+                else if (SideToMove == effect.Piece.Color)
+                {
+                    if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfAllyTurn)
+                    {
+                        startTurnEffect.OnCallStart(mainAction);
+                    }
+                }
+                //The next turn is of the opponent.
+                else
+                {
+                    if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfEnemyTurn)
+                    {
+                        startTurnEffect.OnCallStart(mainAction);
+                    }
+                }
+            });
+        }
+
         public void NotifyMainAction(Action.Action mainAction)
         {
             if (mainAction is ICaptures)

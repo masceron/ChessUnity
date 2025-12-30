@@ -15,8 +15,8 @@ namespace Game.Piece.PieceLogic
 
         public PencilUrchin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new FreeMovement(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new FreeMovement(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

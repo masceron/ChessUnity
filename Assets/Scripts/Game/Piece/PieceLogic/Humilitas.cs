@@ -19,9 +19,9 @@ namespace Game.Piece.PieceLogic
         public Humilitas(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             deathDefianceCount = 4;
-            ActionManager.EnqueueAction(new ApplyEffect(new PureMinded(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Relentless(this, deathDefianceCount)));
-            ActionManager.EnqueueAction(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new PureMinded(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Relentless(this, deathDefianceCount)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

@@ -93,6 +93,14 @@ namespace Game.Action
             }
 
             CurrentPhase = Phase.BeforeEndTurn;
+            
+            BoardUtils.NotifyStart(mainAction);
+
+            while (_actionQueue.TryDequeue(out var action))
+            {
+                BoardUtils.NotifyInternalAction(action);
+                action.Execute();
+            }
         }
 
         public static bool DoManualAction(Action action)
