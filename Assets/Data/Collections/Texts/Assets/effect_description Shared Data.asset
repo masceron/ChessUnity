@@ -423,6 +423,10 @@ MonoBehaviour:
     m_Key: effect_cabezon_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 51580832604979200
+    m_Key: effect_shadow_fin_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -68,6 +68,7 @@ namespace Game.Augmentation
         RaysTail,
         ColdBlooded,
         MantaSpine,
+        ShadowFin,
         None,
     }
 
