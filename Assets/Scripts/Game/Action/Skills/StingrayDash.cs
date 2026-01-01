@@ -16,7 +16,7 @@ namespace Game.Action.Skills
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -30 : 0;
         }
-        public StingrayDash(int maker, int to) : base(maker, true)
+        public StingrayDash(int maker, int to) : base(maker)
         {
             Target = (ushort)to;
         }

@@ -7,7 +7,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeaTurtleCountdown : Effect, IEndTurnEffect
+    public class SeaTurtleCountdown : Effect, IEndTurnEffect, IOnRemove
     {
         private int Pos;
         public EndTurnEffectType EndTurnEffectType { get; }
@@ -17,7 +17,7 @@ namespace Game.Effects.Others
         {
             if (action.Maker != Pos) ActionManager.EnqueueAction(new RemoveEffect(this));
         }
-        public override void OnRemove()
+        public void OnRemove()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, Piece)));
         }

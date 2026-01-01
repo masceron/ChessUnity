@@ -1,4 +1,5 @@
 using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
@@ -7,7 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CoffinFishVengeful : Effect
+    public class CoffinFishVengeful : Effect, IAfterPieceActionEffect
     {
         public readonly int Probability;
         public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, 1, piece, "effect_coffin_fish_vengeful")
@@ -15,9 +16,9 @@ namespace Game.Effects.Traits
             Probability = probability;
         }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action == null) return;
+            if (action is not ICaptures || action.Result != ResultFlag.Success) return;
 
             if (!MatchManager.Roll(Probability)) return;
 

@@ -4,20 +4,18 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Adaptation: Effect
+    public class Adaptation: Effect, IOnApply, IOnRemove
     {
         public Adaptation(PieceLogic piece) : base(-1, 1, piece, "effect_adaptation")
         {}
 
-        public override void OnApply()
+        public void OnApply()
         {
-            base.OnApply();
             Piece.AddImmunity(ImmunityType.FormationDebuff);
         }
         
-        public override void OnRemove()
+        public void OnRemove()
         {
-            base.OnRemove();
             Piece.RemoveImmunity(ImmunityType.FormationDebuff);
         }
 

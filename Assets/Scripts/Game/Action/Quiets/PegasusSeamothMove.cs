@@ -8,7 +8,7 @@ namespace Game.Action.Quiets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PegasusSeamothMove : Action, IQuiets
     {
-        public PegasusSeamothMove(int maker, int to) : base(maker, true)
+        public PegasusSeamothMove(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;

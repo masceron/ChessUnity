@@ -14,7 +14,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private CommonPearl commonPearl;
         
-        public CommonPearlPending(CommonPearl cp, int maker, bool pos = false) : base(maker, pos)
+        public CommonPearlPending(CommonPearl cp, int maker, bool pos = false) : base(maker)
         {
             commonPearl = cp;
             Target = (ushort)maker;

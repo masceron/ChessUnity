@@ -10,7 +10,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private RottingScythe rottingScythe;
 
-        public RottingScythePending(RottingScythe rottingScythe, int maker, bool pos) : base(maker, pos)
+        public RottingScythePending(RottingScythe rottingScythe, int maker, bool pos) : base(maker)
         {
             this.rottingScythe = rottingScythe;
             Maker = (ushort)maker;

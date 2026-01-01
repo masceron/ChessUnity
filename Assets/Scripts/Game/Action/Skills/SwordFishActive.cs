@@ -12,7 +12,7 @@ namespace Game.Action.Skills
         {
             return 0;
         }
-        public SwordFishActive(int maker) : base(maker, true)
+        public SwordFishActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)maker;

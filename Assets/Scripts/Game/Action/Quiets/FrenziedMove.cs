@@ -6,7 +6,7 @@ namespace Game.Action.Quiets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrenziedMove: Action, IDontEndTurn
     {
-        public FrenziedMove(int f, int t) : base(f, true)
+        public FrenziedMove(int f, int t) : base(f)
         {
             Maker = (ushort)f;
             Target = (ushort)t;

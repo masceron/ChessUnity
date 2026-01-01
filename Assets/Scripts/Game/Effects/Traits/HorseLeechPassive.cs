@@ -7,11 +7,7 @@ namespace Game.Effects.Traits
 
         public HorseLeechPassive(PieceLogic piece) : base(-1, 1, piece, "effect_horse_leech_passive")
         { }
-
-        public override void OnCallPieceAction(Action.Action action)
-        {
-            
-        }
+        
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 0;

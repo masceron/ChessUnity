@@ -99,12 +99,6 @@ namespace Game.Effects.Traits
             {
                 SummonClownFish();
             }
-            
-            if (lastMainAction is { DoesMoveChangePos: true } &&
-                (lastMainAction.Maker == Piece.Pos || ColorOfPiece(lastMainAction.Maker) == Piece.Color))
-            {
-                BuffEvasionInRange();
-            }
         }
     }
 }

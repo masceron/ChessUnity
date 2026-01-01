@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
     public class TimelessHourglassPending : Action, System.IDisposable, IPendingAble, IRelicAction
     {
         private TimelessHourglass _timelessHourglass;
-        public TimelessHourglassPending(TimelessHourglass t, int maker, bool pos = false) : base(maker, pos)
+        public TimelessHourglassPending(TimelessHourglass t, int maker, bool pos = false) : base(maker)
         {
             _timelessHourglass = t;
             Maker = (ushort)maker;

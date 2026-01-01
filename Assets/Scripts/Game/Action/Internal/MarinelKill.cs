@@ -9,7 +9,7 @@ namespace Game.Action.Internal
     {
         private readonly int targetPos;
         
-        public MarinelKill(int maker, int target, int to) : base(maker, true)
+        public MarinelKill(int maker, int target, int to) : base(maker)
         {
             Target = (ushort)target;
             targetPos = to;

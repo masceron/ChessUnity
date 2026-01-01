@@ -4,7 +4,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Controlled: Effect, IApplyEffect
+    public class Controlled: Effect, IApplyEffect, IOnRemove
     {
         private readonly bool initSide;
         public Controlled(sbyte duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
@@ -12,17 +12,12 @@ namespace Game.Effects.Debuffs
             initSide = piece.Color;
         }
 
-        // public override void OnCall(Action.Action action)
-        // {
-        //     Piece.Color = !_initSide;
-        // }
-
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             Piece.Color = !initSide;
         }
 
-        public override void OnRemove()
+        public void OnRemove()
         {
             Piece.Color = initSide;
         }

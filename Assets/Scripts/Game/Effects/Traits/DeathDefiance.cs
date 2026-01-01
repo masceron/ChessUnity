@@ -7,7 +7,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Traits
 {
 	[Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	public class DeathDefiance: Effect
+	public class DeathDefiance: Effect, IAfterPieceActionEffect
 	{
 		private int deathDefianceCount;
 		public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
@@ -15,7 +15,7 @@ namespace Game.Effects.Traits
 		this.deathDefianceCount = deathDefianceCount;
 		}
 
-		public override void OnCallPieceAction(Action.Action action)
+		public void OnCallAfterPieceAction(Action.Action action)
 		{
 			//còn né nữa chưa tính
 			if(Piece.IsDead()) return;

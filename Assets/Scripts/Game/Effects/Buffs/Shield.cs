@@ -1,18 +1,19 @@
 ﻿using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Shield: Effect
+    public class Shield: Effect, IBeforePieceActionEffect
     {
         public Shield(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, "effect_shield")
         {}
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result != ResultFlag.Success || (action.Flag & ActionFlag.Unblockable) != 0) return;
+            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success || (action.Flag & ActionFlag.Unblockable) != 0) return;
             
             action.Result = ResultFlag.Blocked;
 

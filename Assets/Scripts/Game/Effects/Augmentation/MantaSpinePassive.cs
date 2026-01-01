@@ -12,13 +12,13 @@ using System.Linq;
 using Game.Action.Captures;
 namespace Game.Effects.Augmentation
 {
-    public class MantaSpinePassive : Effect
+    public class MantaSpinePassive : Effect, IBeforePieceActionEffect
     {
         public MantaSpinePassive(PieceLogic piece) : base(-1, 1, piece, "effect_manta_spine_passive")
         {
         }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action == null || 
                 action.Target != Piece.Pos || 

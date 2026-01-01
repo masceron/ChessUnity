@@ -4,33 +4,23 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Buffs
 {
-    public class Momentum: Effect, ISkillUsedEffect
+    public class Momentum: Effect, IAfterPieceActionEffect
     {
         public Momentum(sbyte duration, PieceLogic piece) : base(duration, -1, piece, "effect_momentum")
         {}
-
-        public override void OnCallPieceAction(Action.Action action)
-        {
-            var piece = PieceOn(action.Maker);
-
-            if (piece == null || piece.Color != Piece.Color) return;
-
-            if (action is ISkills)
-            {
-                ((IPieceWithSkill)Piece).TimeToCooldown--;
-            }
-        }
 
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 20;
         }
 
-        public void OnCallSkillUsed(Action.Action skill)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (skill is ISkills)
+            if (action is not ISkills) return;
+            var caster = PieceOn(action.Maker);
+            if (caster.Color == Piece.Color && caster.SkillCooldown > 0)
             {
-                ((IPieceWithSkill)Piece).TimeToCooldown--;
+                caster.SkillCooldown--;
             }
         }
     }

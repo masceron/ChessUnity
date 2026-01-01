@@ -77,34 +77,46 @@ namespace Game.Action
         {
             while (_actionStack.Count > 0)
             {
-                var currentAction = _actionStack.Peek();
-                
-                if (!currentAction.TriggerCalled)
-                {
-                    currentAction.TriggerCalled = true;
+                var currentActionStack = _actionStack.Peek();
+                var currentAction = currentActionStack.Action;
 
-                    if (currentAction.Action is IInternal)
-                    {
-                        BoardUtils.NotifyInternalAction(currentAction.Action);
-                    }
-                    
-                    if (_actionStack.Peek() != currentAction)
-                    {
-                        continue; 
-                    }
-                }
-                
-                if (!currentAction.Action.IsValid())
+                if (!currentActionStack.TriggerCalled)
                 {
-                    _actionStack.Pop();
-                    continue;
+                    currentActionStack.TriggerCalled = true;
+
+                    switch (currentAction)
+                    {
+                        case IInternal action:
+                            BoardUtils.NotifyInternalAction(action);
+                            break;
+                        case IRelicAction relicAction:
+                            BoardUtils.NotifyBeforeRelicAction(relicAction);
+                            break;
+                        default:
+                            BoardUtils.NotifyBeforePieceAction(currentAction);
+                            break;
+                    }
+
+                    if (_actionStack.Peek() != currentActionStack) continue;
                 }
                 
-                _actionStack.Pop(); 
-                currentAction.Action.Execute();
+
+                if (currentAction.IsValid())
+                {
+                    currentAction.Execute();
+
+                    if (currentAction is IRelicAction relicAction)
+                    {
+                        BoardUtils.NotifyAfterRelicAction(relicAction);
+                    }
+                    else if (currentAction is not IInternal)
+                        BoardUtils.NotifyAfterPieceAction(currentAction);
+                }
+                
+                _actionStack.Pop();
             }
         }
-        
+
         private static bool ShouldEndTurn(Action action)
         {
             switch (action)
@@ -130,40 +142,21 @@ namespace Game.Action
             new EndTurn().Execute();
             CurrentPhase = Phase.AfterEndTurn;
             
-            BoardUtils.NotifyEnd(mainAction);
+            BoardUtils.NotifyOnEndTurn(mainAction);
             ProcessStack();
             
             _state.EffectCountdown();
             ProcessStack();
             
             CurrentPhase = Phase.BeforeEndTurn;
-            BoardUtils.NotifyStart(mainAction);
+            BoardUtils.NotifyOnStartTurn(mainAction);
             ProcessStack();
-        }
-        
-        private static void ProcessMainActionSequence()
-        {
-            if (_actionStack.Count == 0) return;
-
-            var mainAction = _actionStack.Peek().Action;
-            
-            if (mainAction is not IRelicAction)
-            {
-                BoardUtils.NotifyMainAction(mainAction);
-            }
-            
-            ProcessStack();
-            
-            if (mainAction is ISkills and not IRelicAction && mainAction.Result == ResultFlag.Success)
-            {
-                BoardUtils.IncrementSkillUses(mainAction);
-            }
         }
 
         public static bool DoManualAction(Action action)
         {
             _actionStack.Push(new StackAction(action));
-            ProcessMainActionSequence();
+            ProcessStack();
 
             if (!ShouldEndTurn(action)) return false;
             

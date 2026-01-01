@@ -7,7 +7,7 @@ namespace Game.Action.Quiets
 {
     public class RemoraMove: Action, IQuiets
     {
-        public RemoraMove(int maker, int to) : base(maker, true)
+        public RemoraMove(int maker, int to) : base(maker)
         {
             Target = (ushort)to;
         }

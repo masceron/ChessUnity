@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
             return 0;
         }
-        public SeaStarResurrect(int maker, int to) : base(maker, true)
+        public SeaStarResurrect(int maker, int to) : base(maker)
         {
             Target = (ushort)to;
         }

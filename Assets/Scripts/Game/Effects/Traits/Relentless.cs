@@ -7,7 +7,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Relentless: Effect
+    public class Relentless: Effect, IBeforePieceActionEffect
     {
 
         private int deathDefianceCount;
@@ -16,7 +16,7 @@ namespace Game.Effects.Traits
             this.deathDefianceCount = deathDefianceCount;
         }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
             if (Piece.IsDead()) return;
 			if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
@@ -45,5 +45,9 @@ namespace Game.Effects.Traits
         }
 
 
+        public void OnCallAfterPieceAction(Action.Action action)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

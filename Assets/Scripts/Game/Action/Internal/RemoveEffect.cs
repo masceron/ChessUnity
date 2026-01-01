@@ -1,6 +1,5 @@
 ﻿using Game.Common;
 using Game.Effects;
-using Game.Managers;
 
 namespace Game.Action.Internal
 {
@@ -17,11 +16,10 @@ namespace Game.Action.Internal
         protected override void ModifyGameState()
         {
             if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0) return;
-            if (effect.ObserverActivateWhen != ObserverActivateWhen.None)
-            {
-                BoardUtils.RemoveObserver(effect);
-            }
-            effect.OnRemove();
+            BoardUtils.RemoveEffectObserver(effect);
+            
+            if (effect is IOnRemove onRemove)
+                onRemove.OnRemove();
             effect.Piece.Effects.Remove(effect);
         }
     }

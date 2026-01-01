@@ -8,7 +8,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    public class ThreadPipefishEffect : Effect, IEndTurnEffect
+    public class ThreadPipefishEffect : Effect, IEndTurnEffect, IOnApply, IOnRemove
     {
         private PieceLogic Target;
         public ThreadPipefishEffect(PieceLogic piece, PieceLogic target) : base(-1, -1, piece, "effect_thread_pipefish_effect")
@@ -17,7 +17,7 @@ namespace Game.Effects.Traits
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
-        public override void OnApply()
+        public void OnApply()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(Target)));
             ActionManager.EnqueueAction(new ApplyEffect(new Piercing(-1, Target)));
@@ -38,7 +38,7 @@ namespace Game.Effects.Traits
             }
         }
 
-        public override void OnRemove()
+        public void OnRemove()
         {
             foreach (var effect in Target.Effects)
             {

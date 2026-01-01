@@ -16,7 +16,7 @@ namespace Game.Action.Internal.Pending.Relic
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
         private EyeOfMimic eyeOfMimic;
-        public EyeOfMimicPending(EyeOfMimic e, int maker, bool pos = false) : base(maker, pos)
+        public EyeOfMimicPending(EyeOfMimic e, int maker, bool pos = false) : base(maker)
         {
             eyeOfMimic = e;
             Maker = (ushort)maker;

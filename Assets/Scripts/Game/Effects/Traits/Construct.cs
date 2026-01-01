@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Game.Effects.Traits
 {
-    public class Construct : Effect
+    public class Construct : Effect, IOnMoveGenEffect
     {
         public Construct(PieceLogic piece) : base(-1, 1, piece, "effect_construct")
         {
         }
 
-        public override void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(List<Action.Action> actions)
         {
             if (actions == null || actions.Count == 0) return;
 

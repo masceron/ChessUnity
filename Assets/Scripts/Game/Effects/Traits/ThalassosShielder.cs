@@ -68,8 +68,7 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction is { DoesMoveChangePos: true } &&
-                (lastMainAction.Maker == Piece.Pos || ColorOfPiece(lastMainAction.Maker) == Piece.Color))
+            if (lastMainAction.Maker == Piece.Pos || ColorOfPiece(lastMainAction.Maker) == Piece.Color)
             {
                 InRange();
             }

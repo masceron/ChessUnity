@@ -14,7 +14,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SeafoamPhial seafoamPhial;
 
-        public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker, bool pos) : base(maker, pos)
+        public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker, bool pos) : base(maker)
         {
             this.seafoamPhial = seafoamPhial;
             Maker = (ushort)maker;

@@ -10,14 +10,14 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrogFishPassive : Effect
+    public class FrogFishPassive : Effect, IAfterPieceActionEffect
     {
         public FrogFishPassive(PieceLogic piece) : base(-1, -1, piece, "effect_frog_fish_passive")
         {
             
         }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos) return;
             if (action.Maker == action.Target) return;
@@ -29,10 +29,9 @@ namespace Game.Effects.Traits
             {
                 var piece = PieceOn(IndexOf(nRank, nFile));
                 if (piece == null || piece.Color == Piece.Color) continue;
-                
+
                 ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, piece)));
             }
         }
-        
     }
 }

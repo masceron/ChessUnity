@@ -7,12 +7,12 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SwordfishAttack : Effect
+    public class SwordfishAttack : Effect, IAfterPieceActionEffect
     {
         public SwordfishAttack(PieceLogic piece) : base(-1, 1, piece, "effect_swordfish_capture")
         { }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action.Maker != Piece.Pos || action.Result != ResultFlag.Success) return;
 

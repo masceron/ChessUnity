@@ -9,7 +9,7 @@ namespace Game.Action.Quiets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FlyingFishMove: Action, IQuiets
     {
-        public FlyingFishMove(int maker, int to) : base(maker, true)
+        public FlyingFishMove(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;

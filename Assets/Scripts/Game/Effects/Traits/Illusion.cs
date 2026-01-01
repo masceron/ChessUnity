@@ -4,30 +4,29 @@ using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
-using Game.Managers;
 using Game.Action;
 
 namespace Game.Effects.Traits
 {
-    public class Illusion : Effect
+    public class Illusion : Effect, IOnApply, IOnMoveGenEffect
     {
         public Illusion(PieceLogic piece) : base(-1, 1, piece, "effect_illusion")
         {
             
         }
 
-        public override void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(List<Action.Action> actions)
         {
             for (var i = 0; i < actions.Count; i++)
             {
                 if (actions[i] is NormalCapture capture && capture.Maker == Piece.Pos)
                 {
-                    actions[i] = new Action.Captures.IllusionCapture(capture.Maker, capture.Target);
+                    actions[i] = new IllusionCapture(capture.Maker, capture.Target);
                 }
             }
         }
 
-        public override void OnApply()
+        public void OnApply()
         {
             foreach (var effect in Piece.Effects.ToList())
             {
@@ -38,11 +37,9 @@ namespace Game.Effects.Traits
                 }
                 if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0)
                 {
-                    if (effect.ObserverActivateWhen != ObserverActivateWhen.None)
-                    {
-                        RemoveObserver(effect);
-                    }
-                    effect.OnRemove();
+                    RemoveEffectObserver(effect);
+                    if (effect is IOnRemove onRemove)
+                        onRemove.OnRemove();
                     Piece.Effects.Remove(effect);
                 }
                 else

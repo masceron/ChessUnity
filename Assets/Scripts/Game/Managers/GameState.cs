@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Game.Action;
-using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Effects;
 using Game.Piece;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -17,23 +15,11 @@ using UX.UI.Ingame;
 
 namespace Game.Managers
 {
+    
     public interface ISubscriber
     {
         public void OnCall(Action.Action action);
         public void OnCallEnd(bool color);
-    }
-
-    public enum ObserverActivateWhen : byte
-    {
-        None,
-        Captures,
-        Moves,
-        SwitchTurn,
-        MoveGeneration,
-        EffectApplied,
-        Dead,
-        Block,
-        SkillUsed
     }
 
     public enum Color : byte
@@ -55,18 +41,15 @@ namespace Game.Managers
         public RelicLogic WhiteRelic;
         public RelicLogic BlackRelic;
         public PieceLogic WhiteCommander, BlackCommander;
-        public int WhiteSkillUses;
-        public int BlackSkillUses;
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
-        private readonly List<Effect> effectObservers = new();
+        public readonly EffectHooks effectHooks = new();
         public RegionalEffect RegionalEffect;
+        public readonly List<ISubscriber> Subscribers = new();
         public bool IsDay { get; private set; }
-        public int CurrentTurn { get; private set; }
+        private int CurrentTurn { get; set; }
         private int countTurn;
         private const int NumberOfTurnToChange = 10;
-
-        public readonly List<ISubscriber> Subscribers = new();
 
         public System.Action<int> OnIncreaseTurn;
 
@@ -74,7 +57,6 @@ namespace Game.Managers
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
-            
             OurSide = ourSide;
 
             PieceBoard = new PieceLogic[maxLength * maxLength];
@@ -177,22 +159,20 @@ namespace Game.Managers
         public void Destroy(int pos)
         {
             var pieceAffected = PieceBoard[pos];
-            // if (pieceAffected == null) return;
             PieceBoard[pos] = null;
-            NotifyDead(pieceAffected);
+            effectHooks.NotifyDead(pieceAffected);
 
-            pieceAffected.Effects.ForEach(RemoveObserver);
+            pieceAffected.Effects.ForEach(RemoveEffectObserver);
             pieceAffected.Die();
         }
 
         public void Kill(int pos)
         {
             var pieceAffected = PieceBoard[pos];
-            // if (pieceAffected == null) return;
             PieceBoard[pos] = null;
-            NotifyDead(pieceAffected);
+            effectHooks.NotifyDead(pieceAffected);
 
-            pieceAffected.Effects.ForEach(RemoveObserver);
+            pieceAffected.Effects.ForEach(RemoveEffectObserver);
             pieceAffected.Die();
 
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type, pieceAffected.Color, pieceAffected.Pos));
@@ -240,196 +220,40 @@ namespace Game.Managers
                     countTurn = 0;
                 }
             }
-            if (SideToMove && WhiteCommander != null && WhiteCommander.IsDead())
+            switch (SideToMove)
             {
-                if (WhiteCommander != null && WhiteCommander.IsDead())
+                case true when WhiteCommander != null && WhiteCommander.IsDead():
                 {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                    if (WhiteCommander != null && WhiteCommander.IsDead())
+                    {
+                        UIManager.Ins.Load(CanvasID.EndGameMessage);
+                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                    }
+                    else if (BlackCommander != null && BlackCommander.IsDead())
+                    {
+                        UIManager.Ins.Load(CanvasID.EndGameMessage);
+                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                    }
+
+                    break;
                 }
-                else if (BlackCommander != null && BlackCommander.IsDead())
+                case false when BlackCommander != null && BlackCommander.IsDead():
                 {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                }
-            }
-            else if (!SideToMove && BlackCommander != null && BlackCommander.IsDead())
-            {
-                if (BlackCommander != null && BlackCommander.IsDead())
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                }
-                else if (WhiteCommander != null && WhiteCommander.IsDead())
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                    if (BlackCommander != null && BlackCommander.IsDead())
+                    {
+                        UIManager.Ins.Load(CanvasID.EndGameMessage);
+                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                    }
+                    else if (WhiteCommander != null && WhiteCommander.IsDead())
+                    {
+                        UIManager.Ins.Load(CanvasID.EndGameMessage);
+                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                    }
+
+                    break;
                 }
             }
             SideToMove = !SideToMove;
-        }
-        // Được gọi tự động bởi action ApplyEffect
-        public void AddObserver(Effect effect)
-        {
-            var pos = effectObservers.BinarySearch(effect, effect);
-            effectObservers.Insert(pos >= 0 ? pos : ~pos, effect);
-        }
-        // Được gọi tự động bởi action RemoveEffect
-        public void RemoveObserver(Effect effect)
-        {
-            effectObservers.Remove(effect);
-        }
-
-        public void NotifyEnd(Action.Action mainAction)
-        {
-            foreach (var subscriber in Subscribers)
-            {
-                subscriber.OnCallEnd(SideToMove);
-            }
-
-            effectObservers.ForEach(effect =>
-            {
-                if (effect.ObserverActivateWhen != ObserverActivateWhen.SwitchTurn) return;
-                if (effect is not IEndTurnEffect turnEffect) return;
-
-                if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
-                {
-                    turnEffect.OnCallEnd(mainAction);
-                }
-
-                //The next turn is ours.
-                else if (SideToMove == effect.Piece.Color)
-                {
-                    if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
-                    {
-                        turnEffect.OnCallEnd(mainAction);
-                    }
-                }
-                //The next turn is of the opponent.
-                else
-                {
-                    if (turnEffect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
-                    {
-                        turnEffect.OnCallEnd(mainAction);
-                    }
-                }
-            });
-        }
-
-        public void NotifyStart(Action.Action mainAction)
-        {
-            effectObservers.ForEach(effect =>
-            {
-                if (effect is not IStartTurnEffect startTurnEffect) return;
-                
-                if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
-                {
-                    startTurnEffect.OnCallStart(mainAction);
-                }
-
-                //The next turn is ours.
-                else if (SideToMove == effect.Piece.Color)
-                {
-                    if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfAllyTurn)
-                    {
-                        startTurnEffect.OnCallStart(mainAction);
-                    }
-                }
-                //The next turn is of the opponent.
-                else
-                {
-                    if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfEnemyTurn)
-                    {
-                        startTurnEffect.OnCallStart(mainAction);
-                    }
-                }
-            });
-        }
-
-        public void NotifyMainAction(Action.Action mainAction)
-        {
-            if (mainAction is ICaptures)
-            {
-                effectObservers.ForEach(effect =>
-                {
-                    if (effect.disabled) return;
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Captures)
-                        effect.OnCallPieceAction(mainAction);
-                });
-            }
-
-            if (mainAction.DoesMoveChangePos)
-            {
-                effectObservers.ForEach(effect =>
-                {
-                    if (effect.disabled) return;
-                    if (effect.ObserverActivateWhen == ObserverActivateWhen.Moves &&
-                        effect.Priority != ObserverPriority.AfterAction)
-                        effect.OnCallPieceAction(mainAction);
-                });
-            }
-        }
-
-        private void NotifyDead(PieceLogic pieceToDie)
-        {
-            pieceToDie.Effects.ForEach(effect =>
-            {
-                if (effect.disabled) return;
-                if (effect.ObserverActivateWhen == ObserverActivateWhen.Dead)
-                {
-                    ((IDeadEffect)effect).OnCallDead(pieceToDie);
-                }
-            });
-
-            foreach (var piece in PieceBoard)
-            {
-                if (piece == null || piece == pieceToDie || piece.IsDead()) continue;
-                piece.Effects.ForEach(effect =>
-                {
-                    if (effect is IDeadEffect deadEffect)
-                    {
-                        deadEffect.OnCallDead(pieceToDie);
-                    }
-                });
-            }
-        }
-
-        public void NotifyOnMoveGen(List<Action.Action> actions)
-        {
-            effectObservers.ForEach(e =>
-            {
-                if (e.disabled) return;
-                if (e.ObserverActivateWhen == ObserverActivateWhen.MoveGeneration)
-                {
-                    e.OnCallMoveGen(actions);
-                }
-            });
-        }
-
-        public void NotifyWhenApplyEffect(ApplyEffect action)
-        {
-            effectObservers.ForEach(e =>
-            {
-                if (e.disabled) return;
-                if (e.ObserverActivateWhen == ObserverActivateWhen.EffectApplied)
-                {
-                    ((IApplyEffect)e).OnCallApplyEffect(action);
-                }
-            });
-        }
-        
-        public void IncrementSkillUses(Action.Action action)
-        {
-            effectObservers.ForEach(e =>
-            {
-                if (e.disabled) return;
-                if (e.ObserverActivateWhen == ObserverActivateWhen.SkillUsed)
-                {
-                    ((ISkillUsedEffect)e).OnCallSkillUsed(action);
-                }
-            });
-            if (ColorOfPiece(action.Maker)) BlackSkillUses++;
-            else WhiteSkillUses++;
         }
     }
     

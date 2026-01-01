@@ -27,12 +27,10 @@ namespace Game.Action
         public int Maker;
         public ResultFlag Result = ResultFlag.Success;
         public ActionFlag Flag = ActionFlag.None;
-        public readonly bool DoesMoveChangePos;
 
-        protected Action(int maker, bool pos = false)
+        protected Action(int maker)
         {
             Maker = maker;
-            DoesMoveChangePos = pos;
         }
         
         public void Execute()

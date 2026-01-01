@@ -11,7 +11,7 @@ namespace Game.Effects.Others
     /// When this piece moves, destroy an enemy piece within a certain range.
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DestroyEnemyWhenMove : Effect
+    public class DestroyEnemyWhenMove : Effect, IAfterPieceActionEffect
     {
         private readonly int radius;
         public DestroyEnemyWhenMove(PieceLogic piece, int radius) : base(-1, 1, piece, "effect_destroy_enemy_when_move")
@@ -19,7 +19,7 @@ namespace Game.Effects.Others
             this.radius = radius;
         }
 
-        public override void OnCallPieceAction(Game.Action.Action action)
+        public void OnCallAfterPieceAction(Game.Action.Action action)
         {
             if (action is not NormalMove move || BoardUtils.PieceOn(move.Maker) != Piece) return;
             var targetPos = move.Target;
