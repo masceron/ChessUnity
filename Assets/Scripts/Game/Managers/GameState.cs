@@ -164,7 +164,6 @@ namespace Game.Managers
             effectHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveEffectObserver);
-            pieceAffected.Die();
         }
 
         public void Kill(int pos)
@@ -174,7 +173,6 @@ namespace Game.Managers
             effectHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveEffectObserver);
-            pieceAffected.Die();
 
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type, pieceAffected.Color, pieceAffected.Pos));
             
@@ -223,14 +221,14 @@ namespace Game.Managers
             }
             switch (SideToMove)
             {
-                case true when WhiteCommander != null && WhiteCommander.IsDead():
+                case true when WhiteCommander != null && !IsAlive(WhiteCommander):
                 {
-                    if (WhiteCommander != null && WhiteCommander.IsDead())
+                    if (WhiteCommander != null && !IsAlive(WhiteCommander))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
                     }
-                    else if (BlackCommander != null && BlackCommander.IsDead())
+                    else if (BlackCommander != null && !IsAlive(BlackCommander))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
@@ -238,14 +236,14 @@ namespace Game.Managers
 
                     break;
                 }
-                case false when BlackCommander != null && BlackCommander.IsDead():
+                case false when BlackCommander != null && !IsAlive(BlackCommander):
                 {
-                    if (BlackCommander != null && BlackCommander.IsDead())
+                    if (BlackCommander != null && !IsAlive(BlackCommander))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
                     }
-                    else if (WhiteCommander != null && WhiteCommander.IsDead())
+                    else if (WhiteCommander != null && !IsAlive(WhiteCommander))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);

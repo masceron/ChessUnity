@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Action
 {
@@ -35,6 +36,7 @@ namespace Game.Action
         
         public void Execute()
         {
+            Debug.Log(this.GetType());
             Animate();
             ModifyGameState();
         }

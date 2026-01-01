@@ -156,12 +156,12 @@ namespace Game.Managers
             });
         }
         
-        public void NotifyOnMoveGen(List<Action.Action> actions)
+        public void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
             onMoveGens.ForEach(e =>
             {
                 if (((Effect)e).disabled) return;
-                e.OnCallMoveGen(actions);
+                e.OnCallMoveGen(caller, actions);
             });
         }
         

@@ -33,12 +33,10 @@ namespace Game.Piece.PieceLogic.Commons
         public sbyte SkillCooldown;
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
-        // private HashSet<String> immuneEffectNames = new HashSet<String>();
         public readonly List<int> PreviousMoves;
         public readonly string Type;
         private readonly bool hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
-        private bool dead;
         public readonly List<ImmunityType> Immunities;
         public readonly List<FormationType> SpecificFormations;
 
@@ -60,15 +58,6 @@ namespace Game.Piece.PieceLogic.Commons
         public void SetAttackRange(byte newRange)
         {
             attackRange = newRange;
-        }
-        
-        public bool IsDead()
-        {
-            return dead;
-        }
-        public void Die()
-        {
-            dead = true;
         }
 
         protected PieceLogic(PieceConfig cfg, QuietsDelegate quiets = null, CapturesDelegate captures = null)
@@ -186,9 +175,6 @@ namespace Game.Piece.PieceLogic.Commons
             if (SkillCooldown > 0) SkillCooldown--;
         }
 
-        protected virtual void CustomBehaviors(List<Action.Action> list)
-        {}
-
         public QuietsDelegate Quiets;
         public CapturesDelegate Captures;
 
@@ -207,7 +193,6 @@ namespace Game.Piece.PieceLogic.Commons
             if (Effects.Any(e => e.EffectName == "effect_frenzied")) return;
 
             Quiets(list, Pos, isPlayer);
-            
             Captures(list, Pos, excludeEmptyTile);
 
             if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced") && Effects.All(e => e.EffectName == "effect_illusion"))
@@ -215,8 +200,7 @@ namespace Game.Piece.PieceLogic.Commons
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
             
-            CustomBehaviors(list);
-            NotifyOnMoveGen(list);
+            NotifyOnMoveGen(this, list);
         }
 
         public int GetMoveRange()
@@ -274,18 +258,6 @@ namespace Game.Piece.PieceLogic.Commons
             return false;
         }
         
-
-        // public bool IsImmuneToEffect(String appliedEffectName)
-        // {
-        //     if (immuneEffectNames.Contains(appliedEffectName)) return true;
-        //     return false;
-        // }
-        //
-        // public void ImmuneEffect(String effectName)
-        // {
-        //     immuneEffectNames.Add(effectName);
-        // }
-
         public void AddImmunity(ImmunityType immunityType)
         {
             if (!Immunities.Contains(immunityType))

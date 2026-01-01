@@ -308,9 +308,9 @@ namespace Game.Common
             return effectsWithEffectCategory;
         }
 
-        public static void NotifyOnMoveGen(List<Action.Action> list)
+        public static void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> list)
         {
-            MatchManager.Ins.GameState.effectHooks.NotifyOnMoveGen(list);
+            MatchManager.Ins.GameState.effectHooks.NotifyOnMoveGen(caller, list);
         }
 
         public static void NotifyBeforePieceAction(Action.Action action)
@@ -349,6 +349,11 @@ namespace Game.Common
             {
                 MatchManager.Ins.GameState.effectHooks.NotifyWhenApplyEffect(apply);
             }
+        }
+
+        public static bool IsAlive(PieceLogic piece)
+        {
+            return PieceOn(piece.Pos) == piece;
         }
     }
 }

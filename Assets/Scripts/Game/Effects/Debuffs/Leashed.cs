@@ -13,8 +13,9 @@ namespace Game.Effects.Debuffs
             Position = position;
         }
 
-        public void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             if (actions == null || actions.Count == 0) return;
             
             actions.RemoveAll(action => 

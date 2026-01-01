@@ -11,8 +11,9 @@ namespace Game.Effects.Traits
         public Dominator(PieceLogic piece) : base(-1, 1, piece, "effect_dominator")
         {}
         
-        public void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             actions.RemoveAll(action =>
                 action is ICaptures && PieceOn(action.Maker).PieceRank <= PieceOn(action.Target).PieceRank);
         }

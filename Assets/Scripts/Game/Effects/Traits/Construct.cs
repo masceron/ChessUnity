@@ -10,13 +10,14 @@ namespace Game.Effects.Traits
         {
         }
 
-        public void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             if (actions == null || actions.Count == 0) return;
 
             for (var i = actions.Count - 1; i >= 0; i--)
             {
-                if (!(actions[i] is DestroyConstruct) && actions[i].Target == Piece.Pos)
+                if (actions[i] is not DestroyConstruct && actions[i].Target == Piece.Pos)
                 {
                     actions.RemoveAt(i);
                 }

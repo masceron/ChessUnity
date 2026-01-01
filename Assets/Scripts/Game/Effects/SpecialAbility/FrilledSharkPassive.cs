@@ -2,6 +2,7 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
@@ -21,7 +22,7 @@ namespace Game.Effects.SpecialAbility
             if (action is not ICaptures || action.Maker != Piece.Pos) { return; }
             var pieceOn = PieceOn(action.Target);
             if (pieceOn == null) { return; }
-            if (pieceOn.Effects.Any(e => e is Relentless) && !pieceOn.IsDead())
+            if (pieceOn.Effects.Any(e => e is Relentless) && IsAlive(pieceOn))
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn)));
             }

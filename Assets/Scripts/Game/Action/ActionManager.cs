@@ -74,13 +74,13 @@ namespace Game.Action
 
                     if (_actionStack.Peek() != currentActionStack) continue;
                 }
+                
+                _actionStack.Pop();
 
                 if (currentAction.IsValid())
                 {
                     currentAction.Execute();
                 }
-                
-                _actionStack.Pop();
                 
                 if (currentAction is IRelicAction iRelicAction)
                 {

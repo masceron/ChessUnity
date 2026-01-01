@@ -13,8 +13,9 @@ namespace Game.Effects.Traits
             "effect_snapping_strike")
         {}
 
-        public void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
             {
                 if (PieceOn(actions[i].Maker).Effects

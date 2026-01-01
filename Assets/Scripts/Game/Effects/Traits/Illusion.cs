@@ -15,8 +15,9 @@ namespace Game.Effects.Traits
             
         }
 
-        public void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
             {
                 if (actions[i] is NormalCapture capture && capture.Maker == Piece.Pos)

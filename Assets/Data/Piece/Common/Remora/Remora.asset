@@ -23,3 +23,5 @@ MonoBehaviour:
   normalSkillCooldown: -1
   availableSlots: 0
   logicClassName: Remora
+  baseValue: 0
+  considerations: []

@@ -4,6 +4,7 @@ using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
@@ -22,7 +23,7 @@ namespace Game.Effects.Debuffs
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (Piece.IsDead() || PieceOn(Piece.Pos) != Piece) return;
+            if (!IsAlive(Piece) || PieceOn(Piece.Pos) != Piece) return;
             list.Clear();
             Piece.Color = !Piece.Color;
             Piece.Captures(list, Piece.Pos, excludeEmptyTile: true);

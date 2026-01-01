@@ -10,9 +10,9 @@ namespace Game.Effects.Buffs
         public Camouflage(PieceLogic piece, sbyte duration = -1) : base(duration, 1, piece, "effect_camouflage")
         {}
 
-        public void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            if (BoardUtils.SideToMove() == Piece.Color) return;
+            if (caller.Color == Piece.Color) return;
             
             actions.RemoveAll(a => BoardUtils.Distance(a.Maker, Piece.Pos) >= 3 && a.Target == Piece.Pos);
         }

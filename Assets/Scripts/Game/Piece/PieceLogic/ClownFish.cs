@@ -16,14 +16,5 @@ namespace Game.Piece.PieceLogic
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(this)));
         }
         
-        protected override void CustomBehaviors(List<Action.Action> list)
-        {
-            for (var i = 0; i < list.Count; i++)
-            {
-                if (list[i] is ICaptures)
-                    list[i] = new DestroyConstruct(Pos, list[i].Target);
-            }
-        }
-        
     }
 }
