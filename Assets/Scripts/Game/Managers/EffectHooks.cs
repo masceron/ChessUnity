@@ -3,6 +3,7 @@ using Game.Action.Internal;
 using Game.Action.Relics;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.Managers
 {
@@ -23,7 +24,7 @@ namespace Game.Managers
 
         private static void AddToList<T>(List<T> list, T effect)
         {
-            var pos = list.BinarySearch(effect, (IComparer<T>)effect);
+            var pos = list.BinarySearch(effect, Effect.GetComparer<T>());
             list.Insert(pos >= 0 ? pos : ~pos, effect);
         }
 

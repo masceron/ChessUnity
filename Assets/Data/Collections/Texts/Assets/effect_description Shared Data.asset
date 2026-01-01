@@ -151,10 +151,6 @@ MonoBehaviour:
     m_Key: effect_diurnal_ambush_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35140550719967232
-    m_Key: effect_archerfish_accuracy_Passive_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 35140551034540032
     m_Key: effect_kill_after_switch_turn_description
     m_Metadata:
@@ -421,6 +417,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51254866944118784
     m_Key: effect_cabezon_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51846189061427200
+    m_Key: effect_archerfish_accuracy_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

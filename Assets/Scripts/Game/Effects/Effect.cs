@@ -39,7 +39,7 @@ namespace Game.Effects
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class Effect: IComparer<Effect>
+    public abstract class Effect
     {
         public readonly string EffectName;
         public sbyte Duration;
@@ -69,9 +69,14 @@ namespace Game.Effects
         }
 
         public virtual int GetValueForAI(){ return 0; }
-        public int Compare(Effect x, Effect y)
+        public static IComparer<TItem> GetComparer<TItem>()
         {
-            return -y!.priority.CompareTo(x!.priority);
+            return Comparer<TItem>.Create((x, y) => 
+            {
+                if (x is not Effect effectX || y is not Effect effectY) return 0;
+                
+                return effectX.priority.CompareTo(effectY.priority);
+            });
         }
     }
 }

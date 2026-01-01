@@ -11,9 +11,9 @@ namespace Game.Piece.PieceLogic
     {
         public HumboldtSquid(PieceConfig cfg) : base(cfg, AmbushPredatorMoves.Quiets, AmbushPredatorMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new HumboldtSquidPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new HumboldtSquidPassive(this)));
         }
     }
 }

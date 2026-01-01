@@ -103,7 +103,8 @@ namespace Game.Managers
                     BlackCommander = pieceLogic;
                 }
             }
-            PieceBoard[piece.Index] = PieceMaker.Get(piece);
+
+            PieceBoard[piece.Index] = pieceLogic;
 
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<AI.BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];    

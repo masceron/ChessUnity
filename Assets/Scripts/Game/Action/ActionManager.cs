@@ -6,6 +6,7 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Managers;
+using UnityEngine;
 
 
 namespace Game.Action
@@ -16,7 +17,7 @@ namespace Game.Action
         AfterEndTurn
     }
 
-    public struct StackAction
+    public class StackAction
     {
         public readonly Action Action;
         public bool TriggerCalled;
@@ -24,32 +25,6 @@ namespace Game.Action
         public StackAction(Action action)
         {
             Action = action;
-            TriggerCalled = false;
-        }
-        
-        public static bool operator !=(StackAction s1, StackAction s2) 
-        {
-            return !ReferenceEquals(s1.Action, s2.Action);
-        }
-
-        public static bool operator ==(StackAction s1, StackAction s2)
-        {
-            return ReferenceEquals(s1.Action, s2.Action);
-        }
-
-        private bool Equals(StackAction other)
-        {
-            return ReferenceEquals(Action, other.Action);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is StackAction other && Equals(other);
-        }
-
-        public override int GetHashCode()
-        {
-            return Action.GetHashCode();
         }
     }
 
@@ -99,21 +74,22 @@ namespace Game.Action
 
                     if (_actionStack.Peek() != currentActionStack) continue;
                 }
-                
 
                 if (currentAction.IsValid())
                 {
                     currentAction.Execute();
-
-                    if (currentAction is IRelicAction relicAction)
-                    {
-                        BoardUtils.NotifyAfterRelicAction(relicAction);
-                    }
-                    else if (currentAction is not IInternal)
-                        BoardUtils.NotifyAfterPieceAction(currentAction);
                 }
                 
                 _actionStack.Pop();
+                
+                if (currentAction is IRelicAction iRelicAction)
+                {
+                    BoardUtils.NotifyAfterRelicAction(iRelicAction);
+                }
+                else if (currentAction is not IInternal)
+                {
+                    BoardUtils.NotifyAfterPieceAction(currentAction);
+                }
             }
         }
 
