@@ -20,15 +20,21 @@ namespace Game.Action.Captures
         }
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
+        private bool isExecuting;
         public MarineIguanaActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
+            isExecuting = false;
         }
 
         protected override void ModifyGameState()
         {
-
+            if (FirstTarget == null) return;
+            if (SecondTarget == null) return;
+            ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
+            isExecuting = false;
+            Dispose();
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
         public void CompleteAction()
@@ -51,12 +57,12 @@ namespace Game.Action.Captures
                 return;
             }
             SecondTarget = hovering; 
-        
-            ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
             BoardViewer.Ins.ExecuteAction(this);
+            isExecuting = true;
         }
         public void Dispose()
         {
+            if (!isExecuting) return;
             FirstTarget = null;
             SecondTarget = null;
             BoardViewer.SelectingFunction = 0; 

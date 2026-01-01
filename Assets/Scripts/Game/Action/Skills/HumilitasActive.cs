@@ -22,15 +22,24 @@ namespace Game.Action.Skills
         }
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
+
+        private bool isExecuting;
         public HumilitasActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
+            isExecuting = false;
         }
 
         protected override void ModifyGameState()
         {
-
+            if (FirstTarget == null) return;
+            if (SecondTarget == null) return;
+            
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget)));
+            isExecuting = false;
+            Dispose();
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
         public void CompleteAction()
@@ -53,13 +62,13 @@ namespace Game.Action.Skills
                 return;
             }
             SecondTarget = hovering;
-
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget)));
             BoardViewer.Ins.ExecuteAction(this);
+            UnityEngine.Debug.Log("Executing HumilitasActive");
+            isExecuting = true;
         }
         public void Dispose()
         {
+            if (!isExecuting) return;
             FirstTarget = null;
             SecondTarget = null;
             BoardViewer.SelectingFunction = 0;

@@ -3,7 +3,7 @@ using Game.Action.Internal;
 using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-
+using Game.Action.Captures;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -17,6 +17,10 @@ namespace Game.Effects.Traits
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
+            if (action is not ICaptures)
+            {
+                return;
+            }
 			if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
 				|| Piece.Effects.Any(e => e.EffectName == "effect_carapace") 
 					|| Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
