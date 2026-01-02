@@ -14,8 +14,8 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EyeshadeSculpinActive : Action, ISkills, IAIAction, IPendingAble, IDisposable
     {
-        public PieceLogic FirstTarget;
-        public PieceLogic SecondTarget;
+        private PieceLogic FirstTarget;
+        private PieceLogic SecondTarget;
         
         public EyeshadeSculpinActive(int maker, int target) : base(maker)
         {
@@ -25,6 +25,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget)));
+            BoardViewer.Ins.ExecuteAction(this);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
@@ -58,10 +61,6 @@ namespace Game.Action.Skills
                 return;
             }
             SecondTarget = hovering;
-
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget)));
-            BoardViewer.Ins.ExecuteAction(this);
         }
         
         public void Dispose()
