@@ -41,25 +41,25 @@ namespace Game.Action.Skills
             // Xóa debuff khỏi Ally và buff khỏi Enemy
             foreach (var effect in allyDebuffs)
             {
-                ActionManager.ExecuteImmediately(new RemoveEffect(effect));
+                ActionManager.EnqueueAction(new RemoveEffect(effect));
             }
             foreach (var effect in enemyBuffs)
             {
-                ActionManager.ExecuteImmediately(new RemoveEffect(effect));
+                ActionManager.EnqueueAction(new RemoveEffect(effect));
             }
 
             // Thêm debuff vào Enemy (resolve Piece before applying)
             foreach (var effect in allyDebuffs)
             {
                 effect.Piece = enemy;
-                ActionManager.ExecuteImmediately(new ApplyEffect(effect));
+                ActionManager.EnqueueAction(new ApplyEffect(effect));
             }
 
             // Thêm buff vào Ally
             foreach (var effect in enemyBuffs)
             {
                 effect.Piece = ally;
-                ActionManager.ExecuteImmediately(new ApplyEffect(effect));
+                ActionManager.EnqueueAction(new ApplyEffect(effect));
             }
 
             // Reset static indices

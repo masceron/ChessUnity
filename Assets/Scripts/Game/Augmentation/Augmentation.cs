@@ -68,7 +68,11 @@ namespace Game.Augmentation
         RaysTail,
         ColdBlooded,
         MantaSpine,
-        None,
+        MetalSpine,
+        MetalScope,
+        MetalMind,
+        MetalRegulator,
+        None = 10000,
     }
 
     public enum AugmentationRarity

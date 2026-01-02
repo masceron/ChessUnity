@@ -21,10 +21,6 @@ namespace Game.Action.Skills
             Target = (ushort)to;
         }
         
-        protected override void Animate()
-        {
-            PieceManager.Ins.Move(Maker, Target);
-        }
 
         protected override void ModifyGameState()
         {
@@ -47,8 +43,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p)));
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p)));
             }
-            
-            MatchManager.Ins.GameState.Move(Maker, Target);
+            Move(Maker, Target);
             Maker = Target;
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

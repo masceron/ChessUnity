@@ -439,6 +439,14 @@ MonoBehaviour:
     m_Key: effect_pegasus_seamoth_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 52207987264577536
+    m_Key: effect_meta_scope_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52207987428155392
+    m_Key: effect_metal_regulator_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
