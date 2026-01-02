@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
   m_Name: Metal Mind
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 0
+  Name: 10
   Rarity: 0
-  Slot: 0
-  Key: 
-  Icon: {fileID: 0}
+  Slot: 1
+  Key: metal_mind
+  Icon: {fileID: 2800000, guid: a8eee2e2ddbbcaa4fa19ee691ffa56e3, type: 3}
