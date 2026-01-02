@@ -1,4 +1,4 @@
-﻿﻿using System.Linq;
+﻿
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
@@ -9,6 +9,7 @@ namespace Game.Action.Skills
 {
     public class SloaneSViperfishActive : Action, ISkills, IAIAction
     {
+        private bool bleeding;
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -17,36 +18,24 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public SloaneSViperfishActive(int maker) : base(maker)
+        public SloaneSViperfishActive(int maker, bool _bleeding) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)maker;
+            bleeding = _bleeding;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
-
-            for (var i = -4; i <= 4; i++)
+            if (bleeding)
             {
-                if (!VerifyBounds(rank + i)) continue;
-                for (var j = -4; j <= 4; j++)
-                {
-                    if (!VerifyBounds(file + j)) continue;
-
-                    var idx = IndexOf(rank + i, file + j);
-
-                    var p = PieceOn(idx);
-                    if (p == null || p == caller || p.Color == caller.Color) continue;
-
-                    var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
-
-                    ActionManager.ExecuteImmediately(bleeding
-                        ? new ApplyEffect(new Poison(1, p))
-                        : new ApplyEffect(new Bleeding(5, p)));
-                }
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target))));
             }
+            else
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(Target))));
+            }
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
         public void CompleteActionForAI()
