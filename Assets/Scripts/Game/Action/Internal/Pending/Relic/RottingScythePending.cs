@@ -18,7 +18,6 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void CompleteAction()
         {
-            ActionManager.ExecuteImmediately(new KillPiece(Maker));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
@@ -34,6 +33,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void ModifyGameState()
         {
+            ActionManager.EnqueueAction(new KillPiece(Maker));
         }
 
     }
