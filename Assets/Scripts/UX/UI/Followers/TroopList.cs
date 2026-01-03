@@ -2,6 +2,7 @@
 using System.Linq;
 using Game.Common;
 using Game.Piece;
+using Game.Save.Player;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using TMPro;
@@ -32,12 +33,33 @@ namespace UX.UI.Followers
             Close();
         }
 
-        protected override void Awake()
+/*        protected override void Awake()
         {
             data = new Dictionary<string, PieceInfo>();
             foreach (var pieceInfo in piecesData.piecesData)
             {
                 data.Add(pieceInfo.key, pieceInfo);
+            }
+            SearchByKeyword("");
+        }*/
+
+        protected void OnEnable()
+        {
+            data = new Dictionary<string, PieceInfo>();
+            
+            if (PlayerSaveLoader.Player.CollectedUnits == null) return;
+
+            var collectedSet = new HashSet<string>(PlayerSaveLoader.Player.CollectedUnits);
+
+            foreach (var pieceInfo in piecesData.piecesData)
+            {
+                if (collectedSet.Contains(pieceInfo.key))
+                {
+                    if (!data.ContainsKey(pieceInfo.key))
+                    {
+                        data.Add(pieceInfo.key, pieceInfo);
+                    }
+                }
             }
             SearchByKeyword("");
         }

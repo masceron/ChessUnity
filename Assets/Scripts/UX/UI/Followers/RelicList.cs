@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Save.Player;
 using System.Linq;
 using Game.Common;
 using Game.ScriptableObjects;
@@ -20,13 +21,32 @@ namespace UX.UI.Followers
         [SerializeField] private RelicDescriptions descriptions;
 
         private readonly List<RelicLogo> pool = new();
+        private Dictionary<string, RelicInfo> data;
         private List<RelicInfo> searchResult;
         private string lastKeyword;
         
         private bool selecting;
 
-        protected override void Awake()
+        protected void OnEnable()
         {
+            data = new Dictionary<string, RelicInfo>();
+            
+            if (PlayerSaveLoader.Player.CollectedRelics != null)
+            {
+                var collectedSet = new HashSet<string>(PlayerSaveLoader.Player.CollectedRelics);
+
+                foreach (var relicInfo in relicsData.relicsData)
+                {
+                    if (collectedSet.Contains(relicInfo.key))
+                    {
+                        if (!data.ContainsKey(relicInfo.key))
+                        {
+                            data.Add(relicInfo.key, relicInfo);
+                        }
+                    }
+                }
+            }
+            
             SearchByKeyword("");
         }
 
@@ -74,7 +94,7 @@ namespace UX.UI.Followers
             }
             else
             {
-                searchResult = relicsData.relicsData.Where(r => 
+                searchResult = data.Values.Where(r => 
                     r.key.Contains(start)).ToList();
             }
             
