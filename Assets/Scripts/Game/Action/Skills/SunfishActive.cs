@@ -15,7 +15,7 @@ namespace Game.Action.Skills
             return pieceAI.Color != maker.Color ? -10 : 0;
         }
         private readonly int Range;
-        public SunfishActive(int maker,int range) : base(maker, true)
+        public SunfishActive(int maker,int range) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)maker;

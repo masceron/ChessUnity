@@ -1,5 +1,3 @@
-
-
 using System.Linq;
 using Game.Augmentation;
 using Game.Common;
@@ -109,7 +107,7 @@ namespace Game.Managers
             }
             if (formation != null && formation.GetFormationType() == FormationType.FogOfWar 
                 && formation.GetColor() != sideToMove && !haveAbyssalTapetum 
-                && !pieceInPos.Effects.Any(e => e.EffectName == "effect_marked"))
+                && pieceInPos.Effects.All(e => e.EffectName != "effect_marked"))
             {
                 return true;
             }

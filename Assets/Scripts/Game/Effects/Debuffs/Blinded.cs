@@ -1,4 +1,5 @@
 using Game.Action;
+using Game.Action.Captures;
 using Game.Augmentation;
 using Game.Common;
 using Game.Managers;
@@ -7,7 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Blinded: Effect
+    public class Blinded: Effect, IBeforePieceActionEffect
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public readonly int Probability;
@@ -16,10 +17,15 @@ namespace Game.Effects.Debuffs
         {
             Probability = probability;
         }
-
-        public override void OnCallPieceAction(Action.Action action)
+        
+        public override int GetValueForAI()
         {
-            if (action == null || action.Maker != Piece.Pos) return;
+            return base.GetValueForAI() + 20;
+        }
+
+        public void OnCallBeforePieceAction(Action.Action action)
+        {
+            if (action is not ICaptures || action.Maker != Piece.Pos) return;
             
             var pieceTarget = BoardUtils.PieceOn(action.Target);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ProtectiveLens))
@@ -32,11 +38,5 @@ namespace Game.Effects.Debuffs
                 action.Result = ResultFlag.Missed;
             }
         }
-        
-        public override int GetValueForAI()
-        {
-            return base.GetValueForAI() + 20;
-        }
-    
     }
 }

@@ -3,7 +3,7 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    public class CopyCapturesMethod : Effect
+    public class CopyCapturesMethod : Effect, IOnApply, IOnRemove
     {
         private readonly PieceLogic ourPiece;
         private readonly PieceLogic opponentPiece;
@@ -17,7 +17,7 @@ namespace Game.Effects.Others
             opponentPiece = secondPiece;
         }
 
-        public override void OnApply()
+        public void OnApply()
         {
             if (ourPiece == null || opponentPiece == null) return;
 
@@ -28,7 +28,7 @@ namespace Game.Effects.Others
             ourPiece.Captures = opponentPiece.Captures;
         }
 
-        public override void OnRemove()
+        public void OnRemove()
         {
             if (ourPiece != null)
             {

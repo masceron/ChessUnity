@@ -13,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SirensHarpoon _sirensHarpoon;
 
-        public SirensHarpoonPending(SirensHarpoon s, int target, bool pos = false) : base(s.CommanderPiece.Pos, pos)
+        public SirensHarpoonPending(SirensHarpoon s, int target, bool pos = false) : base(s.CommanderPiece.Pos)
         {
             _sirensHarpoon = s;
 

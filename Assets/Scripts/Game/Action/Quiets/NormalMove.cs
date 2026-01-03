@@ -1,14 +1,14 @@
-﻿using Game.Managers;
+﻿using Game.Common;
+using Game.Managers;
 
 namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class NormalMove: Action, IQuiets
     {
-        public NormalMove(int f, int t) : base(f, true)
+        public NormalMove(int f, int t) : base(f)
         {
-            Maker = (ushort)f;
-            Target = (ushort)t;
+            Target = t;
         }
 
         protected override void Animate()
@@ -18,7 +18,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(Maker, Target);
+            BoardUtils.Move(Maker, Target);
             Maker = Target;
         }
     }

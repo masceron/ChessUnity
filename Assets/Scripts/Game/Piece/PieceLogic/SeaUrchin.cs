@@ -4,6 +4,7 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
+using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
 
@@ -17,15 +18,7 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 50, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
-        }
-
-        protected override void CustomBehaviors(List<Action.Action> list)
-        {
-            for (var i = 0; i < list.Count; i++)
-            {
-                if (list[i] is ICaptures)
-                    list[i] = new DestroyConstruct(Pos, list[i].Target);
-            }
+            ActionManager.ExecuteImmediately(new ApplyEffect(new SeaUrchinPassive(this)));
         }
     }
 }

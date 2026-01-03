@@ -12,7 +12,7 @@ namespace Game.Action.Skills
         {
             return 0;
         }
-        public PufferfishExplode(int maker) : base(maker, true)
+        public PufferfishExplode(int maker) : base(maker)
         {
             Target = (ushort)maker;
         }

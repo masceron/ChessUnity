@@ -6,15 +6,15 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Carapace: Effect
+    public class Carapace: Effect, IBeforePieceActionEffect
     {
         public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_carapace")
         {}
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result != ResultFlag.Success 
-                || (action.Flag & ActionFlag.Unblockable) != 0 || action is not ICaptures) return;
+            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success
+                || (action.Flag & ActionFlag.Unblockable) != 0) return;
             
             action.Result = ResultFlag.Blocked;
             ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));

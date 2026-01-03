@@ -21,7 +21,6 @@ namespace Game.Common
 
                 // Need to create a new GameObject to attach the singleton to.
                 var singletonObject = new GameObject();
-                Debug.Log($"New Singleton: {typeof(T)}");
                 _instance = singletonObject.AddComponent<T>();
                 singletonObject.name = typeof(T).ToString();
                 return _instance;

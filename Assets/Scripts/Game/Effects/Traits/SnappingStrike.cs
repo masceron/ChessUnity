@@ -7,14 +7,15 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SnappingStrike: Effect
+    public class SnappingStrike: Effect, IOnMoveGenEffect
     {
         public SnappingStrike(PieceLogic piece, sbyte duration = -1) : base(duration, -1, piece,
             "effect_snapping_strike")
         {}
 
-        public override void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
             {
                 if (PieceOn(actions[i].Maker).Effects

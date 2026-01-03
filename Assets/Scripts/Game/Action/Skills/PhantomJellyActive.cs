@@ -15,7 +15,7 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -30;
             return 0;
         }
-        public PhantomJellyActive(int maker) : base(maker, true)
+        public PhantomJellyActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)maker;

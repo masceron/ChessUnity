@@ -32,7 +32,7 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.Maker == Piece.Pos && lastMainAction.DoesMoveChangePos)
+            if (lastMainAction.Maker == Piece.Pos)
             {
                 CalculateEffectRange(Piece.Pos);
             }

@@ -16,7 +16,7 @@ namespace Game.Action.Skills
             return 0;
         }
         private ushort destination;
-        public HourglassJellyActive(int maker, int target) : base(maker, true)
+        public HourglassJellyActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)target;

@@ -6,22 +6,25 @@ using Game.Effects.Debuffs;
 using System.Linq;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumboldtSquidPassive : Effect
+    public class HumboldtSquidPassive : Effect, IAfterPieceActionEffect
     {
         private int count;
+        private IAfterPieceActionEffect iAfterPieceActionEffectImplementation;
+
         public HumboldtSquidPassive(PieceLogic piece) : base(-1, 1, piece, "effect_humboldt_squid_passive")
         {
             count = 0;
 
         }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos && action is ICaptures && action.Result != ResultFlag.Success)
+            if (action.Maker == Piece.Pos && action is ICaptures && action.Result == ResultFlag.Blocked)
             {
                 var target = PieceOn(action.Target);
                 if (target != null && target.Color != Piece.Color)

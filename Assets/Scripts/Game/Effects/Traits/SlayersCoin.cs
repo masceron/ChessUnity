@@ -6,12 +6,12 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SlayersCoin: Effect
+    public class SlayersCoin: Effect, IAfterPieceActionEffect
     {
         public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, "effect_slayer_coin")
         {}
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action.Result != ResultFlag.Success) return;
             

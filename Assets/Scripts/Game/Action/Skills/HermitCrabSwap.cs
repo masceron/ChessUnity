@@ -11,7 +11,7 @@ namespace Game.Action.Skills
         {
             return 0;
         }
-        public HermitCrabSwap(int maker, int to) : base(maker, true)
+        public HermitCrabSwap(int maker, int to) : base(maker)
         {
             Target = (ushort)to;
         }

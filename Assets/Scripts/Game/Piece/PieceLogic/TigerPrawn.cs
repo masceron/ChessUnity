@@ -14,10 +14,5 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new NocturnalRangeBuff(this)));
         }
-
-        protected override void CustomBehaviors(List<Action.Action> list)
-        {
-            
-        }
     }
 }

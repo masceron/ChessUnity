@@ -17,13 +17,13 @@ namespace Game.Relics
     public class StormCapacitor : RelicLogic
     {
         private Tile.Tile hoveringTile;
-        private int size = 2;
-        private Charge charge;
+        private const int Size = 2;
+        private readonly Charge charge;
         public StormCapacitor(RelicConfig cfg) : base(cfg)
         {
             CurrentCooldown = 0;
             charge = new Charge(0, Color);
-            BoardUtils.AddObserver(charge);
+            BoardUtils.AddEffectObserver(charge);
         }
 
         public override void Activate()
@@ -40,15 +40,14 @@ namespace Game.Relics
                     if (hoveringTile == thisTile) return;
                     if (hoveringTile != null)
                     {
-                        TileManager.Ins.MarkTileInRange(hoveringTile, size, isMark: false);
+                        TileManager.Ins.MarkTileInRange(hoveringTile, Size, isMark: false);
                     }
 
                     hoveringTile = thisTile;
-                    TileManager.Ins.MarkTileInRange(hoveringTile, size, isMark: true, onlyMarkEnemy: false);
+                    TileManager.Ins.MarkTileInRange(hoveringTile, Size, isMark: true, onlyMarkEnemy: false);
                     
                     var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    var pending = new StormCapacitorPending(pos ,hoveringTile, this, size);
-                    var comparer = new ActionComparer();
+                    var pending = new StormCapacitorPending(pos ,hoveringTile, this, Size);
 
                     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
                     {
@@ -71,7 +70,7 @@ namespace Game.Relics
             for (int i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var (rank, file) = BoardUtils.RankFileOf(i);
-                var pieces = BoardUtils.GetPiecesInSize(rank, file, size, Corner.BottomRight, p => p != null && p.Color != Color);
+                var pieces = BoardUtils.GetPiecesInSize(rank, file, Size, Corner.BottomRight, p => p != null && p.Color != Color);
 
                 if (pieces.Count > maxSize)
                 {
@@ -83,7 +82,7 @@ namespace Game.Relics
             }
 
             var pos = topGroup[Random.Range(0, topGroup.Count() - 1)];
-            var maxArea = BoardUtils.GetPiecesInSize(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), size, Corner.BottomRight, p => p != null && p.Color != Color);
+            var maxArea = BoardUtils.GetPiecesInSize(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), Size, Corner.BottomRight, p => p != null && p.Color != Color);
             foreach (var piece in maxArea)
             {
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));

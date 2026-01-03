@@ -8,7 +8,7 @@ using Game.Action.Captures;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Evasion: Effect
+    public class Evasion: Effect, IBeforePieceActionEffect
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public readonly int Probability;
@@ -18,10 +18,9 @@ namespace Game.Effects.Traits
             Probability = probability;
         }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action == null || action.Target != Piece.Pos || action.Result != ResultFlag.Success) return;
-            if (action is not ICaptures) return;
+            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success) return;
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Probability)) return;
 

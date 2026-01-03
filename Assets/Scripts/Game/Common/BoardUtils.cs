@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Game.Action.Internal;
+using Game.Action.Relics;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece;
@@ -180,52 +181,14 @@ namespace Game.Common
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
-        public static void NotifyMainAction(Action.Action mainAction)
+        public static void AddEffectObserver(Effect effect)
         {
-            MatchManager.Ins.GameState.NotifyMainAction(mainAction);
+            MatchManager.Ins.GameState.effectHooks.AddObserver(effect);
         }
 
-        public static void NotifyEnd(Action.Action mainAction)
+        public static void RemoveEffectObserver(Effect effect)
         {
-            MatchManager.Ins.GameState.NotifyEnd(mainAction);
-        }
-
-        public static void NotifyStart(Action.Action mainAction)
-        {
-            MatchManager.Ins.GameState.NotifyStart(mainAction);
-        }
-
-        public static void NotifyInternalAction(Action.Action action)
-        {
-            if (action is ApplyEffect applyEffect)
-            {
-                MatchManager.Ins.GameState.NotifyWhenApplyEffect(applyEffect);
-            }
-        }
-
-        public static void IncrementSkillUses(Action.Action skill)
-        {
-            MatchManager.Ins.GameState.IncrementSkillUses(skill);
-        }
-
-        public static int SkillUseOf(bool color)
-        {
-            return color ? MatchManager.Ins.GameState.BlackSkillUses : MatchManager.Ins.GameState.WhiteSkillUses;
-        }
-
-        public static void NotifyOnMoveGen(List<Action.Action> actions)
-        {
-            MatchManager.Ins.GameState.NotifyOnMoveGen(actions);
-        }
-
-        public static void AddObserver(Effect effect)
-        {
-            MatchManager.Ins.GameState.AddObserver(effect);
-        }
-
-        public static void RemoveObserver(Effect effect)
-        {
-            MatchManager.Ins.GameState.RemoveObserver(effect);
+            MatchManager.Ins.GameState.effectHooks.RemoveObserver(effect);
         }
 
         public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
@@ -344,6 +307,53 @@ namespace Game.Common
             }
             return effectsWithEffectCategory;
         }
+
+        public static void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> list)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyOnMoveGen(caller, list);
+        }
+
+        public static void NotifyBeforePieceAction(Action.Action action)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyBeforePieceAction(action);
+        }
         
+        public static void NotifyAfterPieceAction(Action.Action action)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyAfterPieceAction(action);
+        }
+        
+        public static void NotifyBeforeRelicAction(IRelicAction action)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyBeforeRelicAction(action);
+        }
+        
+        public static void NotifyAfterRelicAction(IRelicAction action)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyAfterRelicAction(action);
+        }
+        
+        public static void NotifyOnEndTurn(Action.Action action)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyEnd(action, MatchManager.Ins.GameState.SideToMove);
+        }
+        
+        public static void NotifyOnStartTurn(Action.Action action)
+        {
+            MatchManager.Ins.GameState.effectHooks.NotifyStart(action, MatchManager.Ins.GameState.SideToMove);
+        }
+
+        public static void NotifyInternalAction(IInternal action)
+        {
+            if (action is ApplyEffect apply)
+            {
+                MatchManager.Ins.GameState.effectHooks.NotifyWhenApplyEffect(apply);
+            }
+        }
+
+        public static bool IsAlive(PieceLogic piece)
+        {
+            return PieceOn(piece.Pos) == piece;
+        }
     }
 }

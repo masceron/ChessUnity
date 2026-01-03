@@ -151,10 +151,6 @@ MonoBehaviour:
     m_Key: effect_diurnal_ambush_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35140550719967232
-    m_Key: effect_archerfish_accuracy_Passive_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 35140551034540032
     m_Key: effect_kill_after_switch_turn_description
     m_Metadata:
@@ -423,8 +419,24 @@ MonoBehaviour:
     m_Key: effect_cabezon_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 51580832604979200
-    m_Key: effect_shadow_fin_passive_description
+  - m_Id: 51846189061427200
+    m_Key: effect_archerfish_accuracy_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51913313779896320
+    m_Key: effect_remora_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51929802662662144
+    m_Key: effect_flying_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51930673874128896
+    m_Key: effect_sea_urchin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51931285248462848
+    m_Key: effect_pegasus_seamoth_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

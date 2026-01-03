@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Tile;
@@ -29,14 +30,7 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            //if (Effect.Piece.IsImmuneToEffect(Effect.EffectName)) return;
-            //if (Effect.Piece.IsImmuneToFormationEffect(SourceFormationType, Effect)) return;
-        
-            
-            if (Effect.ObserverActivateWhen != ObserverActivateWhen.None)
-            {
-                MatchManager.Ins.GameState.AddObserver(Effect);
-            }
+            BoardUtils.AddEffectObserver(Effect);
             
             var already = Effect.Piece.Effects.FirstOrDefault(e => e.EffectName == Effect.EffectName);
 
@@ -45,7 +39,8 @@ namespace Game.Action.Internal
                 // If the effect is applied as a result of an Action not from end turn trigger, increment the duration by 1.
                 if (Effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) Effect.Duration++;
                 
-                Effect.OnApply();
+                if (Effect is IOnApply onApply)
+                    onApply.OnApply();
                 Effect.Piece.Effects.Add(Effect);
             }
             else

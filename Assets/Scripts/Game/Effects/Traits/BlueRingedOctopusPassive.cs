@@ -11,14 +11,19 @@ namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     
-    public class BlueRingedOctopusPassive : Effect
+    public class BlueRingedOctopusPassive : Effect, IAfterPieceActionEffect
     {
         public BlueRingedOctopusPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_ringed_octopus_passive")
         {
 
         }
+        
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
+        }
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
             var activeBoard = ActiveBoard();
             if (action.Maker == Piece.Pos)
@@ -104,11 +109,6 @@ namespace Game.Effects.Traits
                     activeBoard[pos] = true;
                 
             }
-        }
-        
-        public override int GetValueForAI()
-        {
-            return base.GetValueForAI() + 50;
         }
     }
 }

@@ -39,7 +39,7 @@ namespace Game.Effects
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class Effect: Comparer<Effect>
+    public abstract class Effect
     {
         public readonly string EffectName;
         public sbyte Duration;
@@ -47,9 +47,7 @@ namespace Game.Effects
         public PieceLogic Piece;
         public readonly EffectCategory Category;
         public bool disabled = false;
-        
-        public readonly ObserverActivateWhen ObserverActivateWhen;
-        public readonly ObserverPriority Priority;
+        private readonly ObserverPriority priority;
 
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, string name)
         {
@@ -59,40 +57,8 @@ namespace Game.Effects
             EffectName = name;
             
             var info = AssetManager.Ins.EffectData[name];
-            ObserverActivateWhen = info.activeWhen;
-            Priority = info.priority;
+            priority = info.priority;
             Category = info.category;
-        }
-
-        public virtual void OnApply()
-        {
-            
-        }
-
-        public virtual void OnRemove()
-        {
-            
-        }
-
-        public virtual void OnCallPieceAction(Action.Action action)
-        {
-            
-        }
-
-        public virtual void OnCallRelicAction(Action.Action action)
-        {
-            
-        }
-
-        public virtual void OnCallMoveGen(List<Action.Action> actions)
-        {
-
-        }
-
-        //Return y compareTo x to make sure the list sort ascending.
-        public override int Compare(Effect x, Effect y)
-        {
-            return -y!.Priority.CompareTo(x!.Priority);
         }
 
         public string Description()
@@ -103,5 +69,14 @@ namespace Game.Effects
         }
 
         public virtual int GetValueForAI(){ return 0; }
+        public static IComparer<TItem> GetComparer<TItem>()
+        {
+            return Comparer<TItem>.Create((x, y) => 
+            {
+                if (x is not Effect effectX || y is not Effect effectY) return 0;
+                
+                return effectX.priority.CompareTo(effectY.priority);
+            });
+        }
     }
 }

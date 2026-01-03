@@ -1,24 +1,24 @@
 
 
 using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class CabezonPassive : Effect
+    public class CabezonPassive : Effect, IAfterPieceActionEffect
     {
         public CabezonPassive(PieceLogic piece) : base(-1, 1, piece, "effect_cabezon_passive")
         {
 
         }
-        public override void OnCallPieceAction(Action.Action action)
+
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            Debug.Log("[Cabezon] passive activated");
-            if (action.Maker == Piece.Pos || action.Result == ResultFlag.Blocked)
+            if (action is ICaptures && action.Maker == Piece.Pos && (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Missed))
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target))));
             }

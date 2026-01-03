@@ -1,29 +1,20 @@
 using Game.Action;
-using Game.Action.Internal;
+using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TrueBite: Effect, IApplyEffect
+    public class TrueBite: Effect, IBeforePieceActionEffect
     {
         public TrueBite(PieceLogic piece) : base(-1, -1, piece, "effect_true_bite")
         {}
 
-        public override void OnCallPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
-            
-        }
-        
-        public void OnCallApplyEffect(ApplyEffect applyEffect)
-        {
-            if (applyEffect.Effect.Piece != Piece) return;
-
-            var effect = applyEffect.Effect;
-
-            if (effect.EffectName is "effect_evasion")
+            if (action is ICaptures && action.Maker == Piece.Pos)
             {
-                applyEffect.Result = ResultFlag.Dodged;
+                action.Flag |= ActionFlag.Undodgeable;
             }
         }
 
@@ -31,5 +22,7 @@ namespace Game.Effects.Buffs
         {
             return base.GetValueForAI() + 30;
         }
+
+        
     }
 }

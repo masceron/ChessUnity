@@ -1,19 +1,21 @@
 ﻿using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.Others
 {
-    public class MelibePassive : Effect
+    public class MelibePassive : Effect, IAfterPieceActionEffect
     {
         public MelibePassive(PieceLogic piece) : base(-1, 1, piece, "effect_melibe_passive")
         {
             
         }
-
-        public override void OnCallPieceAction(Action.Action action)
+        
+        public void OnCallAfterPieceAction(Action.Action action)
         {
+            if (action is not ICaptures || action.Maker != Piece.Pos || action.Result != ResultFlag.Success) return;
             var targetPos = action.Target;
             var targetRank = RankOf(targetPos);
             var targetFile = FileOf(targetPos);
@@ -22,14 +24,14 @@ namespace Game.Effects.Others
             var pieceOnLeft = PieceOn(IndexOf(targetRank, leftTargetFile));
             if (pieceOnLeft != null && pieceOnLeft != Piece)
             {
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(pieceOnLeft)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnLeft)));
             }
             
             var rightTargetFile = targetFile + 1;
             var pieceOnRight = PieceOn(IndexOf(targetRank, rightTargetFile));
             if (pieceOnRight != null && pieceOnRight != Piece)
             {
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(pieceOnRight)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnRight)));
             }
         }
 

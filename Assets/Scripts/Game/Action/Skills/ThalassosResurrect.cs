@@ -15,7 +15,7 @@ namespace Game.Action.Skills
             return 0;
         }
         private readonly string typeTo;
-        public ThalassosResurrect(int maker, int to, string typeTo) : base(maker, true)
+        public ThalassosResurrect(int maker, int to, string typeTo) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;

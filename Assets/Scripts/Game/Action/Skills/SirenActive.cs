@@ -14,7 +14,7 @@ namespace Game.Action.Skills
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
         private readonly ushort moveTo;
-        public SirenActive(ushort maker, int f, int t) : base(maker, true)
+        public SirenActive(ushort maker, int f, int t) : base(maker)
         {
             Maker = maker;
             Target = (ushort)f;

@@ -6,7 +6,7 @@ namespace Game.Action.Captures
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrenziedCapture: Action, IDontEndTurn, ICaptures
     {
-        public FrenziedCapture(int f, int t) : base(f, true)
+        public FrenziedCapture(int f, int t) : base(f)
         {
             Maker = f;
             Target = t;

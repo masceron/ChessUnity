@@ -5,7 +5,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Leashed: Effect
+    public class Leashed: Effect, IOnMoveGenEffect
     {
         public readonly int Position;
         public Leashed(PieceLogic piece, int position, sbyte duration) : base(duration, 1, piece, "effect_leashed")
@@ -13,8 +13,9 @@ namespace Game.Effects.Debuffs
             Position = position;
         }
 
-        public override void OnCallMoveGen(List<Action.Action> actions)
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece) return;
             if (actions == null || actions.Count == 0) return;
             
             actions.RemoveAll(action => 

@@ -18,7 +18,7 @@ namespace Game.Effects.Others
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (caster.IsDead() || BoardUtils.Distance(caster.Pos, Piece.Pos) > 1)
+            if (!BoardUtils.IsAlive(caster) || BoardUtils.Distance(caster.Pos, Piece.Pos) > 1)
             {
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }

@@ -2,12 +2,13 @@ using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DeathDefianceUI;
 using System.Linq;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
 	[Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	public class DeathDefiance: Effect
+	public class DeathDefiance: Effect, IAfterPieceActionEffect
 	{
 		private int deathDefianceCount;
 		public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
@@ -15,10 +16,10 @@ namespace Game.Effects.Traits
 		this.deathDefianceCount = deathDefianceCount;
 		}
 
-		public override void OnCallPieceAction(Action.Action action)
+		public void OnCallAfterPieceAction(Action.Action action)
 		{
 			//còn né nữa chưa tính
-			if(Piece.IsDead()) return;
+			if(!BoardUtils.IsAlive(Piece)) return;
 			if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
 				|| Piece.Effects.Any(e => e.EffectName == "effect_carapace") 
 					|| Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
