@@ -5,13 +5,13 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class ShadowFinPassive : Effect
+    public class ShadowFinPassive : Effect, IOnApply
     {
         public ShadowFinPassive(PieceLogic piece) : base(-1, 1, piece, "effect_shadow_fin_passive")
         {
         }
 
-        public override void OnApply()
+        public void OnApply()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(Piece)));
         }
