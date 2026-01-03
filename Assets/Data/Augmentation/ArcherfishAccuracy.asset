@@ -16,4 +16,4 @@ MonoBehaviour:
   Rarity: 2
   Slot: 1
   Key: Augmentation_Archerfish_Accuracy
-  Icon: {fileID: 0}
+  Icon: {fileID: 2800000, guid: 863e676f31f110941a542aeee1c65c6f, type: 3}

@@ -40,7 +40,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                     infos.Add(info);
                 }
                 var pieceConfig = new PieceConfig(troop.PieceType, false,
-                    (ushort)(troop.Rank * Config.boardSize + troop.File));
+                    (ushort)(troop.Rank * Config.boardSize + troop.File), null);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
 
