@@ -46,7 +46,7 @@ namespace Game.Relics
         {
             List<PieceLogic> ourPieces = new List<PieceLogic>();
             List<PieceLogic> enemyPieces = new List<PieceLogic>();
-            
+
             PieceLogic ourPiece = null;
             PieceLogic enemyPiece = null;
             
@@ -115,24 +115,9 @@ namespace Game.Relics
             if (ourPiece != null && enemyPiece != null)
             {
                 var ourPending = new EyeOfMimicPending(this, ourPiece.Pos, ourPiece.Color);
-                if (ourPending is IPendingAble op)
-                {
-                    op.CompleteAction();
-                }
-                else
-                {
-                    BoardViewer.Ins.ExecuteAction(ourPending);
-                }
-                
+                ourPending.CompleteAction();
                 var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos, enemyPiece.Color);
-                if (ourPending is IPendingAble ep)
-                {
-                    ep.CompleteAction();
-                }
-                else
-                {
-                    BoardViewer.Ins.ExecuteAction(enemyPending);
-                }
+                enemyPending.CompleteAction();
             }
         }
     }

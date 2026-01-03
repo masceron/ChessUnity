@@ -36,22 +36,7 @@ namespace Game.Action.Internal.Pending.Relic
 
             SecondTarget = hovering;
             Debug.Log(SecondTarget.Type);
-            TileManager.Ins.UnmarkAll();
-
-            var ourSide = MatchManager.Ins.GameState.OurSide;
-
-            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
-
-            ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
-
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-
-            eyeOfMimic.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-
-            ResetTargets();
+            ActionManager.DoManualAction(this);
         }
 
         private static void ResetTargets()
@@ -63,14 +48,22 @@ namespace Game.Action.Internal.Pending.Relic
         public void Dispose()
         {
             ResetTargets();
-
             eyeOfMimic = null;
-
             BoardViewer.SelectingFunction = 0;
         }
 
         protected override void ModifyGameState()
         {
+            var ourSide = BoardUtils.OurSide();
+            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
+            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
+            ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
+            ResetTargets();
+            eyeOfMimic.SetCooldown();
+            TileManager.Ins.UnmarkAll();
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
     }
 
