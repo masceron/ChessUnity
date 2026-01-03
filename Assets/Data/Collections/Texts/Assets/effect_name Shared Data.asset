@@ -423,6 +423,14 @@ MonoBehaviour:
     m_Key: effect_cabezon_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 52517574788567040
+    m_Key: effect_eerie_presence_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52517683760779264
+    m_Key: effect_predator_eyes_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

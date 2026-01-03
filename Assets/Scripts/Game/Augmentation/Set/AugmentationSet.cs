@@ -43,6 +43,8 @@ namespace Game.Augmentation.Set
     public enum AugmentationSetType
     {
         None,
-        StalkerInstinct
+        StalkerInstinct,
+        ScrapCollector, 
+        Spectre
     }
 }

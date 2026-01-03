@@ -26,6 +26,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
+            ApplyEffect(FirstTarget, SecondTarget);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
@@ -45,7 +46,6 @@ namespace Game.Action.Skills
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
 
-            ApplyEffect(FirstTarget, SecondTarget);
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -55,8 +55,8 @@ namespace Game.Action.Skills
 
         private void ApplyEffect(PieceLogic firstTarget, PieceLogic secondTarget)
         {
-            ActionManager.ExecuteImmediately(new Purify(Maker, firstTarget.Pos));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(secondTarget)));
+            ActionManager.EnqueueAction(new Purify(Maker, firstTarget.Pos));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget)));
         }
 
         private static void ResetTargets()

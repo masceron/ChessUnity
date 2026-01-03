@@ -68,6 +68,8 @@ namespace Game.Augmentation
         RaysTail,
         ColdBlooded,
         MantaSpine,
+        EeriePresence,
+        PredatorEyes,
         None,
     }
 

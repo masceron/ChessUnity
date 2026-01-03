@@ -324,7 +324,7 @@ namespace Game.Managers
                 
                 if (startTurnEffect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
                 {
-                    startTurnEffect.OnCallStart(mainAction);
+                    startTurnEffect.OnCallStart(mainAction); 
                 }
 
                 //The next turn is ours.
