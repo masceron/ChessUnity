@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: AugmentationData
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.Collections.AugmentationData
   augmentationsData:
-    keys: 0000000003000000
+    keys: 00000000030000000600000008000000090000000a0000000b000000
     values:
     - {fileID: 11400000, guid: d3ced4f236ee7ec43add753fcfd43d59, type: 2}
     - {fileID: 11400000, guid: d8f89c95645a6514a94718a2cf973d7a, type: 2}
+    - {fileID: 11400000, guid: ed9ffbf92bf2ac44ab9b5801f5ae9711, type: 2}
+    - {fileID: 11400000, guid: c1756679157914a4bba2bd5177e42ed8, type: 2}
+    - {fileID: 11400000, guid: 2801023a674d7ea47b5920ff033b2b83, type: 2}
+    - {fileID: 11400000, guid: 14d044f6007e67547a20f28f33e5f967, type: 2}
+    - {fileID: 11400000, guid: 0a6a2c873f805ec4a8a38b3c2b31b2d1, type: 2}
