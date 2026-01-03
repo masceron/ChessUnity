@@ -4,10 +4,9 @@ using Game.Action.Internal;
 using Game.Action.Relics;
 using Game.Action.Skills;
 using Game.Common;
+using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
-using UnityEngine;
-
 
 namespace Game.Action
 {
@@ -48,6 +47,33 @@ namespace Game.Action
             while (_actionStack.TryPop(out var stackAction)) stackAction.Action.Execute();
         }
 
+        private static void AfterActionResolve(Action mainAction)
+        {
+            var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionEffect>();
+            var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionEffect>();
+            
+            if (mainAction is IRelicAction iRelicAction)
+            {
+                foreach (var listener in afterRelicActionListeners)
+                {
+                    if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
+                    
+                    listener.OnCallAfterRelicAction(iRelicAction);
+                    ProcessStack(); 
+                }
+            }
+            else if (mainAction is not IInternal)
+            {
+                foreach (var listener in afterPieceActionListeners)
+                {
+                    if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
+                    
+                    listener.OnCallAfterPieceAction(mainAction);
+                    ProcessStack(); 
+                }
+            }
+        }
+
         private static void ProcessStack()
         {
             while (_actionStack.Count > 0)
@@ -82,14 +108,7 @@ namespace Game.Action
                     currentAction.Execute();
                 }
                 
-                if (currentAction is IRelicAction iRelicAction)
-                {
-                    BoardUtils.NotifyAfterRelicAction(iRelicAction);
-                }
-                else if (currentAction is not IInternal)
-                {
-                    BoardUtils.NotifyAfterPieceAction(currentAction);
-                }
+                AfterActionResolve(currentAction);
             }
         }
 

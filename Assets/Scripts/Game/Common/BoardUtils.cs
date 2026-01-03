@@ -215,25 +215,26 @@ namespace Game.Common
         public static List<PieceLogic> GetPiecesInSize(int rank, int file, int size, Corner corner, Predicate<PieceLogic> predicate)
         {
             var pieces = new List<PieceLogic>();
-            if (corner == Corner.BottomRight)
+            switch (corner)
             {
-                rank = rank - size / 2 + 1;
-                file = file - size / 2 + 1;
-            }
-            else if (corner == Corner.TopLeft)
-            {
-                file = file - size / 2 + 1;
-                rank -= size / 2;
-            }
-            else if (corner == Corner.TopRight)
-            {
-                rank -= size / 2;
-                file -= size / 2;
-            }
-            else if (corner == Corner.BottomLeft)
-            {
-                rank = rank - size / 2 + 1;
-                file -= size / 2;
+                case Corner.BottomRight:
+                    rank = rank - size / 2 + 1;
+                    file = file - size / 2 + 1;
+                    break;
+                case Corner.TopLeft:
+                    file = file - size / 2 + 1;
+                    rank -= size / 2;
+                    break;
+                case Corner.TopRight:
+                    rank -= size / 2;
+                    file -= size / 2;
+                    break;
+                case Corner.BottomLeft:
+                    rank = rank - size / 2 + 1;
+                    file -= size / 2;
+                    break;
+                default:
+                    return null;
             }
 
             for (var r = rank; r < rank + size; r++)
@@ -297,15 +298,12 @@ namespace Game.Common
 
         public static List<Effect> EffectWithEffectCategory(PieceLogic piece, EffectCategory effectCategory)
         {
-            List<Effect> effectsWithEffectCategory = new List<Effect>();
-            foreach (var effect in piece.Effects)
-            {
-                if (effect.Category == effectCategory)
-                {
-                    effectsWithEffectCategory.Add(effect);
-                }
-            }
-            return effectsWithEffectCategory;
+            return piece.Effects.Where(effect => effect.Category == effectCategory).ToList();
+        }
+
+        public static List<T> GetEffectHookList<T>()
+        {
+            return MatchManager.Ins.GameState.effectHooks.GetList<T>().ToList();
         }
 
         public static void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> list)
@@ -318,19 +316,9 @@ namespace Game.Common
             MatchManager.Ins.GameState.effectHooks.NotifyBeforePieceAction(action);
         }
         
-        public static void NotifyAfterPieceAction(Action.Action action)
-        {
-            MatchManager.Ins.GameState.effectHooks.NotifyAfterPieceAction(action);
-        }
-        
         public static void NotifyBeforeRelicAction(IRelicAction action)
         {
             MatchManager.Ins.GameState.effectHooks.NotifyBeforeRelicAction(action);
-        }
-        
-        public static void NotifyAfterRelicAction(IRelicAction action)
-        {
-            MatchManager.Ins.GameState.effectHooks.NotifyAfterRelicAction(action);
         }
         
         public static void NotifyOnEndTurn(Action.Action action)

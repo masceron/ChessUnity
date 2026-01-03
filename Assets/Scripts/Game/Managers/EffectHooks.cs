@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Game.Action.Internal;
 using Game.Action.Relics;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 
 namespace Game.Managers
 {
@@ -21,6 +23,67 @@ namespace Game.Managers
         private readonly List<IEndTurnEffect> onEndTurns = new();
         private readonly List<IApplyEffect> onEffectApplies = new();
         private readonly List<IMoveRangeModifier> onMoveRanges = new();
+        
+        private class HookBinding
+        {
+            public IList List;
+            public Action<Effect> Add;
+            public Action<Effect> Remove;
+        }
+        
+        private readonly Dictionary<Type, HookBinding> bindings = new();
+
+        public EffectHooks()
+        {
+            Register(onApplies);
+            Register(onRemoves);
+            Register(onMoveGens);
+            Register(afterPieceActions);
+            Register(beforePieceActions);
+            Register(beforeRelicActions);
+            Register(afterRelicActions);
+            Register(onDies);
+            Register(onStartTurns);
+            Register(onEndTurns);
+            Register(onEffectApplies);
+            Register(onMoveRanges);
+        }
+        
+        private void Register<T>(List<T> list)
+        {
+            bindings[typeof(T)] = new HookBinding
+            {
+                List = list,
+                Add = e => AddToList(list, (T)(object)e),
+                Remove = e => RemoveFromList(list, (T)(object)e)
+            };
+        }
+        
+
+        public void AddObserver(Effect effect)
+        {
+            foreach (var kvp in bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
+            {
+                kvp.Value.Add(effect);
+            }
+        }
+
+        public void RemoveObserver(Effect effect)
+        {
+            foreach (var kvp in bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
+            {
+                kvp.Value.Remove(effect);
+            }
+        }
+
+        public List<T> GetList<T>()
+        {
+            if (bindings.TryGetValue(typeof(T), out var binding))
+            {
+                return (List<T>)binding.List;
+            }
+            return null;
+        }
 
         private static void AddToList<T>(List<T> list, T effect)
         {
@@ -32,63 +95,7 @@ namespace Game.Managers
         {
             list.Remove(effect);
         }
-
-        public void AddObserver(Effect effect)
-        {
-            if (effect is IOnApply onApply)
-                AddToList(onApplies, onApply);
-            if (effect is IOnRemove onRemove)
-                AddToList(onRemoves, onRemove);
-            if (effect is IOnMoveGenEffect onMoveGenEffect)
-                AddToList(onMoveGens, onMoveGenEffect);
-            if (effect is IBeforePieceActionEffect beforePieceAction)
-                AddToList(beforePieceActions, beforePieceAction);
-            if (effect is IAfterPieceActionEffect afterPieceAction)
-                AddToList(afterPieceActions, afterPieceAction);
-            if (effect is IBeforeRelicActionEffect beforeRelicActionEffect)
-                AddToList(beforeRelicActions, beforeRelicActionEffect);
-            if (effect is IAfterRelicActionEffect afterRelicActionEffect)
-                AddToList(afterRelicActions, afterRelicActionEffect);
-            if (effect is IDeadEffect deadEffect)
-                AddToList(onDies, deadEffect);
-            if (effect is IStartTurnEffect startTurnEffect)
-                AddToList(onStartTurns, startTurnEffect);
-            if (effect is IEndTurnEffect endTurnEffect)
-                AddToList(onEndTurns, endTurnEffect);
-            if (effect is IApplyEffect applyEffect)
-                AddToList(onEffectApplies, applyEffect);
-            if (effect is IMoveRangeModifier moveRangeModifier)
-                AddToList(onMoveRanges, moveRangeModifier);
-        }
-
-        public void RemoveObserver(Effect effect)
-        {
-            if (effect is IOnApply onApply)
-                RemoveFromList(onApplies, onApply);
-            if (effect is IOnRemove onRemove)
-                RemoveFromList(onRemoves, onRemove);
-            if (effect is IOnMoveGenEffect onMoveGenEffect)
-                RemoveFromList(onMoveGens, onMoveGenEffect);
-            if (effect is IBeforePieceActionEffect beforePieceAction)
-                RemoveFromList(beforePieceActions, beforePieceAction);
-            if (effect is IAfterPieceActionEffect afterPieceAction)
-                RemoveFromList(afterPieceActions, afterPieceAction);
-            if (effect is IBeforeRelicActionEffect beforeRelicActionEffect)
-                RemoveFromList(beforeRelicActions, beforeRelicActionEffect);
-            if (effect is IAfterRelicActionEffect afterRelicActionEffect)
-                RemoveFromList(afterRelicActions, afterRelicActionEffect);
-            if (effect is IDeadEffect deadEffect)
-                RemoveFromList(onDies, deadEffect);
-            if (effect is IStartTurnEffect startTurnEffect)
-                RemoveFromList(onStartTurns, startTurnEffect);
-            if (effect is IEndTurnEffect endTurnEffect)
-                RemoveFromList(onEndTurns, endTurnEffect);
-            if (effect is IApplyEffect applyEffect)
-                RemoveFromList(onEffectApplies, applyEffect);
-            if (effect is IMoveRangeModifier moveRangeModifier)
-                RemoveFromList(onMoveRanges, moveRangeModifier);
-        }
-
+        
         public void NotifyEnd(Action.Action mainAction, bool sideToMove)
         {
             onEndTurns.ForEach(effect =>
@@ -182,15 +189,6 @@ namespace Game.Managers
                 e.OnCallBeforePieceAction(action);
             });
         }
-        
-        public void NotifyAfterPieceAction(Action.Action action)
-        {
-            afterPieceActions.ForEach(e =>
-            {
-                if (((Effect)e).disabled) return;
-                e.OnCallAfterPieceAction(action);
-            });
-        }
 
         public void NotifyBeforeRelicAction(IRelicAction relicAction)
         {
@@ -198,15 +196,6 @@ namespace Game.Managers
             {
                 if (((Effect)e).disabled) return;
                 e.OnCallBeforeRelicAction(relicAction);
-            });
-        }
-        
-        public void NotifyAfterRelicAction(IRelicAction relicAction)
-        {
-            afterRelicActions.ForEach(e =>
-            {
-                if (((Effect)e).disabled) return;
-                e.OnCallAfterRelicAction(relicAction);
             });
         }
     }

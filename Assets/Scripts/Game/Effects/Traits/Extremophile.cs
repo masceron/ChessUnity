@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.Effects.Traits
 {
     public class Extremophile: Effect, IApplyEffect
     {
-        private readonly List<EffectCategory> blockCategories = new()
+        private static readonly List<EffectCategory> BlockCategories = new()
         {
             EffectCategory.Buff,
             EffectCategory.Debuff
@@ -22,7 +23,7 @@ namespace Game.Effects.Traits
             if (Piece != effect.Piece) return;
             
 
-            if (blockCategories.Contains(effect.Category))
+            if (BlockCategories.Contains(effect.Category))
             {
                 applyEffect.Result = ResultFlag.Blocked;
             }

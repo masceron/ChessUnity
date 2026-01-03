@@ -36,7 +36,6 @@ namespace Game.Action
         
         public void Execute()
         {
-            Debug.Log(this.GetType());
             Animate();
             ModifyGameState();
         }

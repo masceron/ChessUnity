@@ -25,6 +25,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
+            if (action.Maker < 0) return;
             var activeBoard = ActiveBoard();
             if (action.Maker == Piece.Pos)
             {
