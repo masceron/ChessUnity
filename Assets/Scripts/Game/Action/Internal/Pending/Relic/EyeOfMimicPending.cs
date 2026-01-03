@@ -36,7 +36,7 @@ namespace Game.Action.Internal.Pending.Relic
 
             SecondTarget = hovering;
             Debug.Log(SecondTarget.Type);
-            ActionManager.DoManualAction(this);
+            BoardViewer.Ins.ExecuteAction(this);
         }
 
         private static void ResetTargets()
