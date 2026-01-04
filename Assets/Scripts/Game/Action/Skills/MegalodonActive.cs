@@ -30,6 +30,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
+            ActionManager.EnqueueAction(new KillPiece(_firstTarget.Pos));
+            ActionManager.EnqueueAction(new KillPiece(_secondTarget.Pos));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
@@ -48,9 +50,6 @@ namespace Game.Action.Skills
 
             _secondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-            
-            ActionManager.ExecuteImmediately(new KillPiece(_firstTarget.Pos));
-            ActionManager.ExecuteImmediately(new KillPiece(_secondTarget.Pos));
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

@@ -76,6 +76,8 @@ namespace Game.Augmentation
         LeviathanScale,
         ShadowFin,
         TaintedHeart,
+        EeriePresence,
+        PredatorEyes,
         None = 10000,
     }
 

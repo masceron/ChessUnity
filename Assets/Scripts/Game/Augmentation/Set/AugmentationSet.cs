@@ -45,5 +45,6 @@ namespace Game.Augmentation.Set
         None,
         StalkerInstinct,
         ScrapCollector,
+        Spectre
     }
 }

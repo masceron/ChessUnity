@@ -21,7 +21,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.ExecuteImmediately(new KillPiece(Target));
+            ActionManager.EnqueueAction(new KillPiece(Target));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
