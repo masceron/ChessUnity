@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     {
         public FlyingFish(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, KnightSurpass.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Surpass(this)));
         }
 
         protected override void CustomBehaviors(List<Action.Action> list)
