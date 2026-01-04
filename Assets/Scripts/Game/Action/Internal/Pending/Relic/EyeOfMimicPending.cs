@@ -57,7 +57,7 @@ namespace Game.Action.Internal.Pending.Relic
             var ourSide = BoardUtils.OurSide();
             var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
             var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
-            ActionManager.ExecuteImmediately(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
+            ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
             ResetTargets();
             eyeOfMimic.SetCooldown();
             TileManager.Ins.UnmarkAll();
