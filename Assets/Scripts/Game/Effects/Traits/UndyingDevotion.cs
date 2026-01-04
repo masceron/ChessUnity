@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
         /// <param name="action">Toàn bộ những Action kế thừa từ ICaptures sẽ được truyền vào hàm này </param>
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action == null || PieceOn(action.Target).Color != Piece.Color ||
+            if (PieceOn(action.Target).Color != Piece.Color ||
                 action.Result != ResultFlag.Success) return;
             action.Result = ResultFlag.Blocked;
             Debug.Log("[UndyingDevotion] Failed capture");

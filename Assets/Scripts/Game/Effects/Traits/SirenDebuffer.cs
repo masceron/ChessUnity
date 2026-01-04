@@ -1,60 +1,39 @@
 ﻿using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
+using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SirenDebuffer: Effect, IEndTurnEffect
+    public class SirenDebuffer: Effect, IStartTurnEffect
     {
         public SirenDebuffer(PieceLogic p) : base(-1, 1, p, "effect_siren_debuffer")
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
-            CalculateEffectRange(p.Pos);
+            StartTurnEffectType = StartTurnEffectType.StartOfEnemyTurn;
         }
 
-        private void CalculateEffectRange(int pos)
+        public StartTurnEffectType StartTurnEffectType { get; }
+
+        public void OnCallStart(Action.Action lastMainAction)
         {
-            var (rank, file) = RankFileOf(pos);
+            var (rank, file) = RankFileOf(Piece.Pos);
             
-            rankStart = ClampUp(rank - 4);
-            rankEnd = ClampDown(rank + 4);
-            fileStart = ClampUp(file - 4);
-            fileEnd = ClampDown(file + 4);
-        }
-
-        private int rankStart;
-        private int rankEnd;
-        private int fileStart;
-        private int fileEnd;
-
-        public void OnCallEnd(Action.Action lastMainAction)
-        {
-            if (lastMainAction.Maker == Piece.Pos)
+            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 4))
             {
-                CalculateEffectRange(Piece.Pos);
-            }
-
-            for (var r = rankStart; r <= rankEnd; r++)
-            {
-                var rowIndex = RowIndex(r);
-                for (var f = fileStart; f <= fileEnd; f++)
-                {
-                    var index = rowIndex + f;
-                    var pOn = PieceOn(index);
-                    if (pOn == null) continue;
+                var pOn = PieceOn(IndexOf(r, f));
+                if (pOn == null) continue;
                     
-                    if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != "effect_slow"))
-                    {
-                        ActionManager.EnqueueAction(new SirenDebuff(Piece.Pos, Piece.Pos, (ushort)index));
-                    }
+                if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != "effect_slow"))
+                {
+                    ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, pOn)));
                 }
             }
         }
-
-        public EndTurnEffectType EndTurnEffectType { get; set; }
 
         public override int GetValueForAI()
         {

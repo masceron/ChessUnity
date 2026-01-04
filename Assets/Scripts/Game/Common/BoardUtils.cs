@@ -320,16 +320,6 @@ namespace Game.Common
         {
             MatchManager.Ins.GameState.effectHooks.NotifyBeforeRelicAction(action);
         }
-        
-        public static void NotifyOnEndTurn(Action.Action action)
-        {
-            MatchManager.Ins.GameState.effectHooks.NotifyEnd(action, MatchManager.Ins.GameState.SideToMove);
-        }
-        
-        public static void NotifyOnStartTurn(Action.Action action)
-        {
-            MatchManager.Ins.GameState.effectHooks.NotifyStart(action, MatchManager.Ins.GameState.SideToMove);
-        }
 
         public static void NotifyInternalAction(IInternal action)
         {
@@ -341,6 +331,8 @@ namespace Game.Common
 
         public static bool IsAlive(PieceLogic piece)
         {
+            if (piece == null) return true;
+            
             return PieceOn(piece.Pos) == piece;
         }
     }

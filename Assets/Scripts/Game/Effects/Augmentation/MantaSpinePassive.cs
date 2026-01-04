@@ -20,8 +20,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action == null || 
-                action.Target != Piece.Pos || 
+            if (action.Target != Piece.Pos || 
                 action.Maker == Piece.Pos || 
                 (action.Flag & ActionFlag.Unblockable) != 0) 
                 return;

@@ -44,7 +44,7 @@ namespace Game.Action
 
         public static void ExecuteWhenStart()
         {
-            while (_actionStack.TryPop(out var stackAction)) stackAction.Action.Execute();
+            StartTurnProcess(new SkipTurn());
         }
 
         private static void AfterActionResolve(Action mainAction)
@@ -100,18 +100,90 @@ namespace Game.Action
 
                     if (_actionStack.Peek() != currentActionStack) continue;
                 }
-                
+
                 _actionStack.Pop();
 
                 if (currentAction.IsValid())
                 {
                     currentAction.Execute();
+                    ProcessStack();
                 }
-                
+
                 AfterActionResolve(currentAction);
             }
         }
 
+        private static void StartTurnProcess(Action mainAction)
+        {
+            CurrentPhase = Phase.BeforeEndTurn;
+
+            var startTurnListeners = BoardUtils.GetEffectHookList<IStartTurnEffect>();
+            
+            startTurnListeners.ForEach(effect =>
+            {
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
+                {
+                    effect.OnCallStart(mainAction);
+                    ProcessStack();
+                }
+                //The next turn is ours.
+                else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
+                {
+                    if (effect.StartTurnEffectType != StartTurnEffectType.StartOfAllyTurn) return;
+                    
+                    effect.OnCallStart(mainAction);
+                    ProcessStack();
+                }
+                //The next turn is of the opponent.
+                else
+                {
+                    if (effect.StartTurnEffectType != StartTurnEffectType.StartOfEnemyTurn) return;
+                    
+                    effect.OnCallStart(mainAction);
+                    ProcessStack();
+                }
+            });
+        }
+
+        private static void EndTurnProcess(Action mainAction)
+        {
+            new EndTurn().Execute();
+            CurrentPhase = Phase.AfterEndTurn;
+
+            var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnEffect>();
+            endTurnListeners.ForEach(effect =>
+            {
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
+                {
+                    effect.OnCallEnd(mainAction);
+                    ProcessStack();
+                }
+                //The next turn is ours.
+                else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
+                {
+                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
+                    {
+                        effect.OnCallEnd(mainAction);
+                        ProcessStack();
+                    }
+                }
+                //The next turn is of the opponent.
+                else
+                {
+                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
+                    {
+                        effect.OnCallEnd(mainAction);
+                        ProcessStack();
+                    }
+                }
+            });
+            
+            _state.EffectCountdown();
+            ProcessStack();
+        }
+        
         private static bool ShouldEndTurn(Action action)
         {
             switch (action)
@@ -132,22 +204,6 @@ namespace Game.Action
             return true;
         }
 
-        private static void EndTurnProcess(Action mainAction)
-        {
-            new EndTurn().Execute();
-            CurrentPhase = Phase.AfterEndTurn;
-            
-            BoardUtils.NotifyOnEndTurn(mainAction);
-            ProcessStack();
-            
-            _state.EffectCountdown();
-            ProcessStack();
-            
-            CurrentPhase = Phase.BeforeEndTurn;
-            BoardUtils.NotifyOnStartTurn(mainAction);
-            ProcessStack();
-        }
-
         public static bool DoManualAction(Action action)
         {
             _actionStack.Push(new StackAction(action));
@@ -156,6 +212,7 @@ namespace Game.Action
             if (!ShouldEndTurn(action)) return false;
             
             EndTurnProcess(action);
+            StartTurnProcess(action);
             return true;
         }
 

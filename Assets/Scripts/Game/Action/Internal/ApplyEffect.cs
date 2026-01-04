@@ -30,8 +30,6 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            BoardUtils.AddEffectObserver(Effect);
-            
             var already = Effect.Piece.Effects.FirstOrDefault(e => e.EffectName == Effect.EffectName);
 
             if (already == null)
@@ -42,6 +40,7 @@ namespace Game.Action.Internal
                 if (Effect is IOnApply onApply)
                     onApply.OnApply();
                 Effect.Piece.Effects.Add(Effect);
+                BoardUtils.AddEffectObserver(Effect);
             }
             else
             {

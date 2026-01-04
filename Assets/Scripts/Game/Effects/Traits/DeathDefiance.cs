@@ -23,7 +23,7 @@ namespace Game.Effects.Traits
 			if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
 				|| Piece.Effects.Any(e => e.EffectName == "effect_carapace") 
 					|| Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
-			if (action == null || action.Target != Piece.Pos || action.Maker == action.Target) {
+			if (action.Target != Piece.Pos || action.Maker == action.Target) {
                 return;
             }
 			if (deathDefianceCount <= 1) return;

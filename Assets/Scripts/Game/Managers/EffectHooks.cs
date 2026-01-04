@@ -96,64 +96,6 @@ namespace Game.Managers
             list.Remove(effect);
         }
         
-        public void NotifyEnd(Action.Action mainAction, bool sideToMove)
-        {
-            onEndTurns.ForEach(effect =>
-            {
-                if (((Effect)effect).disabled) return;
-                if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
-                {
-                    effect.OnCallEnd(mainAction);
-                }
-        
-                //The next turn is ours.
-                else if (sideToMove == ((Effect)effect).Piece.Color)
-                {
-                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
-                    {
-                        effect.OnCallEnd(mainAction);
-                    }
-                }
-                //The next turn is of the opponent.
-                else
-                {
-                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
-                    {
-                        effect.OnCallEnd(mainAction);
-                    }
-                }
-            });
-        }
-        
-        public void NotifyStart(Action.Action mainAction, bool sideToMove)
-        {
-            onStartTurns.ForEach(effect =>
-            {
-                if (((Effect)effect).disabled) return;
-                if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
-                {
-                    effect.OnCallStart(mainAction);
-                }
-        
-                //The next turn is ours.
-                else if (sideToMove == ((Effect)effect).Piece.Color)
-                {
-                    if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAllyTurn)
-                    {
-                        effect.OnCallStart(mainAction);
-                    }
-                }
-                //The next turn is of the opponent.
-                else
-                {
-                    if (effect.StartTurnEffectType == StartTurnEffectType.StartOfEnemyTurn)
-                    {
-                        effect.OnCallStart(mainAction);
-                    }
-                }
-            });
-        }
-        
         public void NotifyDead(PieceLogic pieceToDie)
         {
             onDies.ForEach (effect =>
