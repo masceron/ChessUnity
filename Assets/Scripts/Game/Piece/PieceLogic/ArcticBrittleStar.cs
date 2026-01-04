@@ -13,8 +13,8 @@ namespace Game.Piece.PieceLogic
     {
         public ArcticBrittleStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 15, this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Consume(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 15, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;

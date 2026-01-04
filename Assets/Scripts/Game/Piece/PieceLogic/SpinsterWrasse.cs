@@ -73,8 +73,8 @@ namespace Game.Piece.PieceLogic
                     var idxA = UnityEngine.Random.Range(0, listA.Count - 1);
                     var idxB = UnityEngine.Random.Range(0, listB.Count - 1);
                     
-                    ActionManager.ExecuteImmediately(new Purify(Pos, idxA));
-                    ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(PieceOn(idxB))));
+                    ActionManager.EnqueueAction(new Purify(Pos, idxA));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(idxB))));
                 }
             };
         }

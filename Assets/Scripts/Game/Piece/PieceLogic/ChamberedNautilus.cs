@@ -19,7 +19,7 @@ namespace Game.Piece.PieceLogic
 
         public ChamberedNautilus(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BarracudaMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new ChamberedNautilusHunger(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new ChamberedNautilusHunger(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

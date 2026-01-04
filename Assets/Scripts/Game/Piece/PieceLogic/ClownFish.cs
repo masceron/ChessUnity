@@ -11,8 +11,8 @@ namespace Game.Piece.PieceLogic
     {
         public ClownFish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new ClownFishPassive(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Demolisher(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new ClownFishPassive(this)));
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(this)));
         }
         
