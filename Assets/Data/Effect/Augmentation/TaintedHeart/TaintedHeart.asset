@@ -15,5 +15,5 @@ MonoBehaviour:
   key: effect_tainted_heart_passive
   category: 4
   stack: 1
-  priority: 0
+  priority: 1
   icon: {fileID: 0}
