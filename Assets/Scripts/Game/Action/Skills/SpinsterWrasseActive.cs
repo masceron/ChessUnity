@@ -28,6 +28,8 @@ namespace Game.Action.Skills
         {
             ApplyEffect(FirstTarget, SecondTarget);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            
+            ResetTargets();
         }
 
         public void CompleteAction()
@@ -49,8 +51,6 @@ namespace Game.Action.Skills
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-
-            ResetTargets();
         }
 
         private void ApplyEffect(PieceLogic firstTarget, PieceLogic secondTarget)

@@ -33,6 +33,8 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(new KillPiece(_firstTarget.Pos));
             ActionManager.EnqueueAction(new KillPiece(_secondTarget.Pos));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            
+            ResetTargets();
         }
 
         public void CompleteAction()
@@ -53,8 +55,6 @@ namespace Game.Action.Skills
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-
-            ResetTargets();
         }
 
         public void CompleteActionForAI()
