@@ -60,6 +60,7 @@ namespace Game.Action.Skills
                 return;
             }
             SecondTarget = hovering;
+            BoardViewer.Ins.ExecuteAction(this);
         }
         
         public void Dispose()
