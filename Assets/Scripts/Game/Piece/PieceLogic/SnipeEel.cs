@@ -16,7 +16,7 @@ namespace Game.Piece.PieceLogic
     {
         public SnipeEel(PieceConfig cfg) : base(cfg, RangerMove.Quiets, RangerMove.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new SnipeEelPassive(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new SnipeEelPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
