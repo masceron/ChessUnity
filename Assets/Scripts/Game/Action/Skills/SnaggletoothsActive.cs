@@ -17,25 +17,21 @@ namespace Game.Action.Skills
             if (maker == null) return 0;
             return pieceAI.Color == maker.Color ? 10 : 0;
         }
-        private bool flag;
-        public SnaggletoothsActive(int maker, int to, bool flag) : base(maker)
+        public SnaggletoothsActive(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
-            this.flag = flag;
         }
         protected override void ModifyGameState()
         {
-            if (!flag)
-            {
-                var existingBleeding = PieceOn(Target).Effects.OfType<Bleeding>().ToList();
 
-                foreach (var bleeding in existingBleeding)
-                {
-                    ActionManager.ExecuteImmediately(new RemoveEffect(bleeding));
-                }
-            } 
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(Maker))));
+            var existingBleeding = PieceOn(Target).Effects.OfType<Bleeding>().ToList();
+
+            foreach (var bleeding in existingBleeding)
+            {
+                ActionManager.EnqueueAction(new RemoveEffect(bleeding));
+            }
+
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
