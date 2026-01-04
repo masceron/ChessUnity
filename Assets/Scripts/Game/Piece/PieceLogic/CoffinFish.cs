@@ -10,8 +10,8 @@ namespace Game.Piece.PieceLogic
     {
         public CoffinFish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, None.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Demolisher(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new CoffinFishVengeful(this, 25)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new CoffinFishVengeful(this, 25)));
         }
     }
 }

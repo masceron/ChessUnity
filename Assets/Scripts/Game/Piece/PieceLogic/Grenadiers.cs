@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic
     {
         public Grenadiers(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(-1, 50, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 50, this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

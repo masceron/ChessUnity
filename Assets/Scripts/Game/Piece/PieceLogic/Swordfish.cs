@@ -13,8 +13,8 @@ namespace Game.Piece.PieceLogic
     {
         public Swordfish(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Piercing(-1, this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new SwordfishAttack(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new SwordfishAttack(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;

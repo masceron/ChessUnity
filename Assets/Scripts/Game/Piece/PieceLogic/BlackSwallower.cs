@@ -10,8 +10,8 @@ namespace Game.Piece.PieceLogic
     {
         public BlackSwallower(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, FrontDefenderMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new BlackSwallowerPassive(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new BlackSwallowerVengeful(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new BlackSwallowerPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new BlackSwallowerVengeful(this)));
         }
 
     }

@@ -13,8 +13,8 @@ namespace Game.Piece.PieceLogic
     {
         public PhantomJelly(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PhantomJellyMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 50, this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 50, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;

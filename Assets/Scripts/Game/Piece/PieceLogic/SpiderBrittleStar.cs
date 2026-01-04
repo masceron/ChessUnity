@@ -9,8 +9,8 @@ namespace Game.Piece.PieceLogic
     {
         public SpiderBrittleStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Consume(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 15, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 15, this)));
         }
     }
 }

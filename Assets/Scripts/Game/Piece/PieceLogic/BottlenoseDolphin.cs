@@ -14,8 +14,8 @@ namespace Game.Piece.PieceLogic
     {
         public BottlenoseDolphin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new QuickReflex(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new BottlenoseDolphinPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new QuickReflex(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new BottlenoseDolphinPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

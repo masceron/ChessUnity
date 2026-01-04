@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic
     {
         public MarineFlatworm(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new MarineFlatwormPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new MarineFlatwormPassive(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

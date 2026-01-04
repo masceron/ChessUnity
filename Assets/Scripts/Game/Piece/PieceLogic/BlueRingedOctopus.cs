@@ -11,9 +11,9 @@ namespace Game.Piece.PieceLogic
     {
         public BlueRingedOctopus(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, RookMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 50, this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new BlueRingedOctopusPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 50, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new BlueRingedOctopusPassive(this)));
 
         }
 

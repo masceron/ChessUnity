@@ -16,8 +16,8 @@ namespace Game.Piece.PieceLogic
     {
         public MarineIguana(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Extremophile(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new FreeMovement(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new FreeMovement(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

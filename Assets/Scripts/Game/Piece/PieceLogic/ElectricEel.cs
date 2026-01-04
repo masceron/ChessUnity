@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     {
         public ElectricEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new ElectricEelVengeful(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new ElectricEelVengeful(this)));
             
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

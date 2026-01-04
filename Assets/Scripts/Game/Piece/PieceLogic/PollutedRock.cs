@@ -10,8 +10,8 @@ namespace Game.Piece.PieceLogic
     {
         public PollutedRock(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new PollutedRockPassive(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Construct(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new PollutedRockPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Construct(this)));
         }
     }
 

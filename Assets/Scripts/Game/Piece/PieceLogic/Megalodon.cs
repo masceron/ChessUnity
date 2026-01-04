@@ -16,8 +16,8 @@ namespace Game.Piece.PieceLogic
         public Megalodon(PieceConfig cfg) : base(cfg, RookMoves.Quiets,
             MegalodonMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new FrenziedVeteran(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new FrenziedVeteran(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
 
             Skills = (list, isPlayer, _) =>
             {
