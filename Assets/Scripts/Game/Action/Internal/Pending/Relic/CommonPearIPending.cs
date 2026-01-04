@@ -10,7 +10,7 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearlPending : Action, System.IDisposable, IPendingAble, IRelicAction
+    public class CommonPearlPending : Action, System.IDisposable, IRelicAction
     {
         private CommonPearl commonPearl;
         
@@ -49,17 +49,17 @@ namespace Game.Action.Internal.Pending.Relic
                 _ => null
             };
         }
-        public void CompleteAction()
-        {
-            ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target))));
+        // public void CompleteAction()
+        // {
+        //     ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target))));
 
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-            commonPearl.SetCooldown();
-            MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-            Dispose();
-        }
+        //     BoardViewer.Selecting = -1;
+        //     BoardViewer.SelectingFunction = 0;
+        //     commonPearl.SetCooldown();
+        //     MatchManager.Ins.InputProcessor.Unmark();
+        //     MatchManager.Ins.InputProcessor.UpdateRelic();
+        //     Dispose();
+        // }
 
         public void Dispose()
         {
@@ -69,6 +69,14 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void ModifyGameState()
         {
+            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target))));
+
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            commonPearl.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
 
 

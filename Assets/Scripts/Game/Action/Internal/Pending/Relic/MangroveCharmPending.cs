@@ -10,7 +10,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class MangroveCharmPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class MangroveCharmPending : Action, System.IDisposable, IRelicAction
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
@@ -21,7 +21,46 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        public void CompleteAction()
+        // public void CompleteAction()
+        // {
+        //     var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+        //     if (FirstTarget == null) 
+        //     {
+        //         FirstTarget = hovering;
+        //         TileManager.Ins.UnmarkAll();
+        //         TileManager.Ins.MarkNextEachPiece(FirstTarget.Color, FirstTarget.Pos);
+        //         TileManager.Ins.Select(FirstTarget.Pos);
+        //         return;
+        //     }
+        //     SecondTarget = hovering;
+        //     TileManager.Ins.UnmarkAll();
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Shield(FirstTarget)));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Shield(SecondTarget)));
+        //     BoardViewer.Selecting = -1;
+        //     BoardViewer.SelectingFunction = 0;
+
+        //     mangroveCharm.SetCooldown();
+        //     MatchManager.Ins.InputProcessor.UpdateRelic();
+
+        //     ResetTargets();
+        // }
+
+        private static void ResetTargets()
+        {
+            FirstTarget = null;
+            SecondTarget = null;
+        }
+
+        public void Dispose()
+        {
+            ResetTargets();
+
+            mangroveCharm = null;
+
+            BoardViewer.SelectingFunction = 0;
+        }
+
+        protected override void ModifyGameState()
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
             if (FirstTarget == null) 
@@ -43,25 +82,6 @@ namespace Game.Action.Internal.Pending.Relic
             MatchManager.Ins.InputProcessor.UpdateRelic();
 
             ResetTargets();
-        }
-
-        private static void ResetTargets()
-        {
-            FirstTarget = null;
-            SecondTarget = null;
-        }
-
-        public void Dispose()
-        {
-            ResetTargets();
-
-            mangroveCharm = null;
-
-            BoardViewer.SelectingFunction = 0;
-        }
-
-        protected override void ModifyGameState()
-        {
         }
 
     }

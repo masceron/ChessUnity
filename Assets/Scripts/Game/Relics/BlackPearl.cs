@@ -62,13 +62,7 @@ namespace Game.Relics
             }
             if (selectedPiece == null) return;
             var pending = new BlackPearlPending(this, selectedPiece.Pos);
-            if (pending is IPendingAble p)
-            {
-                p.CompleteAction();
-            } else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
-            }
+            BoardViewer.Ins.ExecuteAction(pending);
         }
     }
 }

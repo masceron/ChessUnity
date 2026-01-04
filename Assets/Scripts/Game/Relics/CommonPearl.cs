@@ -54,13 +54,7 @@ namespace Game.Relics
             var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
 
             var pending = new CommonPearlPending(this, selectedPiece.Pos);
-            if (pending is IPendingAble p)
-            {
-                p.CompleteAction();
-            } else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
-            }
+            BoardViewer.Ins.ExecuteAction(pending);
         }
     }
 }

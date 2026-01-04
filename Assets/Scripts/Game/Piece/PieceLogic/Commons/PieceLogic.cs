@@ -195,8 +195,14 @@ namespace Game.Piece.PieceLogic.Commons
             Quiets(list, Pos, isPlayer);
             Captures(list, Pos, excludeEmptyTile);
 
-            if (hasSkill && Effects.All(e => e.EffectName != "effect_silenced") && Effects.All(e => e.EffectName == "effect_illusion"))
+            if (hasSkill)
             {
+                if (Effects.Any(e => e.EffectName == "effect_silenced") ||
+                    Effects.Any(e => e.EffectName == "effect_illusion") ||
+                        Effects.Any(e => e.EffectName == "effect_crown_of_silence_passive"))
+                {
+                    return; 
+                }
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
             

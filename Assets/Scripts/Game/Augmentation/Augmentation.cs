@@ -72,6 +72,8 @@ namespace Game.Augmentation
         MetalScope,
         MetalMind,
         MetalRegulator,
+        CrownOfSilence,
+        LeviathanScale,
         None = 10000,
     }
 

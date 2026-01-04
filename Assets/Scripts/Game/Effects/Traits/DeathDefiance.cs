@@ -4,7 +4,7 @@ using UX.UI.Ingame.DeathDefianceUI;
 using System.Linq;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
-
+using Game.Action.Captures;
 namespace Game.Effects.Traits
 {
 	[Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -18,6 +18,10 @@ namespace Game.Effects.Traits
 
 		public void OnCallAfterPieceAction(Action.Action action)
 		{
+			 if (action is not ICaptures)
+            {
+                return;
+            }
 			//còn né nữa chưa tính
 			if(!BoardUtils.IsAlive(Piece)) return;
 			if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 

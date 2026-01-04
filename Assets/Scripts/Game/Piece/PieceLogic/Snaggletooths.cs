@@ -14,8 +14,7 @@ namespace Game.Piece.PieceLogic
         public Snaggletooths(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
-            {
-                var flag1 = false;
+            {   
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
@@ -27,14 +26,10 @@ namespace Game.Piece.PieceLogic
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
                         {
-                            list.Add(new SnaggletoothsActive(Pos, index, false));
-                            flag1 = true;
+                            list.Add(new SnaggletoothsActive(Pos, index));
                         }
                     }
-                    if (!flag1)
-                    {
-                        list.Add(new SnaggletoothsActive(Pos, Pos, true));
-                    }
+
                 }
                 else
                 {
@@ -45,7 +40,7 @@ namespace Game.Piece.PieceLogic
                         var (rank, file) = RankFileOf(Pos);
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                         {
-                            list.Add(new SnaggletoothsActive(Pos, IndexOf(rankOff, fileOff), false));
+                            list.Add(new SnaggletoothsActive(Pos, IndexOf(rankOff, fileOff)));
 
                         }
                     }
@@ -55,7 +50,7 @@ namespace Game.Piece.PieceLogic
 
                     var random = new System.Random();
                     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-                    list.Add(new SnaggletoothsActive(Pos, selectedPiece.Pos, true));
+                    list.Add(new SnaggletoothsActive(Pos, selectedPiece.Pos));
                     
                 }
             };

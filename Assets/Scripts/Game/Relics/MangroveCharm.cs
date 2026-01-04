@@ -121,18 +121,19 @@ namespace Game.Relics
             if (bestDuoNoExtremofiles.Count == 0)
             {
                 var best = bestDuo[Random.Range(0, bestDuo.Count - 1)];
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos1))));
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos2))));
+                var pending = new MangroveCharmPending(this, best.pos1);
+                MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
+                MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
+                BoardViewer.Ins.ExecuteAction(pending);
             }
             else
             {
                 var best = bestDuoNoExtremofiles[Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos1))));
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Shield(PieceOn(best.pos2))));
+                var pending = new MangroveCharmPending(this, best.pos1);
+                MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
+                MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
+                BoardViewer.Ins.ExecuteAction(pending);
             }
-            
-            SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
     }
 }
