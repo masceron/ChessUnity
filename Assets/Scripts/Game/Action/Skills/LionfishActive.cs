@@ -36,7 +36,7 @@ namespace Game.Action.Skills
                     var p = PieceOn(IndexOf(rankOff, fileOff));
                     if (p == null || p.Color == caller.Color) continue;
 
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), PieceOn(Maker)));
                 }
             }
 

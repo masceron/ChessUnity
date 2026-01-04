@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
             
             if (action.Target == Piece.Pos && action.Result == ResultFlag.Success)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(3, BoardUtils.PieceOn(action.Maker))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(3, BoardUtils.PieceOn(action.Maker)), Piece));
             }
         }
 

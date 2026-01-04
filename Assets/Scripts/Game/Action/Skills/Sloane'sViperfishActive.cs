@@ -29,7 +29,7 @@ namespace Game.Action.Skills
         {
             if (bleeding)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target)), PieceOn(Maker)));
             }
             else
             {

@@ -67,7 +67,7 @@ namespace Game.Effects.Traits
 
                 foreach (var piece in effectedPieces)
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(piece))));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(piece)), Piece));
                 }
             }
             else
@@ -92,7 +92,7 @@ namespace Game.Effects.Traits
                     foreach (var pos in initActive)
                         activeBoard[pos] = true;
                     
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Maker))));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Maker)), Piece));
                     return;
                 }
                 
@@ -102,7 +102,7 @@ namespace Game.Effects.Traits
                 
                 if (blocker.Item1 != -1)
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Maker))));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Maker)), Piece));
                 }
                 
                 foreach (var pos in initActive)

@@ -20,7 +20,7 @@ namespace Game.Effects.SpecialAbility
         {
             if (action is ICaptures && action.Maker == Piece.Pos && (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Missed))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target)), Piece));
             }
         }
     }
