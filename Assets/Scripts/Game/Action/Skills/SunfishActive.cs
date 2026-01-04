@@ -1,7 +1,9 @@
 using Game.Action.Internal;
+using Game.Action.Internal.Pending;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+using Game.Common;
 
 namespace Game.Action.Skills
 {
@@ -14,33 +16,25 @@ namespace Game.Action.Skills
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -10 : 0;
         }
-        private readonly int Range;
-        public SunfishActive(int maker,int range) : base(maker)
+        
+        public SunfishActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)maker;
-            Range = range;  
+            Target = (ushort)target;
         }
 
-        protected override void ModifyGameState()   
+        protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
-
-            for (var rankOff = rank - Range; rankOff <= rank + Range; rankOff++)
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 4))
             {
-                if (!VerifyBounds(rankOff)) continue;
-                
-                for (var fileOff = file - Range; fileOff <= file + Range; fileOff++)
+                var index = IndexOf(rankOff, fileOff);
+                if (!VerifyIndex(index) || !IsActive(index)) continue;
+                var targetPiece = PieceOn(index);
+                if (targetPiece != null && ColorOfSquare(index) && targetPiece.Color != PieceOn(Maker).Color)
                 {
-                    if (rankOff == rank && fileOff == file) continue;
-                    var p = PieceOn(IndexOf(rankOff, fileOff));
-                    if (p == null || p.Color == caller.Color || !ColorOfSquare(IndexOf(rankOff, fileOff))) continue;
-
-                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, p)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece)));
                 }
             }
-            
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
