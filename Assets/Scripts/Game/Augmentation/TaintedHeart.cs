@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Game.Augmentation.Set;
 using Game.Effects;
+using Game.Effects.Augmentation;
 using Game.Piece.PieceLogic.Commons;
+using UnityEditor;
 
 namespace Game.Augmentation
 {
@@ -16,7 +18,8 @@ namespace Game.Augmentation
         {
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.None,false);
-            
+            //TODO: Change AugmentationSetType to Spectre.
+            PassiveEffects.Add(new TaintedHeartPassive(Target));
         }
     }
 }
