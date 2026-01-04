@@ -12,7 +12,7 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackPearlPending : Action, System.IDisposable, IPendingAble, IRelicAction
+    public class BlackPearlPending : Action, System.IDisposable, IRelicAction
     {
         private BlackPearl blackPearl;
         
@@ -72,9 +72,32 @@ namespace Game.Action.Internal.Pending.Relic
                 _ => null
             };
         }
-        public void CompleteAction()
+        // public void CompleteAction()
+        // {
+        //     ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == blackPearl.Color
+        //         ? new ApplyEffect(GetRandomBuffEffect())
+        //         : new ApplyEffect(GetRandomDebuffEffect()));
+
+
+        //     BoardViewer.Selecting = -1;
+        //     BoardViewer.SelectingFunction = 0;
+
+        //     blackPearl.SetCooldown();
+        //     MatchManager.Ins.InputProcessor.Unmark();
+        //     MatchManager.Ins.InputProcessor.UpdateRelic();
+        //     Dispose();
+
+        // }
+
+        public void Dispose()
         {
-            ActionManager.ExecuteImmediately(BoardUtils.PieceOn(Target).Color == blackPearl.Color
+            blackPearl = null;
+            BoardViewer.SelectingFunction = 0;
+        }
+
+        protected override void ModifyGameState()
+        {
+            ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == blackPearl.Color
                 ? new ApplyEffect(GetRandomBuffEffect())
                 : new ApplyEffect(GetRandomDebuffEffect()));
 
@@ -86,17 +109,6 @@ namespace Game.Action.Internal.Pending.Relic
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-
-        }
-
-        public void Dispose()
-        {
-            blackPearl = null;
-            BoardViewer.SelectingFunction = 0;
-        }
-
-        protected override void ModifyGameState()
-        {
         }
     }
 }
