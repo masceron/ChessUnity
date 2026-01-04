@@ -17,7 +17,7 @@ namespace Game.Effects.Augmentation
         
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.Effect.EffectName == "effect_poison" && applyEffect.Maker == Piece.Pos)
+            if (applyEffect.Effect.EffectName == "effect_poison" && applyEffect.SourcePiece == Piece)
             {
                 List<PieceLogic> targets = new();
                 var (rank, file) = BoardUtils.RankFileOf(applyEffect.Effect.Piece.Pos);
