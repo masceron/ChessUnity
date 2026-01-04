@@ -2,7 +2,6 @@ using System.Linq;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;

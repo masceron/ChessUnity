@@ -5,7 +5,6 @@ using Game.Relics.Commons;
 using UX.UI.Ingame;
 using System.Linq;
 using Game.Effects;
-using Game.Action.Internal.Pending;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Relics

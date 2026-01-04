@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 
 namespace Game.Effects.Traits
 {

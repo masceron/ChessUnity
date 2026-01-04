@@ -447,6 +447,30 @@ MonoBehaviour:
     m_Key: effect_metal_regulator_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 53011606488403968
+    m_Key: effect_shadow_fin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53011606517764096
+    m_Key: effect_leviathan_scale_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53011606530347008
+    m_Key: effect_crown_of_silence_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53011606530347009
+    m_Key: effect_eerie_presence_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53011606534541312
+    m_Key: effect_predator_eyes_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53011606555512832
+    m_Key: effect_tainted_heart_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

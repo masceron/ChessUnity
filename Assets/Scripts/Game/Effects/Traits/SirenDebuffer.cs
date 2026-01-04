@@ -4,7 +4,6 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits

@@ -8,7 +8,6 @@ using UnityEngine;
 using UX.UI.Ingame;
 using System.Collections.Generic;
 using Game.Piece.PieceLogic.Commons;
-using Game.Action.Internal.Pending;
 
 namespace Game.Relics
 {

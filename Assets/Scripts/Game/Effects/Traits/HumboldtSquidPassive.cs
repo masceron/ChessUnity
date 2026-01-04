@@ -6,7 +6,6 @@ using Game.Effects.Debuffs;
 using System.Linq;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 
 namespace Game.Effects.Traits
 {

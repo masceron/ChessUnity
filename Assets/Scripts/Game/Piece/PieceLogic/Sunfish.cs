@@ -1,4 +1,3 @@
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -6,10 +5,6 @@ using Game.Effects.Buffs;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
-using Game.Action.Internal.Pending.Relic;
-using Game.Managers;
-using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 using Game.Common;
 namespace Game.Piece.PieceLogic

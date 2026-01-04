@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using Game.Action;
-using Game.Action.Captures;
+﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Quiets;
 using Game.Effects.SpecialAbility;
 using Game.Movesets;
 

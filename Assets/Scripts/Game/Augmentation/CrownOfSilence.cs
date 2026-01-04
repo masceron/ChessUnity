@@ -4,8 +4,6 @@ using Game.Effects;
 using Game.Effects.Augmentation;
 using Game.Piece.PieceLogic.Commons;
 using Game.Common;
-using Game.Action;
-using Game.Action.Internal;
 
 namespace Game.Augmentation
 {

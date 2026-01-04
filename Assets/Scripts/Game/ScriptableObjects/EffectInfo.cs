@@ -1,5 +1,4 @@
 using Game.Effects;
-using Game.Managers;
 using UnityEngine;
 
 namespace Game.ScriptableObjects

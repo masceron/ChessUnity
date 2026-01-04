@@ -4,7 +4,6 @@ using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
