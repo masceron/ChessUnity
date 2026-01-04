@@ -69,6 +69,7 @@ namespace Game.Augmentation
         ColdBlooded,
         MantaSpine,
         CrownOfSilence,
+        LeviathanScale,
         None,
     }
 
