@@ -41,6 +41,10 @@ namespace Game.Save.Player
         private static void MakeNewPlayer()
         {
             Player.SavedArmies = new Dictionary<string, Army.Army>();
+            Player.Money = 0;
+            Player.CollectedUnits = new List<string>();
+            Player.CollectedRelics = new List<string>();
+            Player.CollectedAugmentations = new List<string>();
         }
     }
 }
