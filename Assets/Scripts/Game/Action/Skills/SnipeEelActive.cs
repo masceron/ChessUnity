@@ -21,7 +21,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Bound(3, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, BoardUtils.PieceOn(Target))));
         }
     }
 }

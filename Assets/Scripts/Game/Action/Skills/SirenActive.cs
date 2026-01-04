@@ -27,8 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var gameState = MatchManager.Ins.GameState;
-            gameState.Move(Target, moveTo);
+            Move(Target, moveTo);
             
             FlipPieceColor(moveTo);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

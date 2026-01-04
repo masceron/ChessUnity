@@ -95,13 +95,7 @@ namespace Game.Relics
             var hoveringTile = TileManager.Ins.GetTile(pos);
 
             var pending = new FrostSigilPending(pos, hoveringTile, this);
-            if (pending is IPendingAble p)
-            {
-                p.CompleteAction();
-            } else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
-            }
+            BoardViewer.Ins.ExecuteAction(pending);
         }
     }
 }

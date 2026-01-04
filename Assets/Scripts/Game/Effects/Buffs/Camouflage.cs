@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 
@@ -12,9 +13,9 @@ namespace Game.Effects.Buffs
 
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            if (caller.Color == Piece.Color) return;
+            if (caller.Color == Piece.Color || caller.Effects.Any(e => e.EffectName == "effect_marked")) return;
             
-            actions.RemoveAll(a => BoardUtils.Distance(a.Maker, Piece.Pos) >= 3 && a.Target == Piece.Pos);
+            actions.RemoveAll(a => BoardUtils.Distance(a.Maker, Piece.Pos) > 4 && a.Target == Piece.Pos);
         }
 
         public override int GetValueForAI()
