@@ -74,6 +74,8 @@ namespace Game.Augmentation
         MetalRegulator,
         CrownOfSilence,
         LeviathanScale,
+        ShadowFin,
+        TaintedHeart,
         None = 10000,
     }
 

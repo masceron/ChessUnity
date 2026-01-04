@@ -1,6 +1,11 @@
-﻿using Game.Action.Skills;
+﻿using System.Linq;
+using Game.Action;
+using Game.Action.Internal;
+using Game.Action.Skills;
+using Game.Effects.Debuffs;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
@@ -15,7 +20,26 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    list.Add(new SloaneSViperfishActive(Pos));
+                    var (rank, file) = RankFileOf(Pos);
+                    var caller = PieceOn(Pos);
+
+                    for (var i = -4; i <= 4; i++)
+                    {
+                        if (!VerifyBounds(rank + i)) continue;
+                        for (var j = -4; j <= 4; j++)
+                        {
+                            if (!VerifyBounds(file + j)) continue;
+
+                            var idx = IndexOf(rank + i, file + j);
+
+                            var p = PieceOn(idx);
+                            if (p == null || p == caller || p.Color == caller.Color) continue;
+
+                            var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
+
+                            list.Add(new SloaneSViperfishActive(idx, bleeding));
+                        }
+                    }
                 }
                 else
                 {

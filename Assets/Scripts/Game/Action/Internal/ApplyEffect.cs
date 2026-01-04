@@ -3,6 +3,7 @@ using System.Linq;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 
 namespace Game.Action.Internal
@@ -13,6 +14,7 @@ namespace Game.Action.Internal
         public readonly Effect Effect;
 
         public readonly FormationType SourceFormationType;
+        public readonly PieceLogic SourcePiece;
 
         public ApplyEffect(Effect e) : base(-1)
         {
@@ -22,6 +24,12 @@ namespace Game.Action.Internal
         {
             Effect = e;
             SourceFormationType = formationType;
+        }
+
+        public ApplyEffect(Effect e, PieceLogic source) : base(-1)
+        {
+            Effect = e;
+            SourcePiece = source;
         }
 
         protected override void Animate()
