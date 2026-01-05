@@ -78,6 +78,7 @@ namespace Game.Augmentation
         TaintedHeart,
         EeriePresence,
         PredatorEyes,
+        ReefPlating,
         None = 10000,
     }
 
