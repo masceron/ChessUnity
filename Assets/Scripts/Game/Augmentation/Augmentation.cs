@@ -79,6 +79,7 @@ namespace Game.Augmentation
         EeriePresence,
         PredatorEyes,
         ReefPlating,
+        PressureMembrane,
         None = 10000,
     }
 

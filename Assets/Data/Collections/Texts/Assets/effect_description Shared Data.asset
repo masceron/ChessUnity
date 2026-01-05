@@ -471,6 +471,14 @@ MonoBehaviour:
     m_Key: effect_tainted_heart_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 53388464676372480
+    m_Key: effect_pressure_membrane_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53388720612802560
+    m_Key: effect_reef_plating_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
