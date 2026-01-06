@@ -23,12 +23,28 @@ namespace UX.UI.Vault
         
         //private readonly List<string> relicsInVault2 = new()
 
-        private void Awake()
+        private void OnEnable()
+        {
+            ClearRelicItem();
+            LoadRelicItem();
+
+            
+        }
+
+        private void LoadRelicItem()
         {
             foreach (var relic in relicsInVault)
             {
                 var relicImage = Instantiate(relicItem, relicContainer.transform);
                 relicImage.GetComponent<RelicItem>().Load(relic);
+            }
+        }
+
+        private void ClearRelicItem()
+        {
+            for (var i = 0; i < relicContainer.transform.childCount; i++)
+            {
+                Destroy(relicContainer.transform.GetChild(i));
             }
         }
 
