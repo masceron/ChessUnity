@@ -341,7 +341,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Menus.PlayPanel
   contents: {fileID: 786335524259000378}
-  moneyText: {fileID: 0}
 --- !u!1 &724088640443930043
 GameObject:
   m_ObjectHideFlags: 0
@@ -2639,7 +2638,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8609027569972684548, guid: 59742dd63ef2f9a4ea5442aa058683dd, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 100
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8609027569972684548, guid: 59742dd63ef2f9a4ea5442aa058683dd, type: 3}
       propertyPath: m_LocalPosition.x
