@@ -80,7 +80,14 @@ namespace UX.UI.Trader
             }
 
             if (!string.IsNullOrEmpty(key)) itemNameText.text = Localizer.GetText(table, key, null);
-            if (icon != null) itemIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.one * 0.5f);
+            if (icon != null) 
+            {
+                itemIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.one * 0.5f);
+            }
+            else
+            {
+                itemIcon.sprite = null;
+            }
             itemNameText.enabled = true;
         }
 

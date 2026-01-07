@@ -1,6 +1,4 @@
 using System;
-using Game.Common;
-using Game.Managers;
 using Game.Save.Player;
 using Game.Save.Relics;
 using Game.ScriptableObjects;
@@ -99,9 +97,15 @@ namespace UX.UI.Trader
                 if (itemDescriptionText) itemDescriptionText.text = Localizer.GetText(descTable, key + "_description", null);
             }
 
-            if (icon != null && itemIcon)
+            if (itemIcon)
             {
-                itemIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.one * 0.5f);
+                if (icon == null) 
+                {
+                    itemIcon.sprite = null;
+                } else
+                {
+                    itemIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.one * 0.5f);
+                }
             }
 
             if (confirmButtonText) confirmButtonText.text = _isSellMode ? "Sell" : "Buy";
