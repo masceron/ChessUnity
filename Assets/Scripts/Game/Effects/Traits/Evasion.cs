@@ -11,7 +11,7 @@ namespace Game.Effects.Traits
     public class Evasion: Effect, IBeforePieceActionEffect
     {
         // ReSharper disable once MemberCanBePrivate.Global
-        public readonly int Probability;
+        public int Probability;
 
         public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, "effect_evasion")
         {

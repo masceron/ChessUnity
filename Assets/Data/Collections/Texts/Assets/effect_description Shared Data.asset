@@ -479,6 +479,10 @@ MonoBehaviour:
     m_Key: effect_reef_plating_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 54108580670046208
+    m_Key: effect_kinetic_diffuser_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

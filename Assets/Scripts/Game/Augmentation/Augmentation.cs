@@ -80,6 +80,7 @@ namespace Game.Augmentation
         PredatorEyes,
         ReefPlating,
         PressureMembrane,
+        KineticDiffuser,
         None = 10000,
     }
 
