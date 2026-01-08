@@ -81,6 +81,7 @@ namespace Game.Augmentation
         ReefPlating,
         PressureMembrane,
         KineticDiffuser,
+        CovetLens,
         None = 10000,
     }
 

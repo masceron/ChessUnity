@@ -483,6 +483,10 @@ MonoBehaviour:
     m_Key: effect_kinetic_diffuser_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 54382640901619712
+    m_Key: effect_covet_lens_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
