@@ -487,6 +487,10 @@ MonoBehaviour:
     m_Key: effect_covet_lens_description
     m_Metadata:
       m_Items: []
+  - m_Id: 54387752055308288
+    m_Key: effect_covet_lens_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
