@@ -21,14 +21,21 @@ namespace UX.UI.Trader
         private void OnEnable()
         {
             LoadShopInventory();
-            confirmPopup.OnTransactionCompleted += LoadShopInventory;
+            confirmPopup.OnTransactionCompleted += OnTransactionCompleted;
             confirmPopup.Hide();
         }
 
         private void OnDisable()
         {
-            confirmPopup.OnTransactionCompleted -= LoadShopInventory;
+            confirmPopup.OnTransactionCompleted -= OnTransactionCompleted;
         }
+
+        private void OnTransactionCompleted()
+        {
+            PlayerSaveLoader.Save();
+            LoadShopInventory();
+        }
+
 
         public void LoadShopInventory()
         {
