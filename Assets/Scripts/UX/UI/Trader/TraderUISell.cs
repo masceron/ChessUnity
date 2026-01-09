@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Save.Relics;
 using Game.Save.Player;
 using Game.Managers;
+using Game.Common;
 
 namespace UX.UI.Trader
 {
@@ -65,9 +66,9 @@ namespace UX.UI.Trader
             }
 
             // 3. Load Augmentations
-            foreach (var augmentation in ownedAugmentations)
+            foreach (var augmentationString in ownedAugmentations)
             {
-                if (System.Enum.TryParse<Game.Augmentation.AugmentationName>(augmentation, out var augmentationName))
+                if (AugmentationHelper.TryStringToAugmentationName(augmentationString, out var augmentationName))
                 {
                     if (allAugmentations.TryGetValue(augmentationName, out var augmentationInfo)) 
                         SpawnItem(augmentationInfo, TraderItemUIType.Augmentation, augmentationsContent);
