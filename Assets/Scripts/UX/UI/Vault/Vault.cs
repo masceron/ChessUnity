@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Game.Save.Relics;
 using UnityEngine;
+using Game.Save.Augmentation;
 
 namespace UX.UI.Vault
 {
@@ -7,19 +9,12 @@ namespace UX.UI.Vault
     {
         [SerializeField] private GameObject relicItem;
         [SerializeField] private GameObject relicContainer;
+        [SerializeField] private GameObject augmentationItem;
+        [SerializeField] private GameObject augmentationContainer;
         
-        private readonly List<string> relicsInVault = new()
-        {
-            "relic_black_pearl",
-            "relic_common_pearl",
-            "relic_eye_of_mimic",
-            "relic_frost_sigil",
-            "relic_mangrove_charm",
-            "relic_rotting_scythe",
-            "relic_seafoam_phial",
-            "relic_sirens_harpoon",
-            "relic_storm_capacitor"
-        };
+        private readonly List<string> relicsInVault = new List<string>();
+        private readonly List<string> augmentationsInVault = new List<string>();
+
         
         //private readonly List<string> relicsInVault2 = new()
 
@@ -27,12 +22,15 @@ namespace UX.UI.Vault
         {
             ClearRelicItem();
             LoadRelicItem();
-
-            
+            ClearAugmentationItem();
+            LoadAugmentationItem();
         }
 
         private void LoadRelicItem()
         {
+            relicsInVault.Clear();
+            relicsInVault.AddRange(RelicSaveLoader.GetCollectedRelics());
+
             foreach (var relic in relicsInVault)
             {
                 var relicImage = Instantiate(relicItem, relicContainer.transform);
@@ -40,12 +38,35 @@ namespace UX.UI.Vault
             }
         }
 
+        private void LoadAugmentationItem()
+        {
+            augmentationsInVault.Clear();
+            augmentationsInVault.AddRange(AugmentationSaveLoader.GetCollectedAugmentations());
+
+            foreach (var aug in augmentationsInVault)
+            {
+                var item = Instantiate(augmentationItem, augmentationContainer.transform);
+                item.GetComponent<AugmentationItem>().Load(aug);
+            }
+        }
+
         private void ClearRelicItem()
         {
             for (var i = 0; i < relicContainer.transform.childCount; i++)
             {
-                Destroy(relicContainer.transform.GetChild(i));
+                Destroy(relicContainer.transform.GetChild(i).gameObject);
             }
+            relicsInVault.Clear();
+        }
+
+        private void ClearAugmentationItem()
+        {
+            for (var i = 0; i < augmentationContainer.transform.childCount; i++)
+            {
+                Destroy(augmentationContainer.transform.GetChild(i).gameObject);
+            }
+
+            augmentationsInVault.Clear();
         }
 
         public void OnClickPrevious()
