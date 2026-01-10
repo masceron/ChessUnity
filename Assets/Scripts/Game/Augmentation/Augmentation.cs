@@ -82,6 +82,7 @@ namespace Game.Augmentation
         PressureMembrane,
         KineticDiffuser,
         CovetLens,
+        PuppeteerSpirit,
         None = 10000,
     }
 

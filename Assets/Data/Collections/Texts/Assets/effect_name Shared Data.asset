@@ -491,6 +491,10 @@ MonoBehaviour:
     m_Key: effect_covet_lens_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 55082811002675200
+    m_Key: effect_puppeteer_spirit_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
