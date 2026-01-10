@@ -20,7 +20,7 @@ namespace Game.Effects.Augmentation
         {
             var (rank, file) = RankFileOf(Piece.Pos);
             
-            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 4))
+            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 3))
             {
                 var pOn = PieceOn(IndexOf(r, f));
                 if (pOn == null || pOn.Color != Piece.Color) continue; 
