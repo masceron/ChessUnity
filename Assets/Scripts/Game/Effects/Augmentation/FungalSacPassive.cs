@@ -7,8 +7,8 @@ namespace Game.Effects.Augmentation
 {
     public class FungalSacPassive : Effect, IApplyEffect
     {
-        private const int turnCounter = 2;
-        private const int radius = 4;
+        private const int turnCounter = 4;
+        private const int radius = 3;
         public FungalSacPassive(PieceLogic piece) : base(-1, 1, piece, "effect_fungal_sac_passive")
         {
         }
