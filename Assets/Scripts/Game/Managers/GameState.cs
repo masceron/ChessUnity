@@ -47,7 +47,7 @@ namespace Game.Managers
         public RegionalEffect RegionalEffect;
         public readonly List<ISubscriber> Subscribers = new();
         public bool IsDay { get; private set; }
-        private int CurrentTurn { get; set; }
+        public int CurrentTurn { get; private set; }
         private int countTurn;
         private const int NumberOfTurnToChange = 10;
 

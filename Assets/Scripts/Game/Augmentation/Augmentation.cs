@@ -83,6 +83,11 @@ namespace Game.Augmentation
         NerveCoolant,
         BarnacleArmor,
         Ribcage,
+        ReefPlating,
+        PressureMembrane,
+        KineticDiffuser,
+        CovetLens,
+        PuppeteerSpirit,
         None = 10000,
     }
 

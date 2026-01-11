@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
-  m_Name: ShadowFin
+  m_Name: CovetLens
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 14
-  Rarity: 1
-  Slot: 3
-  Key: shadow_fin
-  Icon: {fileID: 2800000, guid: 80cfd4d4b22eaf14c9641ecfdacb7836, type: 3}
+  Name: 21
+  Rarity: 5
+  Slot: 0
+  Key: covet_lens
+  Icon: {fileID: 2800000, guid: e2b13abbb14356e45a44e11aeebc9865, type: 3}
