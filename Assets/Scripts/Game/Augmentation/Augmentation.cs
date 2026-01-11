@@ -78,6 +78,12 @@ namespace Game.Augmentation
         TaintedHeart,
         EeriePresence,
         PredatorEyes,
+        AdaptiveGland,
+        FungalSac,
+        FocusModule,
+        Echolocator,
+        UrchinPlating,
+        StressRegulator,
         None = 10000,
     }
 
