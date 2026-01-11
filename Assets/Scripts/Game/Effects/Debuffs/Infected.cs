@@ -10,7 +10,8 @@ namespace Game.Effects.Debuffs
     public class Infected : Effect, IEndTurnEffect
     {
         private int turnCounter;
-        
+        private int turnToActivate = 3;
+        private int radius = 1;
         public Infected(PieceLogic piece) : base(-1, 1, piece, "effect_infected")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
@@ -20,7 +21,7 @@ namespace Game.Effects.Debuffs
         {
             var (rank, file) = RankFileOf(Piece.Pos);
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, radius))
             {
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
@@ -39,7 +40,7 @@ namespace Game.Effects.Debuffs
         {
             turnCounter++;
 
-            if (turnCounter % 3 == 0)
+            if (turnCounter % turnToActivate == 0)
             {
                 var pieceTarget = PieceOn(lastMainAction.Target);
                 if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.HemolymphFilter))
@@ -48,6 +49,16 @@ namespace Game.Effects.Debuffs
                 }
                 InfectedActivate();
             }
+        }
+        public void SetTurnCounter(int turnValue)
+        {
+            if (turnValue < 1) return;
+            turnToActivate = turnValue;
+        }
+        public void SetRadius(int radiusValue)
+        {
+            if (radiusValue < 1) return;
+            radius = radiusValue;
         }
     }
 }
