@@ -471,6 +471,26 @@ MonoBehaviour:
     m_Key: effect_tainted_heart_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 53949981372440576
+    m_Key: effect_bubble_fin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53950149312372736
+    m_Key: effect_elusive_fin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53950371270746112
+    m_Key: effect_barnacle_armor_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53951789146824704
+    m_Key: effect_nerve_coolant_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53952005832957952
+    m_Key: effect_ribcage_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

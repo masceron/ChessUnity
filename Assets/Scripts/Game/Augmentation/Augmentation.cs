@@ -78,6 +78,11 @@ namespace Game.Augmentation
         TaintedHeart,
         EeriePresence,
         PredatorEyes,
+        BubbleFin,
+        ElusiveFin,
+        NerveCoolant,
+        BarnacleArmor,
+        Ribcage,
         None = 10000,
     }
 
