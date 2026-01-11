@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AugmentationData
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.Collections.AugmentationData
   augmentationsData:
-    keys: 00000000030000000600000008000000090000000a0000000b0000001300000012000000140000001500000016000000
+    keys: 00000000030000000600000008000000090000000a0000000b00000013000000120000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f0000002000000021000000
     values:
     - {fileID: 11400000, guid: d3ced4f236ee7ec43add753fcfd43d59, type: 2}
     - {fileID: 11400000, guid: d8f89c95645a6514a94718a2cf973d7a, type: 2}
@@ -27,3 +27,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3a44ed69afe958447a3077521e7a0826, type: 2}
     - {fileID: 11400000, guid: 7b776ca5baba40d40bf5c70ca2543a0f, type: 2}
     - {fileID: 11400000, guid: 026c8ea44a82a6442a1d18847ee1ae97, type: 2}
+    - {fileID: 11400000, guid: 8a6547f4328283a42bae2863465ceaca, type: 2}
+    - {fileID: 11400000, guid: 7604f66d5b3857a48908cf8a5c84f8f3, type: 2}
+    - {fileID: 11400000, guid: 41570ed3bdcee0d4198a7bb111b27116, type: 2}
+    - {fileID: 11400000, guid: aef0126a59bd25b43a1e6c3792902c78, type: 2}
+    - {fileID: 11400000, guid: 2704fdffd91e3ab4fb7e88019b3d9456, type: 2}
+    - {fileID: 0}
+    - {fileID: 11400000, guid: e344fd619d16ccc4bb0437ae85a98570, type: 2}
+    - {fileID: 11400000, guid: 2de5b1df27ccc50488d6f1ce8f5eb373, type: 2}
+    - {fileID: 11400000, guid: e0406b867467727488930c21cfe0fb5f, type: 2}
+    - {fileID: 11400000, guid: 38d4bd19f8cf2924dbfee5b121b02ef5, type: 2}
+    - {fileID: 11400000, guid: 11b8211377f0fdf4d8615b1cfe56af8f, type: 2}
