@@ -88,6 +88,12 @@ namespace Game.Augmentation
         KineticDiffuser,
         CovetLens,
         PuppeteerSpirit,
+        AdaptiveGland,
+        FungalSac,
+        FocusModule,
+        Echolocator,
+        UrchinPlating,
+        StressRegulator,
         None = 10000,
     }
 

@@ -1,0 +1,24 @@
+using Game.Action;
+using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
+using Game.Effects.Buffs;
+using Game.Effects.Debuffs;
+using static Game.Common.BoardUtils;
+namespace Game.Effects.Augmentation
+{
+    public class StressRegulatorPassive : Effect, IApplyEffect
+    {
+        public StressRegulatorPassive(PieceLogic piece) : base(-1, 1, piece, "effect_stress_regulator_passive")
+        {
+        }
+
+        public void OnCallApplyEffect(ApplyEffect applyEffect)
+        {
+            if (applyEffect.Maker != Piece.Pos) return;
+            if (PieceOn(applyEffect.Maker).SkillCooldown > 0)
+            {
+                PieceOn(applyEffect.Maker).SkillCooldown--;
+            } 
+        }
+    }
+}
