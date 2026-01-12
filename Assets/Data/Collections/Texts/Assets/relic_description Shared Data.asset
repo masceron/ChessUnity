@@ -55,6 +55,10 @@ MonoBehaviour:
     m_Key: relic_overgrown_slug_description
     m_Metadata:
       m_Items: []
+  - m_Id: 50593547460239360
+    m_Key: relic_precision_monocle_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

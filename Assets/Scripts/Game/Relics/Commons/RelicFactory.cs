@@ -16,6 +16,7 @@ namespace Game.Relics.Commons
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
                 "relic_overgrown_slug" => new OvergrownSlug(cfg),
+                "relic_precision_monocle" => new PrecisionMonocle(cfg),
                 _ => null
             };
         }
