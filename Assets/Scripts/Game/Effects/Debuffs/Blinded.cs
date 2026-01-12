@@ -30,12 +30,12 @@ namespace Game.Effects.Debuffs
             var pieceTarget = BoardUtils.PieceOn(action.Target);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ProtectiveLens))
             {
-                action.Result = ResultFlag.Missed;
+                action.Result = ResultFlag.Miss;
             }
             
             if (MatchManager.Roll(Probability))
             {
-                action.Result = ResultFlag.Missed;
+                action.Result = ResultFlag.Miss;
             }
         }
     }

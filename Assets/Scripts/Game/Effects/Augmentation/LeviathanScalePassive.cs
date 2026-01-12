@@ -16,7 +16,7 @@ namespace Game.Effects.Augmentation
             var effect = applyEffect.Effect;
             if (effect.EffectName == "effect_shield")
             {
-                applyEffect.Result = ResultFlag.Blocked;
+                applyEffect.Result = ResultFlag.CantApplyEffect;
                 
                 var hardenedShield = new HardenedShield(Piece, effect.Strength);
                 ActionManager.EnqueueAction(new ApplyEffect(hardenedShield));

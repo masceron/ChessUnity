@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Augmentation.Set;
 using Game.Effects;
 using Game.Effects.Augmentation;
+using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
@@ -19,6 +20,7 @@ namespace Game.Augmentation
 
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.ScrapCollector,false);
+            PassiveEffects.Add(new Shield(Target));
             PassiveEffects.Add(new MantaSpinePassive(Target));
         }
     }

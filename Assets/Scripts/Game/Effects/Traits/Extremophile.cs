@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
 
             if (BlockCategories.Contains(effect.Category))
             {
-                applyEffect.Result = ResultFlag.Blocked;
+                applyEffect.Result = ResultFlag.Untouchable;
             }
         }
 

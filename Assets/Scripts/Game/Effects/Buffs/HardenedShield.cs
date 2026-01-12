@@ -18,12 +18,16 @@ namespace Game.Effects.Buffs
         {
             if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success ||
                 (action.Flag & ActionFlag.Unblockable) != 0) return;
-            action.Result = ResultFlag.Blocked;
+            action.Result = ResultFlag.HardenedBlock;
         }
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Blocked) return;
+            if (action is not ICaptures 
+                || action.Target != Piece.Pos 
+                || action.Result != ResultFlag.Blocked 
+                || action.Result != ResultFlag.HardenedBlock
+                || action.Result != ResultFlag.Evade) return;
             
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker))));
             if (Strength > 1) Strength--;

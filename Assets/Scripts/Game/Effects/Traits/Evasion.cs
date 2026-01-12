@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
                 var effect = PieceOn(action.Maker).Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)
                 {
-                    action.Result = ResultFlag.Dodged;
+                    action.Result = ResultFlag.Evade;
                     return;
                 }
             }
@@ -43,7 +43,7 @@ namespace Game.Effects.Traits
                 if (!MatchManager.Roll(Probability)) return;
             }
             
-            action.Result = ResultFlag.Dodged;
+            action.Result = ResultFlag.Evade;
         }
 
         public override int GetValueForAI()

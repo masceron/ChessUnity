@@ -12,7 +12,7 @@ namespace Game.Effects.Augmentation
         {
             if (applyEffect.Effect.EffectName == "effect_broken")
             {
-                applyEffect.Result = Action.ResultFlag.Blocked;
+                applyEffect.Result = Action.ResultFlag.Untouchable;
             }
         }
     }

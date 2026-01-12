@@ -14,26 +14,41 @@ namespace Game.Effects.Augmentation
 {
     public class MantaSpinePassive : Effect, IBeforePieceActionEffect
     {
+        private bool isFirstCaptured = true;
         public MantaSpinePassive(PieceLogic piece) : base(-1, 1, piece, "effect_manta_spine_passive")
         {
         }
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action.Target != Piece.Pos || 
-                action.Maker == Piece.Pos || 
-                (action.Flag & ActionFlag.Unblockable) != 0) 
-                return;
-            if (action is not ICaptures) return;
-            var hasBlockingEffect = Piece.Effects.Any(e => 
-                e.EffectName == "effect_shield" || 
-                e.EffectName == "effect_hardened_shield" || 
-                e.EffectName == "effect_carapace");
+            // if (action.Target != Piece.Pos || 
+            //     action.Maker == Piece.Pos || 
+            //     (action.Flag & ActionFlag.Unblockable) != 0) 
+            //     return;
+            // if (action is not ICaptures) return;
+            // var hasBlockingEffect = Piece.Effects.Any(e => 
+            //     e.EffectName == "effect_shield" || 
+            //     e.EffectName == "effect_hardened_shield" || 
+            //     e.EffectName == "effect_carapace");
             
-            if (hasBlockingEffect) return;
+            // if (hasBlockingEffect) return;
             
-            if (action.Result != ResultFlag.Success) return;
-            action.Result = ResultFlag.Dodged;
+            // if (action.Result != ResultFlag.Success) return;
+            //action.Result = ResultFlag.Dodged;
+
+            if (action is not ICaptures || action.Target != Piece.Pos || action.Maker == Piece.Pos) return;
+
+            if (isFirstCaptured)
+            {
+                isFirstCaptured = false;
+                action.Result = ResultFlag.Blocked;
+                MovePieceAndMakeIllusion(action);
+            }
+
+        }
+
+        private void MovePieceAndMakeIllusion(Action.Action action)
+        {
             var targetPiece = PieceOn(action.Target);
             if (targetPiece != null)
             {
@@ -78,16 +93,12 @@ namespace Game.Effects.Augmentation
                     }
                     ActionManager.EnqueueAction(new NormalMove(action.Target, IndexOf(rankOff, file)));
 
-
                     foreach (var selectedIndex in selectedIndices)
                     {
                         var config = new PieceConfig(piece.Type, Piece.Color, (ushort)selectedIndex);
-                        ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(PieceOn(selectedIndex))));
-                        
+                        ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(PieceOn(selectedIndex)))); 
                     }
                 }
-
-                
             }
         }
     }

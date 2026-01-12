@@ -17,7 +17,7 @@ namespace Game.Effects.Buffs
             if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success
                 || (action.Flag & ActionFlag.Unblockable) != 0) return;
             
-            action.Result = ResultFlag.Blocked;
+            action.Result = ResultFlag.Parry;
         }
 
         public void OnCallAfterPieceAction(Action.Action action)

@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
         {
             if (PieceOn(action.Target).Color != Piece.Color ||
                 action.Result != ResultFlag.Success) return;
-            action.Result = ResultFlag.Blocked;
+            action.Result = ResultFlag.SurvivedHit;
             Debug.Log("[UndyingDevotion] Failed capture");
             ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(action.Target))));
         }

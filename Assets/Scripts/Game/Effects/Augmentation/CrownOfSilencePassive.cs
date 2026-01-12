@@ -21,7 +21,7 @@ namespace Game.Effects.Augmentation
             var effect = applyEffect.Effect;
             if (blockedEffects.Contains(effect.EffectName))
             {
-                applyEffect.Result = ResultFlag.Blocked;
+                applyEffect.Result = ResultFlag.CantApplyEffect;
             }
         }
     }

@@ -20,7 +20,7 @@ namespace Game.Effects.Augmentation
         {
             if (applyEffect.Effect.EffectName == "effect_shortreach")
             {
-                applyEffect.Result = Action.ResultFlag.Blocked;
+                applyEffect.Result = Action.ResultFlag.EffectResistance;
             }
         }
         
