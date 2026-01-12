@@ -14,19 +14,19 @@ namespace Game.Action
     }
     public enum ResultFlag
     {
-        Success, // Action thành công
-        Blocked, // Shield thành công chặn ăn quân
-        Miss, // Blinded thành công làm quân ăn trượt
-        HardenedBlock, // Hardened shield chặn
-        Parry, // Carapace chặn
-        Evade, // Evasion chặn
-        Incorruptible, //(Trait) Sanity (Aug), Metal Mind thành công chặn hiệu ứng
-        Untouchable, // (Aug) Metal Spine, (Aug) Metal Regulator, (Trait) Extremophile, Thành công chặn hiệu ứng
-        Unshaken, // (Trait) Free Movement, (Aug) Cold Blooded, Thành công chặn hiệu ứng
-        Muted, //(Aug) Crown of Silience thành công chặn Commander địch sử dụng Skill.
-        CantApplyEffect, // Không thể áp dụng effect nói chung
-        EffectResistance, // Sử dụng trong trường hợp Kháng Effect
-        SurvivedHit, // bị ăn nhưng không chết
+        Success = 0, // Action thành công
+        Blocked = 1, // Shield thành công chặn ăn quân
+        HardenedBlock = 2, // Hardened shield chặn
+        Parry = 3, // Carapace chặn
+        Miss = 4, // Blinded thành công làm quân ăn trượt
+        Evade = 5, // Evasion chặn
+        Incorruptible = 6, //(Trait) Sanity (Aug), Metal Mind thành công chặn hiệu ứng
+        Untouchable = 7, // (Aug) Metal Spine, (Aug) Metal Regulator, (Trait) Extremophile, Thành công chặn hiệu ứng
+        Unshaken = 8, // (Trait) Free Movement, (Aug) Cold Blooded, Thành công chặn hiệu ứng
+        Muted = 9, //(Aug) Crown of Silience thành công chặn Commander địch sử dụng Skill.
+        CantApplyEffect = 10, // Không thể áp dụng effect nói chung
+        EffectResistance = 11, // Sử dụng trong trường hợp Kháng Effect
+        SurvivedHit = 12, // bị ăn nhưng không chết
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
