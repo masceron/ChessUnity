@@ -15,6 +15,7 @@ namespace Game.Relics.Commons
                 "relic_seafoam_phial" => new SeafoamPhial(cfg),
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
+                "relic_overgrown_slug" => new OvergrownSlug(cfg),
                 _ => null
             };
         }

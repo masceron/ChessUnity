@@ -491,6 +491,30 @@ MonoBehaviour:
     m_Key: effect_ribcage_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 55946085885763584
+    m_Key: effect_adaptive_gland_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55946085965455360
+    m_Key: effect_focus_module_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55946085982232576
+    m_Key: effect_echolocator_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55946085986426880
+    m_Key: effect_urchin_plating_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55946085999009792
+    m_Key: effect_fungal_sac_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55946086007398400
+    m_Key: effect_stress_regulator_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
