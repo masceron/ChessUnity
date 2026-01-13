@@ -43,11 +43,14 @@ namespace UX.UI.Followers
             SearchByKeyword("");
         }*/
 
-        protected void OnEnable()
+        private void OnEnable()
         {
             data = new Dictionary<string, PieceInfo>();
             
-            if (PlayerSaveLoader.Player.CollectedUnits == null) return;
+            if (PlayerSaveLoader.Player.CollectedUnits == null)
+            {
+                return;
+            }
 
             var collectedSet = new HashSet<string>(PlayerSaveLoader.Player.CollectedUnits);
 
@@ -61,6 +64,8 @@ namespace UX.UI.Followers
                     }
                 }
             }
+            lastKeyword = null;
+            searchBar.text = "";
             SearchByKeyword("");
         }
 
