@@ -1,4 +1,6 @@
-﻿using Game.Action.Internal;
+﻿using System.Linq;
+using Game.Action.Internal;
+using Game.Augmentation;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
@@ -18,7 +20,9 @@ namespace Game.Effects.Augmentation
         
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.Effect.EffectName == "effect_shortreach")
+            PieceLogic pieceApplied = applyEffect.Effect.Piece;
+            if (pieceApplied.Augmentations.Any(aug => aug.Name == AugmentationName.PressureMembrane) 
+                && applyEffect.Effect.EffectName == "effect_shortreach")
             {
                 applyEffect.Result = Action.ResultFlag.Blocked;
             }
