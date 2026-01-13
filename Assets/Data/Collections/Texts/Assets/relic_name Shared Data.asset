@@ -59,6 +59,10 @@ MonoBehaviour:
     m_Key: relic_precision_monocle
     m_Metadata:
       m_Items: []
+  - m_Id: 50703769222733824
+    m_Key: relic_kelp_banner
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

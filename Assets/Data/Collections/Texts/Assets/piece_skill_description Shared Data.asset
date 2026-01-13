@@ -203,6 +203,10 @@ MonoBehaviour:
     m_Key: piece_long_snouted_seahorse_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 56078228003708928
+    m_Key: piece_frilled_shark_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

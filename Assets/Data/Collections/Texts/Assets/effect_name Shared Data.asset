@@ -515,6 +515,34 @@ MonoBehaviour:
     m_Key: effect_stress_regulator_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 56081133108682752
+    m_Key: effect_kinetic_diffuser_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56081139052011520
+    m_Key: effect_frilled_shark_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56081139261726720
+    m_Key: effect_reef_plating_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56081139312058368
+    m_Key: effect_pressure_membrane_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56081141321129984
+    m_Key: effect_covet_lens_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56081142013190144
+    m_Key: effect_puppeteer_spirit_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56081142654918656
+    m_Key: effect_abyssal_tapetum_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

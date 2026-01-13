@@ -17,6 +17,7 @@ namespace Game.Relics.Commons
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
                 "relic_overgrown_slug" => new OvergrownSlug(cfg),
                 "relic_precision_monocle" => new PrecisionMonocle(cfg),
+                "relic_kelp_banner" => new KelpBanner(cfg),
                 _ => null
             };
         }

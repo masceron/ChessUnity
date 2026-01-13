@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Game.Augmentation;
 using Game.Common;
@@ -45,6 +46,8 @@ namespace Game.Managers
         {
             return formations[pos];
         }
+        
+        public List<Formation> GetFormation(FormationType type) => formations.Where(f => f != null && f.GetFormationType() == type).ToList();
         
         /// <summary>
         /// Nên dùng để xóa Formation

@@ -24,7 +24,6 @@ namespace Game.Relics
                 if (commander != null)
                 {
                     var pending = new OvergrownSlugPending(this, commander.Pos);
-                    //TODO : Seem to be wrong because maker is not commander but still working.
                     TileManager.Ins.MarkAsMoveable(commander.Pos);
                     BoardViewer.ListOf.Add(pending);
                     BoardViewer.Selecting = -2;
