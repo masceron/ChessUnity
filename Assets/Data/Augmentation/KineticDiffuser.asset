@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
   m_Name: KineticDiffuser
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 20
+  Name: 25
   Rarity: 3
   Slot: 4
   Key: kinetic_diffuser

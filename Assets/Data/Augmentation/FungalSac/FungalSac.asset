@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
   m_Name: FungalSac
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 19
+  Name: 40
   Rarity: 5
   Slot: 2
   Key: Augmentation_Fungal_Sac

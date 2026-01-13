@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
   m_Name: Meta Regulator
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 11
+  Name: 12
   Rarity: 0
   Slot: 2
   Key: metal_regulator

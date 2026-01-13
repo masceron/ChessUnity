@@ -9,7 +9,7 @@ namespace Game.Augmentation
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Echolocator : Augmentation
     {
-        public Echolocator() : base(AugmentationName.Echolocator, AugmentationRarity.Rare, AugmentationSlot.Fin, null, null)
+        public Echolocator() : base(AugmentationName.EchoLocator, AugmentationRarity.Rare, AugmentationSlot.Fin, null, null)
         {
             PassiveEffects = new List<Effect>();
         }

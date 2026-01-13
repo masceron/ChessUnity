@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
   m_Name: TaintedHeart
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 15
+  Name: 17
   Rarity: 4
   Slot: 2
   Key: tainted_heart

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ff97afb0f842c4ca0faba2e222115f, type: 3}
   m_Name: ColdBlooded
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.AugmentationInfo
-  Name: 6
+  Name: 7
   Rarity: 0
   Slot: 0
   Key: cold_blooded
