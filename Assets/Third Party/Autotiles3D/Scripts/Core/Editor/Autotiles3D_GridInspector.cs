@@ -5,7 +5,7 @@ using System.Linq;
 namespace Autotiles3D
 {
     [CustomEditor(typeof(Autotiles3D_Grid), true)]
-    public class Autotiles3D_GridInspector : Editor
+    public class Autotiles3D_GridInspector : UnityEditor.Editor
     {
         Autotiles3D_Grid _grid;
         private string _gridHierarchyName

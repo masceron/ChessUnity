@@ -8,7 +8,7 @@ namespace Autotiles3D
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Autotiles3D_BlockBehaviour), true)]
-    public class Autotiles3D_BlockBehaviourInspector : Editor
+    public class Autotiles3D_BlockBehaviourInspector : UnityEditor.Editor
     {
         private Autotiles3D_BlockBehaviour _baseBlock;
         bool _canRandomize;

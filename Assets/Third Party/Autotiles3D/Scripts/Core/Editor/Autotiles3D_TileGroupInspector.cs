@@ -7,7 +7,7 @@ using System.Linq;
 namespace Autotiles3D
 {
     [CustomEditor(typeof(Autotiles3D_TileGroup))]
-    public class Autotiles3D_TileGroupInspector : Editor
+    public class Autotiles3D_TileGroupInspector : UnityEditor.Editor
     {
         Autotiles3D_TileGroup _group;
 

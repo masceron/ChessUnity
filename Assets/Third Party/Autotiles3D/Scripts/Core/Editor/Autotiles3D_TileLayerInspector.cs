@@ -7,7 +7,7 @@ using System;
 namespace Autotiles3D
 {
     [CustomEditor(typeof(Autotiles3D_TileLayer))]
-    public class Autotiles3D_TileLayerInspector : Editor
+    public class Autotiles3D_TileLayerInspector : UnityEditor.Editor
     {
         Autotiles3D_TileLayer _tileLayer;
         Autotiles3D_Grid Grid => _tileLayer.Grid;
@@ -864,7 +864,7 @@ namespace Autotiles3D
                                     anchor.BakedParent.transform.SetParent(anchor.transform);
                                     anchor.BakedParent.transform.SetSiblingIndex(0);
 
-                                    string path = "Assets/Autotiles3D/Content/CombinedMeshes";
+                                    string path = "Assets/Third Party/Autotiles3D/Content/CombinedMeshes";
                                     var blocks = anchor.GetBlocks();
                                     Autotiles3D_MeshCombiner.CombineMeshes(blocks.Select(c => c.gameObject).ToList(), ref anchor.BakedParent, path);
 
