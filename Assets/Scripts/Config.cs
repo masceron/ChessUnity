@@ -17,7 +17,7 @@ public static class Config
         new PieceConfig("piece_archelon", true, 98),
     };
 
-    public static RelicConfig relicWhiteConfig = new("relic_storm_capacitor", false, 5);
-    public static RelicConfig relicBlackConfig = new("relic_sirens_harpoon", true, 5);
+    public static RelicConfig relicWhiteConfig = new("relic_coral_tome", false, 6);
+    public static RelicConfig relicBlackConfig = new("relic_coral_tome", true, 6);
     public static RegionalEffectType regionalEffectType = RegionalEffectType.None;
 }

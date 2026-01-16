@@ -63,6 +63,10 @@ MonoBehaviour:
     m_Key: relic_kelp_banner_description
     m_Metadata:
       m_Items: []
+  - m_Id: 51805796816347136
+    m_Key: relic_coral_tome_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
