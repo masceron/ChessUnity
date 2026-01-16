@@ -16,8 +16,7 @@ namespace Game.Augmentation
         public override void SetTarget(PieceLogic target)
         {
             Target = target;
-            Set = new AugmentationSet(AugmentationSetType.None,false);
-            //TODO: Change AugmentationSetType to Spectre.
+            Set = new AugmentationSet(AugmentationSetType.Spectre,true);
             PassiveEffects.Add(new TaintedHeartPassive(Target));
         }
     }
