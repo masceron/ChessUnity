@@ -543,6 +543,10 @@ MonoBehaviour:
     m_Key: effect_abyssal_tapetum_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 57251301839036416
+    m_Key: effect_spectre_augmentation
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
