@@ -53,13 +53,12 @@ namespace UX.UI.Ingame.CoralTome
         public void Choose(string type)
         {
             Disable();
-            //TODO: fix options to choose (all the active tiles of our side instead of all the pieces on the board)
+            // TODO: fix options to choose (all the active tiles of our side instead of all the pieces on the board)
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var relic = BoardUtils.GetRelicOf(true);
-                //TODO: fix color of piece which uses the relic (not always be true).
+                var relic = BoardUtils.GetRelicOf(MatchManager.Ins.GameState.OurSide);
                 if (relic is Game.Action.Internal.Pending.Relic.CoralTome coralTome)
                 {
                     var pending = new CoralTomePending(coralTome, piece.Pos, type);

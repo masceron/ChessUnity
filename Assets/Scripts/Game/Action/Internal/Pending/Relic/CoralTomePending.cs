@@ -20,8 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void ModifyGameState()
         {
-            //TODO: fix color of piece which uses the relic (not always be true).
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(pieceType, true , (ushort)Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(pieceType, MatchManager.Ins.GameState.OurSide , (ushort)Target)));
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
