@@ -22,11 +22,11 @@ namespace UX.UI.Ingame.HermosHorn
         }
         public void FirstOption()
         {
-            ActionManager.DoManualAction(new HermosHornActive(relic, true));
+            BoardViewer.Ins.ExecuteAction(new HermosHornActive(relic, true));
         }
         public void SecondOption()
         {
-            ActionManager.DoManualAction(new HermosHornActive(relic, false));
+            BoardViewer.Ins.ExecuteAction(new HermosHornActive(relic, false));
         }
     }
 }
