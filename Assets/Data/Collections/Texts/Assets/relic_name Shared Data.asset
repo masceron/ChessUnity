@@ -51,6 +51,22 @@ MonoBehaviour:
     m_Key: relic_mangrove_charm
     m_Metadata:
       m_Items: []
+  - m_Id: 51893289897943040
+    m_Key: relic_hermos_horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51893290048937984
+    m_Key: relic_ray_stinger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51893290048937985
+    m_Key: relic_adrenaline_radiator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51893290048937986
+    m_Key: relic_methane_casing
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -491,6 +491,54 @@ MonoBehaviour:
     m_Key: effect_ribcage_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 57209752921825280
+    m_Key: effect_urchin_plating_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753035071488
+    m_Key: effect_covet_lens_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753265758208
+    m_Key: effect_kinetic_diffuser_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753483862016
+    m_Key: effect_focus_module_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753580331008
+    m_Key: effect_puppeteer_spirit_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753580331009
+    m_Key: effect_adaptive_gland_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753601302528
+    m_Key: effect_reef_plating_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753689382912
+    m_Key: effect_fungal_sac_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209753722937344
+    m_Key: effect_pressure_membrane_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209754230448128
+    m_Key: effect_echolocator_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57209754331111424
+    m_Key: effect_stress_regulator_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 57752100999258112
+    m_Key: effect_scrap_collector_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

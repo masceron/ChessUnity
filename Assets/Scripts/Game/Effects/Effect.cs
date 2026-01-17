@@ -30,7 +30,7 @@ namespace Game.Effects
     
     public enum EffectCategory: byte 
     {
-        Debuff, Buff, Trait, Condition, Augmentation, SpecialAbility
+        Debuff, Buff, Trait, Condition, Augmentation, SpecialAbility, Skill
     }
 
     public enum EffectStack : byte

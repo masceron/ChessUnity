@@ -9,8 +9,8 @@ namespace UX.UI.Ingame
         ThalassosResurrector,
         DeathDefianceUI,
         DormantFossilUI,
-        TimelessHourglassUI
-
+        TimelessHourglassUI,
+        HermosHornUI,
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
