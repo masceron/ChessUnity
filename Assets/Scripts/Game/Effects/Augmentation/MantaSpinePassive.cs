@@ -8,7 +8,6 @@ using Game.Common;
 using Game.Effects.Traits;
 using UnityEngine;
 using Game.Piece;
-using System.Linq;
 using Game.Action.Captures;
 namespace Game.Effects.Augmentation
 {

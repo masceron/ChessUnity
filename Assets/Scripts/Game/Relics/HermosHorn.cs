@@ -1,11 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using Game.Action.Internal.Pending;
-using Game.Action.Internal.Pending.Relic;
-using Game.Common;
-using Game.Effects;
-using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;

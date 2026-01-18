@@ -535,6 +535,22 @@ MonoBehaviour:
     m_Key: effect_stress_regulator_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 58062861711626240
+    m_Key: effect_frilled_shark_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58062863364182016
+    m_Key: effect_abyssal_tapetum_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58064342670036992
+    m_Key: effect_spectre_augmentation_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58064342699397120
+    m_Key: effect_scrap_collector_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

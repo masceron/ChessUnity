@@ -207,6 +207,10 @@ MonoBehaviour:
     m_Key: piece_frilled_shark_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 58036187443941376
+    m_Key: piece_frilled_shark_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

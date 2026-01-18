@@ -1,14 +1,8 @@
 // Assets/Scripts/Game/Action/Internal/Pending/Relic/SeafoamPhialPending.cs
 
-using Game.Effects.Buffs;
 using Game.Managers;
-using Game.Relics;
-using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 using Game.Action.Relics;
-using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic.Commons;
-using Game.Common;
 using Game.Relics.Commons;
 using UX.UI.Ingame.HermosHorn;
 using UnityEngine;

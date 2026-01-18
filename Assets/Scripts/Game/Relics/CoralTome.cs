@@ -1,12 +1,9 @@
-﻿using Game.Action.Relics;
-using Game.Managers;
-using Game.Relics.Commons;
+﻿using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.CoralTome;
-using UX.UI.Ingame.DormantFossil;
 
-namespace Game.Action.Internal.Pending.Relic
+namespace Game.Relics
 {
     public class CoralTome : RelicLogic
     {

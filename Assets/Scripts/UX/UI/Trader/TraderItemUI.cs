@@ -1,6 +1,5 @@
 using System;
 using Game.ScriptableObjects;
-using Game.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;

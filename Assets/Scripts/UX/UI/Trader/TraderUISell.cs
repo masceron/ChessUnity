@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
 using Game.Save.Relics;
 using Game.Save.Player;
 using Game.Managers;

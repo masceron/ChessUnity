@@ -1,7 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using System.Reflection;
 using UnityEditor;
 using System.Runtime.Serialization.Formatters.Binary;

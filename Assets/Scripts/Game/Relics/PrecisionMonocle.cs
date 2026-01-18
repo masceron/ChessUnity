@@ -1,6 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Managers;
-using Game.Relics.Commons;
+﻿using Game.Relics.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Relics

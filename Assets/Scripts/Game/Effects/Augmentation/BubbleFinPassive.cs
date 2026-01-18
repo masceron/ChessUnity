@@ -1,6 +1,3 @@
-using Game.Action;
-using Game.Action.Internal;
-using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation

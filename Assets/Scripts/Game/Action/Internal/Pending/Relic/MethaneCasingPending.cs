@@ -1,6 +1,5 @@
 // Assets/Scripts/Game/Action/Internal/Pending/Relic/SeafoamPhialPending.cs
 
-using Game.Effects.Buffs;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;

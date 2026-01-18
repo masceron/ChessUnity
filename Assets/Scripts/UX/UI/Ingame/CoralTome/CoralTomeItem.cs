@@ -2,7 +2,6 @@
 using TMPro;
 using UI.UIObject3D.Scripts;
 using UnityEngine;
-using UX.UI.Ingame.DormantFossil;
 
 namespace UX.UI.Ingame.CoralTome
 {

@@ -11,6 +11,7 @@ namespace UX.UI.Ingame
         DormantFossilUI,
         TimelessHourglassUI,
         HermosHornUI,
+        CoralTomeUI,
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

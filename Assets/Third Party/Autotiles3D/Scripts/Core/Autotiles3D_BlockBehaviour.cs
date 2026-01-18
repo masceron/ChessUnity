@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using System;
 #if UNITY_EDITOR
-using UnityEditorInternal;
 #endif
 
 namespace Autotiles3D

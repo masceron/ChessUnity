@@ -1,14 +1,9 @@
 ﻿using System.Collections.Generic;
-using Game.Action;
-using Game.Action.Internal;
 using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Managers;
-using Game.Piece;
 using PrimeTween;
 using UnityEngine;
-using UX.UI.Ingame.DormantFossil;
-using Color = UnityEngine.Color;
 
 namespace UX.UI.Ingame.CoralTome
 {
@@ -58,7 +53,7 @@ namespace UX.UI.Ingame.CoralTome
             {
                 TileManager.Ins.MarkAsMoveable(pos);
                 var relic = BoardUtils.GetRelicOf(color);
-                if (relic is Game.Action.Internal.Pending.Relic.CoralTome coralTome)
+                if (relic is Game.Relics.CoralTome coralTome)
                 {
                     var pending = new CoralTomePending(coralTome, pos, type);
                     BoardViewer.ListOf.Add(pending);

@@ -67,6 +67,22 @@ MonoBehaviour:
     m_Key: relic_coral_tome_description
     m_Metadata:
       m_Items: []
+  - m_Id: 52654791481282560
+    m_Key: relic_adrenaline_radiator_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52654791502254080
+    m_Key: relic_hermos_horn_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52654791502254081
+    m_Key: relic_ray_stinger_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52654791506448384
+    m_Key: relic_methane_casing_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
