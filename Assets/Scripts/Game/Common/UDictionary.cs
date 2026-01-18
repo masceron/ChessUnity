@@ -112,7 +112,7 @@ using UnityEditorInternal;
                 rect.y += TopPadding;
                 rect.height -= TopPadding + BottomPadding;
 
-                if (IsAligned == false)
+                if (!IsAligned)
                 {
                     DrawAlignmentWarning(ref rect);
                     return;
@@ -298,7 +298,7 @@ using UnityEditorInternal;
                 switch (property.propertyType)
                 {
                     case SerializedPropertyType.Generic:
-                        return property.hasVisibleChildren == false;
+                        return !property.hasVisibleChildren;
                 }
 
                 return true;
@@ -314,8 +314,8 @@ using UnityEditorInternal;
                 {
                     yield return property;
 
-                    if (property.NextVisible(false) == false) break;
-                    if (property.propertyPath.StartsWith(path) == false) break;
+                    if (!property.NextVisible(false)) break;
+                    if (!property.propertyPath.StartsWith(path)) break;
                 }
             }
 

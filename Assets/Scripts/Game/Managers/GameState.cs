@@ -94,7 +94,7 @@ namespace Game.Managers
             PieceBoard[piece.Index] = pieceLogic;
             if (pieceLogic.PieceRank == PieceRank.Commander)
             {
-                if (pieceLogic.Color == false)
+                if (!pieceLogic.Color)
                 {
                     WhiteCommander = pieceLogic;
                 }

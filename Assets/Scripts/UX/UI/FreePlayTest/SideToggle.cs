@@ -10,7 +10,7 @@ namespace UX.UI.FreePlayTest
         public void OnToggle()
         {
             FreePlayArmyDesign.Ins.ToggleChosenSide();
-            tmp.text = (FreePlayArmyDesign.Ins.choosenSide == false) ? "Ally" : "Enemy";
+            tmp.text = !FreePlayArmyDesign.Ins.choosenSide ? "Ally" : "Enemy";
         }
     }
 }

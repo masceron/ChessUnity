@@ -22,7 +22,7 @@ namespace Game.Piece.PieceLogic
                     {
                         for (int rank = RankOf(Pos) + 1; rank <= Math.Min(MaxLength - 1, RankOf(Pos) + 3); ++rank)
                         {
-                            if (IsActive(IndexOf(rank, FileOf(Pos))) == false) { return; }
+                            if (!IsActive(IndexOf(rank, FileOf(Pos)))) { return; }
                             int target = IndexOf(rank, FileOf(Pos));
                             Commons.PieceLogic pieceOn = PieceOn(target);
                             if (pieceOn != null)
@@ -43,7 +43,7 @@ namespace Game.Piece.PieceLogic
                     {
                         for (int rank = RankOf(Pos) - 1; rank >= Math.Max(0, RankOf(Pos) - 3); --rank)
                         {
-                            if (IsActive(IndexOf(rank, FileOf(Pos))) == false) { return; }
+                            if (!IsActive(IndexOf(rank, FileOf(Pos)))) { return; }
                             int target = IndexOf(rank, FileOf(Pos));
                             Commons.PieceLogic pieceOn = PieceOn(target);
                             if (pieceOn != null)

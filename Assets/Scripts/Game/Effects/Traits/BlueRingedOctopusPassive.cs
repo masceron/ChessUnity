@@ -88,7 +88,7 @@ namespace Game.Effects.Traits
                     }
                 }
 
-                if (activeBoard[action.Target] == false || activeBoard[action.Maker] == false)
+                if (!activeBoard[action.Target] || !activeBoard[action.Maker])
                 {
                     foreach (var pos in initActive)
                         activeBoard[pos] = true;

@@ -78,7 +78,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
 
         public void SelectRelic(string type)
         {
-            if (choosenSide == false)
+            if (!choosenSide)
             {
                 army.Relic = new Relic(type);
             }
