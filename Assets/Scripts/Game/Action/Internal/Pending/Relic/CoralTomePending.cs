@@ -20,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(pieceType, MatchManager.Ins.GameState.OurSide , (ushort)Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(pieceType, coralTome.Color , (ushort)Target)));
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
