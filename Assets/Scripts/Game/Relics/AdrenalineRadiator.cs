@@ -26,8 +26,7 @@ namespace Game.Relics
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null || piece.Color != Color) continue;
-                    if ((piece.Color == false && BoardUtils.RankOf(piece.Pos) <= BoardUtils.BoardSize / 2 - 1)
-                    || (piece.Color == true && BoardUtils.RankOf(piece.Pos) >= BoardUtils.BoardSize / 2))
+                    if (BoardUtils.IsOnEnemySide(piece))
                     {
                         TileManager.Ins.MarkAsMoveable(piece.Pos);
                         var pending = new AdrenalineRadiatorPending(this, piece.Pos);
