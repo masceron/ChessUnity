@@ -26,10 +26,12 @@ namespace Game.Relics
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null || piece.Color != Color) continue;
-                    // Can kiem tra phan san cua quan dich
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new AdrenalineRadiatorPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    if (BoardUtils.RankOf(piece.Pos) <= BoardUtils.BoardSize / 2 - 1)
+                    {
+                        TileManager.Ins.MarkAsMoveable(piece.Pos);
+                        var pending = new AdrenalineRadiatorPending(this, piece.Pos);
+                        BoardViewer.ListOf.Add(pending);
+                    }
                 }
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;

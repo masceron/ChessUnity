@@ -33,7 +33,7 @@ namespace Game.Action.Internal.Pending.Relic
                 int ind = IndexOf(rankOff, fileOff);
                 if (TileManager.Ins.IsTileEmpty(IndexOf(rankOff, fileOff))){ continue; }
                 if (IndexOf(rankOff, fileOff) == pieceOn.Pos) { continue; }
-                if (PieceOn(ind) == null)
+                if (PieceOn(ind) == null && FormationManager.Ins.GetFormation(ind) != null)
                 {
                     TileManager.Ins.DestroyTile(rankOff, fileOff);
                 }
