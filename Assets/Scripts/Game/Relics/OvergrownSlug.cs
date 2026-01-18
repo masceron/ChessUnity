@@ -20,7 +20,7 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                var commander = GetCommanderOf(true);
+                var commander = GetCommanderOf(Color);
                 if (commander != null)
                 {
                     var pending = new OvergrownSlugPending(this, commander.Pos);
