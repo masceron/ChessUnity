@@ -1,8 +1,4 @@
-using Game.Action;
-using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects.Buffs;
-using Game.Effects.Debuffs;
 using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;

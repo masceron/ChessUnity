@@ -16,17 +16,16 @@ namespace Game.Relics.Commons
                 "relic_kelp_banner" => new KelpBanner(cfg),
                 "relic_mangrove_charm" => new MangroveCharm(cfg),
                 "relic_methane_casing" => new MethaneCasing(cfg),
+                "relic_ornetes_edict" => new OrnetesEdict(cfg),
                 "relic_overgrown_slug" => new OvergrownSlug(cfg),
+                "relic_peace_treaty" => new PeaceTreaty(cfg),
                 "relic_precision_monocle" => new PrecisionMonocle(cfg),
                 "relic_ray_stinger" => new RayStinger(cfg),
+                "relic_reliquary" => new Reliquary(cfg),
                 "relic_rotting_scythe" => new RottingScythe(cfg),
                 "relic_seafoam_phial" => new SeafoamPhial(cfg),
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
-                "relic_peace_treaty" => new PeaceTreaty(cfg),
-                "relic_reliquary" => new Reliquary(cfg),
-                "relic_ledger_stone" => new LedgerStone(cfg),
-                "relic_ornetes_edict" => new OrnetesEdict(cfg),
                 _ => null
             };
         }

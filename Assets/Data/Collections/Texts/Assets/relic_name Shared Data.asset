@@ -83,6 +83,18 @@ MonoBehaviour:
     m_Key: relic_methane_casing
     m_Metadata:
       m_Items: []
+  - m_Id: 52684849642131456
+    m_Key: relic_reliquary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52684849688268800
+    m_Key: relic_peace_treaty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52684849688268801
+    m_Key: relic_ornetes_edict
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

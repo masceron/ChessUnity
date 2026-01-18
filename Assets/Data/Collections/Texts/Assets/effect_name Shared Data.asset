@@ -551,6 +551,10 @@ MonoBehaviour:
     m_Key: effect_scrap_collector
     m_Metadata:
       m_Items: []
+  - m_Id: 58070350331039744
+    m_Key: effect_stalker_instinct
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
