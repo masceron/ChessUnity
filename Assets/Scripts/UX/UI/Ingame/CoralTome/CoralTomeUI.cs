@@ -53,15 +53,14 @@ namespace UX.UI.Ingame.CoralTome
         public void Choose(string type)
         {
             Disable();
-            // TODO: fix options to choose (all the active tiles of our side instead of all the pieces on the board)
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            bool color = MatchManager.Ins.GameState.OurSide;
+            foreach (var pos in BoardUtils.AllSidePos(color))
             {
-                if (piece == null) continue;
-                TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var relic = BoardUtils.GetRelicOf(MatchManager.Ins.GameState.OurSide);
+                TileManager.Ins.MarkAsMoveable(pos);
+                var relic = BoardUtils.GetRelicOf(color);
                 if (relic is Game.Action.Internal.Pending.Relic.CoralTome coralTome)
                 {
-                    var pending = new CoralTomePending(coralTome, piece.Pos, type);
+                    var pending = new CoralTomePending(coralTome, pos, type);
                     BoardViewer.ListOf.Add(pending);
                 }
             }
