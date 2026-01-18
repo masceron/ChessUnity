@@ -371,6 +371,10 @@ MonoBehaviour:
     m_Key: piece_pegasus_seamoth
     m_Metadata:
       m_Items: []
+  - m_Id: 56104894142832640
+    m_Key: piece_cabezon
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

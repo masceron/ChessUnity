@@ -20,6 +20,8 @@ namespace Game.Augmentation.Set
                 {
                     AugmentationSetType.None => -1,
                     AugmentationSetType.StalkerInstinct => 4,
+                    AugmentationSetType.ScrapCollector => 3,
+                    AugmentationSetType.Spectre => 2,
                     _ => -1
                 };
             }

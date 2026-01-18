@@ -51,6 +51,22 @@ MonoBehaviour:
     m_Key: relic_mangrove_charm_description
     m_Metadata:
       m_Items: []
+  - m_Id: 50571819279409152
+    m_Key: relic_overgrown_slug_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50593547460239360
+    m_Key: relic_precision_monocle_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 50703587668090880
+    m_Key: relic_kelp_banner_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51805796816347136
+    m_Key: relic_coral_tome_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

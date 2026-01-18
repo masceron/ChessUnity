@@ -1,3 +1,5 @@
+using Game.Action.Internal.Pending.Relic;
+
 namespace Game.Relics.Commons
 {
     public static class RelicFactory
@@ -15,6 +17,10 @@ namespace Game.Relics.Commons
                 "relic_seafoam_phial" => new SeafoamPhial(cfg),
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
+                "relic_overgrown_slug" => new OvergrownSlug(cfg),
+                "relic_precision_monocle" => new PrecisionMonocle(cfg),
+                "relic_kelp_banner" => new KelpBanner(cfg),
+                "relic_coral_tome" => new CoralTome(cfg),
                 _ => null
             };
         }
