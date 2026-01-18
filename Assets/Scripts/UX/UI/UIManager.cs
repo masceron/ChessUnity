@@ -19,7 +19,6 @@ namespace UX.UI
     public class UIManager : Singleton<UIManager>
     {
         private RectTransform currentCanvas;
-        // public CanvasID initialCanvas = CanvasID.None;
         private CanvasID currentCanvasID;
         private CanvasID previousCanvasID;
         
@@ -31,10 +30,6 @@ namespace UX.UI
         protected override void Awake()
         {
             base.Awake();
-            // if (initialCanvas != CanvasID.None)
-            // {
-            //     Load(initialCanvas);
-            // }
         }
         public void Load(CanvasID id)
         {
