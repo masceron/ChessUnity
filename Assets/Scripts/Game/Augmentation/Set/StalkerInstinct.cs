@@ -2,6 +2,7 @@ using Game.Effects.Buffs;
 using Game.Effects;
 using System.Collections.Generic;
 using Game.Piece.PieceLogic.Commons;
+using Game.Effects.Augmentation;
 
 namespace Game.Augmentation.Set
 {
@@ -11,7 +12,7 @@ namespace Game.Augmentation.Set
         {
             BonusEffects = new List<Effect>
             {
-                new Shield(target)
+                new StalkerInstinctEffect(target)
             };
         }
     }
