@@ -11,6 +11,8 @@ using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
+using UX.UI.Ingame;
+using UX.UI;
 
 namespace Game.Common
 {
@@ -334,6 +336,12 @@ namespace Game.Common
             if (piece == null) return true;
             
             return PieceOn(piece.Pos) == piece;
+        }
+
+        public static void NotifyGameEnd(EndGameUI.MessageID messageID)
+        {
+            UIManager.Ins.Load(CanvasID.EndGameMessage);
+            EndGameUI.Ins.SetMessage(messageID);
         }
     }
 }

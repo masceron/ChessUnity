@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
                 pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
             }
             var mappedPos = BoardUtils.PosMap(pos, MatchManager.Ins.StartingSize);
-            var kelp = new Kelp(true, true);
+            var kelp = new Kelp(true, Piece.Color);
             kelp.SetDuration(6);
             FormationManager.Ins.SetFormation(mappedPos, kelp);
             
