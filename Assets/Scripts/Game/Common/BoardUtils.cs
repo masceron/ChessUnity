@@ -334,7 +334,7 @@ namespace Game.Common
         public static bool IsAlive(PieceLogic piece)
         {
             if (piece == null) return true;
-            
+
             return PieceOn(piece.Pos) == piece;
         }
         
@@ -372,6 +372,11 @@ namespace Game.Common
         {
             UIManager.Ins.Load(CanvasID.EndGameMessage);
             EndGameUI.Ins.SetMessage(messageID);
+        }
+        public static bool IsOnEnemySide(PieceLogic piece)
+        {
+            return (piece.Color == false && RankOf(piece.Pos) <= BoardSize / 2 - 1)
+                    || (piece.Color == true && RankOf(piece.Pos) >= BoardSize / 2);
         }
     }
 }
