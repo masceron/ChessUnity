@@ -25,8 +25,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget), PieceOn(Maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 

@@ -44,7 +44,7 @@ namespace Game.Action.Skills
 
                     if (p != null && p.Color != caller.Color)
                     {
-                        ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p), PieceOn(Maker)));
                     }
                 }
             }

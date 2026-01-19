@@ -36,8 +36,8 @@ namespace Game.Action.Skills
             if (FirstTarget == null) return;
             if (SecondTarget == null) return;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget), PieceOn(Maker)));
             isExecuting = false;
             Dispose();
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

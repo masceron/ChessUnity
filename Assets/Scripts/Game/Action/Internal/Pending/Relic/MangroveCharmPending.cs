@@ -73,8 +73,8 @@ namespace Game.Action.Internal.Pending.Relic
             }
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(FirstTarget)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(SecondTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(FirstTarget), mangroveCharm));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(SecondTarget), mangroveCharm));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 

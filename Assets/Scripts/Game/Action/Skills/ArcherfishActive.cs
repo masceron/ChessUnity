@@ -34,8 +34,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, PieceOn(Target))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, PieceOn(Target)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, PieceOn(Target)), PieceOn(Maker)));
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
@@ -52,8 +52,8 @@ namespace Game.Action.Skills
             listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
             
             var idx = UnityEngine.Random.Range(0, listPieces.Count);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx])));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), PieceOn(Maker)));
             
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

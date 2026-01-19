@@ -52,14 +52,14 @@ namespace Game.Action.Skills
             foreach (var effect in allyDebuffs)
             {
                 effect.Piece = enemy;
-                ActionManager.EnqueueAction(new ApplyEffect(effect));
+                ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
             }
 
             // Thêm buff vào Ally
             foreach (var effect in enemyBuffs)
             {
                 effect.Piece = ally;
-                ActionManager.EnqueueAction(new ApplyEffect(effect));
+                ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
             }
 
             // Reset static indices

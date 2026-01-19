@@ -24,12 +24,12 @@ namespace Game.Effects.Augmentation
 
             if (piece1 != null)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece1)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece1), PieceOn(action.Maker)));
             }
             
             if (piece2 != null)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece2)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece2), PieceOn(action.Maker)));
             }
         }
     }

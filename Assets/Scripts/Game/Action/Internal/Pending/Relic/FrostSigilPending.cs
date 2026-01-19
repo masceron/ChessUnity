@@ -39,11 +39,11 @@ namespace Game.Action.Internal.Pending.Relic
             {
                 if (piece == null || piece.Color == MatchManager.Ins.GameState.OurSide) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece), frostSigil));
 
                 if (MatchManager.Roll(probabilityBound))
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, piece)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, piece), frostSigil));
                 }
             }
 

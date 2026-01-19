@@ -1,4 +1,5 @@
 ﻿using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Others;
 using static Game.Common.BoardUtils;
 
@@ -14,7 +15,7 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(PieceOn(Maker), PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(PieceOn(Maker), PieceOn(Target)), BoardUtils.PieceOn(Maker)));
         }
     }
 }

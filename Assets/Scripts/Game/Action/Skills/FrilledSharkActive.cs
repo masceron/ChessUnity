@@ -27,7 +27,7 @@ namespace Game.Action.Skills
                 PieceLogic pieceOn = PieceOn(IndexOf(rank, file));
                 if (pieceOn != null && pieceOn.Color != PieceOn(Maker).Color)
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn), PieceOn(Maker)));
                 }
             }
             ActionManager.EnqueueAction(new NormalMove(Maker, Target));
