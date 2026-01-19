@@ -215,6 +215,10 @@ MonoBehaviour:
     m_Key: piece_scalyhead_sculpin_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 58339261577564160
+    m_Key: piece_mirror_butterfly_fish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

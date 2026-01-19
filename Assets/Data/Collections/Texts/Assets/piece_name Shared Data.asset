@@ -387,6 +387,10 @@ MonoBehaviour:
     m_Key: piece_fire_goby_fish
     m_Metadata:
       m_Items: []
+  - m_Id: 58365820002766848
+    m_Key: piece_mirror_butterfly_fish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

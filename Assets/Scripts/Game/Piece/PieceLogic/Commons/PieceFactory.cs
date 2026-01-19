@@ -98,6 +98,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_velkaris" => new Velkaris(cfg),
                 "piece_scalyhead_sculpin" => new ScalyheadSculpin(cfg),
                 "piece_fire_goby_fish" => new FireGobyFish(cfg),
+                "piece_mirror_butterfly_fish" => new MirrorButterflyFish(cfg),
                 _ => null
             };
         }
