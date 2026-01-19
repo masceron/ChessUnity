@@ -559,6 +559,10 @@ MonoBehaviour:
     m_Key: effect_scalyhead_sculpin_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 58336136544260096
+    m_Key: effect_fire_goby_fish_pasive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
