@@ -379,6 +379,10 @@ MonoBehaviour:
     m_Key: piece_cabezon
     m_Metadata:
       m_Items: []
+  - m_Id: 58348114390159360
+    m_Key: piece_scalyhead_sculpin
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
