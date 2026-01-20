@@ -112,7 +112,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
         {
             var piece = BoardUtils.PieceOn(piecePos);
             var effect = CreateEffect(effectName, piece);
-            ActionManager.ExecuteImmediately(new ApplyEffect(effect));
+            ActionManager.EnqueueAction(new ApplyEffect(effect, piece));
             Disable();
             DestroyEffectItems();
         }

@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
             var targetPiece = PieceOn(action.Target);
             if (targetPiece is { PieceRank: PieceRank.Elite or PieceRank.Champion or PieceRank.Commander })
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece), Piece));
             }
         }
     }

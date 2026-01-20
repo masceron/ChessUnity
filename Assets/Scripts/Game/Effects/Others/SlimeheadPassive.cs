@@ -27,8 +27,8 @@ namespace Game.Effects.Others
             var buffEffect = maker.Effects.Count(t => t.Category == EffectCategory.Buff);
 
             if (buffEffect < 2) return;
-            ActionManager.EnqueueAction(new ApplyEffect(new Infected(maker)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Infected(maker), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, maker), Piece));
         }
     }
 }

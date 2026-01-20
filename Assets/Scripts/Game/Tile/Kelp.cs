@@ -28,7 +28,7 @@ namespace Game.Tile
             {
                 pieceHaveCamouflage = true;
             } else {
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece), FormationType.Kelp));
             }
         }
 
@@ -36,7 +36,7 @@ namespace Game.Tile
         {
             if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
             {
-                ActionManager.ExecuteImmediately(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == "effect_camouflage")));
+                ActionManager.EnqueueAction(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == "effect_camouflage")));
             }
             
             base.OnPieceExit(piece);

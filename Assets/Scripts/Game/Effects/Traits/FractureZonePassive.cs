@@ -64,7 +64,7 @@ namespace Game.Effects.Traits
             var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank.Value, randFile.Value));
             if (pieceOn != null)
             {
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Bound(1, pieceOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, pieceOn)));
             }
         }
 

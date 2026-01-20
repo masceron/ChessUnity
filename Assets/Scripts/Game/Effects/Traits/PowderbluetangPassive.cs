@@ -4,6 +4,7 @@ using Game.Tile;
 using Game.Managers;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Quiets;
 
 namespace Game.Effects.Traits
 {
@@ -20,12 +21,13 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action.Maker == Piece.Pos &&
+                action is NormalMove &&
                 action.Result == ResultFlag.Success &&
                 count > 0 &&
                 FormationManager.Ins.GetFormation(action.Target) is HydroidThicket)
             {
                 count--;
-                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece, 1)));
+                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece, 1), FormationType.HydroidThicket));
             }
         }
     }

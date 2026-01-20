@@ -23,7 +23,7 @@ namespace Game.Effects.SpecialAbility
             if (pieceOn == null) { return; }
             if (pieceOn.Effects.Any(e => e is Relentless) && IsAlive(pieceOn))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), Piece));
             }
         }
     }

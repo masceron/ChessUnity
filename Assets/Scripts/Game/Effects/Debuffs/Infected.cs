@@ -26,7 +26,7 @@ namespace Game.Effects.Debuffs
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn == null || pOn == Piece) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Infected(pOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Infected(pOn), Piece));
             }
         }
 

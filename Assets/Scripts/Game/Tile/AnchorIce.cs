@@ -9,6 +9,7 @@ namespace Game.Tile{
         private int stack;
         public AnchorIce(bool color) : base(color){
             MatchManager.Ins.GameState.OnIncreaseTurn += OnIncreaseTurn;
+            stack = 0;
         }
         public override FormationType GetFormationType()
         {
@@ -24,10 +25,10 @@ namespace Game.Tile{
                 return; 
             }
             if (stack == 0){
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation), FormationType.AnchorIce));
             }
             else if (stack == 2){
-                ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(1, PieceOnFormation)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation), FormationType.AnchorIce));
             }
             stack++;
         }

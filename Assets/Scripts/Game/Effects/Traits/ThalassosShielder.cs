@@ -49,7 +49,7 @@ namespace Game.Effects.Traits
                 if (pieceEntered.Effects.Any(e => e.EffectName == "effect_shield") || !Roll(50)) continue;
                 
                 shielding.Add(pieceEntered);
-                ActionManager.EnqueueAction(new ApplyEffect(new Shield(pieceEntered)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Shield(pieceEntered), Piece));
             }
 
             foreach (var pieceExited in inRange.Except(newInRange))
