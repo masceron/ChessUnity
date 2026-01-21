@@ -21,6 +21,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
         public void OnClickErase()
         {
             transform.parent.parent.GetComponent<SeabedLevelerUI>().EraseFormation(transform.GetSiblingIndex());
+            Destroy(gameObject);
         }
     }
 }

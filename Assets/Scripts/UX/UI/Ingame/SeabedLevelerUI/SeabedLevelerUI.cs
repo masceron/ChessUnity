@@ -4,6 +4,7 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
+using Game.Tile;
 using PrimeTween;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
     {
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject formationItem;
+        private List<int> formationList = new();
 
 
         private void OnEnable()
@@ -32,21 +34,27 @@ namespace UX.UI.Ingame.SeabedLevelerUI
 
         public void Load()
         {
-            for (int i = 0; i < FormationManager.Ins.GetAllFormations().Count; ++i)
+            for (int i = 0; i < BoardUtils.BoardSize; ++i)
             {
-                Debug.Log("formation length: " + FormationManager.Ins.GetAllFormations().Count);
-                var formation = FormationManager.Ins.GetFormation(i);
+                if (FormationManager.Ins.HasFormation(i))
+                {
+                    formationList.Add(i);
+                }
+            }
+
+            for (int i = 0; i < formationList.Count; ++i)
+            {
+                Debug.Log("formation length: " + formationList.Count);
+                var formation = FormationManager.Ins.GetFormation(formationList[i]);
                 Instantiate(formationItem, chooseField.transform, true);
 
-                Debug.Log(formation.GetFormationType().ToString());
                 chooseField.transform.GetChild(i).GetComponent<SeabedLevelerItem>().Load(formation.GetFormationType().ToString());
-                
             }
         }
 
         public void EraseFormation(int idx)
         {
-            FormationManager.Ins.RemoveFormation(idx);
+            FormationManager.Ins.RemoveFormation(formationList[idx]);
         }
     }
 }

@@ -54,6 +54,10 @@ namespace Game.Managers
 
         public List<Formation> GetFormation(FormationType type) => formations.Where(f => f != null && f.GetFormationType() == type).ToList();
         
+        public bool HasFormation(int pos)
+        {
+            return formations[pos] != null;
+        }
         /// <summary>
         /// Nên dùng để xóa Formation
         /// </summary>
