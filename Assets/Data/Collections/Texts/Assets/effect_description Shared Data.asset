@@ -555,6 +555,22 @@ MonoBehaviour:
     m_Key: effect_stalker_instinct_description
     m_Metadata:
       m_Items: []
+  - m_Id: 58510698119745536
+    m_Key: effect_pressure_hull_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58510698144911360
+    m_Key: effect_broken_relocator_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58510698144911361
+    m_Key: effect_duelist_reflex_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 58617678318587904
+    m_Key: effect_gluttonous_jaw_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

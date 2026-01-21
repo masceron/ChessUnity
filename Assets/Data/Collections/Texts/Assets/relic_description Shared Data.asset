@@ -95,6 +95,22 @@ MonoBehaviour:
     m_Key: relic_ornetes_edict_description
     m_Metadata:
       m_Items: []
+  - m_Id: 53402239175020544
+    m_Key: relic_seabed_leveler_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53402239204380672
+    m_Key: chaotic_constructor_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53402404833251328
+    m_Key: relic_temporal_warp_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 53402524714848256
+    m_Key: relic_chaotic_constructor_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

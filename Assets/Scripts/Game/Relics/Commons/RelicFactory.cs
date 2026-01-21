@@ -26,6 +26,9 @@ namespace Game.Relics.Commons
                 "relic_seafoam_phial" => new SeafoamPhial(cfg),
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
+                "relic_temporal_warp" => new TemporalWarp(cfg),
+                "relic_chaotic_constructor" => new ChaoticConstructor(cfg),
+                "relic_seabed_leveler" => new SeabedLeveler(cfg),
                 _ => null
             };
         }

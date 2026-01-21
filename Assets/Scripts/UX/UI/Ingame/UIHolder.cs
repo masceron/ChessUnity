@@ -12,6 +12,7 @@ namespace UX.UI.Ingame
         TimelessHourglassUI,
         HermosHornUI,
         CoralTomeUI,
+        SeabedLevelerUI,
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

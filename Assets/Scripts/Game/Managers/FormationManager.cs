@@ -41,12 +41,17 @@ namespace Game.Managers
                 formations[pos].OnCreated(PieceOn(pos));
             }
         }
-
+        
         public Formation GetFormation(int pos)
         {
             return formations[pos];
         }
         
+        public List<Formation> GetAllFormations()
+        {
+            return formations.Where(f => f != null).ToList();
+        }
+
         public List<Formation> GetFormation(FormationType type) => formations.Where(f => f != null && f.GetFormationType() == type).ToList();
         
         /// <summary>
