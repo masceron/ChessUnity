@@ -55,7 +55,7 @@ namespace UX.UI.Ingame.DormantFossil
         {
             var color = BoardUtils.ColorOfPiece(piecePos);
             
-            ActionManager.ExecuteImmediately(new KillPiece(piecePos));
+            ActionManager.ExecuteImmediately(new DestroyPiece(piecePos));
             ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig(type, color, piecePos)));
             
             Disable();

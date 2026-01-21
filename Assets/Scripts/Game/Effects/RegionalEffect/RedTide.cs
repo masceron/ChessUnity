@@ -18,7 +18,7 @@ namespace Game.Effects.RegionalEffect
         }
         protected override void ApplyEffect(int currentTurn)
         {
-            if (isActive == 9)
+            if (isActive == 10)
             {
 
                 var random = new System.Random();

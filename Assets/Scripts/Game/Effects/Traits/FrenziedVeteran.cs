@@ -7,7 +7,6 @@ namespace Game.Effects.Traits
     {
         public const byte TurnsToActive = 10;
         public byte numTurns;
-        private bool active;
         private const byte RangeOffset = 1;
 
         public FrenziedVeteran(PieceLogic piece) : base(-1, -1, piece, "effect_frenzied_veteran")
@@ -29,12 +28,7 @@ namespace Game.Effects.Traits
 
         public int ModifyAttackRange(int baseRange)
         {
-            if (numTurns % TurnsToActive == 0)
-            {
-                return baseRange + RangeOffset;
-            }
-
-            else return baseRange;
+            return baseRange + numTurns / 10; // cứ 10 turn tầm đánh tăng 1
         }
     }
 }

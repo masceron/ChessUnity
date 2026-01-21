@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
@@ -25,7 +26,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker < 0) return;
+            if (action is not IQuiets || action.Result != ResultFlag.Success) return;
             var activeBoard = ActiveBoard();
             if (action.Maker == Piece.Pos)
             {

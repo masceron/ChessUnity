@@ -25,14 +25,13 @@ namespace Game.Effects.Augmentation
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             PieceLogic pieceApplied = applyEffect.Effect.Piece;
-            if (pieceApplied.Augmentations.Any(aug => aug.Name == AugmentationName.CovetLens))
+
+            if (pieceApplied != Piece) return;
+            
+            Effect effect = applyEffect.Effect;
+            if (effect.EffectName == "effect_haste" || effect.EffectName == "effect_long_reach")
             {
-                Effect effect = applyEffect.Effect;
-                if (effect.EffectName == "effect_haste" || effect.EffectName == "effect_long_reach")
-                {
-                    effect.Strength = covetLensLevel;
-                    effect.Duration = covetLensLevel;
-                }
+                effect.Strength = covetLensLevel;
             }
         }
     }
