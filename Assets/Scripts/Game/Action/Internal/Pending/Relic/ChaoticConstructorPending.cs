@@ -19,60 +19,27 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class ChaoticConstructorPending : Action, IPendingAble, System.IDisposable, IRelicAction, IEndTurnEffect
+    public class ChaoticConstructorPending : Action, IPendingAble, System.IDisposable, IRelicAction
     {
+
         private ChaoticConstructor chaoticConstructor;
         private int TurnToActive = 1;
         private int currentTurn = 1;
         private List<int> storedPos;
+        private bool color;
 
-        public ChaoticConstructorPending(int maker, ChaoticConstructor cc) : base(maker)
+        public ChaoticConstructorPending(bool color, int maker, ChaoticConstructor cc) : base(maker)
         {
+            this.color = color;
             Maker = (ushort)maker;
             chaoticConstructor = cc;
-            EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
             storedPos = new List<int>();
         }
 
-        public EndTurnEffectType EndTurnEffectType { get; }
-
-        public void OnCallEnd(Action lastMainAction)
-        {
-            if (currentTurn == 0)
-            {
-                Shuffle(storedPos);
-
-                foreach (var pos in storedPos)
-                {
-                    var constructPieces = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == PieceRank.Construct select piece.key).ToList();
-                   
-                    int idx = UnityEngine.Random.Range(0, constructPieces.Count);
-
-                    bool color;
-                    int rd = UnityEngine.Random.Range(0, 101);
-                    if (rd <= 50) color = false;
-                                        else color = true;
-                    var cfg = new PieceConfig(constructPieces[idx], color, (ushort)pos);
-                    ActionManager.ExecuteImmediately(new SpawnPiece(cfg));
-                }
-
-                Dispose();
-            }
-            currentTurn--;
-        }
-
-        private static readonly System.Random Rng = new System.Random();
-        private static void Shuffle<T>(IList<T> list)
-        {
-            for (var i = list.Count - 1; i > 0; i--)
-            {
-                var j = Rng.Next(i + 1);
-                (list[i], list[j]) = (list[j], list[i]);
-            }
-        }
-
+       
         public void CompleteAction()
         {
+            BoardUtils.AddEffectObserver(new Effects.Others.ChaoticConstructorSpawn(-1, color, this, storedPos));
             TileManager.Ins.UnmarkAll();
             for (int i = 0; i < BoardSize; ++i) 
             { 

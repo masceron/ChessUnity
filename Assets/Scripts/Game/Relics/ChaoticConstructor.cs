@@ -30,7 +30,7 @@ namespace Game.Relics
                     if (piece == null) continue;
                     Debug.Log(piece.Type);
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new ChaoticConstructorPending(piece.Pos, this);
+                    var pending = new ChaoticConstructorPending(Color, piece.Pos, this);
                     BoardViewer.ListOf.Add(pending);
 
                     BoardViewer.Selecting = -2;

@@ -571,6 +571,10 @@ MonoBehaviour:
     m_Key: effect_gluttonous_jaw_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 59221742181994496
+    m_Key: effect_chaotic_constructor_spawn
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
