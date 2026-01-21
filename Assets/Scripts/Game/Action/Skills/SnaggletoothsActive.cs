@@ -32,7 +32,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new RemoveEffect(bleeding));
             }
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(Maker))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(Maker), 5)));
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
