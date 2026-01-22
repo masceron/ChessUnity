@@ -18,8 +18,7 @@ namespace Game.Effects.Augmentation
             {
                 applyEffect.Result = ResultFlag.CantApplyEffect;
                 
-                var hardenedShield = new HardenedShield(Piece, effect.Strength);
-                ActionManager.EnqueueAction(new ApplyEffect(hardenedShield));
+                ActionManager.EnqueueAction(new ApplyEffect(new Carapace(effect.Strength, Piece)));
             }
             
         }

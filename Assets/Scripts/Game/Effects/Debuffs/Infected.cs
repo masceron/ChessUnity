@@ -42,11 +42,6 @@ namespace Game.Effects.Debuffs
 
             if (turnCounter % turnToActivate == 0)
             {
-                var pieceTarget = PieceOn(lastMainAction.Target);
-                if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.HemolymphFilter))
-                {
-                    return;
-                }
                 InfectedActivate();
             }
         }

@@ -19,7 +19,7 @@ namespace Game.Augmentation
         {
 
             Target = target;
-            Set = new AugmentationSet(AugmentationSetType.ScrapCollector,false);
+            Set = new AugmentationSet(AugmentationSetType.ScrapCollector, true);
             PassiveEffects.Add(new Shield(Target));
             PassiveEffects.Add(new MantaSpinePassive(Target));
         }
