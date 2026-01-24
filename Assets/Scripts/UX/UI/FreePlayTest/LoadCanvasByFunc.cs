@@ -24,7 +24,6 @@ namespace UX.UI.FreePlayTest
         void LoadFreePlay()
         {
             UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);
-            FreePlayTest.Ins.Load();
         }
     }
 

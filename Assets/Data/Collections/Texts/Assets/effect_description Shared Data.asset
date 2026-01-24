@@ -555,6 +555,18 @@ MonoBehaviour:
     m_Key: effect_stalker_instinct_description
     m_Metadata:
       m_Items: []
+  - m_Id: 59930807121731584
+    m_Key: effect_redtail_parrotfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930807180451840
+    m_Key: effect_dusky_butterflyfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59967875906527232
+    m_Key: effect_surge_wrasse_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

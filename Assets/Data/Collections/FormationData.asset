@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9c9f718c5e9fc499cf862462df3b0e, type: 3}
   m_Name: FormationData
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EnviromentsData
+  defaultPrefab: {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
   enviromentsData:
     keys: 0100000002000000030000000400000005000000060000000700000008000000090000000b000000
     values:
-    - {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
+    - {fileID: 11400000, guid: 912a9d2936ad732449f390a6097ee8c5, type: 2}
     - {fileID: 395919914944283270, guid: 320e4c84c0b7e0344ad2dcd7ba7cd0ca, type: 3}
     - {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
     - {fileID: 395919914944283270, guid: e560f83744548b443a88a77b22782df3, type: 3}
     - {fileID: 395919914944283270, guid: 9ef6e952b55666c499bd151a1cccdd8a, type: 3}
     - {fileID: 395919914944283270, guid: e49aea5757c30cb49bbee055a45b085a, type: 3}
-    - {fileID: 395919914944283270, guid: 92c693e09b3c72341a73b3a7c057ddfd, type: 3}
+    - {fileID: 11400000, guid: 630d4ddd171c1054aa2e102485cfea0b, type: 2}
     - {fileID: 395919914944283270, guid: 7fca08d2865f8234b82d0eff531097dc, type: 3}
     - {fileID: 395919914944283270, guid: 7fca08d2865f8234b82d0eff531097dc, type: 3}
     - {fileID: 395919914944283270, guid: 320e4c84c0b7e0344ad2dcd7ba7cd0ca, type: 3}

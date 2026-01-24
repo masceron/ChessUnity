@@ -313,7 +313,7 @@ MonoBehaviour:
   relicsData: {fileID: 11400000, guid: 55677e0beededb7439a91660f177e2f3, type: 2}
   augmentationData: {fileID: 11400000, guid: 9ebced31df8ab6947800d88d2b50b30d, type: 2}
   regionalsData: {fileID: 11400000, guid: 8a3f66778a5cef149a35b65f5e948c09, type: 2}
-  environmentsData: {fileID: 11400000, guid: 174aa3be7320d8c4693318abc7ea6844, type: 2}
+  FormationDataSO: {fileID: 11400000, guid: 174aa3be7320d8c4693318abc7ea6844, type: 2}
 --- !u!1 &96585507
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +345,7 @@ Transform:
   m_Children:
   - {fileID: 2086704058}
   - {fileID: 89846525}
+  - {fileID: 1273300186}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &114928930
@@ -1587,6 +1588,51 @@ Transform:
   - {fileID: 773333542}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1273300185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1273300186}
+  - component: {fileID: 1273300187}
+  m_Layer: 0
+  m_Name: FormationManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1273300186
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273300185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 96585509}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1273300187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273300185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4f48ac90277ab4a9ea031e6a9691e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Game.Managers.FormationManager
+  defaultPrefab: {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}
 --- !u!1 &1280260135
 GameObject:
   m_ObjectHideFlags: 0

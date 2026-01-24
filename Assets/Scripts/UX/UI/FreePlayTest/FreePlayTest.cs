@@ -22,10 +22,6 @@ namespace UX.UI.FreePlayTest{
         [SerializeField] public UDictionary<FreePlayScene, RectTransform> panelDict;
         public ArmyDesignBoard armyDesignBoard;
         public TMP_Text boardSizeText;
-        public void Load()
-        {
-            SavedArmies.Ins.Load();
-        }
         public void ChangeBoardSize(int value)
         {
             boardSizeText.text = $"Board size: {value}x{value}";

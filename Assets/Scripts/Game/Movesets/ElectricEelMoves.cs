@@ -4,7 +4,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Movesets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ElectricEelMoves : BaseMovePattern
+    public class ElectricEelMoves : BaseMovePattern // Pillar Move
     {
         public override List<int> GenerateBaseMovePattern(int makerPos)
         {
