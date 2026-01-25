@@ -17,7 +17,7 @@ namespace Game.Tile
 
         public override void OnPieceEnter(PieceLogic piece){
             base.OnPieceEnter(piece);
-            appliedEffect = new LongReach(PieceOnFormation, 2);
+            appliedEffect = new LongReach(PieceOnFormation, -1, 2);
             ActionManager.EnqueueAction(new ApplyEffect(appliedEffect, FormationType.PredatorLair));
         }
 
