@@ -31,6 +31,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_damsel_fish" => new DamselFish(cfg),
                 "piece_dormant_fossil" => new DormantFossil(cfg),
                 "piece_dusky_butterflyfish" => new DuskyButterflyfish(cfg),
+                "piece_dwarf_lionfish" => new DwarfLionfish(cfg),
                 "piece_electric_eel" => new ElectricEel(cfg),
                 "piece_epaulette_shark" => new EpauletteShark(cfg),
                 "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
@@ -51,6 +52,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_horseleech" => new HorseLeech(cfg),
                 "piece_hourglass_jelly" => new HourglassJelly(cfg),
                 "piece_humboldt_squid" => new HumboldtSquid(cfg),
+                "piece_humbug_damsel_fish" => new HumbugDamselFish(cfg),
                 "piece_humilitas" => new Humilitas(cfg),
                 "piece_kelp_bass" => new KelpBass(cfg),
                 "piece_kelp_forest" => new KelpForest(cfg),
@@ -103,9 +105,6 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
-                "piece_dwarf_lionfish" => new DwarfLionfish(cfg),
-                "piece_flying_gurnard" => new FlyingGurnard(cfg),
-                "piece_humbug_damsel_fish" => new HumbugDamselFish(cfg),
                 _ => null
             };
         }
