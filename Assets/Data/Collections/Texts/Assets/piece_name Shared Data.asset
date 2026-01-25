@@ -395,6 +395,18 @@ MonoBehaviour:
     m_Key: piece_stone_wall
     m_Metadata:
       m_Items: []
+  - m_Id: 60609534426009600
+    m_Key: piece_fire_goby_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534442786816
+    m_Key: piece_scalyhead_sculpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534476341248
+    m_Key: piece_mirror_butterfly_fish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -36,6 +36,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_eyeshade_sculpin" => new EyeshadeSculpin(cfg),
                 "piece_fangtooth" => new Fangtooth(cfg),
                 "piece_feather_star" => new FeatherStar(cfg),
+                "piece_fire_goby_fish" => new FireGobyFish(cfg),
                 "piece_flowerhorn_cichlid" => new FlowerhornCichlid(cfg),
                 "piece_flying_fish" => new FlyingFish(cfg),
                 "piece_fracture_zone" => new FractureZone(cfg),
@@ -62,6 +63,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_medicinal_leech" => new MedicinalLeech(cfg),
                 "piece_megalodon" => new Megalodon(cfg),
                 "piece_melibe" => new Melibe(cfg),
+                "piece_mirror_butterfly_fish" => new MirrorButterflyFish(cfg),
                 "piece_moorish_idols" => new MoorishIdols(cfg),
                 "piece_moray_eel" => new MorayEel(cfg),
                 "piece_pegasus_seamoth" => new PegasusSeamoth(cfg),
@@ -76,6 +78,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_pufferfish" => new Pufferfish(cfg),
                 "piece_redtail_parrotfish" => new RedtailParrotfish(cfg),
                 "piece_remora" => new Remora(cfg),
+                "piece_scalyhead_sculpin" => new ScalyheadSculpin(cfg),
                 "piece_sea_star" => new SeaStar(cfg),
                 "piece_sea_turtle" => new SeaTurtle(cfg),
                 "piece_sea_urchin" => new SeaUrchin(cfg),
@@ -100,9 +103,6 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
-                "piece_scalyhead_sculpin" => new ScalyheadSculpin(cfg),
-                "piece_fire_goby_fish" => new FireGobyFish(cfg),
-                "piece_mirror_butterfly_fish" => new MirrorButterflyFish(cfg),
                 _ => null
             };
         }

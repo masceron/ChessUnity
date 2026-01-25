@@ -219,6 +219,10 @@ MonoBehaviour:
     m_Key: piece_redtail_parrotfish_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 60582868433686528
+    m_Key: piece_scalyhead_sculpin_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -567,6 +567,18 @@ MonoBehaviour:
     m_Key: effect_surge_wrasse_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 60609651669389312
+    m_Key: effect_scalyhead_sculpin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609651778441216
+    m_Key: effect_mirror_butterfly_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609651791024128
+    m_Key: effect_fire_goby_fish_pasive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
