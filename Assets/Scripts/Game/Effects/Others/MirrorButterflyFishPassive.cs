@@ -1,29 +1,41 @@
-﻿using Game.Action;
+﻿using Autotiles3D;
+using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    public class MirrorButterflyFishPassive : Effect, IApplyEffect
+    public class MirrorButterflyFishPassive : Effect, IAfterPieceActionEffect
     {
-        private const int chance = 25;
+        private const int Chance = 100;
         public MirrorButterflyFishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_mirror_butterfly_fish_passive")
         {
         }
+        
 
-
-        public void OnCallApplyEffect(ApplyEffect applyEffect)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            // TODO: figure out what is a target skill.
-            var maker = applyEffect.SourcePiece;
-            var target = BoardUtils.PieceOn(applyEffect.Target);
+            if (action is not ISkills skill)
+                return;
 
-            if (maker != null && target == Piece && MatchManager.Roll(chance))
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(applyEffect.Effect, Piece));
-            }
+            var maker = BoardUtils.PieceOn(action.Maker);
+            var target = BoardUtils.PieceOn(action.Target);
+
+            if (target != Piece)
+                return;
+
+            if (maker == null || maker is not IPieceWithSkill pieceWithSkill || !MatchManager.Roll(Chance))
+                return;
+            
+            // Block this action.
+            
+            // Mirror skill
+            action.Maker = Piece.Pos;
+            action.Target = maker.Pos;
+
         }
     }
 }

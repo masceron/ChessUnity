@@ -10,10 +10,10 @@ namespace Game.Piece.PieceLogic
 {
     public class MirrorButterflyFish : Commons.PieceLogic
     {
-        private const int evasionProbability = 25;
+        private const int EvasionProbability = 20;
         public MirrorButterflyFish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, evasionProbability, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, EvasionProbability, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new MirrorButterflyFishPassive(this)));
         }
     }

@@ -14,6 +14,7 @@ public static class Config
     public static List<PieceConfig> PieceConfigBlack = new()
     {
         new PieceConfig("piece_siren", true, 110),
+        new PieceConfig("piece_blue_dragon", true, 111),
         new PieceConfig("piece_archelon", true, 98),
     };
 
