@@ -5,7 +5,7 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Silenced : Effect
     {
-        public Silenced(PieceLogic piece) : base(-1, 1, piece, "effect_silenced")
+        public Silenced(PieceLogic piece, sbyte duration = -1) : base(duration, 1, piece, "effect_silenced")
         {
             
         }

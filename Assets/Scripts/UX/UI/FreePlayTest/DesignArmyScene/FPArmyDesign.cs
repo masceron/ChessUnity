@@ -10,18 +10,16 @@ using UX.UI.Army.DesignArmy;
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FreePlayArmyDesign : Singleton<FreePlayArmyDesign>
+    public class FPArmyDesign : Singleton<FPArmyDesign>
     {
-        public bool choosenSide { get; private set; }
         [SerializeField] private FreePlayArmyInfo info;
         public FreePlayArmyBoard board;
-        public FreePlayArmyTroop troopDisplay;
         public FreePlayNotification notification;
         [SerializeField] private FPArmySearcher searcher;
-        [SerializeField] private ArmyRelicSearcher relicSearcher;
+        [SerializeField] private FPRelicSearcher relicSearcher;
         [SerializeField] private Transform nextButton;
         [NonSerialized] public int size;
-        public Game.Save.Army.Army army;
+        public Game.Save.FreePlay.FPPreset army;
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -34,7 +32,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             else FreePlayNotification.Ins.Close();     
         }
 
-        public void Load(int s, Game.Save.Army.Army? armyToLoad)
+        public void Load(int s, Game.Save.FreePlay.FPPreset? armyToLoad)
         {
             size = s;
             info.Load(size);
@@ -44,10 +42,6 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             {
                 LoadSave(armyToLoad.Value);
             }
-            else
-            {
-                relicSearcher.Load(null);
-            }
             nextButton?.gameObject.SetActive(true);
             notification.Close();
         }
@@ -55,42 +49,36 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         {
             Load(s, null);
         }
-        private void LoadSave(Game.Save.Army.Army armyToLoad)
+        private void LoadSave(Game.Save.FreePlay.FPPreset armyToLoad)
         {
             army = armyToLoad;
-            board.LoadSave(army.Troops);
+            board.LoadSave(army.Troops, army.EnemyTroops);
             relicSearcher.Load(armyToLoad.Relic);
+            relicSearcher.Load(armyToLoad.EnemyRelic);
         }
 
         public void Save()
         {
             army.BoardSize = (ushort) size;
-            SetTroops();
-            ArmySaveLoader.Save(army);
+            board.Troops.Sort();
+            army.Troops = board.Troops.ToArray();
+            board.EnemyTroops.Sort();
+            army.EnemyTroops = board.EnemyTroops.ToArray();
+            FreePlaySaveLoader.Save(army);
             UIManager.Ins.Load(CanvasID.RegionalEffect);
             RegionalManagerUI.Ins.Load();
         }
-        private void SetTroops()
-        {
-            board.Troops.Sort();
-            army.Troops = board.Troops.ToArray();
-        }
 
-        public void SelectRelic(string type)
+        public void SelectRelic(string type, bool side)
         {
-            if (!choosenSide)
-            {
-                army.Relic = new Relic(type);
-            }
-            else
+            if (side)
             {
                 army.EnemyRelic = new Relic(type);
             }
-        }
-
-        public void ToggleChosenSide()
-        {
-            choosenSide = !choosenSide;
+            else
+            {
+                army.Relic = new Relic(type);
+            }
         }
     }
 }

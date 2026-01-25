@@ -379,6 +379,22 @@ MonoBehaviour:
     m_Key: piece_cabezon
     m_Metadata:
       m_Items: []
+  - m_Id: 59930689941266432
+    m_Key: piece_surge_wrasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930690096455680
+    m_Key: piece_dusky_butterflyfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930690096455681
+    m_Key: piece_redtail_parrotfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59967759049023488
+    m_Key: piece_stone_wall
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

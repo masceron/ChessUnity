@@ -15,7 +15,7 @@ namespace Game.Managers
         [NonSerialized] public Dictionary<string, PieceInfo> PieceData;
         [NonSerialized] public Dictionary<string, EffectInfo> EffectData;
         [NonSerialized] public Dictionary<string, RelicInfo> RelicData;
-        [NonSerialized] public Dictionary<FormationType, GameObject> EnvironmentData;
+        [NonSerialized] public Dictionary<FormationType, FormationInfo> FormationData;
         [NonSerialized] public Dictionary<AugmentationName, AugmentationInfo> AugmentationData;
         
         [SerializeField] public UDictionary<Color, Tile.Tile> tileData;
@@ -24,7 +24,7 @@ namespace Game.Managers
         [SerializeField] private RelicsData relicsData;
         [SerializeField] private AugmentationData augmentationData;
         [SerializeField] public RegionalsData regionalsData;
-        [SerializeField] private FormationsData environmentsData;
+        [SerializeField] private FormationsData FormationDataSO;
 
         protected override void Awake()
         {
@@ -51,7 +51,7 @@ namespace Game.Managers
                 RelicData.Add(relic.key, relic);
             }
             
-            EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
+            FormationData = new Dictionary<FormationType, FormationInfo>(FormationDataSO.enviromentsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);
         }
     }

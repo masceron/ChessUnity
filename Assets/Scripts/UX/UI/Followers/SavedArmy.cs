@@ -7,7 +7,7 @@ namespace UX.UI.Followers
 {
     public class SavedArmy: MonoBehaviour
     {
-        protected Game.Save.Army.Army army;
+        private Game.Save.Army.Army army;
         [SerializeField] protected TMP_Text armyName;
         [SerializeField] protected TMP_Text boardSize;
 

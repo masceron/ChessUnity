@@ -4,7 +4,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Movesets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FlyingFishMoves : BaseMovePattern
+    public class FlyingFishMoves : BaseMovePattern // Jumping Move
     {
         /*public static void Quiets(List<Action.Action> list, int pos)
         {

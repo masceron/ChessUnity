@@ -2,6 +2,13 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    public enum FormationCategory
+    {
+        Positive,
+        Negative,
+        Miscellaneous,
+
+    }
     public enum FormationType
     {
         None,
@@ -20,7 +27,7 @@ namespace Game.Tile
 
     public abstract class Formation
     {
-        public int Pos{ get; private set; }
+        public int Pos { get; private set; }
         protected readonly bool Color;
         public PieceLogic PieceOnFormation { get; protected set; }
         public bool HaveDuration { get; protected set; }

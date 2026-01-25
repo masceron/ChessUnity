@@ -2,6 +2,7 @@ using Game.Common;
 using Game.Tile;
 using ScrutableObjects;
 using UnityEngine;
+using Game.ScriptableObjects;
 
 namespace Game.ScriptableObjects.Collections
 {
@@ -10,7 +11,7 @@ namespace Game.ScriptableObjects.Collections
     public class FormationsData : ScriptableObject{
         [ShowProperties(LockObjectAtRuntime = true)]
         [SerializeField] 
-        public UDictionary<FormationType, GameObject> enviromentsData;
+        public UDictionary<FormationType, FormationInfo> enviromentsData;
     }
 
 }

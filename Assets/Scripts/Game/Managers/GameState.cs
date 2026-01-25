@@ -125,7 +125,7 @@ namespace Game.Managers
                 RegionalEffectType.RedTide => new RedTide(),
                 _ => null
             };
-
+            
             return re;
         }
 

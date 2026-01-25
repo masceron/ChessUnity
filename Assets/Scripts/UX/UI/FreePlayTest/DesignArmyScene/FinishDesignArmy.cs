@@ -7,10 +7,10 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         [SerializeField] private FreePlayNotification notification;
         public void OnClick()
         {
-            if (!string.IsNullOrWhiteSpace(FreePlayArmyDesign.Ins.army.Name))
+            if (!string.IsNullOrWhiteSpace(FPArmyDesign.Ins.army.Name))
             {
-                Debug.Log($"Save: {FreePlayArmyDesign.Ins.army.Name}");
-                FreePlayArmyDesign.Ins.Save();
+                Debug.Log($"Save: {FPArmyDesign.Ins.army.Name}");
+                FPArmyDesign.Ins.Save();
             }
             else
             {

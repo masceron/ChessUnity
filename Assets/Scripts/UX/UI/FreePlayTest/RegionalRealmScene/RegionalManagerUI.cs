@@ -22,15 +22,16 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             enemyRelic.Load(AssetManager.Ins.RelicData[Config.relicBlackConfig.Type]);
             allyRelic.Load(AssetManager.Ins.RelicData[Config.relicWhiteConfig.Type]);
             searcher.Load();
-            board.Load(FreePlayArmyDesign.Ins.size);
-            board.LoadSave(FreePlayArmyDesign.Ins.board.Troops.ToArray());
+            board.Load(FPArmyDesign.Ins.size);
+            board.LoadSave(FPArmyDesign.Ins.board.Troops.ToArray(), FPArmyDesign.Ins.board.EnemyTroops.ToArray());
         }
 
         public void ToGameScene()
         {
-            Config.boardSize = FreePlayArmyDesign.Ins.army.BoardSize;
+            Config.boardSize = FPArmyDesign.Ins.army.BoardSize;
+
             Config.PieceConfigWhite.Clear();
-            foreach (var troop in FreePlayArmyDesign.Ins.board.Troops)
+            foreach (var troop in FPArmyDesign.Ins.board.Troops)
             {
                 var augNameLst = troop.equippedAugmentation.Values.ToList();
                 List<AugmentationInfo> infos = new();
@@ -43,12 +44,26 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                     (ushort)(troop.Rank * Config.boardSize + troop.File), null);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
-
             }
-            
-            Debug.Log($"BoardSize: {FreePlayArmyDesign.Ins.army.BoardSize}");
-            SceneLoader.LoadFreePlay(LoadCanvasByFunc.chosenGameMode);
 
+            Config.PieceConfigBlack.Clear();
+            foreach (var troop in FPArmyDesign.Ins.board.EnemyTroops)
+            {
+                var augNameLst = troop.equippedAugmentation.Values.ToList();
+                List<AugmentationInfo> infos = new();
+                foreach (var name in augNameLst)
+                {
+                    AugmentationInfo info = AssetManager.Ins.AugmentationData[name];
+                    infos.Add(info);
+                }
+                var pieceConfig = new PieceConfig(troop.PieceType, true,
+                    (ushort)(troop.Rank * Config.boardSize + troop.File), null);
+                Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
+                Config.PieceConfigBlack.Add(pieceConfig);
+            }
+
+            Debug.Log($"BoardSize: {FPArmyDesign.Ins.army.BoardSize}");
+            SceneLoader.LoadFreePlay(LoadCanvasByFunc.chosenGameMode);
         }
         public void ToDesignArmyPanel()
         {

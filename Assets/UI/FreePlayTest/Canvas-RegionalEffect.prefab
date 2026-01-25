@@ -519,7 +519,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -898,7 +897,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1207,7 +1205,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -1593,7 +1590,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -2787,7 +2783,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -3011,7 +3006,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.FreePlayTest.FreePlayArmyBoard
   mainTransform: {fileID: 515713161819485884}
   grid: {fileID: 3823889998252248044}
-  square: {fileID: -6900289534742801969, guid: 0c690fecaea66644bba28bdc5d33a7ce, type: 3}
+  square: {fileID: 4441857502836782060, guid: c81e2052326a63f4693117e6b9ab47e9, type: 3}
   troopDisplay: {fileID: 3845955380129279141, guid: e09bdccd207eadf41aade29e545a12b3, type: 3}
 --- !u!1 &7138559259540417516
 GameObject:
@@ -3680,7 +3675,6 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
