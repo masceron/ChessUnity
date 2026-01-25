@@ -17,7 +17,7 @@ namespace Game.Effects.Others
             if (effect.EffectName == "effect_slow" || effect.EffectName == "effect_stun"
                 && BoardUtils.PieceOn(applyEffect.Target) == Piece)
             {
-                applyEffect.Result = Action.ResultFlag.Untouchable;
+                applyEffect.Result = Action.ResultFlag.EffectResistance;
             }
         }
     }
