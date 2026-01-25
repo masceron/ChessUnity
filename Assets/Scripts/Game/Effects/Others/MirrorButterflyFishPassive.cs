@@ -8,15 +8,15 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    public class MirrorButterflyFishPassive : Effect, IAfterPieceActionEffect
+    public class MirrorButterflyFishPassive : Effect, IBeforePieceActionEffect
     {
-        private const int Chance = 100;
+        private const int Chance = 25;
         public MirrorButterflyFishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_mirror_butterfly_fish_passive")
         {
         }
         
 
-        public void OnCallAfterPieceAction(Action.Action action)
+        public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ISkills skill)
                 return;
@@ -27,13 +27,9 @@ namespace Game.Effects.Others
             if (target != Piece)
                 return;
 
-            if (maker == null || maker is not IPieceWithSkill pieceWithSkill || !MatchManager.Roll(Chance))
+            if (maker == null || !MatchManager.Roll(Chance))
                 return;
             
-            // Block this action.
-            
-            // Mirror skill
-            action.Maker = Piece.Pos;
             action.Target = maker.Pos;
 
         }
