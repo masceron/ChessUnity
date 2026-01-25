@@ -2,6 +2,7 @@
 using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -9,90 +10,34 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LivingCoralPassive : Effect, IEndTurnEffect
+    public class LivingCoralPassive : Effect, IStartTurnEffect, IOnApply, IAfterPieceActionEffect
     {
-        private List<PieceLogic> inRange = new();
-        private readonly List<PieceLogic> evasionBuff = new();
-
-        private readonly (int, int)[] rangeSpawn = new (int, int)[]
-        {
-            (1, 0), (0, -1),
-            (-1, 0), (0, 1)
-        };
-        public EndTurnEffectType EndTurnEffectType { get; }
         private const int Interval = 3;
+        private const int EvasionValue = 25;
+
         private int turnCounter;
         
-        public LivingCoralPassive(PieceLogic piece) : base(-1, 1, piece, "effect_living_coral_passive")
+        private readonly HashSet<PieceLogic> alliesInRange = new();
+
+        public StartTurnEffectType StartTurnEffectType { get; }
+
+        public LivingCoralPassive(PieceLogic piece)
+            : base(-1, 1, piece, "effect_living_coral_passive")
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
-            BuffEvasionInRange();
+            StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
+        }
+
+        public void OnApply()
+        {
+            UpdateAura();
         }
         
-        private void BuffEvasionInRange()
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            var newInRange = new List<PieceLogic>(); 
-            
-            for (var rankOff = -1; rankOff <= 1; rankOff++)
-            {
-                var rank = RankOf(Piece.Pos) + rankOff;
-                if (!VerifyBounds(rank)) continue;
-                
-                for (var fileOff = -1; fileOff <= 1; fileOff++)
-                {
-                    if (rankOff == 0 && fileOff == 0) continue;
-                    var file = FileOf(Piece.Pos) + fileOff;
-                    if (!VerifyBounds(file)) continue;
-
-                    var p = PieceOn(IndexOf(rank, file));
-
-                    if (p != null && p.Color == Piece.Color)
-                    {
-                        newInRange.Add(p);
-                    }
-                }
-            }
-
-            foreach (var pieceEntered in newInRange.Except(inRange))
-            {
-                if (pieceEntered.Effects.Any(e => e.EffectName == "effect_evasion")) continue;
-                
-                evasionBuff.Add(pieceEntered);
-                ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, pieceEntered)));
-            }
-
-            foreach (var pieceExited in inRange.Except(newInRange))
-            {
-                if (!evasionBuff.Contains(pieceExited)) continue;
-                evasionBuff.Remove(pieceExited);
-
-                var effect = pieceExited.Effects.Find(e => e.GetType() == typeof(Evasion));
-                if (effect == null) continue;
-                
-                ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
-
-            inRange = newInRange;
+            UpdateAura();
         }
 
-        private void SummonClownFish()
-        {
-            var random = new System.Random();
-            var emptySpots = rangeSpawn
-                .Select(offset => IndexOf(RankOf(Piece.Pos) + offset.Item1, FileOf(Piece.Pos) + offset.Item2))
-                .Where(index => PieceOn((ushort)index) == null)
-                .ToList();
-
-            if (emptySpots.Count > 0)
-            {
-                var indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
-                ActionManager.EnqueueAction(
-                    new SpawnPiece(new PieceConfig("piece_clown_fish", Piece.Color, indexToSpawn))
-                );
-            }
-        }
-        
-        public void OnCallEnd(Action.Action lastMainAction)
+        public void OnCallStart(Action.Action lastMainAction)
         {
             turnCounter++;
             if (turnCounter % Interval == 0)
@@ -100,5 +45,88 @@ namespace Game.Effects.Traits
                 SummonClownFish();
             }
         }
+
+        private void UpdateAura()
+        {
+            var newInRange = new HashSet<PieceLogic>();
+            var (rank, file) = RankFileOf(Piece.Pos);
+
+            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 1))
+            {
+                var p = PieceOn(IndexOf(r, f));
+                if (p == null || p == Piece) continue;
+                if (p.Color != Piece.Color) continue;
+
+                newInRange.Add(p);
+            }
+            
+            foreach (var entered in newInRange.Except(alliesInRange))
+            {
+                ApplyEvasion(entered);
+            }
+            
+            foreach (var exited in alliesInRange.Except(newInRange))
+            {
+                RemoveOrReduceEvasion(exited);
+            }
+
+            alliesInRange.Clear();
+            foreach (var p in newInRange)
+                alliesInRange.Add(p);
+        }
+
+        private void ApplyEvasion(PieceLogic piece)
+        {
+            if (piece.Effects.FirstOrDefault(e => e is Evasion) is Evasion evasion)
+            {
+                evasion.Probability += EvasionValue;
+            }
+            else
+            {
+                ActionManager.EnqueueAction(
+                    new ApplyEffect(new Evasion(-1, EvasionValue, piece))
+                );
+            }
+        }
+
+        private void RemoveOrReduceEvasion(PieceLogic piece)
+        {
+            if (piece.Effects.FirstOrDefault(e => e is Evasion) is not Evasion evasion) return;
+
+            if (evasion.Probability <= EvasionValue)
+            {
+                ActionManager.EnqueueAction(new RemoveEffect(evasion));
+            }
+            else
+            {
+                evasion.Probability -= EvasionValue;
+            }
+        }
+
+        private void SummonClownFish()
+        {
+            var (rank, file) = RankFileOf(Piece.Pos);
+            List<int> emptyTiles = new();
+
+            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 1))
+            {
+                int index = IndexOf(r, f);
+                if (PieceOn(index) == null)
+                {
+                    emptyTiles.Add(index);
+                }
+            }
+
+            if (emptyTiles.Count == 0) return;
+
+            int rand = UnityEngine.Random.Range(0, emptyTiles.Count);
+            ActionManager.EnqueueAction(
+                new SpawnPiece(new PieceConfig(
+                    "piece_clown_fish",
+                    Piece.Color,
+                    (ushort)emptyTiles[rand]))
+            );
+        }
+        
     }
 }

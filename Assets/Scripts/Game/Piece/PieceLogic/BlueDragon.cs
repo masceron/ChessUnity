@@ -16,7 +16,7 @@ namespace Game.Piece.PieceLogic
         private sbyte timeToCooldown;
         public BlueDragon(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, SpinningMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(this)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new BlueDragonPassive(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
