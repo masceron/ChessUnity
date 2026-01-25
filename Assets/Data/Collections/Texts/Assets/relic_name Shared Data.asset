@@ -95,6 +95,10 @@ MonoBehaviour:
     m_Key: relic_ornetes_edict
     m_Metadata:
       m_Items: []
+  - m_Id: 54542093884551168
+    m_Key: relic_ledger_stone
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

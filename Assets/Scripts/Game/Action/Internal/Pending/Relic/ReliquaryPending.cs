@@ -4,7 +4,7 @@ using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
 using Game.Tile;
-
+using Game.Action.Internal.Pending.Relic;
 
 namespace Game.Action.Internal.Pending.Relic
 {

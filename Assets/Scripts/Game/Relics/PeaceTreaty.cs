@@ -1,5 +1,7 @@
 using Game.Relics.Commons;
 using UX.UI.Ingame;
+using Game.Action.Internal.Pending.Relic;
+using Game.Managers;
 
 namespace Game.Relics
 {
@@ -16,15 +18,13 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                // foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
-                // {
-                //     if (piece == null || piece.Color != Color) continue;
-                //     if (piece.PieceRank == PieceRank.Commander || piece.PieceRank == PieceRank.Construct) continue;
-                //     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                //     var pending = new PeaceTreatyPending(this, piece.Pos);
-                //     BoardViewer.ListOf.Add(pending);
-                // }
-                // thiếu marker
+                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                {
+                    if (piece == null || piece.Color != Color) continue;
+                    TileManager.Ins.MarkAsMoveable(piece.Pos);
+                    var pending = new PeaceTreatyPending(this, piece.Pos);
+                    BoardViewer.ListOf.Add(pending);
+                }
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
             }
