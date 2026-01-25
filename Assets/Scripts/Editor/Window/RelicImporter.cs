@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text;
 using Game.ScriptableObjects;
+using Game.ScriptableObjects.Collections;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
@@ -51,6 +54,8 @@ namespace Editor.Window
                 "This list shows all RelicInfo assets in your project.", MessageType.Info);
 
             if (GUILayout.Button("Refresh List")) FindAllRelicInfos();
+            if (GUILayout.Button("Reimport List")) SyncWithCentralData();
+            if (GUILayout.Button("Generate Factory Code")) GenerateFactoryCode();
 
             EditorGUILayout.Space();
             
@@ -78,6 +83,31 @@ namespace Editor.Window
                 var relic = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
                 if (relic) allRelics.Add(relic);
             }
+        }
+        
+        private void SyncWithCentralData()
+        {
+            var dataGuids = AssetDatabase.FindAssets("t:RelicsData");
+            if (dataGuids.Length == 0)
+            {
+                Debug.LogError("No central data object for RelicInfo found.");
+                return;
+            }
+
+            var path = AssetDatabase.GUIDToAssetPath(dataGuids[0]);
+            var centralData = AssetDatabase.LoadAssetAtPath<RelicsData>(path);
+
+            if (!centralData) return;
+            
+            centralData.relicsData ??= new List<RelicInfo>();
+            
+            centralData.relicsData.Clear();
+            centralData.relicsData.AddRange(allRelics);
+            
+            EditorUtility.SetDirty(centralData);
+            AssetDatabase.SaveAssets();
+            
+            Debug.Log($"PieceManager: Rebuilt PiecesData list. Total items: {centralData.relicsData.Count}");
         }
         
         private void DrawValidateTab()
@@ -172,6 +202,71 @@ namespace Editor.Window
         {
             public string Key;
             public string TableName;
+        }
+        
+        private const string FactoryFilePath = "Assets/Scripts/Game/Relics/Commons/RelicFactory.cs";
+        private const string FactoryClassName = "RelicFactory";
+        private const string BaseLogicClass = "RelicLogic";
+        private const string TargetNamespace = "Game.Relics.Commons";
+        
+        public static void GenerateFactoryCode()
+        {
+            var guids = AssetDatabase.FindAssets("t:RelicInfo");
+            var relics = guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<RelicInfo>(AssetDatabase.GUIDToAssetPath(guid)))
+                .Where(p => p)
+                .ToList();
+
+            var fileContent = BuildFileContent(relics);
+
+            File.WriteAllText(FactoryFilePath, fileContent);
+            AssetDatabase.Refresh();
+        }
+
+        private static string BuildMethod(List<RelicInfo> relics)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine("        public static " + BaseLogicClass + " CreateLogicInstance(string key, RelicConfig cfg)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            return key switch");
+            sb.AppendLine("            {");
+            
+            foreach (var relic in relics.OrderBy(p => p.key))
+            {
+                if (string.IsNullOrEmpty(relic.key) || string.IsNullOrEmpty(relic.logicClassName))
+                {
+                    Debug.LogWarning($"Skipping relic: {relic.name} due to missing key or LogicClassName.");
+                    continue;
+                }
+
+                sb.AppendLine($"                \"{relic.key}\" => new {relic.logicClassName}(cfg),");
+            }
+            
+            sb.AppendLine($"                _ => null");
+            sb.AppendLine("            };");
+            sb.AppendLine("        }");
+
+            return sb.ToString();
+        }
+
+        private static string BuildFileContent(List<RelicInfo> relics)
+        {
+            var sb = new StringBuilder();
+
+            sb.AppendLine($"namespace {TargetNamespace}");
+            sb.AppendLine("{");
+
+            sb.AppendLine($"    public static class {FactoryClassName}");
+            sb.AppendLine("    {");
+
+            sb.Append(BuildMethod(relics));
+
+            sb.AppendLine("    }");
+
+            sb.AppendLine("}");
+
+            return sb.ToString();
         }
     }
 }

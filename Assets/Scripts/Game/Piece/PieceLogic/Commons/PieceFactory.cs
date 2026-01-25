@@ -40,6 +40,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_fire_goby_fish" => new FireGobyFish(cfg),
                 "piece_flowerhorn_cichlid" => new FlowerhornCichlid(cfg),
                 "piece_flying_fish" => new FlyingFish(cfg),
+                "piece_flying_gurnard" => new FlyingGurnard(cfg),
                 "piece_fracture_zone" => new FractureZone(cfg),
                 "piece_frilled_shark" => new FrilledShark(cfg),
                 "piece_frog_fish" => new GulperEel(cfg),
