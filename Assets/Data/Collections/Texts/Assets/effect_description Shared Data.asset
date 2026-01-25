@@ -587,6 +587,26 @@ MonoBehaviour:
     m_Key: effect_humbug_damsel_fish_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 60611048548782080
+    m_Key: effect_pressure_hull_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048565559296
+    m_Key: effect_chaotic_constructor_spawn_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048569753600
+    m_Key: effect_duelist_reflex_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048578142208
+    m_Key: effect_gluttonous_jaw_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048578142209
+    m_Key: effect_broken_relocator_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -99,6 +99,18 @@ MonoBehaviour:
     m_Key: relic_ledger_stone
     m_Metadata:
       m_Items: []
+  - m_Id: 55201678864338944
+    m_Key: relic_temporal_warp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55201678893699072
+    m_Key: relic_chaotic_constructor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55201678897893376
+    m_Key: relic_seabed_leveler
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
