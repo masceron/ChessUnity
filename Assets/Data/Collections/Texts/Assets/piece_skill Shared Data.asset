@@ -223,6 +223,14 @@ MonoBehaviour:
     m_Key: piece_scalyhead_sculpin_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 60583397440278528
+    m_Key: piece_flying_gurnard_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60583397440278529
+    m_Key: piece_dwarf_lionfish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -579,6 +579,14 @@ MonoBehaviour:
     m_Key: effect_fire_goby_fish_pasive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 60610073280827392
+    m_Key: effect_dwarf_lionfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60610073289216000
+    m_Key: effect_humbug_damsel_fish_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

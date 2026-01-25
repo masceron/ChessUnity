@@ -407,6 +407,18 @@ MonoBehaviour:
     m_Key: piece_mirror_butterfly_fish
     m_Metadata:
       m_Items: []
+  - m_Id: 60609955873869824
+    m_Key: piece_flying_gurnard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955878064128
+    m_Key: piece_dwarf_lionfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955878064129
+    m_Key: piece_humbug_damsel_fish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
