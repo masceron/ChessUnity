@@ -17,7 +17,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             {
                 Debug.Log("Go to Augmentation");
                 UIManager.Ins.Load(CanvasID.Augmentation);
-                var troopSide = FreePlayArmyDesign.Ins.board.GetComponent<FreePlayArmyBoard>().GetTroopByCoordinate(Rank, File);
+                var troopSide = FPArmyDesign.Ins.board.GetComponent<FreePlayArmyBoard>().GetTroopByCoordinate(Rank, File);
                 AugmentationManagerUI.Ins.Load(troopSide.troop, troopSide.side);
 
                 return;
@@ -55,7 +55,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         public new void OnEndDrag(PointerEventData eventData)
         {
             if (isGreyOut){ return; }
-            FreePlayArmyDesign.Ins.board.UnSet();
+            FPArmyDesign.Ins.board.UnSet();
             trigger.enabled = true;
             TooltipManager.Ins.Enable();
             if (!Parent)

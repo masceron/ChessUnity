@@ -10,11 +10,10 @@ using UX.UI.Army.DesignArmy;
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FreePlayArmyDesign : Singleton<FreePlayArmyDesign>
+    public class FPArmyDesign : Singleton<FPArmyDesign>
     {
         [SerializeField] private FreePlayArmyInfo info;
         public FreePlayArmyBoard board;
-        public FreePlayArmyTroop troopDisplay;
         public FreePlayNotification notification;
         [SerializeField] private FPArmySearcher searcher;
         [SerializeField] private FPRelicSearcher relicSearcher;
@@ -53,8 +52,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         private void LoadSave(Game.Save.FreePlay.FPPreset armyToLoad)
         {
             army = armyToLoad;
-            board.LoadSave(army.Troops);
-            board.LoadSaveEnemy(army.EnemyTroops);
+            board.LoadSave(army.Troops, army.EnemyTroops);
             relicSearcher.Load(armyToLoad.Relic);
             relicSearcher.Load(armyToLoad.EnemyRelic);
         }
@@ -65,7 +63,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             board.Troops.Sort();
             army.Troops = board.Troops.ToArray();
             board.EnemyTroops.Sort();
-            army.Troops = board.EnemyTroops.ToArray();
+            army.EnemyTroops = board.EnemyTroops.ToArray();
             FreePlaySaveLoader.Save(army);
             UIManager.Ins.Load(CanvasID.RegionalEffect);
             RegionalManagerUI.Ins.Load();
