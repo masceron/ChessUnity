@@ -120,8 +120,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -3570825098352958748}
-        m_TargetAssemblyTypeName: UX.UI.Ingame.DormantFossil.DormantFossilUI, Assembly-CSharp
+      - m_Target: {fileID: 1828201833462826560}
+        m_TargetAssemblyTypeName: UX.UI.Ingame.SeabedLevelerUI.SeabedLevelerUI, Assembly-CSharp
         m_MethodName: Disable
         m_Mode: 1
         m_Arguments:
@@ -243,9 +243,9 @@ GameObject:
   - component: {fileID: 8522268143346288266}
   - component: {fileID: 7581217249472905870}
   - component: {fileID: 5159108015455856}
-  - component: {fileID: -3570825098352958748}
+  - component: {fileID: 1828201833462826560}
   m_Layer: 5
-  m_Name: DormantFossilUI
+  m_Name: SeabedLevelerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -310,7 +310,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &-3570825098352958748
+--- !u!114 &1828201833462826560
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -319,8 +319,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 8072039036464164318}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef65f8125e974ac6a6b3527714ec255e, type: 3}
+  m_Script: {fileID: 11500000, guid: b7469c0986992a34f9eda9459ccca6c4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Ingame.ChrysosShop.DormantFossilUI
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Ingame.SeabedLevelerUI.SeabedLevelerUI
   chooseField: {fileID: 6334686859436215633}
-  pieceItem: {fileID: 3376055359114538654, guid: 745d7845d23719f40b80ceada7300f50, type: 3}
+  formationItem: {fileID: 3376055359114538654, guid: 1cae9e05a674ca64698c82f2a615e4c6, type: 3}

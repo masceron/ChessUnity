@@ -259,6 +259,11 @@ namespace Game.Common
         {
             return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();
         }
+
+        public static List<PieceLogic> FindAllies(bool side)
+        {
+            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece != null && piece.Color == side).ToList();
+        }
         
         public static RelicLogic GetRelicOf(bool side)
         {
@@ -366,6 +371,42 @@ namespace Game.Common
                 }
             }
             return positions;
+        }
+
+        public static List<PieceLogic> FindAllAlliesInEnemyHalf(bool side)
+        {
+            var list = new List<PieceLogic>();
+            var startingSize = MatchManager.Ins.StartingSize;
+            var rankStart = (MaxLength - startingSize.x) / 2;
+            var fileStart = (MaxLength - startingSize.y) / 2;
+            var midRank = rankStart + startingSize.x / 2;
+
+            if (!side) // white: enemy half = ranks >= midRank
+            {
+                for (var r = midRank; r < rankStart + startingSize.x; r++)
+                {
+                    for (var f = fileStart; f < fileStart + startingSize.y; f++)
+                    {
+                        var idx = IndexOf(r, f);
+                        var p = PieceOn(idx);
+                        if (p != null && p.Color == side) list.Add(p);
+                    }
+                }
+            }
+            else // black: enemy half = ranks < midRank
+            {
+                for (var r = rankStart; r < midRank; r++)
+                {
+                    for (var f = fileStart; f < fileStart + startingSize.y; f++)
+                    {
+                        var idx = IndexOf(r, f);
+                        var p = PieceOn(idx);
+                        if (p != null && p.Color == side) list.Add(p);
+                    }
+                }
+            }
+
+            return list;
         }
 
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
