@@ -20,7 +20,7 @@ namespace Game.Tile
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece), FormationType.BubbleVent));
         }
 
         public override void OnPieceExit(PieceLogic piece)

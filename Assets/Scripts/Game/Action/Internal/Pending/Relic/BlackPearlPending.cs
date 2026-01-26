@@ -98,8 +98,8 @@ namespace Game.Action.Internal.Pending.Relic
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == blackPearl.Color
-                ? new ApplyEffect(GetRandomBuffEffect())
-                : new ApplyEffect(GetRandomDebuffEffect()));
+                ? new ApplyEffect(GetRandomBuffEffect(), blackPearl)
+                : new ApplyEffect(GetRandomDebuffEffect(), blackPearl));
 
 
             BoardViewer.Selecting = -1;

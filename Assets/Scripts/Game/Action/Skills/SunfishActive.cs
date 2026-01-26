@@ -31,7 +31,7 @@ namespace Game.Action.Skills
                 var targetPiece = PieceOn(index);
                 if (targetPiece != null && ColorOfSquare(index) && targetPiece.Color != PieceOn(Maker).Color)
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), PieceOn(Maker)));
                 }
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

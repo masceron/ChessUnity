@@ -296,9 +296,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b933b6b09fd6b574899c68b88174d27e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FreePlaySavedArmy
+  image: {fileID: 1731696488163268736}
   armyName: {fileID: 6185246079670248474}
   boardSize: {fileID: 8868708060844757434}
-  image: {fileID: 1731696488163268736}
 --- !u!1 &6110507562810665429
 GameObject:
   m_ObjectHideFlags: 0

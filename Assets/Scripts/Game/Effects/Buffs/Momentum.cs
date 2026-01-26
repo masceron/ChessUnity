@@ -18,9 +18,9 @@ namespace Game.Effects.Buffs
         {
             if (action is not ISkills) return;
             var caster = PieceOn(action.Maker);
-            if (caster.Color == Piece.Color && caster.SkillCooldown > 0)
+            if (caster.Color == Piece.Color && Piece.SkillCooldown > 0)
             {
-                caster.SkillCooldown--;
+                Piece.SkillCooldown--;
             }
         }
     }

@@ -1,0 +1,31 @@
+using System.Collections.Generic;
+using Game.Action;
+using Game.Action.Captures;
+using Game.Action.Internal;
+using Game.Action.Quiets;
+using Game.Common;
+using Game.Effects.Buffs;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
+using static Game.Common.BoardUtils;
+
+namespace Game.Effects.SpecialAbility
+{
+    public class SurgeWrassePassive : Effect, IAfterPieceActionEffect
+    {
+        public SurgeWrassePassive(PieceLogic piece) : base(-1, 1, piece, "effect_surge_wrasse_passive")
+        {
+
+        }
+        public void OnCallAfterPieceAction(Action.Action action)
+        {
+            if (action is not IQuiets) { return; }
+            Formation fmt = FormationManager.Ins.GetFormation(Piece.Pos);
+            if (fmt != null && AssetManager.Ins.FormationData[fmt.GetFormationType()].formationCategory == FormationCategory.Negative)
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(new Haste(2, 4, Piece)));
+            }
+        }
+    }
+}

@@ -8,6 +8,7 @@ namespace Game.Action.Quiets
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PegasusSeamothMove : Action, IQuiets
     {
+        private const int pacifiedDuration = 3;
         public PegasusSeamothMove(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
@@ -36,10 +37,8 @@ namespace Game.Action.Quiets
                 
                 var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.Color == caller.Color) continue;
-                if (p is BlueRingedOctopus) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Maker))));
                 
-                ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, p)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Pacified(pacifiedDuration, p)));
                 break;
             }
             

@@ -25,8 +25,8 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(3, PieceOn(Maker))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken(2, PieceOn(Maker))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(3, PieceOn(Maker)), rayStinger));
+            ActionManager.EnqueueAction(new ApplyEffect(new Broken(2, PieceOn(Maker)), rayStinger));
             rayStinger.SetCooldown();
         }
         public void Dispose()

@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 32
   Rarity: 4
   Slot: 1
-  Key: echo_locator
+  Key: augmentation_echo_locator
   Icon: {fileID: 0}

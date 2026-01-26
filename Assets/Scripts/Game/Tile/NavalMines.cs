@@ -28,7 +28,7 @@ namespace Game.Tile
                                                         effect.EffectName == "effect_hardened_shield"
                                                         && effect.EffectName == "effect_carapace"))
             {
-                ActionManager.ExecuteImmediately(new KillPiece(PieceOnFormation.Pos));
+                ActionManager.EnqueueAction(new KillPiece(PieceOnFormation.Pos));
             }
 
             var (rank, file) = RankFileOf(PieceOnFormation.Pos);
@@ -38,7 +38,7 @@ namespace Game.Tile
                 var pOn = PieceOn(index);
                 if (pOn == null) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn), FormationType.NavalMines));
             }
         }
 

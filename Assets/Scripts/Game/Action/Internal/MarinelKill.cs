@@ -17,13 +17,14 @@ namespace Game.Action.Internal
         
         protected override void ModifyGameState()
         {
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+
             PieceManager.Ins.Destroy(Target);
             PieceManager.Ins.Move(Maker, Target);
             MatchManager.Ins.GameState.Kill(Target);
             MatchManager.Ins.GameState.Move(Maker, Target);
             Maker = Target;
-            ActionManager.EnqueueAction(new KillPiece(targetPos));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new DestroyPiece(targetPos));
             BoardViewer.ListOf.Clear();
         }
         

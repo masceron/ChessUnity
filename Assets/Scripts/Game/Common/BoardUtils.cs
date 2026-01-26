@@ -414,10 +414,9 @@ namespace Game.Common
             UIManager.Ins.Load(CanvasID.EndGameMessage);
             EndGameUI.Ins.SetMessage(messageID);
         }
-        public static bool IsOnEnemySide(PieceLogic piece)
+        public static bool IsOnBlackSide(int pos)
         {
-            return (!piece.Color && RankOf(piece.Pos) <= BoardSize / 2 - 1)
-                    || (piece.Color && RankOf(piece.Pos) >= BoardSize / 2);
+            return RankOf(pos) <= BoardSize / 2 - 1;
         }
     }
 }

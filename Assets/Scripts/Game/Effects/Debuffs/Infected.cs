@@ -26,7 +26,7 @@ namespace Game.Effects.Debuffs
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn == null || pOn == Piece) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Infected(pOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Infected(pOn), Piece));
             }
         }
 
@@ -42,11 +42,6 @@ namespace Game.Effects.Debuffs
 
             if (turnCounter % turnToActivate == 0)
             {
-                var pieceTarget = PieceOn(lastMainAction.Target);
-                if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.HemolymphFilter))
-                {
-                    return;
-                }
                 InfectedActivate();
             }
         }

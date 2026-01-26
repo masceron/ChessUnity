@@ -27,6 +27,7 @@ namespace Game.Action
         CantApplyEffect = 10, // Không thể áp dụng effect nói chung
         EffectResistance = 11, // Sử dụng trong trường hợp Kháng Effect
         SurvivedHit = 12, // bị ăn nhưng không chết
+        SelfDestroy = 13, // Tự chết khi thực hiện ăn quân khác
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

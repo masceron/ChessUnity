@@ -20,8 +20,8 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         {
             gameObject.SetActive(true);
             data = AssetManager.Ins.PieceData;
-            FreePlayArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
-            FreePlayArmyDesign.Ins.board.OnRemoveTroop += (_) => FilterByCondition();
+            FPArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
+            FPArmyDesign.Ins.board.OnRemoveTroop += (_) => FilterByCondition();
             lastSearchResult = data.Values.ToList();
             FilterByCondition();
             SearchByKeyword("");
@@ -33,7 +33,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             // Lọc theo một số condition 
             Dictionary<PieceInfo, int> counts = new();
             
-            foreach (var pieceInfo in FreePlayArmyDesign.Ins.board.Troops.Select(tr => AssetManager.Ins.PieceData[tr.PieceType]))
+            foreach (var pieceInfo in FPArmyDesign.Ins.board.Troops.Select(tr => AssetManager.Ins.PieceData[tr.PieceType]))
             {
                 counts.TryAdd(pieceInfo, 0);
                 counts[pieceInfo]++;
@@ -66,7 +66,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
                 // Construct: 1 quân mỗi bên, giới hạn ở nửa bàn cờ bên mình
                 if (pieceInfo.rank == PieceRank.Construct)
                 {
-                    foreach (var t in FreePlayArmyDesign.Ins.board.Troops)
+                    foreach (var t in FPArmyDesign.Ins.board.Troops)
                     {
                         if (t.GetPieceInfo().rank == PieceRank.Construct)
                         {

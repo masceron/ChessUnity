@@ -35,8 +35,8 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void ActivateRelic(int maker)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target))));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target)), _sirensHarpoon));
+            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target)), _sirensHarpoon));
 
             _sirensHarpoon.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();

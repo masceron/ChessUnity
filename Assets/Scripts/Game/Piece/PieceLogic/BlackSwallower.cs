@@ -8,7 +8,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BlackSwallower: Commons.PieceLogic
     {
-        public BlackSwallower(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, FrontDefenderMoves.Captures)
+        public BlackSwallower(PieceConfig cfg) : base(cfg, UpDoorMoves.Quiets, UpDoorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new BlackSwallowerPassive(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new BlackSwallowerVengeful(this)));

@@ -56,7 +56,7 @@ namespace Game.Action.Skills
         private void ApplyEffect(PieceLogic firstTarget, PieceLogic secondTarget)
         {
             ActionManager.EnqueueAction(new Purify(Maker, firstTarget.Pos));
-            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget), PieceOn(Maker)));
         }
 
         private static void ResetTargets()

@@ -24,14 +24,14 @@ namespace Game.Effects.Others
             var pieceOnLeft = PieceOn(IndexOf(targetRank, leftTargetFile));
             if (pieceOnLeft != null && pieceOnLeft != Piece)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnLeft)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnLeft), Piece));
             }
             
             var rightTargetFile = targetFile + 1;
             var pieceOnRight = PieceOn(IndexOf(targetRank, rightTargetFile));
             if (pieceOnRight != null && pieceOnRight != Piece)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnRight)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnRight), Piece));
             }
         }
 

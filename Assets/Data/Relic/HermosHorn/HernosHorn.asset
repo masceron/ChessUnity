@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdee4035d1e7499a89a7d83135831603, type: 3}
   m_Name: HernosHorn
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.RelicInfo
-  key: relic_hermos_horn
+  key: relic_hernos_horn
   icon: {fileID: 2800000, guid: 07fbf5377eced4148b7821d0b45800f0, type: 3}
   cooldown: 8
   logicClassName: HermosHorn

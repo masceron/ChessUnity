@@ -29,7 +29,7 @@ namespace Game.Effects.Buffs
                 || action.Result != ResultFlag.HardenedBlock
                 || action.Result != ResultFlag.Evade) return;
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker)), Piece));
             if (Strength > 1) Strength--;
             else
             {

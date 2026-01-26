@@ -14,7 +14,7 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] public UIObject3D model;
         [SerializeField] protected Image image;
         [SerializeField] protected TooltipTrigger trigger;
-        [SerializeField] private Image greyMask;
+        [SerializeField] protected Image greyMask;
         [NonSerialized] public Transform Parent;
         protected Transform oldParent;
         public bool Placed;

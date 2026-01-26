@@ -69,7 +69,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target)), commonPearl));
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

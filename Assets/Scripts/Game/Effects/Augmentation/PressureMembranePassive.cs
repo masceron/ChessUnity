@@ -21,8 +21,10 @@ namespace Game.Effects.Augmentation
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             PieceLogic pieceApplied = applyEffect.Effect.Piece;
-            if (pieceApplied.Augmentations.Any(aug => aug.Name == AugmentationName.PressureMembrane) 
-                && applyEffect.Effect.EffectName == "effect_shortreach")
+
+            if (pieceApplied != Piece) return;
+
+            if (applyEffect.Effect.EffectName == "effect_shortreach")
             {
                 applyEffect.Result = Action.ResultFlag.EffectResistance;
             }

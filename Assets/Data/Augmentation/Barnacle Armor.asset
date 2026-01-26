@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 23
   Rarity: 2
   Slot: 4
-  Key: barnacle_armor
+  Key: augmentation_barnacle_armor
   Icon: {fileID: 2800000, guid: 8c91675b876c1404c9ea8610f2cbca1b, type: 3}

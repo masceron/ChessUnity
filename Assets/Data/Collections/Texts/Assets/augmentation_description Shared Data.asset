@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: augmentation_description Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: augmentation_description
+  m_TableCollectionNameGuidString: 931a9f69fd9b2204098fb81f6571bcd8
+  m_Entries:
+  - m_Id: 10240803655680
+    m_Key: augmentation_crown_of_silence_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10240833015808
+    m_Key: augmentation_leviathan_scale_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10240866570240
+    m_Key: augmentation_pressure_hull_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10241034342400
+    m_Key: augmentation_pressure_membrane_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10241239863296
+    m_Key: augmentation_focus_module_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10241273417728
+    m_Key: augmentation_shadow_fin_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10241613156352
+    m_Key: augmentation_nerve_coolant_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242129055744
+    m_Key: augmentation_elusive_fin_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242225524736
+    m_Key: augmentation_bubble_fin_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242242301952
+    m_Key: augmentation_reef_plating_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242271662080
+    m_Key: augmentation_gluttonous_jaw_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242389102592
+    m_Key: augmentation_tidal_retina_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242439434240
+    m_Key: augmentation_predator_eyes_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242556874752
+    m_Key: augmentation_puppeteer_spirit_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242737229824
+    m_Key: augmentation_metal_scope_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242749812736
+    m_Key: augmentation_archerfish_accuracy_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242850476032
+    m_Key: augmentation_ribcage_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242909196288
+    m_Key: augmentation_fungal_sac_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10242921779200
+    m_Key: augmentation_covet_lens_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243102134272
+    m_Key: augmentation_echo_locator_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243462844416
+    m_Key: augmentation_hemolymph_filter_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243592867840
+    m_Key: augmentation_stress_regulator_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243773222912
+    m_Key: augmentation_duelist_reflex_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243831943168
+    m_Key: augmentation_urchin_plating_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243915829248
+    m_Key: augmentation_tainted_heart_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10243949383680
+    m_Key: augmentation_cold_blooded_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10244037464064
+    m_Key: augmentation_kinetic_diffuser_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10244125544448
+    m_Key: augmentation_metal_spine_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10244305899520
+    m_Key: augmentation_broken_relocator_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11812124151808
+    m_Key: augmentation_abyssal_tapetum_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11812140929024
+    m_Key: augmentation_metal_mind_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11812140929025
+    m_Key: augmentation_meta_regulator_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11812145123328
+    m_Key: augmentation_barnacle_armor_description
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8490793330377490433
+  references:
+    version: 2
+    RefIds:
+    - rid: 8490793330377490433
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1769436976572

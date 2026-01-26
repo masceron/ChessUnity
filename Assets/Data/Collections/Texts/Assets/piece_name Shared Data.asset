@@ -19,10 +19,6 @@ MonoBehaviour:
     m_Key: piece_velkaris
     m_Metadata:
       m_Items: []
-  - m_Id: 27662691078144
-    m_Key: piece_siren
-    m_Metadata:
-      m_Items: []
   - m_Id: 27753384513536
     m_Key: piece_barracuda
     m_Metadata:
@@ -135,10 +131,6 @@ MonoBehaviour:
     m_Key: piece_bioluminescent_beacon
     m_Metadata:
       m_Items: []
-  - m_Id: 35112051820990464
-    m_Key: piece_lizard_fish
-    m_Metadata:
-      m_Items: []
   - m_Id: 35112051875516416
     m_Key: piece_grenadiers
     m_Metadata:
@@ -159,16 +151,8 @@ MonoBehaviour:
     m_Key: piece_tiger_prawn
     m_Metadata:
       m_Items: []
-  - m_Id: 35112054383710208
-    m_Key: piece_stonecrab
-    m_Metadata:
-      m_Items: []
   - m_Id: 35112054740226048
     m_Key: piece_melibe
-    m_Metadata:
-      m_Items: []
-  - m_Id: 35112054794752000
-    m_Key: piece_horseleech
     m_Metadata:
       m_Items: []
   - m_Id: 35112058695454720
@@ -201,10 +185,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35112061178482688
     m_Key: piece_hourglass_jelly
-    m_Metadata:
-      m_Items: []
-  - m_Id: 35112061379809280
-    m_Key: piece_sloane's_viperfish
     m_Metadata:
       m_Items: []
   - m_Id: 35112062038315008
@@ -363,10 +343,6 @@ MonoBehaviour:
     m_Key: piece_long_snouted_seahorse
     m_Metadata:
       m_Items: []
-  - m_Id: 51134688642125824
-    m_Key: piece_powdered_blue_tang
-    m_Metadata:
-      m_Items: []
   - m_Id: 51136093146763264
     m_Key: piece_pegasus_seamoth
     m_Metadata:
@@ -389,6 +365,68 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60700711167250432
     m_Key: piece_rusty_parrotfish
+  - m_Id: 59930689941266432
+    m_Key: piece_surge_wrasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930690096455680
+    m_Key: piece_dusky_butterflyfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930690096455681
+    m_Key: piece_redtail_parrotfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59967759049023488
+    m_Key: piece_stone_wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534426009600
+    m_Key: piece_fire_goby_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534442786816
+    m_Key: piece_scalyhead_sculpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534476341248
+    m_Key: piece_mirror_butterfly_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955873869824
+    m_Key: piece_flying_gurnard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955878064128
+    m_Key: piece_dwarf_lionfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955878064129
+    m_Key: piece_humbug_damsel_fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004330944614400
+    m_Key: piece_guiding_siren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004330978168832
+    m_Key: piece_powderbluetang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004331011723264
+    m_Key: piece_lizardfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004331020111872
+    m_Key: piece_stone_crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004331028500480
+    m_Key: piece_horse_leech
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61005610060533760
+    m_Key: piece_sloanes_viperfish
     m_Metadata:
       m_Items: []
   m_Metadata:

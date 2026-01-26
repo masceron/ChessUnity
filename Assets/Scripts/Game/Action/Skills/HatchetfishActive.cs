@@ -20,14 +20,14 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             //Apply effect Marked no duration
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, PieceOn(Target)), PieceOn(Maker)));
 
             var targetPiece = PieceOn(Target);
             if (targetPiece == null) return;
 
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), PieceOn(Maker)));
             }
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
@@ -79,12 +79,12 @@ namespace Game.Action.Skills
 
 
             //ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, selectedPiece)));
-            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece)));
+            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), PieceOn(Maker)));
 
             if (selectedPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
             {
                 //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
+                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), PieceOn(Maker)));
             }
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

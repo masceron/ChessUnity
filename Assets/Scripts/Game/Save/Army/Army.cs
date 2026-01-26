@@ -11,6 +11,5 @@ namespace Game.Save.Army
         //Troops là array liền kề
         public Troop[] Troops;
         public Relic? Relic;
-        public Relic? EnemyRelic;
     }
 }

@@ -26,7 +26,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             PieceLogic pieceOn = PieceOn(Maker);
             ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, pieceOn)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, pieceOn), methaneCasing));
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(pieceOn.Pos), FileOf(pieceOn.Pos), 1))
             {
                 int ind = IndexOf(rankOff, fileOff);

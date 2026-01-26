@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Lizardfish
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  key: piece_lizard_fish
+  key: piece_lizardfish
   prefab: {fileID: 2560844638400570401, guid: 5fbeb5a3da0051a40876bc58430711a5, type: 3}
   rank: 3
   moveRange: 2
@@ -23,3 +23,5 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: Lizardfish
+  baseValue: 0
+  considerations: []

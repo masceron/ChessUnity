@@ -24,8 +24,8 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         {
             if (!string.IsNullOrWhiteSpace(armyNameTmp.text))
             {
-                FreePlayArmyDesign.Ins.army.Name = armyNameTmp.text;
-                FreePlayArmyDesign.Ins.Save();
+                FPArmyDesign.Ins.army.Name = armyNameTmp.text;
+                FPArmyDesign.Ins.Save();
             }
             
         }

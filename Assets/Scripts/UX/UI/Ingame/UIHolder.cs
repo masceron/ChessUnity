@@ -12,6 +12,7 @@ namespace UX.UI.Ingame
         TimelessHourglassUI,
         HermosHornUI,
         CoralTomeUI,
+        LedgerStoneUI,
         SeabedLevelerUI,
         RustyParrotfishUI,
     }

@@ -17,13 +17,13 @@ namespace Game.Tile
 
         public override void OnPieceEnter(PieceLogic piece){
             base.OnPieceEnter(piece);
-            appliedEffect = new LongReach(PieceOnFormation, 2);
-            ActionManager.ExecuteImmediately(new ApplyEffect(appliedEffect));
+            appliedEffect = new LongReach(PieceOnFormation, -1, 2);
+            ActionManager.EnqueueAction(new ApplyEffect(appliedEffect, FormationType.PredatorLair));
         }
 
         public override void OnPieceExit(PieceLogic piece){
             base.OnPieceExit(piece);
-            ActionManager.ExecuteImmediately(new RemoveEffect(appliedEffect));
+            ActionManager.EnqueueAction(new RemoveEffect(appliedEffect));
         }
 
         public override int GetValueForAI()

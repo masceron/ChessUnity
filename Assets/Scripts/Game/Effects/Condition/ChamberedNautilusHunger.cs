@@ -22,7 +22,7 @@ namespace Game.Effects.Condition
         {
             if (action is ICaptures && action.Maker == Piece.Pos && action.Result == ResultFlag.Success)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Shield(Piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Shield(Piece), Piece));
             }
         }
     }

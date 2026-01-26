@@ -58,7 +58,7 @@ namespace Game.Action.Internal.Pending.Relic
             foreach (var piece in pieces)
             {
                 if (piece == null || piece.Color == stormCapacitor.Color) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, piece), stormCapacitor));
 
             }
 

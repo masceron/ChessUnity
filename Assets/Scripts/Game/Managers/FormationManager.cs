@@ -12,7 +12,7 @@ namespace Game.Managers
     public class FormationManager : Singleton<FormationManager>, ISubscriber{
         private Formation[] formations;
         private GameObject[] formationObjects;
-
+        public GameObject defaultPrefab;
         public void Initialize() {
             formations = new Formation[BoardSize];
             formationObjects = new GameObject[BoardSize];
@@ -30,7 +30,9 @@ namespace Game.Managers
             var rank = RankOf(pos);
             var file = FileOf(pos);
             env.SetPositon(pos);
-            formationObjects[pos] = Instantiate(AssetManager.Ins.EnvironmentData[env.GetFormationType()], new Vector3(rank, YCoordinate, file),
+            GameObject prefab = AssetManager.Ins.FormationData[env.GetFormationType()].prefab;
+            if (prefab == null){ prefab = defaultPrefab; }
+            formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
             Quaternion.identity, transform);
             if (formations[pos] != null)
             {
@@ -41,7 +43,12 @@ namespace Game.Managers
                 formations[pos].OnCreated(PieceOn(pos));
             }
         }
-        
+        public void MoveFormation(int from, int to)
+        {
+            Formation movedFormation = GetFormation(from);
+            RemoveFormation(from);
+            SetFormation(to, movedFormation);
+        }
         public Formation GetFormation(int pos)
         {
             return formations[pos];

@@ -105,15 +105,7 @@ namespace Game.Piece.PieceLogic.Commons
             if (IsDulicatedSlot(augmentations)) return false;
 
             var pieceInfo = AssetManager.Ins.PieceData[Type];
-            foreach (var ag in augmentations)
-            {
-                if (!CanEquip(pieceInfo, ag)) 
-                { 
-                    //UnityEngine.Debug.Log($"Can not apply augmentation slot type {ag.Slot}");
-                    return false; 
-                }
-            }
-            return true;
+            return augmentations.All(ag => CanEquip(pieceInfo, ag));
         }
         bool IsDulicatedSlot(List<Augmentation.Augmentation> augmentations)
         {
@@ -138,31 +130,16 @@ namespace Game.Piece.PieceLogic.Commons
             }
 
             var setCount = new Dictionary<AugmentationSetType, int>();
-            foreach (var aug in augmentations)
+            foreach (var aug in augmentations.Where(aug => aug.Set != null && aug.Set.Type != AugmentationSetType.None))
             {
-                if (aug.Set == null || aug.Set.Type == AugmentationSetType.None) continue;
-
                 setCount.TryAdd(aug.Set.Type, 0);
 
                 setCount[aug.Set.Type]++;
             }
 
-            foreach (var kv in setCount)
+            foreach (var setInfo in from kv in setCount let setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set where setInfo != null let count = kv.Value where setInfo.HaveBonus && count >= setInfo.RequiredPieces where setInfo.BonusEffects != null select setInfo)
             {
-                var setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set;
-                if (setInfo == null) continue;
-
-                var count = kv.Value;
-
-                if (setInfo.HaveBonus && count >= setInfo.RequiredPieces)
-                {
-                    //UnityEngine.Debug.Log($"[Set Bonus] {Type} nhận bonus từ set {setInfo.Type} (x{count})");
-
-                    if (setInfo.BonusEffects != null)
-                    {
-                        setInfo.ApplyBonusEffects();
-                    }
-                }
+                setInfo.ApplyBonusEffects();
             }
         }
 
@@ -201,7 +178,7 @@ namespace Game.Piece.PieceLogic.Commons
                     Effects.Any(e => e.EffectName == "effect_illusion") ||
                         Effects.Any(e => e.EffectName == "effect_crown_of_silence_passive"))
                 {
-                    return; 
+                    return;
                 }
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
