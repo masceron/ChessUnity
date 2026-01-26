@@ -26,17 +26,22 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
+                    // var (rank, file) = RankFileOf(Pos);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    // foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    // {
+                    //     var index = IndexOf(rankOff, fileOff);
+                    //     var pOn = PieceOn(index);
+                    //     if (pOn == null || pOn == this) continue;
+                    //     if (pOn.Color == Color)
+                    //     {
+                    //         list.Add(new ArchelonShield(Pos, index));
+                    //     }
+                    // }
+                    var targets = SkillRangeHelper.SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
+                    foreach (var target in targets)
                     {
-                        var index = IndexOf(rankOff, fileOff);
-                        var pOn = PieceOn(index);
-                        if (pOn == null || pOn == this) continue;
-                        if (pOn.Color == Color)
-                        {
-                            list.Add(new ArchelonShield(Pos, index));
-                        }
+                        list.Add(new ArchelonShield(Pos, target));
                     }
                 } else
                 {
