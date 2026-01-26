@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text.RegularExpressions;
+using Game.Augmentation;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEditor;
@@ -28,11 +29,11 @@ namespace Editor.Worker
             var centralData = LoadCentralDataManager();
             var collectionChanged = false;
             
-            foreach (var path in importedAssets)
+            foreach (var path in importedAssets.Concat(movedAssets))
             {
                 var augmentationInfo = AssetDatabase.LoadAssetAtPath<AugmentationInfo>(path);
                 
-                if (!augmentationInfo || string.IsNullOrEmpty(augmentationInfo.Key)) continue;
+                if (!augmentationInfo) continue;
                 
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
                 var newKey = "augmentation_" + ToSnakeCase(fileName);
@@ -44,7 +45,7 @@ namespace Editor.Worker
                     Debug.Log($"Key for {augmentationInfo.Key} auto-generated.");
                 }
                 
-                if (centralData && centralData.augmentationsData.Values.All(p => p.Key != augmentationInfo.Key))
+                if (augmentationInfo.Name != 0 && centralData && centralData.augmentationsData.Values.All(p => p.Key != augmentationInfo.Key))
                 {
                     centralData.augmentationsData.Add(augmentationInfo.Name, augmentationInfo);
                     Debug.Log($"CentralDataManager: Added new AugmentationInfo '{augmentationInfo.Key}' to the master list.");

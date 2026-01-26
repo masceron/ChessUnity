@@ -28,11 +28,11 @@ namespace Editor.Worker
             var centralData = LoadCentralDataManager();
             var collectionChanged = false;
             
-            foreach (var path in importedAssets)
+            foreach (var path in importedAssets.Concat(movedAssets))
             {
                 var effectInfo = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
                 
-                if (!effectInfo || string.IsNullOrEmpty(effectInfo.key)) continue;
+                if (!effectInfo) continue;
                 
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
                 var newKey = "effect_" + ToSnakeCase(fileName);

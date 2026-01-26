@@ -18,11 +18,11 @@ namespace Editor.Worker
             var centralData = LoadCentralDataManager();
             var collectionChanged = false;
 
-            foreach (var path in importedAssets)
+            foreach (var path in importedAssets.Concat(movedAssets))
             {
                 var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
-                if (!relicInfo || string.IsNullOrEmpty(relicInfo.key)) continue;
+                if (!relicInfo) continue;
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
                 var newKey = "relic_" + ToSnakeCase(fileName);
                 
