@@ -13,8 +13,7 @@ MonoBehaviour:
   m_Name: MelibePassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
   key: effect_melibe_passive
-  category: 3
+  category: 5
   stack: 1
   priority: 8
-  activeWhen: 2
   icon: {fileID: 0}
