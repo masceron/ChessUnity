@@ -575,6 +575,14 @@ MonoBehaviour:
     m_Key: effect_chaotic_constructor_spawn
     m_Metadata:
       m_Items: []
+  - m_Id: 59272796395327488
+    m_Key: effect_corrupted_wisper_charge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60606686301048832
+    m_Key: effect_masked_puffer_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

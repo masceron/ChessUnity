@@ -111,6 +111,10 @@ MonoBehaviour:
     m_Key: relic_chaotic_constructor_description
     m_Metadata:
       m_Items: []
+  - m_Id: 53885590918975488
+    m_Key: relic_corrupted_wisper_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

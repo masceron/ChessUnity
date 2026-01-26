@@ -46,10 +46,21 @@ namespace Game.Managers
             }
             
             RelicData = new Dictionary<string, RelicInfo>();
-            foreach (var relic in relicsData.relicsData)
+            for (var i = 0; i < relicsData.relicsData.Count; i++)
             {
+                var relic = relicsData.relicsData[i];
+                if (relic == null)
+                {
+                    Debug.LogWarning($"RelicsData contains a null entry at index {i}");
+                    continue;
+                }
+
                 RelicData.Add(relic.key, relic);
             }
+            //foreach (var relic in relicsData.relicsData)
+            //{
+            //    RelicData.Add(relic.key, relic);
+            //}
             
             EnvironmentData = new Dictionary<FormationType, GameObject>(environmentsData.enviromentsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);

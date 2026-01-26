@@ -13,6 +13,7 @@ namespace UX.UI.Ingame
         HermosHornUI,
         CoralTomeUI,
         SeabedLevelerUI,
+        RustyParrotfishUI,
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

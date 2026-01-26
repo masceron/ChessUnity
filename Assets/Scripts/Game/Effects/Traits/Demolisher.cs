@@ -2,6 +2,7 @@
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -13,7 +14,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is DestroyConstruct && action.Maker == Piece.Pos && action.Result == ResultFlag.Success)
+            if (action is DestroyConstruct && action.Maker == Piece.Pos && PieceOn(action.Maker).Type != "piece_rusty_parrotfish" && action.Result == ResultFlag.Success)
             {
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }

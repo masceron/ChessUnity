@@ -8,8 +8,10 @@ namespace Game.Relics.Commons
             {
                 "relic_adrenaline_radiator" => new AdrenalineRadiator(cfg),
                 "relic_black_pearl" => new BlackPearl(cfg),
+                "relic_chaotic_constructor" => new ChaoticConstructor(cfg),
                 "relic_common_pearl" => new CommonPearl(cfg),
                 "relic_coral_tome" => new CoralTome(cfg),
+                "relic_corrupted_wisper" => new CorruptedWisper(cfg),
                 "relic_eye_of_mimic" => new EyeOfMimic(cfg),
                 "relic_frost_sigil" => new FrostSigil(cfg),
                 "relic_hermos_horn" => new HermosHorn(cfg),
@@ -23,12 +25,11 @@ namespace Game.Relics.Commons
                 "relic_ray_stinger" => new RayStinger(cfg),
                 "relic_reliquary" => new Reliquary(cfg),
                 "relic_rotting_scythe" => new RottingScythe(cfg),
+                "relic_seabed_leveler" => new SeabedLeveler(cfg),
                 "relic_seafoam_phial" => new SeafoamPhial(cfg),
                 "relic_sirens_harpoon" => new SirensHarpoon(cfg),
                 "relic_storm_capacitor" => new StormCapacitor(cfg),
                 "relic_temporal_warp" => new TemporalWarp(cfg),
-                "relic_chaotic_constructor" => new ChaoticConstructor(cfg),
-                "relic_seabed_leveler" => new SeabedLeveler(cfg),
                 _ => null
             };
         }

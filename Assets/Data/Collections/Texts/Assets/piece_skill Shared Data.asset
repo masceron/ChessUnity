@@ -211,6 +211,18 @@ MonoBehaviour:
     m_Key: piece_frilled_shark_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 60580884503121920
+    m_Key: piece_ribbon_eel_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60605074291609600
+    m_Key: piece_masked_puffer_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60674152763019264
+    m_Key: piece_rusty_parrotfish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

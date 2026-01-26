@@ -1,0 +1,60 @@
+﻿using Game.Action.Quiets;
+using Game.Action.Relics;
+using Game.Common;
+using Game.Effects;
+using Game.Effects.Debuffs;
+using Game.Managers;
+using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
+using Game.Relics;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UX.UI.Ingame;
+using static Game.Common.BoardUtils;
+
+namespace Game.Action.Internal.Pending.Relic
+{
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+
+    public class CorruptedWisperPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    {
+        private CorruptedWisper corruptedWisper;
+        private bool color;
+
+        public CorruptedWisperPending(int target, bool color, CorruptedWisper corruptedWisper) : base(target)
+        {
+            this.color = color;
+            Target = (ushort)target;
+            this.corruptedWisper = corruptedWisper;
+        }
+
+
+        public void CompleteAction()
+        {
+            corruptedWisper.LevelUp();
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(126, PieceOn(Target))));
+
+            TileManager.Ins.UnmarkAll();
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+        }
+
+
+
+        public void Dispose()
+        {
+            BoardViewer.SelectingFunction = 0;
+        }
+
+
+        protected override void ModifyGameState()
+        {
+           
+        }
+    }
+}
+
