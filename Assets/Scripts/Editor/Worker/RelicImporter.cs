@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEditor;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Editor.Worker
 {
-    public class RelicLocalizer : AssetPostprocessor
+    public class RelicImporter : AssetPostprocessor
     {
         private const string RelicsManagerPath = "Assets/Data/Collections/RelicsData.asset";
 
@@ -22,6 +23,15 @@ namespace Editor.Worker
                 var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
                 if (!relicInfo || string.IsNullOrEmpty(relicInfo.key)) continue;
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var newKey = "relic_" + ToSnakeCase(fileName);
+                
+                if (relicInfo.key != newKey)
+                {
+                    relicInfo.key = newKey;
+                    EditorUtility.SetDirty(relicInfo);
+                    Debug.Log($"Key for {relicInfo.key} auto-generated.");
+                }
 
                 if (centralData && centralData.relicsData.All(p => p.key != relicInfo.key))
                 {
@@ -36,7 +46,18 @@ namespace Editor.Worker
             if (!collectionChanged) return;
 
             EditorUtility.SetDirty(centralData);
-            AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssets();return;
+
+            string ToSnakeCase(string text)
+            {
+                if (string.IsNullOrEmpty(text)) return text;
+                
+                text = text.Replace("'", "");
+                text = Regex.Replace(text, @"\s+", "_");
+                text = Regex.Replace(text, "([a-z0-9])([A-Z])", "$1_$2");
+                
+                return text.ToLower();
+            }
         }
 
         private static RelicsData LoadCentralDataManager()

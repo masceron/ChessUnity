@@ -71,14 +71,6 @@ MonoBehaviour:
     m_Key: relic_adrenaline_radiator
     m_Metadata:
       m_Items: []
-  - m_Id: 52654973086257152
-    m_Key: relic_hermos_horn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 52654973090451456
-    m_Key: relic_ray_stinger
-    m_Metadata:
-      m_Items: []
   - m_Id: 52654973090451457
     m_Key: relic_methane_casing
     m_Metadata:
@@ -109,6 +101,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 55201678897893376
     m_Key: relic_seabed_leveler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55595078813929472
+    m_Key: relic_hernos_horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55596553485078528
+    m_Key: relic_rays_stinger
     m_Metadata:
       m_Items: []
   m_Metadata:

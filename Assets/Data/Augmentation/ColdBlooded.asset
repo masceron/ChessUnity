@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 7
   Rarity: 0
   Slot: 0
-  Key: cold_blooded
+  Key: augmentation_cold_blooded
   Icon: {fileID: 2800000, guid: 341b27067b46e574bbcfd494557f5bef, type: 3}

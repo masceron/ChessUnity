@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEditor;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Editor.Worker
 {
-    public class PieceLocalizer : AssetPostprocessor
+    public class PieceImporter : AssetPostprocessor
     {
         private const string PiecesManagerPath = "Assets/Data/Collections/PiecesData.asset";
         
@@ -32,6 +33,16 @@ namespace Editor.Worker
 
                 if (!pieceInfo || string.IsNullOrEmpty(pieceInfo.key)) continue;
                 
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var newKey = "piece_" + ToSnakeCase(fileName);
+                
+                if (pieceInfo.key != newKey)
+                {
+                    pieceInfo.key = newKey;
+                    EditorUtility.SetDirty(pieceInfo);
+                    Debug.Log($"Key for {pieceInfo.key} auto-generated.");
+                }
+                
                 if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))
                 {
                     centralData.piecesData.Add(pieceInfo);
@@ -45,7 +56,18 @@ namespace Editor.Worker
             if (!collectionChanged) return;
             
             EditorUtility.SetDirty(centralData);
-            AssetDatabase.SaveAssets();
+            AssetDatabase.SaveAssets();return;
+
+            string ToSnakeCase(string text)
+            {
+                if (string.IsNullOrEmpty(text)) return text;
+                
+                text = text.Replace("'", "");
+                text = Regex.Replace(text, @"\s+", "_");
+                text = Regex.Replace(text, "([a-z0-9])([A-Z])", "$1_$2");
+                
+                return text.ToLower();
+            }
         }
 
         private static void UpdateLocalizationTables(PieceInfo pieceInfo)

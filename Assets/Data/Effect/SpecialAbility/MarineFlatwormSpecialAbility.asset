@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: MarineFlatwormSpecialAbility
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_marine_flatworm_passive
+  key: effect_marine_flatworm_special_ability
   category: 5
   stack: 1
   priority: 1
-  activeWhen: 6
   icon: {fileID: 0}

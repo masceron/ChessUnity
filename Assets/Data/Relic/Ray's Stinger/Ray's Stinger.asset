@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdee4035d1e7499a89a7d83135831603, type: 3}
   m_Name: Ray's Stinger
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.RelicInfo
-  key: relic_ray_stinger
+  key: relic_rays_stinger
   icon: {fileID: 2800000, guid: 4fc4415f5985754469eb5199f9c9f3ad, type: 3}
   cooldown: 3
   logicClassName: RayStinger

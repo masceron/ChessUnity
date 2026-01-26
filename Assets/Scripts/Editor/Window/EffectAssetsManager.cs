@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Editor.Window
 { 
-    public class EffectImporter : EditorWindow
+    public class EffectAssetsManager : EditorWindow
     {
         private readonly string[] tableNamesToValidate = { "effect_name", "effect_description" };
         
@@ -44,7 +44,7 @@ namespace Editor.Window
         [MenuItem("Tools/Effect Manager")]
         public static void ShowWindow()
         {
-            GetWindow<EffectImporter>("Effect Manager");
+            GetWindow<EffectAssetsManager>("Effect Manager");
         }
 
         private void DrawManageTab()
@@ -118,6 +118,18 @@ namespace Editor.Window
                 "This tool finds localization keys that do not match any existing EffectInfo asset.", MessageType.Info);
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
+            if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
+            {
+                if (EditorUtility.DisplayDialog(
+                        "Remove All Orphaned Keys?",
+                        "Are you sure you want to permanently remove all orphaned keys from the table?",
+                        "Remove",
+                        "Cancel"))
+                {
+                    DeleteAllOrphanedKeys();
+                    FindOrphanedKeys();
+                }
+            }
 
             if (!hasScannedForOrphans) return;
 
@@ -155,6 +167,14 @@ namespace Editor.Window
             }
 
             EditorGUILayout.EndScrollView();
+        }
+        
+        private void DeleteAllOrphanedKeys()
+        {
+            foreach (var orphanedKey in orphanedKeys)
+            {
+                RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
+            }
         }
 
         private void FindOrphanedKeys()

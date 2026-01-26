@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using UnityEditor;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Editor.Worker
 {
-    public class EffectLocalizer : AssetPostprocessor
+    public class EffectImporter : AssetPostprocessor
     {
         private const string EffectsManagerPath = "Assets/Data/Collections/EffectsData.asset";
         
@@ -33,6 +34,16 @@ namespace Editor.Worker
                 
                 if (!effectInfo || string.IsNullOrEmpty(effectInfo.key)) continue;
                 
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var newKey = "effect_" + ToSnakeCase(fileName);
+                
+                if (effectInfo.key != newKey)
+                {
+                    effectInfo.key = newKey;
+                    EditorUtility.SetDirty(effectInfo);
+                    Debug.Log($"Key for {effectInfo.key} auto-generated.");
+                }
+                
                 if (centralData && centralData.effectsData.All(p => p.key != effectInfo.key))
                 {
                     centralData.effectsData.Add(effectInfo);
@@ -47,6 +58,18 @@ namespace Editor.Worker
             
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
+            return;
+
+            string ToSnakeCase(string text)
+            {
+                if (string.IsNullOrEmpty(text)) return text;
+                
+                text = text.Replace("'", "");
+                text = Regex.Replace(text, @"\s+", "_");
+                text = Regex.Replace(text, "([a-z0-9])([A-Z])", "$1_$2");
+                
+                return text.ToLower();
+            }
         }
 
         private static void UpdateLocalizationTables(EffectInfo effectInfo)

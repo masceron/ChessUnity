@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 12
   Rarity: 0
   Slot: 2
-  Key: metal_regulator
+  Key: augmentation_meta_regulator
   Icon: {fileID: 2800000, guid: a8eee2e2ddbbcaa4fa19ee691ffa56e3, type: 3}

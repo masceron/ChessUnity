@@ -10,11 +10,11 @@ using UnityEngine;
 
 namespace Editor.Window
 {
-    public class RelicManagerWindow: EditorWindow
+    public class PieceAssetsManager : EditorWindow
     {
-        private readonly List<RelicInfo> allRelics = new();
-        private readonly string[] tableNamesToValidate = { "relic_name", "relic_description" };
-        private readonly string[] toolbarStrings = { "Manage Relics", "Validate Localization" };
+        private readonly List<PieceInfo> allPieces = new();
+        private readonly string[] tableNamesToValidate = { "piece_name", "piece_skill", "piece_skill_description" };
+        private readonly string[] toolbarStrings = { "Manage Pieces", "Validate Localization" };
         private bool hasScannedForOrphans;
         private Vector2 manageScrollPos;
         private readonly List<OrphanedKey> orphanedKeys = new();
@@ -23,7 +23,7 @@ namespace Editor.Window
 
         private void OnEnable()
         {
-            FindAllRelicInfos();
+            FindAllPieceInfos();
         }
 
         private void OnGUI()
@@ -41,83 +41,95 @@ namespace Editor.Window
             }
         }
         
-        [MenuItem("Tools/Relic Manager")]
+        [MenuItem("Tools/Piece Manager")]
         public static void ShowWindow()
         {
-            GetWindow<RelicManagerWindow>("Relic Manager");
+            GetWindow<PieceAssetsManager>("Piece Manager");
         }
 
         private void DrawManageTab()
         {
-            EditorGUILayout.LabelField("RelicInfo Asset Management", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("PieceInfo Asset Management", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "This list shows all RelicInfo assets in your project.", MessageType.Info);
+                "This list shows all PieceInfo assets in your project.", MessageType.Info);
 
-            if (GUILayout.Button("Refresh List")) FindAllRelicInfos();
+            if (GUILayout.Button("Refresh List")) FindAllPieceInfos();
             if (GUILayout.Button("Reimport List")) SyncWithCentralData();
             if (GUILayout.Button("Generate Factory Code")) GenerateFactoryCode();
 
             EditorGUILayout.Space();
             
             manageScrollPos = EditorGUILayout.BeginScrollView(manageScrollPos);
-            foreach (var relic in allRelics)
+            foreach (var piece in allPieces)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
                 
-                EditorGUILayout.ObjectField(relic, typeof(RelicInfo), false);
+                EditorGUILayout.ObjectField(piece, typeof(PieceInfo), false);
                 
-                if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(relic);
+                if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(piece);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
         
-        private void FindAllRelicInfos()
+        private void FindAllPieceInfos()
         {
-            allRelics.Clear();
-            var guids = AssetDatabase.FindAssets("t:RelicInfo");
+            allPieces.Clear();
+            var guids = AssetDatabase.FindAssets("t:PieceInfo");
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-                var relic = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
-                if (relic) allRelics.Add(relic);
+                var piece = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
+                if (piece) allPieces.Add(piece);
             }
         }
         
         private void SyncWithCentralData()
         {
-            var dataGuids = AssetDatabase.FindAssets("t:RelicsData");
+            var dataGuids = AssetDatabase.FindAssets("t:PiecesData");
             if (dataGuids.Length == 0)
             {
-                Debug.LogError("No central data object for RelicInfo found.");
+                Debug.LogError("No central data object for PieceInfo found.");
                 return;
             }
 
             var path = AssetDatabase.GUIDToAssetPath(dataGuids[0]);
-            var centralData = AssetDatabase.LoadAssetAtPath<RelicsData>(path);
+            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(path);
 
             if (!centralData) return;
             
-            centralData.relicsData ??= new List<RelicInfo>();
+            centralData.piecesData ??= new List<PieceInfo>();
             
-            centralData.relicsData.Clear();
-            centralData.relicsData.AddRange(allRelics);
+            centralData.piecesData.Clear();
+            centralData.piecesData.AddRange(allPieces);
             
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
             
-            Debug.Log($"PieceManager: Rebuilt PiecesData list. Total items: {centralData.relicsData.Count}");
+            Debug.Log($"PieceManager: Rebuilt PiecesData list. Total items: {centralData.piecesData.Count}");
         }
         
         private void DrawValidateTab()
         {
             EditorGUILayout.LabelField("Localization Key Validator", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "This tool finds localization keys in your tables that do not match any existing RelicInfo asset. This helps you clean up keys from deleted or renamed relics.",
+                "This tool finds localization keys in your tables that do not match any existing PieceInfo asset. This helps you clean up keys from deleted or renamed pieces.",
                 MessageType.Info);
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
+            if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
+            {
+                if (EditorUtility.DisplayDialog(
+                        "Remove All Orphaned Keys?",
+                        "Are you sure you want to permanently remove all orphaned keys from the table?",
+                        "Remove",
+                        "Cancel"))
+                {
+                    DeleteAllOrphanedKeys();
+                    FindOrphanedKeys();
+                }
+            }
 
             if (!hasScannedForOrphans) return;
 
@@ -156,6 +168,13 @@ namespace Editor.Window
 
             EditorGUILayout.EndScrollView();
         }
+        private void DeleteAllOrphanedKeys()
+        {
+            foreach (var orphanedKey in orphanedKeys)
+            {
+                RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
+            }
+        }
 
         private void FindOrphanedKeys()
         {
@@ -163,12 +182,14 @@ namespace Editor.Window
             orphanedKeys.Clear();
             
             var validKeys = new HashSet<string>();
-            FindAllRelicInfos();
+            FindAllPieceInfos();
 
-            foreach (var relic in allRelics.Where(relic => !string.IsNullOrEmpty(relic.key)))
+            foreach (var piece in allPieces.Where(piece => !string.IsNullOrEmpty(piece.key)))
             {
-                validKeys.Add(relic.key);
-                validKeys.Add(relic.key + "_description");
+                validKeys.Add(piece.key);
+                if (!piece.hasSkill) continue;
+                validKeys.Add(piece.key + "_skill");
+                validKeys.Add(piece.key + "_skill_description");
             }
             
             foreach (var tableName in tableNamesToValidate)
@@ -204,43 +225,43 @@ namespace Editor.Window
             public string TableName;
         }
         
-        private const string FactoryFilePath = "Assets/Scripts/Game/Relics/Commons/RelicFactory.cs";
-        private const string FactoryClassName = "RelicFactory";
-        private const string BaseLogicClass = "RelicLogic";
-        private const string TargetNamespace = "Game.Relics.Commons";
+        private const string FactoryFilePath = "Assets/Scripts/Game/Piece/PieceLogic/Commons/PieceFactory.cs";
+        private const string FactoryClassName = "PieceFactory";
+        private const string BaseLogicClass = "PieceLogic";
+        private const string TargetNamespace = "Game.Piece.PieceLogic.Commons";
         
         public static void GenerateFactoryCode()
         {
-            var guids = AssetDatabase.FindAssets("t:RelicInfo");
-            var relics = guids
-                .Select(guid => AssetDatabase.LoadAssetAtPath<RelicInfo>(AssetDatabase.GUIDToAssetPath(guid)))
+            var guids = AssetDatabase.FindAssets("t:PieceInfo");
+            var pieces = guids
+                .Select(guid => AssetDatabase.LoadAssetAtPath<PieceInfo>(AssetDatabase.GUIDToAssetPath(guid)))
                 .Where(p => p)
                 .ToList();
 
-            var fileContent = BuildFileContent(relics);
+            var fileContent = BuildFileContent(pieces);
 
             File.WriteAllText(FactoryFilePath, fileContent);
             AssetDatabase.Refresh();
         }
 
-        private static string BuildMethod(List<RelicInfo> relics)
+        private static string BuildMethod(List<PieceInfo> pieces)
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("        public static " + BaseLogicClass + " CreateLogicInstance(string key, RelicConfig cfg)");
+            sb.AppendLine("        public static " + BaseLogicClass + " CreateLogicInstance(string key, PieceConfig cfg)");
             sb.AppendLine("        {");
             sb.AppendLine("            return key switch");
             sb.AppendLine("            {");
             
-            foreach (var relic in relics.OrderBy(p => p.key))
+            foreach (var piece in pieces.OrderBy(p => p.key))
             {
-                if (string.IsNullOrEmpty(relic.key) || string.IsNullOrEmpty(relic.logicClassName))
+                if (string.IsNullOrEmpty(piece.key) || string.IsNullOrEmpty(piece.logicClassName))
                 {
-                    Debug.LogWarning($"Skipping relic: {relic.name} due to missing key or LogicClassName.");
+                    Debug.LogWarning($"Skipping piece: {piece.name} due to missing key or LogicClassName.");
                     continue;
                 }
 
-                sb.AppendLine($"                \"{relic.key}\" => new {relic.logicClassName}(cfg),");
+                sb.AppendLine($"                \"{piece.key}\" => new {piece.logicClassName}(cfg),");
             }
             
             sb.AppendLine($"                _ => null");
@@ -250,7 +271,7 @@ namespace Editor.Window
             return sb.ToString();
         }
 
-        private static string BuildFileContent(List<RelicInfo> relics)
+        private static string BuildFileContent(List<PieceInfo> pieces)
         {
             var sb = new StringBuilder();
 
@@ -260,7 +281,7 @@ namespace Editor.Window
             sb.AppendLine($"    public static class {FactoryClassName}");
             sb.AppendLine("    {");
 
-            sb.Append(BuildMethod(relics));
+            sb.Append(BuildMethod(pieces));
 
             sb.AppendLine("    }");
 
