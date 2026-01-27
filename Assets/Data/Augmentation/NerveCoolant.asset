@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 22
   Rarity: 3
   Slot: 1
-  Key: augmentation_nerve_coolant
+  Key: nerve_coolant
   Icon: {fileID: 2800000, guid: 4fc4415f5985754469eb5199f9c9f3ad, type: 3}

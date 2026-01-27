@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 3
   Rarity: 2
   Slot: 2
-  Key: augmentation_hemolymph_filter
+  Key: hemolymph_filter
   Icon: {fileID: 2800000, guid: 19a94ec5245b9be429b5d7d6dae0b9f0, type: 3}

@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 28
   Rarity: 2
   Slot: 3
-  Key: augmentation_pressure_membrane
+  Key: pressure_membrane
   Icon: {fileID: 2800000, guid: 80cfd4d4b22eaf14c9641ecfdacb7836, type: 3}

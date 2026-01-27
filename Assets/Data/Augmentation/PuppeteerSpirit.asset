@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 27
   Rarity: 6
   Slot: 1
-  Key: augmentation_puppeteer_spirit
+  Key: puppeteer_spirit
   Icon: {fileID: 2800000, guid: 172210676b53d6a4fab5c8339fd113ff, type: 3}

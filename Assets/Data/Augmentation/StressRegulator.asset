@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 38
   Rarity: 0
   Slot: 1
-  Key: augmentation_stress_regulator
+  Key: stress_regulator
   Icon: {fileID: 0}

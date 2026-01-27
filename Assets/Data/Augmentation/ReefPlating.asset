@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 29
   Rarity: 0
   Slot: 4
-  Key: augmentation_reef_plating
+  Key: reef_plating
   Icon: {fileID: 2800000, guid: 80cfd4d4b22eaf14c9641ecfdacb7836, type: 3}

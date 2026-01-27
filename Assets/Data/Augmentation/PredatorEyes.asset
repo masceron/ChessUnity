@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 15
   Rarity: 1
   Slot: 0
-  Key: augmentation_predator_eyes
+  Key: predator_eyes
   Icon: {fileID: 2800000, guid: 163621af2d81ba948b9649b5eca3047f, type: 3}

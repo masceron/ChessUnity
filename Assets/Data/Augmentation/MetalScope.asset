@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 10
   Rarity: 0
   Slot: 0
-  Key: augmentation_metal_scope
+  Key: metal_scope
   Icon: {fileID: 2800000, guid: a8eee2e2ddbbcaa4fa19ee691ffa56e3, type: 3}

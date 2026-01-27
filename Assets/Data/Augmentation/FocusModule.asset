@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 39
   Rarity: 1
   Slot: 1
-  Key: augmentation_focus_module
+  Key: focus_module
   Icon: {fileID: 0}
