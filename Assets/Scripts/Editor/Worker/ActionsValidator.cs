@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
@@ -40,6 +41,20 @@ namespace Editor.Worker
                 var ns = type.Namespace ?? "";
                 var isInternalNamespace = ns.StartsWith("Game.Action.Internal");
                 var hasInternalInterface = typeof(IInternal).IsAssignableFrom(type);
+                var isPendingNameSpace = ns.StartsWith("Game.Action.Internal.Pending");
+                var hasPendingClass = typeof(PendingAction).IsAssignableFrom(type);
+                
+                switch (isPendingNameSpace)
+                {
+                    case true when !hasPendingClass:
+                        LogViolation($"'{type.Name}' is in '{ns}' but not inherited from PendingAction.");
+                        allGood = false;
+                        break;
+                    case false when hasPendingClass:
+                        LogViolation($"'{type.Name}' has PendingAction but is NOT in Pending namespace.");
+                        allGood = false;
+                        break;
+                }
                 
                 switch (isInternalNamespace)
                 {
