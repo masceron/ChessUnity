@@ -14,7 +14,7 @@ using UX.UI.Ingame.ChrysosShop;
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate: PendingAction, IInternal, ISkills, IAIAction
+    public class ChrysosUpgradeCandidate: PendingAction, ISkills, IAIAction
     {
         public int AIPenaltyValue(PieceLogic p)
         {

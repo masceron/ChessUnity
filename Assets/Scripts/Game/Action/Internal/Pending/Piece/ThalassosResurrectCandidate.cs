@@ -7,7 +7,7 @@ using UX.UI.Ingame.ThalassosResurrector;
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosResurrectCandidate: PendingAction, IInternal, ISkills
+    public class ThalassosResurrectCandidate: PendingAction, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {
