@@ -218,11 +218,10 @@ namespace Editor.Window
             var sharedData = tableCollection.SharedData;
             if (sharedData.GetEntry(key) == null) return;
             sharedData.RemoveKey(key);
-            EditorUtility.SetDirty(sharedData); // Mark the asset as modified
+            EditorUtility.SetDirty(sharedData);
             Debug.Log($"Removed key '{key}' from table '{tableName}'");
         }
-
-        // --- Tab 2: Validate Localization ---
+        
         private struct OrphanedKey
         {
             public string Key;
