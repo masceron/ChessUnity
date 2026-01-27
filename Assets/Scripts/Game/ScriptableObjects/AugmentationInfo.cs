@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.ScriptableObjects
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [CreateAssetMenu(fileName = "AugmentationInfo", menuName = "ScriptableObjects/AugmentationInfo")]
+    [CreateAssetMenu(fileName = "Augmentation", menuName = "ScriptableObjects/Augmentation")]
     public class AugmentationInfo: ScriptableObject
     {
         public AugmentationName Name;

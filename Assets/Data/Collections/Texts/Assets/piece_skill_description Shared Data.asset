@@ -19,10 +19,6 @@ MonoBehaviour:
     m_Key: piece_velkaris_skill_description
     m_Metadata:
       m_Items: []
-  - m_Id: 5018847547392
-    m_Key: piece_siren_skill_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 5018847547393
     m_Key: piece_electric_eel_skill_description
     m_Metadata:
@@ -121,10 +117,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35085395152605184
     m_Key: piece_hourglass_jelly_skill_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 35085395353931776
-    m_Key: piece_sloane's_viperfish_skill_description
     m_Metadata:
       m_Items: []
   - m_Id: 35085396012437504
@@ -229,6 +221,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60583289852186625
     m_Key: piece_dwarf_lionfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60977664922931200
+    m_Key: piece_guiding_siren_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60978944072404992
+    m_Key: piece_sloanes_viperfish_skill_description
     m_Metadata:
       m_Items: []
   m_Metadata:

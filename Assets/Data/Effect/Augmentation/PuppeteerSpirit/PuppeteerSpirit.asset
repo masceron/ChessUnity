@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: PuppeteerSpirit
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_puppeteer_spirit_passive
+  key: effect_puppeteer_spirit
   category: 4
   stack: 1
   priority: 0

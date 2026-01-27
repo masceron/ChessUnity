@@ -47,6 +47,12 @@ MonoBehaviour:
     - Locale-en
     - Preload
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5f5390af38b84b34897d5e63664f92b5
+    m_Address: augmentation_description_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6a03ced2947145046b2b75372fb8644e
     m_Address: piece_name_en
     m_ReadOnly: 1
@@ -61,6 +67,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a77478329b10e1b429e1370e82a63bd2
     m_Address: effect_name_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b732fcbe68e8da64ebed67464235e9db
+    m_Address: augmentation_name_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

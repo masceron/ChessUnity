@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Localization-String-Tables-Spanish (es)
   m_GUID: c672a5af1a6d8874987a3266ecc20c63
   m_SerializeEntries:
+  - m_GUID: 0637aed24e8bfbf4f93802cee92e8146
+    m_Address: augmentation_description_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 203e5d9f2dddec94aaf86456a4c4bbf0
     m_Address: relic_description_es
     m_ReadOnly: 1
@@ -29,6 +35,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 306cd0e36e22fce4c9fbf47883831af3
     m_Address: effect_description_es
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-es
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3387f62674cfbe84da933e9f4069c370
+    m_Address: augmentation_name_es
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-es

@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: augmentation_name Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: augmentation_name
+  m_TableCollectionNameGuidString: 54d48a3cd73775e4dba2ba9a7e1465ea
+  m_Entries:
+  - m_Id: 10332440809472
+    m_Key: augmentation_crown_of_silence
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10332507918336
+    m_Key: augmentation_leviathan_scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10332541472768
+    m_Key: augmentation_pressure_hull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10332709244928
+    m_Key: augmentation_pressure_membrane
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10332914765824
+    m_Key: augmentation_focus_module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10332948320256
+    m_Key: augmentation_shadow_fin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10333283864576
+    m_Key: augmentation_nerve_coolant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10333803958272
+    m_Key: augmentation_elusive_fin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10333900427264
+    m_Key: augmentation_bubble_fin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10333917204480
+    m_Key: augmentation_reef_plating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10333946564608
+    m_Key: augmentation_gluttonous_jaw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334064005120
+    m_Key: augmentation_tidal_retina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334114336768
+    m_Key: augmentation_predator_eyes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334231777280
+    m_Key: augmentation_puppeteer_spirit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334412132352
+    m_Key: augmentation_metal_scope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334424715264
+    m_Key: augmentation_archerfish_accuracy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334525378560
+    m_Key: augmentation_ribcage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334584098816
+    m_Key: augmentation_fungal_sac
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334592487424
+    m_Key: augmentation_covet_lens
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10334777036800
+    m_Key: augmentation_echo_locator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335137746944
+    m_Key: augmentation_hemolymph_filter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335267770368
+    m_Key: augmentation_stress_regulator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335448125440
+    m_Key: augmentation_duelist_reflex
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335502651392
+    m_Key: augmentation_urchin_plating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335590731776
+    m_Key: augmentation_tainted_heart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335624286208
+    m_Key: augmentation_cold_blooded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335712366592
+    m_Key: augmentation_kinetic_diffuser
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335800446976
+    m_Key: augmentation_metal_spine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 10335980802048
+    m_Key: augmentation_broken_relocator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11903782277120
+    m_Key: augmentation_abyssal_tapetum
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11903815831552
+    m_Key: augmentation_metal_mind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11903815831553
+    m_Key: augmentation_meta_regulator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11903820025856
+    m_Key: augmentation_barnacle_armor
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 8490793330377490432
+  references:
+    version: 2
+    RefIds:
+    - rid: 8490793330377490432
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1769436954715
