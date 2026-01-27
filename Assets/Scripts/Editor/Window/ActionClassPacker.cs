@@ -107,9 +107,25 @@ namespace Editor.Window
                     modified = true;
                 }
             }
+            
+            var fieldRegex = new Regex(@"(?<indent>^\s*)private\s+(?!static|const|void)(?:readonly\s+)?[\w.<>\[\]?]+\s+\w+\s*(?:=.*?)?;", RegexOptions.Multiline);
+            
+            var newContent = fieldRegex.Replace(content, (m) => 
+            {
+                var precedingText = content[..m.Index].TrimEnd();
+                
+                if (precedingText.EndsWith("MemoryPackInclude]") || precedingText.EndsWith("MemoryPackIncludeAttribute]"))
+                {
+                    return m.Value;
+                }
+                
+                modified = true;
+                var indent = m.Groups["indent"].Value;
+                return $"{indent}[MemoryPackInclude]\n{m.Value}";
+            });
 
             if (!modified) return false;
-            File.WriteAllText(path, content);
+            File.WriteAllText(path, newContent);
             return true;
         }
         
