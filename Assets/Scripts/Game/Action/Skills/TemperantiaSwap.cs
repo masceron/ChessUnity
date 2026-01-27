@@ -7,12 +7,14 @@ using UX.UI.Ingame;
 using UnityEngine;
 using Game.Managers;
 using Game.Piece.PieceLogic;
+using UnityEngine.InputSystem;
+
 // <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaSwap : Action, IPendingAble, ISkills
+    public class TemperantiaSwap : PendingAction, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {
@@ -27,47 +29,47 @@ namespace Game.Action.Skills
         }
 
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
-        protected override void ModifyGameState()
-        {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            var ally = PieceOn(allyIndex);
-            var enemy = PieceOn(enemyIndex);
-            if (ally == null || enemy == null) return;
+        // protected override void ModifyGameState()
+        // {
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        //     var ally = PieceOn(allyIndex);
+        //     var enemy = PieceOn(enemyIndex);
+        //     if (ally == null || enemy == null) return;
+        //
+        //     // Copy danh sách buff và debuff trước khi bị xóa
+        //     var allyDebuffs = ally.Effects.FindAll(e => e.Category == EffectCategory.Debuff);
+        //     var enemyBuffs = enemy.Effects.FindAll(e => e.Category == EffectCategory.Buff);
+        //
+        //     // Xóa debuff khỏi Ally và buff khỏi Enemy
+        //     foreach (var effect in allyDebuffs)
+        //     {
+        //         ActionManager.EnqueueAction(new RemoveEffect(effect));
+        //     }
+        //     foreach (var effect in enemyBuffs)
+        //     {
+        //         ActionManager.EnqueueAction(new RemoveEffect(effect));
+        //     }
+        //
+        //     // Thêm debuff vào Enemy (resolve Piece before applying)
+        //     foreach (var effect in allyDebuffs)
+        //     {
+        //         effect.Piece = enemy;
+        //         ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
+        //     }
+        //
+        //     // Thêm buff vào Ally
+        //     foreach (var effect in enemyBuffs)
+        //     {
+        //         effect.Piece = ally;
+        //         ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
+        //     }
+        //
+        //     // Reset static indices
+        //     allyIndex = -1;
+        //     enemyIndex = -1;
+        // }
 
-            // Copy danh sách buff và debuff trước khi bị xóa
-            var allyDebuffs = ally.Effects.FindAll(e => e.Category == EffectCategory.Debuff);
-            var enemyBuffs = enemy.Effects.FindAll(e => e.Category == EffectCategory.Buff);
-
-            // Xóa debuff khỏi Ally và buff khỏi Enemy
-            foreach (var effect in allyDebuffs)
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
-            foreach (var effect in enemyBuffs)
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
-
-            // Thêm debuff vào Enemy (resolve Piece before applying)
-            foreach (var effect in allyDebuffs)
-            {
-                effect.Piece = enemy;
-                ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
-            }
-
-            // Thêm buff vào Ally
-            foreach (var effect in enemyBuffs)
-            {
-                effect.Piece = ally;
-                ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
-            }
-
-            // Reset static indices
-            allyIndex = -1;
-            enemyIndex = -1;
-        }
-
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             // Nếu chưa có enemy (chỉ hành động chọn ally), set firstSelection trên commander để tương thích
             if (allyIndex == -1)

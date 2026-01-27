@@ -7,7 +7,7 @@ using UX.UI.Ingame.ThalassosResurrector;
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosResurrectCandidate: Action, IPendingAble, IInternal, ISkills
+    public class ThalassosResurrectCandidate: PendingAction, IInternal, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {
@@ -19,7 +19,7 @@ namespace Game.Action.Internal.Pending.Piece
             Target = (ushort)pos;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var selector = Object.FindAnyObjectByType<ThalassosResurrector>(FindObjectsInactive.Include);
             if (!selector)
@@ -31,8 +31,5 @@ namespace Game.Action.Internal.Pending.Piece
 
             selector.Load(Maker, Target);
         }
-
-        protected override void ModifyGameState()
-        {}
     }
 }

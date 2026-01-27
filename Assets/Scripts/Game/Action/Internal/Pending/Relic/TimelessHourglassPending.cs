@@ -8,7 +8,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TimelessHourglassPending : Action, System.IDisposable, IPendingAble, IRelicAction
+    public class TimelessHourglassPending : PendingAction, System.IDisposable, IRelicAction
     {
         private TimelessHourglass _timelessHourglass;
         public TimelessHourglassPending(TimelessHourglass t, int maker, bool pos = false) : base(maker)
@@ -17,7 +17,7 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             if(BoardUtils.PieceOn(Target).Color == _timelessHourglass.Color)
             {
@@ -36,10 +36,6 @@ namespace Game.Action.Internal.Pending.Relic
 
             _timelessHourglass.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
-
-        protected override void ModifyGameState()
-        {
         }
         
         public void Dispose()

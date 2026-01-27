@@ -11,7 +11,7 @@ using Game.AI;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive : Action, ISkills, IPendingAble, System.IDisposable, IAIAction
+    public class HumilitasActive : PendingAction, System.IDisposable, IAIAction
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -31,18 +31,18 @@ namespace Game.Action.Skills
             isExecuting = false;
         }
 
-        protected override void ModifyGameState()
-        {
-            if (FirstTarget == null) return;
-            if (SecondTarget == null) return;
-            
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget), PieceOn(Maker)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget), PieceOn(Maker)));
-            isExecuting = false;
-            Dispose();
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-        public void CompleteAction()
+        // protected override void ModifyGameState()
+        // {
+        //     if (FirstTarget == null) return;
+        //     if (SecondTarget == null) return;
+        //     
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget), PieceOn(Maker)));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget), PieceOn(Maker)));
+        //     isExecuting = false;
+        //     Dispose();
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        // }
+        public override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
             if (FirstTarget == null)

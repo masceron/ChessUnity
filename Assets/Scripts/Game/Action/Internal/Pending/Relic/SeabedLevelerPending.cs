@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class SeabedLevelerPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class SeabedLevelerPending : PendingAction, System.IDisposable, IRelicAction
     {
         private SeabedLeveler seabedLeveler;
 
@@ -27,7 +27,7 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.SelectingFunction = 0;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var ui = Object.FindAnyObjectByType<SeabedLevelerUI>(FindObjectsInactive.Include);
 
@@ -43,11 +43,6 @@ namespace Game.Action.Internal.Pending.Relic
             }
 
             ui.Load();
-        }
-
-        protected override void ModifyGameState()
-        {
-
         }
 
     }
