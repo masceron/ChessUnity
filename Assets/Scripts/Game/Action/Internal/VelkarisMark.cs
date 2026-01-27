@@ -15,7 +15,7 @@ namespace Game.Action.Internal
 
         protected override void Animate()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(PieceOn(Target)), PieceOn(Maker)));
         }
 
         protected override void ModifyGameState()

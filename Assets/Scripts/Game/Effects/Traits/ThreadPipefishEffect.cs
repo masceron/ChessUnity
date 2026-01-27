@@ -11,6 +11,8 @@ namespace Game.Effects.Traits
     public class ThreadPipefishEffect : Effect, IEndTurnEffect, IOnApply, IOnRemove
     {
         private PieceLogic Target;
+        private int distance; // distance between 2 connected pieces
+        private const int MaxDistance = 3;
         public ThreadPipefishEffect(PieceLogic piece, PieceLogic target) : base(-1, -1, piece, "effect_thread_pipefish_effect")
         {
             Target = target;
@@ -28,11 +30,11 @@ namespace Game.Effects.Traits
         {
             int posMaker = Piece.Pos;
             int posTarget = Target.Pos;
-            var distance = math.max(math.abs(RankOf(posMaker) - RankOf(posTarget)),
+            distance = math.max(math.abs(RankOf(posMaker) - RankOf(posTarget)),
                 math.abs(FileOf(posMaker) - FileOf(posTarget)));
 
-            Debug.Log(distance);
-            if (distance > 3)
+            //Debug.Log(distance);
+            if (distance > MaxDistance)
             {
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }

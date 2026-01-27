@@ -29,7 +29,7 @@ namespace Game.Action.Skills
                 .ToList();
             foreach (var piece in picked)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece), PieceOn(Maker)));
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

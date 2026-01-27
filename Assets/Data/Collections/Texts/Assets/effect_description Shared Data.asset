@@ -75,10 +75,6 @@ MonoBehaviour:
     m_Key: effect_piercing_description
     m_Metadata:
       m_Items: []
-  - m_Id: 9587715477504
-    m_Key: effect_slayer_coin_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 10143875993600
     m_Key: effect_snapping_strike_description
     m_Metadata:
@@ -149,10 +145,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35140550296342528
     m_Key: effect_diurnal_ambush_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 35140551034540032
-    m_Key: effect_kill_after_switch_turn_description
     m_Metadata:
       m_Items: []
   - m_Id: 35140552552878080
@@ -307,10 +299,6 @@ MonoBehaviour:
     m_Key: effect_contagion_corpse_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35140564661833728
-    m_Key: effect_sea_turtle_countdown_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 35140565009960960
     m_Key: effect_frenzied_description
     m_Metadata:
@@ -329,10 +317,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 35179732020498432
     m_Key: effect_snipe_eel_passive_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 37737757918892032
-    m_Key: effect_ray's_tail_passive_description
     m_Metadata:
       m_Items: []
   - m_Id: 37737848918511616
@@ -411,10 +395,6 @@ MonoBehaviour:
     m_Key: effect_powderbluetang_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 51134805860339712
-    m_Key: effect_marine_flatworm_passive_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 51254866944118784
     m_Key: effect_cabezon_passive_description
     m_Metadata:
@@ -425,10 +405,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 51913313779896320
     m_Key: effect_remora_passive_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 51929802662662144
-    m_Key: effect_flying_fish_passive_description
     m_Metadata:
       m_Items: []
   - m_Id: 51930673874128896
@@ -467,10 +443,6 @@ MonoBehaviour:
     m_Key: effect_predator_eyes_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 53011606555512832
-    m_Key: effect_tainted_heart_passive_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 53949981372440576
     m_Key: effect_bubble_fin_passive_description
     m_Metadata:
@@ -489,14 +461,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 53952005832957952
     m_Key: effect_ribcage_passive_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 55769985597607936
-    m_Key: effect_pressure_membrane_passive_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 55769985614385152
-    m_Key: effect_puppeteer_spirit_passive_description
     m_Metadata:
       m_Items: []
   - m_Id: 55769985614385153
@@ -551,20 +515,92 @@ MonoBehaviour:
     m_Key: effect_scrap_collector_description
     m_Metadata:
       m_Items: []
-  - m_Id: 58094219116859392
-    m_Key: effect_stalker_instinct_description
+  - m_Id: 59930807121731584
+    m_Key: effect_redtail_parrotfish_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 58352380408369152
+  - m_Id: 59967875906527232
+    m_Key: effect_surge_wrasse_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609651669389312
     m_Key: effect_scalyhead_sculpin_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 58360005309108224
-    m_Key: effect_fire_goby_fish_pasive_description
+  - m_Id: 60610073280827392
+    m_Key: effect_dwarf_lionfish_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 58367737277845504
-    m_Key: effect_mirror_butterfly_fish_passive_description
+  - m_Id: 60610073289216000
+    m_Key: effect_humbug_damsel_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048548782080
+    m_Key: effect_pressure_hull_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048565559296
+    m_Key: effect_chaotic_constructor_spawn_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048569753600
+    m_Key: effect_duelist_reflex_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048578142208
+    m_Key: effect_gluttonous_jaw_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60611048578142209
+    m_Key: effect_broken_relocator_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448380932096
+    m_Key: effect_tainted_heart_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448406097920
+    m_Key: effect_fire_goby_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448418680832
+    m_Key: effect_kill_piece_after_switch_turn_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448422875136
+    m_Key: effect_pressure_membrane_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448435458048
+    m_Key: effect_stalker_instinct_effect_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448460623872
+    m_Key: effect_marine_flatworm_special_ability_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448477401088
+    m_Key: effect_flyingfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448481595392
+    m_Key: effect_puppeteer_spirit_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004448506761216
+    m_Key: effect_sea_turtle_count_down_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61005840030027776
+    m_Key: effect_rays_tail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61005840046804992
+    m_Key: effect_slayers_coin_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61005840055193600
+    m_Key: effect_dusky_butterfly_fish_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -1,24 +1,53 @@
 using UX.UI.Followers;
 using System.Collections.Generic;
 using UnityEngine;
+using Game.Save.Army;
+using Game.Common;
+using System.Linq;
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
-    public class FPSavedArmies : SavedArmies
+    public class FPSavedArmies : MonoBehaviour
     {
-        public new static FPSavedArmies Ins;
-        protected List<SavedArmy> savedArmies;
-        protected override void Awake()
+        [SerializeField] protected RectTransform list;
+        [SerializeField] protected FreePlaySavedArmy saved;
+        public static FPSavedArmies Ins{ get; private set; }
+        public List<FreePlaySavedArmy> savedArmies;
+        protected void Awake()
         {
             Ins = this;
+            Load();
         }
-        public List<SavedArmy> GetList()
+        public void Load()
         {
-            savedArmies = new();
-            foreach (Transform tr in list)
+            var dict = FreePlaySaveLoader.ReadAll();
+
+            var already = list.transform.childCount;
+            var needed = dict.Count;
+
+            if (already < needed)
             {
-                savedArmies.Add(tr.GetComponent<FreePlaySavedArmy>());
+                for (var i = 1; i <= needed - already; i++)
+                {
+                    Instantiate(saved, list.transform, true);
+                }
             }
-            return savedArmies;
+            else if (already > needed)
+            {
+                var index = already - 1;
+                for (var i = 1; i <= already - needed; i++)
+                {
+                    Destroy(list.transform.GetChild(index).gameObject);
+                    index--;
+                }
+            }
+
+            var vlist = dict.Values.ToList();
+            for (var i = 0; i < needed; i++)
+            {
+                FreePlaySavedArmy f = list.transform.GetChild(i).GetComponent<FreePlaySavedArmy>();
+                f.Load(vlist[i]);
+                savedArmies.Add(f);
+            }
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
                     
                 if (pOn.Color != Piece.Color && pOn.Effects.All(e => e.EffectName != "effect_slow"))
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, pOn)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, pOn), Piece));
                 }
             }
         }

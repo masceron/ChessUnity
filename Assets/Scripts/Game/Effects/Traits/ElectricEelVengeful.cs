@@ -17,7 +17,7 @@ namespace Game.Effects.Traits
         {
             if (action.Target == Piece.Pos && action is ICaptures && action.Result == ResultFlag.Success)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, BoardUtils.PieceOn(action.Maker))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(2, BoardUtils.PieceOn(action.Maker)), Piece));
             }
         }
 

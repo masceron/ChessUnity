@@ -19,7 +19,7 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(Target), Target, 5)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(Target), Target, 5), PieceOn(Maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

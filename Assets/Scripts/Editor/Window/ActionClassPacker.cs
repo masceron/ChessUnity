@@ -1,0 +1,203 @@
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
+using Game.Action.Internal;
+using UnityEditor;
+using UnityEngine;
+using Action = Game.Action.Action;
+
+namespace Editor.Window
+{
+    public class ActionClassPacker : EditorWindow
+    {
+        [MenuItem("Tools/Action System Tools")]
+        public static void ShowWindow()
+        {
+            GetWindow<ActionClassPacker>("Action Tools");
+        }
+
+        private void OnGUI()
+        {
+            GUILayout.Label("Action System Maintenance", EditorStyles.boldLabel);
+            GUILayout.Space(10);
+            
+            if (GUILayout.Button("1. Fix Class Definitions (Add partial/[MemoryPackable])", GUILayout.Height(40)))
+            {
+                RunFixer();
+            }
+            GUILayout.Label("Scans for Actions missing attributes or 'partial' keyword.", EditorStyles.miniLabel);
+
+            GUILayout.Space(20);
+            
+            if (GUILayout.Button("2. Generate ActionFormatter.cs", GUILayout.Height(40)))
+            {
+                GenerateFormatter();
+            }
+            GUILayout.Label("Re-generates the serialization switch statement for IL2CPP.", EditorStyles.miniLabel);
+        }
+        
+        private static void RunFixer()
+        {
+            var actionTypes = TypeCache.GetTypesDerivedFrom<Action>()
+                .Where(t => !t.IsAbstract)
+                .Where(t => !typeof(IInternal).IsAssignableFrom(t))
+                .ToList();
+
+            var fixedCount = actionTypes.Count(FixClass);
+
+            if (fixedCount > 0)
+            {
+                AssetDatabase.Refresh();
+                Debug.Log($"<color=green>Successfully updated {fixedCount} Action classes!</color>");
+            }
+            else
+            {
+                Debug.Log("All Action classes are already correct.");
+            }
+        }
+
+        private static bool FixClass(Type type)
+        {
+            var guids = AssetDatabase.FindAssets("t:MonoScript " + type.Name);
+            var path = (from guid in guids
+                select AssetDatabase.GUIDToAssetPath(guid)
+                into p
+                let script = AssetDatabase.LoadAssetAtPath<MonoScript>(p)
+                where script && script.GetClass() == type
+                select p).FirstOrDefault();
+
+            if (string.IsNullOrEmpty(path))
+            {
+                Debug.LogWarning($"Could not find source file for class: {type.Name}");
+                return false;
+            }
+
+            var content = File.ReadAllText(path);
+            var modified = false;
+
+            if (!content.Contains("using MemoryPack;"))
+            {
+                content = "using MemoryPack;\n" + content;
+                modified = true;
+            }
+            
+            var classRegex = new Regex($@"(public|internal|private)\s+(abstract\s+)?(sealed\s+)?class\s+{type.Name}\b");
+            var match = classRegex.Match(content);
+
+            if (match.Success)
+            {
+                if (!content.Contains("[MemoryPackable]"))
+                {
+                    const string insertStr = "[MemoryPackable]\n    ";
+                    content = content.Insert(match.Index, insertStr);
+                    
+                    match = classRegex.Match(content);
+                    modified = true;
+                }
+
+                var classIndex = match.Index;
+                var classLine = content.Substring(classIndex, match.Length);
+
+                if (!classLine.Contains("partial"))
+                {
+                    var newClassLine = classLine.Replace("class", "partial class");
+                    content = content.Remove(classIndex, match.Length).Insert(classIndex, newClassLine);
+                    modified = true;
+                }
+            }
+            
+            var fieldRegex = new Regex(@"(?<indent>^\s*)private\s+(?!static|const|void)(?:readonly\s+)?[\w.<>\[\]?]+\s+\w+\s*(?:=.*?)?;", RegexOptions.Multiline);
+            
+            var newContent = fieldRegex.Replace(content, (m) => 
+            {
+                var precedingText = content[..m.Index].TrimEnd();
+                
+                if (precedingText.EndsWith("MemoryPackInclude]") || precedingText.EndsWith("MemoryPackIncludeAttribute]"))
+                {
+                    return m.Value;
+                }
+                
+                modified = true;
+                var indent = m.Groups["indent"].Value;
+                return $"{indent}[MemoryPackInclude]\n{m.Value}";
+            });
+
+            if (!modified) return false;
+            File.WriteAllText(path, newContent);
+            return true;
+        }
+        
+        private static void GenerateFormatter()
+        {
+            const string outputPath = "Assets/Scripts/Game/Action/ActionFormatter.cs";
+
+            var actionTypes = TypeCache.GetTypesDerivedFrom<Action>()
+                .Where(t => !t.IsAbstract && !t.IsGenericType)
+                .Where(t => !typeof(IInternal).IsAssignableFrom(t))
+                .OrderBy(t => t.FullName)
+                .ToList();
+
+            var sb = new StringBuilder();
+
+            sb.AppendLine("// <auto-generated />");
+            sb.AppendLine("using MemoryPack;");
+            sb.AppendLine("using MemoryPack.Formatters;");
+            sb.AppendLine("using Game.Action;");
+            sb.AppendLine("");
+            sb.AppendLine("// This file is generated by ActionClassPacker. Do not modify manually.");
+            sb.AppendLine("public class ActionFormatter : MemoryPackFormatter<Game.Action.Action>");
+            sb.AppendLine("{");
+            
+            sb.AppendLine("    public override void Serialize(ref MemoryPackWriter writer, ref Game.Action.Action value)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (value == null) { writer.WriteNullObjectHeader(); return; }");
+            sb.AppendLine("");
+            sb.AppendLine("        switch (value)");
+            sb.AppendLine("        {");
+
+            for (var i = 0; i < actionTypes.Count; i++)
+            {
+                var type = actionTypes[i];
+                sb.AppendLine($"            case {type.FullName} concrete:");
+                sb.AppendLine($"                writer.WriteVarInt({i});");
+                sb.AppendLine($"                writer.WritePackable(concrete);");
+                sb.AppendLine($"                break;");
+            }
+
+            sb.AppendLine("            default:");
+            sb.AppendLine("                throw new System.Exception($\"Unknown Action type: {value.GetType()}\");");
+            sb.AppendLine("        }");
+            sb.AppendLine("    }");
+            
+            sb.AppendLine("");
+            sb.AppendLine("    public override void Deserialize(ref MemoryPackReader reader, ref Game.Action.Action value)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (!reader.TryReadObjectHeader(out var count)) { value = null; return; }");
+            sb.AppendLine("");
+            sb.AppendLine("        int typeId = reader.ReadVarIntInt32();");
+            sb.AppendLine("        switch (typeId)");
+            sb.AppendLine("        {");
+
+            for (var i = 0; i < actionTypes.Count; i++)
+            {
+                var type = actionTypes[i];
+                sb.AppendLine($"            case {i}:");
+                sb.AppendLine($"                value = reader.ReadPackable<{type.FullName}>();");
+                sb.AppendLine($"                break;");
+            }
+
+            sb.AppendLine("            default:");
+            sb.AppendLine("                throw new System.Exception($\"Unknown Action ID: {typeId}\");");
+            sb.AppendLine("        }");
+            sb.AppendLine("    }");
+            sb.AppendLine("}");
+
+            File.WriteAllText(outputPath, sb.ToString());
+
+            AssetDatabase.Refresh();
+            Debug.Log($"<color=cyan>ActionFormatter generated successfully with {actionTypes.Count} actions.</color>");
+        }
+    }
+}

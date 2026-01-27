@@ -31,31 +31,45 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     //query for AI in here
-                    
-                    var listPieces = GetPiecesInRadius(rank, file, 3, p => p != null && p.Color != Color);
-                    if (listPieces.Count == 0) return;
-            
-                    listPieces.Sort((a, b) =>
+                    if (excludeEmptyTile)
                     {
-                        int buffCountA = 0, buffCountB = 0;
-                        foreach (var effect in a.Effects)
+                        var listPieces = GetPiecesInRadius(rank, file, 3, p => p != null && p.Color != Color);
+                        if (listPieces.Count == 0) return;
+
+                        listPieces.Sort((a, b) =>
                         {
-                            if (effect.Category == EffectCategory.Buff)
-                                buffCountA++;
-                        }
+                            int buffCountA = 0, buffCountB = 0;
+                            foreach (var effect in a.Effects)
+                            {
+                                if (effect.Category == EffectCategory.Buff)
+                                    buffCountA++;
+                            }
 
-                        foreach (var effect in b.Effects)
+                            foreach (var effect in b.Effects)
+                            {
+                                if (effect.Category == EffectCategory.Buff)
+                                    buffCountB++;
+                            }
+
+                            return buffCountA.CompareTo(buffCountB);
+                        });
+
+                        var idx = Random.Range(0, listPieces.Count - 1);
+
+                        list.Add(new Action.Skills.PhronimaActive(Pos, listPieces[idx].Pos));
+                    }
+                    else
+                    {
+                        for (var x = rank - 3; x <= rank + 3; x++)
                         {
-                            if (effect.Category == EffectCategory.Buff)
-                                buffCountB++;
+                            for (var y = file - 3; y <= file + 3; y++)
+                            {
+                                if (x == rank && y == file) continue;
+                                list.Add(new Action.Skills.PhronimaActive(Pos, BoardUtils.IndexOf(x, y)));
+                            }
                         }
+                    }
 
-                        return buffCountA.CompareTo(buffCountB);
-                    });
-
-                    var idx = Random.Range(0, listPieces.Count - 1);
-                    
-                    list.Add(new Action.Skills.PhronimaActive(Pos, listPieces[idx].Pos));
                 }
             };
         }

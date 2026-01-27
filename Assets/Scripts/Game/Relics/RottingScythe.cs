@@ -121,13 +121,9 @@ namespace Game.Relics
             if (bestPieces != null)
             {
                 var pending = new RottingScythePending(this, bestPiece.Pos, bestPiece.Color);
-                if (pending is IPendingAble p)
+                if (pending is PendingAction p)
                 {
                     p.CompleteAction();
-                }
-                else
-                {
-                    BoardViewer.Ins.ExecuteAction(pending);
                 }
             }
             

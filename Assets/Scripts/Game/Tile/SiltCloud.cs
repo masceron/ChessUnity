@@ -23,7 +23,7 @@ namespace Game.Tile
         {
             base.OnPieceEnter(piece);
             
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken(-1, piece)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Broken(-1, piece), FormationType.SiltCloud));
         }
 
         public override void OnPieceExit(PieceLogic piece)

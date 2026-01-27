@@ -22,7 +22,10 @@ namespace Game.Effects.Traits
             var pieceBehind = PieceOn(behind);
             if (pieceBehind != null && pieceBehind.Color != Piece.Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieceBehind)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieceBehind), Piece));
+            } else
+            {
+                action.Flag = ActionFlag.Unblockable;
             }
         }
 

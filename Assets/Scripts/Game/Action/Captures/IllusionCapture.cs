@@ -1,4 +1,5 @@
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Captures
@@ -19,7 +20,7 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOn(Target)), BoardUtils.PieceOn(Maker)));
         }
     }
 }

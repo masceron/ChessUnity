@@ -12,7 +12,7 @@ using Game.AI;
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineIguanaActive: Action, IPendingAble, ISkills, System.IDisposable, IAIAction
+    public class MarineIguanaActive: PendingAction, System.IDisposable, IAIAction
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -28,16 +28,16 @@ namespace Game.Action.Captures
             isExecuting = false;
         }
 
-        protected override void ModifyGameState()
-        {
-            if (FirstTarget == null) return;
-            if (SecondTarget == null) return;
-            ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
-            isExecuting = false;
-            Dispose();
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-        public void CompleteAction()
+        // protected override void ModifyGameState()
+        // {
+        //     if (FirstTarget == null) return;
+        //     if (SecondTarget == null) return;
+        //     ActionManager.EnqueueAction(new MarinelKill(Maker, FirstTarget.Pos, SecondTarget.Pos));
+        //     isExecuting = false;
+        //     Dispose();
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        // }
+        public override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
             if (FirstTarget == null) 

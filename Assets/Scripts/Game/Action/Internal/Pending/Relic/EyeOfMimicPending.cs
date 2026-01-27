@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class EyeOfMimicPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class EyeOfMimicPending : PendingAction, System.IDisposable, IRelicAction
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
@@ -22,7 +22,7 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
@@ -52,19 +52,19 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.SelectingFunction = 0;
         }
 
-        protected override void ModifyGameState()
-        {
-            var ourSide = BoardUtils.OurSide();
-            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
-            ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(source, target, 0)));
-            ResetTargets();
-            eyeOfMimic.SetCooldown();
-            TileManager.Ins.UnmarkAll();
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
+        // protected override void ModifyGameState()
+        // {
+        //     var ourSide = BoardUtils.OurSide();
+        //     var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
+        //     var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
+        //     ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(source, target, 0), eyeOfMimic));
+        //     ResetTargets();
+        //     eyeOfMimic.SetCooldown();
+        //     TileManager.Ins.UnmarkAll();
+        //     BoardViewer.Selecting = -1;
+        //     BoardViewer.SelectingFunction = 0;
+        //     MatchManager.Ins.InputProcessor.UpdateRelic();
+        // }
     }
 
 }

@@ -33,7 +33,7 @@ namespace Game.Action.Skills
             }
             else
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(Target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(Target)), PieceOn(Maker)));
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

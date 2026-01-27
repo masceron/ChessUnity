@@ -24,7 +24,7 @@ namespace Game.Effects.RegionalEffect
                 }
             }
             var randomInd = Random.Range(0, pieces.Count);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(5, pieces[randomInd])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieces[randomInd])));
         }
     }
 }

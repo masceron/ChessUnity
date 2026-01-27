@@ -12,7 +12,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class EyeshadeSculpinActive : Action, ISkills, IAIAction, IPendingAble, IDisposable
+    public class EyeshadeSculpinActive : PendingAction, ISkills, IAIAction, IDisposable
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
@@ -23,12 +23,12 @@ namespace Game.Action.Skills
             Target = (ushort)target;
         }
 
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
+        // protected override void ModifyGameState()
+        // {
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget), PieceOn(Maker)));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget), PieceOn(Maker)));
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        // }
 
         public int AIPenaltyValue(PieceLogic maker)
         {
@@ -40,7 +40,7 @@ namespace Game.Action.Skills
             
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
             if (FirstTarget == null)

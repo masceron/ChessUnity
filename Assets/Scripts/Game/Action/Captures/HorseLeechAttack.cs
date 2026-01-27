@@ -1,4 +1,5 @@
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 
@@ -16,7 +17,7 @@ namespace Game.Action.Captures
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, PieceOn(Target)), BoardUtils.PieceOn(Maker)));
             ActionManager.EnqueueAction(new KillPiece(Maker));
         }
 

@@ -19,10 +19,6 @@ MonoBehaviour:
     m_Key: piece_velkaris_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 4246177058816
-    m_Key: piece_siren_skill
-    m_Metadata:
-      m_Items: []
   - m_Id: 4246177058819
     m_Key: piece_electric_eel_skill
     m_Metadata:
@@ -123,10 +119,6 @@ MonoBehaviour:
     m_Key: piece_hourglass_jelly_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 35085502942023680
-    m_Key: piece_sloane's_viperfish_skill
-    m_Metadata:
-      m_Items: []
   - m_Id: 35085503600529408
     m_Key: piece_hermit_crab_skill
     m_Metadata:
@@ -211,12 +203,32 @@ MonoBehaviour:
     m_Key: piece_frilled_shark_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 58321556040454144
+  - m_Id: 59904131545423872
+    m_Key: piece_surge_wrasse_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59904131667058688
+    m_Key: piece_redtail_parrotfish_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60582976005001216
     m_Key: piece_scalyhead_sculpin_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 58339261577564160
-    m_Key: piece_mirror_butterfly_fish_skill
+  - m_Id: 60583397440278528
+    m_Key: piece_flying_gurnard_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60583397440278529
+    m_Key: piece_dwarf_lionfish_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60977772506828800
+    m_Key: piece_guiding_siren_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60979051652108288
+    m_Key: piece_sloanes_viperfish_skill
     m_Metadata:
       m_Items: []
   m_Metadata:

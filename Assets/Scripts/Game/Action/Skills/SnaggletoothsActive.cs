@@ -4,6 +4,7 @@ using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.AI;
+using Game.Effects.Buffs;
 
 namespace Game.Action.Skills
 {
@@ -30,6 +31,8 @@ namespace Game.Action.Skills
             {
                 ActionManager.EnqueueAction(new RemoveEffect(bleeding));
             }
+
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(Maker), 5)));
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

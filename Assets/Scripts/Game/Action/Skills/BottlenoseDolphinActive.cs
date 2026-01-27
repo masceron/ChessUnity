@@ -26,7 +26,7 @@ namespace Game.Action.Skills
             if (PieceOn(Target).Color != PieceOn(Maker).Color) 
             {
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(Target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(Target)), PieceOn(Maker)));
             } 
             else
             {
@@ -63,7 +63,7 @@ namespace Game.Action.Skills
                 else
                 {
                     int idx = UnityEngine.Random.Range(0, B.Count - 1);
-                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos))));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos)), PieceOn(Maker)));
                 }
             }
             else if (A.Count > 0)
@@ -74,7 +74,7 @@ namespace Game.Action.Skills
             else if (B.Count > 0)
             {
                 int idx = UnityEngine.Random.Range(0, B.Count - 1);
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos)), PieceOn(Maker)));
             }
             
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

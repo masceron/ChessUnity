@@ -87,13 +87,9 @@ namespace Game.Relics
             if (targetPiece != null)
             {
                 var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
-                if (pending is IPendingAble p)
+                if (pending is PendingAction p)
                 {
                     p.CompleteAction();
-                }
-                else
-                {
-                    BoardViewer.Ins.ExecuteAction(pending);
                 }
             }
 

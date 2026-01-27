@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
   m_Name: Powderbluetang
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  key: piece_powdered_blue_tang
+  key: piece_powderbluetang
   prefab: {fileID: 5011701986001230811, guid: afed54edaaaa41541ba97ecc62a001e6, type: 3}
   rank: 3
   moveRange: 0

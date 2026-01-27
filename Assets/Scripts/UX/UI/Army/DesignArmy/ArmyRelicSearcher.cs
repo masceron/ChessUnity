@@ -55,8 +55,9 @@ namespace UX.UI.Army.DesignArmy
 
         public void Load(Relic? relic)
         {
-            relicText.text = !relic.HasValue ? Localizer.GetText("game", "relic", null) 
+            relicText.text = !relic.HasValue ? Localizer.GetText("game", "relic", null)
                 : Localizer.GetText("relic_name", AssetManager.Ins.RelicData[relic.Value.Type].key, null);
+            
         }
 
         private void OnDisable()

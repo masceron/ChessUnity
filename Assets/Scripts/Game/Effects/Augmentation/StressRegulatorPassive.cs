@@ -11,10 +11,10 @@ namespace Game.Effects.Augmentation
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.Maker != Piece.Pos) return;
-            if (PieceOn(applyEffect.Maker).SkillCooldown > 0)
+            if (applyEffect.Effect.Piece != Piece) return;
+            if (applyEffect.Effect.Piece.SkillCooldown > 0)
             {
-                PieceOn(applyEffect.Maker).SkillCooldown--;
+                applyEffect.Effect.Piece.SkillCooldown--;
             } 
         }
     }

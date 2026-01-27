@@ -27,12 +27,6 @@ namespace Game.Effects.Debuffs
         {
             if (action is not ICaptures || action.Maker != Piece.Pos) return;
             
-            var pieceTarget = BoardUtils.PieceOn(action.Target);
-            if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ProtectiveLens))
-            {
-                action.Result = ResultFlag.Miss;
-            }
-            
             if (MatchManager.Roll(Probability))
             {
                 action.Result = ResultFlag.Miss;

@@ -13,7 +13,6 @@ namespace Game.Effects.Traits
     public class HumboldtSquidPassive : Effect, IAfterPieceActionEffect
     {
         private int count;
-        private IAfterPieceActionEffect iAfterPieceActionEffectImplementation;
 
         public HumboldtSquidPassive(PieceLogic piece) : base(-1, 1, piece, "effect_humboldt_squid_passive")
         {
@@ -23,12 +22,16 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos && action is ICaptures && action.Result == ResultFlag.Blocked)
+            if (action.Maker == Piece.Pos 
+                && action is ICaptures 
+                && (action.Result == ResultFlag.Blocked 
+                        || action.Result == ResultFlag.HardenedBlock 
+                        || action.Result == ResultFlag.Parry))
             {
                 var target = PieceOn(action.Target);
                 if (target != null && target.Color != Piece.Color)
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target), Piece));
                 }
 
             }
@@ -42,7 +45,7 @@ namespace Game.Effects.Traits
             }
             if (count >= 5)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Frenzied(Piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Frenzied(Piece), Piece));
                 count = 0;
             }
         }

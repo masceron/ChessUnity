@@ -30,7 +30,7 @@ namespace Game.Effects.Traits
                 var piece = PieceOn(IndexOf(nRank, nFile));
                 if (piece == null || piece.Color == Piece.Color) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, piece), Piece));
             }
         }
     }

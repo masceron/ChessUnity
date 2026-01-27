@@ -15,5 +15,5 @@ MonoBehaviour:
   Name: 25
   Rarity: 3
   Slot: 4
-  Key: kinetic_diffuser
+  Key: augmentation_kinetic_diffuser
   Icon: {fileID: 2800000, guid: 80cfd4d4b22eaf14c9641ecfdacb7836, type: 3}

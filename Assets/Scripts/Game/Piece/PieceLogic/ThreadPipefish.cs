@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThreadPipefish : Commons.PieceLogic, IPieceWithSkill
     {
-        public ThreadPipefish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
+        public ThreadPipefish(PieceConfig cfg) : base(cfg, UpDoorMoves.Quiets, UpDoorMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

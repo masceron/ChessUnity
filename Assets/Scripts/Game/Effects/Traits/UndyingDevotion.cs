@@ -23,7 +23,7 @@ namespace Game.Effects.Traits
                 action.Result != ResultFlag.Success) return;
             action.Result = ResultFlag.SurvivedHit;
             Debug.Log("[UndyingDevotion] Failed capture");
-            ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(action.Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(action.Target)), Piece));
         }
 
         public override int GetValueForAI()

@@ -9,7 +9,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class SirensHarpoonPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class SirensHarpoonPending : PendingAction, System.IDisposable, IRelicAction
     {
         private SirensHarpoon _sirensHarpoon;
 
@@ -20,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
             Target = (ushort)target;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             ActivateRelic(Maker);
         }
@@ -35,16 +35,11 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void ActivateRelic(int maker)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target))));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target)), _sirensHarpoon));
+            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target)), _sirensHarpoon));
 
             _sirensHarpoon.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
-
-        protected override void ModifyGameState()
-        {
-
         }
 
         // public void CompleteActionForAI()

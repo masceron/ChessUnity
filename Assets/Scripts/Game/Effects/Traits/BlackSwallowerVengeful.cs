@@ -3,7 +3,6 @@ using Game.Action.Internal;
 using Game.Common;
 using static Game.Common.BoardUtils;
 using System.Collections.Generic;
-using System.Linq;
 using System;
 using Game.Piece.PieceLogic.Commons;
 
@@ -34,10 +33,11 @@ namespace Game.Effects.Traits
             var random = new Random();
             var randomPiece = pieceAround[random.Next(0, pieceAround.Count)];
             if (randomPiece == null) return;
-            foreach (var effect in randomPiece.Effects.Where(effect => effect.Category == EffectCategory.Buff))
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
+            // foreach (var effect in randomPiece.Effects.Where(effect => effect.Category == EffectCategory.Buff))
+            // {
+            //     ActionManager.EnqueueAction(new RemoveEffect(effect));
+            // }
+            ActionManager.EnqueueAction(new Nullify(Piece.Pos, randomPiece.Pos));
         }
 
         public override int GetValueForAI()

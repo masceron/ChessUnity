@@ -4,6 +4,7 @@ using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Relics.Commons;
 using Game.Tile;
 
 namespace Game.Action.Internal
@@ -15,23 +16,49 @@ namespace Game.Action.Internal
 
         public readonly FormationType SourceFormationType;
         public readonly PieceLogic SourcePiece;
+        public readonly RelicLogic SourceRelic;
 
+        /// <summary>
+        /// Sử dụng apply chung chung, tự apply cho mình
+        /// </summary>
+        /// <param name="e">Effect is applied</param>
         public ApplyEffect(Effect e) : base(-1)
         {
             Effect = e;
         }
+
+        /// <summary>
+        /// Sử dụng khi formation apply effect.
+        /// </summary>
+        /// <param name="e">Effect is applied</param>
+        /// <param name="formationType">Formation that apply this effect</param>
         public ApplyEffect(Effect e, FormationType formationType = FormationType.None) : base(-1)
         {
             Effect = e;
             SourceFormationType = formationType;
         }
 
-        public ApplyEffect(Effect e, PieceLogic source) : base(-1)
+        /// <summary>
+        /// Sử dụng khi Piece apply effect.
+        /// </summary>
+        /// <param name="e">Effect is applied</param>
+        /// <param name="source">Piece that apply this effect</param>
+        public ApplyEffect(Effect e, PieceLogic source) : base(source.Pos)
         {
             Effect = e;
             SourcePiece = source;
         }
 
+        /// <summary>
+        /// Sử dụng khi Relic apply effect. Bên trắng side = false, bên đen side = true
+        /// </summary>
+        /// <param name="e">Effect is applied</param>
+        /// <param name="source">Relic that apply this effect</param>
+        public ApplyEffect(Effect e, RelicLogic source): base(-1)
+        {
+            Effect = e;
+            this.SourceRelic = source;
+        }
         protected override void Animate()
         {
         }

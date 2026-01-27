@@ -41,6 +41,12 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 54d48a3cd73775e4dba2ba9a7e1465ea
+    m_Address: Assets/Data/Collections/Texts/Augmentations/augmentation_name Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 77911d5ba1910f948ae8671b68076d14
     m_Address: Assets/Data/Collections/Texts/GameTexts Shared Data.asset
     m_ReadOnly: 1
@@ -48,6 +54,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 86d5a7d54882ff14aafdc9afccd88eda
     m_Address: Assets/Data/Collections/Texts/Relics/relic_name Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 931a9f69fd9b2204098fb81f6571bcd8
+    m_Address: Assets/Data/Collections/Texts/Augmentations/augmentation_description
+      Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -96,7 +96,6 @@ namespace UX.UI.Army.DesignArmy
         public void SelectRelic(string type)
         {
             army.Relic = new Relic(type);
-
         }
     }
 }

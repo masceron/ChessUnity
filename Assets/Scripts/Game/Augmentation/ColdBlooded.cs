@@ -17,7 +17,7 @@ namespace Game.Augmentation
         public override void SetTarget(PieceLogic target)
         {
             Target = target;
-            Set = new AugmentationSet(AugmentationSetType.StalkerInstinct,false);
+            Set = new AugmentationSet(AugmentationSetType.StalkerInstinct, true);
             PassiveEffects.Add(new ColdBloodedPassive(-1, -1, Target));
         }
     }
