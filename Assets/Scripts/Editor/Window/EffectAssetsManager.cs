@@ -84,7 +84,6 @@ namespace Editor.Window
                 var effect = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
                 if (effect) allEffects.Add(effect);
             }
-            
         }
         
         private void SyncWithCentralData()

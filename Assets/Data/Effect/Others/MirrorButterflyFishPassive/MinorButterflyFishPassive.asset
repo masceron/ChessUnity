@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: MelibePassive
+  m_Name: MinorButterflyFishPassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_melibe_passive
+  key: effect_minor_butterfly_fish_passive
   category: 5
   stack: 1
   priority: 8
