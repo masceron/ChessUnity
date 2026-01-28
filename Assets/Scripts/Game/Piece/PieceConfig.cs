@@ -11,12 +11,12 @@ namespace Game.Piece
         public readonly ushort Index;
         public readonly List<Augmentation.Augmentation> Augmentations;
 
-        public PieceConfig(string t, bool c, ushort i, List<Augmentation.Augmentation> Augs = null)
+        public PieceConfig(string type, bool color, ushort index, List<Augmentation.Augmentation> augmentations = null)
         {
-            Type = t;
-            Color = c;
-            Index = i;
-            Augmentations = Augs ?? new List<Augmentation.Augmentation>();
+            Type = type;
+            Color = color;
+            Index = index;
+            Augmentations = augmentations ?? new List<Augmentation.Augmentation>();
         }
 
         public bool Equals(PieceConfig other)

@@ -1,17 +1,8 @@
-﻿using Game.Action.Quiets;
-using Game.Action.Relics;
+﻿using Game.Action.Relics;
 using Game.Common;
-using Game.Effects;
-using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
@@ -19,9 +10,8 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class ChaoticConstructorPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class ChaoticConstructorPending : PendingAction, System.IDisposable, IRelicAction
     {
-
         private ChaoticConstructor chaoticConstructor;
         private int TurnToActive = 1;
         private int currentTurn = 1;
@@ -37,7 +27,7 @@ namespace Game.Action.Internal.Pending.Relic
         }
 
        
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             BoardUtils.AddEffectObserver(new Effects.Others.ChaoticConstructorSpawn(-1, color, this, storedPos));
             TileManager.Ins.UnmarkAll();
@@ -57,13 +47,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
             BoardViewer.SelectingFunction = 0;
             chaoticConstructor = null;
-        }
-
-
-        protected override void ModifyGameState()
-        {
-            
-
         }
     }
 }

@@ -125,7 +125,7 @@ namespace UX.UI.Ingame
                     {
                         case null:
                             return;
-                        case IPendingAble pending:
+                        case PendingAction pending:
                             pending.CompleteAction();
                             return;
                     }
@@ -138,7 +138,7 @@ namespace UX.UI.Ingame
                     {
                         case null:
                             return;
-                        case IPendingAble pending:
+                        case PendingAction pending:
                             pending.CompleteAction();
                             return;
                     }

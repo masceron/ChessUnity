@@ -70,13 +70,9 @@ namespace Game.Relics
             int idx = UnityEngine.Random.Range(0, topGroup.Count);
             
             var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
-            if (pending is IPendingAble p)
+            if (pending is PendingAction p)
             {
                 p.CompleteAction();
-            }
-            else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
             }
         }
     }

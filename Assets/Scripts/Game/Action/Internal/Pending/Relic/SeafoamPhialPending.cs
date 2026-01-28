@@ -10,7 +10,7 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeafoamPhialPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class SeafoamPhialPending : PendingAction, System.IDisposable, IRelicAction
     {
         private SeafoamPhial seafoamPhial;
 
@@ -20,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             // ActionManager.EnqueueAction(new Purify(Maker, Maker));
             // ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker))));
@@ -33,16 +33,16 @@ namespace Game.Action.Internal.Pending.Relic
 
         
 
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker)), seafoamPhial));
+        // protected override void ModifyGameState()
+        // {
+        //     ActionManager.EnqueueAction(new Purify(Maker, Maker));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker)), seafoamPhial));
             // BoardViewer.Selecting = -1;
             // BoardViewer.SelectingFunction = 0;
             //
             // seafoamPhial.SetCooldown();
             // MatchManager.Ins.InputProcessor.UpdateRelic(); 
-        }
+        // }
 
         public void Dispose()
         {

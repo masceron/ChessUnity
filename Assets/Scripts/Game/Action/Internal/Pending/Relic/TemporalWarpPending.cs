@@ -13,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TemporalWarpPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class TemporalWarpPending : PendingAction, System.IDisposable, IRelicAction
     {
         private TemporalWarp temporalWarp;
 
@@ -29,7 +29,7 @@ namespace Game.Action.Internal.Pending.Relic
             temporalWarp = tw;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
             
@@ -106,12 +106,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
             FirstTarget = null;
             secondPos = -1;
-        }
-
-        protected override void ModifyGameState()
-        {
-            
-
         }
     }
 }
