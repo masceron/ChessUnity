@@ -5,7 +5,7 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
-namespace Game.SkillRangeHelper
+namespace Game.Common
 {
     public static class SkillRangeHelper
     {

@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
                         //         list.Add(new AnglerfishTaunt(Pos, idx));
                         //     }
                         // }
-                        var targets = SkillRangeHelper.SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, 3);
+                        var targets = SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, 3);
                         foreach (var target in targets)
                         {
                             list.Add(new AnglerfishTaunt(Pos, target));

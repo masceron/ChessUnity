@@ -38,7 +38,7 @@ namespace Game.Piece.PieceLogic
                     //         list.Add(new ArchelonShield(Pos, index));
                     //     }
                     // }
-                    var targets = SkillRangeHelper.SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
+                    var targets = SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
                     foreach (var target in targets)
                     {
                         list.Add(new ArchelonShield(Pos, target));
