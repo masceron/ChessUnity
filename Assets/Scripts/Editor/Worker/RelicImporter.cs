@@ -23,15 +23,19 @@ namespace Editor.Worker
                 var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
                 if (!relicInfo) continue;
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var newKey = "relic_" + ToSnakeCase(fileName);
 
                 if (string.IsNullOrEmpty(relicInfo.key))
                 {
-                    var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                    var newKey = "relic_" + ToSnakeCase(fileName);
-                    
                     relicInfo.key = newKey;
                     EditorUtility.SetDirty(relicInfo);
                     Debug.Log($"Key for {relicInfo.key} auto-generated.");
+                }
+                else if (!relicInfo.key.StartsWith("effect_"))
+                {
+                    Debug.LogWarning(
+                        $"{fileName}'s key '${relicInfo.key}' doesn't follow naming convention for Relic objects. Suggestion: ${newKey}");
                 }
 
                 if (centralData && centralData.relicsData.All(p => p.key != relicInfo.key))
@@ -47,16 +51,17 @@ namespace Editor.Worker
             if (!collectionChanged) return;
 
             EditorUtility.SetDirty(centralData);
-            AssetDatabase.SaveAssets();return;
+            AssetDatabase.SaveAssets();
+            return;
 
             string ToSnakeCase(string text)
             {
                 if (string.IsNullOrEmpty(text)) return text;
-                
+
                 text = text.Replace("'", "");
                 text = Regex.Replace(text, @"\s+", "_");
                 text = Regex.Replace(text, "([a-z0-9])([A-Z])", "$1_$2");
-                
+
                 return text.ToLower();
             }
         }

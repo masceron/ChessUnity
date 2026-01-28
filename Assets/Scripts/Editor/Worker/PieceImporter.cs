@@ -11,7 +11,7 @@ namespace Editor.Worker
     public class PieceImporter : AssetPostprocessor
     {
         private const string PiecesManagerPath = "Assets/Data/Collections/PiecesData.asset";
-        
+
         private static PiecesData LoadCentralDataManager()
         {
             var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(PiecesManagerPath);
@@ -19,28 +19,34 @@ namespace Editor.Worker
             {
                 Debug.LogError($"Central Data Manager asset not found at: {PiecesManagerPath}.");
             }
+
             return centralData;
         }
+
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
         {
             var centralData = LoadCentralDataManager();
             var collectionChanged = false;
-            
+
             foreach (var path in importedAssets.Concat(movedAssets))
             {
                 var pieceInfo = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
 
                 if (!pieceInfo) continue;
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var newKey = "piece_" + ToSnakeCase(fileName);
 
                 if (string.IsNullOrEmpty(pieceInfo.key))
                 {
-                    var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                    var newKey = "piece_" + ToSnakeCase(fileName);
-                    
                     pieceInfo.key = newKey;
                     EditorUtility.SetDirty(pieceInfo);
                     Debug.Log($"Key for {pieceInfo.key} auto-generated.");
+                }
+                else if (!pieceInfo.key.StartsWith("piece_"))
+                {
+                    Debug.LogWarning(
+                        $"{fileName}'s key '${pieceInfo.key}' doesn't follow naming convention for Piece objects. Suggestion: ${newKey}");
                 }
 
                 if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))
@@ -54,18 +60,19 @@ namespace Editor.Worker
             }
 
             if (!collectionChanged) return;
-            
+
             EditorUtility.SetDirty(centralData);
-            AssetDatabase.SaveAssets();return;
+            AssetDatabase.SaveAssets();
+            return;
 
             string ToSnakeCase(string text)
             {
                 if (string.IsNullOrEmpty(text)) return text;
-                
+
                 text = text.Replace("'", "");
                 text = Regex.Replace(text, @"\s+", "_");
                 text = Regex.Replace(text, "([a-z0-9])([A-Z])", "$1_$2");
-                
+
                 return text.ToLower();
             }
         }
