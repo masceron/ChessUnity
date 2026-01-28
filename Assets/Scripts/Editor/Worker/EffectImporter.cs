@@ -43,10 +43,10 @@ namespace Editor.Worker
                     EditorUtility.SetDirty(effectInfo);
                     Debug.Log($"Key for {effectInfo.key} auto-generated.");
                 }
-                else if (!effectInfo.key.StartsWith("effect_"))
+                else if (!effectInfo.key.StartsWith("effect_") || !Regex.IsMatch(effectInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '${effectInfo.key}' doesn't follow naming convention for Effect objects. Suggestion: ${newKey}");
+                        $"{fileName}'s key '{effectInfo.key}' doesn't follow naming convention for Effect objects. Suggestion: {newKey}");
                 }
 
                 if (centralData && centralData.effectsData.All(p => p.key != effectInfo.key))

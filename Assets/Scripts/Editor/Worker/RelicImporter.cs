@@ -32,10 +32,10 @@ namespace Editor.Worker
                     EditorUtility.SetDirty(relicInfo);
                     Debug.Log($"Key for {relicInfo.key} auto-generated.");
                 }
-                else if (!relicInfo.key.StartsWith("effect_"))
+                else if (!relicInfo.key.StartsWith("effect_") || !Regex.IsMatch(relicInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '${relicInfo.key}' doesn't follow naming convention for Relic objects. Suggestion: ${newKey}");
+                        $"{fileName}'s key '{relicInfo.key}' doesn't follow naming convention for Relic objects. Suggestion: {newKey}");
                 }
 
                 if (centralData && centralData.relicsData.All(p => p.key != relicInfo.key))

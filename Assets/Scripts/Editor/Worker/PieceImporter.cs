@@ -43,10 +43,10 @@ namespace Editor.Worker
                     EditorUtility.SetDirty(pieceInfo);
                     Debug.Log($"Key for {pieceInfo.key} auto-generated.");
                 }
-                else if (!pieceInfo.key.StartsWith("piece_"))
+                else if (!pieceInfo.key.StartsWith("piece_") || !Regex.IsMatch(pieceInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '${pieceInfo.key}' doesn't follow naming convention for Piece objects. Suggestion: ${newKey}");
+                        $"{fileName}'s key '{pieceInfo.key}' doesn't follow naming convention for Piece objects. Suggestion: {newKey}");
                 }
 
                 if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))

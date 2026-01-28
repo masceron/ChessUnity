@@ -43,10 +43,10 @@ namespace Editor.Worker
                     EditorUtility.SetDirty(augmentationInfo);
                     Debug.Log($"Key for {augmentationInfo.Key} auto-generated.");
                 }
-                else if (!augmentationInfo.Key.StartsWith("augmentation_"))
+                else if (!augmentationInfo.Key.StartsWith("augmentation_") || !Regex.IsMatch(augmentationInfo.Key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '${augmentationInfo.Key}' doesn't follow naming convention for Augmentation objects. Suggestion: ${newKey}");
+                        $"{fileName}'s key '{augmentationInfo.Key}' doesn't follow naming convention for Augmentation objects. Suggestion: {newKey}");
                 }
 
                 if (augmentationInfo.Name != 0 && centralData &&
