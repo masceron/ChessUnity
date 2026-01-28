@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeaStar : Commons.PieceLogic, IPieceWithSkill
     {
-        public SeaStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
+        public SeaStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

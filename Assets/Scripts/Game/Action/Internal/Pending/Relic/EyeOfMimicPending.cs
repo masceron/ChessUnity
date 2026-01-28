@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class EyeOfMimicPending : PendingAction, System.IDisposable, IRelicAction
+    public class EyeOfMimicPending : PendingAction, System.IDisposable
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
@@ -35,8 +35,18 @@ namespace Game.Action.Internal.Pending.Relic
             }
 
             SecondTarget = hovering;
-            Debug.Log(SecondTarget.Type);
-            BoardViewer.Ins.ExecuteAction(this);
+
+            var ourSide = eyeOfMimic.Color;
+            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
+            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
+
+            EyeOfMimicExcute excute = new EyeOfMimicExcute(source.Pos, target.Pos);
+            eyeOfMimic.SetCooldown();
+            BoardViewer.Ins.ExecuteAction(excute);
+            TileManager.Ins.UnmarkAll();
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
 
         private static void ResetTargets()
@@ -51,20 +61,6 @@ namespace Game.Action.Internal.Pending.Relic
             eyeOfMimic = null;
             BoardViewer.SelectingFunction = 0;
         }
-
-        // protected override void ModifyGameState()
-        // {
-        //     var ourSide = BoardUtils.OurSide();
-        //     var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-        //     var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
-        //     ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(source, target, 0), eyeOfMimic));
-        //     ResetTargets();
-        //     eyeOfMimic.SetCooldown();
-        //     TileManager.Ins.UnmarkAll();
-        //     BoardViewer.Selecting = -1;
-        //     BoardViewer.SelectingFunction = 0;
-        //     MatchManager.Ins.InputProcessor.UpdateRelic();
-        // }
     }
 
 }
