@@ -23,11 +23,12 @@ namespace Editor.Worker
                 var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
                 if (!relicInfo) continue;
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "relic_" + ToSnakeCase(fileName);
-                
-                if (relicInfo.key != newKey)
+
+                if (string.IsNullOrEmpty(relicInfo.key))
                 {
+                    var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                    var newKey = "relic_" + ToSnakeCase(fileName);
+                    
                     relicInfo.key = newKey;
                     EditorUtility.SetDirty(relicInfo);
                     Debug.Log($"Key for {relicInfo.key} auto-generated.");

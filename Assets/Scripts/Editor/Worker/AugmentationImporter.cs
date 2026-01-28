@@ -34,17 +34,17 @@ namespace Editor.Worker
                 var augmentationInfo = AssetDatabase.LoadAssetAtPath<AugmentationInfo>(path);
                 
                 if (!augmentationInfo) continue;
-                
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "augmentation_" + ToSnakeCase(fileName);
-                
-                if (augmentationInfo.Key != newKey)
+
+                if (string.IsNullOrEmpty(augmentationInfo.Key))
                 {
+                    var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                    var newKey = "augmentation_" + ToSnakeCase(fileName);
+                    
                     augmentationInfo.Key = newKey;
                     EditorUtility.SetDirty(augmentationInfo);
                     Debug.Log($"Key for {augmentationInfo.Key} auto-generated.");
                 }
-                
+
                 if (augmentationInfo.Name != 0 && centralData && centralData.augmentationsData.Values.All(p => p.Key != augmentationInfo.Key))
                 {
                     centralData.augmentationsData.Add(augmentationInfo.Name, augmentationInfo);

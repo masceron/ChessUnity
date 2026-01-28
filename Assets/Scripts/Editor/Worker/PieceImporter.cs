@@ -32,17 +32,17 @@ namespace Editor.Worker
                 var pieceInfo = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
 
                 if (!pieceInfo) continue;
-                
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "piece_" + ToSnakeCase(fileName);
-                
-                if (pieceInfo.key != newKey)
+
+                if (string.IsNullOrEmpty(pieceInfo.key))
                 {
+                    var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                    var newKey = "piece_" + ToSnakeCase(fileName);
+                    
                     pieceInfo.key = newKey;
                     EditorUtility.SetDirty(pieceInfo);
                     Debug.Log($"Key for {pieceInfo.key} auto-generated.");
                 }
-                
+
                 if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))
                 {
                     centralData.piecesData.Add(pieceInfo);

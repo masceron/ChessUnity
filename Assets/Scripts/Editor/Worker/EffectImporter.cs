@@ -33,17 +33,17 @@ namespace Editor.Worker
                 var effectInfo = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
                 
                 if (!effectInfo) continue;
-                
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "effect_" + ToSnakeCase(fileName);
-                
-                if (effectInfo.key != newKey)
+
+                if (string.IsNullOrEmpty(effectInfo.key))
                 {
+                    var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                    var newKey = "effect_" + ToSnakeCase(fileName);
+                    
                     effectInfo.key = newKey;
                     EditorUtility.SetDirty(effectInfo);
                     Debug.Log($"Key for {effectInfo.key} auto-generated.");
                 }
-                
+
                 if (centralData && centralData.effectsData.All(p => p.key != effectInfo.key))
                 {
                     centralData.effectsData.Add(effectInfo);
