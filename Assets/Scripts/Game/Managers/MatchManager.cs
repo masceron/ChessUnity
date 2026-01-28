@@ -48,7 +48,7 @@ namespace Game.Managers
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
             
-            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, StartingSize), cfg.Augmentations)))
+            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, StartingSize), cfg.AugmentationNames)))
             {
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
             }
