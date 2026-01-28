@@ -39,7 +39,7 @@ namespace Game.Relics
                     TileManager.Ins.MarkTileInRange(hoveringTile, 3, isMark: true, onlyMarkEnemy: false);
 
                     var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    var pending = new FrostSigilPending(pos, hoveringTile, this);
+                    var pending = new FrostSigilPending(pos, this);
 
                     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
                     {
@@ -91,9 +91,8 @@ namespace Game.Relics
 
             var bestArea = bestAreas[Random.Range(0, bestAreas.Count)];
             var pos = BoardUtils.IndexOf(bestArea.rank, bestArea.file);
-            var hoveringTile = TileManager.Ins.GetTile(pos);
 
-            var pending = new FrostSigilPending(pos, hoveringTile, this);
+            var pending = new FrostSigilPending(pos, this);
             BoardViewer.Ins.ExecuteAction(pending);
         }
     }
