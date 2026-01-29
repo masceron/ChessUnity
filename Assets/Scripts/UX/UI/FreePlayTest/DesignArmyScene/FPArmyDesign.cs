@@ -54,7 +54,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             army = armyToLoad;
             board.LoadSave(army.Troops, army.EnemyTroops);
             relicSearcher.Load(armyToLoad.Relic);
-            relicSearcher.Load(armyToLoad.EnemyRelic);
+            relicSearcher.LoadEnemyRelic(armyToLoad.EnemyRelic);
         }
 
         public void Save()
