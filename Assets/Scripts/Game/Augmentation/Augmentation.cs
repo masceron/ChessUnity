@@ -99,7 +99,7 @@ namespace Game.Augmentation
         FungalSac = 40,
         AdaptiveGland = 41,
         CursedJaw = 42,
-
+        CursedModule = 43,
         None = 10000,
     }
 

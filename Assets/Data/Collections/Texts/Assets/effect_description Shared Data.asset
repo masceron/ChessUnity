@@ -607,6 +607,10 @@ MonoBehaviour:
     m_Key: effect_cursed_jaw_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 62102511851016192
+    m_Key: effect_cursed_module_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

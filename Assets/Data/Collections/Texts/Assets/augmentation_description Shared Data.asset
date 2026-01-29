@@ -155,6 +155,14 @@ MonoBehaviour:
     m_Key: augmentation_cursed_jaw_description
     m_Metadata:
       m_Items: []
+  - m_Id: 1108053093650432
+    m_Key: augmentation_cursed_jaw_1_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1108078762790912
+    m_Key: augmentation_cursed_module_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
