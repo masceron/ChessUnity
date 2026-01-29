@@ -6,28 +6,31 @@ using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 using Game.Action.Relics;
 using Game.Effects.Debuffs;
+using UnityEngine;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RayStingerActive : Action, System.IDisposable, IRelicAction
+    public class RayStingerPending : PendingAction, System.IDisposable
     {
         private RayStinger rayStinger;
 
-        public RayStingerActive(RayStinger seafoamPhial, int maker) : base(maker)
+        public RayStingerPending(RayStinger seafoamPhial, int target) : base(target)
         {
             this.rayStinger = seafoamPhial;
-            Maker = (ushort)maker;
+            Target = (ushort)target;
         }
 
-        protected override void ModifyGameState()
+        public override void CompleteAction()
         {
+            rayStinger.SetCooldown();
+
+            var excute = new RayStingerExcute(Target);
+            BoardViewer.Ins.ExecuteAction(excute);
+            TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(3, PieceOn(Maker)), rayStinger));
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken(2, PieceOn(Maker)), rayStinger));
-            rayStinger.SetCooldown();
         }
         public void Dispose()
         {

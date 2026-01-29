@@ -22,7 +22,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color == Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new RayStingerActive(this, piece.Pos);
+                    var pending = new RayStingerPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
                 BoardViewer.Selecting = -2;

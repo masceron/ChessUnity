@@ -194,10 +194,26 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         }
         public void Remove(int r, int f)
         {
-            var removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
-            var removedTroop = Troops[removedIndex];
-            Troops.RemoveAt(removedIndex);
-            OnRemoveTroop?.Invoke(removedTroop);
+            if (IsInEnemySite(r))
+            {
+                var removedIndex = EnemyTroops.FindIndex(t => t.Rank == r && t.File == f);
+                if (removedIndex != -1)
+                {
+                    var removedTroop = EnemyTroops[removedIndex];
+                    EnemyTroops.RemoveAt(removedIndex);
+                    OnRemoveTroop?.Invoke(removedTroop);
+                }
+            }
+            else
+            {
+                var removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
+                if (removedIndex != -1)
+                {
+                    var removedTroop = Troops[removedIndex];
+                    Troops.RemoveAt(removedIndex);
+                    OnRemoveTroop?.Invoke(removedTroop);
+                }
+            }
         }
         public bool IsInEnemySite(int rank)
         {

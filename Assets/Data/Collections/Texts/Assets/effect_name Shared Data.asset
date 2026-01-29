@@ -603,6 +603,14 @@ MonoBehaviour:
     m_Key: effect_dusky_butterfly_fish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 61955622575050752
+    m_Key: effect_broken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61956933618012160
+    m_Key: effect_mirror_butterfly_fish_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
