@@ -6,7 +6,7 @@ using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    public class CoralTomePending : Action, System.IDisposable, IRelicAction
+    public class CoralTomePending : PendingAction, System.IDisposable
     {
         private CoralTome coralTome;
         private string pieceType;
@@ -18,21 +18,20 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(pieceType, coralTome.Color , (ushort)Target)));
+        // protected override void ModifyGameState()
+        // {
+        //     
+        // }
 
+        public override void CompleteAction()
+        {
+            BoardViewer.Ins.ExecuteAction(new CoralTomeAction(coralTome.Color, pieceType, Maker));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             coralTome.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-        }
-
-        public void CompleteAction()
-        {
-            
         }
 
         public void Dispose()

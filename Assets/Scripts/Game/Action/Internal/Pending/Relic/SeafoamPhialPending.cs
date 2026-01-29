@@ -10,7 +10,7 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeafoamPhialPending : PendingAction, System.IDisposable, IRelicAction
+    public class SeafoamPhialPending : PendingAction, System.IDisposable
     {
         private SeafoamPhial seafoamPhial;
 
