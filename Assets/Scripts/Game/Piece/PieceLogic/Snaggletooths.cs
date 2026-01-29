@@ -18,17 +18,27 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
+                    var targets = SkillRangeHelper.GetActiveCellInRadius(Pos, 2);
+                    foreach (var target in targets)
                     {
-                        var index = IndexOf(rankOff, fileOff);
-                        var piece = PieceOn(index);
+                        var piece = PieceOn(target);
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
                         {
-                            list.Add(new SnaggletoothsActive(Pos, index));
+                            list.Add(new SnaggletoothsActive(Pos, target));
                         }
                     }
+                    // var (rank, file) = RankFileOf(Pos);
+                    // foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
+                    // {
+                    //     var index = IndexOf(rankOff, fileOff);
+                    //     var piece = PieceOn(index);
+                    //     if (piece == null) continue;
+                    //     if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
+                    //     {
+                    //         list.Add(new SnaggletoothsActive(Pos, index));
+                    //     }
+                    // }
 
                 }
                 else

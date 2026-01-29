@@ -30,12 +30,10 @@ namespace Game.Effects.Augmentation
 
         private void MakeActive()
         {
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Piece.Pos), FileOf(Piece.Pos), 4))
+            var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece.Pos, 4);
+            foreach (var piece in listPieces)
             {
-                var index = IndexOf(rankOff, fileOff);
-                var pOn = PieceOn(index);
-                if (pOn == null || pOn.Color == Piece.Color) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Marked(1, pOn)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Marked(1, PieceOn(piece))));
             }
         }
         public EndTurnEffectType EndTurnEffectType { get; }

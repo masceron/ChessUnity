@@ -6,7 +6,8 @@ using UX.UI.Ingame;
 using System.Linq;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
-
+using Game.Common;
+using static Game.Common.BoardUtils;
 namespace Game.Relics
 {
     public class BlackPearl : RelicLogic, IRelicAction
@@ -21,11 +22,13 @@ namespace Game.Relics
         {
             if (CurrentCooldown != 0) return;
             
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            var targets = SkillRangeHelper.GetActiveAllyPieceGlobal(-1);
+            foreach (var target in targets)
             {
+                var piece = PieceOn(target);
                 if (piece == null) continue;
-                TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new BlackPearlPending(this, piece.Pos);
+                TileManager.Ins.MarkAsMoveable(target);
+                var pending = new BlackPearlPending(this, target);
                 BoardViewer.ListOf.Add(pending);
             }
             BoardViewer.Selecting = -2;

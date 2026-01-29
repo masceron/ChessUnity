@@ -21,14 +21,10 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 1))
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 1);
+            foreach (var target in targets)
             {
-                var idx = IndexOf(rank, file);
-                var pOn = PieceOn(idx);
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pOn)));
-                }
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(target))));
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

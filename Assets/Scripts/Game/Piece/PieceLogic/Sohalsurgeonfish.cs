@@ -16,13 +16,14 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 6))
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 6);
+                    foreach (var target in targets)
                     {
-                        var idx = IndexOf(rank, file);
-                        var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != PieceOn(Pos).Color && pOn.Effects.Any(e => e.EffectName == "effect_slow"))
+                        var piece = PieceOn(target);
+                        if (piece == null) continue;
+                        if (piece.Effects.Any(e => e.EffectName == "effect_slow"))
                         {
-                            list.Add(new SohalSurgeonfishActive(Pos, idx));
+                            list.Add(new SohalSurgeonfishActive(Pos, target));
                         }
                     }
                 }

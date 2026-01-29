@@ -36,34 +36,25 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var listPieces = new List<PieceLogic>();
-            
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 4))
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 4);
+            foreach (var target in targets)
             {
-                var idx = IndexOf(rank, file);
-                var pOn = PieceOn(idx);
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_camouflage") &&
+                !PieceOn(target).Effects.Any(e => e.EffectName == "effect_blinded" || e.EffectName == "effect_extremophile"))
                 {
-                    if(pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_camouflage") &&
-                    !pOn.Effects.Any(e => e.EffectName == "effect_blinded" || e.EffectName == "effect_extremophile")) 
-                    {
-                        listPieces.Add(pOn);
-                    }
-        
+                    listPieces.Add(PieceOn(target));
                 }
             }
+
+
             if (listPieces.Count == 0) 
             {
-                foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 2))
+                var targets1 = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 2);
+                foreach (var target in targets1)
                 {
-                    var idx = IndexOf(rank, file);
-                    var pOn = PieceOn(idx);
-                    if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                    if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_marked" || e.EffectName == "effect_extremophile"))
                     {
-                        if(pOn.Effects != null &&
-                        !pOn.Effects.Any(e => e.EffectName == "effect_marked" || e.EffectName == "effect_extremophile")) 
-                        {
-                            listPieces.Add(pOn);
-                        }
+                        listPieces.Add(PieceOn(target));
                     }
                 }
             }

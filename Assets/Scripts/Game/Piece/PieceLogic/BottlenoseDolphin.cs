@@ -6,6 +6,8 @@ using Game.Effects.Traits;
 using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using Game.Common;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
@@ -21,11 +23,10 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                    var listPieces = SkillRangeHelper.GetActiveEnemyPieceGlobal(Pos);
+                    foreach (var piece in listPieces)
                     {
-                        if (piece == null) continue;
-
-                        list.Add(new BottlenoseDolphinActive(Pos, piece.Pos));
+                        list.Add(new BottlenoseDolphinActive(Pos, PieceOn(piece).Pos));
                     }
                 }
                 else

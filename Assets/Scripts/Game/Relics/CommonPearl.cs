@@ -4,7 +4,8 @@ using Game.Effects;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-
+using Game.Common;
+using static Game.Common.BoardUtils;
 namespace Game.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -20,11 +21,13 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                var targets = SkillRangeHelper.GetActiveAllyPieceGlobal(-1);
+                foreach (var target in targets)
                 {
-                    if (piece == null || piece.Color != Color) continue;
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new CommonPearlPending(this, piece.Pos);
+                    var piece = PieceOn(target);
+                    if (piece == null) continue;
+                    TileManager.Ins.MarkAsMoveable(target);
+                    var pending = new CommonPearlPending(this, target);
                     BoardViewer.ListOf.Add(pending);
                 }
                 BoardViewer.Selecting = -2;
