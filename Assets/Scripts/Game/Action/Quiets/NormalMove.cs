@@ -1,14 +1,16 @@
 ﻿using Game.Common;
 using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class NormalMove: Action, IQuiets
+    [MemoryPackable]
+    public partial class NormalMove: Action, IQuiets
     {
-        public NormalMove(int f, int t) : base(f)
+        public NormalMove(int maker, int target) : base(maker)
         {
-            Target = t;
+            Target = target;
         }
 
         protected override void Animate()

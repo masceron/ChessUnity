@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MemoryPack;
 
 namespace Game.Action
 {
@@ -31,7 +32,8 @@ namespace Game.Action
     }
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class Action
+    [MemoryPackable]
+    public abstract partial class Action
     {
         public int Target = -1;
         public int Maker;
