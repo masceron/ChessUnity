@@ -1,6 +1,7 @@
 using Game.Action.Internal.Pending.Relic;
 using Game.Relics.Commons;
 using Game.Common;
+using Game.Action.Relics;
 
 namespace UX.UI.Ingame.HermosHorn
 {
@@ -13,11 +14,13 @@ namespace UX.UI.Ingame.HermosHorn
         }
         public void FirstOption()
         {
-            BoardViewer.Ins.ExecuteAction(new HermosHornActive(relic, true));
+            BoardViewer.Ins.ExecuteAction(new HermosHornExcute(relic.Color, true));
+            relic.SetCooldown();
         }
         public void SecondOption()
         {
-            BoardViewer.Ins.ExecuteAction(new HermosHornActive(relic, false));
+            BoardViewer.Ins.ExecuteAction(new HermosHornExcute(relic.Color, false));
+            relic.SetCooldown();
         }
     }
 }
