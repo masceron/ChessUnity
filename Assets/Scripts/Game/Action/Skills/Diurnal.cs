@@ -1,86 +1,86 @@
 ﻿using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using System.Linq;
 using UnityEngine;
-using Game.Effects.Buffs;
 using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
-using Game.Piece.PieceLogic;
-using NUnit.Framework;
-using System.Collections.Generic;
 using Game.Action.Quiets;
 
 namespace Game.Action.Skills
 {
     public class Diurnal : Action, ISkills, IPendingAble
     {
-        private PieceLogic SelectedPiece;
-        private int MovePosTo;
-        public int AIPenaltyValue(PieceLogic pieceAI)
-        {
-            return 0;
-        }
+        private static PieceLogic SelectedPiece;
+        private static int MovePosTo;
 
-        public Diurnal(int maker) : base(maker)
+        public int AIPenaltyValue(PieceLogic pieceAI) => 0;
+
+        public Diurnal(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Target = (ushort)target;
         }
+
         void IPendingAble.CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
-            var actions = new List<Action>();
 
-            if (SelectedPiece == null || SelectedPiece.Color == hovering.Color)
+            if (SelectedPiece == null)
             {
-                SelectedPiece = hovering;
-                TileManager.Ins.Select(SelectedPiece.Pos);
-                
-                for (int i = -1; i <= 1; i++)
-                {
-                    if (!VerifyBounds(RankOf(SelectedPiece.Pos) + i)) continue;
-                    for (int j = -1; j <= 1; j++)
-                    {
-                        if (!VerifyBounds(FileOf(SelectedPiece.Pos) + j))
-                            continue;
+                if (hovering == null) return;
 
-                        int newRank = RankOf(SelectedPiece.Pos) + i;
-                        int newFile = FileOf(SelectedPiece.Pos) + j;
-                        if (PieceOn(IndexOf(newRank, newFile)) == null)
-                        {
-                            TileManager.Ins.MarkAsMoveable(IndexOf(newRank, newFile));
-                        }
+                SelectedPiece = hovering;
+
+                TileManager.Ins.UnmarkAll();
+                TileManager.Ins.Select(SelectedPiece.Pos);
+                BoardViewer.ListOf.Clear();
+
+                for (var dr = -1; dr <= 1; dr++)
+                {
+                    var r = RankOf(SelectedPiece.Pos) + dr;
+                    if (!VerifyBounds(r)) continue;
+
+                    for (var df = -1; df <= 1; df++)
+                    {
+                        var f = FileOf(SelectedPiece.Pos) + df;
+                        if (dr == 0 && df == 0) continue;
+                        if (!VerifyBounds(f)) continue;
+
+                        var idx = IndexOf(r, f);
+                        if (PieceOn(idx) != null) continue;
+
+                        TileManager.Ins.MarkAsMoveable(idx);
+                        BoardViewer.ListOf.Add(new Diurnal(Maker, idx));
                     }
                 }
 
-                if (hovering != null) return;
-
-                var move = new NormalMove(SelectedPiece.Pos, BoardViewer.HoveringPos);
-
-                BoardViewer.Selecting = -1;
-                BoardViewer.SelectingFunction = 0;
-
-                BoardViewer.Ins.ExecuteAction(move);
-
-                
+                Debug.Log($"Diurnal select: {SelectedPiece.Type} at {SelectedPiece.Pos}");
+                return;
             }
+
+            MovePosTo = BoardViewer.HoveringPos;
+            if (MovePosTo == -1 || PieceOn(MovePosTo) != null) return;
+
+            var move = new NormalMove(SelectedPiece.Pos, MovePosTo);
+
+            TileManager.Ins.UnmarkAll();
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+
+            BoardViewer.Ins.ExecuteAction(move);
+            ResetTargets();
+        }
+
+        private static void ResetTargets()
+        {
+            SelectedPiece = null;
+            MovePosTo = -1;
         }
 
         protected override void ModifyGameState()
         {
-            var Pieces = FindPiece<PieceLogic>(PieceOn(Maker).Color);
-            var picked = Pieces
-                .OrderBy(_ => Random.value)
-                .Take(Mathf.Min(3, Pieces.Count))
-                .ToList();
-            foreach (var piece in picked)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece)));
-            }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-
     }
 }

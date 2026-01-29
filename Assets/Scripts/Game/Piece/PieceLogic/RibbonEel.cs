@@ -25,7 +25,7 @@ namespace Game.Piece.PieceLogic
                     {
                         var p = BoardUtils.PieceOn(i);
                         if (p == null || p.Color == Color) continue;
-                        list.Add(new Diurnal(p.Pos));
+                        list.Add(new Diurnal(Pos, p.Pos));
                     }
                 }
                 else
