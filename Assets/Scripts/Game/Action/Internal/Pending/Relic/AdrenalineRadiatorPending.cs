@@ -7,7 +7,7 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class AdrenalineRadiatorPending : Action, System.IDisposable, IRelicAction
+    public class AdrenalineRadiatorPending : PendingAction, System.IDisposable
     {
         private AdrenalineRadiator relic;
 
@@ -17,20 +17,23 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        protected override void ModifyGameState()
-        {
-            PieceOn(Maker).SkillCooldown = 0;
-            
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-            relic.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic(); 
-        }
-
         public void Dispose()
         {
             relic = null;
             BoardViewer.SelectingFunction = 0;
+        }
+
+        public override void CompleteAction()
+        {
+             relic.SetCooldown();
+
+            var excute = new AdrenalineRadiatorExcute(Maker);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            BoardViewer.Ins.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic(); 
         }
     }
 }

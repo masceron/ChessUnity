@@ -1,0 +1,17 @@
+using Game.Common;
+using UnityEngine;
+
+namespace Game.Action.Relics
+{
+    public class AdrenalineRadiatorExcute : Action, IRelicAction
+    {
+        public AdrenalineRadiatorExcute(int maker) : base(maker)
+        {
+        }
+
+        protected override void ModifyGameState()
+        {
+            BoardUtils.PieceOn(Maker).SkillCooldown = 0;
+        }
+    }
+}
