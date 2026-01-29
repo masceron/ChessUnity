@@ -40,7 +40,7 @@ namespace Game.Managers
             TileManager.Ins.Spawn();
             FormationManager.Ins.Initialize();
             // For testing purpose
-            FormationManager.Ins.SetFormation(PosMap(15, StartingSize), new HydroidThicket(cfg.FirstSideToMove));
+            // FormationManager.Ins.SetFormation(PosMap(15, StartingSize), new HydroidThicket(cfg.FirstSideToMove));
         }
 
         private void MakePieces(LineupConfig lineup)
