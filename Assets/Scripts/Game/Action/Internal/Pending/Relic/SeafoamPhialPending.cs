@@ -22,12 +22,12 @@ namespace Game.Action.Internal.Pending.Relic
 
         public override void CompleteAction()
         {
-            // ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            // ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker))));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             
+            BoardViewer.Ins.ExecuteAction(new SeafoamPhialAction(Maker));
             seafoamPhial.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
         }
 
