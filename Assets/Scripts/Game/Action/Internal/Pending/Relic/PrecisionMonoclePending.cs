@@ -8,42 +8,18 @@ using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    public class PrecisionMonoclePending : Action, System.IDisposable, IRelicAction
+    public class PrecisionMonoclePending : PendingAction, System.IDisposable
     {
         private PrecisionMonocle precisionMonocle;
-        private const int EvasionProbabilityDecrease = 5;
         public PrecisionMonoclePending(PrecisionMonocle pm, int maker, bool pos = false) : base(maker)
         {
             precisionMonocle = pm;
             Maker = (ushort)maker;
         }
 
-        protected override void ModifyGameState()
+        public override void CompleteAction()
         {
-            var allyColor = BoardUtils.PieceOn(Maker).Color;
-            var markedEnemy = BoardUtils.FindPiecesWithEffectName(!allyColor, "effect_marked");
-            var markedAlly = BoardUtils.FindPiecesWithEffectName(allyColor, "effect_marked");
-
-            foreach (var enemy in markedEnemy)
-            {
-                Evasion evasion = enemy.Effects.OfType<Evasion>().FirstOrDefault();
-                if (evasion != null)
-                {
-                    evasion.Probability -= EvasionProbabilityDecrease;
-                    if (evasion.Probability < 0) evasion.Probability = 0;
-                }
-            }
-            
-            foreach (var ally in markedAlly)
-            {
-                Evasion evasion = ally.Effects.OfType<Evasion>().FirstOrDefault();
-                if (evasion != null)
-                {
-                    evasion.Probability -= EvasionProbabilityDecrease;
-                    if (evasion.Probability < 0) evasion.Probability = 0;
-                }
-            }
-            
+            BoardViewer.Ins.ExecuteAction(new PrecisionMonocleAction(Maker));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
