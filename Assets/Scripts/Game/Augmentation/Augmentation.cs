@@ -101,6 +101,7 @@ namespace Game.Augmentation
         CursedJaw = 42,
         CursedModule = 43,
         CursedFin = 44,
+        CursedPlate = 45,
         None = 10000,
     }
 

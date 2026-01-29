@@ -6,9 +6,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    public class CursedFin : Augmentation
+    public class CursedPlate : Augmentation
     {
-        public CursedFin() : base(AugmentationName.CursedFin, AugmentationRarity.Cursed, AugmentationSlot.Fin, null, null)
+        public CursedPlate() : base(AugmentationName.CursedPlate, AugmentationRarity.Cursed, AugmentationSlot.Chassis, null, null)
         {
             PassiveEffects = new List<Effect>();
         }
@@ -17,7 +17,7 @@ namespace Game.Augmentation
         {
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.None, false);
-            PassiveEffects.Add(new CursedFinPassive(Target));
+            PassiveEffects.Add(new CursedPlatePassive(Target));
         }
     }
 }

@@ -171,6 +171,10 @@ MonoBehaviour:
     m_Key: augmentation_cursed_fin_description
     m_Metadata:
       m_Items: []
+  - m_Id: 1115044172140544
+    m_Key: augmentation_cursed_plate_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

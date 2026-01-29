@@ -615,6 +615,10 @@ MonoBehaviour:
     m_Key: effect_cursed_fin_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 62109443315863552
+    m_Key: effect_cursed_plate_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
