@@ -163,6 +163,14 @@ MonoBehaviour:
     m_Key: augmentation_cursed_module
     m_Metadata:
       m_Items: []
+  - m_Id: 1111499842654208
+    m_Key: augmentation_cursed_module_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1111517278375936
+    m_Key: augmentation_cursed_fin
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

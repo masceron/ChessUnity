@@ -100,6 +100,7 @@ namespace Game.Augmentation
         AdaptiveGland = 41,
         CursedJaw = 42,
         CursedModule = 43,
+        CursedFin = 44,
         None = 10000,
     }
 
