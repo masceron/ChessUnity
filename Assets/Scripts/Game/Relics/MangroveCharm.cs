@@ -6,6 +6,7 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Relics

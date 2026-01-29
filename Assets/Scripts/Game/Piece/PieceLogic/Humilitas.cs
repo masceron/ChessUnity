@@ -9,6 +9,7 @@ using static Game.Common.BoardUtils;
 using Game.Action.Skills;
 using System.Collections.Generic;
 using System.Linq;
+using ZLinq;
 
 namespace Game.Piece.PieceLogic
 {

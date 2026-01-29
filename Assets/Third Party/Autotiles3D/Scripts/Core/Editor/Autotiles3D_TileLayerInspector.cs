@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Linq;
 using System;
+using Third_Party.Autotiles3D.Scripts.Utility;
 
 namespace Autotiles3D
 {
@@ -84,7 +85,7 @@ namespace Autotiles3D
                 }
             }
 
-            _tileLayer.LoadedGroups = Autotiles3D_Utility.LoadTileGroups();
+            _tileLayer.LoadedGroups = Autotiles3DUtility.LoadTileGroups();
 
             if (_tileLayer.Group == null && _tileLayer.LoadedGroups.Count > 0)
                 _tileLayer.Group = _tileLayer.LoadedGroups[0];
@@ -361,7 +362,7 @@ namespace Autotiles3D
                                 _isPushing = true;
                             }
                             _pIndex = 0;
-                            Autotiles3D_Settings.IsLocked = true;
+                            Autotiles3DSettings.IsLocked = true;
                             e.Use();
                         }
                     }
@@ -483,7 +484,7 @@ namespace Autotiles3D
                     GridSelection(e.type, e, _tileLayer.LocalHoverPosition);
                     Grid.OnGridSelection?.Invoke(e.type, e, _tileLayer.LocalHoverPosition);
                 }
-                Autotiles3D_Settings.IsLocked = false;
+                Autotiles3DSettings.IsLocked = false;
             }
 
 
@@ -901,11 +902,11 @@ namespace Autotiles3D
 
                     GUI.enabled = true;
 
-                    if (amount >= 500 && !Autotiles3D_Settings.EditorInstance.SuppressTileAmountWarning)
+                    if (amount >= 500 && !Autotiles3DSettings.EditorInstance.suppressTileAmountWarning)
                     {
-                        EditorGUILayout.LabelField($"<color=red> {amount} </color> <color=yellow> {tile.Name} </color> Tiles. This amount is very high! Consider", Autotiles3D_Utility.RichStyle, GUILayout.Width(_sp2));
-                        EditorGUILayout.LabelField($"a) <color=red>reducing </color> amount of tiles, \nb)<color=red> baking </color> meshes or \nc) working with <color=red> multiple layers </color> to improve perfomance.", Autotiles3D_Utility.RichStyle, GUILayout.Width(_sp2));
-                        Autotiles3D_Settings.EditorInstance.SuppressTileAmountWarning = EditorGUILayout.Toggle("Suppress warning", Autotiles3D_Settings.EditorInstance.SuppressTileAmountWarning);
+                        EditorGUILayout.LabelField($"<color=red> {amount} </color> <color=yellow> {tile.Name} </color> Tiles. This amount is very high! Consider", Autotiles3DUtility.RichStyle, GUILayout.Width(_sp2));
+                        EditorGUILayout.LabelField($"a) <color=red>reducing </color> amount of tiles, \nb)<color=red> baking </color> meshes or \nc) working with <color=red> multiple layers </color> to improve perfomance.", Autotiles3DUtility.RichStyle, GUILayout.Width(_sp2));
+                        Autotiles3DSettings.EditorInstance.suppressTileAmountWarning = EditorGUILayout.Toggle("Suppress warning", Autotiles3DSettings.EditorInstance.suppressTileAmountWarning);
                         GUILayout.Space(EditorGUIUtility.singleLineHeight);
                     }
 
@@ -933,11 +934,11 @@ namespace Autotiles3D
             if (_totalBrokenAmt > 0)
             {
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-                EditorGUILayout.LabelField($"<color=red>{_totalBrokenAmt} Broken tiles found! </color>", Autotiles3D_Utility.RichStyle);
+                EditorGUILayout.LabelField($"<color=red>{_totalBrokenAmt} Broken tiles found! </color>", Autotiles3DUtility.RichStyle);
 
                 EditorGUILayout.LabelField("Blocks in this layer are missing (or can't find) their respective tile data!");
                 EditorGUILayout.LabelField("This might have happened because you deleted tiles from your TileGroups or due to version a version upgrade from before version 1.3.");
-                EditorGUILayout.LabelField("Don't worry, this is <color=cyan>easy to fix </color>!", Autotiles3D_Utility.RichStyle);
+                EditorGUILayout.LabelField("Don't worry, this is <color=cyan>easy to fix </color>!", Autotiles3DUtility.RichStyle);
                 EditorGUILayout.LabelField("Just specify the TileGroup and TileName once for the blocks below!");
                 GUILayout.Space(20);
 
@@ -980,7 +981,7 @@ namespace Autotiles3D
                             {
                                 Autotiles3D_BlockBehaviour block = _brokenBlocks[i];
                                 if (block != null)
-                                    Autotiles3D_Utility.RepairBlocks(block, block.Anchor.GetBlocks(), group.name, tile.Name);
+                                    Autotiles3DUtility.RepairBlocks(block, block.Anchor.GetBlocks(), group.name, tile.Name);
                             }
                         }
 
@@ -1028,7 +1029,7 @@ namespace Autotiles3D
         public void RenderHoverInstance(Vector3Int internalPosition, Quaternion localRotation)
         {
 
-            var activeTile = Autotiles3D_Utility.GetTile(_tileLayer.ActiveTileID);
+            var activeTile = Autotiles3DUtility.GetTile(_tileLayer.ActiveTileID);
             if (_tileLayer.ActiveTileID == -1 || activeTile == null)
             {
                 _tileLayer.DestroyHoverInstance();

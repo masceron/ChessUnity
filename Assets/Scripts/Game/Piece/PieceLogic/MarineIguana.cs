@@ -8,6 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using System.Linq;
 using Game.Common;
+using ZLinq;
 
 namespace Game.Piece.PieceLogic
 {

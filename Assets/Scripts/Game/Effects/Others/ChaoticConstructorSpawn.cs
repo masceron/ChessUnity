@@ -7,6 +7,7 @@ using Game.Managers;
 using Game.Piece;
 using System.Collections.Generic;
 using System.Linq;
+using ZLinq;
 
 
 namespace Game.Effects.Others

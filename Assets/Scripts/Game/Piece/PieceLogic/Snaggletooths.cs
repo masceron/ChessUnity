@@ -5,6 +5,7 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using System.Collections.Generic;
+using ZLinq;
 
 namespace Game.Piece.PieceLogic
 {

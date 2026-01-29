@@ -1,3 +1,4 @@
+using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine;
 #if UNITY_EDITOR
 #endif
@@ -60,7 +61,7 @@ namespace Autotiles3D
 
         public Autotiles3D_Tile GetTile()
         {
-            return Autotiles3D_Utility.GetTile(_tileID, _tileName, _group);
+            return Autotiles3DUtility.GetTile(_tileID, _tileName, _group);
         }
 
 

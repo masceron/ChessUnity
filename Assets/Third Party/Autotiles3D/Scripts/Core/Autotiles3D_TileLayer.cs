@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine.Serialization;
+using ZLinq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -59,7 +61,7 @@ namespace Autotiles3D
 #if UNITY_EDITOR
         public Autotiles3D_Tile GetTile()
         {
-            return Autotiles3D_Utility.GetTile(_tileID, _tileName, _group);
+            return Autotiles3DUtility.GetTile(_tileID, _tileName, _group);
         }
 #endif
 
@@ -295,11 +297,11 @@ namespace Autotiles3D
         /// <param name="tile"></param>
         public void TryPlacementSingle(Vector3Int internalPosition, Quaternion localRotation, int tileID)
         {
-            var tile = Autotiles3D_Utility.GetTile(tileID);
+            var tile = Autotiles3DUtility.GetTile(tileID);
             if (tile == null)
                 return;
 
-            if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCompleteObjectUndo(this, "TryPlacementSingle");
 
             AddNodeInternal(tile.TileID, tile.Name, tile.Group, internalPosition, localRotation);
@@ -317,7 +319,7 @@ namespace Autotiles3D
             if (size == 0)
                 return;
 
-            if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCompleteObjectUndo(this, "TryPlacementMany");
 
             for (int i = 0; i < size; i++)
@@ -336,7 +338,7 @@ namespace Autotiles3D
         /// <param name="internalPosition"></param>
         public void TryUnplacingSingle(Vector3Int internalPosition)
         {
-            if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCompleteObjectUndo(this, "TryUnPlacementSingle");
 
             RemoveNodeInternal(internalPosition);
@@ -353,7 +355,7 @@ namespace Autotiles3D
             if (!internalPosition.Any())
                 return;
 
-            if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCompleteObjectUndo(this, "TryUnplacingMany");
 
             foreach (var p in internalPosition)
@@ -423,7 +425,7 @@ namespace Autotiles3D
         }
         public void VerifyNodes()
         {
-            Autotiles3D_Settings.IsLocked = true;
+            Autotiles3DSettings.IsLocked = true;
             for (int i = 0; i < _toVerify.Count; i++)
             {
                 if (_internalNodes.TryGetValue(_toVerify[i], out InternalNode node))
@@ -432,11 +434,11 @@ namespace Autotiles3D
                 }
             }
             _toVerify.Clear();
-            Autotiles3D_Settings.IsLocked = false;
+            Autotiles3DSettings.IsLocked = false;
         }
         public void RefreshNodes()
         {
-            Autotiles3D_Settings.IsLocked = true;
+            Autotiles3DSettings.IsLocked = true;
             for (int i = 0; i < _toUpdate.Count; i++)
             {
                 if (_internalNodes.TryGetValue(_toUpdate[i], out InternalNode node))
@@ -445,7 +447,7 @@ namespace Autotiles3D
                 }
             }
             _toUpdate.Clear();
-            Autotiles3D_Settings.IsLocked = false;
+            Autotiles3DSettings.IsLocked = false;
         }
 
         private void AddNodeInternal(int tileId, string tileName, string group, Vector3Int internalPosition, Quaternion localRotation)

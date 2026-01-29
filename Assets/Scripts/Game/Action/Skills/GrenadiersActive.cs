@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using Game.Managers;
 using static Game.Common.BoardUtils;
 using Game.Tile;
+using ZLinq;
+
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

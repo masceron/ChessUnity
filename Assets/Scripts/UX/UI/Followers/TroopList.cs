@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using ZLinq;
 
 namespace UX.UI.Followers
 {

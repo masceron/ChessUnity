@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 //Xuất hiện vào turn thứ 30 của ván nếu chưa kết thúc, tạo ra vòng xoáy 2x2 giữa bàn cờ, 

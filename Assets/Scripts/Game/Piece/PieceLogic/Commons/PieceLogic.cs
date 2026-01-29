@@ -7,6 +7,7 @@ using Game.Managers;
 using Game.Movesets;
 using Game.ScriptableObjects;
 using Game.Tile;
+using ZLinq;
 using static Game.Common.BoardUtils;
 using static Game.ScriptableObjects.PieceInfo;
 

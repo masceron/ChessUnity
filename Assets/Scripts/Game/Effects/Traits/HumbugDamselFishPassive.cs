@@ -9,6 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Effects.Buffs;
 using Game.Effects;
 using Game.Common;
+using ZLinq;
 
 namespace Game.Effects.Traits
 {

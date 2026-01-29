@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using System.Linq;
+using Third_Party.Autotiles3D.Scripts.Utility;
 
 namespace Autotiles3D
 {
@@ -71,7 +72,7 @@ namespace Autotiles3D
         //v1.3 Tries to repair block and tile link based on the tileID stored in the anchor
         public void TryAutoRepairBrokenBlocks()
         {
-            var tile = Autotiles3D_Utility.GetTile(_tileID, "", "");
+            var tile = Autotiles3DUtility.GetTile(_tileID, "", "");
             if (tile != null)
             {
                 var blocks = GetBlocks();
@@ -79,7 +80,7 @@ namespace Autotiles3D
                 {
                     if (block.GetTile() == null)
                     {
-                        Autotiles3D_Utility.RepairBlocks(block, blocks, tile.Group, tile.Name, tile.TileID);
+                        Autotiles3DUtility.RepairBlocks(block, blocks, tile.Group, tile.Name, tile.TileID);
                     }
                 }
             }

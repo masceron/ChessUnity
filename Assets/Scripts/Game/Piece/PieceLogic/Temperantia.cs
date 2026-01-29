@@ -1,4 +1,3 @@
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -6,6 +5,7 @@ using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -26,7 +26,14 @@ namespace Game.Piece.PieceLogic
                 {
                     Debug.Log("Temperantia: choose a ally");
                     var allies = FindPiece<Commons.PieceLogic>(Color);
-                    list.AddRange(from ally in allies where !ally.Equals(this) select new TemperantiaSwap(Pos, ally.Pos));
+                    var query = from ally in allies
+                        where !ally.Equals(this)
+                        select new TemperantiaSwap(Pos, ally.Pos);
+
+                    foreach (var item in query)
+                    {
+                        list.Add(item);
+                    }
                 }
                 else
                 {
@@ -40,8 +47,10 @@ namespace Game.Piece.PieceLogic
                                 list.Add(new TemperantiaSwap(Pos, i));
                             }
                         }
+
                         return;
                     }
+
                     // Gather ally and enemy pieces
                     var allies = FindPiece<Commons.PieceLogic>(Color);
                     var enemies = FindPiece<Commons.PieceLogic>(!Color);
@@ -50,7 +59,8 @@ namespace Game.Piece.PieceLogic
                     if (enemies == null || enemies.Count == 0) return;
 
                     // Count buffs on each piece
-                    int CountBuffs(Commons.PieceLogic p) => p.Effects.Count(e => e.Category == Game.Effects.EffectCategory.Buff);
+                    int CountBuffs(Commons.PieceLogic p) =>
+                        p.Effects.Count(e => e.Category == Game.Effects.EffectCategory.Buff);
 
                     // Find minimum buff count among allies
                     var minBuff = allies.Min(CountBuffs);
@@ -62,15 +72,18 @@ namespace Game.Piece.PieceLogic
                     if (candidatesA.Count == 0 || candidatesB.Count == 0) return;
 
                     // Choose selection (random if multiple)
-                    Commons.PieceLogic chosenAlly = candidatesA.Count == 1 ? candidatesA[0] : candidatesA[Random.Range(0, candidatesA.Count)];
-                    Commons.PieceLogic chosenEnemy = candidatesB.Count == 1 ? candidatesB[0] : candidatesB[Random.Range(0, candidatesB.Count)];
+                    Commons.PieceLogic chosenAlly = candidatesA.Count == 1
+                        ? candidatesA[0]
+                        : candidatesA[Random.Range(0, candidatesA.Count)];
+                    Commons.PieceLogic chosenEnemy = candidatesB.Count == 1
+                        ? candidatesB[0]
+                        : candidatesB[Random.Range(0, candidatesB.Count)];
                     TemperantiaSwap.allyIndex = chosenAlly.Pos;
                     TemperantiaSwap.enemyIndex = chosenEnemy.Pos;
 
                     // Execute effect now
                     list.Add(new TemperantiaSwap(Pos, -1));
                 }
-
             };
         }
 
