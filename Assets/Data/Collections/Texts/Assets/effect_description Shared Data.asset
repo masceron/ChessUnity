@@ -603,6 +603,10 @@ MonoBehaviour:
     m_Key: effect_dusky_butterfly_fish_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 62098350312919040
+    m_Key: effect_cursed_jaw_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

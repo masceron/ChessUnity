@@ -147,6 +147,14 @@ MonoBehaviour:
     m_Key: augmentation_barnacle_armor_description
     m_Metadata:
       m_Items: []
+  - m_Id: 1105039037435904
+    m_Key: augmentation_crown_of_silence_1_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1105064400392192
+    m_Key: augmentation_cursed_jaw_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
