@@ -5,7 +5,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Internal
 {
-    public class MarinelKill : Action, ICaptures
+    public class MarinelKill : Action, ICaptures, IInternal
     {
         private readonly int targetPos;
         
