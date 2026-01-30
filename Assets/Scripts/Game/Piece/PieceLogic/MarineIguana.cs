@@ -8,8 +8,6 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using System.Linq;
 using Game.Common;
-using Game.Action.Internal.Pending.Piece;
-using Game.Action.Skills;
 
 namespace Game.Piece.PieceLogic
 {
@@ -36,7 +34,7 @@ namespace Game.Piece.PieceLogic
                     .ToList();
                     foreach (var target in captureTargets)
                     {
-                        list.Add(new MarineIguanaPending(Pos, target));
+                        list.Add(new MarineIguanaActive(Pos, target));
                     }
                 }
                 else
@@ -55,7 +53,7 @@ namespace Game.Piece.PieceLogic
                     {
                         foreach (var target in captureTargets)
                         {
-                            list.Add(new MarineIguanaPending(Pos, target));
+                            list.Add(new MarineIguanaActive(Pos, target));
                         }
                         return;
                     }
@@ -91,8 +89,8 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                     if (secondTarget == -1) return;
-                    var action = new MarineIguanaPending(Pos, firstTarget);
-                    MarineIguanaActive.SecondTarget = secondTarget;
+                    var action = new MarineIguanaActive(Pos, firstTarget);
+                    MarineIguanaActive.SecondTarget = PieceOn(secondTarget);
                     list.Add(action);
                     // ActionManager.EnqueueAction(new MarinelKill(Maker, firstTarget, secondTarget));
                 }
