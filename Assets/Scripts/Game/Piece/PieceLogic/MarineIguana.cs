@@ -8,12 +8,14 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using System.Linq;
 using Game.Common;
+using Game.Action.Internal.Pending.Piece;
 
 namespace Game.Piece.PieceLogic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MarineIguana : Commons.PieceLogic, IPieceWithSkill
     {
+        private int skillRadius = 4;
         public MarineIguana(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
@@ -23,39 +25,27 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var listActions = new List<Action.Action>();
-                    BluffingMoves.Captures(listActions, Pos, excludeEmptyTile: true);
-                    if (listActions.Count > 1)
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, skillRadius);
+                    foreach (var target in targets)
                     {
-                        listActions = listActions.Distinct(new ActionComparer()).ToList();
-                    }
-                    var captureTargets = listActions.OfType<ICaptures>()
-                    .Select(c => ((Action.Action)c).Target)
-                    .ToList();
-                    foreach (var target in captureTargets)
-                    {
-                        list.Add(new MarineIguanaActive(Pos, target));
+                        list.Add(new MarineIguanaPending(Pos, target));
                     }
                 }
                 else
                 {
-                    var listActions = new List<Action.Action>();
-                        BluffingMoves.Captures(listActions, Pos, excludeEmptyTile: true);
-                        if (listActions.Count > 1)
-                        {
-                            listActions = listActions.Distinct(new ActionComparer()).ToList();
-                        }
-                        var captureTargets = listActions.OfType<ICaptures>()
-                        .Select(c => ((Action.Action)c).Target)
-                        .ToList();
-                        
-                    if (!excludeEmptyTile)
+                    var captureTargets = new List<int>();
+                    if (excludeEmptyTile)
                     {
-                        foreach (var target in captureTargets)
-                        {
-                            list.Add(new MarineIguanaActive(Pos, target));
-                        }
-                        return;
+                        captureTargets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, skillRadius);
+                    }
+                    else
+                    {
+                        captureTargets = SkillRangeHelper.GetActiveCellInRadius(Pos, skillRadius);
+                    }
+
+                    if (captureTargets.Contains(Pos))
+                    {
+                        captureTargets.Remove(Pos);
                     }
 
                     if (captureTargets.Count == 0) return;
@@ -89,10 +79,9 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                     if (secondTarget == -1) return;
-                    var action = new MarineIguanaActive(Pos, firstTarget);
-                    MarineIguanaActive.SecondTarget = PieceOn(secondTarget);
+                    var action = new MarineIguanaPending(Pos, firstTarget);
+                    MarineIguanaPending.SecondTarget = PieceOn(secondTarget);
                     list.Add(action);
-                    // ActionManager.EnqueueAction(new MarinelKill(Maker, firstTarget, secondTarget));
                 }
 
             };

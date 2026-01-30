@@ -611,6 +611,10 @@ MonoBehaviour:
     m_Key: effect_mirror_butterfly_fish_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 62370010872188928
+    m_Key: effect_marine_iguana_kill_effect_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
