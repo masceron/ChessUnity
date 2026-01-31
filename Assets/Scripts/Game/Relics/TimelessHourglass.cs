@@ -29,7 +29,7 @@ namespace Game.Relics
                     if (piece == null) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new TimelessHourglassPending(this, piece.Pos, piece.Color);
+                    var pending = new TimelessHourglassPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -69,7 +69,7 @@ namespace Game.Relics
             var top = candidates.Where(p => p.GetValueForAI() == bestScore).ToList();
             var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
-            var pending = new TimelessHourglassPending(this, chosen.Pos, chosen.Color);
+            var pending = new TimelessHourglassPending(this, chosen.Pos);
             if (pending is PendingAction p)
             {
                 p.CompleteAction();

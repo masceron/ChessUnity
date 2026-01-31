@@ -9,7 +9,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class SirensHarpoonPending : PendingAction, System.IDisposable, IRelicAction
+    public class SirensHarpoonPending : PendingAction, System.IDisposable
     {
         private SirensHarpoon _sirensHarpoon;
 
@@ -22,7 +22,14 @@ namespace Game.Action.Internal.Pending.Relic
 
         public override void CompleteAction()
         {
-            ActivateRelic(Maker);
+            _sirensHarpoon.SetCooldown();
+            var excute = new SirenHarpoonExcute(Maker, Target);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            BoardViewer.Ins.Unmark();
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
 
 
@@ -31,58 +38,5 @@ namespace Game.Action.Internal.Pending.Relic
             _sirensHarpoon = null;
             BoardViewer.SelectingFunction = 0;
         }
-
-
-        public void ActivateRelic(int maker)
-        {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target)), _sirensHarpoon));
-            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target)), _sirensHarpoon));
-
-            _sirensHarpoon.SetCooldown();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
-
-        // public void CompleteActionForAI()
-        // {
-        //     //Implement for AI automatically
-        //     var listPieces = new List<PieceLogic>();
-
-        //     for (var i = 0; i < BoardUtils.BoardSize; ++i)
-        //     {
-        //         var piece = BoardUtils.PieceOn(i);
-        //         if (piece == null || piece.Color == _sirensHarpoon.Color) continue;
-
-        //         if (piece.Effects.Any(e => (
-        //                 e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity"))
-        //            ) continue;
-
-        //         listPieces.Add(piece);
-        //     }
-
-        //     if (listPieces.Count == 0) return;
-
-        //     if (listPieces.Count == 1)
-        //     {
-        //         ActivateRelic(listPieces[0].Pos);
-        //         return;
-        //     }
-            
-        //     listPieces.Sort((a, b) => 
-        //         b.GetValueForAI().CompareTo(a.GetValueForAI())
-        //     );
-            
-        //     int topValue = listPieces[0].GetValueForAI();
-        //     var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
-            
-        //     if (topGroup.Count == 1)
-        //     {
-        //         ActivateRelic(topGroup[0].Pos);
-        //     }
-        //     else
-        //     {
-        //         int idx = UnityEngine.Random.Range(0, topGroup.Count);
-        //         ActivateRelic(topGroup[idx].Pos);
-        //     }
-        // }
     }
 }
