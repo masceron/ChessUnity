@@ -119,7 +119,7 @@ namespace Game.Relics
             if (bestDuoNoExtremofiles.Count == 0)
             {
                 var best = bestDuo[Random.Range(0, bestDuo.Count - 1)];
-                var pending = new MangroveCharmPending(this, best.pos1);
+                var pending = new MangroveCharmPending(this, best.pos1, Color);
                 MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
                 MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
                 BoardViewer.Ins.ExecuteAction(pending);
@@ -127,7 +127,7 @@ namespace Game.Relics
             else
             {
                 var best = bestDuoNoExtremofiles[Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
-                var pending = new MangroveCharmPending(this, best.pos1);
+                var pending = new MangroveCharmPending(this, best.pos1, Color);
                 MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
                 MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
                 BoardViewer.Ins.ExecuteAction(pending);

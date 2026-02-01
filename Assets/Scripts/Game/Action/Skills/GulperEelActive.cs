@@ -21,6 +21,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
+            UnityEngine.Debug.Log("GulperEelActive: " + Target);
+            UnityEngine.Debug.Log("GulperEelActive: " + RankFileOf(Target));
             TileManager.Ins.DestroyTile(Target);
             FormationManager.Ins.RemoveFormation(Target);
 

@@ -23,15 +23,13 @@ namespace Game.Effects.Traits
         public void OnCallStart(Action.Action lastMainAction)
         {
             int evasion = 1;
-            var (rank, file) = RankFileOf(Piece.Pos);
-            foreach (var (nRank, nFile) in MoveEnumerators.AroundUntil(rank, file, 4))
+            var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(Piece.Pos, 4);
+            foreach (var piece in listPieces)
             {
-                var piece = PieceOn(IndexOf(nRank, nFile));
-                if (piece == null || piece.Color != Piece.Color) continue;
-                if (piece.Type == "piece_humbug_damsel_fish")
+                if (PieceOn(piece).Type == "piece_humbug_damsel_fish")
                 {
                     evasion += 5;
-                } else if (piece.Effects.Any(e => e.EffectName == "effect_evasion"))
+                } else if (PieceOn(piece).Effects.Any(e => e.EffectName == "effect_evasion"))
                 {
                     evasion += 2;
                 }

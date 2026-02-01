@@ -19,15 +19,10 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
                 {
-                    UnityEngine.Debug.Log("DwarfLionfish Active");
-                     foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 1))
+                    var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 1);
+                    foreach (var piece in listPieces)
                     {
-                        var idx = IndexOf(rank, file);
-                        var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != Color)
-                        {
-                            list.Add(new DwarfLionfishActive(Pos, idx));
-                        }
+                        list.Add(new DwarfLionfishActive(Pos, PieceOn(piece).Pos));
                     }
                 }
                 else

@@ -40,16 +40,13 @@ namespace Game.Action.Skills
         {
             var listPieces = new List<PieceLogic>();
             
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 3))
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 3);
+            foreach (var target in targets)
             {
-                var idx = IndexOf(rank, file);
-                var pOn = PieceOn(idx);
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
-                {
-                    if(pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
-                    listPieces.Add(pOn);
-                }
+                if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                listPieces.Add(PieceOn(target));
             }
+
             if (listPieces.Count == 0) return;
             int maxValue = listPieces.Max(p => p.GetValueForAI());
             var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();

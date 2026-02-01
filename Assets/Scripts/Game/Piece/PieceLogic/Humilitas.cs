@@ -9,6 +9,8 @@ using static Game.Common.BoardUtils;
 using Game.Action.Skills;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Action.Internal.Pending.Piece;
+using Game.Action.Internal.Pending;
 
 namespace Game.Piece.PieceLogic
 {
@@ -19,9 +21,9 @@ namespace Game.Piece.PieceLogic
         public Humilitas(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             deathDefianceCount = 4;
-            ActionManager.ExecuteImmediately(new ApplyEffect(new PureMinded(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Relentless(this, deathDefianceCount)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new PureMinded(this)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new Relentless(this, deathDefianceCount)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -34,7 +36,7 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn != null && pOn.Color != Color)
                         {
-                            list.Add(new HumilitasActive(Pos, idx));
+                            list.Add(new HumilitasPending(Pos, idx));
                         }
                     }
                 }
@@ -48,7 +50,7 @@ namespace Game.Piece.PieceLogic
                             var pOn = PieceOn(idx);
                             if (pOn != null && pOn.Color != Color)
                             {
-                                list.Add(new HumilitasActive(Pos, idx));
+                                list.Add(new HumilitasPending(Pos, idx));
                             }
                         }
                         return;
@@ -110,8 +112,8 @@ namespace Game.Piece.PieceLogic
                     }
                     if (selectedPieces.Count < 2) return;
 
-                    var action = new HumilitasActive(Pos, selectedPieces[0].Pos);
-                    HumilitasActive.SecondTarget = selectedPieces[1];
+                    var action = new HumilitasPending(Pos, selectedPieces[0].Pos);
+                    HumilitasPending.SecondTarget = selectedPieces[1].Pos;
                     list.Add(action);
                 }
             };

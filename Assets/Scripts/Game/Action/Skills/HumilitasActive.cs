@@ -1,145 +1,40 @@
 using Game.Action.Internal;
+using Game.Effects.Traits;
+using Game.Piece;
 using static Game.Common.BoardUtils;
-using Game.Effects.Debuffs;
-using Game.Action.Internal.Pending;
-using UX.UI.Ingame;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using Game.Common;
-using Game.AI;
+using Game.Action.Internal.Pending.Piece;
+using Game.Effects.Debuffs;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive : PendingAction, System.IDisposable, IAIAction
+    public class HumilitasActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
-            if (maker == null || pieceAI == null) return 0;
-            if (pieceAI.Color != maker.Color) return -20;
             return 0;
         }
-        public static PieceLogic FirstTarget;
-        public static PieceLogic SecondTarget;
+        public static int FirstTarget;
+        public static int SecondTarget;
 
-        private bool isExecuting;
-        public HumilitasActive(int maker, int to) : base(maker)
+        public HumilitasActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)to;
-            isExecuting = false;
+            FirstTarget = firstTarget;
+            SecondTarget = secondTarget;
         }
-
-        // protected override void ModifyGameState()
-        // {
-        //     if (FirstTarget == null) return;
-        //     if (SecondTarget == null) return;
-        //     
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget), PieceOn(Maker)));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget), PieceOn(Maker)));
-        //     isExecuting = false;
-        //     Dispose();
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        // }
-        public override void CompleteAction()
+        protected override void ModifyGameState()
         {
-            var hovering = PieceOn(BoardViewer.HoveringPos);
-            if (FirstTarget == null)
-            {
-                FirstTarget = hovering;
-                TileManager.Ins.UnmarkAll();
-                BoardViewer.ListOf.Clear();
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 5))
-                {
-                    var index = IndexOf(rankOff, fileOff);
-                    var piece = PieceOn(index);
-                    if (piece == null || piece.Color != FirstTarget.Color) continue;
-                    var newAction = new HumilitasActive(Maker, index);
-                    BoardViewer.ListOf.Add(newAction);
-                    TileManager.Ins.MarkAsMoveable(index);
-                }
-                return;
-            }
-            SecondTarget = hovering;
-            BoardViewer.Ins.ExecuteAction(this);
             UnityEngine.Debug.Log("Executing HumilitasActive");
-            isExecuting = true;
+            var first = PieceOn(FirstTarget);
+            var second = PieceOn(SecondTarget);
+            if (first != null)
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), PieceOn(Maker)));
+            if (second != null)
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), PieceOn(Maker)));
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-        public void Dispose()
-        {
-            if (!isExecuting) return;
-            FirstTarget = null;
-            SecondTarget = null;
-            BoardViewer.SelectingFunction = 0;
-        }
 
-        public void CompleteActionForAI()
-        {
-            // var listPieces = new List<PieceLogic>();
-
-            // foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 5))
-            // {
-            //     var idx = IndexOf(rank, file);
-            //     var pOn = PieceOn(idx);
-            //     if (pOn != null && pOn.Color != PieceOn(Maker).Color)
-            //     {
-            //         if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
-            //         listPieces.Add(pOn);
-            //     }
-            // }
-            // // neu khong co quan nao
-            // if (listPieces.Count == 0) return;
-            // // neu co dung mot quan
-            // if (listPieces.Count == 1)
-            // {
-            //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, listPieces[0])));
-            //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            //     return;
-            // }
-            // // neu co nhieu quan           
-            // listPieces.Sort((a, b) =>
-            //     b.GetValueForAI()
-            //         .CompareTo(a.GetValueForAI()));
-
-            // var selectedPieces = new List<PieceLogic>();
-
-            // int topValue = listPieces[0].GetValueForAI();
-            // var topGroup = listPieces.Where(p =>
-            //     p.GetValueForAI() == topValue).ToList();
-
-            // if (topGroup.Count >= 2)
-            // {
-            //     int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
-            //     int idx2;
-            //     do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
-            //     while (idx2 == idx1);
-
-            //     selectedPieces.Add(topGroup[idx1]);
-            //     selectedPieces.Add(topGroup[idx2]);
-            // }
-            // else
-            // {
-            //     selectedPieces.Add(listPieces[0]);
-
-            //     if (listPieces.Count > 1)
-            //     {
-            //         int secondValue = listPieces[1].GetValueForAI();
-            //         var secondGroup = listPieces.Where(p =>
-            //             p.GetValueForAI() == secondValue).ToList();
-            //         if (secondGroup.Count == 0) return;
-            //         int idx = UnityEngine.Random.Range(0, secondGroup.Count);
-            //         selectedPieces.Add(secondGroup[idx]);
-            //     }
-            // }
-
-            // foreach (var piece in selectedPieces)
-            // {
-            //     UnityEngine.Debug.Log("Taunting piece: " + piece.Type);
-            //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
-            // }
-
-            // SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
     }
 }
