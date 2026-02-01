@@ -19,11 +19,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
                 {
-                    var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 1);
-                    foreach (var piece in listPieces)
-                    {
-                        list.Add(new DwarfLionfishActive(Pos, PieceOn(piece).Pos));
-                    }
+                    list.Add(new DwarfLionfishActive(Pos));
                 }
                 else
                 {

@@ -14,10 +14,10 @@ namespace Game.Action.Skills
         {
             return -30;
         }
-        public DwarfLionfishActive(int maker, int target) : base(maker)
+        public DwarfLionfishActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)target;
+            Target = (ushort)maker;
         }
         protected override void ModifyGameState()
         {

@@ -14,10 +14,10 @@ namespace Game.Action.Skills
         {
             return -40;
         }
-        public FlyingGurnardActive(int maker, int target) : base(maker)
+        public FlyingGurnardActive(int maker) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)target;
+            Target = (ushort)maker;
         }
         protected override void Animate()
         {
