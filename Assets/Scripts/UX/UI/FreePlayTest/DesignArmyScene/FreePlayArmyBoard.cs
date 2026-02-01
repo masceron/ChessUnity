@@ -57,7 +57,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             Debug.LogError($"GetTroopByCoordinate: False coordinate {rank} {file}");
             return (new Troop("piece_velkaris", -1, -1), false);
         }
-        public void LoadSave(Troop[] troops, Troop[] enemyTroops)
+        public void LoadSave(Troop[] troops, Troop[] enemyTroops, bool disableInteraction = false)
         {
             foreach (var troop in troops)
             {
@@ -66,6 +66,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
+                piece.enabled = !disableInteraction;
             }
             foreach (var troop in enemyTroops)
             {
@@ -74,6 +75,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
+                piece.enabled = !disableInteraction;
             }
         }
         public virtual void Load(int boardSize)
