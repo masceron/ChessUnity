@@ -5,7 +5,6 @@ using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.UI;
 using Game.Managers;
-using Game.Common;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
@@ -57,7 +56,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             Debug.LogError($"GetTroopByCoordinate: False coordinate {rank} {file}");
             return (new Troop("piece_velkaris", -1, -1), false);
         }
-        public void LoadSave(Troop[] troops, Troop[] enemyTroops)
+        public void LoadSave(Troop[] troops, Troop[] enemyTroops, bool disableInteraction = false)
         {
             foreach (var troop in troops)
             {
@@ -66,6 +65,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
+                piece.enabled = !disableInteraction;
             }
             foreach (var troop in enemyTroops)
             {
@@ -74,6 +74,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
                 piece.Placed = true;
+                piece.enabled = !disableInteraction;
             }
         }
         public virtual void Load(int boardSize)
@@ -194,10 +195,26 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         }
         public void Remove(int r, int f)
         {
-            var removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
-            var removedTroop = Troops[removedIndex];
-            Troops.RemoveAt(removedIndex);
-            OnRemoveTroop?.Invoke(removedTroop);
+            if (IsInEnemySite(r))
+            {
+                var removedIndex = EnemyTroops.FindIndex(t => t.Rank == r && t.File == f);
+                if (removedIndex != -1)
+                {
+                    var removedTroop = EnemyTroops[removedIndex];
+                    EnemyTroops.RemoveAt(removedIndex);
+                    OnRemoveTroop?.Invoke(removedTroop);
+                }
+            }
+            else
+            {
+                var removedIndex = Troops.FindIndex(t => t.Rank == r && t.File == f);
+                if (removedIndex != -1)
+                {
+                    var removedTroop = Troops[removedIndex];
+                    Troops.RemoveAt(removedIndex);
+                    OnRemoveTroop?.Invoke(removedTroop);
+                }
+            }
         }
         public bool IsInEnemySite(int rank)
         {

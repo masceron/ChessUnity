@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Skills;
 using Game.AI;
 using Game.Common;
@@ -10,11 +9,12 @@ using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.ChrysosShop;
+using ZLinq;
 
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate: Action, IPendingAble, IInternal, ISkills, IAIAction
+    public class ChrysosUpgradeCandidate: PendingAction, ISkills, IAIAction
     {
         public int AIPenaltyValue(PieceLogic p)
         {
@@ -44,7 +44,7 @@ namespace Game.Action.Internal.Pending.Piece
             allyPieces = new List<PieceLogic>();
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var shop = Object.FindAnyObjectByType<ChrysosShop>(FindObjectsInactive.Include);
             if (!shop)
@@ -126,12 +126,9 @@ namespace Game.Action.Internal.Pending.Piece
             }
             else
             {
-                var p = UnityEngine.Random.Range(0, topGroup.Count);
+                var p = Random.Range(0, topGroup.Count);
                 ActivateSkill(allyPieces[p], upgradableTo[idx], cost);
             }
         }
-
-        protected override void ModifyGameState()
-        {}
     }
 }

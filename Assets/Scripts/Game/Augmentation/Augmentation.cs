@@ -4,6 +4,7 @@ using Game.Augmentation.Set;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using System;
 
 namespace Game.Augmentation
 {
@@ -58,6 +59,7 @@ namespace Game.Augmentation
         }
     }
 
+    [Serializable]
     public enum AugmentationName
     {
         TidalRetina = 1,
@@ -98,7 +100,10 @@ namespace Game.Augmentation
         FocusModule = 39,
         FungalSac = 40,
         AdaptiveGland = 41,
-
+        CursedJaw = 42,
+        CursedModule = 43,
+        CursedFin = 44,
+        CursedPlate = 45,
         None = 10000,
     }
 

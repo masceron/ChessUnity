@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
-using Game.ScriptableObjects;
 using UnityEngine;
 using UX.UI.Army.DesignArmy;
 using UX.UI.FreePlayTest.DesignArmyScene;
@@ -34,14 +31,14 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             foreach (var troop in FPArmyDesign.Ins.board.Troops)
             {
                 var augNameLst = troop.equippedAugmentation.Values.ToList();
-                List<AugmentationInfo> infos = new();
-                foreach (var name in augNameLst)
-                {
-                    AugmentationInfo info = AssetManager.Ins.AugmentationData[name];
-                    infos.Add(info);
-                }
+                // List<AugmentationInfo> infos = new();
+                // foreach (var name in augNameLst)
+                // {
+                //     AugmentationInfo info = AssetManager.Ins.AugmentationData[name];
+                //     infos.Add(info);
+                // }
                 var pieceConfig = new PieceConfig(troop.PieceType, false,
-                    (ushort)(troop.Rank * Config.boardSize + troop.File), null);
+                    (ushort)(troop.Rank * Config.boardSize + troop.File), augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
             }
@@ -50,14 +47,14 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             foreach (var troop in FPArmyDesign.Ins.board.EnemyTroops)
             {
                 var augNameLst = troop.equippedAugmentation.Values.ToList();
-                List<AugmentationInfo> infos = new();
-                foreach (var name in augNameLst)
-                {
-                    AugmentationInfo info = AssetManager.Ins.AugmentationData[name];
-                    infos.Add(info);
-                }
+                // List<AugmentationInfo> infos = new();
+                // foreach (var name in augNameLst)
+                // {
+                //     AugmentationInfo info = AssetManager.Ins.AugmentationData[name];
+                //     infos.Add(info);
+                // }
                 var pieceConfig = new PieceConfig(troop.PieceType, true,
-                    (ushort)(troop.Rank * Config.boardSize + troop.File), null);
+                    (ushort)(troop.Rank * Config.boardSize + troop.File), augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigBlack.Add(pieceConfig);
             }

@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation

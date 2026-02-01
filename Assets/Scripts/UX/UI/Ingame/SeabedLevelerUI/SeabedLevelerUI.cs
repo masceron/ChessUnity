@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
-using Game.Action;
-using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
-using Game.Piece;
-using Game.Tile;
 using PrimeTween;
 using UnityEngine;
 

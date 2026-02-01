@@ -1,16 +1,14 @@
 ﻿// Assets/Scripts/Game/Action/Internal/Pending/Relic/SeafoamPhialPending.cs
 
-using Game.Effects.Buffs;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeafoamPhialPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class SeafoamPhialPending : PendingAction, System.IDisposable
     {
         private SeafoamPhial seafoamPhial;
 
@@ -20,29 +18,29 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
-            // ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            // ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker))));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             
+            BoardViewer.Ins.ExecuteAction(new SeafoamPhialAction(Maker));
             seafoamPhial.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
         }
 
         
 
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker)), seafoamPhial));
+        // protected override void ModifyGameState()
+        // {
+        //     ActionManager.EnqueueAction(new Purify(Maker, Maker));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker)), seafoamPhial));
             // BoardViewer.Selecting = -1;
             // BoardViewer.SelectingFunction = 0;
             //
             // seafoamPhial.SetCooldown();
             // MatchManager.Ins.InputProcessor.UpdateRelic(); 
-        }
+        // }
 
         public void Dispose()
         {

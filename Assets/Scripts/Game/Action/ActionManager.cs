@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Internal;
 using Game.Action.Relics;
 using Game.Action.Skills;
@@ -7,6 +6,7 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
+using ZLinq;
 
 namespace Game.Action
 {

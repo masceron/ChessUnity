@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Quiets;
@@ -10,6 +9,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UX.UI.Tooltip;
+using ZLinq;
 using Color = UnityEngine.Color;
 using static Game.Common.BoardUtils;
 using static UX.UI.Ingame.BoardViewer;
@@ -145,7 +145,8 @@ namespace UX.UI.Ingame
             if (SelectingFunction == 3)
             {
                 // thêm dispose vào đây được dể cleardata của chọn 2 quân được không 
-                TileManager.Ins.UnmarkAll();
+                //TileManager.Ins.UnmarkAll();
+                BoardViewer.Ins.Unmark();
                 SelectingFunction = 0;
                 return;
             }

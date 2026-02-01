@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
 using Game.Common;
@@ -121,13 +120,9 @@ namespace Game.Relics
             if (bestPieces != null)
             {
                 var pending = new RottingScythePending(this, bestPiece.Pos, bestPiece.Color);
-                if (pending is IPendingAble p)
+                if (pending is PendingAction p)
                 {
                     p.CompleteAction();
-                }
-                else
-                {
-                    BoardViewer.Ins.ExecuteAction(pending);
                 }
             }
             

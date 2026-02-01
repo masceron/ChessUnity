@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
 using Game.Common;
@@ -8,6 +7,7 @@ using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
+using ZLinq;
 
 namespace Game.Relics
 {
@@ -70,13 +70,9 @@ namespace Game.Relics
             int idx = UnityEngine.Random.Range(0, topGroup.Count);
             
             var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
-            if (pending is IPendingAble p)
+            if (pending is PendingAction p)
             {
                 p.CompleteAction();
-            }
-            else
-            {
-                BoardViewer.Ins.ExecuteAction(pending);
             }
         }
     }

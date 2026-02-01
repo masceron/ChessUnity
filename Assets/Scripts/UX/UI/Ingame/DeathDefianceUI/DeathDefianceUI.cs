@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Game.Common;
 using Game.Effects;
 using UnityEngine;
@@ -7,6 +6,7 @@ using PrimeTween;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace UX.UI.Ingame.DeathDefianceUI
 {

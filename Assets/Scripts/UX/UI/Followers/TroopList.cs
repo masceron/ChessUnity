@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Common;
 using Game.Piece;
 using Game.Save.Player;
@@ -9,6 +8,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using ZLinq;
 
 namespace UX.UI.Followers
 {

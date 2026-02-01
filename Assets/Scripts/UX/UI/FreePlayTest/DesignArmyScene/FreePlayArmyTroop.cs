@@ -23,8 +23,9 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
                 return;
             }
             else if (!Placed) return;
-            Destroy(gameObject);
+
             FindAnyObjectByType<FreePlayArmyBoard>().Remove(Rank, File);
+            Destroy(gameObject);
         }
         public new void OnBeginDrag(PointerEventData eventData)
         {

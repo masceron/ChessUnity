@@ -6,7 +6,6 @@ using Game.Piece;
 using UX.UI.Army.DesignArmy;
 using UnityEngine;
 using Game.ScriptableObjects.Collections;
-using UX.UI.Followers;
 
 namespace UX.UI.FreePlayTest{
     public enum FreePlayScene

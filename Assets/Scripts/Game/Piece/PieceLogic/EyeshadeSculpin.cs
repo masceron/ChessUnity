@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -7,6 +6,7 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic

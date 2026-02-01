@@ -22,12 +22,10 @@ namespace Game.Effects.Traits
             }
             UnityEngine.Debug.Log("BlackSwallowerVengeful OnCallDead");
             var pieceAround = new List<PieceLogic>();
-            foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Piece.Pos), FileOf(Piece.Pos), 1))
+            var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece.Pos, 1);
+            foreach (var piece in listPieces)
             {
-                var index = IndexOf(rank, file);
-                var pOn = PieceOn(index);
-                if (pOn == null || pOn == Piece) continue;
-                pieceAround.Add(pOn);
+                pieceAround.Add(PieceOn(piece));
             }
             if (pieceAround.Count == 0) return;
             var random = new Random();

@@ -1,16 +1,12 @@
-    using System.Linq;
-using Game.Common;
-using Game.Effects;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
 
-
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class OrnetesEdictPending : Action, System.IDisposable, IRelicAction
+    public class OrnetesEdictPending : PendingAction, System.IDisposable, IRelicAction, IInternal
     {
         private OrnetesEdict ornetesEdict;
         
@@ -18,30 +14,29 @@ namespace Game.Action.Internal.Pending.Relic
         {
             ornetesEdict = cp;
             Target = (ushort)maker;
+            Maker = (ushort)maker;
+        }
+
+        public override void CompleteAction()
+        {
+            var excute = new OrnetesEdictExecute(Target);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            if(ornetesEdict != null)
+            {
+                ornetesEdict.SetCooldown();
+            }
+            MatchManager.Ins.InputProcessor.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
 
         public void Dispose()
         {
             ornetesEdict = null;
             BoardViewer.SelectingFunction = 0;
-        }
-
-        protected override void ModifyGameState()
-        {
-            int numberOfDebuffedPieces = BoardUtils.PieceOn(Target).Effects.Count(e => e.Category == EffectCategory.Debuff);
-            int rate = 7 * (numberOfDebuffedPieces);
-            if (MatchManager.Roll(rate)) 
-            {
-                ActionManager.EnqueueAction(new KillPiece(Target));
-            }
-
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-
-            ornetesEdict.SetCooldown();
-            MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-            Dispose();
         }
     }
 }

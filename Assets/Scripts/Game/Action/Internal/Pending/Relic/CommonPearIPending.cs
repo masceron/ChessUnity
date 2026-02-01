@@ -1,16 +1,12 @@
-using System.Linq;
-using Game.Effects;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearlPending : Action, System.IDisposable, IRelicAction
+    public class CommonPearlPending : PendingAction, System.IDisposable, IRelicAction, IInternal
     {
         private CommonPearl commonPearl;
         
@@ -20,38 +16,29 @@ namespace Game.Action.Internal.Pending.Relic
             Target = (ushort)maker;
             Maker = (ushort)maker;
         }
-        public Effect GetRandomBuffEffect(PieceLogic piece)
+
+        public override void CompleteAction()
         {
-            var buffEffects = AssetManager.Ins.EffectData
-                .Where(kvp => kvp.Value.category == EffectCategory.Buff)
-                .Select(kvp => kvp.Key)
-                .ToArray();
-            
-            var random = new System.Random();
-            var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            
-            return CreateEffectFromName(selectedEffectName, piece);
+            commonPearl.SetCooldown();
+            var excute = new CommonPearlExecute(Target);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            MatchManager.Ins.InputProcessor.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
 
-        private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
+        public void Dispose()
         {
-            var randomDuration = (sbyte)new System.Random().Next(2, 6);
-
-            return effectName switch
-            {
-                "effect_shield" => new Effects.Buffs.Shield(piece),
-                "effect_carapace" => new Effects.Buffs.Carapace(randomDuration, piece),
-                "effect_haste" => new Effects.Buffs.Haste(randomDuration, 1, piece),
-                "effect_piercing" => new Effects.Buffs.Piercing(randomDuration, piece),
-                "effect_hardened_shield" => new Effects.Buffs.HardenedShield(piece),
-                "effect_true_bite" => new Effects.Buffs.TrueBite(piece),
-                "effect_camouflage" => new Effects.Buffs.Camouflage(piece),
-                _ => null
-            };
+            commonPearl = null;
+            BoardViewer.SelectingFunction = 0;
         }
-        // public void CompleteAction()
+
+        // protected override void ModifyGameState()
         // {
-        //     ActionManager.ExecuteImmediately(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target))));
+        //     ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target)), commonPearl));
 
         //     BoardViewer.Selecting = -1;
         //     BoardViewer.SelectingFunction = 0;
@@ -60,24 +47,6 @@ namespace Game.Action.Internal.Pending.Relic
         //     MatchManager.Ins.InputProcessor.UpdateRelic();
         //     Dispose();
         // }
-
-        public void Dispose()
-        {
-            commonPearl = null;
-            BoardViewer.SelectingFunction = 0;
-        }
-
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target)), commonPearl));
-
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-            commonPearl.SetCooldown();
-            MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-            Dispose();
-        }
 
 
 

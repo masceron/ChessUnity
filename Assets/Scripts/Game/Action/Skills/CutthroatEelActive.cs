@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         public CutthroatEelActive(int maker, int target, Bleeding effect) : base(maker)
         {
             Target = target;
-            this.bleeding = effect;
+            bleeding = effect;
         }
         protected override void ModifyGameState()
         {

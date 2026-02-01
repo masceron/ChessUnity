@@ -6,7 +6,7 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RottingScythePending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class RottingScythePending : PendingAction, System.IDisposable
     {
         private RottingScythe rottingScythe;
 
@@ -16,12 +16,14 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = (ushort)maker;
         }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
             rottingScythe.SetCooldown();
+            BoardViewer.Ins.ExecuteAction(new RottingScytheAction(Maker));
+            MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
         }
         
@@ -29,11 +31,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
             rottingScythe = null;
             BoardViewer.SelectingFunction = 0;
-        }
-
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new KillPiece(Maker));
         }
 
     }

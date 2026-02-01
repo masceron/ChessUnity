@@ -147,6 +147,34 @@ MonoBehaviour:
     m_Key: augmentation_barnacle_armor
     m_Metadata:
       m_Items: []
+  - m_Id: 1105130645229568
+    m_Key: augmentation_crown_of_silence_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1105156066906112
+    m_Key: augmentation_cursed_jaw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1108144755970048
+    m_Key: augmentation_cursed_jaw_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1108170429304832
+    m_Key: augmentation_cursed_module
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1111499842654208
+    m_Key: augmentation_cursed_module_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1111517278375936
+    m_Key: augmentation_cursed_fin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1115135771545600
+    m_Key: augmentation_cursed_plate
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

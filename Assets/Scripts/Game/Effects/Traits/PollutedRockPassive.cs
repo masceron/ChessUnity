@@ -1,8 +1,8 @@
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits

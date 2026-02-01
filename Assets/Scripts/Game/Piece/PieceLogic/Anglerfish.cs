@@ -5,7 +5,6 @@ using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
@@ -22,30 +21,36 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    if (!Color)
-                    {
-                        foreach (var (rank, file) in MoveEnumerators.Up(RankOf(Pos), FileOf(Pos), 3))
+                    // if (!Color)
+                    // {
+                        // foreach (var (rank, file) in MoveEnumerators.Up(RankOf(Pos), FileOf(Pos), 3))
+                        // {
+                        //     var idx = IndexOf(rank, file);
+                        //     var pOn = PieceOn(idx);
+                        //     if (pOn != null && pOn.Color != Color)
+                        //     {
+                        //         list.Add(new AnglerfishTaunt(Pos, idx));
+                        //     }
+                        // }
+                        var targets = SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, 3);
+                        foreach (var target in targets)
                         {
-                            var idx = IndexOf(rank, file);
-                            var pOn = PieceOn(idx);
-                            if (pOn != null && pOn.Color != Color)
-                            {
-                                list.Add(new AnglerfishTaunt(Pos, idx));
-                            }
+                            list.Add(new AnglerfishTaunt(Pos, target));
                         }
-                    }
-                    else
-                    {
-                        foreach (var (rank, file) in MoveEnumerators.Down(RankOf(Pos), FileOf(Pos), 3))
-                        {
-                            var idx = IndexOf(rank, file);
-                            var pOn = PieceOn(idx);
-                            if (pOn != null && pOn.Color != Color)
-                            {
-                                list.Add(new AnglerfishTaunt(Pos, idx));
-                            }
-                        }
-                    }
+                        
+                    // }
+                    // else
+                    // {
+                    //     foreach (var (rank, file) in MoveEnumerators.Down(RankOf(Pos), FileOf(Pos), 3))
+                    //     {
+                    //         var idx = IndexOf(rank, file);
+                    //         var pOn = PieceOn(idx);
+                    //         if (pOn != null && pOn.Color != Color)
+                    //         {
+                    //             list.Add(new AnglerfishTaunt(Pos, idx));
+                    //         }
+                    //     }
+                    // }
                 }
                 else
                 {

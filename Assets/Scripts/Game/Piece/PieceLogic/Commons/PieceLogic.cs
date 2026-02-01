@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Game.Augmentation.Set;
+using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Movesets;
 using Game.ScriptableObjects;
 using Game.Tile;
+using ZLinq;
 using static Game.Common.BoardUtils;
 using static Game.ScriptableObjects.PieceInfo;
 
@@ -87,9 +88,12 @@ namespace Game.Piece.PieceLogic.Commons
             Captures = captures;
 
             Augmentations = new List<Augmentation.Augmentation>();
-            if (cfg.Augmentations != null)
+            if (cfg.AugmentationNames != null)
             {
-                Augmentations.AddRange(cfg.Augmentations);
+                foreach (var augmentationName in cfg.AugmentationNames)
+                {
+                    Augmentations.Add(AugmentationHelper.NameToNewAugmentation(augmentationName));
+                }
             }
 
             if (Augmentations is not { Count: > 0 }) return;
@@ -146,6 +150,10 @@ namespace Game.Piece.PieceLogic.Commons
         public bool HasAugmentation(Augmentation.AugmentationName augmentationName)
         {
             return Augmentations.Any(a => a.Name == augmentationName);
+        }
+        public Augmentation.Augmentation GetAugmentation(Augmentation.AugmentationName augmentationName)
+        {
+            return Augmentations.FirstOrDefault(a => a.Name == augmentationName);
         }
         public void PassTurn()
         {

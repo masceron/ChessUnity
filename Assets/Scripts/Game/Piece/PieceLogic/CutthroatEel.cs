@@ -3,7 +3,6 @@ using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Common;
-using System.Linq;
 using Game.Effects.Debuffs;
 using Game.Effects;
 
@@ -25,7 +24,7 @@ namespace Game.Piece.PieceLogic
                         int targetPos = IndexOf(rank, file);
                         Commons.PieceLogic pieceOn = PieceOn(targetPos);
 
-                        if (pieceOn != null && pieceOn.Color != this.Color && pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
+                        if (pieceOn != null && pieceOn.Color != Color && pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
                         {
                             foreach(Effect effect in pieceOn.Effects)
                             {

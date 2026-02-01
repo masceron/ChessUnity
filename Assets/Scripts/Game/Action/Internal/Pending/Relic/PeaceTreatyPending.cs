@@ -1,21 +1,34 @@
-using Game.Common;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
 
-
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PeaceTreatyPending : Action, System.IDisposable, IRelicAction
+    public class PeaceTreatyPending : PendingAction, System.IDisposable, IRelicAction, IInternal
     {
         private PeaceTreaty peaceTreaty;
-        private const int TurnToEnd = 50;
+        
         public PeaceTreatyPending(PeaceTreaty cp, int maker, bool pos = false) : base(maker)
         {
             peaceTreaty = cp;
+            Target = (ushort)maker;
             Maker = (ushort)maker;
+        }
+
+        public override void CompleteAction()
+        {
+            
+            var excute = new PeaceTreatyExcute(peaceTreaty.Color);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+            MatchManager.Ins.InputProcessor.Unmark();
+            peaceTreaty.SetCooldown();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
 
         public void Dispose()
@@ -23,30 +36,5 @@ namespace Game.Action.Internal.Pending.Relic
             peaceTreaty = null;
             BoardViewer.SelectingFunction = 0;
         }
-
-        protected override void ModifyGameState()
-        {
-            if (MatchManager.Ins.GameState.CurrentTurn >= TurnToEnd)
-            {
-                BoardUtils.NotifyGameEnd(EndGameUI.MessageID.Win);
-            }
-            
-            if (peaceTreaty.Color)
-            {
-                MatchManager.Ins.GameState.BlackRelic = null;
-            }
-            else
-            {
-                MatchManager.Ins.GameState.WhiteRelic = null;
-            }
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-
-            peaceTreaty.SetCooldown();
-            MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic();
-            Dispose();
-        }
-
     }
 }   

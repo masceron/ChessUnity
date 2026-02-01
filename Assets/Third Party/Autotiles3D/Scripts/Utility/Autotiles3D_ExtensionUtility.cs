@@ -1,35 +1,34 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using UnityEngine;
-using System.Reflection;
-using UnityEditor;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Reflection;
+using System.Runtime.Serialization.Formatters.Binary;
+using Autotiles3D;
+using UnityEditor;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility
 {
-    public static class Autotiles3D_ExtensionUtility
+    public static class Autotiles3DExtensionUtility
     {
         public static void DeleteInstance(this InternalNode node)
         {
-            if (node.Instance != null)
-            {
-                node.Instance.SetActive(true);
-                if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
-                    Undo.DestroyObjectImmediate(node.Instance);
-                else
-                    GameObject.DestroyImmediate(node.Instance);
-            }
+            if (!node.Instance) return;
+            node.Instance.SetActive(true);
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
+                Undo.DestroyObjectImmediate(node.Instance);
+            else
+                Object.DestroyImmediate(node.Instance);
         }
 
         public static void DisableInstance(this InternalNode node)
         {
-            if (node.Instance != null)
+            if (node.Instance)
                 node.Instance.SetActive(false);
         }
         public static void EnableInstance(this InternalNode node)
         {
-            if (node.Instance != null)
+            if (node.Instance)
                 node.Instance.SetActive(true);
         }
 
@@ -45,14 +44,14 @@ namespace Autotiles3D
         /// <param name="node"></param>
         public static void VerifyInstance(this InternalNode node)
         {
-            if (node.Instance == null)
+            if (!node.Instance)
             {
                 node.UpdateInstance();
             }
             else
             {
                 //dont allow baked node to update
-                if (node.Block != null && node.Block.IsBaked)
+                if (node.Block && node.Block.IsBaked)
                     return;
 
                 GameObject prefab = null;
@@ -62,10 +61,10 @@ namespace Autotiles3D
                     Debug.LogError("Autotiles3D: Internal node  is missing tile");
                     return;
                 }
-                int[] addedRotation = new int[] { -1, 0 };
+                var addedRotation = new[] { -1, 0 };
                 if (tile.HasRules)
                 {
-                    bool[] neighbors = node.Layer.GetNeighborsBoolSelfSpace(node.InternalPosition, node.LocalRotation);
+                    var neighbors = node.Layer.GetNeighborsBoolSelfSpace(node.InternalPosition, node.LocalRotation);
                     var rule = tile.GetRule(neighbors, out addedRotation);
 
                     if (rule != null)
@@ -96,7 +95,7 @@ namespace Autotiles3D
 
                 if (addedRotation[0] > -1) //if rotated around an axis, add the rotation 
                 {
-                    Vector3 axis = Vector3.right;
+                    var axis = Vector3.right;
                     if (addedRotation[0] == 1)
                         axis = Vector3.up;
                     else if (addedRotation[0] == 2)
@@ -141,11 +140,11 @@ namespace Autotiles3D
         {
 
             //dont allow baked node to update
-            if (node.Block != null && node.Block.IsBaked)
+            if (node.Block && node.Block.IsBaked)
                 return;
 
-            GameObject prefab = null;
-            int[] addedRotation = new int[] { -1, 0 };
+            GameObject prefab;
+            var addedRotation = new[] { -1, 0 };
 
             var tile = node.GetTile();
             if (tile == null)
@@ -161,7 +160,7 @@ namespace Autotiles3D
 
             if (tile.HasRules)
             {
-                bool[] neighbors = node.Layer.GetNeighborsBoolSelfSpace(node.InternalPosition, node.LocalRotation);
+                var neighbors = node.Layer.GetNeighborsBoolSelfSpace(node.InternalPosition, node.LocalRotation);
                 var rule = tile.GetRule(neighbors, out addedRotation);
 
                 if (rule != null)
@@ -184,7 +183,7 @@ namespace Autotiles3D
 
             if (addedRotation[0] > -1) //if rotated around an axis, add the rotation 
             {
-                Vector3 axis = Vector3.right;
+                var axis = Vector3.right;
                 if (addedRotation[0] == 1)
                     axis = Vector3.up;
                 else if (addedRotation[0] == 2)
@@ -226,7 +225,7 @@ namespace Autotiles3D
         #region DEBUGGING
         private static void DebugNeighbors(InternalNode node, bool[] neighbors)
         {
-            string middle = node.InternalPosition.ToString();
+            var middle = node.InternalPosition.ToString();
             middle += $"\n{neighbors[9]}  {neighbors[10]}  {neighbors[11]}";
             middle += $"\n{neighbors[12]}  {neighbors[13]}  {neighbors[14]}";
             middle += $"\n{neighbors[15]}  {neighbors[16]}  {neighbors[17]}";
@@ -237,7 +236,7 @@ namespace Autotiles3D
         public static void Randomize(this InternalNode node, bool dontAllowSame = true)
         {
 
-            if (node.TryRandomize(out GameObject random, dontAllowSame))
+            if (node.TryRandomize(out var random, dontAllowSame))
             {
                 node.CreateInstance(random);
                 node.UpdateInstanceTransform();
@@ -262,8 +261,7 @@ namespace Autotiles3D
             }
 
 
-            int[] addedRotation = new int[] { -1, 0 };
-            bool[] neighbors = node.Layer.GetNeighborsBoolSelfSpace(node.InternalPosition, node.LocalRotation);
+            var neighbors = node.Layer.GetNeighborsBoolSelfSpace(node.InternalPosition, node.LocalRotation);
             var tile = node.GetTile();
             if (tile == null)
             {
@@ -271,21 +269,15 @@ namespace Autotiles3D
                 return false;
             }
 
-            Autotiles3D_Rule rule = tile.GetRule(neighbors, out addedRotation);
-            GameObject instance = dontAllowSame ? node.Instance : null;
+            var rule = tile.GetRule(neighbors, out _);
+            var instance = dontAllowSame ? node.Instance : null;
 
             //case we can onyl place default:
-            if (rule == null)
-            {
-                random = tile.GetRandomDefaultExclude(instance);
-            }
-            //case: a rule applies.
-            else
-            {
-                random = rule.GetRandomObjectExclude(instance);
-            }
+            random = rule == null ? tile.GetRandomDefaultExclude(instance) :
+                //case: a rule applies.
+                rule.GetRandomObjectExclude(instance);
 
-            return random != null;
+            return random;
         }
 
         public static void UpdateInstanceTransform(this InternalNode node)
@@ -297,9 +289,9 @@ namespace Autotiles3D
             }
         }
 
-        public static void CreateInstance(this InternalNode node, GameObject prefab)
+        private static void CreateInstance(this InternalNode node, GameObject prefab)
         {
-            if (prefab == null)
+            if (!prefab)
             {
                 Debug.LogError("Skin Prefab is null!");
                 return;
@@ -311,30 +303,30 @@ namespace Autotiles3D
                 return;
             }
             var anchor = node.Layer.GetAnchor(node.TileID);
-            if (anchor == null)
+            if (!anchor)
                 anchor = node.Layer.EnsureAnchor(node.TileGroupName, node.TileName, node.TileID);
 
-            var newInstance = PrefabUtility.InstantiatePrefab(prefab, anchor.transform) as UnityEngine.GameObject;
+            var newInstance = PrefabUtility.InstantiatePrefab(prefab, anchor.transform) as GameObject;
 
             var newBlock = newInstance.GetComponent<Autotiles3D_BlockBehaviour>();
-            if (node.Block != null && newBlock != null)
+            if (node.Block && newBlock)
             {
                 var viewCache = newBlock.View;
-                CopyComponent(node.Block, newBlock);
+                node.Block.CopyComponent(newBlock);
                 newBlock.View = viewCache;
             }
 
-            if (node.Instance != null)
+            if (node.Instance)
             {
-                if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+                if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                     Undo.DestroyObjectImmediate(node.Instance);
                 else
-                    GameObject.DestroyImmediate(node.Instance);
+                    Object.DestroyImmediate(node.Instance);
             }
 
             node.Instance = newInstance;
 
-            if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCreatedObjectUndo(node.Instance, "InstanceUpdate");
         }
 
@@ -350,20 +342,20 @@ namespace Autotiles3D
             return false;
         }
 
-        public static void CopyComponent<T>(this T original, T destination) where T : Component
+        private static void CopyComponent<T>(this T original, T destination) where T : Component
         {
-            System.Type originalType = original.GetType();
-            System.Type destinationType = destination.GetType();
+            var originalType = original.GetType();
+            var destinationType = destination.GetType();
             if (destinationType.IsSubclassOf(originalType))
             {
-                FieldInfo[] originalFields = originalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
-                foreach (FieldInfo field in originalFields)
+                var originalFields = originalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+                foreach (var field in originalFields)
                     field.SetValue(destination, field.GetValue(original));
             }
             else if (originalType.IsSubclassOf(destinationType))
             {
-                FieldInfo[] destinationFields = destinationType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
-                foreach (FieldInfo field in destinationFields)
+                var destinationFields = destinationType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+                foreach (var field in destinationFields)
                     field.SetValue(destination, field.GetValue(original));
 
             }
@@ -377,14 +369,12 @@ namespace Autotiles3D
         /// <returns></returns>
         public static T DeepClone<T>(this T obj)
         {
-            using (var ms = new MemoryStream())
-            {
-                var formatter = new BinaryFormatter();
-                formatter.Serialize(ms, obj);
-                ms.Position = 0;
+            using var ms = new MemoryStream();
+            var formatter = new BinaryFormatter();
+            formatter.Serialize(ms, obj);
+            ms.Position = 0;
 
-                return (T)formatter.Deserialize(ms);
-            }
+            return (T)formatter.Deserialize(ms);
         }
 
         public static Autotiles3D_Anchor EnsureAnchor(this Autotiles3D_TileLayer layer, string group, string tileName, int tileID)
@@ -410,14 +400,13 @@ namespace Autotiles3D
         public static List<Vector3Int> GetNeighborsPosition(this Autotiles3D_TileLayer layer, Vector3Int internalPosition)
         {
             var myNeighbors = new List<Vector3Int>();
-            Vector3Int iteration;
-            for (int x = (int)internalPosition.x - 1; x <= (int)internalPosition.x + 1; x++)
+            for (var x = internalPosition.x - 1; x <= internalPosition.x + 1; x++)
             {
-                for (int y = (int)internalPosition.y - 1; y <= (int)internalPosition.y + 1; y++)
+                for (var y = internalPosition.y - 1; y <= internalPosition.y + 1; y++)
                 {
-                    for (int z = (int)internalPosition.z - 1; z <= (int)internalPosition.z + 1; z++)
+                    for (var z = internalPosition.z - 1; z <= internalPosition.z + 1; z++)
                     {
-                        iteration = new Vector3Int(x, y, z);
+                        var iteration = new Vector3Int(x, y, z);
                         if (iteration == internalPosition)
                             continue;
                         if (layer.ContainsKey(iteration))
@@ -430,19 +419,17 @@ namespace Autotiles3D
 
         public static bool[] GetNeighborsBoolSelfSpace(this Autotiles3D_TileLayer layer, Vector3Int internalPosition, Quaternion localRotation)
         {
-            bool[] neighbors = new bool[27];
-            Vector3Int iteration;
-            int deltax, deltay, deltaz;
-            deltay = 0;
-            for (int y = -1; y <= 1; y++)
+            var neighbors = new bool[27];
+            var deltay = 0;
+            for (var y = -1; y <= 1; y++)
             {
-                deltaz = 0;
-                for (int z = 1; z >= -1; z--)
+                var deltaz = 0;
+                for (var z = 1; z >= -1; z--)
                 {
-                    deltax = 0;
-                    for (int x = -1; x <= 1; x++)
+                    var deltax = 0;
+                    for (var x = -1; x <= 1; x++)
                     {
-                        iteration = Vector3Int.RoundToInt(internalPosition + localRotation * new Vector3Int(x, y, z));
+                        var iteration = Vector3Int.RoundToInt(internalPosition + localRotation * new Vector3Int(x, y, z));
 
                         if (iteration != internalPosition)
                         {

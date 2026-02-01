@@ -1,10 +1,10 @@
-using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
 using Game.AI;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
+using ZLinq;
 
 namespace Game.Action.Skills
 {

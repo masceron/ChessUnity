@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece;
@@ -12,6 +11,7 @@ using UX.UI;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
+using ZLinq;
 
 namespace Game.Managers
 {

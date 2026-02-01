@@ -1,7 +1,6 @@
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DeathDefianceUI;
-using System.Linq;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Action.Captures;

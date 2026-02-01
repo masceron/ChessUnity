@@ -1,5 +1,4 @@
 using System;
-using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -10,7 +9,7 @@ using Game.AI;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MegalodonActive: Action, ISkills, IPendingAble, IDisposable, IAIAction
+    public class MegalodonActive: PendingAction, IDisposable, IAIAction
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -28,16 +27,16 @@ namespace Game.Action.Skills
             Target = (ushort)to;
         }
 
-        protected override void ModifyGameState()
-        {
-            ActionManager.EnqueueAction(new KillPiece(_firstTarget.Pos));
-            ActionManager.EnqueueAction(new KillPiece(_secondTarget.Pos));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            
-            ResetTargets();
-        }
+        // protected override void ModifyGameState()
+        // {
+        //     ActionManager.EnqueueAction(new KillPiece(_firstTarget.Pos));
+        //     ActionManager.EnqueueAction(new KillPiece(_secondTarget.Pos));
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        //     
+        //     ResetTargets();
+        // }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
 

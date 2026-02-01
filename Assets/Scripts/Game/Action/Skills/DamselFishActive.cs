@@ -1,9 +1,9 @@
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using System.Linq;
 using UnityEngine;
 using Game.Effects.Buffs;
+using ZLinq;
 
 namespace Game.Action.Skills
 {

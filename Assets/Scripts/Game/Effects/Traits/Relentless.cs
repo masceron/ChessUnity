@@ -1,6 +1,5 @@
 using Game.Action;
 using Game.Action.Internal;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;

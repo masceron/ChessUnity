@@ -2,9 +2,9 @@ using Game.Managers;
 using UnityEngine;
 using Game.Action.Internal;
 using Game.Action;
-using System.Linq;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Effects.RegionalEffect
 {

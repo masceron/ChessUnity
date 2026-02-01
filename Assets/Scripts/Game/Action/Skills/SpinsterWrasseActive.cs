@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Effects.Buffs;
@@ -12,7 +11,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SpinsterWrasseActive : Action, ISkills, IPendingAble, IDisposable
+    public class SpinsterWrasseActive : PendingAction, IDisposable
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
@@ -24,15 +23,15 @@ namespace Game.Action.Skills
             Color = color;
         }
 
-        protected override void ModifyGameState()
-        {
-            ApplyEffect(FirstTarget, SecondTarget);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            
-            ResetTargets();
-        }
+        // protected override void ModifyGameState()
+        // {
+        //     ApplyEffect(FirstTarget, SecondTarget);
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        //     
+        //     ResetTargets();
+        // }
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
 

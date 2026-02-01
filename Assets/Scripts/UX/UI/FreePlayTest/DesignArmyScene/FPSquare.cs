@@ -1,5 +1,4 @@
 using UnityEngine;
-using UX.UI.Army.DesignArmy;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 

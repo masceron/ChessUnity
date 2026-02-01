@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UX.UI.FreePlayTest.DesignArmyScene;
 
 namespace UX.UI.FreePlayTest
 {
