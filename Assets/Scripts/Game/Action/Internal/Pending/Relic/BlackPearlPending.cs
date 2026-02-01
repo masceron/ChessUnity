@@ -1,13 +1,7 @@
-using System.Linq;
-using Game.Common;
-using Game.Effects;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
-using UnityEngine;
 using UX.UI.Ingame;
 using Game.Action.Relics;
-using ZLinq;
 
 
 namespace Game.Action.Internal.Pending.Relic
@@ -79,7 +73,7 @@ namespace Game.Action.Internal.Pending.Relic
             //     ? new ApplyEffect(GetRandomBuffEffect())
             //     : new ApplyEffect(GetRandomDebuffEffect()));
 
-            BoardViewer.Ins.ExecuteAction(new BlackPearlExcute(Target, blackPearl.Color));
+            BoardViewer.Ins.ExecuteAction(new BlackPearlExecute(Target, blackPearl.Color));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 

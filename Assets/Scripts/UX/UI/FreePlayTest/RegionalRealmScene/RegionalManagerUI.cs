@@ -1,9 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
-using Game.ScriptableObjects;
 using UnityEngine;
 using UX.UI.Army.DesignArmy;
 using UX.UI.FreePlayTest.DesignArmyScene;

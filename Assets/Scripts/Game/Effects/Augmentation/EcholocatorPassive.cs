@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
-using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Effects.Debuffs;
 using Game.Common;

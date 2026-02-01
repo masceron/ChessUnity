@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Game.Piece.PieceLogic
 {
     public class StoneWall : Commons.PieceLogic

@@ -1,12 +1,7 @@
-using Game.Common;
-using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
-using Game.Action.Internal.Pending;
-using Game.Action.Internal;
-using Game.Tile;
 
 namespace Game.Action.Internal.Pending.Relic
 {

@@ -1,7 +1,5 @@
 using Game.Action;
 using Game.Action.Captures;
-using Game.Augmentation;
-using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 

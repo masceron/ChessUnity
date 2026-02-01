@@ -1,9 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Buffs;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
-using Game.Managers;
 using Game.Effects.Debuffs;
 
 namespace Game.Tile

@@ -1,13 +1,7 @@
-using System.Linq;
-using Game.Effects;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 using Game.Action.Relics;
-using Game.Action.Internal.Pending;
-using Game.Action.Internal;
 
 namespace Game.Action.Internal.Pending.Relic
 {
@@ -26,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
         public override void CompleteAction()
         {
             commonPearl.SetCooldown();
-            var excute = new CommonPearlExcute(Target);
+            var excute = new CommonPearlExecute(Target);
             BoardViewer.Ins.ExecuteAction(excute);
 
             BoardViewer.Selecting = -1;

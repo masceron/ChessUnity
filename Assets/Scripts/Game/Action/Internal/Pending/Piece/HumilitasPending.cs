@@ -1,15 +1,10 @@
-using Game.Action.Internal;
 using static Game.Common.BoardUtils;
-using Game.Effects.Debuffs;
-using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Common;
 using Game.AI;
 using Game.Action.Skills;
-using Game.Action;
-using Game.AI;
 
 namespace Game.Action.Internal.Pending.Piece
 {

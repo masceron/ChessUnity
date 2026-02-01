@@ -1,29 +1,26 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
-using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
-using Game.Effects.Buffs;
-using System.Linq;
+using ZLinq;
 
 namespace Game.Action.Relics
 {
 
-    public class BlackPearlExcute : Action, IRelicAction
+    public class BlackPearlExecute : Action, IRelicAction
     {
-        private int Target;
-        private bool Color;
-        public BlackPearlExcute(int Target, bool Color) : base(-1)
+        private readonly bool _color;
+        public BlackPearlExecute(int target, bool color) : base(-1)
         {
-            this.Target = Target;
-            this.Color = Color;
+            Target = target;
+            _color = color;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == Color
+            ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == _color
                 ? new ApplyEffect(GetRandomBuffEffect())
                 : new ApplyEffect(GetRandomDebuffEffect()));
         }

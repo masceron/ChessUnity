@@ -1,10 +1,7 @@
-using Game.Common;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
-using Game.Action.Internal.Pending;
-using Game.Action.Internal;
 
 namespace Game.Action.Internal.Pending.Relic
 {

@@ -1,6 +1,4 @@
-﻿
-using System.Linq;
-using Game.Action;
+﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -53,13 +51,13 @@ namespace Game.Effects.Others
 
             return effectName switch
             {
-                "effect_shield" => new Effects.Buffs.Shield(piece),
-                "effect_carapace" => new Effects.Buffs.Carapace(randomDuration, piece),
-                "effect_haste" => new Effects.Buffs.Haste(randomDuration, 1, piece),
-                "effect_piercing" => new Effects.Buffs.Piercing(randomDuration, piece),
-                "effect_hardened_shield" => new Effects.Buffs.HardenedShield(piece),
-                "effect_true_bite" => new Effects.Buffs.TrueBite(piece),
-                "effect_camouflage" => new Effects.Buffs.Camouflage(piece),
+                "effect_shield" => new Buffs.Shield(piece),
+                "effect_carapace" => new Buffs.Carapace(randomDuration, piece),
+                "effect_haste" => new Buffs.Haste(randomDuration, 1, piece),
+                "effect_piercing" => new Buffs.Piercing(randomDuration, piece),
+                "effect_hardened_shield" => new Buffs.HardenedShield(piece),
+                "effect_true_bite" => new Buffs.TrueBite(piece),
+                "effect_camouflage" => new Buffs.Camouflage(piece),
                 _ => null
             };
         }

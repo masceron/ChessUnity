@@ -1,7 +1,6 @@
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Managers;
-using System.Linq;
 using Game.Tile;
 
 namespace Game.Effects.SpecialAbility

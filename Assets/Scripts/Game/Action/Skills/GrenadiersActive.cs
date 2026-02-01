@@ -1,5 +1,4 @@
 using Game.Common;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using Game.AI;
 using System.Collections.Generic;

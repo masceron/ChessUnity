@@ -126,7 +126,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
             else
             {
-                var p = UnityEngine.Random.Range(0, topGroup.Count);
+                var p = Random.Range(0, topGroup.Count);
                 ActivateSkill(allyPieces[p], upgradableTo[idx], cost);
             }
         }

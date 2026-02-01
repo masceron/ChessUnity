@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile

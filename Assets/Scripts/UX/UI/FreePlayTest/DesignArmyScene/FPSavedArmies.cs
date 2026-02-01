@@ -1,9 +1,7 @@
-using UX.UI.Followers;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Save.Army;
-using Game.Common;
-using System.Linq;
+
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     public class FPSavedArmies : MonoBehaviour

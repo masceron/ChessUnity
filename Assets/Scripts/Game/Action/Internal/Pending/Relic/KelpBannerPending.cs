@@ -1,10 +1,8 @@
 ﻿using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
-using Game.Tile;
-using UnityEngine.InputSystem;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
+
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

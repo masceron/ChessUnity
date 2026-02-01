@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Game.Action.Internal;
+﻿using Game.Action.Internal;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;

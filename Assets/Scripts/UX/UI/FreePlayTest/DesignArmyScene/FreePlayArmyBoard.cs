@@ -5,7 +5,6 @@ using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.UI;
 using Game.Managers;
-using Game.Common;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {

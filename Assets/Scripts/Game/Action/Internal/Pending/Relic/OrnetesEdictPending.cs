@@ -1,12 +1,7 @@
-using System.Linq;
-using Game.Common;
-using Game.Effects;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
-using Game.Action.Internal.Pending;
-using Game.Action.Internal;
 
 namespace Game.Action.Internal.Pending.Relic
 {
@@ -24,7 +19,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public override void CompleteAction()
         {
-            var excute = new OrnetesEdictExcute(Target);
+            var excute = new OrnetesEdictExecute(Target);
             BoardViewer.Ins.ExecuteAction(excute);
 
             BoardViewer.Selecting = -1;

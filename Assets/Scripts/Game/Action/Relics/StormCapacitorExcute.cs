@@ -2,8 +2,6 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics
 {
@@ -22,7 +20,7 @@ namespace Game.Action.Relics
             this.file = file;
             this.size = size;
             this.corner = corner;
-            this.Color = color;
+            Color = color;
         }
 
         protected override void ModifyGameState()

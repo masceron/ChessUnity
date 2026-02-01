@@ -1,9 +1,7 @@
 ﻿using Game.Common;
-using Game.Effects.Others;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
-using UnityEngine;
 using UX.UI.Ingame;
 using Game.Action.Relics;
 

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Relics.Commons;
-using Game.Tile;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;

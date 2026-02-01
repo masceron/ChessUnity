@@ -1,8 +1,4 @@
 ﻿using Game.Action.Relics;
-using Game.Common;
-using Game.Effects;
-using Game.Effects.Debuffs;
-using Game.Managers;
 using Game.Relics;
 using UnityEngine;
 using UX.UI.Ingame;

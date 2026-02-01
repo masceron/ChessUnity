@@ -2,9 +2,7 @@ using Game.Relics.Commons;
 using UX.UI.Ingame;
 using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
-using Game.Relics;
-using Game.Common;
-using static Game.Common.BoardUtils;
+
 namespace Game.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

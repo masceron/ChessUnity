@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Game.Save.Army;
+﻿using Game.Save.Army;
 using UnityEngine;
 using Game.Common;
 

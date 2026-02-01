@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Game.Action.Internal.Pending.Piece;
+﻿using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece;

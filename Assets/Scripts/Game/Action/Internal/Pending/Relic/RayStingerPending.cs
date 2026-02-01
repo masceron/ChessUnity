@@ -3,10 +3,7 @@
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 using Game.Action.Relics;
-using Game.Effects.Debuffs;
-using UnityEngine;
 
 namespace Game.Action.Internal.Pending.Relic
 {
@@ -17,7 +14,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public RayStingerPending(RayStinger seafoamPhial, int target) : base(target)
         {
-            this.rayStinger = seafoamPhial;
+            rayStinger = seafoamPhial;
             Target = (ushort)target;
         }
 

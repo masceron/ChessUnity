@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using static Game.Common.BoardUtils;
+﻿using static Game.Common.BoardUtils;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;

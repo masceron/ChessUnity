@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System;
 using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine;
@@ -27,7 +26,7 @@ namespace Autotiles3D
         Edge = 2
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Autotiles3D_Rule
     {
         public bool IsActive = true;
@@ -43,20 +42,20 @@ namespace Autotiles3D
         [SerializeField] private int _ruleID = -1;
         public Autotiles3D_Rule()
         {
-            _ruleID = System.Guid.NewGuid().GetHashCode();
+            _ruleID = Guid.NewGuid().GetHashCode();
         }
         public int RuleID
         {
             get
             {
                 if (_ruleID == -1)
-                    _ruleID = System.Guid.NewGuid().GetHashCode();
+                    _ruleID = Guid.NewGuid().GetHashCode();
                 return _ruleID;
             }
         }
         public Autotiles3D_Rule(Autotiles3D_Rule copy)
         {
-            _ruleID = System.Guid.NewGuid().GetHashCode();
+            _ruleID = Guid.NewGuid().GetHashCode();
             IsActive = copy.IsActive;
             Object = copy.Object;
             Randoms = new List<GameObject>();
@@ -111,7 +110,7 @@ namespace Autotiles3D
 #endif
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Autotiles3D_Tile
     {
         [SerializeField] private string _group; //name of the TileGroup this belongs to
@@ -135,7 +134,7 @@ namespace Autotiles3D
             get
             {
                 if (_tileID == -1)
-                    _tileID = System.Guid.NewGuid().GetHashCode();
+                    _tileID = Guid.NewGuid().GetHashCode();
                 return _tileID;
             }
         }

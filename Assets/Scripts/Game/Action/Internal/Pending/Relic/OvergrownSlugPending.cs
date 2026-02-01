@@ -2,7 +2,6 @@
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Relic
 {
@@ -11,7 +10,7 @@ namespace Game.Action.Internal.Pending.Relic
         private OvergrownSlug overgrownSlug;
         public OvergrownSlugPending(OvergrownSlug ogs, int maker, bool pos = false) : base(maker)
         {
-            this.overgrownSlug = ogs;
+            overgrownSlug = ogs;
             Maker = (ushort)maker;
         }
 

@@ -35,7 +35,7 @@ namespace Game.Action.Skills
             if (formationPos == -1)
             {
                 Debug.Log("[RedtailParrotfishActive] Choose destination!");
-                formationPos = this.Target;
+                formationPos = Target;
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
                 for(int i = 0; i < BoardSize; ++i)
@@ -52,7 +52,7 @@ namespace Game.Action.Skills
             }
             else
             {
-                moveTo = this.Target;
+                moveTo = Target;
                 BoardViewer.Ins.ExecuteAction(this);
             }
         }

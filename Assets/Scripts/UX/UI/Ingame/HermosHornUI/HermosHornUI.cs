@@ -1,4 +1,3 @@
-using Game.Action.Internal.Pending.Relic;
 using Game.Relics.Commons;
 using Game.Common;
 using Game.Action.Relics;
@@ -10,7 +9,7 @@ namespace UX.UI.Ingame.HermosHorn
         private RelicLogic relic; 
         public void Load(RelicLogic relicLogic)
         {
-            this.relic = relicLogic;
+            relic = relicLogic;
         }
         public void FirstOption()
         {

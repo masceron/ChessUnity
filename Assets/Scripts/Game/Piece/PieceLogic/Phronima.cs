@@ -1,4 +1,3 @@
-using Game.Common;
 using Game.Effects;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -14,15 +13,15 @@ namespace Game.Piece.PieceLogic
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-                var (rank, file) = BoardUtils.RankFileOf(Pos);
+                var (rank, file) = RankFileOf(Pos);
                 if (isPlayer)
                 {
                     for (var x = rank - 3; x <= rank + 3; ++x)
                     {
                         for (var y = file - 3; y <= file + 3; ++y)
                         {
-                            if (!BoardUtils.VerifyBounds(x) || !BoardUtils.VerifyBounds(y)) continue;
-                            var targetPiece = BoardUtils.PieceOn(BoardUtils.IndexOf(x, y));
+                            if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
+                            var targetPiece = PieceOn(IndexOf(x, y));
                             if (targetPiece == null || targetPiece.Color == Color) continue;
                             list.Add(new Action.Skills.PhronimaActive(Pos, targetPiece.Pos));
                         }
@@ -65,7 +64,7 @@ namespace Game.Piece.PieceLogic
                             for (var y = file - 3; y <= file + 3; y++)
                             {
                                 if (x == rank && y == file) continue;
-                                list.Add(new Action.Skills.PhronimaActive(Pos, BoardUtils.IndexOf(x, y)));
+                                list.Add(new Action.Skills.PhronimaActive(Pos, IndexOf(x, y)));
                             }
                         }
                     }

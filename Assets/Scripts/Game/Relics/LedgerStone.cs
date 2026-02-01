@@ -1,14 +1,6 @@
-    using System.Linq;
-using Game.Common;
-using static Game.Common.BoardUtils;
-using Game.Effects;
-using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
 using Game.Relics.Commons;
-using Game.Piece;
-using Game.Action.Internal.Pending.Relic;
 using UX.UI.Ingame.LedgerStone;
 namespace Game.Relics
 {

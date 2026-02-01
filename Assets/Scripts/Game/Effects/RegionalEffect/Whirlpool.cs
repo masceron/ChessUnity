@@ -4,8 +4,6 @@ using Game.Managers;
 using Game.Action.Internal;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 using static Game.Common.BoardUtils;
@@ -78,7 +76,7 @@ namespace Game.Effects.RegionalEffect
             foreach (var info in pieceInfos)
             {
                 var piece = info.piece;
-                if (piece == null || BoardUtils.IsAlive(piece)) continue;
+                if (piece == null || IsAlive(piece)) continue;
 
                 int fromIndex = piece.Pos;
                 // If piece already on whirlpool -> destroy it

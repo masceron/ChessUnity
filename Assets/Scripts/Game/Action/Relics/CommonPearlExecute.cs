@@ -1,23 +1,19 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
-using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
-using Game.Effects.Buffs;
-using System.Linq;
+using ZLinq;
 
 namespace Game.Action.Relics
 {
 
-    public class CommonPearlExcute : Action, IRelicAction
+    public class CommonPearlExecute : Action, IRelicAction
     {
-        private int Target;
 
-        public CommonPearlExcute(int Target) : base(Target)
+        public CommonPearlExecute(int target) : base(target)
         {
-            this.Target = Target;
+            Target = target;
         }
 
         protected override void ModifyGameState()

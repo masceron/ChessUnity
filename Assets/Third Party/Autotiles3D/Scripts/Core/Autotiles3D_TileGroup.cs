@@ -46,7 +46,7 @@ namespace Autotiles3D
         {
             foreach (var tile in Tiles)
             {
-                tile.SetGroupName(this.name);
+                tile.SetGroupName(name);
             }
 
 #if UNITY_EDITOR

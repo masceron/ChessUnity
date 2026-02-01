@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
+﻿using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Managers;
-using Game.Piece;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;

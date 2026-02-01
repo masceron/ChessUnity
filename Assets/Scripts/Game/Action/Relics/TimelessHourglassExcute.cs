@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Relics;
 using Game.Common;
-using UnityEngine;
 
 public class TimelessHourglassExcute : Action, IRelicAction
 {
@@ -10,8 +9,8 @@ public class TimelessHourglassExcute : Action, IRelicAction
     public TimelessHourglassExcute(int maker, bool relicColor, int target) : base(maker)
     {
         this.relicColor = relicColor;
-        this.Target = target;
-        this.targetColor = BoardUtils.PieceOn(target).Color;
+        Target = target;
+        targetColor = BoardUtils.PieceOn(target).Color;
     }
 
     protected override void ModifyGameState()

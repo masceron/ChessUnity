@@ -3,11 +3,10 @@ using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using System.Linq;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
-using Game.Common;
-using static Game.Common.BoardUtils;
+using ZLinq;
+
 namespace Game.Relics
 {
     public class BlackPearl : RelicLogic, IRelicAction

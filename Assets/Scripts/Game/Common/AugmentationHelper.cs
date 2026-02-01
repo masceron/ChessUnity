@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Game.Augmentation;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Common
 {

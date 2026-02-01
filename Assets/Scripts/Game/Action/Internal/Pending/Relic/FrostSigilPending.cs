@@ -1,10 +1,7 @@
-using Game.Common;
-using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 
 namespace Game.Action.Internal.Pending.Relic
 {

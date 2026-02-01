@@ -2,7 +2,7 @@ using Game.Piece.PieceLogic.Commons;
 using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
-using System.Linq;
+
 namespace Game.Effects.Augmentation
 {
     public class StalkerInstinctEffect : Effect, IOnMoveGenEffect

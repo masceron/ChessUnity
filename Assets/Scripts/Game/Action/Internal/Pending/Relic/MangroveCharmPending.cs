@@ -1,5 +1,4 @@
 using Game.Common;
-using Game.Effects.Buffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
@@ -21,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
             mangroveCharm = e;
             Target = (ushort)Target;
             Maker = (ushort)Target;
-            this.Color = color;
+            Color = color;
         }
 
         public override void CompleteAction()

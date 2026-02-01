@@ -2,12 +2,6 @@ using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.Action.Internal.Pending;
-using UX.UI.Ingame;
-using UnityEngine;
-using Game.Managers;
-using Game.Piece.PieceLogic;
-using UnityEngine.InputSystem;
 
 // <-- thêm để dùng LINQ
 

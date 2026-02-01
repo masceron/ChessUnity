@@ -1,11 +1,10 @@
-﻿using System.Linq;
-using Game.Action.Internal.Pending.Relic;
+﻿using Game.Action.Internal.Pending.Relic;
 using Game.Effects;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Common;
-using static Game.Common.BoardUtils;
+using ZLinq;
+
 namespace Game.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

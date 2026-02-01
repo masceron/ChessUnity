@@ -1,9 +1,5 @@
-using System;
 using Game.Action.Internal;
-using Game.Action.Relics;
-using Game.Common;
 using Game.Effects.Others;
-using UnityEngine;
 
 namespace Game.Action.Relics
 {

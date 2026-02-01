@@ -5,7 +5,6 @@ using Game.Save.Relics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UX.UI.FreePlayTest.RegionalRealmScene;
-using UX.UI.Army.DesignArmy;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {

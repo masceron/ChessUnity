@@ -1,13 +1,12 @@
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
-using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -27,7 +26,14 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     Debug.Log("[Temperantia] Clicked");
-                    list.AddRange(from piece in PieceBoard() where piece != null && !piece.Equals(this) select new TemperantiaPending(Pos, piece.Pos));
+                    var pendingActions = from piece in PieceBoard()
+                        where piece != null && !piece.Equals(this)
+                        select new TemperantiaPending(Pos, piece.Pos);
+
+                    foreach (var action in pendingActions)
+                    {
+                        list.Add(action);
+                    }
                 }
                 else
                 {

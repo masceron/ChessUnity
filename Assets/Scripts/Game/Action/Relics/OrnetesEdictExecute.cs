@@ -1,4 +1,3 @@
-using System.Linq;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
@@ -7,11 +6,9 @@ using Game.Managers;
 namespace Game.Action.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class OrnetesEdictExcute : Action, IRelicAction
+    public class OrnetesEdictExecute : Action, IRelicAction
     {
-        private int Target;
-        
-        public OrnetesEdictExcute(int target) : base(target)
+        public OrnetesEdictExecute(int target) : base(target)
         {
             Target = target;
         }

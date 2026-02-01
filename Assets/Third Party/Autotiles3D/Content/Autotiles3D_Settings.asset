@@ -11,6 +11,6 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b96604b19288b83499cf01efb355f8a7, type: 3}
   m_Name: Autotiles3D_Settings
-  m_EditorClassIdentifier: Assembly-CSharp::Autotiles3D.Autotiles3D_Settings
-  _useUndoAPI: 0
-  SuppressTileAmountWarning: 0
+  m_EditorClassIdentifier: Assembly-CSharp::Third_Party.Autotiles3D.Scripts.Utility.Autotiles3DSettings
+  useUndoAPI: 0
+  suppressTileAmountWarning: 0

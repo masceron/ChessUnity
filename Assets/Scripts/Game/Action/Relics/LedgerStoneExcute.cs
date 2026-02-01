@@ -1,7 +1,4 @@
-using System.Linq;
-using Game.Common;
 using Game.Managers;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics

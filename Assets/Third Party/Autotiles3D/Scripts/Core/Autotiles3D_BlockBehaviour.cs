@@ -122,18 +122,18 @@ namespace Autotiles3D
         }
         public void OnInstanceUpdate(InternalNode node)
         {
-            this._tileID = node.TileID;
-            this._group = node.TileGroupName;
-            this._tileName = node.TileName;
-            this._ruleID = node.RuleID;
+            _tileID = node.TileID;
+            _group = node.TileGroupName;
+            _tileName = node.TileName;
+            _ruleID = node.RuleID;
 
             if (Mathf.Abs(node.TileID) < 5)
             {
                 Debug.Log("assigning empty tileiD");
             }
 
-            this.InternalPosition = node.InternalPosition;
-            this.LocalRotation = node.LocalRotation;
+            InternalPosition = node.InternalPosition;
+            LocalRotation = node.LocalRotation;
         }
     }
 

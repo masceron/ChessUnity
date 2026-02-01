@@ -2,7 +2,6 @@ using Game.Action.Skills;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using System.Linq;
 using Game.Common;
 namespace Game.Piece.PieceLogic
 {

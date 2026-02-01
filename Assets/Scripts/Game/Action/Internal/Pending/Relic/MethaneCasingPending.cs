@@ -3,11 +3,7 @@
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 using Game.Action.Relics;
-using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic.Commons;
-using Game.Common;
 
 namespace Game.Action.Internal.Pending.Relic
 {
