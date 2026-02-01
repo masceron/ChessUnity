@@ -22,13 +22,11 @@ namespace Game.Relics
         {
             if (CurrentCooldown != 0) return;
             
-            var targets = SkillRangeHelper.GetActiveAllyPieceGlobal(-1);
-            foreach (var target in targets)
+            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
-                var piece = PieceOn(target);
                 if (piece == null) continue;
-                TileManager.Ins.MarkAsMoveable(target);
-                var pending = new BlackPearlPending(this, target);
+                TileManager.Ins.MarkAsMoveable(piece.Pos);
+                var pending = new BlackPearlPending(this, piece.Pos);
                 BoardViewer.ListOf.Add(pending);
             }
             BoardViewer.Selecting = -2;
