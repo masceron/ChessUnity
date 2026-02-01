@@ -9,7 +9,7 @@ public static class Config
     public static List<PieceConfig> PieceConfigWhite = new()
     {
         new PieceConfig("piece_redtail_parrotfish", false, 20),
-new PieceConfig("piece_redtail_parrotfish", false, 25),
+        new PieceConfig("piece_redtail_parrotfish", false, 25),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()

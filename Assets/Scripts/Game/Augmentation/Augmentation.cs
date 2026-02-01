@@ -100,7 +100,10 @@ namespace Game.Augmentation
         FocusModule = 39,
         FungalSac = 40,
         AdaptiveGland = 41,
-
+        CursedJaw = 42,
+        CursedModule = 43,
+        CursedFin = 44,
+        CursedPlate = 45,
         None = 10000,
     }
 
