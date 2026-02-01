@@ -1,7 +1,9 @@
 using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -24,9 +26,8 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0 || FindPiece<Commons.PieceLogic>(!Color).Count == 0) return;
                 if (isPlayer)
                 {
-                    Debug.Log("Temperantia: choose a ally");
-                    var allies = FindPiece<Commons.PieceLogic>(Color);
-                    list.AddRange(from ally in allies where !ally.Equals(this) select new TemperantiaSwap(Pos, ally.Pos));
+                    Debug.Log("[Temperantia] Clicked");
+                    list.AddRange(from piece in PieceBoard() where piece != null && !piece.Equals(this) select new TemperantiaPending(Pos, piece.Pos));
                 }
                 else
                 {
@@ -37,7 +38,7 @@ namespace Game.Piece.PieceLogic
                         {
                             if (IsActive(i) && i != Pos)
                             {
-                                list.Add(new TemperantiaSwap(Pos, i));
+                                list.Add(new TemperantiaPending(Pos, i));
                             }
                         }
                         return;
@@ -64,11 +65,8 @@ namespace Game.Piece.PieceLogic
                     // Choose selection (random if multiple)
                     Commons.PieceLogic chosenAlly = candidatesA.Count == 1 ? candidatesA[0] : candidatesA[Random.Range(0, candidatesA.Count)];
                     Commons.PieceLogic chosenEnemy = candidatesB.Count == 1 ? candidatesB[0] : candidatesB[Random.Range(0, candidatesB.Count)];
-                    TemperantiaSwap.allyIndex = chosenAlly.Pos;
-                    TemperantiaSwap.enemyIndex = chosenEnemy.Pos;
-
                     // Execute effect now
-                    list.Add(new TemperantiaSwap(Pos, -1));
+                    list.Add(new TemperantiaSwap(Pos, chosenAlly.Pos, chosenEnemy.Pos));
                 }
 
             };

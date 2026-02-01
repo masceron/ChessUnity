@@ -10,7 +10,6 @@ namespace Game.Action.Internal.Pending.Relic
     public class AdrenalineRadiatorPending : PendingAction, System.IDisposable
     {
         private AdrenalineRadiator relic;
-
         public AdrenalineRadiatorPending(AdrenalineRadiator relic, int maker) : base(maker)
         {
             this.relic = relic;
@@ -25,7 +24,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public override void CompleteAction()
         {
-             relic.SetCooldown();
+            relic.SetCooldown();
 
             var excute = new AdrenalineRadiatorExcute(Maker);
             BoardViewer.Ins.ExecuteAction(excute);
