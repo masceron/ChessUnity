@@ -175,10 +175,6 @@ MonoBehaviour:
     m_Key: effect_bioluminescent_beacon_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 35116686082314240
-    m_Key: effect_melibe_passive
-    m_Metadata:
-      m_Items: []
   - m_Id: 35116686203949056
     m_Key: effect_humboldt_squid_passive
     m_Metadata:
