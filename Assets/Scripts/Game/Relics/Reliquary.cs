@@ -20,13 +20,11 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                var targets = SkillRangeHelper.GetActiveAllyPieceGlobal(-1);
-                foreach (var target in targets)
+                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
-                    var piece = PieceOn(target);
-                    if (piece == null) continue;
-                    TileManager.Ins.MarkAsMoveable(target);
-                    var pending = new ReliquaryPending(this, target);
+                    if (piece == null && piece.Color != Color) continue;
+                    TileManager.Ins.MarkAsMoveable(piece.Pos);
+                    var pending = new ReliquaryPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
                 BoardViewer.Selecting = -2;
