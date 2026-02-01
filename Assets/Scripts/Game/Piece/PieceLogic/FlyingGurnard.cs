@@ -16,48 +16,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
-                    var push = Color ? 1 : -1;
-                    
-                    var frontRank = rank + push;
-                    if (VerifyBounds(frontRank))
-                    {
-                        var frontIndex = IndexOf(frontRank, file);
-                        if (VerifyIndex(frontIndex))
-                        {
-                            list.Add(new FlyingGurnardActive(Pos, frontIndex));
-                        }
-                    }
-                    
-                    var backRank = rank - push;
-                    if (VerifyBounds(backRank))
-                    {
-                        var backIndex = IndexOf(backRank, file);
-                        if (VerifyIndex(backIndex))
-                        {
-                            list.Add(new FlyingGurnardActive(Pos, backIndex));
-                        }
-                    }
-                    
-                    var leftFile = file - 1;
-                    if (VerifyBounds(leftFile))
-                    {
-                        var leftIndex = IndexOf(rank, leftFile);
-                        if (VerifyIndex(leftIndex))
-                        {
-                            list.Add(new FlyingGurnardActive(Pos, leftIndex));
-                        }
-                    }
-                    
-                    var rightFile = file + 1;
-                    if (VerifyBounds(rightFile))
-                    {
-                        var rightIndex = IndexOf(rank, rightFile);
-                        if (VerifyIndex(rightIndex))
-                        {
-                            list.Add(new FlyingGurnardActive(Pos, rightIndex));
-                        }
-                    }
+                    list.Add(new FlyingGurnardActive(Pos));
                 }
                 else
                 {
