@@ -7,6 +7,7 @@ using Game.Effects.Traits;
 using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic

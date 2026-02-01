@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Game.Managers;
+using ZLinq;
 
 namespace UX.UI.Army.DesignArmy
 {

@@ -5,6 +5,7 @@ using Game.Managers;
 using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 
 namespace Game.Effects.Condition
 {

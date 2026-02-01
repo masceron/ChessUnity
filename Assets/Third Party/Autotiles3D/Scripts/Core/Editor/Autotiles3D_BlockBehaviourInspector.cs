@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Third_Party.Autotiles3D.Scripts.Utility;
 
 namespace Autotiles3D
 {
@@ -38,7 +39,7 @@ namespace Autotiles3D
             Autotiles3D_TileGroup group = null;
             if (tile == null)
             {
-                EditorGUILayout.LabelField("<color=red> LINK TO TILE IS MISSING </color>", Autotiles3D_Utility.RichStyle);
+                EditorGUILayout.LabelField("<color=red> LINK TO TILE IS MISSING </color>", Autotiles3DUtility.RichStyle);
                 EditorGUILayout.LabelField("This might be due to migration to Autotiles3D version 1.3 or because you have deleted TileGroups/Tiles");
                 EditorGUILayout.LabelField("Don't panic, this is not critical. However you won't be able to use new features (such as \"View Tile\" or \"Randomize\") for this block until you reconnect to your tile");
                 EditorGUILayout.LabelField("If you would like to reconnect, you can manually update the TileGroup's name and the tile's name for this block here once, and Autotiles3D automatically links things up again!");
@@ -53,7 +54,7 @@ namespace Autotiles3D
 
                 if (GUILayout.Button("Link"))
                 {
-                    Autotiles3D_Utility.RepairBlocks(_baseBlock, _baseBlock.Anchor.GetBlocks(), updateGroup, updateTile);
+                    Autotiles3DUtility.RepairBlocks(_baseBlock, _baseBlock.Anchor.GetBlocks(), updateGroup, updateTile);
                 }
                 GUI.enabled = wasEnabled;
             }

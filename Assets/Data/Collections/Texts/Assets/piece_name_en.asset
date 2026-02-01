@@ -298,6 +298,146 @@ MonoBehaviour:
     m_Localized: Armored Feather Star
     m_Metadata:
       m_Items: []
+  - m_Id: 46452577354113024
+    m_Localized: Frilled Shark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464494451314688
+    m_Localized: Damsel Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47464494510034944
+    m_Localized: Penpoint Gunnel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796170326016
+    m_Localized: Thread Pipefish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796220657664
+    m_Localized: Frog Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796224851968
+    m_Localized: Spinster Wrasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796224851969
+    m_Localized: Dormant Fossil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47484796229046272
+    m_Localized: Blue Ringed Octopus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49021423877349376
+    m_Localized: Umbrella Slug
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49021423923486720
+    m_Localized: Porcelain Crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49021423923486721
+    m_Localized: Marine Flatworm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49021424019955712
+    m_Localized: Eyeshade Sculpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49028472312946688
+    m_Localized: Flowerhorn Cichlid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 49028472480718848
+    m_Localized: Cutthroat Eel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51134688570822656
+    m_Localized: Sohal Surgeonfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51134688633737216
+    m_Localized: Pencil Urchin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51134688637931520
+    m_Localized: Long Snouted Seahorse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51136093146763264
+    m_Localized: Pegasus Seamoth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 56104894142832640
+    m_Localized: Cabezon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930689941266432
+    m_Localized: Surge Wrasse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930690096455680
+    m_Localized: Dusky Butterflyfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59930690096455681
+    m_Localized: Redtail Parrotfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 59967759049023488
+    m_Localized: Stone Wall
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534426009600
+    m_Localized: Fire Goby Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534442786816
+    m_Localized: Scalyhead Sculpin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609534476341248
+    m_Localized: Mirror Butterfly Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955873869824
+    m_Localized: Flying Gurnard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955878064128
+    m_Localized: Dwarf Lionfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60609955878064129
+    m_Localized: Humbug Damsel Fish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004330944614400
+    m_Localized: Guiding Siren
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004330978168832
+    m_Localized: Powderbluetang
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004331011723264
+    m_Localized: Lizardfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004331020111872
+    m_Localized: Stone Crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61004331028500480
+    m_Localized: Horse Leech
+    m_Metadata:
+      m_Items: []
+  - m_Id: 61005610060533760
+    m_Localized: Sloanes Viperfish
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

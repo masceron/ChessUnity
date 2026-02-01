@@ -7,6 +7,7 @@ using PrimeTween;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace UX.UI.Ingame.DeathDefianceUI
 {

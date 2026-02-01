@@ -7,6 +7,7 @@ using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ZLinq;
 
 namespace UX.UI.Followers
 {

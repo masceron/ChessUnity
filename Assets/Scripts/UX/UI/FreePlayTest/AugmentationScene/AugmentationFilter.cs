@@ -7,6 +7,7 @@ using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
+using ZLinq;
 
 namespace UX.UI.FreePlayTest.AugmentationScene
 {

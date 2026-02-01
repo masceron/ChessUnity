@@ -1,43 +1,41 @@
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-
 #if UNITY_EDITOR
+using System.Collections.Generic;
+using Autotiles3D;
 using UnityEditor;
+using UnityEngine;
+using ZLinq;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility
 {
     [InitializeOnLoad]
-    public static class Autotiles3D_Utility
+    public static class Autotiles3DUtility
     {
 
-        static Autotiles3D_Utility()
+        static Autotiles3DUtility()
         {
             UpdateAllTileGroupNames();
-            if (Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 ClearUndoStack();
         }
-        private static Dictionary<int, Autotiles3D_Tile> _cache = new Dictionary<int, Autotiles3D_Tile>();
-        private static Dictionary<string, Autotiles3D_Tile> _tagCache = new Dictionary<string, Autotiles3D_Tile>();
-        private static Dictionary<string, Autotiles3D_TileGroup> _groupCache = new Dictionary<string, Autotiles3D_TileGroup>();
+        private static readonly Dictionary<int, Autotiles3D_Tile> _cache = new Dictionary<int, Autotiles3D_Tile>();
+        private static readonly Dictionary<string, Autotiles3D_Tile> _tagCache = new Dictionary<string, Autotiles3D_Tile>();
+        private static readonly Dictionary<string, Autotiles3D_TileGroup> _groupCache = new Dictionary<string, Autotiles3D_TileGroup>();
 
-        private static Autotiles3D_TileGroup[] _gCache = null;
-        public static Autotiles3D_TileGroup[] Groups
+        private static Autotiles3D_TileGroup[] _gCache;
+
+        private static Autotiles3D_TileGroup[] Groups
         {
             get
             {
-                if (_gCache == null)
-                    _gCache = Resources.LoadAll<Autotiles3D_TileGroup>("");
+                _gCache ??= Resources.LoadAll<Autotiles3D_TileGroup>("");
                 return _gCache;
             }
         }
 
         public static Autotiles3D_Tile GetTile(int tileID)
         {
-            Autotiles3D_Tile tile;
-
             //try id cache
-            if (_cache.TryGetValue(tileID, out tile))
+            if (_cache.TryGetValue(tileID, out var tile))
             {
                 if (tile != null)
                     return tile;
@@ -57,17 +55,15 @@ namespace Autotiles3D
         }
         public static Autotiles3D_Tile GetTile(int tileID, string name, string group)
         {
-            Autotiles3D_Tile tile;
-
             //try id cache
-            if (_cache.TryGetValue(tileID, out tile))
+            if (_cache.TryGetValue(tileID, out var tile))
             {
                 if (tile != null)
                     return tile;
                 _cache.Remove(tileID);
             }
 
-            string tag = group + name;
+            var tag = group + name;
             //try tag cache
             if (_tagCache.TryGetValue(tag, out tile))
             {
@@ -77,7 +73,7 @@ namespace Autotiles3D
             }
 
             //get group
-            Autotiles3D_TileGroup tileGroup = GetGroup(group);
+            var tileGroup = GetGroup(group);
 
             if (tileGroup != null)
             {
@@ -107,14 +103,12 @@ namespace Autotiles3D
             return null;
         }
 
-        public static Autotiles3D_TileGroup GetGroup(string name)
+        private static Autotiles3D_TileGroup GetGroup(string name)
         {
-            Autotiles3D_TileGroup group = null;
-
             if (string.IsNullOrEmpty(name))
                 return null;
 
-            if (_groupCache.TryGetValue(name, out group))
+            if (_groupCache.TryGetValue(name, out var group))
             {
                 if (group != null)
                     return group;
@@ -136,19 +130,15 @@ namespace Autotiles3D
 
         public static void ClearCache(int tileID)
         {
-            if (_cache.TryGetValue(tileID, out Autotiles3D_Tile tile))
+            if (_cache.Remove(tileID, out var tile))
             {
-                _cache.Remove(tileID);
-                if (_tagCache.ContainsKey(tile.Tag))
-                {
-                    _tagCache.Remove(tile.Tag);
-                }
+                _tagCache.Remove(tile.Tag);
             }
             //clear group cache for good measure
             _gCache = null;
         }
 
-        public static void UpdateAllTileGroupNames()
+        private static void UpdateAllTileGroupNames()
         {
             var groups = Resources.LoadAll<Autotiles3D_TileGroup>("");
             foreach (var group in groups)
@@ -157,7 +147,7 @@ namespace Autotiles3D
             }
         }
 
-        public static void ClearUndoStack()
+        private static void ClearUndoStack()
         {
             Undo.ClearAll();
         }
@@ -176,14 +166,14 @@ namespace Autotiles3D
 
         public static void RepairBlocks(Autotiles3D_BlockBehaviour block, List<Autotiles3D_BlockBehaviour> siblings, string tilegroup, string tilename, int tileID = -1)
         {
-            if (block == null || block.Anchor == null)
+            if (!block || !block.Anchor)
                 return;
 
 
-            var tile = Autotiles3D_Utility.GetTile(tileID, tilename, tilegroup);
+            var tile = GetTile(tileID, tilename, tilegroup);
             if (tile != null)
             {
-                int missingTileId = block.TileID;
+                var missingTileId = block.TileID;
 
                 //group name might be not set on the tile, so make sure to set again!
                 tile.SetGroupName(tilegroup);
@@ -192,7 +182,7 @@ namespace Autotiles3D
                     Where(b => b.TileID == missingTileId && b.GetTile() == null).ToList();
 
                 int i;
-                int successes = 0;
+                var successes = 0;
                 for (i = 0; i < brokenBlocks.Count(); i++)
                 {
                     brokenBlocks[i].UpdateTileInfo(tile);
@@ -235,11 +225,16 @@ namespace Autotiles3D
         {
             get
             {
-                var style = new GUIStyle(GUI.skin.label);
-                style.wordWrap = true;
-                style.richText = true;
-                style.normal.textColor = Color.white;
-                style.alignment = TextAnchor.MiddleLeft;
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    wordWrap = true,
+                    richText = true,
+                    normal =
+                    {
+                        textColor = Color.white
+                    },
+                    alignment = TextAnchor.MiddleLeft
+                };
                 return style;
             }
         }

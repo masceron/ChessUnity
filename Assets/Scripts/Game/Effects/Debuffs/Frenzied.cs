@@ -5,6 +5,7 @@ using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Effects.Debuffs
 {

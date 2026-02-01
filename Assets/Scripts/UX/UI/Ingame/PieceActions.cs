@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UX.UI.Tooltip;
+using ZLinq;
 using Color = UnityEngine.Color;
 using static Game.Common.BoardUtils;
 using static UX.UI.Ingame.BoardViewer;

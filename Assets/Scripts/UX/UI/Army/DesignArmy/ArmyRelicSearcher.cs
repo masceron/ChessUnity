@@ -10,6 +10,7 @@ using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ZLinq;
 
 namespace UX.UI.Army.DesignArmy
 {

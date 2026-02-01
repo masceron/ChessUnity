@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Third_Party.Autotiles3D.Scripts.Utility;
 
 namespace Autotiles3D
 {
@@ -23,7 +24,7 @@ namespace Autotiles3D
         private void OnGUI()
         {
 
-            var tileGroups = Autotiles3D_Utility.LoadTileGroups();
+            var tileGroups = Autotiles3DUtility.LoadTileGroups();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
@@ -47,7 +48,7 @@ namespace Autotiles3D
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("Create new TileGroup"))
             {
-                Autotiles3D_Utility.EnsureFolders();
+                Autotiles3DUtility.EnsureFolders();
                 var newTileGroup = CreateInstance<Autotiles3D_TileGroup>();
                 string uniquepath = AssetDatabase.GenerateUniqueAssetPath("Assets/Third Party/Autotiles3D/Resources/NewTileGroup.asset");
                 AssetDatabase.CreateAsset(newTileGroup, uniquepath);
@@ -67,10 +68,10 @@ namespace Autotiles3D
             EditorGUILayout.LabelField("You can enable this feature, but please be aware that editor perfomance can slow down over time when working with thousands of tiles", RichStyle);
 
             EditorGUIUtility.labelWidth = 200;
-            bool useUndo = EditorGUILayout.Toggle("Use Undo API (recommended off)", Autotiles3D_Settings.EditorInstance.UseUndoAPI);
-            if (useUndo != Autotiles3D_Settings.EditorInstance.UseUndoAPI)
+            bool useUndo = EditorGUILayout.Toggle("Use Undo API (recommended off)", Autotiles3DSettings.EditorInstance.UseUndoAPI);
+            if (useUndo != Autotiles3DSettings.EditorInstance.UseUndoAPI)
             {
-                Autotiles3D_Settings.EditorInstance.SetUndoAPI(useUndo);
+                Autotiles3DSettings.EditorInstance.SetUndoAPI(useUndo);
             }
             EditorGUIUtility.labelWidth = 0;
             EditorGUILayout.EndVertical();
