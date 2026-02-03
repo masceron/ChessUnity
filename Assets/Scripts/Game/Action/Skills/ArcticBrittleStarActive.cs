@@ -19,8 +19,6 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -5;
             return 0;
         }
-
-        private Tile.Tile hoveringTile;
         public ArcticBrittleStarActive(int maker, int to) : base(maker)
         {
             Target = (ushort)to;

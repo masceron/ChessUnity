@@ -1,6 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
+using Game.Action.Internal.Pending.Piece;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;

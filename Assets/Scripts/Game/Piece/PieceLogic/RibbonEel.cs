@@ -1,9 +1,8 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
+using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Buffs;
-using Game.Effects.SpecialAbility;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 
@@ -25,7 +24,7 @@ namespace Game.Piece.PieceLogic
                     {
                         var p = BoardUtils.PieceOn(i);
                         if (p == null || p.Color == Color) continue;
-                        list.Add(new Diurnal(Pos, p.Pos));
+                        list.Add(new DiurnalPending(Pos, p.Pos));
                     }
                 }
                 else

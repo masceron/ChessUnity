@@ -7,9 +7,9 @@ using UX.UI.Ingame;
 using UX.UI.Ingame.RustyParrotfishUI;
 using static Game.Common.BoardUtils;
 
-namespace Game.Action.Skills
+namespace Game.Action.Internal.Pending.Piece
 {
-    public class RustyParrotfishPending : Action, ISkills, IPendingAble
+    public class RustyParrotfishPending : PendingAction
     {
         public RustyParrotfishPending(int maker) : base(maker)
         {
@@ -22,17 +22,7 @@ namespace Game.Action.Skills
 
         }
 
-        protected override void ModifyGameState()
-        {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-
-        int ISkills.AIPenaltyValue(PieceLogic maker)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void CompleteAction()
+        public override void CompleteAction()
         {
             Debug.Log("complete rusty parrotfish action");
             var ui = Object.FindAnyObjectByType<RustyParrotfishUI>(FindObjectsInactive.Include);

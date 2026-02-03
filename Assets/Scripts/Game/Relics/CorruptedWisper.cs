@@ -52,7 +52,7 @@ namespace Game.Relics
                     if (piece == null || piece.Color == Color) continue;
                     if (possibleRank.Contains(piece.PieceRank) == false) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new CorruptedWisperPending(piece.Pos, piece.Color, this);
+                    var pending = new CorruptedWisperPending(piece.Pos, this);
                     BoardViewer.ListOf.Add(pending);
                 }
 

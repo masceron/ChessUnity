@@ -6,23 +6,27 @@ using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
 using Game.Action.Quiets;
+using Game.Action.Relics;
 
-namespace Game.Action.Skills
+namespace Game.Action.Internal.Pending.Piece
 {
-    public class Diurnal : Action, ISkills, IPendingAble
+    public class DiurnalPending : PendingAction
     {
         private static PieceLogic SelectedPiece;
         private static int MovePosTo;
 
-        public int AIPenaltyValue(PieceLogic pieceAI) => 0;
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return 0;
+        }
 
-        public Diurnal(int maker, int target) : base(maker)
+        public DiurnalPending(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)target;
         }
 
-        void IPendingAble.CompleteAction()
+        public override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
 
@@ -51,7 +55,7 @@ namespace Game.Action.Skills
                         if (PieceOn(idx) != null) continue;
 
                         TileManager.Ins.MarkAsMoveable(idx);
-                        BoardViewer.ListOf.Add(new Diurnal(Maker, idx));
+                        BoardViewer.ListOf.Add(new DiurnalPending(Maker, idx));
                     }
                 }
 
@@ -62,13 +66,13 @@ namespace Game.Action.Skills
             MovePosTo = BoardViewer.HoveringPos;
             if (MovePosTo == -1 || PieceOn(MovePosTo) != null) return;
 
-            var move = new NormalMove(SelectedPiece.Pos, MovePosTo);
+            var execute = new DiurnalActive(SelectedPiece.Pos, MovePosTo);
 
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
-            BoardViewer.Ins.ExecuteAction(move);
+            BoardViewer.Ins.ExecuteAction(execute);
             ResetTargets();
         }
 
@@ -76,11 +80,6 @@ namespace Game.Action.Skills
         {
             SelectedPiece = null;
             MovePosTo = -1;
-        }
-
-        protected override void ModifyGameState()
-        {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

@@ -19,42 +19,34 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class CorruptedWisperPending : Action, IPendingAble, System.IDisposable, IRelicAction
+    public class CorruptedWisperPending : PendingAction, System.IDisposable
     {
         private CorruptedWisper corruptedWisper;
-        private bool color;
 
-        public CorruptedWisperPending(int target, bool color, CorruptedWisper corruptedWisper) : base(target)
+        public CorruptedWisperPending(int target, CorruptedWisper corruptedWisper) : base(target)
         {
-            this.color = color;
             Target = (ushort)target;
             this.corruptedWisper = corruptedWisper;
         }
 
 
-        public void CompleteAction()
+        public override void CompleteAction()
         {
-            corruptedWisper.LevelUp();
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Controlled(126, PieceOn(Target))));
+            var execute = new CorruptedWisperExecute(126, Target);
 
+            BoardViewer.Ins.ExecuteAction(execute);
+            corruptedWisper.LevelUp();
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.UpdateRelic();
         }
 
-
-
         public void Dispose()
         {
             BoardViewer.SelectingFunction = 0;
         }
 
-
-        protected override void ModifyGameState()
-        {
-           
-        }
     }
 }
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
+using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects;
 using Game.Effects.Buffs;
@@ -28,7 +28,7 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new SpinsterWrasseActive(Pos, idx, Color));
+                        list.Add(new SpinsterWrassePending(Pos, idx, Color));
                     }
                 }
                 else
