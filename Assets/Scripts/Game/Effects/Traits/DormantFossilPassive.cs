@@ -41,7 +41,6 @@ namespace Game.Effects.Traits
             if (numTurns == 0)
             {
                 ActivePassive();
-                numTurns = TurnsToActive;
             }
         }
         
