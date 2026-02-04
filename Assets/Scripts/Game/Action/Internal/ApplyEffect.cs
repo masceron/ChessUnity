@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
@@ -57,7 +56,7 @@ namespace Game.Action.Internal
         public ApplyEffect(Effect e, RelicLogic source): base(-1)
         {
             Effect = e;
-            this.SourceRelic = source;
+            SourceRelic = source;
         }
         protected override void Animate()
         {

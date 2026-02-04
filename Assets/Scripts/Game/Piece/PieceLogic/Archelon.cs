@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -9,6 +8,7 @@ using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -26,17 +26,22 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
+                    // var (rank, file) = RankFileOf(Pos);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    // foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    // {
+                    //     var index = IndexOf(rankOff, fileOff);
+                    //     var pOn = PieceOn(index);
+                    //     if (pOn == null || pOn == this) continue;
+                    //     if (pOn.Color == Color)
+                    //     {
+                    //         list.Add(new ArchelonShield(Pos, index));
+                    //     }
+                    // }
+                    var targets = SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
+                    foreach (var target in targets)
                     {
-                        var index = IndexOf(rankOff, fileOff);
-                        var pOn = PieceOn(index);
-                        if (pOn == null || pOn == this) continue;
-                        if (pOn.Color == Color)
-                        {
-                            list.Add(new ArchelonShield(Pos, index));
-                        }
+                        list.Add(new ArchelonShield(Pos, target));
                     }
                 } else
                 {

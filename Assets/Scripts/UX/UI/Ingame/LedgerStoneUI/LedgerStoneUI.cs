@@ -2,7 +2,7 @@ using Game.Action.Internal.Pending.Relic;
 using Game.Relics.Commons;
 using Game.Common;
 using LedgerStoneRelic = Game.Relics.LedgerStone;
-using UnityEngine;
+
 namespace UX.UI.Ingame.LedgerStone
 {
     public class LedgerStoneUI : Singleton<LedgerStoneUI>
@@ -10,7 +10,7 @@ namespace UX.UI.Ingame.LedgerStone
         private RelicLogic relic; 
         public void Load(RelicLogic relicLogic)
         {
-            this.relic = relicLogic;
+            relic = relicLogic;
         }
         public void FirstOption()
         {

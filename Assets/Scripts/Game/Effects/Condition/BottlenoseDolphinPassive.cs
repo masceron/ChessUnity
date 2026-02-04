@@ -2,9 +2,10 @@ using Game.Managers;
 using Game.Action.Internal;
 using Game.Action;
 using Game.Effects.Traits;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using System;
+using ZLinq;
+
 namespace Game.Effects.Condition
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

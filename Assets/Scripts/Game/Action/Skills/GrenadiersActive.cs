@@ -1,11 +1,12 @@
 using Game.Common;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using Game.AI;
 using System.Collections.Generic;
 using Game.Managers;
 using static Game.Common.BoardUtils;
 using Game.Tile;
+using ZLinq;
+
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -33,17 +34,12 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var listPieces = new List<PieceLogic>();
-            
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 3))
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 3);
+            foreach (var target in targets)
             {
-                var idx = IndexOf(rank, file);
-                var pOn = PieceOn(idx);
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
-                {
-
-                    listPieces.Add(pOn);
-                }
+                listPieces.Add(PieceOn(target));
             }
+
             if (listPieces.Count == 0) return;
             int maxValue = listPieces.Max(p => p.GetValueForAI());
             var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();

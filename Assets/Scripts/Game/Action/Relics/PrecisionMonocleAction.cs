@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using Game.Common;
+﻿using Game.Common;
 using Game.Effects.Traits;
+using ZLinq;
 
 namespace Game.Action.Relics
 {

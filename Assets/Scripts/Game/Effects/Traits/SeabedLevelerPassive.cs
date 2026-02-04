@@ -1,7 +1,5 @@
 ﻿using Game.Effects;
-using Game.Action.Skills;
 using Game.Relics;
-using Game.Action;
 
 namespace Assets.Scripts.Game.Effects.Traits
 {

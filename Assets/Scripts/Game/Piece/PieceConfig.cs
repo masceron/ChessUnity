@@ -9,14 +9,14 @@ namespace Game.Piece
         public readonly string Type;
         public readonly bool Color;
         public readonly ushort Index;
-        public readonly List<Augmentation.Augmentation> Augmentations;
+        public readonly List<Augmentation.AugmentationName> AugmentationNames;
 
-        public PieceConfig(string type, bool color, ushort index, List<Augmentation.Augmentation> augmentations = null)
+        public PieceConfig(string type, bool color, ushort index, List<Augmentation.AugmentationName> augmentationNames = null)
         {
             Type = type;
             Color = color;
             Index = index;
-            Augmentations = augmentations ?? new List<Augmentation.Augmentation>();
+            AugmentationNames = augmentationNames ?? new List<Augmentation.AugmentationName>();
         }
 
         public bool Equals(PieceConfig other)

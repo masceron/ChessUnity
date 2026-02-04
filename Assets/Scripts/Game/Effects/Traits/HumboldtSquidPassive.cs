@@ -3,7 +3,6 @@ using Game.Action.Internal;
 using Game.Action.Captures;
 using static Game.Common.BoardUtils;
 using Game.Effects.Debuffs;
-using System.Linq;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 

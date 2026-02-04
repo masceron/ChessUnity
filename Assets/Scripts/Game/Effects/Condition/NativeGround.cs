@@ -2,9 +2,9 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.RegionalEffect;
 using Game.Managers;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 
 namespace Game.Effects.Condition
 {

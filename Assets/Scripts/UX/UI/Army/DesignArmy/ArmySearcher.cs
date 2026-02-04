@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Common;
 using Game.Piece;
 using Game.ScriptableObjects;
@@ -7,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Game.Managers;
+using ZLinq;
 
 namespace UX.UI.Army.DesignArmy
 {

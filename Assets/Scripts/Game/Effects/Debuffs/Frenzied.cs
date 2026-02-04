@@ -1,10 +1,10 @@
 using Game.Action;
 using System.Collections.Generic;
-using System.Linq;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Effects.Debuffs
 {
@@ -12,11 +12,11 @@ namespace Game.Effects.Debuffs
     public class Frenzied : Effect, IEndTurnEffect
     {
         private List<Action.Action> list;
-        public Frenzied(PieceLogic piece) : base(-1, 1, piece, "effect_frenzied")
+        public Frenzied(PieceLogic piece, sbyte duration = -1) : base(duration, 1, piece, "effect_frenzied")
         {
             list = new List<Action.Action>();
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
-            
+            Duration = duration;
         }
 
         public EndTurnEffectType EndTurnEffectType { get; }

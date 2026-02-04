@@ -1,12 +1,10 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Relic;
-using Game.Action.Skills;
-using Game.Common;
 using Game.Managers;
 using Game.Piece;
 using System.Collections.Generic;
-using System.Linq;
+using ZLinq;
 
 
 namespace Game.Effects.Others
@@ -14,17 +12,14 @@ namespace Game.Effects.Others
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChaoticConstructorSpawn : Effect, IEndTurnEffect
     {
-        private readonly bool color;
-        private int TurnToActive = 1;
-        private int currentTurn = 1;
-        private List<int> storedPos;
-        private ChaoticConstructorPending chaoticConstructorPending;
+        private int _currentTurn = 1;
+        private readonly List<int> _storedPos;
+        private readonly ChaoticConstructorPending _chaoticConstructorPending;
 
-        public ChaoticConstructorSpawn(sbyte strength, bool color, ChaoticConstructorPending ccp, List<int> storedPos) : base(1, strength, null, "effect_chaotic_constructor_spawn")
+        public ChaoticConstructorSpawn(sbyte strength, ChaoticConstructorPending ccp, List<int> storedPos) : base(1, strength, null, "effect_chaotic_constructor_spawn")
         {
-            this.color = color;
-            this.storedPos = storedPos;
-            chaoticConstructorPending = ccp;
+            _storedPos = storedPos;
+            _chaoticConstructorPending = ccp;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
 
@@ -42,27 +37,25 @@ namespace Game.Effects.Others
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (currentTurn == 0)
+            if (_currentTurn == 0)
             {
-                Shuffle(storedPos);
+                Shuffle(_storedPos);
 
-                foreach (var pos in storedPos)
+                foreach (var pos in _storedPos)
                 {
                     var constructPieces = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == PieceRank.Construct select piece.key).ToList();
 
-                    int idx = UnityEngine.Random.Range(0, constructPieces.Count);
+                    var idx = UnityEngine.Random.Range(0, constructPieces.Count);
 
-                    bool color;
-                    int rd = UnityEngine.Random.Range(0, 101);
-                    if (rd <= 50) color = false;
-                    else color = true;
+                    var rd = UnityEngine.Random.Range(0, 101);
+                    var color = rd > 50;
                     var cfg = new PieceConfig(constructPieces[idx], color, (ushort)pos);
                     ActionManager.ExecuteImmediately(new SpawnPiece(cfg));
                 }
 
-                chaoticConstructorPending.Dispose();
+                _chaoticConstructorPending.Dispose();
             }
-            currentTurn--;
+            _currentTurn--;
         }
     }
 }

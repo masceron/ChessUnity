@@ -1,3 +1,4 @@
+using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine;
 #if UNITY_EDITOR
 #endif
@@ -60,7 +61,7 @@ namespace Autotiles3D
 
         public Autotiles3D_Tile GetTile()
         {
-            return Autotiles3D_Utility.GetTile(_tileID, _tileName, _group);
+            return Autotiles3DUtility.GetTile(_tileID, _tileName, _group);
         }
 
 
@@ -121,18 +122,18 @@ namespace Autotiles3D
         }
         public void OnInstanceUpdate(InternalNode node)
         {
-            this._tileID = node.TileID;
-            this._group = node.TileGroupName;
-            this._tileName = node.TileName;
-            this._ruleID = node.RuleID;
+            _tileID = node.TileID;
+            _group = node.TileGroupName;
+            _tileName = node.TileName;
+            _ruleID = node.RuleID;
 
             if (Mathf.Abs(node.TileID) < 5)
             {
                 Debug.Log("assigning empty tileiD");
             }
 
-            this.InternalPosition = node.InternalPosition;
-            this.LocalRotation = node.LocalRotation;
+            InternalPosition = node.InternalPosition;
+            LocalRotation = node.LocalRotation;
         }
     }
 

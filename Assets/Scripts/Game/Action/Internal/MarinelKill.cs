@@ -1,31 +1,23 @@
-using Game.Managers;
-using UX.UI.Ingame;
-using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+using Game.Effects.Others;
 namespace Game.Action.Internal
 {
-    public class MarinelKill : Action, ICaptures
+    public class MarinelKill : Action, IInternal
     {
-        private readonly int targetPos;
+        private readonly int secondTarget;
         
-        public MarinelKill(int maker, int target, int to) : base(maker)
+        public MarinelKill(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Target = (ushort)target;
-            targetPos = to;
+            Target = (ushort)firstTarget;
+            this.secondTarget = secondTarget;
         }
         
         protected override void ModifyGameState()
         {
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
 
-            PieceManager.Ins.Destroy(Target);
-            PieceManager.Ins.Move(Maker, Target);
-            MatchManager.Ins.GameState.Kill(Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
-            ActionManager.EnqueueAction(new DestroyPiece(targetPos));
-            BoardViewer.ListOf.Clear();
+            ActionManager.EnqueueAction(new ApplyEffect(new MarineIguanaKillEffect(0, PieceOn(Target), Maker, secondTarget), PieceOn(Maker)));
         }
         
 

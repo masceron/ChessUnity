@@ -23,6 +23,9 @@ namespace Game.Tile
         NavalMines,
         SiltCloud,
         HydroidThicket,
+        AnoxicPool,
+        CarpetAnemone,
+        HopkinsRose,
     }
 
     public abstract class Formation

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Game.Save.Player;
-using System.Linq;
 using Game.Common;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using ZLinq;
 
 namespace UX.UI.Followers
 {

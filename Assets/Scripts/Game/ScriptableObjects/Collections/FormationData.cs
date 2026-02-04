@@ -2,7 +2,6 @@ using Game.Common;
 using Game.Tile;
 using ScrutableObjects;
 using UnityEngine;
-using Game.ScriptableObjects;
 
 namespace Game.ScriptableObjects.Collections
 {

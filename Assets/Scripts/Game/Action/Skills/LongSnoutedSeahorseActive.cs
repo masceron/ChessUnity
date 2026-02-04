@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic maker)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void CompleteActionForAI()

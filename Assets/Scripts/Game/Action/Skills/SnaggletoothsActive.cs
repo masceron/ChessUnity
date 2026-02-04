@@ -1,10 +1,10 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using System.Linq;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.AI;
 using Game.Effects.Buffs;
+using ZLinq;
 
 namespace Game.Action.Skills
 {

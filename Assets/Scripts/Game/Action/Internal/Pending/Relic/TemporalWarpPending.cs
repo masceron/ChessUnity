@@ -1,6 +1,4 @@
-﻿using Game.Common;
-using Game.Effects.Debuffs;
-using Game.Managers;
+﻿using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
@@ -15,43 +13,40 @@ namespace Game.Action.Internal.Pending.Relic
 
     public class TemporalWarpPending : PendingAction, System.IDisposable, IRelicAction
     {
-        private TemporalWarp temporalWarp;
+        private TemporalWarp _temporalWarp;
 
-        private static PieceLogic FirstTarget;
-        private static int secondPos;
-
-        private const int TurnToBack = 4;
-        private int currentTurn = TurnToBack;
+        private static PieceLogic _firstTarget;
+        private static int _secondPos;
 
         public TemporalWarpPending(int maker, TemporalWarp tw) : base(maker)
         {
             Maker = (ushort)maker;
-            temporalWarp = tw;
+            _temporalWarp = tw;
         }
 
         public override void CompleteAction()
         {
-            var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
+            var hovering = PieceOn(BoardViewer.HoveringPos);
             
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            if (_firstTarget == null || _firstTarget.Color == hovering.Color)
             {
-                FirstTarget = hovering;
-                TileManager.Ins.Select(FirstTarget.Pos);
+                _firstTarget = hovering;
+                TileManager.Ins.Select(_firstTarget.Pos);
                 SecondMark();
                 
                 return;
             }
 
             Debug.Log(BoardViewer.HoveringPos);
-            secondPos = BoardViewer.HoveringPos;
+            _secondPos = BoardViewer.HoveringPos;
             TileManager.Ins.UnmarkAll();
 
-            ActionManager.ExecuteImmediately(new NormalMove(FirstTarget.Pos, secondPos));
+            ActionManager.ExecuteImmediately(new NormalMove(_firstTarget.Pos, _secondPos));
             ResetTargets();
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-            temporalWarp.SetCooldown();
+            _temporalWarp.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
 
@@ -64,7 +59,7 @@ namespace Game.Action.Internal.Pending.Relic
             var rankStart = (MaxLength - startingSize.x) / 2;
             var fileStart = (MaxLength - startingSize.y) / 2; 
             var midRank = rankStart + startingSize.x / 2;
-            var side = FirstTarget.Color;
+            var side = _firstTarget.Color;
 
             if (side)
             {
@@ -97,15 +92,15 @@ namespace Game.Action.Internal.Pending.Relic
         public void Dispose()
         {
             BoardViewer.SelectingFunction = 0;
-            temporalWarp = null;
+            _temporalWarp = null;
 
             Tile.Tile.OnPointEnterHandle = null;
         }
 
         private static void ResetTargets()
         {
-            FirstTarget = null;
-            secondPos = -1;
+            _firstTarget = null;
+            _secondPos = -1;
         }
     }
 }

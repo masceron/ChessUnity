@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using System;
+using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
 #if UNITY_EDITOR
@@ -26,7 +26,7 @@ namespace Autotiles3D
         Edge = 2
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Autotiles3D_Rule
     {
         public bool IsActive = true;
@@ -42,20 +42,20 @@ namespace Autotiles3D
         [SerializeField] private int _ruleID = -1;
         public Autotiles3D_Rule()
         {
-            _ruleID = System.Guid.NewGuid().GetHashCode();
+            _ruleID = Guid.NewGuid().GetHashCode();
         }
         public int RuleID
         {
             get
             {
                 if (_ruleID == -1)
-                    _ruleID = System.Guid.NewGuid().GetHashCode();
+                    _ruleID = Guid.NewGuid().GetHashCode();
                 return _ruleID;
             }
         }
         public Autotiles3D_Rule(Autotiles3D_Rule copy)
         {
-            _ruleID = System.Guid.NewGuid().GetHashCode();
+            _ruleID = Guid.NewGuid().GetHashCode();
             IsActive = copy.IsActive;
             Object = copy.Object;
             Randoms = new List<GameObject>();
@@ -110,7 +110,7 @@ namespace Autotiles3D
 #endif
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Autotiles3D_Tile
     {
         [SerializeField] private string _group; //name of the TileGroup this belongs to
@@ -134,7 +134,7 @@ namespace Autotiles3D
             get
             {
                 if (_tileID == -1)
-                    _tileID = System.Guid.NewGuid().GetHashCode();
+                    _tileID = Guid.NewGuid().GetHashCode();
                 return _tileID;
             }
         }
@@ -165,7 +165,7 @@ namespace Autotiles3D
                 return cachedGroup;
 #if UNITY_EDITOR
 
-            List<Autotiles3D_TileGroup> groups = Autotiles3D_Utility.LoadTileGroups();
+            List<Autotiles3D_TileGroup> groups = Autotiles3DUtility.LoadTileGroups();
             foreach (var group in groups)
             {
                 if (group.name == _group)
@@ -425,7 +425,7 @@ namespace Autotiles3D
             {
                 //check for duplicate names
                 int increase = 1;
-                while (Autotiles3D_Utility.DoesTileExist(-1, newName, _group))
+                while (Autotiles3DUtility.DoesTileExist(-1, newName, _group))
                 {
                     newName += $"({increase++})";
                 }
@@ -651,7 +651,7 @@ namespace Autotiles3D
                         selection = i * 9 + selection; //from 0 to 26
                         if (selection != 13)
                         {
-                            var tempSelection = Autotiles3D_EnumUtility.Next(rule.Relations[selection]);
+                            var tempSelection = Autotiles3DEnumUtility.Next(rule.Relations[selection]);
                             if (rule.Relations[selection] != tempSelection)
                             {
                                 Undo.RegisterCompleteObjectUndo(context, "Rule change");
@@ -719,7 +719,7 @@ namespace Autotiles3D
             if (EditorGUI.EndChangeCheck() || GUI.changed)
             {
                 dirty = true;
-                Autotiles3D_Utility.ClearCache(TileID);
+                Autotiles3DUtility.ClearCache(TileID);
             }
         }
         private GUIContent GetContent(Relation relation, int direction)

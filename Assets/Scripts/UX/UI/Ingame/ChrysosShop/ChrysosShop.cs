@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Game.Action.Internal.Pending.Piece;
+﻿using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece;
@@ -8,6 +7,7 @@ using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
+using ZLinq;
 
 namespace UX.UI.Ingame.ChrysosShop
 {

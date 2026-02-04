@@ -1,4 +1,5 @@
 #if UNITY_2020_1_OR_NEWER
+using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor;
@@ -8,7 +9,7 @@ namespace Autotiles3D
 {
     public class Autotiles3D_SettingsProvider : SettingsProvider
     {
-        private Autotiles3D_Settings _settings;
+        private Autotiles3DSettings _settings;
         class Styles
         {
             public static GUIContent UndoAPI = new GUIContent("Use Undo API");
@@ -20,14 +21,14 @@ namespace Autotiles3D
 
         public static bool IsSettingsAvailable()
         {
-            var settings = Autotiles3D_Settings.EditorInstance;
+            var settings = Autotiles3DSettings.EditorInstance;
             return (settings != null);
         }
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
         {
             // This function is called when the user clicks on the MyCustom element in the Settings window.
-            _settings = Autotiles3D_Settings.EditorInstance;
+            _settings = Autotiles3DSettings.EditorInstance;
         }
 
         public override void OnGUI(string searchContext)
@@ -35,7 +36,7 @@ namespace Autotiles3D
             // Use IMGUI to display UI:
             if (_settings != null)
             {
-                _settings.SuppressTileAmountWarning = EditorGUILayout.Toggle(Styles.Suppress, _settings.SuppressTileAmountWarning, GUILayout.Width(200));
+                _settings.suppressTileAmountWarning = EditorGUILayout.Toggle(Styles.Suppress, _settings.suppressTileAmountWarning, GUILayout.Width(200));
                 EditorGUILayout.LabelField("(Experimental)");
                 bool useUndo = EditorGUILayout.Toggle(Styles.UndoAPI, _settings.UseUndoAPI);
                 if (useUndo != _settings.UseUndoAPI)

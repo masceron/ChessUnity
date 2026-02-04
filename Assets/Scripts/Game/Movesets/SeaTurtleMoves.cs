@@ -4,7 +4,6 @@ using Game.Action.Quiets;
 using Game.Common;
 using static Game.Common.BoardUtils;
 using Game.Effects;
-using System.Linq;
 using Game.Piece;
 
 namespace Game.Movesets

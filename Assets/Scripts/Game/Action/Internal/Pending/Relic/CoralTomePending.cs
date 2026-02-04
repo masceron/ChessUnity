@@ -1,6 +1,5 @@
 ﻿using Game.Action.Relics;
 using Game.Managers;
-using Game.Piece;
 using Game.Relics;
 using UX.UI.Ingame;
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Skills;
 using Game.AI;
 using Game.Common;
@@ -10,6 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.ChrysosShop;
+using ZLinq;
 
 namespace Game.Action.Internal.Pending.Piece
 {
@@ -126,7 +126,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
             else
             {
-                var p = UnityEngine.Random.Range(0, topGroup.Count);
+                var p = Random.Range(0, topGroup.Count);
                 ActivateSkill(allyPieces[p], upgradableTo[idx], cost);
             }
         }

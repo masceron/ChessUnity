@@ -4,6 +4,7 @@ using Game.Augmentation.Set;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using System;
 
 namespace Game.Augmentation
 {
@@ -58,6 +59,7 @@ namespace Game.Augmentation
         }
     }
 
+    [Serializable]
     public enum AugmentationName
     {
         TidalRetina = 1,

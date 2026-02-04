@@ -1,5 +1,6 @@
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using Game.Common;
 
 namespace Game.Effects.Others
 {
@@ -10,11 +11,11 @@ namespace Game.Effects.Others
         private byte ourPieceAttackRangeSaver;
         private CapturesDelegate ourPieceCapturesSaver;
 
-        public CopyCapturesMethod(PieceLogic firstPiece, PieceLogic secondPiece, sbyte duration) : base(duration, 1, firstPiece, "effect_copy_captures_method")
+        public CopyCapturesMethod(int firstPiece, int secondPiece, sbyte duration) : base(duration, 1, BoardUtils.PieceOn(firstPiece), "effect_copy_captures_method")
         {
             Duration = duration;
-            ourPiece = firstPiece;
-            opponentPiece = secondPiece;
+            ourPiece = BoardUtils.PieceOn(firstPiece);
+            opponentPiece = BoardUtils.PieceOn(secondPiece);
         }
 
         public void OnApply()
@@ -38,4 +39,3 @@ namespace Game.Effects.Others
         }
     }
 }
-

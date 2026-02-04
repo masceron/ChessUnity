@@ -20,7 +20,7 @@ namespace Game.Relics
             {
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
-                    if (piece == null || piece.Color != Color) continue;
+                    if (piece == null && piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                     var pending = new PeaceTreatyPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);

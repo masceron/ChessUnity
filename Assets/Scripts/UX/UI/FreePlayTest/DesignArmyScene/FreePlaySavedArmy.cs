@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using UnityEngine;
-using UX.UI.Followers;
 using Game.Save.FreePlay;
 using TMPro;
 using Game.Save.Army;
