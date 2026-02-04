@@ -1,71 +1,39 @@
-﻿using System;
-using Game.Action.Internal.Pending;
+﻿using Game.Action.Internal;
 using Game.AI;
-using Game.Common;
-using Game.Managers;
+using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
-using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class EyeshadeSculpinActive : PendingAction, ISkills, IAIAction, IDisposable
+    public class EyeshadeSculpinActive : Action, ISkills, IAIAction
     {
-        public static PieceLogic FirstTarget;
-        public static PieceLogic SecondTarget;
+        private PieceLogic firstTarget;
+        private PieceLogic secondTarget;
         
-        public EyeshadeSculpinActive(int maker, int target) : base(maker)
+        public EyeshadeSculpinActive(int maker, PieceLogic _firstTarget, PieceLogic _secondTarget) : base(maker)
         {
             Maker = (ushort)maker;
-            Target = (ushort)target;
+            firstTarget = _firstTarget;
+            secondTarget = _secondTarget;
         }
 
-        // protected override void ModifyGameState()
-        // {
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, FirstTarget), PieceOn(Maker)));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, SecondTarget), PieceOn(Maker)));
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        // }
+        protected override void ModifyGameState()
+        {
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, firstTarget), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, secondTarget), PieceOn(Maker)));
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
 
         public int AIPenaltyValue(PieceLogic maker)
         {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
         public void CompleteActionForAI()
         {
-            
-        }
-
-        public override void CompleteAction()
-        {
-            var hovering = PieceOn(BoardViewer.HoveringPos);
-            if (FirstTarget == null)
-            {
-                FirstTarget = hovering;
-                TileManager.Ins.UnmarkAll();
-                BoardViewer.ListOf.Clear();
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(FirstTarget.Pos), FileOf(FirstTarget.Pos), 4))
-                {
-                    var index = IndexOf(rankOff, fileOff);
-                    var piece = PieceOn(index);
-                    if (piece == null || piece.Color != FirstTarget.Color) continue;
-                    var newAction = new EyeshadeSculpinActive(Maker, index);
-                    BoardViewer.ListOf.Add(newAction);
-                    TileManager.Ins.MarkAsMoveable(index);
-                }
-                return;
-            }
-            SecondTarget = hovering;
-            BoardViewer.Ins.ExecuteAction(this);
+            throw new System.NotImplementedException();
         }
         
-        public void Dispose()
-        {
-            FirstTarget = null;
-            SecondTarget = null;
-            BoardViewer.SelectingFunction = 0;
-        }
     }
 }

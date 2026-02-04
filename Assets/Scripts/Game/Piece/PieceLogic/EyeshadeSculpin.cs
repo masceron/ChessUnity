@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -30,7 +31,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this || pOn.Color == Color) continue;
-                        list.Add(new EyeshadeSculpinActive(Pos, index));
+                        list.Add(new EyeshadeSculpinPending(Pos, index));
                     }
                 }
                 else
@@ -54,7 +55,6 @@ namespace Game.Piece.PieceLogic
                         // neu co dung mot quan
                         if (listPieces.Count == 1)
                         {
-                            list.Add(new EyeshadeSculpinActive(Pos, listPieces[0].Pos));
                             return;
                         }
                         
@@ -94,8 +94,8 @@ namespace Game.Piece.PieceLogic
                             }
                         }
                     
-                        var eyeshadeSculpinActiveAI = new EyeshadeSculpinActiveAI(Pos, selectedPieces[0], selectedPieces[1]);
-                        list.Add(eyeshadeSculpinActiveAI);
+                        var eyeshadeSculpinActive = new EyeshadeSculpinActive(Pos, selectedPieces[0], selectedPieces[1]);
+                        list.Add(eyeshadeSculpinActive);
                     }
                     else
                     {
@@ -109,7 +109,7 @@ namespace Game.Piece.PieceLogic
                                 var index2 = IndexOf(rankOff2, fileOff2);
                                 var pOn2 = PieceOn(index2);
                                 if (pOn2 == null || pOn2 == this || pOn2.Color == Color || pOn2.Pos == pOn1.Pos) continue;
-                                list.Add(new EyeshadeSculpinActiveAI(Pos, pOn1, pOn2));
+                                list.Add(new EyeshadeSculpinActive(Pos, pOn1, pOn2));
                             }
                         }
                     }
