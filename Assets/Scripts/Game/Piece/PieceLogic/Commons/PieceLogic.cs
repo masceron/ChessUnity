@@ -22,7 +22,15 @@ namespace Game.Piece.PieceLogic.Commons
         FormationDebuff,
         FormationSpecific,
     }
-
+    public enum SkillStat
+    {
+        Duration,
+        Target,
+        Unit,
+        Range,
+        Cooldown, 
+        CooldownLeft, // Người chơi còn bao nhiêu turn nữa để có thể sử dụng skill?
+    }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
@@ -31,7 +39,17 @@ namespace Game.Piece.PieceLogic.Commons
         public bool IsVisible = true;
         private byte moveRange;
         private byte attackRange;
-        public sbyte SkillCooldown;
+        public sbyte SkillCooldown
+        {
+            get
+            {
+                return (sbyte)SkillStats[SkillStat.CooldownLeft];
+            }
+            set
+            {
+                SkillStats[SkillStat.CooldownLeft] = value;
+            }
+        }
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
         public readonly List<int> PreviousMoves;
@@ -40,7 +58,8 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly List<Augmentation.Augmentation> Augmentations;
         public readonly List<ImmunityType> Immunities;
         public readonly List<FormationType> SpecificFormations;
-
+        public readonly UDictionary<SkillStat, int> SkillStats;
+        
         public byte MoveRange()
         {
             return moveRange;
@@ -79,7 +98,15 @@ namespace Game.Piece.PieceLogic.Commons
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
-                SkillCooldown = 0;
+                SkillStats = new()
+                {
+                    // { SkillStat.Cooldown, info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1},
+                    { SkillStat.CooldownLeft, 0 },
+                };
+                foreach(var pair in info.otherSkillStats)
+                {
+                    SkillStats.Add(pair.Key, pair.Value);
+                }
                 pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1);
             }
             else SkillCooldown = -1;
@@ -309,16 +336,29 @@ namespace Game.Piece.PieceLogic.Commons
         {
             switch (rank)
             {
-                case PieceRank.Swarm:     return 50;
-                case PieceRank.Common:    return 70;
-                case PieceRank.Elite:     return 120;
-                case PieceRank.Champion:  return 200;
+                case PieceRank.Swarm: return 50;
+                case PieceRank.Common: return 70;
+                case PieceRank.Elite: return 120;
+                case PieceRank.Champion: return 200;
                 case PieceRank.Commander: return 1000;
                 case PieceRank.Construct: return 150;
-                case PieceRank.Summoned:  return 300;
+                case PieceRank.Summoned: return 300;
                 default: return 0;
             }
         }
-
+        
+        public int Get(SkillStat stat)
+        {
+            if (!SkillStats.ContainsKey(stat)) { return -1; }
+            int finalStat = SkillStats[stat];
+            foreach (Effect effect in Effects)
+            {
+                if (effect is ISkillStatModifier modifier)
+                {
+                    finalStat += modifier.Modify(stat);
+                }
+            }
+            return finalStat;
+        }
     }
 }

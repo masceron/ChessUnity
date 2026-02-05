@@ -1,27 +1,11 @@
 using System.Collections.Generic;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX;
 
 namespace Game.Effects
 {
-    public enum ObserverPriority: byte
-    {
-        //Effect does not have a trigger
-        None,
-        
-        // Priorities of effect trigger when an action is taken.
-        AfterAction, DefenderAction, AttackerAction, Kill,
-        
-        //Priorities of effect trigger when ending a ply.
-        //Effects on the start of turn have to run after effects at the end of turn.
-        
-        StartTurnBuff, StartTurnDebuff, StartTurnKill, StartTurnMove,
-        
-        RegionalEffect, RealmInfluence,
-        
-        EndturnBuff, EndturnDebuff, EndturnKill, EndturnMove,
-    }
     
     /*
      *  The effect queue at the end of plies must look like the following:
@@ -37,28 +21,63 @@ namespace Game.Effects
     {
         Stackable, NonStackable, Additive
     }
-    
+    public enum EffectStat
+    {
+        Target,
+        Unit,
+        Radius,
+        Duration,
+        Strength,
+        Chance,
+    }
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class Effect
+    public abstract class Effect : Observer
     {
         public readonly string EffectName;
-        public sbyte Duration;
-        public sbyte Strength;
+        public sbyte Duration
+        {
+            get {
+                if (!Stats.ContainsKey(EffectStat.Duration)){ return -1; }
+                return Stats[EffectStat.Duration];
+            }
+            set
+            {
+                Stats[EffectStat.Duration] = value;
+            }
+        }
+        public sbyte Strength
+        {
+            get {
+                if (!Stats.ContainsKey(EffectStat.Strength)){ return -1; }
+                return Stats[EffectStat.Strength];
+            }
+            set
+            {
+                Stats[EffectStat.Strength] = value;
+            }
+        }
         public PieceLogic Piece;
         public readonly EffectCategory Category;
-        public bool disabled = false;
-        private readonly ObserverPriority priority;
-
+        public readonly Dictionary<EffectStat, sbyte> Stats;
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, string name)
         {
-            Duration = duration;
-            Strength = strength;
             Piece = piece;
             EffectName = name;
             
             var info = AssetManager.Ins.EffectData[name];
-            priority = info.priority;
             Category = info.category;
+            priority = info.priority;
+
+            Stats = new();
+            if (duration != -1)
+            {
+                Stats.Add(EffectStat.Duration, duration);
+            }
+            if (strength != -1)
+            {
+                Stats.Add(EffectStat.Strength, strength);
+            }
         }
 
         public string Description()
@@ -69,14 +88,19 @@ namespace Game.Effects
         }
 
         public virtual int GetValueForAI(){ return 0; }
-        public static IComparer<TItem> GetComparer<TItem>()
+        
+        public int Get(EffectStat stat)
         {
-            return Comparer<TItem>.Create((x, y) => 
+            if (!Stats.ContainsKey(stat)){ return -1; } // Không tồn tại
+            int finalStat = Stats[stat];
+            foreach (Effect effect in Piece.Effects)
             {
-                if (x is not Effect effectX || y is not Effect effectY) return 0;
-                
-                return effectX.priority.CompareTo(effectY.priority);
-            });
+                if (effect is IEffectStatModifier modifier)
+                {
+                    finalStat += modifier.Modify(stat);
+                }
+            }
+            return finalStat;
         }
     }
 }

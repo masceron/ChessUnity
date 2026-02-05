@@ -35,5 +35,6 @@ namespace Game.Action.Skills
                 FormationManager.Ins.SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
         }
+        
     }
 }
