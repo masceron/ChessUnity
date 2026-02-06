@@ -22,7 +22,6 @@ namespace Game.ScriptableObjects
         
         [SerializeField] public bool hasSkill;
         [SerializeField] public sbyte normalSkillCooldown;
-        public UDictionary<SkillStat, int> otherSkillStats;
         [SerializeField] public AugmentationSlotMask availableSlots;
         [SerializeField] public string logicClassName;
         [SerializeField] public int baseValue;

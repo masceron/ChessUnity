@@ -13,6 +13,5 @@ namespace Game.ScriptableObjects
         [SerializeField] public EffectStack stack;
         [SerializeField] public ObserverPriority priority;
         [SerializeField] public Texture2D icon;
-        [SerializeField] public UDictionary<EffectStat, int> otherStats;
     }
 }

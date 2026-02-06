@@ -26,7 +26,6 @@ namespace Game.Effects
         Target,
         Unit,
         Radius,
-        Duration,
         Strength,
         Chance,
     }
@@ -35,31 +34,11 @@ namespace Game.Effects
     public abstract class Effect : Observer
     {
         public readonly string EffectName;
-        public sbyte Duration
-        {
-            get {
-                if (!Stats.ContainsKey(EffectStat.Duration)){ return -1; }
-                return Stats[EffectStat.Duration];
-            }
-            set
-            {
-                Stats[EffectStat.Duration] = value;
-            }
-        }
-        public sbyte Strength
-        {
-            get {
-                if (!Stats.ContainsKey(EffectStat.Strength)){ return -1; }
-                return Stats[EffectStat.Strength];
-            }
-            set
-            {
-                Stats[EffectStat.Strength] = value;
-            }
-        }
+        public sbyte Duration;
+        public sbyte Strength;
         public PieceLogic Piece;
         public readonly EffectCategory Category;
-        public readonly Dictionary<EffectStat, sbyte> Stats;
+        private readonly UDictionary<EffectStat, List<int>> Stats;
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, string name)
         {
             Piece = piece;
@@ -70,13 +49,9 @@ namespace Game.Effects
             priority = info.priority;
 
             Stats = new();
-            if (duration != -1)
-            {
-                Stats.Add(EffectStat.Duration, duration);
-            }
             if (strength != -1)
             {
-                Stats.Add(EffectStat.Strength, strength);
+                Set(EffectStat.Strength, strength);
             }
         }
 
@@ -88,11 +63,16 @@ namespace Game.Effects
         }
 
         public virtual int GetValueForAI(){ return 0; }
-        
-        public int Get(EffectStat stat)
+
+        public int GetRaw(EffectStat stat, int num = 1)
         {
-            if (!Stats.ContainsKey(stat)){ return -1; } // Không tồn tại
-            int finalStat = Stats[stat];
+            if (!Stats.ContainsKey(stat)) { return 0; }
+            return Stats[stat][num - 1];
+        }
+        public int Get(EffectStat stat, int num = 1)
+        {
+            if (!Stats.ContainsKey(stat)) { return 0; }
+            int finalStat = Stats[stat][num - 1];
             foreach (Effect effect in Piece.Effects)
             {
                 if (effect is IEffectStatModifier modifier)
@@ -102,5 +82,19 @@ namespace Game.Effects
             }
             return finalStat;
         }
+        public void Set(EffectStat stat, int value, int num = 1)
+        {
+            if (!Stats.ContainsKey(stat))
+            {
+                Stats.Add(stat, new());
+            }
+            List<int> lst = Stats[stat];
+            while (lst.Count < num)
+            {
+                lst.Add(0);
+            }
+            Stats[stat][num - 1] = value;
+        }
+
     }
 }
