@@ -60,6 +60,7 @@ namespace Game.Managers
                 {
                     formations[pos].OnRemove(PieceOn(pos));
                 }
+                RemoveObserver(formations[pos]);
                 formations[pos] = null;
                 Destroy(formationObjects[pos]);
                 formationObjects[pos] = null;

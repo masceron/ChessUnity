@@ -189,7 +189,7 @@ namespace Game.Common
             MatchManager.Ins.GameState.effectHooks.AddObserver(effect);
         }
 
-        public static void RemoveObserver(Effect effect)
+        public static void RemoveObserver(Observer effect)
         {
             MatchManager.Ins.GameState.effectHooks.RemoveObserver(effect);
         }
