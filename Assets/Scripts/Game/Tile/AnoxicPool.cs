@@ -3,20 +3,21 @@ using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Managers;
+using Game.Effects;
 
 namespace Game.Tile
 {
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class AnoxicPool : Formation, ISubscriber
+    public class AnoxicPool : Formation, IEndTurnEffect
     {
-        private int turnsOnTile; 
-        
+        private int turnsOnTile;
+        public EndTurnEffectType EndTurnEffectType{ get; private set; }
         public AnoxicPool(bool haveDuration, bool color) : base(color)
         {
             HaveDuration = haveDuration;
             turnsOnTile = 0;
-            MatchManager.Ins.GameState.Subscribers.Add(this);
+            EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
         public override FormationType GetFormationType()
@@ -46,16 +47,10 @@ namespace Game.Tile
             return -10;
         }
         
-        public void OnCall(Action.Action action) { }
         
-        public void OnCallEnd(bool endOfSide)
+        public void OnCallEnd(Action.Action lastMainAction)
         {
             if (PieceOnFormation == null)
-            {
-                return;
-            }
-            
-            if (endOfSide != PieceOnFormation.Color)
             {
                 return;
             }

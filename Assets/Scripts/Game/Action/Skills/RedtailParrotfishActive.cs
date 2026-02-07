@@ -26,7 +26,7 @@ namespace Game.Action.Skills
         }
         // protected override void ModifyGameState()
         // {
-        //     FormationManager.Ins.MoveFormation(formationPos, moveTo);
+        //     BoardUtils.MoveFormation(formationPos, moveTo);
         //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         //     Reset();
         // }
@@ -41,7 +41,7 @@ namespace Game.Action.Skills
                 for(int i = 0; i < BoardSize; ++i)
                 {
                     if (!IsActive(i)) { return; }
-                    Formation formation = FormationManager.Ins.GetFormation(i);
+                    Formation formation = GetFormation(i);
                     if(formation != null){ continue; }
                     if (IsOnBlackSide(Maker) == redtailParrotfish.Color)
                     {

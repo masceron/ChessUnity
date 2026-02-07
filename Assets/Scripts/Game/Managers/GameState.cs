@@ -12,6 +12,7 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
 using ZLinq;
+using Game.Tile;
 
 namespace Game.Managers
 {
@@ -35,6 +36,7 @@ namespace Game.Managers
     {
         public readonly bool OurSide;
         public readonly PieceLogic[] PieceBoard;
+        public readonly Formation[] formations;
         public readonly BitArray ActiveBoard;
         public readonly BitArray SquareColor;
         public bool SideToMove;
@@ -44,6 +46,7 @@ namespace Game.Managers
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
         public readonly EffectHooks effectHooks = new();
+        public readonly FormationManager formationManager;
         public RegionalEffect RegionalEffect;
         public readonly List<ISubscriber> Subscribers = new();
         public bool IsDay { get; private set; }
@@ -62,6 +65,7 @@ namespace Game.Managers
             PieceBoard = new PieceLogic[maxLength * maxLength];
             ActiveBoard = new BitArray(maxLength * maxLength);
             SquareColor = new BitArray(maxLength * maxLength);
+            formations = new Formation[maxLength * maxLength];
 
             SideToMove = side;
 
@@ -105,6 +109,7 @@ namespace Game.Managers
             }
 
             PieceBoard[piece.Index] = pieceLogic;
+            effectHooks.NotifySpawnPiece(pieceLogic);
 
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<AI.BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];    
@@ -147,7 +152,17 @@ namespace Game.Managers
                     }
                 }
             }
+            
+            for(var pos = 0; pos < formations.Length; pos++) {
+                var format = formations[pos];
 
+                if (format is not { HaveDuration: true } || SideToMove != format.GetColor()) continue;
+
+                format.SetDuration(format.Duration - 1);
+                if (format.Duration <= 0) {
+                    FormationManager.Ins.RemoveFormation(pos);
+                }
+            }
             WhiteRelic?.PassTurn();
             BlackRelic?.PassTurn();
         }
@@ -163,7 +178,7 @@ namespace Game.Managers
             PieceBoard[pos] = null;
             effectHooks.NotifyDead(pieceAffected);
 
-            pieceAffected.Effects.ForEach(RemoveEffectObserver);
+            pieceAffected.Effects.ForEach(RemoveObserver);
         }
 
         public void Kill(int pos)
@@ -172,7 +187,7 @@ namespace Game.Managers
             PieceBoard[pos] = null;
             effectHooks.NotifyDead(pieceAffected);
 
-            pieceAffected.Effects.ForEach(RemoveEffectObserver);
+            pieceAffected.Effects.ForEach(RemoveObserver);
 
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type, pieceAffected.Color, pieceAffected.Pos));
             
@@ -184,8 +199,6 @@ namespace Game.Managers
             PieceBoard[t].Pos = (ushort)t;
             PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
-            FormationManager.Ins.TriggerExit(f, t);
-            FormationManager.Ins.TriggerEnter(t);
         }
 
         public void Swap(int a, int b)
@@ -193,12 +206,8 @@ namespace Game.Managers
             var pieceB = PieceBoard[b];
             PieceBoard[b] = PieceBoard[a];
             PieceBoard[b].Pos = (ushort)b;
-            FormationManager.Ins.TriggerEnter(b);
-            FormationManager.Ins.TriggerExit(a, b);
             PieceBoard[a] = pieceB;
             PieceBoard[a].Pos = (ushort)a;
-            FormationManager.Ins.TriggerEnter(a);
-            FormationManager.Ins.TriggerExit(b, a);
         }
 
         public void FlipSideToMove()
@@ -222,39 +231,42 @@ namespace Game.Managers
             switch (SideToMove)
             {
                 case true when WhiteCommander != null && !IsAlive(WhiteCommander):
-                {
-                    if (WhiteCommander != null && !IsAlive(WhiteCommander))
                     {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
-                    }
-                    else if (BlackCommander != null && !IsAlive(BlackCommander))
-                    {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                    }
+                        if (WhiteCommander != null && !IsAlive(WhiteCommander))
+                        {
+                            UIManager.Ins.Load(CanvasID.EndGameMessage);
+                            EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                        }
+                        else if (BlackCommander != null && !IsAlive(BlackCommander))
+                        {
+                            UIManager.Ins.Load(CanvasID.EndGameMessage);
+                            EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
                 case false when BlackCommander != null && !IsAlive(BlackCommander):
-                {
-                    if (BlackCommander != null && !IsAlive(BlackCommander))
                     {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                    }
-                    else if (WhiteCommander != null && !IsAlive(WhiteCommander))
-                    {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
-                    }
+                        if (BlackCommander != null && !IsAlive(BlackCommander))
+                        {
+                            UIManager.Ins.Load(CanvasID.EndGameMessage);
+                            EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
+                        }
+                        else if (WhiteCommander != null && !IsAlive(WhiteCommander))
+                        {
+                            UIManager.Ins.Load(CanvasID.EndGameMessage);
+                            EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
             SideToMove = !SideToMove;
         }
+        public void SetRegionalEffect(RegionalEffect e)
+        {
+            RegionalEffect = e;
+            effectHooks.AddObserver(e);
+        }
     }
-    
-    
 }

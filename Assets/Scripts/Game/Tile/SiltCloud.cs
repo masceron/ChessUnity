@@ -13,12 +13,6 @@ namespace Game.Tile
             HaveDuration = haveDuration;
         }
         public override FormationType GetFormationType() => FormationType.SiltCloud;
-
-        public override void OnFirstTurn(PieceLogic piece)
-        {
-            base.OnFirstTurn(piece);
-        }
-
         public override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);

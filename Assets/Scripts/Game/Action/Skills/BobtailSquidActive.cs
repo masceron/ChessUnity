@@ -44,7 +44,7 @@ namespace Game.Action.Skills
                     {
                         Formation FogOfWar = new FogOfWar(Color);
                         FogOfWar.SetDuration(3);
-                        FormationManager.Ins.SetFormation(IndexOf(x, y), FogOfWar);
+                        SetFormation(IndexOf(x, y), FogOfWar);
                     }
                     
                 }

@@ -32,12 +32,8 @@ namespace Game.Effects.Traits
 
             foreach (var pos in posInRadius)
             {
-                if (FormationManager.Ins.GetFormation(pos) != null || pos == Piece.Pos) continue;
-                FormationManager.Ins.SetFormation(pos, saprolegnia);
-                if (BoardUtils.PieceOn(pos) != null)
-                {
-                    FormationManager.Ins.TriggerEnter(pos);
-                }
+                if (BoardUtils.GetFormation(pos) != null || pos == Piece.Pos) continue;
+                BoardUtils.SetFormation(pos, saprolegnia);
             }
         }
     }

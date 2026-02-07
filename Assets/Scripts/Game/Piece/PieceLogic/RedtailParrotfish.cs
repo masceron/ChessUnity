@@ -26,7 +26,7 @@ namespace Game.Piece.PieceLogic
                     for(int i = 0; i < BoardSize; ++i)
                     {
                         if (!IsActive(i)) { continue; }
-                        Formation formation = FormationManager.Ins.GetFormation(i);
+                        Formation formation = GetFormation(i);
                         if (formation != null)
                         {
                             list.Add(new RedtailParrotfishActive(this, i));

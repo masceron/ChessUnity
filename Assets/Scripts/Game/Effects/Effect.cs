@@ -95,6 +95,5 @@ namespace Game.Effects
             }
             Stats[stat][num - 1] = value;
         }
-
     }
 }

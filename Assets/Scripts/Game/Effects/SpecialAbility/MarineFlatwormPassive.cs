@@ -1,6 +1,5 @@
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.Managers;
 using Game.Tile;
 
 namespace Game.Effects.SpecialAbility
@@ -19,7 +18,7 @@ namespace Game.Effects.SpecialAbility
             // quan dong minh
             if (pieceToDie.Color == Piece.Color && pieceToDie.Effects.Any(e => e.EffectName == "effect_illusion")) {
                 if (Distance(Piece.Pos, pieceToDie.Pos) <= 4) {
-                    FormationManager.Ins.SetFormation(pieceToDie.Pos, new SiltCloud(Piece.Color));
+                    SetFormation(pieceToDie.Pos, new SiltCloud(Piece.Color));
                 }
 
             }

@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Effects.Buffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -17,7 +18,7 @@ namespace Game.Effects.SpecialAbility
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) { return; }
-            Formation fmt = FormationManager.Ins.GetFormation(Piece.Pos);
+            Formation fmt = BoardUtils.GetFormation(Piece.Pos);
             if (fmt != null && AssetManager.Ins.FormationData[fmt.GetFormationType()].formationCategory == FormationCategory.Negative)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Haste(2, 4, Piece)));

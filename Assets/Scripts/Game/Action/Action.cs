@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action
@@ -39,7 +40,6 @@ namespace Game.Action
         public int Maker;
         public ResultFlag Result = ResultFlag.Success;
         public ActionFlag Flag = ActionFlag.None;
-
         protected Action(int maker)
         {
             Maker = maker;

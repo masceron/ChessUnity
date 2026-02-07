@@ -1,5 +1,6 @@
 using UnityEngine;
 using Game.Tile;
+using Game.Common;
 
 namespace Game.ScriptableObjects
 {
@@ -7,8 +8,8 @@ namespace Game.ScriptableObjects
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FormationInfo : ScriptableObject
     {
-        public string key = "no_key";
         public FormationCategory formationCategory;
+        public ObserverPriority priority;
         public GameObject prefab;
     }
 }

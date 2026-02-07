@@ -22,7 +22,7 @@ namespace Game.Tile
         {
             if (piece.Color != Color)
             {
-                FormationManager.Ins.RemoveFormation(piece.Pos);
+                BoardUtils.RemoveFormation(piece.Pos);
             }
         }
         public override void OnPieceExit(PieceLogic piece)

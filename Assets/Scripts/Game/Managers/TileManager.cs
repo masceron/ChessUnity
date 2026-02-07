@@ -1,4 +1,6 @@
-﻿using Game.Common;
+﻿using Game.Action;
+using Game.Action.Internal;
+using Game.Common;
 using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -213,6 +215,12 @@ namespace Game.Managers
             var y = FileOf(index);
             UpdateActiveRegion(x, y);
             UpdateBorder();
+
+            BoardUtils.RemoveFormation(index);
+            if (PieceOn(index) != null)
+            {
+                ActionManager.EnqueueAction(new KillPiece(index));
+            }
         }
         
         public void Select(int pos)

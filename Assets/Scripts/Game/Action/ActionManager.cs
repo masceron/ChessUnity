@@ -51,29 +51,27 @@ namespace Game.Action
         {
             var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionEffect>();
             var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionEffect>();
-            
+
             if (mainAction is IRelicAction iRelicAction)
             {
                 foreach (var listener in afterRelicActionListeners)
                 {
-                    if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
-                    
+                    // if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
                     listener.OnCallAfterRelicAction(iRelicAction);
-                    ProcessStack(); 
+                    ProcessStack();
                 }
             }
             else if (mainAction is not IInternal)
             {
                 foreach (var listener in afterPieceActionListeners)
                 {
-                    if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
-                    
+                    // if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
                     listener.OnCallAfterPieceAction(mainAction);
-                    ProcessStack(); 
+                    ProcessStack();
                 }
             }
         }
-
+        
         private static void ProcessStack()
         {
             while (_actionStack.Count > 0)

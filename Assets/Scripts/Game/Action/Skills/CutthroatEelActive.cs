@@ -32,7 +32,7 @@ namespace Game.Action.Skills
             else
             {
                 ActionManager.EnqueueAction(new KillPiece(Target));
-                FormationManager.Ins.SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
+                SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
         }
         
