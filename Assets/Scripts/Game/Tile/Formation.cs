@@ -37,7 +37,6 @@ namespace Game.Tile
     public abstract class Formation : Observer, IAfterPieceActionEffect, IOnPieceSpawned
     {
         public int Pos { get; private set; }
-        protected readonly bool Color;
         public PieceLogic PieceOnFormation { get; protected set; }
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }

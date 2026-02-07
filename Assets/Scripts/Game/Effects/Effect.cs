@@ -43,6 +43,7 @@ namespace Game.Effects
         {
             Piece = piece;
             EffectName = name;
+            Color = Piece.Color;
             
             var info = AssetManager.Ins.EffectData[name];
             Category = info.category;
