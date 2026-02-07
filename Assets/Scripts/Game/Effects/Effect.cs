@@ -51,7 +51,7 @@ namespace Game.Effects
             Stats = new();
             if (strength != -1)
             {
-                Set(EffectStat.Strength, strength);
+                SetStat(EffectStat.Strength, strength);
             }
         }
 
@@ -64,12 +64,12 @@ namespace Game.Effects
 
         public virtual int GetValueForAI(){ return 0; }
 
-        public int GetRaw(EffectStat stat, int num = 1)
+        public int GetRawStat(EffectStat stat, int num = 1)
         {
             if (!Stats.ContainsKey(stat)) { return 0; }
             return Stats[stat][num - 1];
         }
-        public int Get(EffectStat stat, int num = 1)
+        public int GetStat(EffectStat stat, int num = 1)
         {
             if (!Stats.ContainsKey(stat)) { return 0; }
             int finalStat = Stats[stat][num - 1];
@@ -82,7 +82,7 @@ namespace Game.Effects
             }
             return finalStat;
         }
-        public void Set(EffectStat stat, int value, int num = 1)
+        public void SetStat(EffectStat stat, int value, int num = 1)
         {
             if (!Stats.ContainsKey(stat))
             {

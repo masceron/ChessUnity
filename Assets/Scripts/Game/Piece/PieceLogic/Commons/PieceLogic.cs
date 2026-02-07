@@ -327,12 +327,24 @@ namespace Game.Piece.PieceLogic.Commons
                 default: return 0;
             }
         }
-        public int GetRaw(SkillStat stat, int num = 1)
+        /// <summary>
+        /// Trả về chỉ 
+        /// </summary>
+        /// <param name="stat"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public int GetRawStat(SkillStat stat, int num = 1)
         {
             if (!SkillStats.ContainsKey(stat)) { return 0; }
             return SkillStats[stat][num - 1];
         }
-        public int Get(SkillStat stat, int num = 1)
+        /// <summary>
+        /// Trả về stat sau khi đã qua sự chỉnh sửa của các Effect
+        /// </summary>
+        /// <param name="stat">Loại stat</param>
+        /// <param name="num">Số thứ tự của stat</param>
+        /// <returns></returns>
+        public int GetStat(SkillStat stat, int num = 1)
         {
             if (!SkillStats.ContainsKey(stat)) { return 0; }
             int finalStat = SkillStats[stat][num - 1];
@@ -345,7 +357,7 @@ namespace Game.Piece.PieceLogic.Commons
             }
             return finalStat;
         }
-        public void Set(SkillStat stat, int value, int num = 1)
+        public void SetStat(SkillStat stat, int value, int num = 1)
         {
             if (!SkillStats.ContainsKey(stat))
             {
