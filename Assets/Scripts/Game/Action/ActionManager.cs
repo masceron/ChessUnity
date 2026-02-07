@@ -119,14 +119,14 @@ namespace Game.Action
             
             startTurnListeners.ForEach(effect =>
             {
-                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                // if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
                 if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
                 {
                     effect.OnCallStart(mainAction);
                     ProcessStack();
                 }
                 //The next turn is ours.
-                else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
+                else if (BoardUtils.SideToMove() == ((Observer)effect).Color)
                 {
                     if (effect.StartTurnEffectType != StartTurnEffectType.StartOfAllyTurn) return;
                     

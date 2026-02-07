@@ -24,6 +24,7 @@ namespace Game.Common
     {
         public bool disabled = false;
         protected ObserverPriority priority;
+        public bool Color;
         public static IComparer<TItem> GetComparer<TItem>()
         {
             return Comparer<TItem>.Create((x, y) =>
