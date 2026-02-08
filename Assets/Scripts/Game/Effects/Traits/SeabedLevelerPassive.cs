@@ -10,7 +10,5 @@ namespace Assets.Scripts.Game.Effects.Traits
         {
             seabedLeveler = sl;
         }
-
-        
     }
 }
