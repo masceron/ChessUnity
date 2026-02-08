@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Quiets;
+using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
+using UnityEngine;
 
 namespace Game.Tile.RealityDistortion
 {
@@ -35,9 +37,11 @@ namespace Game.Tile.RealityDistortion
             if (allDistortions.Count < 2) return;
             
             var piecesOnDistortions = new List<(PieceLogic piece, int currentPos)>();
+            var distortionPositions = new List<int>();
             
             foreach (var distortion in allDistortions)
             {
+                distortionPositions.Add(distortion.Pos);
                 var piece = gameState.PieceBoard[distortion.Pos];
                 if (piece != null)
                 {
@@ -45,24 +49,65 @@ namespace Game.Tile.RealityDistortion
                 }
             }
             
-            foreach (var (piece, currentPos) in piecesOnDistortions)
+            if (piecesOnDistortions.Count < 2) return;
+            
+            var availablePositions = new List<int>(distortionPositions);
+            
+            for (int i = availablePositions.Count - 1; i > 0; i--)
             {
-                var availableDistortions = new List<RealityDistortion>();
-                foreach (var distortion in allDistortions)
+                int j = UnityEngine.Random.Range(0, i + 1);
+                int temp = availablePositions[i];
+                availablePositions[i] = availablePositions[j];
+                availablePositions[j] = temp;
+            }
+            
+            // Gán mỗi quân đến một vị trí ngẫu nhiên
+            // 2 quân k cùng đến 1 vị trí
+            var usedPositions = new HashSet<int>();
+            
+            for (int i = 0; i < piecesOnDistortions.Count; i++)
+            {
+                var (piece, currentPos) = piecesOnDistortions[i];
+                
+                int targetPos = -1;
+                
+                foreach (var pos in availablePositions)
                 {
-                    if (distortion.Pos != currentPos && gameState.PieceBoard[distortion.Pos] == null)
+                    if (!usedPositions.Contains(pos) && pos != currentPos)
                     {
-                        availableDistortions.Add(distortion);
+                        targetPos = pos;
+                        break;
                     }
                 }
                 
-                if (availableDistortions.Count == 0) continue;
+                if (targetPos == -1)
+                {
+                    foreach (var pos in availablePositions)
+                    {
+                        if (!usedPositions.Contains(pos))
+                        {
+                            targetPos = pos;
+                            break;
+                        }
+                    }
+                }
                 
-                var randomIndex = UnityEngine.Random.Range(0, availableDistortions.Count);
-                var targetDistortion = availableDistortions[randomIndex];
-                var targetPos = targetDistortion.Pos;
+                if (targetPos == -1) continue;
                 
-                ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
+                usedPositions.Add(targetPos);
+                
+                if (targetPos != currentPos)
+                {
+                    var pieceAtTarget = gameState.PieceBoard[targetPos];
+                    if (pieceAtTarget == null)
+                    {
+                        ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
+                    }
+                    else
+                    {
+                        ActionManager.EnqueueAction(new HermitCrabSwap(currentPos, targetPos));
+                    }
+                }
             }
         }
     }
