@@ -40,29 +40,32 @@ namespace Game.Piece.PieceLogic
                             list.Add(new SohalSurgeonfishActive(Pos, index));
                         }
                     }
-                    var listPieces = new List<Commons.PieceLogic>();
-            
-                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 6))
+                    else
                     {
-                        var idx = IndexOf(rank, file);
-                        var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != Color)
+                        var listPieces = new List<Commons.PieceLogic>();
+            
+                        foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 6))
                         {
-                            if (pOn.Effects != null && !pOn.Effects.Any(e => e.EffectName == "effect_leashed") 
-                                                    && pOn.Effects.Any(e => e.EffectName == "effect_slow"))
+                            var idx = IndexOf(rank, file);
+                            var pOn = PieceOn(idx);
+                            if (pOn != null && pOn.Color != Color)
                             {
-                                listPieces.Add(pOn);
+                                if (pOn.Effects != null && !pOn.Effects.Any(e => e.EffectName == "effect_leashed") 
+                                                        && pOn.Effects.Any(e => e.EffectName == "effect_slow"))
+                                {
+                                    listPieces.Add(pOn);
+                                }
                             }
                         }
-                    }
-                    if (listPieces.Count == 0) return;
-                    int maxValue = listPieces.Max(p => p.GetValueForAI());
-                    var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
-                    if (bestPieces.Count == 0) return;
+                        if (listPieces.Count == 0) return;
+                        int maxValue = listPieces.Max(p => p.GetValueForAI());
+                        var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+                        if (bestPieces.Count == 0) return;
+                        var random = new System.Random();
+                        var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+                        list.Add(new SohalSurgeonfishActive(Pos, selectedPiece.Pos));
 
-                    var random = new System.Random();
-                    var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-                    list.Add(new SohalSurgeonfishActive(Pos, selectedPiece.Pos));
+                    }
                 }
             };
         }
