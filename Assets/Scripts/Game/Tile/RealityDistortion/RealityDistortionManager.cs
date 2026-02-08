@@ -1,13 +1,11 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Quiets;
-using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using static Game.Common.BoardUtils;
-using Game.Action.Internal;
 using UnityEngine;
 
 namespace Game.Tile.RealityDistortion
@@ -105,7 +103,7 @@ namespace Game.Tile.RealityDistortion
                     }
                     else
                     {
-                        ActionManager.EnqueueAction(new HermitCrabSwap(currentPos, targetPos));
+                        ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
                     }
                 }
             }

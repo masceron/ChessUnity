@@ -44,6 +44,6 @@ namespace Game.Tile.RealityDistortion
         }
         
         public StartTurnEffectType StartTurnEffectType { get; set; } 
-            = StartTurnEffectType.StartOfAllyTurn;
+            = StartTurnEffectType.StartOfAnyTurn;
     }
 }
