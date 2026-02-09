@@ -11,7 +11,7 @@ namespace Game.Action.Skills
         private int firstTargetPos;
         private int secondTargetPos;
         
-        public EyeshadeSculpinActive(int maker, int _frstTarget, int secondTarget) : base(maker)
+        public EyeshadeSculpinActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
             Maker = (ushort)maker;
             firstTargetPos = firstTarget;
