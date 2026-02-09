@@ -10,7 +10,7 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TemporalWarpPending : PendingAction, System.IDisposable, IRelicAction, IInternal
+    public class TemporalWarpPending : PendingAction, System.IDisposable, IInternal
     {
         private TemporalWarp _temporalWarp;
 

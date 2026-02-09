@@ -32,7 +32,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public override void CompleteAction()
         {
-            var execute = new CorruptedWisperExecute(126, Target);
+            var execute = new CorruptedWisperExecute(-1, Target);
 
             BoardViewer.Ins.ExecuteAction(execute);
             corruptedWisper.LevelUp();

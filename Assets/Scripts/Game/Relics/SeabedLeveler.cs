@@ -12,7 +12,7 @@ namespace Game.Relics
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeabedLeveler : RelicLogic
     {
-        public readonly Charge charge;
+        private Charge charge;
         public SeabedLeveler(RelicConfig cfg) : base(cfg)
         {
             CurrentCooldown = 0;
@@ -32,7 +32,7 @@ namespace Game.Relics
                     if (FormationManager.Ins.HasFormation(i) == false) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeabedLevelerPending(this, piece.Pos);
+                    var pending = new SeabedLevelerPending(this, charge, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 
