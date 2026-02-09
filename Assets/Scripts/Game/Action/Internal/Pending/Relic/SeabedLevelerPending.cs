@@ -1,20 +1,33 @@
-﻿using Game.Action.Relics;
+﻿using Game.Managers;
 using Game.Relics;
-using UnityEngine;
 using UX.UI.Ingame;
-using UX.UI.Ingame.SeabedLevelerUI;
+using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class SeabedLevelerPending : PendingAction, System.IDisposable, IRelicAction
+    public class SeabedLevelerPending : PendingAction, System.IDisposable, IRelicAction, IInternal
     {
         private SeabedLeveler seabedLeveler;
 
-        public SeabedLevelerPending(SeabedLeveler sl) : base(-1)
+        public SeabedLevelerPending(SeabedLeveler sl, int maker) : base(maker)
         {
             seabedLeveler = sl;
+            Target = (ushort)maker;
+            Maker = (ushort)maker;
+        }
+
+        public override void CompleteAction()
+        {
+            var excute = new SeabedLevelerExecute(Maker, Target);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+
+            MatchManager.Ins.InputProcessor.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
 
         public void Dispose()
@@ -22,24 +35,5 @@ namespace Game.Action.Internal.Pending.Relic
             seabedLeveler = null;
             BoardViewer.SelectingFunction = 0;
         }
-
-        public override void CompleteAction()
-        {
-            var ui = Object.FindAnyObjectByType<SeabedLevelerUI>(FindObjectsInactive.Include);
-
-            if (!ui)
-            {
-                var canvas = Object.FindAnyObjectByType<BoardViewer>(FindObjectsInactive.Exclude);
-                ui = Object.Instantiate(UIHolder.Ins.Get(IngameSubmenus.SeabedLevelerUI), canvas.transform)
-                    .GetComponent<SeabedLevelerUI>();
-            }
-            else
-            {
-                ui.gameObject.SetActive(true);
-            }
-
-            ui.Load();
-        }
-
     }
 }

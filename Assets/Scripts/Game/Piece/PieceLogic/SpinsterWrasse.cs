@@ -71,9 +71,8 @@ namespace Game.Piece.PieceLogic
             
                     var idxA = UnityEngine.Random.Range(0, listA.Count - 1);
                     var idxB = UnityEngine.Random.Range(0, listB.Count - 1);
-                    
-                    ActionManager.EnqueueAction(new Purify(Pos, idxA));
-                    ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(idxB))));
+
+                    list.Add(new SpinsterWrasseBuff(Pos, listA[idxA].Pos, listB[idxB].Pos));
                 }
             };
         }

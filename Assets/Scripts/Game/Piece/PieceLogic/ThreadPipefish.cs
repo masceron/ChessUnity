@@ -54,7 +54,7 @@ namespace Game.Piece.PieceLogic
                                 }
 
                                 if (numberOfBuff > 0)
-                                    listPieces.Add((pOn, idx));
+                                    listPieces.Add((pOn, numberOfBuff));
                             }
                         }
 

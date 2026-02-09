@@ -1,17 +1,16 @@
 ﻿using Game.Managers;
+using Game.Action;
 using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.Action.Quiets;
-using UnityEngine;
 
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TemporalWarpPending : PendingAction, System.IDisposable, IRelicAction
+    public class TemporalWarpPending : PendingAction, System.IDisposable, IRelicAction, IInternal
     {
         private TemporalWarp _temporalWarp;
 
@@ -37,16 +36,15 @@ namespace Game.Action.Internal.Pending.Relic
                 return;
             }
 
-            Debug.Log(BoardViewer.HoveringPos);
             _secondPos = BoardViewer.HoveringPos;
             TileManager.Ins.UnmarkAll();
 
-            ActionManager.ExecuteImmediately(new NormalMove(_firstTarget.Pos, _secondPos));
+            var execute = new TemporalWarpExecute(_firstTarget.Pos, _secondPos);
+            BoardViewer.Ins.ExecuteAction(execute);
             ResetTargets();
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-            _temporalWarp.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
 
@@ -57,7 +55,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             var startingSize = MatchManager.Ins.StartingSize;
             var rankStart = (MaxLength - startingSize.x) / 2;
-            var fileStart = (MaxLength - startingSize.y) / 2; 
+            var fileStart = (MaxLength - startingSize.y) / 2;
             var midRank = rankStart + startingSize.x / 2;
             var side = _firstTarget.Color;
 

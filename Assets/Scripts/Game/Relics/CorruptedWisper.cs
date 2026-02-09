@@ -26,7 +26,7 @@ namespace Game.Relics
             currentLevel = 1;
             possibleRank = new List<PieceRank> { PieceRank.Swarm, PieceRank.Summoned, PieceRank.Common };
             
-            corruptedWisperCharge = new CorruptedWisperCharge(3, config.Color);
+            corruptedWisperCharge = new CorruptedWisperCharge(0, config.Color);
             BoardUtils.AddEffectObserver(corruptedWisperCharge);
         }
 
