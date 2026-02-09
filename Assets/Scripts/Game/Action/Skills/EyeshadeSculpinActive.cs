@@ -8,20 +8,20 @@ namespace Game.Action.Skills
 {
     public class EyeshadeSculpinActive : Action, ISkills, IAIAction
     {
-        private PieceLogic firstTarget;
-        private PieceLogic secondTarget;
+        private int firstTargetPos;
+        private int secondTargetPos;
         
-        public EyeshadeSculpinActive(int maker, PieceLogic _firstTarget, PieceLogic _secondTarget) : base(maker)
+        public EyeshadeSculpinActive(int maker, int _frstTarget, int secondTarget) : base(maker)
         {
             Maker = (ushort)maker;
-            firstTarget = _firstTarget;
-            secondTarget = _secondTarget;
+            firstTargetPos = firstTarget;
+            secondTargetPos = secondTarget;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, firstTarget), PieceOn(Maker)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, secondTarget), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(firstTargetPos)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(secondTargetPos)), PieceOn(Maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 

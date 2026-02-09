@@ -94,7 +94,7 @@ namespace Game.Piece.PieceLogic
                             }
                         }
                     
-                        var eyeshadeSculpinActive = new EyeshadeSculpinActive(Pos, selectedPieces[0], selectedPieces[1]);
+                        var eyeshadeSculpinActive = new EyeshadeSculpinActive(Pos, selectedPieces[0].Pos, selectedPieces[1].Pos);
                         list.Add(eyeshadeSculpinActive);
                     }
                     else
@@ -109,7 +109,7 @@ namespace Game.Piece.PieceLogic
                                 var index2 = IndexOf(rankOff2, fileOff2);
                                 var pOn2 = PieceOn(index2);
                                 if (pOn2 == null || pOn2 == this || pOn2.Color == Color || pOn2.Pos == pOn1.Pos) continue;
-                                list.Add(new EyeshadeSculpinActive(Pos, pOn1, pOn2));
+                                list.Add(new EyeshadeSculpinActive(Pos, pOn1.Pos, pOn2.Pos));
                             }
                         }
                     }

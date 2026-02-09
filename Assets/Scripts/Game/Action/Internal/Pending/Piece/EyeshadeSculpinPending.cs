@@ -42,7 +42,7 @@ namespace Game.Action.Internal.Pending.Piece
                 return;
             }
             SecondTarget = hovering;
-            BoardViewer.Ins.ExecuteAction(new EyeshadeSculpinActive(Maker, FirstTarget, SecondTarget));
+            BoardViewer.Ins.ExecuteAction(new EyeshadeSculpinActive(Maker, FirstTarget.Pos, SecondTarget.Pos));
         }
         
         public void Dispose()
