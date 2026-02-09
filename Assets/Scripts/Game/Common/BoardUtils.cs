@@ -14,6 +14,7 @@ using UX.UI.Ingame;
 using UX.UI;
 using ZLinq;
 using Game.Tile;
+using Game.Action;
 
 namespace Game.Common
 {
@@ -434,6 +435,16 @@ namespace Game.Common
         public static List<Formation> GetFormation(FormationType type) => GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
         public static Formation[] GetFormations() => MatchManager.Ins.GameState.formations;
         public static Formation GetFormation(int pos) => MatchManager.Ins.GameState.formations[pos];
-        public static bool HasFormation(int pos) =>  MatchManager.Ins.GameState.formations[pos] != null;
+        public static bool HasFormation(int pos) => MatchManager.Ins.GameState.formations[pos] != null;
+        
+        public static void DestroyTile(int index)
+        {
+            TileManager.Ins.DestroyTile(index);
+            BoardUtils.RemoveFormation(index);
+            if (PieceOn(index) != null)
+            {
+                ActionManager.EnqueueAction(new KillPiece(index));
+            }
+        }
     }
 }
