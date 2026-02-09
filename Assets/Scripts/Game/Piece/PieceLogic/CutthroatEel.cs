@@ -23,6 +23,7 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Pos), FileOf(Pos), 4))
                     {
                         int targetPos = IndexOf(rank, file);
+                        if (!IsActive(targetPos)){ return; }
                         Commons.PieceLogic pieceOn = PieceOn(targetPos);
 
                         if (pieceOn != null && pieceOn.Color != Color && pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
@@ -31,7 +32,7 @@ namespace Game.Piece.PieceLogic
                             {
                                 if (effect is Bleeding bleeding)
                                 {
-                                    list.Add(new CutthroatEelActive(Pos, targetPos, bleeding));
+                                    list.Add(new CutthroatEelActive(Pos, targetPos));
                                     break;
                                 }
                             }
@@ -47,6 +48,7 @@ namespace Game.Piece.PieceLogic
                     var validTargets = new System.Collections.Generic.List<(Commons.PieceLogic piece, Bleeding bleeding)>();
                     foreach (var enemy in enemiesWithBleeding)
                     {
+                        if (!IsActive(enemy.Pos)){ return; }
                         foreach (Effect effect in enemy.Effects)
                         {
                             if (effect is Bleeding bleeding)
@@ -83,7 +85,7 @@ namespace Game.Piece.PieceLogic
                     
                     // Chọn 1 hoặc random
                     var chosen = candidates.Count == 1 ? candidates[0] : candidates[UnityEngine.Random.Range(0, candidates.Count)];
-                    list.Add(new CutthroatEelActive(Pos, chosen.piece.Pos, chosen.bleeding));
+                    list.Add(new CutthroatEelActive(Pos, chosen.piece.Pos));
                 }
             };
         }

@@ -5,26 +5,26 @@ using static Game.Common.BoardUtils;
 using Game.Effects.Debuffs;
 using Game.Action.Quiets;
 using Game.Action.Internal;
+using Game.Effects;
 
 namespace Game.Action.Skills
 {
     public class CutthroatEelActive  : Action, ISkills
     {
-        Bleeding bleeding;
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
-        public CutthroatEelActive(int maker, int target, Bleeding effect) : base(maker)
+        public CutthroatEelActive(int maker, int target) : base(maker)
         {
-            Target = target;
-            bleeding = effect;
+            Target = target; // Target is enemy
         }
         protected override void ModifyGameState()
         {
             PieceLogic makerPiece = PieceOn(Maker);
             int direction = PieceOn(Maker).Color ? 1 : -1;
             ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(RankOf(Target) + direction, FileOf(Target))));
+            Effect bleeding = PieceOn(Target).Effects.First(e => e is Bleeding);
             if (bleeding.Strength >= 4)
             {
                 bleeding.Strength -= 1;
