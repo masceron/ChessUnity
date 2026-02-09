@@ -22,7 +22,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            
+            FormationManager.Ins.RemoveFormation(Target);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

@@ -1,7 +1,10 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
+using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Traits;
+using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 
@@ -17,7 +20,15 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
                 {
-                    list.Add(new RustyParrotfishPending(Pos));
+                    for (int i = 0; i < BoardUtils.BoardSize; ++i)
+                    {
+                        var piece = BoardUtils.PieceOn(i);
+                        if (piece == null || piece.Color == Color) continue;
+                        if (FormationManager.Ins.HasFormation(i) == false) continue;
+
+                        list.Add(new RustyParrotfishActive(Pos, piece.Pos));
+                    }
+
                 }
                 else
                 {
