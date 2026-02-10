@@ -14,12 +14,10 @@ namespace Game.Effects.Others
     {
         private int _currentTurn = 1;
         private readonly List<int> _storedPos;
-        private readonly ChaoticConstructorPending _chaoticConstructorPending;
 
-        public ChaoticConstructorSpawn(sbyte strength, ChaoticConstructorPending ccp, List<int> storedPos) : base(1, strength, null, "effect_chaotic_constructor_spawn")
+        public ChaoticConstructorSpawn(sbyte strength, List<int> storedPos) : base(1, strength, null, "effect_chaotic_constructor_spawn")
         {
             _storedPos = storedPos;
-            _chaoticConstructorPending = ccp;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
 
@@ -53,7 +51,6 @@ namespace Game.Effects.Others
                     ActionManager.ExecuteImmediately(new SpawnPiece(cfg));
                 }
 
-                _chaoticConstructorPending.Dispose();
             }
             _currentTurn--;
         }

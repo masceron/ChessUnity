@@ -11,6 +11,7 @@ namespace Game.Relics.Commons
                 "relic_chaotic_constructor" => new ChaoticConstructor(cfg),
                 "relic_common_pearl" => new CommonPearl(cfg),
                 "relic_coral_tome" => new CoralTome(cfg),
+                "relic_corrupted_wisper" => new CorruptedWisper(cfg),
                 "relic_eye_of_mimic" => new EyeOfMimic(cfg),
                 "relic_frost_sigil" => new FrostSigil(cfg),
                 "relic_hernos_horn" => new HermosHorn(cfg),

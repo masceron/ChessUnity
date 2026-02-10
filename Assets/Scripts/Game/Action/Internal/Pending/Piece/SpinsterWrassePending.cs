@@ -8,15 +8,15 @@ using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
-namespace Game.Action.Skills
+namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SpinsterWrasseActive : PendingAction, IDisposable
+    public class SpinsterWrassePending : PendingAction, IDisposable
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
         private bool Color;
-        public SpinsterWrasseActive(int maker, int to, bool color) : base(maker)
+        public SpinsterWrassePending(int maker, int to, bool color) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
@@ -46,7 +46,8 @@ namespace Game.Action.Skills
             
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-
+            var buff = new SpinsterWrasseBuff(Maker, FirstTarget.Pos, SecondTarget.Pos);
+            BoardViewer.Ins.ExecuteAction(buff);
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

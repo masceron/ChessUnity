@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
+using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects;
 using Game.Effects.Buffs;
@@ -28,7 +28,7 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new SpinsterWrasseActive(Pos, idx, Color));
+                        list.Add(new SpinsterWrassePending(Pos, idx, Color));
                     }
                 }
                 else
@@ -71,9 +71,8 @@ namespace Game.Piece.PieceLogic
             
                     var idxA = UnityEngine.Random.Range(0, listA.Count - 1);
                     var idxB = UnityEngine.Random.Range(0, listB.Count - 1);
-                    
-                    ActionManager.EnqueueAction(new Purify(Pos, idxA));
-                    ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(idxB))));
+
+                    list.Add(new SpinsterWrasseBuff(Pos, listA[idxA].Pos, listB[idxB].Pos));
                 }
             };
         }

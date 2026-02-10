@@ -1,5 +1,7 @@
-﻿using Game.Common;
+﻿using Game.Action.Internal.Pending.Relic;
+using Game.Common;
 using Game.Effects.Others;
+using Game.Managers;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
@@ -10,7 +12,7 @@ namespace Game.Relics
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeabedLeveler : RelicLogic
     {
-        public readonly Charge charge;
+        private Charge charge;
         public SeabedLeveler(RelicConfig cfg) : base(cfg)
         {
             CurrentCooldown = 0;
@@ -20,23 +22,22 @@ namespace Game.Relics
 
         public override void Activate()
         {
-            if (charge.Strength >= 0)
+            if (charge.Strength >= 3)
             {
 
-                var ui = Object.FindAnyObjectByType<SeabedLevelerUI>(FindObjectsInactive.Include);
+                for (int i = 0; i < BoardUtils.BoardSize; ++i)
+                {
+                    var piece = BoardUtils.PieceOn(i);
+                    if (piece == null || piece.Color == Color) continue;
+                    if (FormationManager.Ins.HasFormation(i) == false) continue;
 
-                if (!ui)
-                {
-                    var canvas = Object.FindAnyObjectByType<BoardViewer>(FindObjectsInactive.Exclude);
-                    ui = Object.Instantiate(UIHolder.Ins.Get(IngameSubmenus.SeabedLevelerUI), canvas.transform)
-                        .GetComponent<SeabedLevelerUI>();
-                }
-                else
-                {
-                    ui.gameObject.SetActive(true);
+                    TileManager.Ins.MarkAsMoveable(piece.Pos);
+                    var pending = new SeabedLevelerPending(this, charge, piece.Pos);
+                    BoardViewer.ListOf.Add(pending);
                 }
 
-                ui.Load();
+                BoardViewer.Selecting = -2;
+                BoardViewer.SelectingFunction = 4;
             }
 
             if (CurrentCooldown > 0)
