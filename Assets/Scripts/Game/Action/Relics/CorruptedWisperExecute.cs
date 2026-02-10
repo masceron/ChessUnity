@@ -7,16 +7,14 @@ namespace Game.Action.Relics
 {
     public class CorruptedWisperExecute : Action, IRelicAction
     {
-        private int duration;
-        public CorruptedWisperExecute(int duration, int target) : base(-1)
+        public CorruptedWisperExecute(int target) : base(-1)
         {
             Target = target;
-            this.duration = duration;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(126, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, PieceOn(Target))));
         }
     }
 }

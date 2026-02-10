@@ -22,7 +22,7 @@ namespace Game.Relics
 
         public override void Activate()
         {
-            if (charge.Strength >= 0)
+            if (charge.Strength >= 3)
             {
 
                 for (int i = 0; i < BoardUtils.BoardSize; ++i)
