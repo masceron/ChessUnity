@@ -26,7 +26,7 @@ namespace Game.Effects.Others
                 var piece = BoardUtils.PieceOn(BoardUtils.IndexOf(rankoff, fileoff));
                 if (piece != null && piece.Color == Piece.Color && MatchManager.Roll(probability))
                 {
-                    Effect poison = piece.Effects.Find(effect => effect.EffectName == "effect_poison");
+                    var poison = piece.Effects.Find(effect => effect.EffectName == "effect_poison");
                     if (poison != null)
                     {
                         poison.Strength -= 1;

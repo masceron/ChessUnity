@@ -18,7 +18,7 @@ namespace Game.Effects.Augmentation
         
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            PieceLogic pieceApplied = applyEffect.Effect.Piece;
+            var pieceApplied = applyEffect.Effect.Piece;
 
             if (pieceApplied != Piece) return;
 

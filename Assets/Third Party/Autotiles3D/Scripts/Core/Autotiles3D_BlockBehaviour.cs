@@ -73,7 +73,7 @@ namespace Autotiles3D
         }
         public InternalNode Randomize(bool focusInstance = true)
         {
-            InternalNode node = GetInternalNode();
+            var node = GetInternalNode();
             if (node != null)
             {
                 node.Randomize();
@@ -96,7 +96,7 @@ namespace Autotiles3D
         {
             if (Anchor != null)
             {
-                Autotiles3D_TileLayer layer = Anchor.Layer;
+                var layer = Anchor.Layer;
                 if (layer != null)
                 {
                     if (layer.ContainsKey(_internalPosition))

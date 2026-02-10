@@ -39,12 +39,12 @@ namespace Game.Relics
             var listPiecesB = allPieces.Where(p => p != null && p.Color != Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
 
             if (listPiecesA.Count == 0 || listPiecesB.Count == 0) return;
-            int minValueA = listPiecesA.Min(p => p.GetValueForAI());
+            var minValueA = listPiecesA.Min(p => p.GetValueForAI());
 
-            int maxValueB = listPiecesB.Max(p => p.GetValueForAI());
+            var maxValueB = listPiecesB.Max(p => p.GetValueForAI());
 
             var bestPiecesValuesA = listPiecesA.Where(p => p.GetValueForAI() == minValueA).ToList();
-            int minBuffA = bestPiecesValuesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
+            var minBuffA = bestPiecesValuesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
             var bestPiecesA = bestPiecesValuesA.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA).ToList();
             var bestPiecesValuesB = listPiecesB.Where(p => p.GetValueForAI() == maxValueB).ToList();
             var bestPiecesB = bestPiecesValuesB.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5).ToList();

@@ -55,11 +55,11 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             var bestAreas = new List<(int rank, int file, List<PieceLogic> enemies)>();
-            int maxEnemyCount = 0;
+            var maxEnemyCount = 0;
 
-            for (int rank = 1; rank < BoardUtils.MaxLength; rank++)
+            for (var rank = 1; rank < BoardUtils.MaxLength; rank++)
             {
-                for (int file = 1; file < BoardUtils.MaxLength; file++)
+                for (var file = 1; file < BoardUtils.MaxLength; file++)
                 {
                     if (!BoardUtils.IsActive(BoardUtils.IndexOf(rank, file))) continue;
                     var enemies = BoardUtils.GetPiecesInRadius(
@@ -68,7 +68,7 @@ namespace Game.Relics
                         3,
                         piece => piece.Color != MatchManager.Ins.GameState.OurSide);
 
-                    int count = enemies.Count;
+                    var count = enemies.Count;
 
                     if (count > maxEnemyCount)
                     {

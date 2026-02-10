@@ -1,7 +1,5 @@
-﻿using Game.Action.Internal;
-using Game.Action.Quiets;
+﻿using Game.Action.Quiets;
 using Game.Action.Skills;
-using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Relics

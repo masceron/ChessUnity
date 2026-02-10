@@ -79,14 +79,14 @@ namespace Game.Effects.Augmentation
                 }
                 if (indexList.Count > 0)
                 {
-                    int countToSelect = Mathf.Min(2, indexList.Count);
+                    var countToSelect = Mathf.Min(2, indexList.Count);
                     var selectedIndices = new List<int>();
                     var available = new List<int>(indexList);
                     
-                    for (int i = 0; i < countToSelect; i++)
+                    for (var i = 0; i < countToSelect; i++)
                     {
                         if (available.Count == 0) break;
-                        int randomIdx = Random.Range(0, available.Count);
+                        var randomIdx = Random.Range(0, available.Count);
                         selectedIndices.Add(available[randomIdx]);
                         available.RemoveAt(randomIdx);
                     }

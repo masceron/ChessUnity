@@ -39,7 +39,7 @@ namespace Game.Action.Skills
         {
             var A = new List<(int pos, int deltaCooldown)>();
             var B = new List<(int pos, int deltaCooldown)>();
-            for (int i = 0; i < BoardSize; ++i)
+            for (var i = 0; i < BoardSize; ++i)
             {
                 var piece = PieceOn(i);
                 if (piece == null) continue;
@@ -54,26 +54,26 @@ namespace Game.Action.Skills
 
             if (A.Count > 0 && B.Count > 0)
             {
-                int type = UnityEngine.Random.Range(0, 1);
+                var type = UnityEngine.Random.Range(0, 1);
                 if (type == 0)
                 {
-                    int idx = UnityEngine.Random.Range(0, A.Count - 1);
+                    var idx = UnityEngine.Random.Range(0, A.Count - 1);
                     SetCooldown(PieceOn(A[idx].pos).Pos, 0);
                 }
                 else
                 {
-                    int idx = UnityEngine.Random.Range(0, B.Count - 1);
+                    var idx = UnityEngine.Random.Range(0, B.Count - 1);
                     ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos)), PieceOn(Maker)));
                 }
             }
             else if (A.Count > 0)
             {
-                int idx = UnityEngine.Random.Range(0, A.Count - 1);
+                var idx = UnityEngine.Random.Range(0, A.Count - 1);
                 SetCooldown(PieceOn(A[idx].pos).Pos, 0);
             }
             else if (B.Count > 0)
             {
-                int idx = UnityEngine.Random.Range(0, B.Count - 1);
+                var idx = UnityEngine.Random.Range(0, B.Count - 1);
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(B[idx].pos)), PieceOn(Maker)));
             }
             

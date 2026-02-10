@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Game.Action.Internal;
-using Game.Action.Internal.Pending;
 using Game.Effects.Buffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -94,7 +92,7 @@ namespace Game.Action.Internal.Pending.Piece
             });
 
             var listB = new List<PieceLogic>();
-            for (int i = 0; i < BoardSize; ++i)
+            for (var i = 0; i < BoardSize; ++i)
             {
                 var piece = PieceOn(i);
                 if (piece == null || piece.Color != PieceOn(Maker).Color || piece.Effects.Any(

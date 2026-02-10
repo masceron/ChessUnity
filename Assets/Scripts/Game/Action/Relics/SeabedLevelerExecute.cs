@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal;
-using Game.Managers;
+﻿using Game.Managers;
 
 namespace Game.Action.Relics
 {

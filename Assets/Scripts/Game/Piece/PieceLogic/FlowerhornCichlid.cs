@@ -20,11 +20,11 @@ namespace Game.Piece.PieceLogic
                 {
                     if (Color)
                     {
-                        for (int rank = RankOf(Pos) + 1; rank <= Math.Min(MaxLength - 1, RankOf(Pos) + 3); ++rank)
+                        for (var rank = RankOf(Pos) + 1; rank <= Math.Min(MaxLength - 1, RankOf(Pos) + 3); ++rank)
                         {
                             if (!IsActive(IndexOf(rank, FileOf(Pos)))) { return; }
-                            int target = IndexOf(rank, FileOf(Pos));
-                            Commons.PieceLogic pieceOn = PieceOn(target);
+                            var target = IndexOf(rank, FileOf(Pos));
+                            var pieceOn = PieceOn(target);
                             if (pieceOn != null)
                             {
                                 if (pieceOn.Color != Color)
@@ -41,11 +41,11 @@ namespace Game.Piece.PieceLogic
                     }
                     else
                     {
-                        for (int rank = RankOf(Pos) - 1; rank >= Math.Max(0, RankOf(Pos) - 3); --rank)
+                        for (var rank = RankOf(Pos) - 1; rank >= Math.Max(0, RankOf(Pos) - 3); --rank)
                         {
                             if (!IsActive(IndexOf(rank, FileOf(Pos)))) { return; }
-                            int target = IndexOf(rank, FileOf(Pos));
-                            Commons.PieceLogic pieceOn = PieceOn(target);
+                            var target = IndexOf(rank, FileOf(Pos));
+                            var pieceOn = PieceOn(target);
                             if (pieceOn != null)
                             {
                                 if (pieceOn.Color != Color)

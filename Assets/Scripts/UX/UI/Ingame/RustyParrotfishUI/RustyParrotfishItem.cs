@@ -1,8 +1,5 @@
-﻿using Game.Managers;
-using TMPro;
-using UI.UIObject3D.Scripts;
+﻿using TMPro;
 using UnityEngine;
-using UX.UI.Ingame.DormantFossil;
 
 namespace UX.UI.Ingame.RustyParrotfishUI
 {

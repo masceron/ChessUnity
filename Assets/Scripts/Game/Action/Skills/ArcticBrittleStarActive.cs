@@ -3,10 +3,6 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
-using Game.AI;
-using System.Collections.Generic;
-using Game.Common;
-using ZLinq;
 
 namespace Game.Action.Skills
 {

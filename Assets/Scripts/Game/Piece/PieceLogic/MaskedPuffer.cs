@@ -3,7 +3,6 @@ using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 namespace Game.Piece.PieceLogic
 {

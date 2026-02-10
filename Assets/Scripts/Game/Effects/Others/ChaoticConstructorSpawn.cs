@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
 using Game.Piece;
 using System.Collections.Generic;

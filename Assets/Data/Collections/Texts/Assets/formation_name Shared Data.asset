@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: formation_name Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: formation_name
+  m_TableCollectionNameGuidString: e46ccb29b1a011743a42734536a67409
+  m_Entries:
+  - m_Id: 1137700163584
+    m_Key: formation_reality_distortion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371410976768
+    m_Key: formation_anoxic_pool
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371410976769
+    m_Key: formation_hopkins_rose
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371419365376
+    m_Key: formation_kelp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371419365377
+    m_Key: formation_fog_of_war
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1371423559680
+    m_Key: formation_carpet_anemone
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 1192961559349690452
+  references:
+    version: 2
+    RefIds:
+    - rid: 1192961559349690452
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1770731911192

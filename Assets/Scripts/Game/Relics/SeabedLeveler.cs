@@ -3,9 +3,7 @@ using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Relics.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
-using UX.UI.Ingame.SeabedLevelerUI;
 
 namespace Game.Relics
 {
@@ -25,11 +23,11 @@ namespace Game.Relics
             if (charge.Strength >= 3)
             {
 
-                for (int i = 0; i < BoardUtils.BoardSize; ++i)
+                for (var i = 0; i < BoardUtils.BoardSize; ++i)
                 {
                     var piece = BoardUtils.PieceOn(i);
                     if (piece == null || piece.Color == Color) continue;
-                    if (FormationManager.Ins.HasFormation(i) == false) continue;
+                    if (!BoardUtils.HasFormation(i)) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                     var pending = new SeabedLevelerPending(this, charge, piece.Pos);

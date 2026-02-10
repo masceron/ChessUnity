@@ -1,5 +1,3 @@
-using Game.Common;
-
 namespace Game.Effects
 {
     public interface IEffectStatModifier

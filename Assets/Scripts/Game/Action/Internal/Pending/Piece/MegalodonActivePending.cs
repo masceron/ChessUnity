@@ -1,11 +1,9 @@
 using System;
-using Game.Action.Internal.Pending;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
-using Game.AI;
 using Game.Common;
 
 namespace Game.Action.Internal.Pending.Piece

@@ -15,9 +15,9 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            foreach ((int rank, int file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 1))
+            foreach ((var rank, var file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 1))
             {
-                PieceLogic pieceOn = PieceOn(IndexOf(rank, file));
+                var pieceOn = PieceOn(IndexOf(rank, file));
                 if (pieceOn != null && pieceOn.Color == PieceOn(Maker).Color)
                 {
                     ActionManager.EnqueueAction(new ApplyEffect(new LongReach(pieceOn, 2, 2)));

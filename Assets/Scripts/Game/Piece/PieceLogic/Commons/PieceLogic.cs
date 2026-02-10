@@ -284,7 +284,7 @@ namespace Game.Piece.PieceLogic.Commons
 
         public int GetValueForAI()
         {
-            int value = RankToValue(PieceRank);
+            var value = RankToValue(PieceRank);
             value += AssetManager.Ins.PieceData[Type].baseValue;
 
             foreach (var effect in Effects)
@@ -347,8 +347,8 @@ namespace Game.Piece.PieceLogic.Commons
         public int GetStat(SkillStat stat, int num = 1)
         {
             if (!SkillStats.ContainsKey(stat)) { return 0; }
-            int finalStat = SkillStats[stat][num - 1];
-            foreach (Effect effect in Effects)
+            var finalStat = SkillStats[stat][num - 1];
+            foreach (var effect in Effects)
             {
                 if (effect is ISkillStatModifier modifier)
                 {
@@ -363,7 +363,7 @@ namespace Game.Piece.PieceLogic.Commons
             {
                 SkillStats.Add(stat, new());
             }
-            List<int> lst = SkillStats[stat];
+            var lst = SkillStats[stat];
             while (lst.Count < num)
             {
                 lst.Add(0);

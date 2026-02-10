@@ -30,7 +30,7 @@ namespace Game.Effects.Others
                 surroundingPieces.Add(piece);
             }
             
-            int index = UnityEngine.Random.Range(0, surroundingPieces.Count);
+            var index = UnityEngine.Random.Range(0, surroundingPieces.Count);
             ActionManager.EnqueueAction(new ApplyEffect(new Silenced(surroundingPieces[index]), Piece));
             
         }

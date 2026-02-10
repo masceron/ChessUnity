@@ -31,7 +31,7 @@ namespace Game.Player
         {
             if (currentEffectInstance != null && currentEffectInstance.activeSelf && playerController != null)
             {
-                float distance = Vector3.Distance(playerController.transform.position, currentEffectInstance.transform.position);
+                var distance = Vector3.Distance(playerController.transform.position, currentEffectInstance.transform.position);
                 
                 if (distance < hideDistance)
                 {
@@ -44,7 +44,7 @@ namespace Game.Player
         {
             if (clickEffectPrefab == null) return;
 
-            Vector3 spawnPos = position + Vector3.up * 0.1f;
+            var spawnPos = position + Vector3.up * 0.1f;
 
             if (currentEffectInstance == null)
             {

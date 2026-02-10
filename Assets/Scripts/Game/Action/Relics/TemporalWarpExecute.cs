@@ -1,4 +1,4 @@
-﻿using Game.Action;            // thêm để nhận Action, ActionManager
+﻿// thêm để nhận Action, ActionManager
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;

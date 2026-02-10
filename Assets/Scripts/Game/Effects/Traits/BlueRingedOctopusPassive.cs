@@ -42,16 +42,16 @@ namespace Game.Effects.Traits
                 var curX = first1;
                 var curY = first2;
 
-                HashSet<int> effectedPieces = new HashSet<int>();
+                var effectedPieces = new HashSet<int>();
                 while(true) 
                 {
                     var p = PieceOn(IndexOf(curX, curY));
                     if (p != null && p.Color != Piece.Color) 
                         effectedPieces.Add(IndexOf(curX, curY));
 
-                    for (int x = -1; x <= 1; x++)
+                    for (var x = -1; x <= 1; x++)
                     {
-                        for (int y = -1; y <= 1; y++)
+                        for (var y = -1; y <= 1; y++)
                         {
                             var (rank, file) = (curX + x, curY + y);
                             if (!VerifyBounds(rank) || !VerifyBounds(file)) continue;
@@ -76,9 +76,9 @@ namespace Game.Effects.Traits
             {
                 var initActive = new List<int>();
 
-                for (int x = -1; x <= 1; ++x)
+                for (var x = -1; x <= 1; ++x)
                 {
-                    for (int y = -1; y <= 1; ++y)
+                    for (var y = -1; y <= 1; ++y)
                     {
                         var (rank, file) = (RankOf(Piece.Pos) + x, FileOf(Piece.Pos) + y);
                         if (activeBoard[IndexOf(rank, file)])

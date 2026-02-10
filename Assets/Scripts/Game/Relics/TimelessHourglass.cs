@@ -47,7 +47,7 @@ namespace Game.Relics
 
             if (pieces.Count == 0) return;
 
-            bool relicColor = Color;
+            var relicColor = Color;
 
             // Candidates: allies with cooldown >= 2, enemies with cooldown == 1
             var candidates = new List<PieceLogic>();

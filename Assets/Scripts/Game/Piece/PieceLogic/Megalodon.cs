@@ -55,8 +55,8 @@ namespace Game.Piece.PieceLogic
 
         private bool CanActive()
         {
-            bool hasAlly = false;
-            bool hasEnemy = false;
+            var hasAlly = false;
+            var hasEnemy = false;
             foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange()))
             {
                 var idx = IndexOf(rank, file);

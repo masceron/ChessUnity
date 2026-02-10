@@ -54,7 +54,7 @@ namespace Game.Piece.PieceLogic
 
                         }
                     }
-                    int maxValue = listPieces.Max(p => p.GetValueForAI());
+                    var maxValue = listPieces.Max(p => p.GetValueForAI());
                     var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
                     if (bestPieces.Count == 0) return;
 

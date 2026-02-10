@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects;
-using Game.Effects.Buffs;
 using Game.Movesets;
 
 using Game.Piece.PieceLogic.Commons;
@@ -55,7 +53,7 @@ namespace Game.Piece.PieceLogic
                     });
 
                     var listB = new List<Commons.PieceLogic>();
-                    for (int i = 0; i < BoardSize; ++i)
+                    for (var i = 0; i < BoardSize; ++i)
                     {
                         var piece = PieceOn(i);
                         if (piece == null || piece.Color != Color || piece.Effects.Any(

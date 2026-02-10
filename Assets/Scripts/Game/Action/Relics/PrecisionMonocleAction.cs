@@ -22,7 +22,7 @@ namespace Game.Action.Relics
 
             foreach (var enemy in markedEnemy)
             {
-                Evasion evasion = enemy.Effects.OfType<Evasion>().FirstOrDefault();
+                var evasion = enemy.Effects.OfType<Evasion>().FirstOrDefault();
                 if (evasion != null)
                 {
                     evasion.Probability -= EvasionProbabilityDecrease;
@@ -32,7 +32,7 @@ namespace Game.Action.Relics
             
             foreach (var ally in markedAlly)
             {
-                Evasion evasion = ally.Effects.OfType<Evasion>().FirstOrDefault();
+                var evasion = ally.Effects.OfType<Evasion>().FirstOrDefault();
                 if (evasion != null)
                 {
                     evasion.Probability -= EvasionProbabilityDecrease;

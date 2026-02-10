@@ -52,6 +52,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-fr
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 623148f8a727b414f89c5db12ab5b87f
+    m_Address: formation_description_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 74e3f29c7807f8d4f9d5240a07b76a6e
     m_Address: game_fr
     m_ReadOnly: 1
@@ -73,6 +79,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a73be134254fbd94e9ca7d83fa249686
     m_Address: piece_skill_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aa779fe245b286445aa89dfd5868834c
+    m_Address: formation_name_fr
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-fr

@@ -30,18 +30,18 @@ namespace UX.UI.Ingame.SeabedLevelerUI
 
         public void Load()
         {
-            for (int i = 0; i < BoardUtils.BoardSize; ++i)
+            for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
-                if (FormationManager.Ins.HasFormation(i))
+                if (BoardUtils.HasFormation(i))
                 {
                     formationList.Add(i);
                 }
             }
 
-            for (int i = 0; i < formationList.Count; ++i)
+            for (var i = 0; i < formationList.Count; ++i)
             {
                 Debug.Log("formation length: " + formationList.Count);
-                var formation = FormationManager.Ins.GetFormation(formationList[i]);
+                var formation = BoardUtils.GetFormation(formationList[i]);
                 Instantiate(formationItem, chooseField.transform, true);
 
                 chooseField.transform.GetChild(i).GetComponent<SeabedLevelerItem>().Load(formation.GetFormationType().ToString());

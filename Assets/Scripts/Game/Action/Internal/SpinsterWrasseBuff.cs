@@ -1,6 +1,5 @@
 ﻿using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.Effects.Others;
 using Game.Effects.Buffs;
 namespace Game.Action.Internal
 {

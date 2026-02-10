@@ -20,7 +20,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
                 {
-                    for (int i = 0; i < BoardUtils.BoardSize; ++i)
+                    for (var i = 0; i < BoardUtils.BoardSize; ++i)
                     {
                         var p = BoardUtils.PieceOn(i);
                         if (p == null || p.Color == Color) continue;

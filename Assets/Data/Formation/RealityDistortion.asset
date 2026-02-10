@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf583118f4239c4dae4d6a30fddbd5a, type: 3}
   m_Name: RealityDistortion
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.FormationInfo
+  type: 15
+  key: formation_reality_distortion
   formationCategory: 2
   priority: 0
   prefab: {fileID: 395919914944283270, guid: 92c693e09b3c72341a73b3a7c057ddfd, type: 3}

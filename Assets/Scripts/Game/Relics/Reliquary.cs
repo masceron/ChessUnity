@@ -1,6 +1,5 @@
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
 using Game.Action.Relics;
 

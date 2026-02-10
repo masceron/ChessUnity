@@ -41,9 +41,9 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        List<Commons.PieceLogic> bestPieces = new List<Commons.PieceLogic>();
+                        var bestPieces = new List<Commons.PieceLogic>();
                         Commons.PieceLogic bestPiece = null;
-                        int maxStackPoison = int.MinValue;
+                        var maxStackPoison = int.MinValue;
             
                         var (rank, file) = RankFileOf(Pos);
             
@@ -75,7 +75,7 @@ namespace Game.Piece.PieceLogic
                         else if (bestPieces.Count == 0)
                         {
                             // Find enemies which have the highest AI value and don't have extremophiles in a radius of 2.
-                            int maxAIValue = int.MinValue;
+                            var maxAIValue = int.MinValue;
                             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                             {
                                 var index = IndexOf(rankOff, fileOff);
@@ -83,7 +83,7 @@ namespace Game.Piece.PieceLogic
                                 if (pOn == null || pOn.Pos == Pos || pOn.Color == Color
                                     || pOn.Effects.Any(effect => effect.EffectName == "effect_extremophiles")) continue;
                 
-                                int aiValue = pOn.GetValueForAI();
+                                var aiValue = pOn.GetValueForAI();
                                 if (aiValue > maxAIValue)
                                 {
                                     bestPieces.Clear();

@@ -1,6 +1,5 @@
 ﻿using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using Game.Effects.Others;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics

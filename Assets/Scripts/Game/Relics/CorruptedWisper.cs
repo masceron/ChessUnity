@@ -4,9 +4,7 @@ using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Piece;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics
@@ -50,7 +48,7 @@ namespace Game.Relics
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null || piece.Color == Color) continue;
-                    if (possibleRank.Contains(piece.PieceRank) == false) continue;
+                    if (!possibleRank.Contains(piece.PieceRank)) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
                     var pending = new CorruptedWisperPending(piece.Pos, this);
                     BoardViewer.ListOf.Add(pending);

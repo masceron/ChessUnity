@@ -44,7 +44,7 @@ namespace Game.Piece.PieceLogic
                             {
                                 if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
 
-                                int numberOfBuff = 0;
+                                var numberOfBuff = 0;
                                 foreach (var effect in pOn.Effects)
                                 {
                                     if (effect.EffectName == "effect_truebite" || effect.EffectName == "effect_momentum" || effect.EffectName == "effect_piercing")

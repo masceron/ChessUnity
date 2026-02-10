@@ -265,13 +265,13 @@ namespace Game.Common
 
             if (type != TargetType.Any && makerPiece == null) return results;
 
-            bool makerColor = makerPiece != null && makerPiece.Color;
+            var makerColor = makerPiece != null && makerPiece.Color;
 
             var (rank, file) = BoardUtils.RankFileOf(makerPos);
 
             foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, radius))
             {
-                int index = BoardUtils.IndexOf(r, f);
+                var index = BoardUtils.IndexOf(r, f);
                 if (CheckCondition(index, type, makerColor))
                 {
                     results.Add(index);
@@ -290,18 +290,18 @@ namespace Game.Common
 
             if (type != TargetType.Any && makerPiece == null) return results;
 
-            bool makerColor = false;
+            var makerColor = false;
             if (makerPiece != null) makerColor = makerPiece.Color;
 
             // Determine final direction (inverted for Black)
-            Direction finalDir = DetermineDirection(dir, makerColor);
-            DirectionEnumerator dirEnum = GetEnumerator(finalDir);
+            var finalDir = DetermineDirection(dir, makerColor);
+            var dirEnum = GetEnumerator(finalDir);
 
             var (startRank, startFile) = BoardUtils.RankFileOf(makerPos);
 
             foreach (var (r, f) in dirEnum(startRank, startFile, range))
             {
-                int index = BoardUtils.IndexOf(r, f);
+                var index = BoardUtils.IndexOf(r, f);
                 if (CheckCondition(index, type, makerColor))
                 {
                     results.Add(index);
@@ -324,7 +324,7 @@ namespace Game.Common
                 return results;
             }
 
-            Direction finalDir = DetermineDirection(dir, makerPiece.Color);
+            var finalDir = DetermineDirection(dir, makerPiece.Color);
             var (dRank, dFile) = GetDirectionOffsets(finalDir);
 
             return GetActivePosAtOffset(makerPos, range, dRank, dFile);
@@ -333,7 +333,7 @@ namespace Game.Common
         private static List<int> GetTargetsGlobal(TargetType type, int makerPos)
         {
             var results = new List<int>();
-            bool makerColor = false;
+            var makerColor = false;
 
             if (type != TargetType.Any)
             {
@@ -342,7 +342,7 @@ namespace Game.Common
                 makerColor = p.Color;
             }
 
-            for (int i = 0; i < BoardUtils.BoardSize; i++)
+            for (var i = 0; i < BoardUtils.BoardSize; i++)
             {
                 if (CheckCondition(i, type, makerColor))
                 {
@@ -373,12 +373,12 @@ namespace Game.Common
         {
             var results = new List<int>();
             var (r, f) = BoardUtils.RankFileOf(makerPos);
-            int tr = r + dRank * range;
-            int tf = f + dFile * range;
+            var tr = r + dRank * range;
+            var tf = f + dFile * range;
 
             if (!BoardUtils.VerifyBounds(tr) || !BoardUtils.VerifyBounds(tf)) return results;
 
-            int index = BoardUtils.IndexOf(tr, tf);
+            var index = BoardUtils.IndexOf(tr, tf);
             if (BoardUtils.IsActive(index))
             {
                 results.Add(index);

@@ -3,10 +3,8 @@ using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
-using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -23,10 +21,10 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0){ return; }
                 if (isPlayer)
                 {
-                    for(int i = 0; i < BoardSize; ++i)
+                    for(var i = 0; i < BoardSize; ++i)
                     {
                         if (!IsActive(i)) { continue; }
-                        Formation formation = GetFormation(i);
+                        var formation = GetFormation(i);
                         if (formation != null)
                         {
                             list.Add(new RedtailParrotfishPending(Pos, i));

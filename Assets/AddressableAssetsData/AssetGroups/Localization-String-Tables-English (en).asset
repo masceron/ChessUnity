@@ -59,8 +59,20 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 711e2439a12d8d347939502cbe43df34
+    m_Address: formation_description_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7d09bf49f563be24da042bcacb28bd77
     m_Address: effect_description_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8c8241172adae664a8d642e2d1b96637
+    m_Address: formation_name_en
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-en

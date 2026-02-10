@@ -110,7 +110,7 @@ namespace Game.Effects.Traits
 
             foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 1))
             {
-                int index = IndexOf(r, f);
+                var index = IndexOf(r, f);
                 if (PieceOn(index) == null)
                 {
                     emptyTiles.Add(index);
@@ -119,7 +119,7 @@ namespace Game.Effects.Traits
 
             if (emptyTiles.Count == 0) return;
 
-            int rand = UnityEngine.Random.Range(0, emptyTiles.Count);
+            var rand = UnityEngine.Random.Range(0, emptyTiles.Count);
             ActionManager.EnqueueAction(
                 new SpawnPiece(new PieceConfig(
                     "piece_clown_fish",

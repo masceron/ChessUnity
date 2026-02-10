@@ -103,7 +103,7 @@ namespace Autotiles3D
         }
         public InternalNode GetInternalNode(Vector3Int internalPosition)
         {
-            _internalNodes.TryGetValue(internalPosition, out InternalNode node);
+            _internalNodes.TryGetValue(internalPosition, out var node);
             return node;
         }
         public List<Vector3Int> GetAllInternalPositions()
@@ -166,12 +166,12 @@ namespace Autotiles3D
         public void OnAfterDeserialize()
         {
             _internalNodes = new Dictionary<Vector3Int, InternalNode>();
-            for (int i = 0; i < _NodesKeys.Count; i++)
+            for (var i = 0; i < _NodesKeys.Count; i++)
             {
                 _internalNodes.Add(_NodesKeys[i], _NodesValues[i]);
             }
             Anchors = new Dictionary<int, Autotiles3D_Anchor>();
-            for (int i = 0; i < _AnchorKeys.Count; i++)
+            for (var i = 0; i < _AnchorKeys.Count; i++)
             {
                 Anchors.Add(_AnchorKeys[i], _AnchorValues[i]);
             }
@@ -205,7 +205,7 @@ namespace Autotiles3D
 
         public void VerifyLayer()
         {
-            Autotiles3D_Anchor[] anchors = GetComponentsInChildren<Autotiles3D_Anchor>();
+            var anchors = GetComponentsInChildren<Autotiles3D_Anchor>();
 
             //remove deleted blocks from nodes. update internal nodes with block tile info if missing or different
             var nodes = GetAllInternalNodes();
@@ -257,17 +257,17 @@ namespace Autotiles3D
 
         public void UpdateNeighborsCubeAlgorithm(HashSet<Vector3Int> internalPositions)
         {
-            (int minX, int maxX) = ((int)internalPositions.Min(l => l.x), (int)internalPositions.Max(l => l.x));
-            (int minY, int maxY) = ((int)internalPositions.Min(l => l.y), (int)internalPositions.Max(l => l.y));
-            (int minZ, int maxZ) = ((int)internalPositions.Min(l => l.z), (int)internalPositions.Max(l => l.z));
+            (var minX, var maxX) = ((int)internalPositions.Min(l => l.x), (int)internalPositions.Max(l => l.x));
+            (var minY, var maxY) = ((int)internalPositions.Min(l => l.y), (int)internalPositions.Max(l => l.y));
+            (var minZ, var maxZ) = ((int)internalPositions.Min(l => l.z), (int)internalPositions.Max(l => l.z));
 
             var myNeighbors = new List<Vector3Int>();
             Vector3Int iteration;
-            for (int x = minX - 1; x <= maxX + 1; x++)
+            for (var x = minX - 1; x <= maxX + 1; x++)
             {
-                for (int y = minY - 1; y <= maxY + 1; y++)
+                for (var y = minY - 1; y <= maxY + 1; y++)
                 {
-                    for (int z = minZ - 1; z <= maxZ + 1; z++)
+                    for (var z = minZ - 1; z <= maxZ + 1; z++)
                     {
                         iteration = new Vector3Int(x, y, z);
 
@@ -314,19 +314,19 @@ namespace Autotiles3D
         /// <param name="tiles"></param>
         public void TryPlacementMany(List<Vector3Int> localPositions, List<Quaternion> localRotations, List<int> tileIDs, List<string> tileNames, List<string> groupNames)
         {
-            int size = localPositions.Count;
+            var size = localPositions.Count;
             if (size == 0)
                 return;
 
             if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCompleteObjectUndo(this, "TryPlacementMany");
 
-            for (int i = 0; i < size; i++)
+            for (var i = 0; i < size; i++)
             {
                 AddNodeInternal(tileIDs[i], tileNames[i], groupNames[i], localPositions[i], localRotations[i]);
             }
 
-            HashSet<Vector3Int> hashedPositions = new HashSet<Vector3Int>(localPositions);
+            var hashedPositions = new HashSet<Vector3Int>(localPositions);
             UpdateNeighborsCubeAlgorithm(hashedPositions);
 
         }
@@ -361,7 +361,7 @@ namespace Autotiles3D
             {
                 RemoveNodeInternal(p);
             }
-            HashSet<Vector3Int> hashedPositions = new HashSet<Vector3Int>(internalPosition);
+            var hashedPositions = new HashSet<Vector3Int>(internalPosition);
             UpdateNeighborsCubeAlgorithm(hashedPositions);
 
         }
@@ -372,7 +372,7 @@ namespace Autotiles3D
         /// <param name="node"></param>
         public void RequireUpdate(Vector3Int internalPosition)
         {
-            if (_internalNodes.TryGetValue(internalPosition, out InternalNode node))
+            if (_internalNodes.TryGetValue(internalPosition, out var node))
             {
                 if (node.Block != null)
                     if (node.Block.IsBaked)
@@ -383,7 +383,7 @@ namespace Autotiles3D
 
         public void RequireVerification(Vector3Int internalPosition)
         {
-            if (_internalNodes.TryGetValue(internalPosition, out InternalNode node))
+            if (_internalNodes.TryGetValue(internalPosition, out var node))
             {
                 if (node.Block != null)
                     if (node.Block.IsBaked)
@@ -402,7 +402,7 @@ namespace Autotiles3D
             {
                 if (_internalNodes.ContainsKey(block.InternalPosition))
                 {
-                    InternalNode node = _internalNodes[block.InternalPosition];
+                    var node = _internalNodes[block.InternalPosition];
                     node.UpdateInstance();
                 }
             }
@@ -412,12 +412,12 @@ namespace Autotiles3D
             if (anchor == null)
                 return;
 
-            List<Autotiles3D_BlockBehaviour> blocks = anchor.GetBlocks();
+            var blocks = anchor.GetBlocks();
             foreach (var block in blocks)
             {
                 if (_internalNodes.ContainsKey(block.InternalPosition))
                 {
-                    InternalNode node = _internalNodes[block.InternalPosition];
+                    var node = _internalNodes[block.InternalPosition];
                     node.VerifyInstance();
                 }
             }
@@ -425,9 +425,9 @@ namespace Autotiles3D
         public void VerifyNodes()
         {
             Autotiles3DSettings.IsLocked = true;
-            for (int i = 0; i < _toVerify.Count; i++)
+            for (var i = 0; i < _toVerify.Count; i++)
             {
-                if (_internalNodes.TryGetValue(_toVerify[i], out InternalNode node))
+                if (_internalNodes.TryGetValue(_toVerify[i], out var node))
                 {
                     node.VerifyInstance();
                 }
@@ -438,9 +438,9 @@ namespace Autotiles3D
         public void RefreshNodes()
         {
             Autotiles3DSettings.IsLocked = true;
-            for (int i = 0; i < _toUpdate.Count; i++)
+            for (var i = 0; i < _toUpdate.Count; i++)
             {
-                if (_internalNodes.TryGetValue(_toUpdate[i], out InternalNode node))
+                if (_internalNodes.TryGetValue(_toUpdate[i], out var node))
                 {
                     node.UpdateInstance();
                 }
@@ -462,7 +462,7 @@ namespace Autotiles3D
 
                 _internalNodes.Add(internalPosition, new InternalNode(this, group, tileName, tileId, internalPosition, localRotation));
 
-                if (!Anchors.TryGetValue(tileId, out Autotiles3D_Anchor anchor))
+                if (!Anchors.TryGetValue(tileId, out var anchor))
                 {
                     this.EnsureAnchor(group, tileName, tileId);
                     anchor = Anchors[tileId];
@@ -476,7 +476,7 @@ namespace Autotiles3D
 
         private void RemoveNodeInternal(Vector3Int internalPosition)
         {
-            if (_internalNodes.TryGetValue(internalPosition, out InternalNode node))
+            if (_internalNodes.TryGetValue(internalPosition, out var node))
             {
                 //dont allow remove of baked nodes
                 if (node.Block != null)

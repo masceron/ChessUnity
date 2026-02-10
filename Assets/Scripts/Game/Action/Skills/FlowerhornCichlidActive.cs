@@ -14,15 +14,15 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            bool makerColor = PieceOn(Maker).Color;
-            int direction = makerColor ? 1 : -1;
-            PieceLogic pieceOn = PieceOn(Target);
+            var makerColor = PieceOn(Maker).Color;
+            var direction = makerColor ? 1 : -1;
+            var pieceOn = PieceOn(Target);
             if (pieceOn != null)
             {
-                int finalRankOfTarget = RankOf(Target);
+                var finalRankOfTarget = RankOf(Target);
                 if (makerColor)
                 {
-                    int knockbackCount = 0;
+                    var knockbackCount = 0;
                     while (IsActive(IndexOf(finalRankOfTarget + 1, FileOf(Target))) && knockbackCount < 2)
                     {
                         finalRankOfTarget++;
@@ -31,14 +31,14 @@ namespace Game.Action.Skills
                 }
                 else
                 {
-                    int knockbackCount = 0;
+                    var knockbackCount = 0;
                     while (IsActive(IndexOf(finalRankOfTarget - 1, FileOf(Target))) && knockbackCount < 2)
                     {
                         finalRankOfTarget--;
                         knockbackCount++;
                     }
                 }
-                int finalRankOfMaker = finalRankOfTarget == RankOf(Target) ? RankOf(Target) - direction : RankOf(Target);
+                var finalRankOfMaker = finalRankOfTarget == RankOf(Target) ? RankOf(Target) - direction : RankOf(Target);
                 ActionManager.EnqueueAction(new NormalMove(Target, IndexOf(finalRankOfTarget, FileOf(Target))));
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), PieceOn(Maker)));
                 ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(finalRankOfMaker, FileOf(Target))));

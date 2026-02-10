@@ -199,10 +199,6 @@ MonoBehaviour:
     m_Key: piece_frilled_shark_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 58036187443941376
-    m_Key: piece_frilled_shark_skill
-    m_Metadata:
-      m_Items: []
   - m_Id: 60580884503121920
     m_Key: piece_ribbon_eel_skill
     m_Metadata:
@@ -213,6 +209,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60674152763019264
     m_Key: piece_rusty_parrotfish_skill
+    m_Metadata:
+      m_Items: []
   - m_Id: 59904131545423872
     m_Key: piece_surge_wrasse_skill
     m_Metadata:
@@ -239,10 +237,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60979051652108288
     m_Key: piece_sloanes_viperfish_skill
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64248378611601408
-    m_Key: piece_ribbon_eel_skill
     m_Metadata:
       m_Items: []
   m_Metadata:

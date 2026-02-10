@@ -37,9 +37,9 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        List<Commons.PieceLogic> bestPieces = new List<Commons.PieceLogic>();
+                        var bestPieces = new List<Commons.PieceLogic>();
                         Commons.PieceLogic bestPiece = null;
-                        int maxPoint = int.MinValue;
+                        var maxPoint = int.MinValue;
             
                         var (rank, file) = RankFileOf(Pos);
 
@@ -50,7 +50,7 @@ namespace Game.Piece.PieceLogic
                             if (pOn == null || pOn.Pos == Pos || pOn.Color == Color
                                 || pOn.Effects.Any(effect => effect.EffectName == "effect_extremophiles")) continue;
                 
-                            int AIValue = pOn.GetValueForAI();
+                            var AIValue = pOn.GetValueForAI();
                             if (AIValue > maxPoint)
                             {
                                 bestPieces.Clear();

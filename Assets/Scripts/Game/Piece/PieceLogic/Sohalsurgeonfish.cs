@@ -3,7 +3,6 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Common;
-using System.Linq;
 using System.Collections.Generic;
 using ZLinq;
 namespace Game.Piece.PieceLogic
@@ -58,7 +57,7 @@ namespace Game.Piece.PieceLogic
                             }
                         }
                         if (listPieces.Count == 0) return;
-                        int maxValue = listPieces.Max(p => p.GetValueForAI());
+                        var maxValue = listPieces.Max(p => p.GetValueForAI());
                         var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
                         if (bestPieces.Count == 0) return;
                         var random = new System.Random();

@@ -8,6 +8,8 @@ namespace Game.ScriptableObjects
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FormationInfo : ScriptableObject
     {
+        public FormationType type;
+        public string key;
         public FormationCategory formationCategory;
         public ObserverPriority priority;
         public GameObject prefab;

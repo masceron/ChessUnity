@@ -64,9 +64,9 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             if (charge.Strength < 3) return;
-            int maxSize = 0;
-            List<int> topGroup = new List<int>();
-            for (int i = 0; i < BoardUtils.BoardSize; ++i)
+            var maxSize = 0;
+            var topGroup = new List<int>();
+            for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var (rank, file) = BoardUtils.RankFileOf(i);
                 var pieces = BoardUtils.GetPiecesInSize(rank, file, Size, Corner.BottomRight, p => p != null && p.Color != Color);

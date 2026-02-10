@@ -65,13 +65,13 @@ namespace Game.Piece.PieceLogic
                     
                         var selectedPieces = new List<Commons.PieceLogic>();
                     
-                        int topValue = listPieces[0].GetValueForAI();
+                        var topValue = listPieces[0].GetValueForAI();
                         var topGroup = listPieces.Where(p =>
                             p.GetValueForAI() == topValue).ToList();
                     
                         if (topGroup.Count >= 2)
                         {
-                            int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
+                            var idx1 = UnityEngine.Random.Range(0, topGroup.Count);
                             int idx2;
                             do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
                             while (idx2 == idx1);
@@ -85,11 +85,11 @@ namespace Game.Piece.PieceLogic
                     
                             if (listPieces.Count > 1)
                             {
-                                int secondValue = listPieces[1].GetValueForAI();
+                                var secondValue = listPieces[1].GetValueForAI();
                                 var secondGroup = listPieces.Where(p =>
                                     p.GetValueForAI() == secondValue).ToList();
                                 if (secondGroup.Count == 0) return;
-                                int idx = UnityEngine.Random.Range(0, secondGroup.Count);
+                                var idx = UnityEngine.Random.Range(0, secondGroup.Count);
                                 selectedPieces.Add(secondGroup[idx]);
                             }
                         }

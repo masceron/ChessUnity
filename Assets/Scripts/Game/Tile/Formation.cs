@@ -1,11 +1,8 @@
-using Game.Action.Captures;
-using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using Game.ScriptableObjects;
 
 namespace Game.Tile
 {
@@ -33,6 +30,7 @@ namespace Game.Tile
         AnoxicPool,
         CarpetAnemone,
         HopkinsRose,
+        RealityDistortion
     }
     public abstract class Formation : Observer, IAfterPieceActionEffect, IOnPieceSpawned
     {
@@ -45,7 +43,7 @@ namespace Game.Tile
         protected Formation(bool color)
         {
             Color = color;
-            FormationInfo info = AssetManager.Ins.FormationData[GetFormationType()];
+            var info = AssetManager.Ins.FormationData[GetFormationType()];
             this.priority = info.priority;
             this.category = info.formationCategory;
         }
@@ -90,7 +88,7 @@ namespace Game.Tile
         {
             if (action is IQuiets)
             {
-                PieceLogic pieceOn = BoardUtils.PieceOn(action.Target);
+                var pieceOn = BoardUtils.PieceOn(action.Target);
                 if (pieceOn == null){ return; }
                 if (action.Target == Pos)
                 {

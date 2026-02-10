@@ -1,5 +1,4 @@
-﻿using Game.Managers;
-using Game.Tile;
+﻿using Game.Tile;
 using static Game.Common.BoardUtils;    
 
 namespace Game.Action.Relics

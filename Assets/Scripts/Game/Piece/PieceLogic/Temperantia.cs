@@ -40,7 +40,7 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (!excludeEmptyTile)
                     {
-                        for (int i = 0; i < BoardSize; ++i)
+                        for (var i = 0; i < BoardSize; ++i)
                         {
                             if (IsActive(i) && i != Pos)
                             {
@@ -69,8 +69,8 @@ namespace Game.Piece.PieceLogic
                     if (candidatesA.Count == 0 || candidatesB.Count == 0) return;
 
                     // Choose selection (random if multiple)
-                    Commons.PieceLogic chosenAlly = candidatesA.Count == 1 ? candidatesA[0] : candidatesA[Random.Range(0, candidatesA.Count)];
-                    Commons.PieceLogic chosenEnemy = candidatesB.Count == 1 ? candidatesB[0] : candidatesB[Random.Range(0, candidatesB.Count)];
+                    var chosenAlly = candidatesA.Count == 1 ? candidatesA[0] : candidatesA[Random.Range(0, candidatesA.Count)];
+                    var chosenEnemy = candidatesB.Count == 1 ? candidatesB[0] : candidatesB[Random.Range(0, candidatesB.Count)];
                     // Execute effect now
                     list.Add(new TemperantiaSwap(Pos, chosenAlly.Pos, chosenEnemy.Pos));
                 }

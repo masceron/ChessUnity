@@ -32,8 +32,8 @@ namespace UX.UI.Trader
         {
             if (_itemData == null) return;
 
-            string key = string.Empty;
-            string table = string.Empty;
+            var key = string.Empty;
+            var table = string.Empty;
             Texture2D icon = null;
 
             foreach (Transform child in itemIcon.transform) Destroy(child.gameObject);

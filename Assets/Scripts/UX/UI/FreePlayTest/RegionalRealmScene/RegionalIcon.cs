@@ -28,7 +28,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
         }
         public void Choose()
         {
-            RegionalIcon previous = RegionalManagerUI.Ins.chosenRegional;
+            var previous = RegionalManagerUI.Ins.chosenRegional;
             if (previous == this)
             {
                 return;

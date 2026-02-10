@@ -10,17 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-<<<<<<<< HEAD:Assets/Data/Effect/Traits/MaskedPufferPassive/MaskedPufferPassive.asset
-  m_Name: MaskedPufferPassive
-  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_masked_puffer_passive
-  category: 2
-========
   m_Name: MirrorButterflyFishPassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
   key: effect_mirror_butterfly_fish_passive
   category: 5
->>>>>>>> main:Assets/Data/Effect/Others/MirrorButterflyFishPassive/MirrorButterflyFishPassive.asset
   stack: 1
   priority: 1
   icon: {fileID: 0}

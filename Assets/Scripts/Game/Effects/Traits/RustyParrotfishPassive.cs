@@ -1,6 +1,4 @@
 ﻿using Game.Effects;
-using Game.Action.Skills;
-using Game.Relics;
 using Game.Action;
 using Game.Piece.PieceLogic.Commons;
 using Game.Action.Captures;

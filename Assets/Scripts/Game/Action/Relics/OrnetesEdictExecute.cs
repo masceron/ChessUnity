@@ -18,8 +18,8 @@ namespace Game.Action.Relics
             var piece = BoardUtils.PieceOn(Target);
             if (piece == null) return;
             
-            int numberOfDebuffedPieces = piece.Effects.Count(e => e.Category == EffectCategory.Debuff);
-            int rate = 7 * numberOfDebuffedPieces;
+            var numberOfDebuffedPieces = piece.Effects.Count(e => e.Category == EffectCategory.Debuff);
+            var rate = 7 * numberOfDebuffedPieces;
             
             if (MatchManager.Roll(rate)) 
             {

@@ -99,12 +99,6 @@ MonoBehaviour:
     m_Key: relic_chaotic_constructor
     m_Metadata:
       m_Items: []
-  - m_Id: 53885772473618432
-    m_Key: relic_corrupted_wisper
-    m_Metadata:
-      m_Items: []
-  - m_Id: 53887137652461568
-    m_Key: effect_corrupted_wisper_charge
   - m_Id: 55201678897893376
     m_Key: relic_seabed_leveler
     m_Metadata:

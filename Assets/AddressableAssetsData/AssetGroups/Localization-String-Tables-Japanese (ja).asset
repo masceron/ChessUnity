@@ -35,6 +35,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-ja
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4c94b4a85b58c0042b1dddaae182ca02
+    m_Address: formation_description_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6389ef60c1e9fbb458c6c55ffc1735b3
     m_Address: game_ja
     m_ReadOnly: 1
@@ -67,6 +73,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c40709b6b264e8d4a96237155e18301a
     m_Address: relic_name_ja
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ja
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb2cbef2802ee3a47bca0b2cc08ac00b
+    m_Address: formation_name_ja
     m_ReadOnly: 1
     m_SerializedLabels:
     - Locale-ja

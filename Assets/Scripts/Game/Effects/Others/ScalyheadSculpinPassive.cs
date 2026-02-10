@@ -12,7 +12,7 @@ namespace Game.Effects.Others
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            Effect effect = applyEffect.Effect;
+            var effect = applyEffect.Effect;
 
             if (effect.EffectName == "effect_slow" || effect.EffectName == "effect_stun"
                 && BoardUtils.PieceOn(applyEffect.Target) == Piece)

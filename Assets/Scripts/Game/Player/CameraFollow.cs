@@ -19,7 +19,7 @@ namespace Game.Player
             if (target == null)
                 return;
 
-            Vector3 desiredPosition = target.position + offset;
+            var desiredPosition = target.position + offset;
             transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothTime);
 
             if (lookAtTarget)

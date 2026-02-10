@@ -21,7 +21,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         public void Click()
         {
             FPArmyDesign.Ins.Load(preset.BoardSize, preset);
-            foreach(FreePlaySavedArmy savedArmy in FPSavedArmies.Ins.savedArmies)
+            foreach(var savedArmy in FPSavedArmies.Ins.savedArmies)
             {
                 if(savedArmy != this)
                 {

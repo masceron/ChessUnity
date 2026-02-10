@@ -43,21 +43,21 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            List<PieceLogic> ourPieces = new List<PieceLogic>();
-            List<PieceLogic> enemyPieces = new List<PieceLogic>();
+            var ourPieces = new List<PieceLogic>();
+            var enemyPieces = new List<PieceLogic>();
 
             PieceLogic ourPiece = null;
             PieceLogic enemyPiece = null;
             
-            int minMoveset = int.MaxValue;
-            int maxMoveset = int.MinValue;
+            var minMoveset = int.MaxValue;
+            var maxMoveset = int.MinValue;
             
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
                 if (piece.Color == MatchManager.Ins.GameState.OurSide)
                 {
-                    int pieceMoveset = piece.GetQuitesValue();
+                    var pieceMoveset = piece.GetQuitesValue();
                     if (pieceMoveset < minMoveset)
                     {
                         minMoveset = pieceMoveset;
@@ -71,7 +71,7 @@ namespace Game.Relics
                 }
                 else
                 {
-                    int pieceMoveset = piece.GetQuitesValue();
+                    var pieceMoveset = piece.GetQuitesValue();
                     if (pieceMoveset > maxMoveset)
                     {
                         maxMoveset = pieceMoveset;

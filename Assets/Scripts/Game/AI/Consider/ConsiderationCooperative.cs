@@ -17,14 +17,14 @@ namespace Game.AI.Consider
         {
             if (action == null || action is not IQuiets) return 0f;
 
-            float scaleValue = 1f;
+            var scaleValue = 1f;
             
             var (targetRank, targetFile) = BoardUtils.RankFileOf(action.Target);
 
             // đếm số Ally Piece ở quanh action.Target, mỗi Ally Piece xung quanh giúp tăng scaleValue lên 0.25f
-            for (int r = targetRank - 1; r <= targetRank + 1; r++)
+            for (var r = targetRank - 1; r <= targetRank + 1; r++)
             {
-                for (int f = targetFile - 1; f <= targetFile + 1; f++)
+                for (var f = targetFile - 1; f <= targetFile + 1; f++)
                 {
                     if (r == targetRank && f == targetFile)
                         continue;
@@ -40,7 +40,7 @@ namespace Game.AI.Consider
                 }
             }
 
-            int value = Mathf.FloorToInt(scaleValue * weight + TileManager.Ins.GetTileValue(action.Target));
+            var value = Mathf.FloorToInt(scaleValue * weight + TileManager.Ins.GetTileValue(action.Target));
             foreach (var ea in enemyActions)
             {
                 //if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;

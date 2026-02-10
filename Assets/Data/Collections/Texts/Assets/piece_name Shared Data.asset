@@ -351,10 +351,6 @@ MonoBehaviour:
     m_Key: piece_cabezon
     m_Metadata:
       m_Items: []
-  - m_Id: 58062745986584576
-    m_Key: piece_cabezon
-    m_Metadata:
-      m_Items: []
   - m_Id: 60607442789912576
     m_Key: piece_ribbon_eel
     m_Metadata:
@@ -365,6 +361,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60700711167250432
     m_Key: piece_rusty_parrotfish
+    m_Metadata:
+      m_Items: []
   - m_Id: 59930689941266432
     m_Key: piece_surge_wrasse
     m_Metadata:
@@ -427,10 +425,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 61005610060533760
     m_Key: piece_sloanes_viperfish
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64274936940335104
-    m_Key: piece_ribbon_eel
     m_Metadata:
       m_Items: []
   m_Metadata:

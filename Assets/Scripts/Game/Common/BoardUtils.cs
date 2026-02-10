@@ -356,13 +356,13 @@ namespace Game.Common
         
         public static List<ushort> AllSidePos(bool side)
         {
-            List<ushort> positions = new List<ushort>();
+            var positions = new List<ushort>();
             if (side)
             {
-                for (int rank = MaxLength / 2; rank > 0; rank--)
+                for (var rank = MaxLength / 2; rank > 0; rank--)
                 {
                     if (!VerifyBounds(rank)) continue;
-                    for (int file = 0; file < MaxLength; file++)
+                    for (var file = 0; file < MaxLength; file++)
                     {
                         if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
                         positions.Add((ushort)IndexOf(rank, file));
@@ -371,10 +371,10 @@ namespace Game.Common
             }
             else
             {
-                for (int rank = MaxLength / 2; rank < MaxLength; rank++)
+                for (var rank = MaxLength / 2; rank < MaxLength; rank++)
                 {
                     if (!VerifyBounds(rank)) continue;
-                    for (int file = 0; file < MaxLength; file++)
+                    for (var file = 0; file < MaxLength; file++)
                     {
                         if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
                         positions.Add((ushort)IndexOf(rank, file));

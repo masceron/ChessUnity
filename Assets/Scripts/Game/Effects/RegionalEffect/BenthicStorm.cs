@@ -26,9 +26,9 @@ namespace Game.Effects.RegionalEffect
                         startingSizeY + MatchManager.Ins.StartingSize.y));
         
                 Formation siltCloud = new SiltCloud(false);
-                for (int i = 0; i < 2; ++i)
+                for (var i = 0; i < 2; ++i)
                 {
-                    for (int j = 0; j < 2; ++j)
+                    for (var j = 0; j < 2; ++j)
                     {
                         var newRank = i + RankOf(idx);
                         var newFile = j + FileOf(idx);

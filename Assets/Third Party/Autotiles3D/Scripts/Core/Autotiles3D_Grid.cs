@@ -102,10 +102,10 @@ namespace Autotiles3D
         Color blue = new Color(0.000f, 0.568f, 1.000f, 0.686f);
         public void DrawLevelGrid(int controlID, bool drawCurrentLayer = true)
         {
-            Vector3 offset = -Vector3.one * 0.5f;
+            var offset = -Vector3.one * 0.5f;
 
-            float drawWidth = (float)Width;
-            float halfWidth = (float)Width / 2f;
+            var drawWidth = (float)Width;
+            var halfWidth = (float)Width / 2f;
 
             //Draw Color Handles
             Handles.color = red;
@@ -127,13 +127,13 @@ namespace Autotiles3D
             //Draw Grid of Current Layer
             if (drawCurrentLayer)
             {
-                Vector3 localCenter = new Vector3(halfWidth, 0, halfWidth);
+                var localCenter = new Vector3(halfWidth, 0, halfWidth);
                 var vert1 = offset + localCenter + halfWidth * (Vector3.forward + Vector3.right);
                 var vert2 = offset + localCenter + halfWidth * (Vector3.forward - Vector3.right);
                 var vert3 = offset + localCenter + halfWidth * (-Vector3.forward - Vector3.right);
                 var vert4 = offset + localCenter + halfWidth * (-Vector3.forward + Vector3.right);
                 var verts = new List<Vector3> { vert1, vert2, vert3, vert4 };
-                for (int i = 0; i < verts.Count; i++)
+                for (var i = 0; i < verts.Count; i++)
                     verts[i] += Vector3.up * _LayerIndex;
 
                 Handles.DrawSolidRectangleWithOutline(verts.ToArray(), new Color(0.2f, 0.2f, 0.2f, 0.2f), outlineGridColor);

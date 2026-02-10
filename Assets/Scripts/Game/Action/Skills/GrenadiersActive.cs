@@ -2,7 +2,6 @@ using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.AI;
 using System.Collections.Generic;
-using Game.Managers;
 using static Game.Common.BoardUtils;
 using Game.Tile;
 using ZLinq;
@@ -41,7 +40,7 @@ namespace Game.Action.Skills
             }
 
             if (listPieces.Count == 0) return;
-            int maxValue = listPieces.Max(p => p.GetValueForAI());
+            var maxValue = listPieces.Max(p => p.GetValueForAI());
             var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
             if (bestPieces.Count == 0) return;
             var random = new System.Random();

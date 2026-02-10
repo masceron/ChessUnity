@@ -4,9 +4,6 @@ using Game.Action.Quiets;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
-using static Game.Common.BoardUtils;
-using UnityEngine;
 
 namespace Game.Tile.RealityDistortion
 {
@@ -23,7 +20,7 @@ namespace Game.Tile.RealityDistortion
             lastProcessedTurn = currentTurn;
             
             var allDistortions = new List<RealityDistortion>();
-            for (int pos = 0; pos < gameState.formations.Length; pos++)
+            for (var pos = 0; pos < gameState.formations.Length; pos++)
             {
                 var formation = gameState.formations[pos];
                 if (formation != null && formation is RealityDistortion distortion)
@@ -51,10 +48,10 @@ namespace Game.Tile.RealityDistortion
             
             var availablePositions = new List<int>(distortionPositions);
             
-            for (int i = availablePositions.Count - 1; i > 0; i--)
+            for (var i = availablePositions.Count - 1; i > 0; i--)
             {
-                int j = UnityEngine.Random.Range(0, i + 1);
-                int temp = availablePositions[i];
+                var j = UnityEngine.Random.Range(0, i + 1);
+                var temp = availablePositions[i];
                 availablePositions[i] = availablePositions[j];
                 availablePositions[j] = temp;
             }
@@ -63,11 +60,11 @@ namespace Game.Tile.RealityDistortion
             // 2 quân k cùng đến 1 vị trí
             var usedPositions = new HashSet<int>();
             
-            for (int i = 0; i < piecesOnDistortions.Count; i++)
+            for (var i = 0; i < piecesOnDistortions.Count; i++)
             {
                 var (piece, currentPos) = piecesOnDistortions[i];
                 
-                int targetPos = -1;
+                var targetPos = -1;
                 
                 foreach (var pos in availablePositions)
                 {

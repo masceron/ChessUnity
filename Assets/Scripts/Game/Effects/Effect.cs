@@ -73,8 +73,8 @@ namespace Game.Effects
         public int GetStat(EffectStat stat, int num = 1)
         {
             if (!Stats.ContainsKey(stat)) { return 0; }
-            int finalStat = Stats[stat][num - 1];
-            foreach (Effect effect in Piece.Effects)
+            var finalStat = Stats[stat][num - 1];
+            foreach (var effect in Piece.Effects)
             {
                 if (effect is IEffectStatModifier modifier)
                 {
@@ -89,7 +89,7 @@ namespace Game.Effects
             {
                 Stats.Add(stat, new());
             }
-            List<int> lst = Stats[stat];
+            var lst = Stats[stat];
             while (lst.Count < num)
             {
                 lst.Add(0);

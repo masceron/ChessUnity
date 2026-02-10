@@ -17,7 +17,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            for (int i = 0; i < BoardSize; ++i)
+            for (var i = 0; i < BoardSize; ++i)
             {
                 var p = PieceOn(i);
                 if (p == null || p.PieceRank != Game.Piece.PieceRank.Construct) continue;

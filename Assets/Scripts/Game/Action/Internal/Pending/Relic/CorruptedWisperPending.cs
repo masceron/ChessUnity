@@ -1,19 +1,7 @@
-﻿using Game.Action.Quiets;
-using Game.Action.Relics;
-using Game.Common;
-using Game.Effects;
-using Game.Effects.Debuffs;
+﻿using Game.Action.Relics;
 using Game.Managers;
-using Game.Piece;
-using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
-using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Relic
 {

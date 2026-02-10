@@ -42,7 +42,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             var vlist = dict.Values.ToList();
             for (var i = 0; i < needed; i++)
             {
-                FreePlaySavedArmy f = list.transform.GetChild(i).GetComponent<FreePlaySavedArmy>();
+                var f = list.transform.GetChild(i).GetComponent<FreePlaySavedArmy>();
                 f.Load(vlist[i]);
                 savedArmies.Add(f);
             }

@@ -17,7 +17,7 @@ namespace Game.Effects.Traits
 
         public void OnCallStart(Action.Action lastMainAction)
         {
-            int evasion = 1;
+            var evasion = 1;
             var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(Piece.Pos, 4);
             foreach (var piece in listPieces)
             {

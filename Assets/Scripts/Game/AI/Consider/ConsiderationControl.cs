@@ -16,7 +16,7 @@ namespace Game.AI.Consider
         {
             if (action == null || action is not IQuiets) return 0f;
 
-            int value = weight + TileManager.Ins.GetTileValue(action.Target);
+            var value = weight + TileManager.Ins.GetTileValue(action.Target);
             foreach (var ea in enemyActions)
             {
                 //if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;

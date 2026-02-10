@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Game.Managers;
-using Game.ScriptableObjects;
 using UnityEngine;
 using Game.Piece.PieceLogic.Commons;
 
@@ -17,14 +16,14 @@ namespace Game.AI
         public float Evaluate(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions)
         {
             if (Maker == null || action == null) return float.NegativeInfinity;
-            PieceInfo pieceInfo = AssetManager.Ins.PieceData[Maker.Type];
+            var pieceInfo = AssetManager.Ins.PieceData[Maker.Type];
 
-            float bestScoreConsideration = float.NegativeInfinity;
+            var bestScoreConsideration = float.NegativeInfinity;
 
             foreach (var cw in pieceInfo.considerations)
             {
                 if (cw.Consideration == null) continue;
-                float score = cw.Consideration.Score(action, allyActions, enemyActions, cw.Weight, Maker);
+                var score = cw.Consideration.Score(action, allyActions, enemyActions, cw.Weight, Maker);
                 if (score > bestScoreConsideration) bestScoreConsideration = score;
             }
 
@@ -37,16 +36,16 @@ namespace Game.AI
             if (actions == null || actions.Count == 0) return null;
 
             var allyActions = actions;
-            float bestScore = float.NegativeInfinity;
+            var bestScore = float.NegativeInfinity;
 
             // Danh sách các action tốt nhất
-            List<Action.Action> bestList = new List<Action.Action>();
+            var bestList = new List<Action.Action>();
 
             foreach (var a in actions)
             {
                 if (Maker != null && a.Maker != Maker.Pos) continue;
 
-                float score = Evaluate(a, allyActions, enemyActions);
+                var score = Evaluate(a, allyActions, enemyActions);
 
                 if (score > bestScore)
                 {

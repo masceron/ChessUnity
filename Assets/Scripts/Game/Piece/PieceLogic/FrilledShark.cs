@@ -28,15 +28,15 @@ namespace Game.Piece.PieceLogic
                     // 8 directions: N, S, E, W, NE, NW, SE, SW
                     int[] dRank = {-1, 1, 0, 0, -1, -1, 1, 1};
                     int[] dFile = {0, 0, -1, 1, -1, 1, -1, 1};
-                    int step = 4;
-                    for (int dir = 0; dir < 8; dir++)
+                    var step = 4;
+                    for (var dir = 0; dir < 8; dir++)
                     {
-                        int r = rank + dRank[dir] * step;
-                        int f = file + dFile[dir] * step;
+                        var r = rank + dRank[dir] * step;
+                        var f = file + dFile[dir] * step;
                         
                         if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
                         
-                        int idx = IndexOf(r, f);
+                        var idx = IndexOf(r, f);
                         if (!IsActive(idx)) continue;
                         
                         var piece = PieceOn(idx);

@@ -35,7 +35,7 @@ namespace Game.AI
         public void UIMethod_ShowAllScores()
         {
             // Assuming the current turn is the AI's turn.
-            bool sideToMove = MatchManager.Ins.GameState.SideToMove;
+            var sideToMove = MatchManager.Ins.GameState.SideToMove;
             AIShowAllActionScores(sideToMove);
         }
 
@@ -44,7 +44,7 @@ namespace Game.AI
         /// </summary>
         public void UIMethod_PlayBestAction()
         {
-            bool sideToMove = MatchManager.Ins.GameState.SideToMove;
+            var sideToMove = MatchManager.Ins.GameState.SideToMove;
             AIPlayAndExecuteBestAction(sideToMove);
         }
 
@@ -54,7 +54,7 @@ namespace Game.AI
 
             var enemySnapshot = GenerateEnemySnapshot(sideToMove);
 
-            Action.Action bestAction = AIPlayBestAction(sideToMove, enemySnapshot, out float bestScore);
+            var bestAction = AIPlayBestAction(sideToMove, enemySnapshot, out var bestScore);
 
             if (bestAction == null)
             {
@@ -98,7 +98,7 @@ namespace Game.AI
             var state = MatchManager.Ins.GameState;
             if (state == null) return list;
 
-            for (int i = 0; i < BoardUtils.BoardSize; i++)
+            for (var i = 0; i < BoardUtils.BoardSize; i++)
             {
                 var p = state.PieceBoard[i];
                 if (p == null) continue;
@@ -145,7 +145,7 @@ namespace Game.AI
                 var bestForBrain = bestForBrains[Random.Range(0, bestForBrains.Count)]; // Randomly pick one if multiple have same best score
                 if (bestForBrain == null) continue;
 
-                float score = brain.Evaluate(bestForBrain, actions, enemySnapshot);
+                var score = brain.Evaluate(bestForBrain, actions, enemySnapshot);
                 if (score > globalBestScore)
                 {
                     globalBestScore = score;
@@ -177,7 +177,7 @@ namespace Game.AI
 
                 foreach (var action in actions)
                 {
-                    float score = brain.Evaluate(action, actions, enemySnapshot);
+                    var score = brain.Evaluate(action, actions, enemySnapshot);
                     ShowScoreForAction(action, score);
                 }
             }
@@ -201,7 +201,7 @@ namespace Game.AI
         /// <param name="score">The score to display.</param>
         private void ShowScoreAtPosition(int position, float score)
         {
-            TileScore tileScoreInstance = Instantiate(tileScorePrefab, canvas);
+            var tileScoreInstance = Instantiate(tileScorePrefab, canvas);
             spawnedTileScores.Add(tileScoreInstance);
 
             var (rank, file) = BoardUtils.RankFileOf(position);
@@ -269,10 +269,10 @@ namespace Game.AI
 
             foreach (var action in actions)
             {
-                float score = targetBrain.Evaluate(action, actions, enemySnapshot);
-                int targetPos = action.Target;
+                var score = targetBrain.Evaluate(action, actions, enemySnapshot);
+                var targetPos = action.Target;
 
-                if (targetScores.TryGetValue(targetPos, out float existingScore))
+                if (targetScores.TryGetValue(targetPos, out var existingScore))
                 {
                     if (score > existingScore)
                     {

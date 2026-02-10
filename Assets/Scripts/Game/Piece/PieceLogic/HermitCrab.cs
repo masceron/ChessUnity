@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
                     {
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
                         {
-                            int index = IndexOf(rankOff, fileOff);
+                            var index = IndexOf(rankOff, fileOff);
                             if (index != Pos)
                             {
                                 list.Add(new HermitCrabSwap(Pos, index));
@@ -42,12 +42,12 @@ namespace Game.Piece.PieceLogic
                         }
                         return;
                     }
-                    int rank = RankOf(Pos);
-                    int file = FileOf(Pos);
+                    var rank = RankOf(Pos);
+                    var file = FileOf(Pos);
                     List<int> candidates = new();
-                    for(int i = rank - 3; i < rank + 3; ++i)
+                    for(var i = rank - 3; i < rank + 3; ++i)
                     {
-                        for(int j = file - 3; j < file + 3; ++j)
+                        for(var j = file - 3; j < file + 3; ++j)
                         {
                             if (!VerifyBounds(file) || !VerifyBounds(rank)) { continue; }
                             if (PieceOn(IndexOf(i, j)) != null){ candidates.Add(IndexOf(i, j)); }

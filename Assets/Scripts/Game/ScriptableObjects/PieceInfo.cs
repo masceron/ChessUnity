@@ -3,8 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.AI.Consider;
-using Game.Common;
-using Game.Piece.PieceLogic.Commons;
 
 namespace Game.ScriptableObjects
 {

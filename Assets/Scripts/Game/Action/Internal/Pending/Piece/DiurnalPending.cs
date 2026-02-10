@@ -1,11 +1,8 @@
-﻿using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
+﻿using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using UnityEngine;
-using Game.Action.Internal.Pending;
 using UX.UI.Ingame;
 using Game.Managers;
-using Game.Action.Quiets;
 using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Piece

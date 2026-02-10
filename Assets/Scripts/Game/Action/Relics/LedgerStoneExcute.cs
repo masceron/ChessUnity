@@ -16,12 +16,12 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             UnityEngine.Debug.Log("LedgerStoneExcute: " + isFirstOption);
-            int startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
-            int startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
+            var startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
+            var startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
             
             if (isFirstOption)
             {
-                bool isFillColumn = false;
+                var isFillColumn = false;
                 if(!IsColumnFull(startingSizeY)){
                     isFillColumn = true;
                 }
@@ -74,7 +74,7 @@ namespace Game.Action.Relics
             }
             else
             {
-                bool isFillRow = false;
+                var isFillRow = false;
                 if(!IsRowFull(startingSizeX)){
                     isFillRow = true;
                 }

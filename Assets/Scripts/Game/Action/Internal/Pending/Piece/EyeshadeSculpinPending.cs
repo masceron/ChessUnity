@@ -1,7 +1,5 @@
 ﻿using System;
-using Game.Action.Internal.Pending;
 using Game.Action.Skills;
-using Game.AI;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;

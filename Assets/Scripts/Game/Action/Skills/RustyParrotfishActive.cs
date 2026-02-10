@@ -1,7 +1,4 @@
-﻿using System.Linq;
-using Game.Action.Internal;
-using Game.Managers;
-using Game.Piece;
+﻿using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 

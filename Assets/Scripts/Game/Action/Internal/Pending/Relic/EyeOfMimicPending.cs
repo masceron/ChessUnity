@@ -38,7 +38,7 @@ namespace Game.Action.Internal.Pending.Relic
             var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
             var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
 
-            EyeOfMimicExcute excute = new EyeOfMimicExcute(source.Pos, target.Pos);
+            var excute = new EyeOfMimicExcute(source.Pos, target.Pos);
             eyeOfMimic.SetCooldown();
             BoardViewer.Ins.ExecuteAction(excute);
             TileManager.Ins.UnmarkAll();

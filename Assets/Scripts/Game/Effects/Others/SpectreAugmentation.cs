@@ -17,7 +17,7 @@ namespace Game.Effects.Others
         
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            int currentTurn = MatchManager.Ins.GameState.CurrentTurn;
+            var currentTurn = MatchManager.Ins.GameState.CurrentTurn;
 
             if (currentTurn != lastProcessedTurn)
             {

@@ -25,7 +25,7 @@ namespace UX.UI.Vault
             var relicIcon = info.icon;
             
             if (relicIcon == null) return;
-            Sprite relicSprite = Sprite.Create(relicIcon, new Rect(0, 0, relicIcon.width, relicIcon.height), Vector2.zero);
+            var relicSprite = Sprite.Create(relicIcon, new Rect(0, 0, relicIcon.width, relicIcon.height), Vector2.zero);
             relicImage.sprite = relicSprite;
         }
 
