@@ -12,7 +12,6 @@ namespace Game.Action.Internal
     public class ApplyEffect: Action, IInternal
     {
         public readonly Effect Effect;
-
         public readonly FormationType SourceFormationType;
         public readonly PieceLogic SourcePiece;
         public readonly RelicLogic SourceRelic;

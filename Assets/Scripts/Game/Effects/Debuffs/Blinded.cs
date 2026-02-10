@@ -10,7 +10,10 @@ namespace Game.Effects.Debuffs
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public readonly int Probability;
-
+        public Blinded(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_blinded")
+        {
+            Probability = 50;
+        }
         public Blinded(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, "effect_blinded")
         {
             Probability = probability;

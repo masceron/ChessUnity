@@ -28,6 +28,7 @@ namespace Game.Effects
         Radius,
         Strength,
         Chance,
+        Duration, // Đây là biến động, cần phân biệt với Duration - thời gian tồn tại của Effect
     }
 
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

@@ -605,6 +605,8 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 60630555095257088
     m_Key: effect_masked_puffer_passive_description
+    m_Metadata:
+      m_Items: []
   - m_Id: 61979491377647616
     m_Key: effect_broken_description
     m_Metadata:
@@ -631,6 +633,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 66059811140476928
     m_Key: effect_cursed_fin_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66480929020305408
+    m_Key: effect_paletail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66481317689679872
+    m_Key: effect_paletail_unicornfish_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

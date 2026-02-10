@@ -427,6 +427,10 @@ MonoBehaviour:
     m_Key: piece_sloanes_viperfish
     m_Metadata:
       m_Items: []
+  - m_Id: 66484406970736640
+    m_Key: piece_paletail_unicornfish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
