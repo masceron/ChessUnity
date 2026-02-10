@@ -82,6 +82,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_pufferfish" => new Pufferfish(cfg),
                 "piece_redtail_parrotfish" => new RedtailParrotfish(cfg),
                 "piece_remora" => new Remora(cfg),
+                "piece_ribbon_eel" => new RibbonEel(cfg),
                 "piece_scalyhead_sculpin" => new ScalyheadSculpin(cfg),
                 "piece_sea_star" => new SeaStar(cfg),
                 "piece_sea_turtle" => new SeaTurtle(cfg),

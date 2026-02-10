@@ -415,6 +415,10 @@ MonoBehaviour:
     m_Key: piece_sloanes_viperfish
     m_Metadata:
       m_Items: []
+  - m_Id: 64274936940335104
+    m_Key: piece_ribbon_eel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

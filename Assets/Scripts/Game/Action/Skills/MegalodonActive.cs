@@ -1,78 +1,31 @@
-using System;
-using Game.Action.Internal.Pending;
-using Game.Managers;
+﻿using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
-using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
-using Game.AI;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MegalodonActive: PendingAction, IDisposable, IAIAction
+    public class MegalodonActive : Action, ISkills
     {
-        public int AIPenaltyValue(PieceLogic pieceAI)
-        {
-            var maker = PieceOn(Maker);
-            if (maker == null || pieceAI == null) return 0;
-            if (pieceAI.Color != maker.Color) return -40;
-            return 0;
-        }
-
-        private static PieceLogic _firstTarget;
-        private static PieceLogic _secondTarget;
-
-        public MegalodonActive(int maker, int to) : base(maker)
-        {
-            Target = (ushort)to;
-        }
-
-        // protected override void ModifyGameState()
-        // {
-        //     ActionManager.EnqueueAction(new KillPiece(_firstTarget.Pos));
-        //     ActionManager.EnqueueAction(new KillPiece(_secondTarget.Pos));
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        //     
-        //     ResetTargets();
-        // }
-
-        public override void CompleteAction()
-        {
-            var hovering = PieceOn(BoardViewer.HoveringPos);
-
-            if (_firstTarget == null || _firstTarget.Color == hovering.Color)
-            {
-                _firstTarget = hovering;
-                TileManager.Ins.UnmarkAll();
-                TileManager.Ins.Select(_firstTarget.Pos);
-                TileManager.Ins.MarkPieceInRange(Maker, !_firstTarget.Color, PieceOn(Maker).AttackRange());
-                return;
-            }
-
-            _secondTarget = hovering;
-            TileManager.Ins.UnmarkAll();
-            
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-        }
-
-        public void CompleteActionForAI()
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void ResetTargets()
-        {
-            _firstTarget = null;
-            _secondTarget = null;
-        }
+        private int firstTargetPos;
+        private int secondTargetPos;
         
-        public void Dispose()
+        public MegalodonActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            ResetTargets();
-            BoardViewer.SelectingFunction = 0;
+            Maker = (ushort)maker;
+            firstTargetPos = firstTarget;
+            secondTargetPos = secondTarget;
         }
 
-        
+        protected override void ModifyGameState()
+        {
+            ActionManager.EnqueueAction(new KillPiece(firstTargetPos));
+            ActionManager.EnqueueAction(new KillPiece(secondTargetPos));
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

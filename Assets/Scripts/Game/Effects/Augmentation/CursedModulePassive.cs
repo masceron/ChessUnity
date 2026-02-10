@@ -14,12 +14,15 @@ namespace Game.Effects.Augmentation
 
         public void OnApply()
         {
-            if (Piece.SkillCooldown >= cooldownDecrease)
+            if (Piece is IPieceWithSkill skillPiece)
             {
-                Piece.SkillCooldown -= cooldownDecrease;
+                if (skillPiece.TimeToCooldown >= cooldownDecrease)
+                {
+                    skillPiece.TimeToCooldown -= cooldownDecrease;
+                }
+                else skillPiece.TimeToCooldown = 0;
             }
-            else Piece.SkillCooldown = 0;
-            
+
             ActionManager.EnqueueAction(new ApplyEffect(new Demolisher(Piece)));
         }
     }

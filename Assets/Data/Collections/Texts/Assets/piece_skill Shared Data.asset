@@ -227,6 +227,10 @@ MonoBehaviour:
     m_Key: piece_sloanes_viperfish_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 64248378611601408
+    m_Key: piece_ribbon_eel_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
