@@ -51,29 +51,27 @@ namespace Game.Action
         {
             var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionEffect>();
             var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionEffect>();
-            
+
             if (mainAction is IRelicAction iRelicAction)
             {
                 foreach (var listener in afterRelicActionListeners)
                 {
-                    if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
-                    
+                    // if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
                     listener.OnCallAfterRelicAction(iRelicAction);
-                    ProcessStack(); 
+                    ProcessStack();
                 }
             }
             else if (mainAction is not IInternal)
             {
                 foreach (var listener in afterPieceActionListeners)
                 {
-                    if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
-                    
+                    // if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
                     listener.OnCallAfterPieceAction(mainAction);
-                    ProcessStack(); 
+                    ProcessStack();
                 }
             }
         }
-
+        
         private static void ProcessStack()
         {
             while (_actionStack.Count > 0)
@@ -121,14 +119,14 @@ namespace Game.Action
             
             startTurnListeners.ForEach(effect =>
             {
-                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                // if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
                 if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
                 {
                     effect.OnCallStart(mainAction);
                     ProcessStack();
                 }
                 //The next turn is ours.
-                else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
+                else if (BoardUtils.SideToMove() == ((Observer)effect).Color)
                 {
                     if (effect.StartTurnEffectType != StartTurnEffectType.StartOfAllyTurn) return;
                     

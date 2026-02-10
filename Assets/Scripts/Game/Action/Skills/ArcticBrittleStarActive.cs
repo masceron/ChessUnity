@@ -31,7 +31,7 @@ namespace Game.Action.Skills
             Debug.Log("Execute Arctic Brittle Star");
             Formation AnchorIce = new AnchorIce(PieceOn(Maker).Color);
             AnchorIce.SetDuration(3);
-            FormationManager.Ins.SetFormation(Target, AnchorIce);
+            BoardUtils.SetFormation(Target, AnchorIce);
             
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
@@ -56,7 +56,7 @@ namespace Game.Action.Skills
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
             Formation AnchorIce = new AnchorIce(PieceOn(Maker).Color);
             AnchorIce.SetDuration(3);
-            FormationManager.Ins.SetFormation(selectedPiece.Pos, AnchorIce);
+            BoardUtils.SetFormation(selectedPiece.Pos, AnchorIce);
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

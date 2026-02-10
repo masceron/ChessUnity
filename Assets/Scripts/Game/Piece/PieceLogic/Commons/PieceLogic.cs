@@ -22,7 +22,14 @@ namespace Game.Piece.PieceLogic.Commons
         FormationDebuff,
         FormationSpecific,
     }
-
+    public enum SkillStat
+    {
+        Duration,
+        Target,
+        Unit,
+        Range,
+        Cooldown,
+    }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
@@ -40,7 +47,8 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly List<Augmentation.Augmentation> Augmentations;
         public readonly List<ImmunityType> Immunities;
         public readonly List<FormationType> SpecificFormations;
-
+        private readonly UDictionary<SkillStat, List<int>> SkillStats;
+        
         public byte MoveRange()
         {
             return moveRange;
@@ -79,7 +87,7 @@ namespace Game.Piece.PieceLogic.Commons
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
-                SkillCooldown = 0;
+                SkillStats = new();
                 pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1);
             }
             else SkillCooldown = -1;
@@ -309,16 +317,58 @@ namespace Game.Piece.PieceLogic.Commons
         {
             switch (rank)
             {
-                case PieceRank.Swarm:     return 50;
-                case PieceRank.Common:    return 70;
-                case PieceRank.Elite:     return 120;
-                case PieceRank.Champion:  return 200;
+                case PieceRank.Swarm: return 50;
+                case PieceRank.Common: return 70;
+                case PieceRank.Elite: return 120;
+                case PieceRank.Champion: return 200;
                 case PieceRank.Commander: return 1000;
                 case PieceRank.Construct: return 150;
-                case PieceRank.Summoned:  return 300;
+                case PieceRank.Summoned: return 300;
                 default: return 0;
             }
         }
-
+        /// <summary>
+        /// Trả về chỉ 
+        /// </summary>
+        /// <param name="stat"></param>
+        /// <param name="num"></param>
+        /// <returns></returns>
+        public int GetRawStat(SkillStat stat, int num = 1)
+        {
+            if (!SkillStats.ContainsKey(stat)) { return 0; }
+            return SkillStats[stat][num - 1];
+        }
+        /// <summary>
+        /// Trả về stat sau khi đã qua sự chỉnh sửa của các Effect
+        /// </summary>
+        /// <param name="stat">Loại stat</param>
+        /// <param name="num">Số thứ tự của stat</param>
+        /// <returns></returns>
+        public int GetStat(SkillStat stat, int num = 1)
+        {
+            if (!SkillStats.ContainsKey(stat)) { return 0; }
+            int finalStat = SkillStats[stat][num - 1];
+            foreach (Effect effect in Effects)
+            {
+                if (effect is ISkillStatModifier modifier)
+                {
+                    finalStat += modifier.Modify(stat);
+                }
+            }
+            return finalStat;
+        }
+        public void SetStat(SkillStat stat, int value, int num = 1)
+        {
+            if (!SkillStats.ContainsKey(stat))
+            {
+                SkillStats.Add(stat, new());
+            }
+            List<int> lst = SkillStats[stat];
+            while (lst.Count < num)
+            {
+                lst.Add(0);
+            }
+            SkillStats[stat][num - 1] = value;
+        }
     }
 }

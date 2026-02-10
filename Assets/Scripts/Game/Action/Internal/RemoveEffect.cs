@@ -16,7 +16,7 @@ namespace Game.Action.Internal
         protected override void ModifyGameState()
         {
             if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0) return;
-            BoardUtils.RemoveEffectObserver(effect);
+            BoardUtils.RemoveObserver(effect);
             
             if (effect is IOnRemove onRemove)
                 onRemove.OnRemove();

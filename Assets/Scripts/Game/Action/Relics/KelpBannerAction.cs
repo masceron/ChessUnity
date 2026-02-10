@@ -14,7 +14,7 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(Maker);
-            var formation = FormationManager.Ins.GetFormation(Maker);
+            var formation = GetFormation(Maker);
  
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -23,7 +23,7 @@ namespace Game.Action.Relics
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     var kelpPos = IndexOf(rankOff, fileOff);
-                    FormationManager.Ins.SetFormation(kelpPos, new Kelp(false, formation.GetColor()));
+                    SetFormation(kelpPos, new Kelp(false, formation.GetColor()));
                 }
             }
         }

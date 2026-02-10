@@ -1,4 +1,4 @@
-using Game.Managers;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal
 {
@@ -22,7 +22,7 @@ namespace Game.Action.Internal
         {
             if (applyEffectAction.Result == ResultFlag.Success)
             {
-                FormationManager.Ins.RemoveFormation(formationPos);
+                RemoveFormation(formationPos);
             }
         }
     }

@@ -1,6 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
+using Game.Action.Internal.Pending.Piece;
 using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Managers;
@@ -26,10 +26,10 @@ namespace Game.Piece.PieceLogic
                     for(int i = 0; i < BoardSize; ++i)
                     {
                         if (!IsActive(i)) { continue; }
-                        Formation formation = FormationManager.Ins.GetFormation(i);
+                        Formation formation = GetFormation(i);
                         if (formation != null)
                         {
-                            list.Add(new RedtailParrotfishActive(this, i));
+                            list.Add(new RedtailParrotfishPending(Pos, i));
                         }
                     }
                 }

@@ -16,18 +16,18 @@ namespace Game.Action.Relics
             var FOWPos = getRandomPos();
             var FogOfWar = new FogOfWar(true);
             FogOfWar.SetPositon(FOWPos);
-            FormationManager.Ins.SetFormation(FOWPos, FogOfWar);
+            BoardUtils.SetFormation(FOWPos, FogOfWar);
             
             var SaposPos = getRandomPos();
             var Saprolegnia = new Saprolegnia(false, true);
             Saprolegnia.SetPositon(SaposPos);
-            FormationManager.Ins.SetFormation(SaposPos, Saprolegnia);
+            BoardUtils.SetFormation(SaposPos, Saprolegnia);
         }
         
         private int getRandomPos()
         {
             var pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
-            while (!TileManager.Ins.IsTileEmpty(pos) && FormationManager.Ins.GetFormation(pos) != null)
+            while (!TileManager.Ins.IsTileEmpty(pos) && BoardUtils.GetFormation(pos) != null)
             {
                 pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
             }

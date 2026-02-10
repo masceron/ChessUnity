@@ -35,7 +35,7 @@ namespace Game.Effects.RegionalEffect
 
                         if (!VerifyBounds(newRank) || !VerifyBounds(newFile)) continue;
                         
-                        FormationManager.Ins.SetFormation(IndexOf(newRank, newFile), siltCloud);
+                        SetFormation(IndexOf(newRank, newFile), siltCloud);
                         
                     }
                 }

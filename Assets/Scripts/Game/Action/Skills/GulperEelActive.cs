@@ -24,7 +24,6 @@ namespace Game.Action.Skills
             UnityEngine.Debug.Log("GulperEelActive: " + Target);
             UnityEngine.Debug.Log("GulperEelActive: " + RankFileOf(Target));
             TileManager.Ins.DestroyTile(Target);
-            FormationManager.Ins.RemoveFormation(Target);
 
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
@@ -53,7 +52,6 @@ namespace Game.Action.Skills
             var selectedTile = listTiles[random.Next(listTiles.Count)];
 
             TileManager.Ins.DestroyTile(selectedTile);
-            FormationManager.Ins.RemoveFormation(selectedTile);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

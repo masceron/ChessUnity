@@ -9,14 +9,13 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    public class FormationManager : Singleton<FormationManager>, ISubscriber{
-        private Formation[] formations;
+    public class FormationManager : Singleton<FormationManager>{
         private GameObject[] formationObjects;
         public GameObject defaultPrefab;
+        private Formation[] formations;
         public void Initialize() {
-            formations = new Formation[BoardSize];
+            formations = MatchManager.Ins.GameState.formations;
             formationObjects = new GameObject[BoardSize];
-            MatchManager.Ins.GameState.Subscribers.Add(this);
         }
         
         /// <summary>
@@ -39,6 +38,7 @@ namespace Game.Managers
                 RemoveFormation(pos);
             }
             formations[pos] = env;
+            BoardUtils.AddEffectObserver(env);
             if (PieceOn(pos) != null){
                 formations[pos].OnCreated(PieceOn(pos));
             }
@@ -49,22 +49,7 @@ namespace Game.Managers
             RemoveFormation(from);
             SetFormation(to, movedFormation);
         }
-        public Formation GetFormation(int pos)
-        {
-            return formations[pos];
-        }
         
-        public List<Formation> GetAllFormations()
-        {
-            return formations.Where(f => f != null).ToList();
-        }
-
-        public List<Formation> GetFormation(FormationType type) => formations.Where(f => f != null && f.GetFormationType() == type).ToList();
-        
-        public bool HasFormation(int pos)
-        {
-            return formations[pos] != null;
-        }
         /// <summary>
         /// Nên dùng để xóa Formation
         /// </summary>
@@ -73,43 +58,15 @@ namespace Game.Managers
             {
                 if (PieceOn(pos) != null)
                 {
-                    formations[pos].OnDestroyed(PieceOn(pos));
+                    formations[pos].OnRemove(PieceOn(pos));
                 }
+                RemoveObserver(formations[pos]);
                 formations[pos] = null;
                 Destroy(formationObjects[pos]);
                 formationObjects[pos] = null;
             }
         }
-        /// <summary>
-        /// Được gọi tự động bởi GameState.cs khi bất cứ quân nào dẫm phải ô có tọa độ là pos.
-        /// </summary>
-        public void TriggerEnter(int pos){
-            if (formations[pos] == null) return;
-            formations[pos].OnPieceEnter(PieceOn(pos));
-        }
-        /// <summary>
-        /// Được gọi tự động bởi GameState.cs khi bất cứ quân nào di chuyển khỏi ô có tọa độ là pos. 
-        /// </summary>
-        public void TriggerExit(int oldPos, int newPos){
-            if (formations[oldPos] == null) return;
-            formations[oldPos].OnPieceExit(PieceOn(newPos));
-        }
-        /// <summary>
-        /// Được gọi tự động bởi GameState.cs khi kết thúc turn, muc đích hiện tại để xử lý duration
-        /// </summary>
-        public void OnCallEnd(bool endOfSide){
-            for(var pos = 0; pos < formations.Length; pos++) {
-                var format = formations[pos];
-
-                if (format is not { HaveDuration: true } || endOfSide != format.GetColor()) continue;
-
-                format.SetDuration(format.Duration - 1);
-                if (format.Duration <= 0) {
-                    RemoveFormation(pos);
-                }
-            }
-        }
-        public void OnCall(Action.Action action) { }
+        
         public bool IsHideByFog(int pos, bool sideToMove)
         {
             Formation formation = GetFormation(pos);

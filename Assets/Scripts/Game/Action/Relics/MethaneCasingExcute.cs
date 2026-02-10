@@ -22,7 +22,7 @@ namespace Game.Action.Relics
                 int ind = BoardUtils.IndexOf(rankOff, fileOff);
                 if (TileManager.Ins.IsTileEmpty(BoardUtils.IndexOf(rankOff, fileOff))){ continue; }
                 if (BoardUtils.IndexOf(rankOff, fileOff) == pieceOn.Pos) { continue; }
-                if (BoardUtils.PieceOn(ind) == null && FormationManager.Ins.GetFormation(ind) == null)
+                if (BoardUtils.PieceOn(ind) == null && BoardUtils.GetFormation(ind) == null)
                 {
                     TileManager.Ins.DestroyTile(rankOff, fileOff);
                 }

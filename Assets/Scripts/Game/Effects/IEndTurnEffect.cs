@@ -4,7 +4,7 @@
     {
         EndOfAllyTurn, EndOfEnemyTurn, EndOfAnyTurn
     }
-    
+
     /// <summary>
     /// <para>
     /// Interface for triggers that took place on a new turn.
@@ -16,7 +16,8 @@
     public interface IEndTurnEffect
     {
         public EndTurnEffectType EndTurnEffectType { get; }
-        
+
         public void OnCallEnd(Action.Action lastMainAction);
     }
+    
 }

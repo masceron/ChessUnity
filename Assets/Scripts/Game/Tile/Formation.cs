@@ -1,4 +1,11 @@
+using Game.Action.Captures;
+using Game.Action.Internal;
+using Game.Action.Quiets;
+using Game.Common;
+using Game.Effects;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.ScriptableObjects;
 
 namespace Game.Tile
 {
@@ -27,19 +34,20 @@ namespace Game.Tile
         CarpetAnemone,
         HopkinsRose,
     }
-
-    public abstract class Formation
+    public abstract class Formation : Observer, IAfterPieceActionEffect, IOnPieceSpawned
     {
         public int Pos { get; private set; }
-        protected readonly bool Color;
         public PieceLogic PieceOnFormation { get; protected set; }
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
-
+        public readonly FormationCategory category;
         protected Formation() {}
         protected Formation(bool color)
         {
             Color = color;
+            FormationInfo info = AssetManager.Ins.FormationData[GetFormationType()];
+            this.priority = info.priority;
+            this.category = info.formationCategory;
         }
         /// <summary>
         /// Hiện hàm này được gọi chủ động bởi FormationManager::SetFormation() nên mọi người không cần phải động tới
@@ -67,9 +75,32 @@ namespace Game.Tile
         {
             OnPieceEnter(piece);
         }
-        public virtual void OnDestroyed(PieceLogic piece)
+        public virtual void OnRemove(PieceLogic piece)
         {
             OnPieceExit(piece);
+        }
+        public void OnPieceSpawn(PieceLogic piece)
+        {
+            if (BoardUtils.IsAlive(piece) && piece.Pos == Pos)
+            {
+                OnPieceEnter(piece);
+            }
+        }
+        public virtual void OnCallAfterPieceAction(Action.Action action)
+        {
+            if (action is IQuiets)
+            {
+                PieceLogic pieceOn = BoardUtils.PieceOn(action.Target);
+                if (pieceOn == null){ return; }
+                if (action.Target == Pos)
+                {
+                    OnPieceEnter(pieceOn);
+                }
+                else if (action.Maker == Pos)
+                {
+                    OnPieceExit(pieceOn);
+                }
+            }
         }
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
@@ -85,13 +116,6 @@ namespace Game.Tile
         {
             PieceOnFormation = null;
         }
-
-        public virtual void OnFirstTurn(PieceLogic piece)
-        {
-            
-        }
-
-
         public virtual int GetValueForAI(){return 0;}
     }
 }

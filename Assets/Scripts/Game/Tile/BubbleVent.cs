@@ -28,11 +28,6 @@ namespace Game.Tile
             base.OnPieceExit(piece);
         }
 
-        public override void OnFirstTurn(PieceLogic piece)
-        {
-            base.OnFirstTurn(piece);
-        }
-
         public override FormationType GetFormationType()
         {
             return FormationType.BubbleVent;

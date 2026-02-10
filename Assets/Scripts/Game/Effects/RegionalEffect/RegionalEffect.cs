@@ -1,8 +1,9 @@
+using Game.Common;
 using Game.Managers;
 
 namespace Game.Effects.RegionalEffect
 {
-    public abstract class RegionalEffect
+    public abstract class RegionalEffect : Observer
     {
         public RegionalEffectType Type { get; set; }
         public RegionalEffect(RegionalEffectType type)

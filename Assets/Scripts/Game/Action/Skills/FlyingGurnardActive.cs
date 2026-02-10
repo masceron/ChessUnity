@@ -40,7 +40,7 @@ namespace Game.Action.Skills
                     }
                     SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
-                    FormationManager.Ins.SetFormation(frontIndex, siltCloud);
+                    SetFormation(frontIndex, siltCloud);
                 }
             }
             
@@ -57,7 +57,7 @@ namespace Game.Action.Skills
                     }
                     SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
-                    FormationManager.Ins.SetFormation(backIndex, siltCloud);
+                    SetFormation(backIndex, siltCloud);
                 }
             }
             
@@ -74,7 +74,7 @@ namespace Game.Action.Skills
                     }
                     SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
-                    FormationManager.Ins.SetFormation(leftIndex, siltCloud);
+                    SetFormation(leftIndex, siltCloud);
                 }
             }
             
@@ -91,7 +91,7 @@ namespace Game.Action.Skills
                     }
                     SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
-                    FormationManager.Ins.SetFormation(rightIndex, siltCloud);
+                    SetFormation(rightIndex, siltCloud);
                 }
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

@@ -37,7 +37,7 @@ namespace Game.Effects.Traits
                 }
                 if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0)
                 {
-                    RemoveEffectObserver(effect);
+                    RemoveObserver(effect);
                     if (effect is IOnRemove onRemove)
                         onRemove.OnRemove();
                     Piece.Effects.Remove(effect);

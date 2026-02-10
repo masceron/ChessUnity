@@ -59,7 +59,7 @@ namespace Game.Effects.Traits
             if (randRank == null || randFile == null) return;
 
             Formation bubbleVent = new BubbleVent(aliveTime, true, Piece.Color);
-            FormationManager.Ins.SetFormation(BoardUtils.IndexOf(randRank.Value, randFile.Value), bubbleVent);
+            BoardUtils.SetFormation(BoardUtils.IndexOf(randRank.Value, randFile.Value), bubbleVent);
 
             var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank.Value, randFile.Value));
             if (pieceOn != null)
@@ -79,7 +79,7 @@ namespace Game.Effects.Traits
 
                 var randIndex = Random.Range(0, availableTiles.Count);
                 var (randRank, randFile) = availableTiles[randIndex];
-                var formation = FormationManager.Ins.GetFormation(BoardUtils.IndexOf(randRank, randFile));
+                var formation = BoardUtils.GetFormation(BoardUtils.IndexOf(randRank, randFile));
                 if (formation == null)
                 {
                     availableTiles.RemoveAt(randIndex);

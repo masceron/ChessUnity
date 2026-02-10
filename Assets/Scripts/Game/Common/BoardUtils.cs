@@ -13,6 +13,8 @@ using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI;
 using ZLinq;
+using Game.Tile;
+using Game.Action;
 
 namespace Game.Common
 {
@@ -183,12 +185,12 @@ namespace Game.Common
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
-        public static void AddEffectObserver(Effect effect)
+        public static void AddEffectObserver(Observer effect)
         {
             MatchManager.Ins.GameState.effectHooks.AddObserver(effect);
         }
 
-        public static void RemoveEffectObserver(Effect effect)
+        public static void RemoveObserver(Observer effect)
         {
             MatchManager.Ins.GameState.effectHooks.RemoveObserver(effect);
         }
@@ -417,6 +419,32 @@ namespace Game.Common
         public static bool IsOnBlackSide(int pos)
         {
             return RankOf(pos) <= BoardSize / 2 - 1;
+        }
+        public static void SetFormation(int pos, Formation env)
+        {
+            FormationManager.Ins.SetFormation(pos, env);
+        }
+        public static void MoveFormation(int from, int to)
+        {
+            FormationManager.Ins.MoveFormation(from, to);
+        }
+        public static void RemoveFormation(int pos)
+        {
+            FormationManager.Ins.RemoveFormation(pos);
+        }
+        public static List<Formation> GetFormation(FormationType type) => GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
+        public static Formation[] GetFormations() => MatchManager.Ins.GameState.formations;
+        public static Formation GetFormation(int pos) => MatchManager.Ins.GameState.formations[pos];
+        public static bool HasFormation(int pos) => MatchManager.Ins.GameState.formations[pos] != null;
+        
+        public static void DestroyTile(int index)
+        {
+            TileManager.Ins.DestroyTile(index);
+            BoardUtils.RemoveFormation(index);
+            if (PieceOn(index) != null)
+            {
+                ActionManager.EnqueueAction(new KillPiece(index));
+            }
         }
     }
 }

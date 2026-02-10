@@ -6,6 +6,8 @@ using Game.Action.Relics;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
+using Game.Common;
+using Game.Tile;
 
 namespace Game.Managers
 {
@@ -23,12 +25,12 @@ namespace Game.Managers
         private readonly List<IEndTurnEffect> onEndTurns = new();
         private readonly List<IApplyEffect> onEffectApplies = new();
         private readonly List<IMoveRangeModifier> onMoveRanges = new();
-        
+        private readonly List<IOnPieceSpawned> onSpawns = new();
         private class HookBinding
         {
             public IList List;
-            public Action<Effect> Add;
-            public Action<Effect> Remove;
+            public Action<Observer> Add;
+            public Action<Observer> Remove;
         }
         
         private readonly Dictionary<Type, HookBinding> bindings = new();
@@ -60,7 +62,7 @@ namespace Game.Managers
         }
         
 
-        public void AddObserver(Effect effect)
+        public void AddObserver(Observer effect)
         {
             foreach (var kvp in bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
             {
@@ -68,7 +70,7 @@ namespace Game.Managers
             }
         }
 
-        public void RemoveObserver(Effect effect)
+        public void RemoveObserver(Observer effect)
         {
             foreach (var kvp in bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
             {
@@ -87,7 +89,7 @@ namespace Game.Managers
 
         private static void AddToList<T>(List<T> list, T effect)
         {
-            var pos = list.BinarySearch(effect, Effect.GetComparer<T>());
+            var pos = list.BinarySearch(effect, Observer.GetComparer<T>());
             list.Insert(pos >= 0 ? pos : ~pos, effect);
         }
 
@@ -100,7 +102,7 @@ namespace Game.Managers
         {
             onDies.ForEach (effect =>
             {
-                if (((Effect)effect).disabled) return;
+                if (((Observer)effect).disabled) return;
                 effect.OnCallDead(pieceToDie);
             });
         }
@@ -109,7 +111,7 @@ namespace Game.Managers
         {
             onMoveGens.ForEach(e =>
             {
-                if (((Effect)e).disabled) return;
+                if (((Observer)e).disabled) return;
                 e.OnCallMoveGen(caller, actions);
             });
         }
@@ -118,7 +120,7 @@ namespace Game.Managers
         {
             onEffectApplies.ForEach(e =>
             {
-                if (((Effect)e).disabled) return;
+                if (((Observer)e).disabled) return;
                 e.OnCallApplyEffect(action);
             });
         }
@@ -127,7 +129,7 @@ namespace Game.Managers
         {
             beforePieceActions.ForEach(e =>
             {
-                if (((Effect)e).disabled) return;
+                if (((Observer)e).disabled) return;
                 e.OnCallBeforePieceAction(action);
             });
         }
@@ -136,8 +138,17 @@ namespace Game.Managers
         {
             beforeRelicActions.ForEach(e =>
             {
-                if (((Effect)e).disabled) return;
+                if (((Observer)e).disabled) return;
                 e.OnCallBeforeRelicAction(relicAction);
+            });
+        }
+        public void NotifySpawnPiece(PieceLogic piece)
+        {
+            onSpawns.ForEach(e =>
+            {
+                if (((Observer)e).disabled) return;
+                
+                e.OnPieceSpawn(piece);
             });
         }
     }

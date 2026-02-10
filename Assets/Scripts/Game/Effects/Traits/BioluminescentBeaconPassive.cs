@@ -52,13 +52,13 @@ namespace Game.Effects.Traits
 
             foreach (var pos in posInRadius)
             {
-                if (FormationManager.Ins.GetFormation(pos) != null) continue;
-                FormationManager.Ins.SetFormation(pos, dazzlingLight);
+                if (BoardUtils.GetFormation(pos) != null) continue;
+                BoardUtils.SetFormation(pos, dazzlingLight);
                 // Trigger không cần thiết, hàm TriggerEnter được gọi tự động
-                if (BoardUtils.PieceOn(pos) != null)
-                {
-                    FormationManager.Ins.TriggerEnter(pos);
-                }
+                // if (BoardUtils.PieceOn(pos) != null)
+                // {
+                //     BoardUtils.TriggerEnter(pos);
+                // }
             }
             isApplied = true;
         }
