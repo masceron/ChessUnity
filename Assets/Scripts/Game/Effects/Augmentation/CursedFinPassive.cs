@@ -17,7 +17,10 @@ namespace Game.Effects.Augmentation
 
         public void OnApply()
         {
-            Piece.SkillCooldown += cooldownModifier;
+            if (Piece is IPieceWithSkill skillPiece)
+            {
+                skillPiece.TimeToCooldown += cooldownModifier;
+            }
             ActionManager.EnqueueAction(new ApplyEffect(new Sanity(-1, Piece)));
         }
 
