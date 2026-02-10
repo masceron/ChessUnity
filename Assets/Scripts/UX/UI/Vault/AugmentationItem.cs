@@ -27,7 +27,7 @@ namespace UX.UI.Vault
             var icon = info.Icon;
             
             if (icon == null) return;
-            Sprite sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.zero);
+            var sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.zero);
             augmentationImage.sprite = sprite;
         }
 

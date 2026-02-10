@@ -17,7 +17,7 @@ namespace Game.Effects.Augmentation
 
         public void OnApply()
         {
-            Evasion evasion = Piece.Effects.OfType<Evasion>().FirstOrDefault();
+            var evasion = Piece.Effects.OfType<Evasion>().FirstOrDefault();
 
             if (evasion != null)
             {

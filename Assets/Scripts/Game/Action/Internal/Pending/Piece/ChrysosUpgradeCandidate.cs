@@ -64,10 +64,10 @@ namespace Game.Action.Internal.Pending.Piece
         public void CompleteActionForAI()
         {
             //Implement for AI automatically
-            bool hasElite = false;
-            bool hasCommon = false;
-            bool hasSwarm = false;
-            bool hasChampion = false;
+            var hasElite = false;
+            var hasCommon = false;
+            var hasSwarm = false;
+            var hasChampion = false;
 
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
@@ -111,14 +111,14 @@ namespace Game.Action.Internal.Pending.Piece
             allyPieces.Sort((a, b) => 
                 a.GetValueForAI().CompareTo(b.GetValueForAI()));
                 
-            int topValue = allyPieces[0].GetValueForAI();
+            var topValue = allyPieces[0].GetValueForAI();
             var topGroup = allyPieces.Where(p => p.GetValueForAI() == topValue).ToList();
 
             var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values 
                 where piece.rank == UpgradableTo select piece.key).ToList();
             if (UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(CurrentPiece);
                 
-            int idx = Random.Range(0, upgradableTo.Count);
+            var idx = Random.Range(0, upgradableTo.Count);
                 
             if (topGroup.Count == 1)
             {

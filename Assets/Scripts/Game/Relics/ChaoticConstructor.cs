@@ -1,8 +1,5 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Common;
-using Game.Managers;
+﻿using Game.Action.Relics;
 using Game.Relics.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
 
 namespace Game.Relics
@@ -21,18 +18,10 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                for (int i = 0; i < BoardUtils.BoardSize; ++i)
-                {
-                    var piece = BoardUtils.PieceOn(i);
-                    if (piece == null) continue;
-                    Debug.Log(piece.Type);
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new ChaoticConstructorPending(Color, piece.Pos, this);
-                    BoardViewer.ListOf.Add(pending);
-
-                    BoardViewer.Selecting = -2;
-                    BoardViewer.SelectingFunction = 4;
-                }
+                var action = new ChaoticConstructorAction(-1);
+                BoardViewer.Ins.ExecuteAction(action);
+                BoardViewer.Selecting = -2;
+                BoardViewer.SelectingFunction = 4;
             }
         }
 

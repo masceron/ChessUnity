@@ -1,0 +1,23 @@
+﻿// thêm để nhận Action, ActionManager
+using Game.Action.Internal;
+using Game.Action.Quiets;
+using Game.Common;
+using Game.Effects.Others;
+
+namespace Game.Action.Relics
+{
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class TemporalWarpExecute : Action, IRelicAction
+    {
+        public TemporalWarpExecute(int maker, int target) : base(maker)
+        {
+            Target = target;
+        }
+
+        protected override void ModifyGameState()
+        {
+            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(BoardUtils.PieceOn(Maker), Target)));
+        }
+    }
+}

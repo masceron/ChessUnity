@@ -37,7 +37,7 @@ namespace Game.Relics
             UnityEngine.Debug.Log("CompleteActionForAI");
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
             var listPieces = allPieces.Where(p => p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
-            int minValue = int.MaxValue;
+            var minValue = int.MaxValue;
             foreach (var piece in listPieces)
             {
                 if (piece.GetValueForAI() < minValue)
@@ -46,7 +46,7 @@ namespace Game.Relics
                 }
             }
             var bestPieceValues = listPieces.Where(p => p.GetValueForAI() == minValue).ToList();
-            int minBuff = bestPieceValues.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
+            var minBuff = bestPieceValues.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
             var bestPiece = bestPieceValues.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuff).ToList();
             if (bestPiece.Count == 0) return;
             var random = new System.Random();

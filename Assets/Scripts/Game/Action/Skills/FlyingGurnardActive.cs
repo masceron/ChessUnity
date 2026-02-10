@@ -1,4 +1,3 @@
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Tile;
@@ -38,7 +37,7 @@ namespace Game.Action.Skills
                     {
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
                     }
-                    SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
                     SetFormation(frontIndex, siltCloud);
                 }
@@ -55,7 +54,7 @@ namespace Game.Action.Skills
                     {
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
                     }
-                    SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
                     SetFormation(backIndex, siltCloud);
                 }
@@ -72,7 +71,7 @@ namespace Game.Action.Skills
                     {
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
                     }
-                    SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
                     SetFormation(leftIndex, siltCloud);
                 }
@@ -89,7 +88,7 @@ namespace Game.Action.Skills
                     {
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
                     }
-                    SiltCloud siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
                     siltCloud.SetDuration(3);
                     SetFormation(rightIndex, siltCloud);
                 }

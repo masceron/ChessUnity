@@ -65,9 +65,9 @@ namespace Game.Relics
                 b.GetValueForAI().CompareTo(a.GetValueForAI())
             );
             
-            int topValue = listPieces[0].GetValueForAI();
+            var topValue = listPieces[0].GetValueForAI();
             var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
-            int idx = UnityEngine.Random.Range(0, topGroup.Count);
+            var idx = UnityEngine.Random.Range(0, topGroup.Count);
             
             var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
             if (pending is PendingAction p)

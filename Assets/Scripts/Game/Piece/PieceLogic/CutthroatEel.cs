@@ -4,7 +4,6 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Effects;
 using ZLinq;
 
 namespace Game.Piece.PieceLogic
@@ -22,13 +21,13 @@ namespace Game.Piece.PieceLogic
                 {
                     foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Pos), FileOf(Pos), 4))
                     {
-                        int targetPos = IndexOf(rank, file);
+                        var targetPos = IndexOf(rank, file);
                         if (!IsActive(targetPos)){ return; }
-                        Commons.PieceLogic pieceOn = PieceOn(targetPos);
+                        var pieceOn = PieceOn(targetPos);
 
                         if (pieceOn != null && pieceOn.Color != Color && pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
                         {
-                            foreach (Effect effect in pieceOn.Effects)
+                            foreach (var effect in pieceOn.Effects)
                             {
                                 if (effect is Bleeding bleeding)
                                 {
@@ -49,7 +48,7 @@ namespace Game.Piece.PieceLogic
                     foreach (var enemy in enemiesWithBleeding)
                     {
                         if (!IsActive(enemy.Pos)){ return; }
-                        foreach (Effect effect in enemy.Effects)
+                        foreach (var effect in enemy.Effects)
                         {
                             if (effect is Bleeding bleeding)
                             {
@@ -69,7 +68,7 @@ namespace Game.Piece.PieceLogic
                     if (listA.Count > 0)
                     {
                         // Tìm candidate có value cao nhất
-                        int maxValue = listA.Max(t => t.piece.GetValueForAI());
+                        var maxValue = listA.Max(t => t.piece.GetValueForAI());
                         candidates = listA.Where(t => t.piece.GetValueForAI() == maxValue).ToList();
                     }
                     else
@@ -79,7 +78,7 @@ namespace Game.Piece.PieceLogic
                         if (listB.Count == 0) return;
                         
                         // Tìm candidate có value cao nhất
-                        int maxValue = listB.Max(t => t.piece.GetValueForAI());
+                        var maxValue = listB.Max(t => t.piece.GetValueForAI());
                         candidates = listB.Where(t => t.piece.GetValueForAI() == maxValue).ToList();
                     }
                     

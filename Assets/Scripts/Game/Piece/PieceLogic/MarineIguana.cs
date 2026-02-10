@@ -47,13 +47,13 @@ namespace Game.Piece.PieceLogic
                     }
 
                     if (captureTargets.Count == 0) return;
-                    int firstTarget = captureTargets[0];
-                    int secondTarget = -1;
-                    int MaxValue = int.MinValue;
+                    var firstTarget = captureTargets[0];
+                    var secondTarget = -1;
+                    var MaxValue = int.MinValue;
                     foreach (var target in captureTargets)
                     {
-                        int maxSubValue = int.MinValue;
-                        int secondSubTarget = -1;
+                        var maxSubValue = int.MinValue;
+                        var secondSubTarget = -1;
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(target), FileOf(target), 2))
                         {
                             var index = IndexOf(rankOff, fileOff);

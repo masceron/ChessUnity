@@ -55,7 +55,7 @@ namespace Game.Piece.PieceLogic
                     var (r, f) = RankFileOf(Pos);
                     var enemies = GetPiecesInRadius(r, f, 4, p => p != null && p.Color != makerPiece.Color);
 
-                    int bestScore = enemies.Max(p => p.GetValueForAI());
+                    var bestScore = enemies.Max(p => p.GetValueForAI());
                     var top = enemies.Where(p => p.GetValueForAI() == bestScore).ToList();
                     var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 

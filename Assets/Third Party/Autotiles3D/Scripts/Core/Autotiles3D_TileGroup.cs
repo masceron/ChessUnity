@@ -15,7 +15,7 @@ namespace Autotiles3D
         private Dictionary<string, Autotiles3D_Tile> _nameMap = new Dictionary<string, Autotiles3D_Tile>();
         public Autotiles3D_Tile GetTile(int id)
         {
-            if (_map.TryGetValue(id, out Autotiles3D_Tile tile))
+            if (_map.TryGetValue(id, out var tile))
             {
                 return tile;
             }
@@ -29,13 +29,13 @@ namespace Autotiles3D
         }
         public Autotiles3D_Tile GetTile(string name)
         {
-            if (_nameMap.TryGetValue(name, out Autotiles3D_Tile tile))
+            if (_nameMap.TryGetValue(name, out var tile))
             {
                 return tile;
             }
 
             //backwards compatibility
-            for (int i = 0; i < Tiles.Count; i++)
+            for (var i = 0; i < Tiles.Count; i++)
             {
                 if (Tiles[i].Name == name)
                     return Tiles[i];
@@ -58,7 +58,7 @@ namespace Autotiles3D
         {
             _map = new Dictionary<int, Autotiles3D_Tile>();
             _nameMap = new Dictionary<string, Autotiles3D_Tile>();
-            for (int i = 0; i < Tiles.Count; i++)
+            for (var i = 0; i < Tiles.Count; i++)
             {
                 _map.Add(Tiles[i].TileID, Tiles[i]);
 

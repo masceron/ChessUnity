@@ -302,8 +302,17 @@ namespace Game.Common
         // Use this function even when you want to grab a number of effects by using .Count. 
         public static List<PieceLogic> FindPiecesWithEffectName(bool side, string effectName)
         {
-            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece.Color == side && piece.Effects.Any(effect => effect.EffectName == effectName)).ToList();
+            return MatchManager.Ins?.GameState?.PieceBoard?
+                       .Where(piece =>
+                           piece != null &&
+                           piece.Color == side &&
+                           piece.Effects != null &&
+                           piece.Effects.Any(effect => effect != null && effect.EffectName == effectName)
+                       )
+                       .ToList()
+                   ?? new List<PieceLogic>();
         }
+
 
         public static List<Effect> EffectWithEffectCategory(PieceLogic piece, EffectCategory effectCategory)
         {
@@ -347,13 +356,13 @@ namespace Game.Common
         
         public static List<ushort> AllSidePos(bool side)
         {
-            List<ushort> positions = new List<ushort>();
+            var positions = new List<ushort>();
             if (side)
             {
-                for (int rank = MaxLength / 2; rank > 0; rank--)
+                for (var rank = MaxLength / 2; rank > 0; rank--)
                 {
                     if (!VerifyBounds(rank)) continue;
-                    for (int file = 0; file < MaxLength; file++)
+                    for (var file = 0; file < MaxLength; file++)
                     {
                         if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
                         positions.Add((ushort)IndexOf(rank, file));
@@ -362,10 +371,10 @@ namespace Game.Common
             }
             else
             {
-                for (int rank = MaxLength / 2; rank < MaxLength; rank++)
+                for (var rank = MaxLength / 2; rank < MaxLength; rank++)
                 {
                     if (!VerifyBounds(rank)) continue;
-                    for (int file = 0; file < MaxLength; file++)
+                    for (var file = 0; file < MaxLength; file++)
                     {
                         if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
                         positions.Add((ushort)IndexOf(rank, file));

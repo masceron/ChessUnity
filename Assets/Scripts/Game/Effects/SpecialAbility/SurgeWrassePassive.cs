@@ -18,7 +18,7 @@ namespace Game.Effects.SpecialAbility
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) { return; }
-            Formation fmt = BoardUtils.GetFormation(Piece.Pos);
+            var fmt = BoardUtils.GetFormation(Piece.Pos);
             if (fmt != null && AssetManager.Ins.FormationData[fmt.GetFormationType()].formationCategory == FormationCategory.Negative)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Haste(2, 4, Piece)));

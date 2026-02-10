@@ -28,7 +28,7 @@ namespace Game.Action.Internal.Pending.Piece
                 if (PieceOn(Target).Color == temperantia.Color)
                 {
                     ally = Target;
-                    foreach(Action pending in BoardViewer.ListOf)
+                    foreach(var pending in BoardViewer.ListOf)
                     {
                         if (PieceOn(pending.Target).Color == temperantia.Color)
                         {
@@ -39,7 +39,7 @@ namespace Game.Action.Internal.Pending.Piece
                 else
                 {
                     enemy = Target;
-                    foreach(Action pending in BoardViewer.ListOf)
+                    foreach(var pending in BoardViewer.ListOf)
                     {
                         if (PieceOn(pending.Target).Color != temperantia.Color)
                         {

@@ -47,9 +47,9 @@ namespace Game.Relics
         {
             var (rank, file) = RankFileOf(p.Pos);
             var potentialPiece = new List<PieceLogic>();
-            for (int x = -1; x <= 1; ++x)
+            for (var x = -1; x <= 1; ++x)
             {
-                for (int y = -1; y <= 1; ++y)
+                for (var y = -1; y <= 1; ++y)
                 {
                     var nextPos = IndexOf(rank + x, file + y);
                     if (!VerifyIndex(nextPos)) continue;
@@ -76,9 +76,9 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            int bestRank = (Color ? 0 : 999999);
-            List<(int pos1, int pos2)> bestDuo = new List<(int pos1, int pos2)>();
-            for (int i = 0; i < BoardSize; ++i)
+            var bestRank = (Color ? 0 : 999999);
+            var bestDuo = new List<(int pos1, int pos2)>();
+            for (var i = 0; i < BoardSize; ++i)
             {
                 var (rank, file) = RankFileOf(i);
                 var piece = PieceOn(i);

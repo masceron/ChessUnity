@@ -1,7 +1,7 @@
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
+using Game.Action.Relics;
 
 namespace Game.Relics
 {
@@ -18,15 +18,19 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
-                {
-                    if (piece == null && piece.Color != Color) continue;
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new ReliquaryPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
-                }
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
+                // foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                // {
+                //     if (piece == null && piece.Color != Color) continue;
+                //     TileManager.Ins.MarkAsMoveable(piece.Pos);
+                //     var pending = new ReliquaryPending(this, piece.Pos);
+                //     BoardViewer.ListOf.Add(pending);
+                // }
+                // BoardViewer.Selecting = -2;
+                // BoardViewer.SelectingFunction = 4;
+                var excute = new ReliquaryExcute();
+                BoardViewer.Ins.ExecuteAction(excute);
+                MatchManager.Ins.InputProcessor.UpdateRelic();
+                SetCooldown();
             }
         }
 

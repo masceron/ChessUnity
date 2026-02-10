@@ -61,12 +61,12 @@ namespace Game.Piece.PieceLogic
 
                     // Gather allies within radius 3
                     var candidates = new List<Commons.PieceLogic>();
-                    for (int dr = -3; dr <= 3; dr++)
+                    for (var dr = -3; dr <= 3; dr++)
                     {
-                        for (int df = -3; df <= 3; df++)
+                        for (var df = -3; df <= 3; df++)
                         {
-                            int r = rank + dr;
-                            int f = file + df;
+                            var r = rank + dr;
+                            var f = file + df;
                             if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
 
                             var piece = PieceOn(IndexOf(r, f));

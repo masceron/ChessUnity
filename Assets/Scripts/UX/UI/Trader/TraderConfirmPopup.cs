@@ -49,9 +49,9 @@ namespace UX.UI.Trader
         {
             if (_itemData == null) return;
 
-            string key = string.Empty;
-            string table = string.Empty;
-            string descTable = string.Empty;
+            var key = string.Empty;
+            var table = string.Empty;
+            var descTable = string.Empty;
             Texture2D icon = null;
 
             // Clear previous 3D icons

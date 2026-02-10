@@ -22,11 +22,11 @@ namespace Game.Effects.Augmentation
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            PieceLogic pieceApplied = applyEffect.Effect.Piece;
+            var pieceApplied = applyEffect.Effect.Piece;
 
             if (pieceApplied != Piece) return;
             
-            Effect effect = applyEffect.Effect;
+            var effect = applyEffect.Effect;
             if (effect.EffectName == "effect_haste" || effect.EffectName == "effect_long_reach")
             {
                 effect.Strength = covetLensLevel;

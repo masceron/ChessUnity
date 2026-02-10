@@ -24,7 +24,7 @@ namespace Game.Managers
         [SerializeField] private RelicsData relicsData;
         [SerializeField] private AugmentationData augmentationData;
         [SerializeField] public RegionalsData regionalsData;
-        [SerializeField] private FormationsData FormationDataSO;
+        [SerializeField] private FormationsData formationDataSo;
         protected override void Awake()
         {
             Load();
@@ -50,7 +50,7 @@ namespace Game.Managers
                 RelicData.Add(relic.key, relic);
             }
             
-            FormationData = new Dictionary<FormationType, FormationInfo>(FormationDataSO.enviromentsData);
+            FormationData = new Dictionary<FormationType, FormationInfo>(formationDataSo.formationsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);
         }
     }

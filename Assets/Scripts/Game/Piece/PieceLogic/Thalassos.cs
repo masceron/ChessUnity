@@ -89,14 +89,14 @@ namespace Game.Piece.PieceLogic
                     // Find empty squares around Maker within radius 1
                     var (r0, f0) = RankFileOf(Pos);
                     var emptySquares = new System.Collections.Generic.List<int>();
-                    for (int dr = -1; dr <= 1; dr++)
+                    for (var dr = -1; dr <= 1; dr++)
                     {
-                        for (int df = -1; df <= 1; df++)
+                        for (var df = -1; df <= 1; df++)
                         {
-                            int rr = r0 + dr;
-                            int ff = f0 + df;
+                            var rr = r0 + dr;
+                            var ff = f0 + df;
                             if (!VerifyBounds(rr) || !VerifyBounds(ff)) continue;
-                            int idx = IndexOf(rr, ff);
+                            var idx = IndexOf(rr, ff);
                             if (!IsActive(idx)) continue;
                             if (PieceOn(idx) == null) emptySquares.Add(idx);
                         }

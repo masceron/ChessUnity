@@ -76,7 +76,7 @@ namespace UX.UI.Trader
         {
             if (itemPrefab == null || parent == null) return;
 
-            GameObject newItem = Instantiate(itemPrefab, parent);
+            var newItem = Instantiate(itemPrefab, parent);
             // TODO: Setup item UI
             var itemUI = newItem.GetComponent<TraderItemUI>();
             itemUI.Setup(data, type, isSell: false);

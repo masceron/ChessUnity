@@ -38,10 +38,10 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             PieceLogic bestPiece = null;
-            List<PieceLogic> bestPieces = new List<PieceLogic>();
+            var bestPieces = new List<PieceLogic>();
             
-            List<PieceLogic> piecesInfected = FindPiecesWithEffectName(MatchManager.Ins.GameState.OurSide, "effect_infected");
-            List<PieceLogic> enemyPiecesInfected = FindPiecesWithEffectName(!MatchManager.Ins.GameState.OurSide, "effect_infected");
+            var piecesInfected = FindPiecesWithEffectName(MatchManager.Ins.GameState.OurSide, "effect_infected");
+            var enemyPiecesInfected = FindPiecesWithEffectName(!MatchManager.Ins.GameState.OurSide, "effect_infected");
             piecesInfected.AddRange(enemyPiecesInfected);
 
             foreach (var piece in piecesInfected)
@@ -56,15 +56,15 @@ namespace Game.Relics
             // If no enemy commander found, evaluate based on surrounding pieces
             if (bestPiece == null)
             {
-                bool allOurPiecesAbove2 = true;
+                var allOurPiecesAbove2 = true;
                 
                 foreach (var piece in piecesInfected)
                 {
                     var (rank, file) = RankFileOf(piece.Pos);
                     
-                    int ourPieceCount = 0;
-                    int enemyPieceCount = 0;
-                    int maxEnemyPieceCount = int.MinValue;
+                    var ourPieceCount = 0;
+                    var enemyPieceCount = 0;
+                    var maxEnemyPieceCount = int.MinValue;
                     
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
                     {

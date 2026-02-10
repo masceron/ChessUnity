@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -30,7 +31,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this || pOn.Color == Color) continue;
-                        list.Add(new EyeshadeSculpinActive(Pos, index));
+                        list.Add(new EyeshadeSculpinPending(Pos, index));
                     }
                 }
                 else
@@ -54,7 +55,6 @@ namespace Game.Piece.PieceLogic
                         // neu co dung mot quan
                         if (listPieces.Count == 1)
                         {
-                            list.Add(new EyeshadeSculpinActive(Pos, listPieces[0].Pos));
                             return;
                         }
                         
@@ -65,13 +65,13 @@ namespace Game.Piece.PieceLogic
                     
                         var selectedPieces = new List<Commons.PieceLogic>();
                     
-                        int topValue = listPieces[0].GetValueForAI();
+                        var topValue = listPieces[0].GetValueForAI();
                         var topGroup = listPieces.Where(p =>
                             p.GetValueForAI() == topValue).ToList();
                     
                         if (topGroup.Count >= 2)
                         {
-                            int idx1 = UnityEngine.Random.Range(0, topGroup.Count);
+                            var idx1 = UnityEngine.Random.Range(0, topGroup.Count);
                             int idx2;
                             do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
                             while (idx2 == idx1);
@@ -85,17 +85,17 @@ namespace Game.Piece.PieceLogic
                     
                             if (listPieces.Count > 1)
                             {
-                                int secondValue = listPieces[1].GetValueForAI();
+                                var secondValue = listPieces[1].GetValueForAI();
                                 var secondGroup = listPieces.Where(p =>
                                     p.GetValueForAI() == secondValue).ToList();
                                 if (secondGroup.Count == 0) return;
-                                int idx = UnityEngine.Random.Range(0, secondGroup.Count);
+                                var idx = UnityEngine.Random.Range(0, secondGroup.Count);
                                 selectedPieces.Add(secondGroup[idx]);
                             }
                         }
                     
-                        var eyeshadeSculpinActiveAI = new EyeshadeSculpinActiveAI(Pos, selectedPieces[0], selectedPieces[1]);
-                        list.Add(eyeshadeSculpinActiveAI);
+                        var eyeshadeSculpinActive = new EyeshadeSculpinActive(Pos, selectedPieces[0].Pos, selectedPieces[1].Pos);
+                        list.Add(eyeshadeSculpinActive);
                     }
                     else
                     {
@@ -109,7 +109,7 @@ namespace Game.Piece.PieceLogic
                                 var index2 = IndexOf(rankOff2, fileOff2);
                                 var pOn2 = PieceOn(index2);
                                 if (pOn2 == null || pOn2 == this || pOn2.Color == Color || pOn2.Pos == pOn1.Pos) continue;
-                                list.Add(new EyeshadeSculpinActiveAI(Pos, pOn1, pOn2));
+                                list.Add(new EyeshadeSculpinActive(Pos, pOn1.Pos, pOn2.Pos));
                             }
                         }
                     }

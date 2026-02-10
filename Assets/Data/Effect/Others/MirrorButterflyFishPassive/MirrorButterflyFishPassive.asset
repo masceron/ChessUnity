@@ -15,5 +15,5 @@ MonoBehaviour:
   key: effect_mirror_butterfly_fish_passive
   category: 5
   stack: 1
-  priority: 8
+  priority: 1
   icon: {fileID: 0}

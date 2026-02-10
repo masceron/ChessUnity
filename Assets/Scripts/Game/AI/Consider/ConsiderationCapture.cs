@@ -19,7 +19,7 @@ namespace Game.AI.Consider
 
             try
             {
-                float value = (float) targetPiece.GetValueForAI();
+                var value = (float) targetPiece.GetValueForAI();
                 return value + weight;
             }
             catch

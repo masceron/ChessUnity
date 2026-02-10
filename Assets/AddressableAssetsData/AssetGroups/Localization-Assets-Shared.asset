@@ -73,6 +73,17 @@ MonoBehaviour:
     m_ReadOnly: 1
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e46ccb29b1a011743a42734536a67409
+    m_Address: Assets/Data/Collections/Texts/Formations/formation_name Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e70025ba2f371c8419d0289fca84ce15
+    m_Address: Assets/Data/Collections/Texts/Formations/formation_description Shared
+      Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: eede08d557d40834a8ee0b238f68460d
     m_Address: Assets/Data/Collections/Texts/piece Shared Data.asset
     m_ReadOnly: 1

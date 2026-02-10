@@ -7,7 +7,6 @@ using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 using Game.Common;
-using Game.Tile;
 
 namespace Game.Managers
 {

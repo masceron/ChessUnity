@@ -30,7 +30,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
 
         public void Load()
         {
-            for (int i = 0; i < BoardUtils.BoardSize; ++i)
+            for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 if (BoardUtils.HasFormation(i))
                 {
@@ -38,7 +38,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
                 }
             }
 
-            for (int i = 0; i < formationList.Count; ++i)
+            for (var i = 0; i < formationList.Count; ++i)
             {
                 Debug.Log("formation length: " + formationList.Count);
                 var formation = BoardUtils.GetFormation(formationList[i]);
@@ -50,7 +50,9 @@ namespace UX.UI.Ingame.SeabedLevelerUI
 
         public void EraseFormation(int idx)
         {
-            BoardUtils.RemoveFormation(formationList[idx]);
+            FormationManager.Ins.RemoveFormation(formationList[idx]);
+            Disable();
+
         }
     }
 }

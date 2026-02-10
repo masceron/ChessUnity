@@ -12,14 +12,14 @@ namespace Editor.Window
 {
     public class PieceAssetsManager : EditorWindow
     {
-        private readonly List<PieceInfo> allPieces = new();
-        private readonly string[] tableNamesToValidate = { "piece_name", "piece_skill", "piece_skill_description" };
-        private readonly string[] toolbarStrings = { "Manage Pieces", "Validate Localization" };
-        private bool hasScannedForOrphans;
-        private Vector2 manageScrollPos;
-        private readonly List<OrphanedKey> orphanedKeys = new();
-        private int toolbarIndex;
-        private Vector2 validateScrollPos;
+        private readonly List<PieceInfo> _allPieces = new();
+        private readonly string[] _tableNamesToValidate = { "piece_name", "piece_skill", "piece_skill_description" };
+        private readonly string[] _toolbarStrings = { "Manage Pieces", "Validate Localization" };
+        private bool _hasScannedForOrphans;
+        private Vector2 _manageScrollPos;
+        private readonly List<OrphanedKey> _orphanedKeys = new();
+        private int _toolbarIndex;
+        private Vector2 _validateScrollPos;
 
         private void OnEnable()
         {
@@ -28,9 +28,9 @@ namespace Editor.Window
 
         private void OnGUI()
         {
-            toolbarIndex = GUILayout.Toolbar(toolbarIndex, toolbarStrings);
+            _toolbarIndex = GUILayout.Toolbar(_toolbarIndex, _toolbarStrings);
 
-            switch (toolbarIndex)
+            switch (_toolbarIndex)
             {
                 case 0:
                     DrawManageTab();
@@ -59,8 +59,8 @@ namespace Editor.Window
 
             EditorGUILayout.Space();
             
-            manageScrollPos = EditorGUILayout.BeginScrollView(manageScrollPos);
-            foreach (var piece in allPieces)
+            _manageScrollPos = EditorGUILayout.BeginScrollView(_manageScrollPos);
+            foreach (var piece in _allPieces)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
                 
@@ -75,13 +75,13 @@ namespace Editor.Window
         
         private void FindAllPieceInfos()
         {
-            allPieces.Clear();
+            _allPieces.Clear();
             var guids = AssetDatabase.FindAssets("t:PieceInfo");
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var piece = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
-                if (piece) allPieces.Add(piece);
+                if (piece) _allPieces.Add(piece);
             }
         }
         
@@ -102,7 +102,7 @@ namespace Editor.Window
             centralData.piecesData ??= new List<PieceInfo>();
             
             centralData.piecesData.Clear();
-            centralData.piecesData.AddRange(allPieces);
+            centralData.piecesData.AddRange(_allPieces);
             
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
@@ -131,23 +131,23 @@ namespace Editor.Window
                 }
             }
 
-            if (!hasScannedForOrphans) return;
+            if (!_hasScannedForOrphans) return;
 
             EditorGUILayout.Space();
 
-            if (orphanedKeys.Count == 0)
+            if (_orphanedKeys.Count == 0)
             {
                 EditorGUILayout.HelpBox("No orphaned keys found. All keys are valid.", MessageType.Info);
                 return;
             }
 
-            EditorGUILayout.LabelField($"Found {orphanedKeys.Count} orphaned keys:", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"Found {_orphanedKeys.Count} orphaned keys:", EditorStyles.boldLabel);
             
-            validateScrollPos = EditorGUILayout.BeginScrollView(validateScrollPos);
+            _validateScrollPos = EditorGUILayout.BeginScrollView(_validateScrollPos);
             
-            for (var i = orphanedKeys.Count - 1; i >= 0; i--)
+            for (var i = _orphanedKeys.Count - 1; i >= 0; i--)
             {
-                var orphan = orphanedKeys[i];
+                var orphan = _orphanedKeys[i];
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
 
                 EditorGUILayout.LabelField(new GUIContent(orphan.Key, "Table: " + orphan.TableName));
@@ -160,7 +160,7 @@ namespace Editor.Window
                             "Cancel"))
                     {
                         RemoveKeyFromTable(orphan.Key, orphan.TableName);
-                        orphanedKeys.RemoveAt(i);
+                        _orphanedKeys.RemoveAt(i);
                     }
 
                 EditorGUILayout.EndHorizontal();
@@ -170,7 +170,7 @@ namespace Editor.Window
         }
         private void DeleteAllOrphanedKeys()
         {
-            foreach (var orphanedKey in orphanedKeys)
+            foreach (var orphanedKey in _orphanedKeys)
             {
                 RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
             }
@@ -178,13 +178,13 @@ namespace Editor.Window
 
         private void FindOrphanedKeys()
         {
-            hasScannedForOrphans = true;
-            orphanedKeys.Clear();
+            _hasScannedForOrphans = true;
+            _orphanedKeys.Clear();
             
             var validKeys = new HashSet<string>();
             FindAllPieceInfos();
 
-            foreach (var piece in allPieces.Where(piece => !string.IsNullOrEmpty(piece.key)))
+            foreach (var piece in _allPieces.Where(piece => !string.IsNullOrEmpty(piece.key)))
             {
                 validKeys.Add(piece.key);
                 if (!piece.hasSkill) continue;
@@ -192,7 +192,7 @@ namespace Editor.Window
                 validKeys.Add(piece.key + "_skill_description");
             }
             
-            foreach (var tableName in tableNamesToValidate)
+            foreach (var tableName in _tableNamesToValidate)
             {
                 var tableCollection = LocalizationEditorSettings.GetStringTableCollection(tableName);
                 if (!tableCollection)
@@ -202,7 +202,7 @@ namespace Editor.Window
 
                 var sharedData = tableCollection.SharedData;
                 foreach (var entry in sharedData.Entries.Where(entry => !validKeys.Contains(entry.Key)))
-                    orphanedKeys.Add(new OrphanedKey { Key = entry.Key, TableName = tableName });
+                    _orphanedKeys.Add(new OrphanedKey { Key = entry.Key, TableName = tableName });
             }
         }
 

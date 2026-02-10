@@ -1,7 +1,6 @@
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
@@ -28,10 +27,10 @@ namespace Game.Action.Internal.Pending.Piece
 				formationPos = Target;
 				TileManager.Ins.UnmarkAll();
 				BoardViewer.ListOf.Clear();
-				for (int i = 0; i < BoardSize; ++i)
+				for (var i = 0; i < BoardSize; ++i)
 				{
 					if (!IsActive(i)) { return; }
-					Formation formation = GetFormation(i);
+					var formation = GetFormation(i);
 					if (formation != null) { continue; }
 					if (IsOnBlackSide(Maker) == redtail.Color)
 					{

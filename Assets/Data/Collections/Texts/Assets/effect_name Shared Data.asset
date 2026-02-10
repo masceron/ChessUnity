@@ -599,6 +599,12 @@ MonoBehaviour:
     m_Key: effect_dusky_butterfly_fish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 59272796395327488
+    m_Key: effect_corrupted_wisper_charge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 60606686301048832
+    m_Key: effect_masked_puffer_passive
   - m_Id: 61955622575050752
     m_Key: effect_broken
     m_Metadata:
@@ -611,19 +617,19 @@ MonoBehaviour:
     m_Key: effect_marine_iguana_kill_effect
     m_Metadata:
       m_Items: []
-  - m_Id: 64438712420261888
+  - m_Id: 66035941247361024
     m_Key: effect_cursed_plate_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 64438712583839744
-    m_Key: effect_cursed_module_passive
-    m_Metadata:
-      m_Items: []
-  - m_Id: 64438712592228352
+  - m_Id: 66035941503213568
     m_Key: effect_cursed_jaw_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 64438712596422656
+  - m_Id: 66035942253993984
+    m_Key: effect_cursed_module_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 66035942379823104
     m_Key: effect_cursed_fin_passive
     m_Metadata:
       m_Items: []

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf583118f4239c4dae4d6a30fddbd5a, type: 3}
   m_Name: HopkinsRose
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.FormationInfo
-  key: no_key
+  type: 14
+  key: formation_hopkins_rose
   formationCategory: 1
+  priority: 0
   prefab: {fileID: 395919914944283270, guid: 92c693e09b3c72341a73b3a7c057ddfd, type: 3}

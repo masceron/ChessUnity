@@ -19,7 +19,7 @@ namespace Game.Effects.Augmentation
             {
                 if (enemy != null && IsAlive(enemy))
                 {
-                     bool alreadyExists = actions.Any(a => a is ICaptures && a.Target == enemy.Pos);
+                     var alreadyExists = actions.Any(a => a is ICaptures && a.Target == enemy.Pos);
                      if (!alreadyExists)
                      {
                         actions.Add(new NormalCapture(caller.Pos, enemy.Pos));

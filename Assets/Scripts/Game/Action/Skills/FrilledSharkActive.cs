@@ -18,13 +18,13 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            int rank = RankOf(Maker);
-            int file = FileOf(Maker);
-            for (int i = 0; i < 4; ++i)
+            var rank = RankOf(Maker);
+            var file = FileOf(Maker);
+            for (var i = 0; i < 4; ++i)
             {
                 rank += drank;
                 file += dfile;
-                PieceLogic pieceOn = PieceOn(IndexOf(rank, file));
+                var pieceOn = PieceOn(IndexOf(rank, file));
                 if (pieceOn != null && pieceOn.Color != PieceOn(Maker).Color)
                 {
                     ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn), PieceOn(Maker)));

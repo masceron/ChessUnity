@@ -38,7 +38,7 @@ namespace Game.Action.Skills
             var finalPos = IndexOf(oldRank + steps * direction, oldFile);
             MatchManager.Ins.GameState.Move(Maker, (ushort)finalPos);
             PieceManager.Ins.Move(Maker, (ushort)finalPos);
-            for (int x = oldRank + (Color ? 0 : -1); x <= oldRank + (Color ? 1 : 0); ++x){
+            for (var x = oldRank + (Color ? 0 : -1); x <= oldRank + (Color ? 1 : 0); ++x){
                 for (var y = oldFile - 1; y <= oldFile + 1; ++y){  
                     if (IsActive(IndexOf(x, y)))
                     {

@@ -1,6 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
+using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
@@ -19,7 +19,7 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new FrenziedVeteran(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
 
-            Skills = (list, isPlayer, _) =>
+            Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
@@ -31,13 +31,21 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new MegalodonActive(Pos, idx));
+                        list.Add(new MegalodonActivePending(Pos, idx));
 
                     }
                 }
                 else
                 {
                     //query for AI in here
+                    if (excludeEmptyTile)
+                    {
+                        
+                    }
+                    else
+                    {
+                        
+                    }
                 }
             };
         }
@@ -47,14 +55,15 @@ namespace Game.Piece.PieceLogic
 
         private bool CanActive()
         {
-            bool hasAlly = false;
-            bool hasEnemy = false;
+            var hasAlly = false;
+            var hasEnemy = false;
             foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), AttackRange()))
             {
                 var idx = IndexOf(rank, file);
                 var pOn = PieceOn(idx);
 
                 if (pOn == null) continue;
+                if (pOn.PieceRank > PieceRank.Champion) continue;
 
                 if (pOn.Color == Color)
                     hasAlly = true;

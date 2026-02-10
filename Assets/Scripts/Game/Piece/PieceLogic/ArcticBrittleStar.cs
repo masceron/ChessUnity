@@ -5,6 +5,9 @@ using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using System.Collections.Generic;
+using ZLinq;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
@@ -31,6 +34,25 @@ namespace Game.Piece.PieceLogic
                 } else
                 {
                     //query for AI in here
+
+                    var listPieces = new List<Commons.PieceLogic>();
+
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 3);
+                    foreach (var target in targets)
+                    {
+                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        listPieces.Add(PieceOn(target));
+                    }
+
+                    if (listPieces.Count == 0) return;
+                    var maxValue = listPieces.Max(p => p.GetValueForAI());
+                    var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+                    if (bestPieces.Count == 0) return;
+
+                    var random = new System.Random();
+                    var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+
+                    list.Add(new ArcticBrittleStarActive(Pos, selectedPiece.Pos));
                 }
             };
         }

@@ -1,11 +1,9 @@
 using Game.Tile;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Effects.Debuffs;
 using Game.Action.Quiets;
 using Game.Action.Internal;
-using Game.Effects;
 
 namespace Game.Action.Skills
 {
@@ -21,10 +19,10 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            PieceLogic makerPiece = PieceOn(Maker);
-            int direction = PieceOn(Maker).Color ? 1 : -1;
+            var makerPiece = PieceOn(Maker);
+            var direction = PieceOn(Maker).Color ? 1 : -1;
             ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(RankOf(Target) + direction, FileOf(Target))));
-            Effect bleeding = PieceOn(Target).Effects.First(e => e is Bleeding);
+            var bleeding = PieceOn(Target).Effects.First(e => e is Bleeding);
             if (bleeding.Strength >= 4)
             {
                 bleeding.Strength -= 1;

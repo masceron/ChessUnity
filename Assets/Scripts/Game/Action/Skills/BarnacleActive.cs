@@ -46,7 +46,7 @@ namespace Game.Action.Skills
                                                  p.Effects.Any(e => e.EffectName == "effect_shield" || e.EffectName == "effect_hardened_shield")).ToList();
 
             if (listPieces.Count == 0) return;
-            int maxValue = listPieces.Max(p => p.GetValueForAI());
+            var maxValue = listPieces.Max(p => p.GetValueForAI());
             var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
             if (bestPieces.Count == 0) return;
             var random = new System.Random();

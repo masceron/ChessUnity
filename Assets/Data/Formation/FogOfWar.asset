@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf583118f4239c4dae4d6a30fddbd5a, type: 3}
   m_Name: FogOfWar
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.FormationInfo
-  key: no_key
+  type: 1
+  key: formation_fog_of_war
   formationCategory: 0
+  priority: 0
   prefab: {fileID: 9017780426237720715, guid: c556b7b6320f0744ca4f6ead626bab5f, type: 3}

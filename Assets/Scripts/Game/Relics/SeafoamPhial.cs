@@ -39,14 +39,14 @@ namespace Game.Relics
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
             var bestPieces = new List<PieceLogic>();
-            int maxDebuff = -1;
+            var maxDebuff = -1;
 
             // Find allied pieces with the most debuffs
             foreach (var piece in allPieces)
             {
                 if (piece != null && piece.Color == Color)
                 {
-                    int debuffCount = BoardUtils.EffectWithEffectCategory(piece, EffectCategory.Debuff).Count;
+                    var debuffCount = BoardUtils.EffectWithEffectCategory(piece, EffectCategory.Debuff).Count;
                     if (debuffCount > maxDebuff)
                     {
                         maxDebuff = debuffCount;
@@ -74,12 +74,12 @@ namespace Game.Relics
             else
             {
                 // From bestPieces choose the one with lowest AI value; if tie pick random
-                int minScore = bestPieces.Min(p => p.GetValueForAI());
+                var minScore = bestPieces.Min(p => p.GetValueForAI());
                 var lowestScorePieces = bestPieces.Where(p => p.GetValueForAI() == minScore).ToList();
 
                 if (lowestScorePieces.Count > 0)
                 {
-                    int randomIndex = UnityEngine.Random.Range(0, lowestScorePieces.Count);
+                    var randomIndex = UnityEngine.Random.Range(0, lowestScorePieces.Count);
                     targetPiece = lowestScorePieces[randomIndex];
                 }
             }

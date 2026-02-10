@@ -1,10 +1,7 @@
-using System.Collections.Generic;
 using Game.Augmentation;
 using Game.Common;
-using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
-using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Managers
@@ -29,7 +26,7 @@ namespace Game.Managers
             var rank = RankOf(pos);
             var file = FileOf(pos);
             env.SetPositon(pos);
-            GameObject prefab = AssetManager.Ins.FormationData[env.GetFormationType()].prefab;
+            var prefab = AssetManager.Ins.FormationData[env.GetFormationType()].prefab;
             if (prefab == null){ prefab = defaultPrefab; }
             formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
             Quaternion.identity, transform);
@@ -45,7 +42,7 @@ namespace Game.Managers
         }
         public void MoveFormation(int from, int to)
         {
-            Formation movedFormation = GetFormation(from);
+            var movedFormation = GetFormation(from);
             RemoveFormation(from);
             SetFormation(to, movedFormation);
         }
@@ -69,11 +66,11 @@ namespace Game.Managers
         
         public bool IsHideByFog(int pos, bool sideToMove)
         {
-            Formation formation = GetFormation(pos);
-            PieceLogic pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
+            var formation = GetFormation(pos);
+            var pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
             if (pieceInPos == null){ return false; }
-            bool haveAbyssalTapetum = false;
-            foreach(PieceLogic pieceLogic in MatchManager.Ins.GameState.PieceBoard)
+            var haveAbyssalTapetum = false;
+            foreach(var pieceLogic in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (pieceLogic != null && pieceLogic.Color == sideToMove && pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum))
                 {
