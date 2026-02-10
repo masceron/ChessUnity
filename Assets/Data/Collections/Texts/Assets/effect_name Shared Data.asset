@@ -611,6 +611,22 @@ MonoBehaviour:
     m_Key: effect_marine_iguana_kill_effect
     m_Metadata:
       m_Items: []
+  - m_Id: 64438712420261888
+    m_Key: effect_cursed_plate_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64438712583839744
+    m_Key: effect_cursed_module_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64438712592228352
+    m_Key: effect_cursed_jaw_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 64438712596422656
+    m_Key: effect_cursed_fin_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

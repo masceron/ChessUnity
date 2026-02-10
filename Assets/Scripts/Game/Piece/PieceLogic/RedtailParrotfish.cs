@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
+using Game.Action.Skills;
 using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Managers;
@@ -35,8 +36,53 @@ namespace Game.Piece.PieceLogic
                 }
                 else
                 {
-                    // ....
-                    Debug.Log("AI");
+                    var listA = new System.Collections.Generic.List<Formation>();
+                    var listB = new System.Collections.Generic.List<int>();
+                    var bestValue = int.MinValue;
+
+                    for (int i = 0; i < BoardSize; ++i)
+                    {
+                        if (!IsActive(i)) { continue; }
+
+                        bool isOurSide = IsOnBlackSide(i) == Color;
+                        Formation formation = GetFormation(i);
+
+                        if (formation == null)
+                        {
+                            if (isOurSide)
+                            {
+                                listB.Add(i);
+                            }
+                            continue;
+                        }
+
+                        if (isOurSide) { continue; }
+                        if (formation.category != FormationCategory.Positive) { continue; }
+
+                        int value = formation.GetValueForAI();
+                        if (value > bestValue)
+                        {
+                            bestValue = value;
+                            listA.Clear();
+                            listA.Add(formation);
+                        }
+                        else if (value == bestValue)
+                        {
+                            listA.Add(formation);
+                        }
+                    }
+
+                    if (listA.Count == 0 || listB.Count == 0) { return; }
+
+                    var chosenFormation = listA.Count == 1
+                        ? listA[0]
+                        : listA[Random.Range(0, listA.Count)];
+
+                    int chosenTarget = listB.Count == 1
+                        ? listB[0]
+                        : listB[Random.Range(0, listB.Count)];
+
+                    list.Add(new RedtailParrotfishActive(Pos, chosenFormation.Pos, chosenTarget));
                 }
             };
         }
