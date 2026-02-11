@@ -6,7 +6,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class EyeshadeSculpinActive : Action, ISkills, IAIAction
+    public class EyeshadeSculpinActive : Action, ISkills
     {
         private readonly int firstTargetPos;
         private readonly int secondTargetPos;
@@ -26,11 +26,6 @@ namespace Game.Action.Skills
         }
 
         public int AIPenaltyValue(PieceLogic maker)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void CompleteActionForAI()
         {
             throw new System.NotImplementedException();
         }

@@ -8,7 +8,7 @@ using ZLinq;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArcherfishActive: Action, ISkills, IAIAction
+    public class ArcherfishActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -40,23 +40,23 @@ namespace Game.Action.Skills
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
-        public void CompleteActionForAI()
-        {
-            var (rank, file) = RankFileOf(Maker);
-            var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != PieceOn(Maker).Color)
-                .Where(p => p.Effects.Any(p => p.EffectName != "effect_extremophile"
-                                          && p.EffectName != "effect_blind" &&
-                                          p.EffectName != "effect_marked")).ToList();
+        // public void CompleteActionForAI()
+        // {
+        //     var (rank, file) = RankFileOf(Maker);
+        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != PieceOn(Maker).Color)
+        //         .Where(p => p.Effects.Any(p => p.EffectName != "effect_extremophile"
+        //                                   && p.EffectName != "effect_blind" &&
+        //                                   p.EffectName != "effect_marked")).ToList();
             
-            if (listPieces.Count == 0) return;
-            listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
+        //     if (listPieces.Count == 0) return;
+        //     listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
             
-            var idx = UnityEngine.Random.Range(0, listPieces.Count);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), PieceOn(Maker)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), PieceOn(Maker)));
+        //     var idx = UnityEngine.Random.Range(0, listPieces.Count);
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), PieceOn(Maker)));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), PieceOn(Maker)));
             
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        // }
 
     }
 }

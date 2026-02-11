@@ -1,39 +1,40 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game.Player
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(NavMeshAgent))]
     public class PlayerController : MonoBehaviour
     {
         [Header("Movement Settings")]
-        [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float rotationSpeed = 10f;
         [SerializeField] private LayerMask groundLayer;
+        [SerializeField] private float stoppingDistance = 0.2f;
 
-        private Vector3 targetPosition;
+        private NavMeshAgent navMeshAgent;
         private bool isMoving;
-        [SerializeField] private float minMoveDistance = 0.2f;
-        [SerializeField] private float gravity = -9.81f;
-        [SerializeField] private float gravityMultiplier = 2.0f;
-        private Vector3 verticalVelocity;
-
-        private CharacterController characterController;
+        private Camera mainCamera; // Cache camera reference
 
         private void Awake()
         {
-            characterController = GetComponent<CharacterController>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            mainCamera = Camera.main; // Cache once instead of calling every frame
         }
 
         private void Start()
         {
-            targetPosition = transform.position;
             isMoving = false;
+            
+            // Configure NavMeshAgent
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.stoppingDistance = stoppingDistance;
+            }
         }
 
         private void Update()
         {
             HandleInput();
-            Move();
+            UpdateMovementState();
         }
 
         public event System.Action<Vector3> OnMoveTargetSet; 
@@ -45,7 +46,7 @@ namespace Game.Player
 
         private void HandleInput()
         {
-            if (UnityEngine.InputSystem.Mouse.current == null) return;
+            if (UnityEngine.InputSystem.Mouse.current == null || mainCamera == null) return;
 
             var wasPressed = false;
             if (moveButton == InputMouseButton.Left)
@@ -60,56 +61,49 @@ namespace Game.Player
             if (wasPressed)
             {
                 var mousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
-                var ray = Camera.main.ScreenPointToRay(mousePos);
+                var ray = mainCamera.ScreenPointToRay(mousePos);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
                 {
-                    targetPosition = hit.point;
-                    isMoving = true;
-                    
+                    SetDestination(hit.point);
                     OnMoveTargetSet?.Invoke(hit.point);
                 }
             }
         }
 
-        private void Move()
+        private void SetDestination(Vector3 destination)
         {
-            var currentPos = transform.position;
-            var targetPos = targetPosition;
-            var currentPosFlat = new Vector3(currentPos.x, 0, currentPos.z);
-            var targetPosFlat = new Vector3(targetPos.x, 0, targetPos.z);
-            
-            var distance = Vector3.Distance(currentPosFlat, targetPosFlat);
-            var horizontalMove = Vector3.zero;
-
-            if (isMoving && distance > minMoveDistance)
+            if (navMeshAgent != null && navMeshAgent.isOnNavMesh)
             {
-                var direction = (targetPosFlat - currentPosFlat).normalized;
-                horizontalMove = direction * moveSpeed;
+                navMeshAgent.SetDestination(destination);
+                isMoving = true;
+            }
+        }
 
-                if (direction != Vector3.zero)
+        private void UpdateMovementState()
+        {
+            if (navMeshAgent != null && isMoving)
+            {
+                // Check if agent has reached destination
+                if (!navMeshAgent.pathPending)
                 {
-                    var lookRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                    if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+                    {
+                        if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                        {
+                            isMoving = false;
+                        }
+                    }
                 }
             }
-            else
-            {
-                isMoving = false;
-            }
+        }
 
-            if (characterController.isGrounded)
-            {
-                verticalVelocity.y = -2f; 
-            }
-            else
-            {
-                verticalVelocity.y += gravity * gravityMultiplier * Time.deltaTime;
-            }
-
-            var finalMove = (horizontalMove + verticalVelocity) * Time.deltaTime;
-            characterController.Move(finalMove);
+        public bool IsMoving => isMoving;
+        
+        public Vector3 GetDestination()
+        {
+            return navMeshAgent != null ? navMeshAgent.destination : transform.position;
         }
     }
 }

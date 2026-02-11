@@ -5,7 +5,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class BlueDragonActive : Action, ISkills, IAIAction
+    public class BlueDragonActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -24,11 +24,6 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target)), PieceOn(Maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-        
-        public void CompleteActionForAI()
-        {
-            
         }
     }
 }

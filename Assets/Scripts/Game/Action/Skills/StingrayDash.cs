@@ -7,7 +7,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class StingrayDash: Action, ISkills, IAIAction
+    public class StingrayDash: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -45,11 +45,6 @@ namespace Game.Action.Skills
             Move(Maker, Target);
             Maker = Target;
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-        
-        public void CompleteActionForAI()
-        {
-            
         }
     
     }

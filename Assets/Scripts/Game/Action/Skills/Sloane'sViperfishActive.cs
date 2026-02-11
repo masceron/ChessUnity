@@ -7,7 +7,7 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
-    public class SloaneSViperfishActive : Action, ISkills, IAIAction
+    public class SloaneSViperfishActive : Action, ISkills
     {
         private readonly bool bleeding;
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -36,11 +36,6 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(Target)), PieceOn(Maker)));
             }
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-
-        public void CompleteActionForAI()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
