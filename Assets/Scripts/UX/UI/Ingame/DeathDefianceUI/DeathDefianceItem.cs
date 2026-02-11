@@ -26,7 +26,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
 
         public void Choose()
         {
-            transform.parent.parent.GetComponent<DeathDefiancePendingMenu>().ChooseEffect(effectName);
+            transform.parent.parent.GetComponent<DeathDefianceUI>().ChooseEffect(effectName);
         }
         
 

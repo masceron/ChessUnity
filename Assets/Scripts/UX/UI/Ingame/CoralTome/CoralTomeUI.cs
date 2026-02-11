@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.CoralTome
 {
-    public class CoralTomePendingMenu : IngamePendingMenu
+    public class CoralTomeUI : IngamePendingMenu
     {
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject pieceItem;

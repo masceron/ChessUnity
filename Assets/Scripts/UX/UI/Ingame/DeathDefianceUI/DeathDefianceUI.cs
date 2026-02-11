@@ -13,7 +13,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class DeathDefiancePendingMenu: IngamePendingMenu
+    public class DeathDefianceUI: IngamePendingMenu
     {
         [SerializeField] private GameObject selector;
         [SerializeField] private GameObject EffectItem;

@@ -21,7 +21,7 @@ namespace UX.UI.Ingame.CoralTome
 
         public void OnClickSummon()
         {
-            transform.parent.parent.GetComponent<CoralTomePendingMenu>().Choose(pieceType);
+            transform.parent.parent.GetComponent<CoralTomeUI>().Choose(pieceType);
         }
     }
 }
