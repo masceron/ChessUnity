@@ -2,6 +2,7 @@
 using System.Linq;
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
@@ -110,12 +111,15 @@ namespace Game.Relics
             }
 
             if (bestPiece == null) return;
+
+            var excute = new RottingScytheAction(bestPiece.Pos);
+            BoardViewer.Ins.ExecuteAction(excute);
             
-            var pending = new RottingScythePending(this, bestPiece.Pos);
-            if (pending is PendingAction p)
-            {
-                BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
-            }
+            // var pending = new RottingScythePending(this, bestPiece.Pos);
+            // if (pending is PendingAction p)
+            // {
+            //     BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
+            // }
         }
     }
 }

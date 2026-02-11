@@ -25,6 +25,11 @@ namespace Game.Action.Internal.Pending
             _task.TrySetResult(action);
         }
 
+        public void CancelResult()
+        {
+            _task.TrySetCanceled();
+        }
+
         protected abstract void CompleteAction();
 
         private UniTaskCompletionSource<Action> _task;

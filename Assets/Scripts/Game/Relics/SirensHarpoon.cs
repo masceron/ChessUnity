@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
@@ -69,11 +70,14 @@ namespace Game.Relics
             var topGroup = listPieces.Where(pieceLogic => pieceLogic.GetValueForAI() == topValue).ToList();
             var idx = UnityEngine.Random.Range(0, topGroup.Count);
             
-            var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
-            if (pending is PendingAction p)
-            {
-                BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
-            }
+            var excute = new SirenHarpoonExcute(CommanderPiece.Pos ,topGroup[idx].Pos);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            // var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
+            // if (pending is PendingAction p)
+            // {
+            //     BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
+            // }
         }
     }
 }

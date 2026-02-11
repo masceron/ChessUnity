@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -110,11 +111,13 @@ namespace Game.Relics
             }
 
             if (ourPiece == null || enemyPiece == null) return;
+            var excute = new EyeOfMimicExcute(ourPiece.Pos, enemyPiece.Pos);
+            BoardViewer.Ins.ExecuteAction(excute);
             
-            var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);
-            BoardViewer.Ins.ExecuteAction(await ourPending.WaitForCompletion());
-            var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos);
-            BoardViewer.Ins.ExecuteAction(await enemyPending.WaitForCompletion());
+            // var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);
+            // BoardViewer.Ins.ExecuteAction(await ourPending.WaitForCompletion());
+            // var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos);
+            // BoardViewer.Ins.ExecuteAction(await enemyPending.WaitForCompletion());
         }
     }
 }

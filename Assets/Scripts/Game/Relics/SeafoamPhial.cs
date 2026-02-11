@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
@@ -89,11 +90,15 @@ namespace Game.Relics
 
             if (targetPiece == null) return;
             {
-                var pending = new SeafoamPhialPending(this, targetPiece.Pos);
-                if (pending is PendingAction p)
-                {
-                    BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
-                }
+                var excute = new SeafoamPhialAction(targetPiece.Pos);
+                BoardViewer.Ins.ExecuteAction(excute);
+
+                // var pending = new SeafoamPhialPending(this, targetPiece.Pos);
+                // if (pending is PendingAction p)
+                // {
+                //     BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
+                // }
+
             }
 
         }

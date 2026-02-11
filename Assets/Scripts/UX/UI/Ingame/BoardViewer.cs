@@ -100,6 +100,10 @@ namespace UX.UI.Ingame
                 {
                     disposable.Dispose();
                 }
+                if (action is PendingAction pending)
+                {
+                    pending.CancelResult(); //hủy những task đang treo
+                }
             }
 
             ListOf.Clear();
@@ -108,7 +112,6 @@ namespace UX.UI.Ingame
 
         public async void ExecuteAction(Action action)
         {
-            Unmark();
             if (action is PendingAction pendingAction)
             {
                 action = await pendingAction.WaitForCompletion();
@@ -118,6 +121,7 @@ namespace UX.UI.Ingame
             {
                 EndTurn();
             }
+            Unmark();
         }
 
         public void MarkPiece(int pos)
