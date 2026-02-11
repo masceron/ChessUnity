@@ -17,7 +17,6 @@ namespace Game.Piece.PieceLogic
         public PaletailUnicornfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new PaletailUnicornfishPassive(this)));
-            
         }
     }
 }

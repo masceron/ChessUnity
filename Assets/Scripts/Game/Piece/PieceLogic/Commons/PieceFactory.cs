@@ -71,6 +71,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_mirror_butterfly_fish" => new MirrorButterflyFish(cfg),
                 "piece_moorish_idols" => new MoorishIdols(cfg),
                 "piece_moray_eel" => new MorayEel(cfg),
+                "piece_paletail_unicornfish" => new PaletailUnicornfish(cfg),
                 "piece_pegasus_seamoth" => new PegasusSeamoth(cfg),
                 "piece_pencil_urchin" => new PencilUrchin(cfg),
                 "piece_penpoint_gunnel" => new PenpointGunnel(cfg),
