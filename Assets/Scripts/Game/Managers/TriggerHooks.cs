@@ -10,21 +10,21 @@ using Game.Common;
 
 namespace Game.Managers
 {
-    public class EffectHooks
+    public class TriggerHooks
     {
-        private readonly List<IOnApply> onApplies = new();
-        private readonly List<IOnRemove> onRemoves = new();
-        private readonly List<IOnMoveGenEffect> onMoveGens = new();
-        private readonly List<IAfterPieceActionEffect> afterPieceActions = new();
-        private readonly List<IBeforePieceActionEffect> beforePieceActions = new();
-        private readonly List<IBeforeRelicActionEffect> beforeRelicActions = new();
-        private readonly List<IAfterRelicActionEffect> afterRelicActions = new();
-        private readonly List<IDeadEffect> onDies = new();
-        private readonly List<IStartTurnEffect> onStartTurns = new();
-        private readonly List<IEndTurnEffect> onEndTurns = new();
-        private readonly List<IApplyEffect> onEffectApplies = new();
-        private readonly List<IMoveRangeModifier> onMoveRanges = new();
-        private readonly List<IOnPieceSpawned> onSpawns = new();
+        private readonly List<IOnApply> _onApplies = new();
+        private readonly List<IOnRemove> _onRemoves = new();
+        private readonly List<IOnMoveGenEffect> _onMoveGens = new();
+        private readonly List<IAfterPieceActionEffect> _afterPieceActions = new();
+        private readonly List<IBeforePieceActionEffect> _beforePieceActions = new();
+        private readonly List<IBeforeRelicActionEffect> _beforeRelicActions = new();
+        private readonly List<IAfterRelicActionEffect> _afterRelicActions = new();
+        private readonly List<IDeadEffect> _onDies = new();
+        private readonly List<IStartTurnEffect> _onStartTurns = new();
+        private readonly List<IEndTurnEffect> _onEndTurns = new();
+        private readonly List<IApplyEffect> _onEffectApplies = new();
+        private readonly List<IMoveRangeModifier> _onMoveRanges = new();
+        private readonly List<IOnPieceSpawned> _onSpawns = new();
         private class HookBinding
         {
             public IList List;
@@ -32,27 +32,27 @@ namespace Game.Managers
             public Action<Observer> Remove;
         }
         
-        private readonly Dictionary<Type, HookBinding> bindings = new();
+        private readonly Dictionary<Type, HookBinding> _bindings = new();
 
-        public EffectHooks()
+        public TriggerHooks()
         {
-            Register(onApplies);
-            Register(onRemoves);
-            Register(onMoveGens);
-            Register(afterPieceActions);
-            Register(beforePieceActions);
-            Register(beforeRelicActions);
-            Register(afterRelicActions);
-            Register(onDies);
-            Register(onStartTurns);
-            Register(onEndTurns);
-            Register(onEffectApplies);
-            Register(onMoveRanges);
+            Register(_onApplies);
+            Register(_onRemoves);
+            Register(_onMoveGens);
+            Register(_afterPieceActions);
+            Register(_beforePieceActions);
+            Register(_beforeRelicActions);
+            Register(_afterRelicActions);
+            Register(_onDies);
+            Register(_onStartTurns);
+            Register(_onEndTurns);
+            Register(_onEffectApplies);
+            Register(_onMoveRanges);
         }
         
         private void Register<T>(List<T> list)
         {
-            bindings[typeof(T)] = new HookBinding
+            _bindings[typeof(T)] = new HookBinding
             {
                 List = list,
                 Add = e => AddToList(list, (T)(object)e),
@@ -63,7 +63,7 @@ namespace Game.Managers
 
         public void AddObserver(Observer effect)
         {
-            foreach (var kvp in bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
+            foreach (var kvp in _bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
             {
                 kvp.Value.Add(effect);
             }
@@ -71,7 +71,7 @@ namespace Game.Managers
 
         public void RemoveObserver(Observer effect)
         {
-            foreach (var kvp in bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
+            foreach (var kvp in _bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
             {
                 kvp.Value.Remove(effect);
             }
@@ -79,7 +79,7 @@ namespace Game.Managers
 
         public List<T> GetList<T>()
         {
-            if (bindings.TryGetValue(typeof(T), out var binding))
+            if (_bindings.TryGetValue(typeof(T), out var binding))
             {
                 return (List<T>)binding.List;
             }
@@ -99,7 +99,7 @@ namespace Game.Managers
         
         public void NotifyDead(PieceLogic pieceToDie)
         {
-            onDies.ForEach (effect =>
+            _onDies.ForEach (effect =>
             {
                 if (((Observer)effect).disabled) return;
                 effect.OnCallDead(pieceToDie);
@@ -108,7 +108,7 @@ namespace Game.Managers
         
         public void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            onMoveGens.ForEach(e =>
+            _onMoveGens.ForEach(e =>
             {
                 if (((Observer)e).disabled) return;
                 e.OnCallMoveGen(caller, actions);
@@ -117,7 +117,7 @@ namespace Game.Managers
         
         public void NotifyWhenApplyEffect(ApplyEffect action)
         {
-            onEffectApplies.ForEach(e =>
+            _onEffectApplies.ForEach(e =>
             {
                 if (((Observer)e).disabled) return;
                 e.OnCallApplyEffect(action);
@@ -126,7 +126,7 @@ namespace Game.Managers
 
         public void NotifyBeforePieceAction(Action.Action action)
         {
-            beforePieceActions.ForEach(e =>
+            _beforePieceActions.ForEach(e =>
             {
                 if (((Observer)e).disabled) return;
                 e.OnCallBeforePieceAction(action);
@@ -135,7 +135,7 @@ namespace Game.Managers
 
         public void NotifyBeforeRelicAction(IRelicAction relicAction)
         {
-            beforeRelicActions.ForEach(e =>
+            _beforeRelicActions.ForEach(e =>
             {
                 if (((Observer)e).disabled) return;
                 e.OnCallBeforeRelicAction(relicAction);
@@ -143,7 +143,7 @@ namespace Game.Managers
         }
         public void NotifySpawnPiece(PieceLogic piece)
         {
-            onSpawns.ForEach(e =>
+            _onSpawns.ForEach(e =>
             {
                 if (((Observer)e).disabled) return;
                 

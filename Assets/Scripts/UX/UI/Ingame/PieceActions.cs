@@ -206,7 +206,7 @@ namespace UX.UI.Ingame
             foreach (var captures in _moveList.OfType<ICaptures>())
             {
                 var targetPos = ((Action)captures).Target;
-                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
+                if (FormationManager.IsHideByFog(targetPos, SideToMove())){ continue; }
                 _listOf.Add((Action)captures);
                 TileManager.Ins.MarkAsMoveable(((Action)captures).Target);
             }
@@ -222,7 +222,7 @@ namespace UX.UI.Ingame
             foreach (var skills in _moveList.OfType<ISkills>())
             {
                 var targetPos = ((Action)skills).Target;
-                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
+                if (FormationManager.IsHideByFog(targetPos, SideToMove())){ continue; }
                 _listOf.Add((Action)skills);
                 TileManager.Ins.MarkAsMoveable(((Action)skills).Target);
             }

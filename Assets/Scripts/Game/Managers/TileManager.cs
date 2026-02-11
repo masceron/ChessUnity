@@ -16,7 +16,7 @@ namespace Game.Managers
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TileManager : Singleton<TileManager>
     {
-        private Tile.Tile[] tiles;
+        private Tile.Tile[] _tiles;
         [SerializeField] private Material moveableMat;
         [SerializeField] private Material selectionMat;
         [SerializeField] private ActiveBoardBorder boardBorder3D;
@@ -24,7 +24,7 @@ namespace Game.Managers
         /*[SerializeField] private Button _activeTileButton;
         public int rank, file;*/
 
-        private Marker[] selections;
+        private Marker[] _selections;
 
         /*private void Start()
         {
@@ -34,13 +34,13 @@ namespace Game.Managers
         public Tile.Tile GetTile(int pos)
         {
             if (!VerifyIndex(pos)) return null;
-            return tiles[pos];
+            return _tiles[pos];
         }
 
         public int GetTileValue(int pos)
         {
             if (!VerifyIndex(pos)) return -1000;
-            return tiles[pos].GetTileValue();
+            return _tiles[pos].GetTileValue();
         }
 
         private void SelectionIndicator(int pos, Tile.Tile tile)
@@ -54,13 +54,13 @@ namespace Game.Managers
             
             sel.SetActive(false);
             
-            selections[pos] = sel.AddComponent<Marker>();
+            _selections[pos] = sel.AddComponent<Marker>();
         }
 
         public void Spawn()
         {
-            selections = new Marker[BoardSize];
-            tiles = new Tile.Tile[BoardSize];
+            _selections = new Marker[BoardSize];
+            _tiles = new Tile.Tile[BoardSize];
 
             for (var i = 0; i < BoardSize; i++)
             {
@@ -71,18 +71,18 @@ namespace Game.Managers
             SetActiveTiles();
         }
 
-        public void SetActiveTiles()
+        private void SetActiveTiles()
         {
-            if (tiles == null || tiles.Length == 0 || ActiveBoard() == null) return;
+            if (_tiles == null || _tiles.Length == 0 || ActiveBoard() == null) return;
 
             for (var y = 0; y < MaxLength; y++)
             {
                 for (var x = 0; x < MaxLength; x++)
                 {
                     var index = IndexOf(x, y);
-                    if (tiles[index] == null) continue;
+                    if (_tiles[index] == null) continue;
 
-                    tiles[index].gameObject.SetActive(ShouldTileBeActive(x, y));
+                    _tiles[index].gameObject.SetActive(ShouldTileBeActive(x, y));
                 }
             }
         }
@@ -104,9 +104,9 @@ namespace Game.Managers
                         continue;
 
                     var index = IndexOf(nx, ny);
-                    if (tiles[index] == null) continue;
+                    if (_tiles[index] == null) continue;
 
-                    tiles[index].gameObject.SetActive(ShouldTileBeActive(nx, ny));
+                    _tiles[index].gameObject.SetActive(ShouldTileBeActive(nx, ny));
                 }
             }
         }
@@ -118,7 +118,7 @@ namespace Game.Managers
         private bool ShouldTileBeActive(int x, int y)
         {
             var index = IndexOf(x, y);
-            if (tiles[index] == null) return false;
+            if (_tiles[index] == null) return false;
 
             var isActive = IsActive(index);
             if (isActive) return true;
@@ -153,16 +153,16 @@ namespace Game.Managers
             SetActiveSquare(index, true);
 
             // Nếu tile none thì đổi sang white/black
-            if (tiles[index] != null && tiles[index].color == Color.None)
+            if (_tiles[index] != null && _tiles[index].color == Color.None)
             {
                 var prefab = !ColorOfSquare(index)
                     ? AssetManager.Ins.tileData[Color.White]
                     : AssetManager.Ins.tileData[Color.Black];
 
-                Destroy(tiles[index].gameObject);
+                Destroy(_tiles[index].gameObject);
                 var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
                 tile.Spawn(index);
-                tiles[index] = tile;
+                _tiles[index] = tile;
             }
 
             // Cập nhật vùng hiển thị quanh ô
@@ -170,7 +170,7 @@ namespace Game.Managers
             UpdateBorder();
         }
 
-        public void UpdateBorder()
+        private void UpdateBorder()
         {
             if (boardBorder3D == null) boardBorder3D = FindFirstObjectByType<ActiveBoardBorder>();
             boardBorder3D.UpdateBorder();
@@ -187,7 +187,7 @@ namespace Game.Managers
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);
 
-            tiles[index] = tile;
+            _tiles[index] = tile;
             SelectionIndicator(index, tile);
         }
 
@@ -198,14 +198,14 @@ namespace Game.Managers
 
         public void DestroyTile(int index)
         {
-            Destroy(tiles[index].gameObject);
-            tiles[index] = null;
+            Destroy(_tiles[index].gameObject);
+            _tiles[index] = null;
 
             var prefab = AssetManager.Ins.tileData[Color.None];
             var tile = Instantiate(prefab.gameObject, transform).GetComponent<Tile.Tile>();
             tile.Spawn(index);
 
-            tiles[index] = tile;
+            _tiles[index] = tile;
             SelectionIndicator(index, tile);
             SetActiveSquare(index, false);
 
@@ -217,30 +217,30 @@ namespace Game.Managers
         
         public void Select(int pos)
         {
-            selections[pos].GetComponent<MeshRenderer>().material = selectionMat;
-            selections[pos].GetComponent<Marker>().enabled = true;
-            selections[pos].gameObject.SetActive(true);
+            _selections[pos].GetComponent<MeshRenderer>().material = selectionMat;
+            _selections[pos].GetComponent<Marker>().enabled = true;
+            _selections[pos].gameObject.SetActive(true);
         }
         public void Unselect(int pos)
         {
-            selections[pos].GetComponent<MeshRenderer>().material = null;
-            selections[pos].GetComponent<Marker>().enabled = false;
-            selections[pos].gameObject.SetActive(false);
+            _selections[pos].GetComponent<MeshRenderer>().material = null;
+            _selections[pos].GetComponent<Marker>().enabled = false;
+            _selections[pos].gameObject.SetActive(false);
         }
 
         public void UnmarkAll()
         {
             for (var i = 0; i < BoardSize; i++)
             {
-                selections[i].gameObject.SetActive(false);
+                _selections[i].gameObject.SetActive(false);
             }
         }
 
         public void UnMark(int pos)
         {
-            if (selections[pos]  != null)
+            if (_selections[pos]  != null)
             {
-                selections[pos].gameObject.SetActive(false);
+                _selections[pos].gameObject.SetActive(false);
             }
         }
         public Corner IndexToCorner(Vector3 hit, Tile.Tile hoveringTile)
@@ -334,9 +334,9 @@ namespace Game.Managers
 
         public void MarkAsMoveable(int pos)
         {
-            selections[pos].GetComponent<MeshRenderer>().material = moveableMat;
-            selections[pos].GetComponent<Marker>().enabled = false;
-            selections[pos].gameObject.SetActive(true);
+            _selections[pos].GetComponent<MeshRenderer>().material = moveableMat;
+            _selections[pos].GetComponent<Marker>().enabled = false;
+            _selections[pos].gameObject.SetActive(true);
         }
 
         public void MarkIfDifferntColor(bool color)
@@ -347,10 +347,10 @@ namespace Game.Managers
 
                 if (PieceOn(i).Color != color)
                 {
-                    selections[i].GetComponent<MeshRenderer>().material = moveableMat;
-                    selections[i].GetComponent<Marker>().enabled = false;
-                    selections[i].gameObject.SetActive(true);
-                } else selections[i].gameObject.SetActive(false);
+                    _selections[i].GetComponent<MeshRenderer>().material = moveableMat;
+                    _selections[i].GetComponent<Marker>().enabled = false;
+                    _selections[i].gameObject.SetActive(true);
+                } else _selections[i].gameObject.SetActive(false);
             }
         }
 
@@ -374,7 +374,7 @@ namespace Game.Managers
 
         public bool IsTileEmpty(int index)
         {
-            return tiles[index] == null || tiles[index].color == Color.None;
+            return _tiles[index] == null || _tiles[index].color == Color.None;
         }
 
         public void MarkPieceInRange(int pos, bool color, int range)

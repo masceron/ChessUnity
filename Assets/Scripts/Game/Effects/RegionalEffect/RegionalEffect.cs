@@ -5,8 +5,9 @@ namespace Game.Effects.RegionalEffect
 {
     public abstract class RegionalEffect : Observer
     {
-        public RegionalEffectType Type { get; set; }
-        public RegionalEffect(RegionalEffectType type)
+        public RegionalEffectType Type { get; }
+
+        protected RegionalEffect(RegionalEffectType type)
         {
             Type = type;
             MatchManager.Ins.GameState.OnIncreaseTurn += ApplyEffect;
@@ -40,7 +41,7 @@ namespace Game.Effects.RegionalEffect
 
     public enum RegionalEffectType
     {
-        Whirpool,
+        Whirlpool,
         PsionicShock,
         BloodMoon,
         DjinnBlessing,

@@ -34,7 +34,7 @@ namespace Game.Managers
 
         public Vector2Int StartingSize {get; private set;}
 
-        private void MakeBoard(GameConfig cfg)
+        private static void MakeBoard()
         {
             TileManager.Ins.Spawn();
             FormationManager.Ins.Initialize();
@@ -62,7 +62,7 @@ namespace Game.Managers
         {
             StartingSize = cfg.StartingSize;
             MakeGame(cfg);
-            MakeBoard(cfg);
+            MakeBoard();
 
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()),
                 Config.relicWhiteConfig,

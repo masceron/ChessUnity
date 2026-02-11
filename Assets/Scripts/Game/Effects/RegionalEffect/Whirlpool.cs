@@ -24,7 +24,7 @@ namespace Game.Effects.RegionalEffect
 
         private readonly int startTurn = 4;
         private readonly List<int> centralIndices;
-        public Whirlpool() : base(RegionalEffectType.Whirpool)
+        public Whirlpool() : base(RegionalEffectType.Whirlpool)
         {
             // Use MaxLength to derive center coordinates (board is MaxLength x MaxLength)
             var half = MaxLength / 2;

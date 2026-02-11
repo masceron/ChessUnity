@@ -16,7 +16,7 @@ namespace Game.ScriptableObjects.Collections
         {
             var result = type switch
             {
-                RegionalEffectType.Whirpool => "Whirpool",
+                RegionalEffectType.Whirlpool => "Whirpool",
                 RegionalEffectType.None => "No Regional effect is chosen",
                 _ => type.ToString()
             };

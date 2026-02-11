@@ -45,18 +45,17 @@ namespace Game.Managers
         public PieceLogic WhiteCommander, BlackCommander;
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
-        public readonly EffectHooks effectHooks = new();
-        public readonly FormationManager formationManager;
+        public readonly TriggerHooks TriggerHooks = new();
         public RegionalEffect RegionalEffect;
         public readonly List<ISubscriber> Subscribers = new();
         public bool IsDay { get; private set; }
         public int CurrentTurn { get; private set; }
-        private int countTurn;
+        private int _countTurn;
         private const int NumberOfTurnToChange = 10;
 
         public System.Action<int> OnIncreaseTurn;
 
-        private Action.Action lastMainAction;
+        private Action.Action _lastMainAction;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -89,7 +88,7 @@ namespace Game.Managers
 
             IsDay = true;
             CurrentTurn = 1;
-            countTurn = 0;
+            _countTurn = 0;
         }
 
         public void SpawnPiece(PieceConfig piece)
@@ -109,7 +108,7 @@ namespace Game.Managers
             }
 
             PieceBoard[piece.Index] = pieceLogic;
-            effectHooks.NotifySpawnPiece(pieceLogic);
+            TriggerHooks.NotifySpawnPiece(pieceLogic);
 
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<AI.BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];    
@@ -124,7 +123,7 @@ namespace Game.Managers
         {
             RegionalEffect re = ret switch
             {
-                RegionalEffectType.Whirpool => new Whirlpool(),
+                RegionalEffectType.Whirlpool => new Whirlpool(),
                 RegionalEffectType.PsionicShock => new PsionicShock(),
                 RegionalEffectType.BloodMoon => new BloodMoon(),
                 RegionalEffectType.RedTide => new RedTide(),
@@ -176,7 +175,7 @@ namespace Game.Managers
         {
             var pieceAffected = PieceBoard[pos];
             PieceBoard[pos] = null;
-            effectHooks.NotifyDead(pieceAffected);
+            TriggerHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
         }
@@ -185,7 +184,7 @@ namespace Game.Managers
         {
             var pieceAffected = PieceBoard[pos];
             PieceBoard[pos] = null;
-            effectHooks.NotifyDead(pieceAffected);
+            TriggerHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
 
@@ -214,18 +213,18 @@ namespace Game.Managers
         {
             if (SideToMove)
             {
-                countTurn++;
+                _countTurn++;
                 CurrentTurn++;
                 OnIncreaseTurn?.Invoke(CurrentTurn);
-                if (countTurn == 151)
+                if (_countTurn == 151)
                 {
                     UIManager.Ins.Load(CanvasID.EndGameMessage);
                     EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Draw);
                 }
-                if (countTurn >= NumberOfTurnToChange)
+                if (_countTurn >= NumberOfTurnToChange)
                 {
                     IsDay = !IsDay;
-                    countTurn = 0;
+                    _countTurn = 0;
                 }
             }
             switch (SideToMove)
@@ -266,7 +265,7 @@ namespace Game.Managers
         public void SetRegionalEffect(RegionalEffect e)
         {
             RegionalEffect = e;
-            effectHooks.AddObserver(e);
+            TriggerHooks.AddObserver(e);
         }
     }
 }

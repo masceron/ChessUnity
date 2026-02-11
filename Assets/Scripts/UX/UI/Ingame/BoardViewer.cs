@@ -150,7 +150,7 @@ namespace UX.UI.Ingame
                 // Hiển thị những vị trí trên bàn cờ có thể thực thi Action do người chơi chọn
                 // Action ở đây có thể là Move/Attack/Skill
                 var piece = PieceOn(pos);
-                if (piece is not { IsVisible: true } || FormationManager.Ins.IsHideByFog(pos, SideToMove())) return;
+                if (piece is not { IsVisible: true } || FormationManager.IsHideByFog(pos, SideToMove())) return;
 
                 Hover(pos);
                 TileManager.Ins.Select(pos);
@@ -189,7 +189,7 @@ namespace UX.UI.Ingame
                 return;
             }
 
-            if (FormationManager.Ins.IsHideByFog(pos, SideToMove()))
+            if (FormationManager.IsHideByFog(pos, SideToMove()))
             {
                 return;
             }

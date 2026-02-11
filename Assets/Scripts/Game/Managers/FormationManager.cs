@@ -1,3 +1,4 @@
+using System.Linq;
 using Game.Augmentation;
 using Game.Common;
 using Game.Tile;
@@ -7,12 +8,12 @@ using static Game.Common.BoardUtils;
 namespace Game.Managers
 {
     public class FormationManager : Singleton<FormationManager>{
-        private GameObject[] formationObjects;
+        private GameObject[] _formationObjects;
         public GameObject defaultPrefab;
-        private Formation[] formations;
+        private Formation[] _formations;
         public void Initialize() {
-            formations = MatchManager.Ins.GameState.formations;
-            formationObjects = new GameObject[BoardSize];
+            _formations = MatchManager.Ins.GameState.formations;
+            _formationObjects = new GameObject[BoardSize];
         }
         
         /// <summary>
@@ -27,17 +28,17 @@ namespace Game.Managers
             var file = FileOf(pos);
             env.SetPositon(pos);
             var prefab = AssetManager.Ins.FormationData[env.GetFormationType()].prefab;
-            if (prefab == null){ prefab = defaultPrefab; }
-            formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
+            if (!prefab){ prefab = defaultPrefab; }
+            _formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
             Quaternion.identity, transform);
-            if (formations[pos] != null)
+            if (_formations[pos] != null)
             {
                 RemoveFormation(pos);
             }
-            formations[pos] = env;
+            _formations[pos] = env;
             AddEffectObserver(env);
             if (PieceOn(pos) != null){
-                formations[pos].OnCreated(PieceOn(pos));
+                _formations[pos].OnCreated(PieceOn(pos));
             }
         }
         public void MoveFormation(int from, int to)
@@ -50,41 +51,28 @@ namespace Game.Managers
         /// <summary>
         /// Nên dùng để xóa Formation
         /// </summary>
-        public void RemoveFormation(int pos){
-            if (formations[pos] != null)
+        public void RemoveFormation(int pos)
+        {
+            if (_formations[pos] == null) return;
+            if (PieceOn(pos) != null)
             {
-                if (PieceOn(pos) != null)
-                {
-                    formations[pos].OnRemove(PieceOn(pos));
-                }
-                RemoveObserver(formations[pos]);
-                formations[pos] = null;
-                Destroy(formationObjects[pos]);
-                formationObjects[pos] = null;
+                _formations[pos].OnRemove(PieceOn(pos));
             }
+            RemoveObserver(_formations[pos]);
+            _formations[pos] = null;
+            Destroy(_formationObjects[pos]);
+            _formationObjects[pos] = null;
         }
         
-        public bool IsHideByFog(int pos, bool sideToMove)
+        public static bool IsHideByFog(int pos, bool sideToMove)
         {
             var formation = GetFormation(pos);
             var pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
             if (pieceInPos == null){ return false; }
-            var haveAbyssalTapetum = false;
-            foreach(var pieceLogic in MatchManager.Ins.GameState.PieceBoard)
-            {
-                if (pieceLogic != null && pieceLogic.Color == sideToMove && pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum))
-                {
-                    haveAbyssalTapetum = true;
-                    break;
-                }
-            }
-            if (formation != null && formation.GetFormationType() == FormationType.FogOfWar 
-                && formation.GetColor() != sideToMove && !haveAbyssalTapetum 
-                && pieceInPos.Effects.All(e => e.EffectName != "effect_marked"))
-            {
-                return true;
-            }
-            return false;
+            var haveAbyssalTapetum = Enumerable.Any(MatchManager.Ins.GameState.PieceBoard, pieceLogic => pieceLogic != null && pieceLogic.Color == sideToMove && pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum));
+            return formation != null && formation.GetFormationType() == FormationType.FogOfWar 
+                                     && formation.GetColor() != sideToMove && !haveAbyssalTapetum 
+                                     && pieceInPos.Effects.All(e => e.EffectName != "effect_marked");
         }
     }
 }

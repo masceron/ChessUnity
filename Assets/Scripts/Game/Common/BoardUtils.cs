@@ -187,12 +187,12 @@ namespace Game.Common
 
         public static void AddEffectObserver(Observer effect)
         {
-            MatchManager.Ins.GameState.effectHooks.AddObserver(effect);
+            MatchManager.Ins.GameState.TriggerHooks.AddObserver(effect);
         }
 
         public static void RemoveObserver(Observer effect)
         {
-            MatchManager.Ins.GameState.effectHooks.RemoveObserver(effect);
+            MatchManager.Ins.GameState.TriggerHooks.RemoveObserver(effect);
         }
 
         public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
@@ -321,29 +321,29 @@ namespace Game.Common
 
         public static List<T> GetEffectHookList<T>()
         {
-            return MatchManager.Ins.GameState.effectHooks.GetList<T>().ToList();
+            return MatchManager.Ins.GameState.TriggerHooks.GetList<T>().ToList();
         }
 
         public static void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> list)
         {
-            MatchManager.Ins.GameState.effectHooks.NotifyOnMoveGen(caller, list);
+            MatchManager.Ins.GameState.TriggerHooks.NotifyOnMoveGen(caller, list);
         }
 
         public static void NotifyBeforePieceAction(Action.Action action)
         {
-            MatchManager.Ins.GameState.effectHooks.NotifyBeforePieceAction(action);
+            MatchManager.Ins.GameState.TriggerHooks.NotifyBeforePieceAction(action);
         }
         
         public static void NotifyBeforeRelicAction(IRelicAction action)
         {
-            MatchManager.Ins.GameState.effectHooks.NotifyBeforeRelicAction(action);
+            MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeRelicAction(action);
         }
 
         public static void NotifyInternalAction(IInternal action)
         {
             if (action is ApplyEffect apply)
             {
-                MatchManager.Ins.GameState.effectHooks.NotifyWhenApplyEffect(apply);
+                MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
             }
         }
 
