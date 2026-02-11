@@ -10423,6 +10423,7 @@ MonoBehaviour:
   playerController: {fileID: 1102064046}
   clickEffectPrefab: {fileID: 7734114007194204280, guid: bc6d7d049a4376248a58860617dd3036, type: 3}
   hideDistance: 0.05
+  currentEffectInstance: {fileID: 0}
 --- !u!1001 &1028946353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11425,7 +11426,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
-  stoppingDistance: 0.2
+  stoppingDistance: 0.001
   moveButton: 1
 --- !u!143 &1102064047
 CharacterController:
@@ -11466,7 +11467,7 @@ NavMeshAgent:
   m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 360
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.001
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
