@@ -10,14 +10,13 @@ namespace UX.UI.Ingame.RustyParrotfishUI
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class RustyParrotfishUI : MonoBehaviour
+    public class RustyParrotfishUI : IngamePendingMenu
     {
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject formationItem;
         private readonly List<int> _formationList = new();
         private int _caller;
         private int _to;
-        private PendingAction _pd;
 
         private void OnEnable()
         {
@@ -36,7 +35,7 @@ namespace UX.UI.Ingame.RustyParrotfishUI
         {
             _caller = caller;
             _to = to;
-            _pd = pd;
+            PendingAction = pd;
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 if (BoardUtils.HasFormation(i))
@@ -57,9 +56,11 @@ namespace UX.UI.Ingame.RustyParrotfishUI
 
         public void EraseFormation(int idx)
         {
-            _pd.CommitResult(new RustyParrotfishActive(_caller, _to));
+            PendingAction.CommitResult(new RustyParrotfishActive(_caller, _to));
             FormationManager.Ins.RemoveFormation(_formationList[idx]);
             Disable();
         }
+
+        protected override PendingAction PendingAction { get; set; }
     }
 }

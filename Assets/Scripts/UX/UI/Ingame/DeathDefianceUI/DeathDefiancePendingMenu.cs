@@ -5,6 +5,7 @@ using UnityEngine;
 using PrimeTween;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 
@@ -12,13 +13,13 @@ namespace UX.UI.Ingame.DeathDefianceUI
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class DeathDefianceUI: MonoBehaviour
+    public class DeathDefiancePendingMenu: IngamePendingMenu
     {
         [SerializeField] private GameObject selector;
         [SerializeField] private GameObject EffectItem;
         // [SerializeField] private TMP_Text titleText;
 
-        private readonly string[] possibleEffects = {
+        private readonly string[] _possibleEffects = {
             "effect_carapace",
             "effect_hardened_shield",
             "effect_piercing",
@@ -33,14 +34,14 @@ namespace UX.UI.Ingame.DeathDefianceUI
             "effect_ambush",
             "effect_quick_reflex",
         };
-        private int piecePos;
-        private List<string> selectedEffects = new();
-        private static readonly System.Random Random = new System.Random();
+        private int _piecePos;
+        private List<string> _selectedEffects = new();
+        private static readonly System.Random Random = new();
         
         
         public void Load(int piecePos)
         {
-            this.piecePos = piecePos;
+            _piecePos = piecePos;
             BoardUtils.PieceOn(piecePos);
             GetRandomEffect();
             CreateEffectItems();
@@ -48,7 +49,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
 
         private void GetRandomEffect()
         {
-            selectedEffects = possibleEffects.OrderBy(_ => Random.Next()).Take(3).ToList();
+            _selectedEffects = _possibleEffects.OrderBy(_ => Random.Next()).Take(3).ToList();
         }
         private void CreateEffectItems()
         {
@@ -58,7 +59,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
             }
             for (var i = 0; i < selector.transform.childCount; i++)
             {
-                selector.transform.GetChild(i).GetComponent<DeathDefianceItem>().Load(selectedEffects[i]);
+                selector.transform.GetChild(i).GetComponent<DeathDefianceItem>().Load(_selectedEffects[i]);
             }
         }
         private void DestroyEffectItems()
@@ -83,7 +84,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
 
         private static Effect CreateEffect(string effectName, PieceLogic piece)
         {
-            sbyte duration = 5;
+            const sbyte duration = 5;
             return effectName switch
             {
                 // Buffs 
@@ -110,11 +111,13 @@ namespace UX.UI.Ingame.DeathDefianceUI
         }
         public void ChooseEffect(string effectName)
         {
-            var piece = BoardUtils.PieceOn(piecePos);
+            var piece = BoardUtils.PieceOn(_piecePos);
             var effect = CreateEffect(effectName, piece);
             ActionManager.EnqueueAction(new ApplyEffect(effect, piece));
             Disable();
             DestroyEffectItems();
         }
+
+        protected override PendingAction PendingAction { get; set; }
     }
 }

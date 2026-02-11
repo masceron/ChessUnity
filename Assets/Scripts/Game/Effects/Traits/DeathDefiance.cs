@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
 				 return;
 			 }
 			 if (_deathDefianceCount <= 1) return;
-			 var ui = BoardViewer.Ins.GetOrInstantiateUI<DeathDefianceUI>(IngameSubmenus.DeathDefianceUI);
+			 var ui = BoardViewer.Ins.GetOrInstantiateUI<DeathDefiancePendingMenu>(IngameSubmenus.DeathDefianceUI);
 
 			 ui.Load(Piece.Pos);
 			 _deathDefianceCount--;

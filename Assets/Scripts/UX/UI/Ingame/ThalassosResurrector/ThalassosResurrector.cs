@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal.Pending.Piece;
+﻿using Game.Action.Internal.Pending;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
@@ -10,18 +11,17 @@ using ZLinq;
 namespace UX.UI.Ingame.ThalassosResurrector
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosResurrector: MonoBehaviour
+    public class ThalassosResurrector: IngamePendingMenu
     {
         [SerializeField] private GameObject selector;
         [SerializeField] private GameObject item;
         private int _caller;
         private int _to;
-        private ThalassosResurrectCandidate _cd;
         public void Load(int c, int t, ThalassosResurrectCandidate cd)
         {
             _caller = c;
             _to = t;
-            _cd = cd;
+            PendingAction = cd;
             var gameState = MatchManager.Ins.GameState;
             var pieceCaller = BoardUtils.PieceOn(c);
             var collection = !pieceCaller.Color ? gameState.WhiteCaptured : gameState.BlackCaptured;
@@ -69,8 +69,10 @@ namespace UX.UI.Ingame.ThalassosResurrector
 
         public void Choose(string type)
         {
-            _cd.CommitResult(new ThalassosResurrect(_caller, _to, type));
+            PendingAction.CommitResult(new ThalassosResurrect(_caller, _to, type));
             Disable();
         }
+
+        protected override PendingAction PendingAction { get; set; }
     }
 }

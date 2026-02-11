@@ -12,7 +12,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
     {
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject formationItem;
-        private readonly List<int> formationList = new();
+        private readonly List<int> _formationList = new();
 
 
         private void OnEnable()
@@ -34,14 +34,14 @@ namespace UX.UI.Ingame.SeabedLevelerUI
             {
                 if (BoardUtils.HasFormation(i))
                 {
-                    formationList.Add(i);
+                    _formationList.Add(i);
                 }
             }
 
-            for (var i = 0; i < formationList.Count; ++i)
+            for (var i = 0; i < _formationList.Count; ++i)
             {
-                Debug.Log("formation length: " + formationList.Count);
-                var formation = BoardUtils.GetFormation(formationList[i]);
+                Debug.Log("formation length: " + _formationList.Count);
+                var formation = BoardUtils.GetFormation(_formationList[i]);
                 Instantiate(formationItem, chooseField.transform, true);
 
                 chooseField.transform.GetChild(i).GetComponent<SeabedLevelerItem>().Load(formation.GetFormationType().ToString());
@@ -50,7 +50,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
 
         public void EraseFormation(int idx)
         {
-            FormationManager.Ins.RemoveFormation(formationList[idx]);
+            FormationManager.Ins.RemoveFormation(_formationList[idx]);
             Disable();
 
         }

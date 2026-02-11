@@ -42,11 +42,9 @@ namespace UX.UI.Ingame.DormantFossil
             
             for (var i = 0; i < 3; ++i)
             {
-                if (chooseField.transform.childCount < 3)
-                {
-                    Instantiate(pieceItem, chooseField.transform, true);
-                    chooseField.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
-                }
+                if (chooseField.transform.childCount >= 3) continue;
+                Instantiate(pieceItem, chooseField.transform, true);
+                chooseField.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
             }
 
         }

@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal.Pending.Piece;
+﻿using Game.Action.Internal.Pending;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece;
@@ -12,14 +13,13 @@ using ZLinq;
 namespace UX.UI.Ingame.ChrysosShop
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosShop: MonoBehaviour
+    public class ChrysosShop : IngamePendingMenu
     {
         [SerializeField] private GameObject shopItem;
         [SerializeField] private TMP_Text balanceField;
         [SerializeField] private TMP_Text costField;
         [SerializeField] private GameObject itemLine;
         private PieceLogic _chrysos;
-        private ChrysosUpgradeCandidate _candidate;
         private byte _cost;
 
         private void OnEnable()
@@ -40,14 +40,16 @@ namespace UX.UI.Ingame.ChrysosShop
             balanceField.text = "Balance: " + c.Coin;
             costField.text = "Cost: " + cd.Cost;
             _chrysos = c;
-            _candidate = cd;
+            PendingAction = cd;
             _cost = cd.Cost;
-            
-            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == _candidate.UpgradableTo select piece.key).ToList();
+
+            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values
+                where piece.rank == cd.UpgradableTo
+                select piece.key).ToList();
             if (cd.UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(cd.CurrentPiece);
             var already = itemLine.transform.childCount;
             var needed = upgradableTo.Count;
-            
+
             if (already < needed)
             {
                 for (var i = 1; i <= needed - already; i++)
@@ -73,8 +75,11 @@ namespace UX.UI.Ingame.ChrysosShop
 
         public void Buy(string type)
         {
-            _candidate.CommitResult(new ChrysosUpgrade(_chrysos.Pos, new PieceConfig(type, _chrysos.Color, (ushort)_candidate.Target), _cost));
+            PendingAction.CommitResult(new ChrysosUpgrade(_chrysos.Pos,
+                new PieceConfig(type, _chrysos.Color, (ushort)PendingAction.Target), _cost));
             Disable();
         }
+
+        protected override PendingAction PendingAction { get; set; }
     }
 }

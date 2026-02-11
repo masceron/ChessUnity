@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Managers;
@@ -7,12 +8,12 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.CoralTome
 {
-    public class CoralTomeUI : MonoBehaviour
+    public class CoralTomePendingMenu : IngamePendingMenu
     {
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject pieceItem;
 
-        private readonly List<string> spawnPiece = new()
+        private readonly List<string> _spawnPiece = new()
         {
             "piece_barnacle",
             "piece_melibe",
@@ -36,11 +37,9 @@ namespace UX.UI.Ingame.CoralTome
         {
             for (var i = 0; i < 3; ++i)
             {
-                if (chooseField.transform.childCount < 3)
-                {
-                    Instantiate(pieceItem, chooseField.transform, true);
-                    chooseField.transform.GetChild(i).GetComponent<CoralTomeItem>().Load(spawnPiece[i]);
-                }
+                if (chooseField.transform.childCount >= 3) continue;
+                Instantiate(pieceItem, chooseField.transform, true);
+                chooseField.transform.GetChild(i).GetComponent<CoralTomeItem>().Load(_spawnPiece[i]);
             }
 
         }
@@ -53,14 +52,14 @@ namespace UX.UI.Ingame.CoralTome
             {
                 TileManager.Ins.MarkAsMoveable(pos);
                 var relic = BoardUtils.GetRelicOf(color);
-                if (relic is Game.Relics.CoralTome coralTome)
-                {
-                    var pending = new CoralTomePending(coralTome, pos, type);
-                    BoardViewer.ListOf.Add(pending);
-                }
+                if (relic is not Game.Relics.CoralTome coralTome) continue;
+                var pending = new CoralTomePending(coralTome, pos, type);
+                BoardViewer.ListOf.Add(pending);
             }
             BoardViewer.Selecting = -2;
             BoardViewer.SelectingFunction = 4;
         }
+
+        protected override PendingAction PendingAction { get; set; }
     }
 }
