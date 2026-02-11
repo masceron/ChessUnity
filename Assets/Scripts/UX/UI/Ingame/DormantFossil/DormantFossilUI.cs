@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending;
+using Game.Action.Skills;
 using Game.Common;
 using Game.Piece;
 using PrimeTween;
@@ -10,7 +12,7 @@ namespace UX.UI.Ingame.DormantFossil
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     
-    public class DormantFossilUI : MonoBehaviour
+    public class DormantFossilUI : IngamePendingMenu
     {
         private ushort piecePos;
         [SerializeField] private GameObject chooseField;
@@ -52,11 +54,12 @@ namespace UX.UI.Ingame.DormantFossil
         public void Choose(string type)
         {
             var color = BoardUtils.ColorOfPiece(piecePos);
-            
-            ActionManager.ExecuteImmediately(new DestroyPiece(piecePos));
-            ActionManager.ExecuteImmediately(new SpawnPiece(new PieceConfig(type, color, piecePos)));
+
+            PendingAction.CommitResult(new DormantFossilAwake(piecePos, new PieceConfig(type, color, piecePos)));
             
             Disable();
         }
+
+        protected override PendingAction PendingAction { get; set; }
     }
 }
