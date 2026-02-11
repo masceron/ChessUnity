@@ -6,7 +6,6 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
-using UnityEngine;
 using ZLinq;
 
 namespace Game.Action
@@ -84,13 +83,12 @@ namespace Game.Action
             }
         }
 
-        private static void ProcessStack()
+        private static void ProcessStack(int targetDepth = 0)
         {
-            while (_actionStack.Count > 0)
+            while (_actionStack.Count > targetDepth) 
             {
                 var currentActionStack = _actionStack.Peek();
                 var currentAction = currentActionStack.Action;
-                Debug.Log(currentAction.GetType());
 
                 if (!currentActionStack.TriggerCalled)
                 {
@@ -103,7 +101,6 @@ namespace Game.Action
                         case IRelicAction relicAction: BoardUtils.NotifyBeforeRelicAction(relicAction); break;
                         default: BoardUtils.NotifyBeforePieceAction(currentAction); break;
                     }
-
                     _buffering = false;
                     FlushBuffer();
 
@@ -166,41 +163,40 @@ namespace Game.Action
             CurrentPhase = Phase.AfterEndTurn;
 
             var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnEffect>();
-            _buffering = true;
+            
             endTurnListeners.ForEach(effect =>
             {
                 if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
-                if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
-                {
-                    effect.OnCallEnd(mainAction);
-
-                    FlushBuffer();
-                    ProcessStack();
-                }
-                //The next turn is ours.
+        
+                var shouldTrigger = false;
+                if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn) shouldTrigger = true;
                 else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
                 {
-                    if (effect.EndTurnEffectType != EndTurnEffectType.EndOfEnemyTurn) return;
-                    effect.OnCallEnd(mainAction);
-
-                    FlushBuffer();
-                    ProcessStack();
+                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn) shouldTrigger = true;
                 }
-                //The next turn is of the opponent.
                 else
                 {
-                    if (effect.EndTurnEffectType != EndTurnEffectType.EndOfAllyTurn) return;
-                    effect.OnCallEnd(mainAction);
-
-                    FlushBuffer();
-                    ProcessStack();
+                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn) shouldTrigger = true;
                 }
+
+                if (!shouldTrigger) return;
+                var depthBefore = _actionStack.Count; 
+                    
+                _buffering = true; 
+                effect.OnCallEnd(mainAction);
+                _buffering = false; 
+
+                FlushBuffer();
+                    
+                ProcessStack(depthBefore);
             });
             
+            var countdownDepth = _actionStack.Count;
+            _buffering = true;
             _state.EffectCountdown();
-            FlushBuffer();
             _buffering = false;
-            ProcessStack();
+            FlushBuffer();
+            ProcessStack(countdownDepth);
         }
 
         private static bool ShouldEndTurn(Action action)
