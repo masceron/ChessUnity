@@ -2,9 +2,8 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects.Traits;
 
-namespace Game.Effects.Augmentation
+namespace Game.Effects.Traits
 {
     public class PressureHullPassive : Effect, IOnApply
     {

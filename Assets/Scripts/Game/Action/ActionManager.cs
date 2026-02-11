@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
+using UnityEngine;
 using ZLinq;
 
 namespace Game.Action
@@ -78,6 +79,7 @@ namespace Game.Action
             {
                 var currentActionStack = _actionStack.Peek();
                 var currentAction = currentActionStack.Action;
+                Debug.Log(currentAction.GetType());
 
                 if (!currentActionStack.TriggerCalled)
                 {

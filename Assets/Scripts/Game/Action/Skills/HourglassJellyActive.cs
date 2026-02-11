@@ -15,7 +15,7 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -25;
             return 0;
         }
-        private ushort destination;
+        private readonly ushort destination;
         public HourglassJellyActive(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;

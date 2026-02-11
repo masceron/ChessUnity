@@ -30,7 +30,7 @@ namespace Game.Relics
                     if (piece == null) continue;
                     if (!IsNextEachOther(piece)) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new MangroveCharmPending(this, piece.Pos, piece.Color);
+                    var pending = new MangroveCharmPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -119,7 +119,7 @@ namespace Game.Relics
             if (bestDuoNoExtremofiles.Count == 0)
             {
                 var best = bestDuo[Random.Range(0, bestDuo.Count - 1)];
-                var pending = new MangroveCharmPending(this, best.pos1, Color);
+                var pending = new MangroveCharmPending(this, best.pos1);
                 MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
                 MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
                 BoardViewer.Ins.ExecuteAction(pending);
@@ -127,7 +127,7 @@ namespace Game.Relics
             else
             {
                 var best = bestDuoNoExtremofiles[Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
-                var pending = new MangroveCharmPending(this, best.pos1, Color);
+                var pending = new MangroveCharmPending(this, best.pos1);
                 MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
                 MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
                 BoardViewer.Ins.ExecuteAction(pending);

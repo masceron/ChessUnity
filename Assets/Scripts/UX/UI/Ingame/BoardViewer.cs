@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal.Pending;
@@ -9,6 +10,7 @@ using PrimeTween;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static Game.Common.BoardUtils;
+using Action = Game.Action.Action;
 
 namespace UX.UI.Ingame
 {
@@ -20,22 +22,25 @@ namespace UX.UI.Ingame
         [SerializeField] private GameActions gameActions;
         [SerializeField] private EffectBar effectBar;
 
-        private AIManager aiManager;
-        
-        private Transform mainCameraCenter;
+        private AIManager _aiManager;
+
+        private Transform _mainCameraCenter;
         public static PieceLogic Hovering;
+
         public static int HoveringPos;
+
         // Vị trí của quân cờ đang chọn, -1 nếu chưa chọn quân nào
-        public static int Selecting = -1; 
+        public static int Selecting = -1;
+
         // 0: Không chọn, 1: Move, 2: Attack, 3: Skill, 4: Relic
-        public static int SelectingFunction; 
+        public static int SelectingFunction;
         private static readonly List<Action> MoveList = new();
         public static readonly List<Action> ListOf = new();
-        
+
         private void Start()
         {
-            mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
-            aiManager = AIManager.Ins;
+            _mainCameraCenter = GameObject.Find("CameraTarget").GetComponent<Transform>();
+            _aiManager = AIManager.Ins;
             pieceActions.Load(ListOf, MoveList);
             UpdateRelic();
             Selecting = -1;
@@ -54,11 +59,11 @@ namespace UX.UI.Ingame
 
         private void PanTo(int pos1, int pos2)
         {
-            var direction = mainCameraCenter.position;
+            var direction = _mainCameraCenter.position;
             direction.x = pos1;
             direction.z = pos2;
-            
-            Tween.Position(mainCameraCenter, direction, 0.3f);
+
+            Tween.Position(_mainCameraCenter, direction, 0.3f);
         }
 
         private void SetPieceHover(int pos)
@@ -66,7 +71,7 @@ namespace UX.UI.Ingame
             HoveringPos = pos;
 
             if (Selecting != -1) return;
-            
+
             var piece = PieceOn(pos);
 
             if (piece == null || !piece.IsVisible) return;
@@ -87,63 +92,65 @@ namespace UX.UI.Ingame
         {
             Selecting = -1;
             TileManager.Ins.UnmarkAll();
-            aiManager.ClearTileScores();
+            _aiManager.ClearTileScores();
             pieceActions.DisablePieceInteractions();
             foreach (var action in ListOf)
             {
-                if (action is System.IDisposable disposable)
+                if (action is IDisposable disposable)
                 {
                     disposable.Dispose();
                 }
             }
+
             ListOf.Clear();
             Hover(-1);
         }
 
-        public void ExecuteAction(Action action)
+        public async void ExecuteAction(Action action)
         {
-            Unmark();
-            if (ActionManager.DoManualAction(action))
+            try
             {
-                EndTurn();
+                Unmark();
+                if (action is PendingAction pendingAction)
+                {
+                    action = await pendingAction.WaitForCompletion();
+                    Debug.Log(action.GetType() + " " + action.Maker + " " + action.Target);
+                }
+
+                if (ActionManager.DoManualAction(action))
+                {
+                    EndTurn();
+                }
+            }
+            catch (Exception)
+            {
+                // ignored
             }
         }
 
         public void MarkPiece(int pos)
         {
             HoveringPos = pos;
-            aiManager.ShowPieceActionScore(pos);
+            _aiManager.ShowPieceActionScore(pos);
 
             if (Selecting != -1)
             {
-                if (SelectingFunction == 0) return;
-                
-                if (SelectingFunction == 4)
+                switch (SelectingFunction)
                 {
-                    var action = ListOf.Find(a => a.Maker == pos);
-                    switch (action)
+                    case 0:
+                        return;
+                    case 4:
                     {
-                        case null:
-                            return;
-                        case PendingAction pending:
-                            pending.CompleteAction();
-                            return;
+                        var action = ListOf.Find(a => a.Maker == pos);
+                        ExecuteAction(action);
+                        break;
                     }
-                    ActionManager.DoManualAction(action);
-                } 
-                else
-                {
-                    var action = ListOf.Find(a => a.Target == pos);
-                    switch (action)
+                    default:
                     {
-                        case null:
-                            return;
-                        case PendingAction pending:
-                            pending.CompleteAction();
-                            return;
+                        var action = ListOf.Find(a => a.Target == pos);
+                        ExecuteAction(action);
+                        break;
                     }
-
-                    ExecuteAction(action);
                 }
             }
             else
@@ -152,7 +159,7 @@ namespace UX.UI.Ingame
                 // Action ở đây có thể là Move/Attack/Skill
                 var piece = PieceOn(pos);
                 if (piece is not { IsVisible: true } || FormationManager.Ins.IsHideByFog(pos, SideToMove())) return;
-                
+
                 Hover(pos);
                 TileManager.Ins.Select(pos);
                 Selecting = pos;
@@ -160,7 +167,7 @@ namespace UX.UI.Ingame
                 PanTo(RankOf(pos), FileOf(pos));
 
                 if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
-                
+
                 pieceActions.EnablePieceInteractions();
                 MoveList.Clear();
                 PieceOn(Selecting).MoveList(MoveList);
@@ -185,7 +192,7 @@ namespace UX.UI.Ingame
             if (pos == -1)
             {
                 Hovering = null;
-                //effectBar.Disable();
+                effectBar.Disable();
                 pieceInfoMenu.Disable();
                 return;
             }
@@ -194,13 +201,24 @@ namespace UX.UI.Ingame
             {
                 return;
             }
-            // Debug.Log(pos);
+            
             SetPieceHover(pos);
         }
 
-        public void MarkMove()
+        public T GetOrInstantiateUI<T>(IngameSubmenus submenuType) where T : Component
         {
-            pieceActions.ClickMove();
+            var menu = FindAnyObjectByType<T>(FindObjectsInactive.Include);
+        
+            if (!menu)
+            {
+                menu = Instantiate(UIHolder.Ins.Get(submenuType), transform).GetComponent<T>();
+            }
+            else 
+            {
+                menu.gameObject.SetActive(true);
+            }
+
+            return menu;
         }
     }
 }

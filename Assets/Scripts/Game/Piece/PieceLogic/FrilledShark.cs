@@ -6,7 +6,6 @@ using Game.Effects.SpecialAbility;
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -17,7 +16,7 @@ namespace Game.Piece.PieceLogic
     {
         sbyte IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
-        int step = 4;
+        readonly int step = 4;
         public FrilledShark(PieceConfig cfg) : base(cfg, KnightMoves.Quiets, KnightMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this)));
@@ -34,14 +33,14 @@ namespace Game.Piece.PieceLogic
                     int[] dRank = { -1, 1, 0, 0, -1, -1, 1, 1 };
                     int[] dFile = { 0, 0, -1, 1, -1, 1, -1, 1 };
                     
-                    for (int dir = 0; dir < 8; dir++)
+                    for (var dir = 0; dir < 8; dir++)
                     {
-                        int r = rank + dRank[dir] * step;
-                        int f = file + dFile[dir] * step;
+                        var r = rank + dRank[dir] * step;
+                        var f = file + dFile[dir] * step;
 
                         if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
 
-                        int idx = IndexOf(r, f);
+                        var idx = IndexOf(r, f);
                         if (!IsActive(idx)) continue;
 
                         var piece = PieceOn(idx);
@@ -58,31 +57,31 @@ namespace Game.Piece.PieceLogic
                     int[] dRank = { -1, 1, 0, 0, -1, -1, 1, 1 };
                     int[] dFile = { 0, 0, -1, 1, -1, 1, -1, 1 };
 
-                    int bestScore = int.MinValue;
+                    var bestScore = int.MinValue;
                     var bestDirs = new List<int>();
 
-                    for (int dir = 0; dir < 8; dir++)
+                    for (var dir = 0; dir < 8; dir++)
                     {
-                        int targetRank = rank + dRank[dir] * step;
-                        int targetFile = file + dFile[dir] * step;
+                        var targetRank = rank + dRank[dir] * step;
+                        var targetFile = file + dFile[dir] * step;
 
                         if (!VerifyBounds(targetRank) || !VerifyBounds(targetFile)) continue;
 
-                        int targetIdx = IndexOf(targetRank, targetFile);
+                        var targetIdx = IndexOf(targetRank, targetFile);
                         if (!IsActive(targetIdx)) continue;
                         if (PieceOn(targetIdx) != null) continue;
 
-                        int sumScore = 0;
-                        bool hasEnemy = false;
+                        var sumScore = 0;
+                        var hasEnemy = false;
 
-                        for (int step = 1; step <= 3; step++)
+                        for (var step = 1; step <= 3; step++)
                         {
-                            int r = rank + dRank[dir] * step;
-                            int f = file + dFile[dir] * step;
+                            var r = rank + dRank[dir] * step;
+                            var f = file + dFile[dir] * step;
 
                             if (!VerifyBounds(r) || !VerifyBounds(f)) break;
 
-                            int idx = IndexOf(r, f);
+                            var idx = IndexOf(r, f);
                             if (!IsActive(idx)) break;
 
                             var pOn = PieceOn(idx);
@@ -109,7 +108,7 @@ namespace Game.Piece.PieceLogic
 
                     if (bestDirs.Count == 0) return;
 
-                    int chosenDir = bestDirs.Count == 1
+                    var chosenDir = bestDirs.Count == 1
                         ? bestDirs[0]
                         : bestDirs[Random.Range(0, bestDirs.Count)];
 

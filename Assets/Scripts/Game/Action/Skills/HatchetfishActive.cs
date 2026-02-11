@@ -41,7 +41,7 @@ namespace Game.Action.Skills
             foreach (var target in targets)
             {
                 if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_camouflage") &&
-                !PieceOn(target).Effects.Any(e => e.EffectName == "effect_blinded" || e.EffectName == "effect_extremophile"))
+                !PieceOn(target).Effects.Any(e => e.EffectName is "effect_blinded" or "effect_extremophile"))
                 {
                     listPieces.Add(PieceOn(target));
                 }

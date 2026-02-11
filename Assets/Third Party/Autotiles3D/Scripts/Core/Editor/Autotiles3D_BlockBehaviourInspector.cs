@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.Linq;
+using Third_Party.Autotiles3D.Scripts.Core;
 using Third_Party.Autotiles3D.Scripts.Utility;
 
 namespace Autotiles3D

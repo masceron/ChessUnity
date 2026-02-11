@@ -20,8 +20,8 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         {
             gameObject.SetActive(true);
             data = AssetManager.Ins.PieceData;
-            FPArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
-            FPArmyDesign.Ins.board.OnRemoveTroop += (_) => FilterByCondition();
+            FPArmyDesign.Ins.board.OnAddTroop += _ => FilterByCondition();
+            FPArmyDesign.Ins.board.OnRemoveTroop += _ => FilterByCondition();
             lastSearchResult = data.Values.ToList();
             FilterByCondition();
             SearchByKeyword("");

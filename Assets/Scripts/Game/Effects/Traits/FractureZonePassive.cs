@@ -16,7 +16,7 @@ namespace Game.Effects.Traits
         private readonly int intervalToSpawn = 2;
         private readonly int radius = 2;
         private readonly int aliveTime = 10;
-        private List<(int,int)> tileInradius = new List<(int, int)>();
+        private readonly List<(int,int)> tileInradius = new List<(int, int)>();
 
         public FractureZonePassive(PieceLogic piece) : base(-1, 1, piece, "effect_fracture_zone_passive")
         {

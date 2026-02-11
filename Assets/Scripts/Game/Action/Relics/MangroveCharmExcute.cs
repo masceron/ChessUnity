@@ -6,8 +6,8 @@ namespace Game.Action.Relics
 
     public class MangroveCharmExcute : Action, IRelicAction
     {
-        private int FirstTarget;
-        private int SecondTarget;
+        private readonly int FirstTarget;
+        private readonly int SecondTarget;
 
         public MangroveCharmExcute(int FirstTarget, int SecondTarget) : base(-1)
         {

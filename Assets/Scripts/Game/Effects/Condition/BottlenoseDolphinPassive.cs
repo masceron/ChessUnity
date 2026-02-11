@@ -12,7 +12,7 @@ namespace Game.Effects.Condition
     public class BottlenoseDolphinPassive: Effect, IStartTurnEffect
     {
         private bool surpassed;
-        private int evasionProbability = 25;
+        private readonly int evasionProbability = 25;
         public BottlenoseDolphinPassive(PieceLogic piece) : base(-1, 1, piece, "effect_bottlenose_dolphin_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;

@@ -8,7 +8,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SlayersCoin: Effect, IAfterPieceActionEffect
     {
-        public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, "effect_slayer_coin")
+        public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, "effect_slayers_coin")
         {}
 
         public void OnCallAfterPieceAction(Action.Action action)

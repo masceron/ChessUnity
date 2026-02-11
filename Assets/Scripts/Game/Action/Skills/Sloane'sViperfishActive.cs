@@ -9,7 +9,7 @@ namespace Game.Action.Skills
 {
     public class SloaneSViperfishActive : Action, ISkills, IAIAction
     {
-        private bool bleeding;
+        private readonly bool bleeding;
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);

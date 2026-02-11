@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Save.Army;
+using Game.Save.FreePlay;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {

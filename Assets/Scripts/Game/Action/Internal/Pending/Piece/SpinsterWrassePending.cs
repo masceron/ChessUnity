@@ -11,14 +11,13 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SpinsterWrassePending : PendingAction, IDisposable
     {
-        public static PieceLogic FirstTarget;
-        public static PieceLogic SecondTarget;
-        private bool Color;
-        public SpinsterWrassePending(int maker, int to, bool color) : base(maker)
+        private static PieceLogic _firstTarget;
+        private static PieceLogic _secondTarget;
+
+        public SpinsterWrassePending(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
-            Color = color;
         }
 
         // protected override void ModifyGameState()
@@ -29,23 +28,23 @@ namespace Game.Action.Internal.Pending.Piece
         //     ResetTargets();
         // }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            if (_firstTarget == null || _firstTarget.Color == hovering.Color)
             {
-                FirstTarget = hovering;
+                _firstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
-                TileManager.Ins.Select(FirstTarget.Pos);
-                TileManager.Ins.MarkPieceInRange(Maker, FirstTarget.Color, 5);
+                TileManager.Ins.Select(_firstTarget.Pos);
+                TileManager.Ins.MarkPieceInRange(Maker, _firstTarget.Color, 5);
                 return;
             } 
             
-            SecondTarget = hovering;
+            _secondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-            var buff = new SpinsterWrasseBuff(Maker, FirstTarget.Pos, SecondTarget.Pos);
-            BoardViewer.Ins.ExecuteAction(buff);
+            var buff = new SpinsterWrasseBuff(Maker, _firstTarget.Pos, _secondTarget.Pos);
+            CommitResult(buff);
             
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -59,8 +58,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         private static void ResetTargets()
         {
-            FirstTarget = null;
-            SecondTarget = null;
+            _firstTarget = null;
+            _secondTarget = null;
         }
         
         public void Dispose()

@@ -1,7 +1,6 @@
 using Game.Relics.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
-using UX.UI.Ingame.HermosHorn;
+using UX.UI.Ingame.HermosHornUI;
 
 namespace Game.Relics
 {
@@ -15,11 +14,10 @@ namespace Game.Relics
 
         public override void Activate()
         {
-            if (CurrentCooldown == 0)
-            {
-                var ui = Object.Instantiate(UIHolder.Ins.Get(IngameSubmenus.HermosHornUI)).GetComponent<HermosHornUI>();
-                ui.Load(this);
-            }
+            if (CurrentCooldown != 0) return;
+
+            var ui = BoardViewer.Ins.GetOrInstantiateUI<HermosHornUI>(IngameSubmenus.HermosHornUI);
+            ui.Load(this);
         }
 
         public override void ActiveForAI()

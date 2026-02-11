@@ -6,8 +6,8 @@ namespace Game.Action.Skills
 {
     public class MegalodonActive : Action, ISkills
     {
-        private int firstTargetPos;
-        private int secondTargetPos;
+        private readonly int firstTargetPos;
+        private readonly int secondTargetPos;
         
         public MegalodonActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {

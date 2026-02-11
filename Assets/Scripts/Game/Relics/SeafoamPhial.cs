@@ -27,7 +27,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeafoamPhialPending(this, piece.Pos, piece.Color);
+                    var pending = new SeafoamPhialPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
                 BoardViewer.Selecting = -2;
@@ -35,7 +35,7 @@ namespace Game.Relics
             }
         }
 
-        public override void ActiveForAI()
+        public async override void ActiveForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
             var bestPieces = new List<PieceLogic>();
@@ -62,34 +62,37 @@ namespace Game.Relics
 
             PieceLogic targetPiece = null;
 
-            // If none found, default to caster (can be changed later)
-            if (bestPieces.Count == 0)
+            switch (bestPieces.Count)
             {
-                // targetPiece = PieceOn(Maker);
-            }
-            else if (bestPieces.Count == 1)
-            {
-                targetPiece = bestPieces[0];
-            }
-            else
-            {
-                // From bestPieces choose the one with lowest AI value; if tie pick random
-                var minScore = bestPieces.Min(p => p.GetValueForAI());
-                var lowestScorePieces = bestPieces.Where(p => p.GetValueForAI() == minScore).ToList();
-
-                if (lowestScorePieces.Count > 0)
+                // If none found, default to caster (can be changed later)
+                case 0:
+                    // targetPiece = PieceOn(Maker);
+                    break;
+                case 1:
+                    targetPiece = bestPieces[0];
+                    break;
+                default:
                 {
-                    var randomIndex = UnityEngine.Random.Range(0, lowestScorePieces.Count);
-                    targetPiece = lowestScorePieces[randomIndex];
+                    // From bestPieces choose the one with lowest AI value; if tie pick random
+                    var minScore = bestPieces.Min(p => p.GetValueForAI());
+                    var lowestScorePieces = bestPieces.Where(p => p.GetValueForAI() == minScore).ToList();
+
+                    if (lowestScorePieces.Count > 0)
+                    {
+                        var randomIndex = UnityEngine.Random.Range(0, lowestScorePieces.Count);
+                        targetPiece = lowestScorePieces[randomIndex];
+                    }
+
+                    break;
                 }
             }
 
-            if (targetPiece != null)
+            if (targetPiece == null) return;
             {
-                var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
+                var pending = new SeafoamPhialPending(this, targetPiece.Pos);
                 if (pending is PendingAction p)
                 {
-                    p.CompleteAction();
+                    BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
                 }
             }
 

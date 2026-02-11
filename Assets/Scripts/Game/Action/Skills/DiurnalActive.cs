@@ -1,8 +1,7 @@
 ﻿using Game.Action.Quiets;
-using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 
-namespace Game.Action.Relics
+namespace Game.Action.Skills
 {
     public class DiurnalActive : Action, ISkills
     {

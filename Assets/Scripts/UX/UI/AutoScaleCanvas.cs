@@ -11,7 +11,7 @@ namespace UX.UI
         private void Awake()
         {
             _scaler = GetComponent<CanvasScaler>();
-            if (((float)Screen.height / (float)Screen.width) <= (9f / 16f))
+            if ((Screen.height / (float)Screen.width) <= (9f / 16f))
             {
                 _scaler.matchWidthOrHeight = 1;
             }

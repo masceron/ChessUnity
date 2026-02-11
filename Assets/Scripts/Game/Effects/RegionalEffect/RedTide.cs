@@ -8,7 +8,7 @@ namespace Game.Effects.RegionalEffect
     public class RedTide: RegionalEffect
     {
         private int startingSizeX;
-        private int startingSizeY;
+        private readonly int startingSizeY;
         private int isActive;
         public RedTide() : base(RegionalEffectType.RedTide)
         {

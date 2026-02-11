@@ -52,6 +52,7 @@ namespace Game.Action.Skills
             var random = new System.Random();
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
             
+            SetCooldown(Maker, -1);
             foreach (var effect in selectedPiece.Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
             {
@@ -59,11 +60,9 @@ namespace Game.Action.Skills
                     effect.Duration -= 1;
                 else
                 {
-                    //ActionManager.EnqueueAction(new RemoveEffect(effect));
                     BoardViewer.Ins.ExecuteAction(new RemoveEffect(effect));
                 }
             }
-            SetCooldown(Maker, -1);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

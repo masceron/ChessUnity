@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Third_Party.Autotiles3D.Scripts.Core;
 
 namespace Autotiles3D
 {

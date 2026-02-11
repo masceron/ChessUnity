@@ -104,7 +104,7 @@ namespace Game.Piece.PieceLogic
                     if (emptySquares.Count == 0) return;
 
                     // Pick best candidate
-                    var bestScore = candidates.Max((p) => PieceMaker.Get(p).GetValueForAI());
+                    var bestScore = candidates.Max(p => PieceMaker.Get(p).GetValueForAI());
                     var top = candidates.Where(c => PieceMaker.Get(c).GetValueForAI() == bestScore).ToList();
                     var chosenPiece = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 

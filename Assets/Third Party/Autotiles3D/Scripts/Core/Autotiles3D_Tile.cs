@@ -1,13 +1,11 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     public enum Neighbor
     {

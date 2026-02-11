@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeaTurtleCountdown : Effect, IEndTurnEffect, IOnRemove
     {
-        private int Pos;
+        private readonly int Pos;
         public EndTurnEffectType EndTurnEffectType { get; }
         public SeaTurtleCountdown(sbyte Duration, PieceLogic piece) : base(Duration, 1, piece, "effect_sea_turtle_countdown")
         { Pos = piece.Pos; }

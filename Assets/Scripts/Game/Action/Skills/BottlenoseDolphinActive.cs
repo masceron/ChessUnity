@@ -42,7 +42,6 @@ namespace Game.Action.Skills
             for (var i = 0; i < BoardSize; ++i)
             {
                 var piece = PieceOn(i);
-                if (piece == null) continue;
                 if (piece is not IPieceWithSkill) continue;
                 
                 var deltaCooldown = ((IPieceWithSkill)PieceOn(i)).TimeToCooldown - piece.SkillCooldown;

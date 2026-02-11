@@ -27,7 +27,7 @@ namespace Game.Effects.Traits
             if (action.Maker == Piece.Pos) return;
             if (action.Target != Piece.Pos) return;
 
-            if (action.Result != Action.ResultFlag.Success)
+            if (action.Result != ResultFlag.Success)
             {
                 ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
             }

@@ -7,7 +7,7 @@ namespace Game.Action.Relics
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PeaceTreatyExcute : Action, IRelicAction
     {
-        private bool Color;
+        private readonly bool Color;
         private const int TurnToEnd = 50;
         
         public PeaceTreatyExcute(bool color) : base(-1)

@@ -8,8 +8,8 @@ namespace Game.Action.Internal.Pending.Piece
 {
     public class RibbonEelPendingForChooseMove : PendingAction, ISkills
     {
-        private int sourcePiecePos;
-        private int targetPiecePos;
+        private readonly int sourcePiecePos;
+        private readonly int targetPiecePos;
         
         public RibbonEelPendingForChooseMove(int maker, int sourcePiece, int targetPiece) : base(maker)
         {
@@ -18,13 +18,13 @@ namespace Game.Action.Internal.Pending.Piece
             sourcePiecePos = sourcePiece;
             targetPiecePos = targetPiece;
         }
-        
-        public override void CompleteAction()
+
+        protected override void CompleteAction()
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
             var newAction = new RibbonEelActive(Maker, sourcePiecePos, targetPiecePos);
-            BoardViewer.Ins.ExecuteAction(newAction);
+            CommitResult(newAction);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

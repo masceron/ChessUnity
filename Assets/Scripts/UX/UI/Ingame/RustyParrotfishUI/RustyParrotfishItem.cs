@@ -8,7 +8,7 @@ namespace UX.UI.Ingame.RustyParrotfishUI
     {
         [SerializeField] private TMP_Text formationName;
         [SerializeField] private Sprite formationImage;
-        private string formationType;
+        private string _formationType;
 
         public void Load(string type)
         {

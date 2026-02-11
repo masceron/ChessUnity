@@ -6,26 +6,23 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ReliquaryPending : PendingAction, System.IDisposable, IRelicAction, IInternal
+    public class ReliquaryPending : PendingAction, System.IDisposable, IRelicAction
     {
-        private Reliquary reliquary;
+        private Reliquary _reliquary;
         
-        public ReliquaryPending(Reliquary cp, int maker, bool pos = false) : base(maker)
+        public ReliquaryPending(Reliquary cp, int maker) : base(maker)
         {
-            reliquary = cp;
+            _reliquary = cp;
             Target = (ushort)maker;
             Maker = (ushort)maker;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            if (reliquary != null)
-            {
-                reliquary.SetCooldown();
-            }
-            
-            var excute = new ReliquaryExcute();
-            BoardViewer.Ins.ExecuteAction(excute);
+            _reliquary?.SetCooldown();
+
+            var execute = new ReliquaryExcute();
+            CommitResult(execute);
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -36,7 +33,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void Dispose()
         {
-            reliquary = null;
+            _reliquary = null;
             BoardViewer.SelectingFunction = 0;
         }
     }

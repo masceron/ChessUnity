@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.Serialization;
 using ZLinq;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     [System.Serializable]
     public class InternalNode
@@ -185,8 +183,8 @@ namespace Autotiles3D
         public static bool SHOW_HOVER_GIZMO;
 
         public List<Autotiles3D_TileGroup> LoadedGroups = new List<Autotiles3D_TileGroup>();
-        private List<Vector3Int> _toVerify = new List<Vector3Int>();
-        private List<Vector3Int> _toUpdate = new List<Vector3Int>();
+        private readonly List<Vector3Int> _toVerify = new List<Vector3Int>();
+        private readonly List<Vector3Int> _toUpdate = new List<Vector3Int>();
         public bool RequireNodeVerification => _toVerify.Count > 0;
         public bool RequiresNodeUpdate => _toUpdate.Count > 0;
 
@@ -257,9 +255,9 @@ namespace Autotiles3D
 
         public void UpdateNeighborsCubeAlgorithm(HashSet<Vector3Int> internalPositions)
         {
-            (var minX, var maxX) = ((int)internalPositions.Min(l => l.x), (int)internalPositions.Max(l => l.x));
-            (var minY, var maxY) = ((int)internalPositions.Min(l => l.y), (int)internalPositions.Max(l => l.y));
-            (var minZ, var maxZ) = ((int)internalPositions.Min(l => l.z), (int)internalPositions.Max(l => l.z));
+            (var minX, var maxX) = (internalPositions.Min(l => l.x), internalPositions.Max(l => l.x));
+            (var minY, var maxY) = (internalPositions.Min(l => l.y), internalPositions.Max(l => l.y));
+            (var minZ, var maxZ) = (internalPositions.Min(l => l.z), internalPositions.Max(l => l.z));
 
             var myNeighbors = new List<Vector3Int>();
             Vector3Int iteration;

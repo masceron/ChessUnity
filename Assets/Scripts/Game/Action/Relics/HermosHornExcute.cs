@@ -15,8 +15,8 @@ namespace Game.Action.Relics
             this.relicColor = relicColor;
         }
 
-        private bool isFirstOption;
-        private bool relicColor;
+        private readonly bool isFirstOption;
+        private readonly bool relicColor;
 
         protected override void ModifyGameState()
         {

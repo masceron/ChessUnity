@@ -28,7 +28,7 @@ namespace Game.Action.Internal.Pending.Piece
             Target = (ushort)target;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
             if (_firstTarget == null)
@@ -50,7 +50,7 @@ namespace Game.Action.Internal.Pending.Piece
             _secondTarget = hovering;
             if (_firstTarget == null || _secondTarget == null) return;
             if (_firstTarget == _secondTarget) return;
-            BoardViewer.Ins.ExecuteAction(new MegalodonActive(Maker, _firstTarget.Pos, _secondTarget.Pos));
+            CommitResult(new MegalodonActive(Maker, _firstTarget.Pos, _secondTarget.Pos));
         }
 
         public void CompleteActionForAI()

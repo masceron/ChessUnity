@@ -6,36 +6,33 @@ using Game.Action.Relics;
 namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class StormCapacitorPending : PendingAction, System.IDisposable, IRelicAction, IInternal
+    public class StormCapacitorPending : PendingAction, System.IDisposable, IRelicAction
     {
-        private readonly Tile.Tile thisTile;
-        private readonly int size;
-        private StormCapacitor stormCapacitor;
+        private readonly Tile.Tile _thisTile;
+        private readonly int _size;
+        private StormCapacitor _stormCapacitor;
         
         public StormCapacitorPending(int maker, Tile.Tile hoveringTile, StormCapacitor sc, int size) : base(maker)
         {
-            thisTile = hoveringTile;
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
-            stormCapacitor = sc;
-            this.size = size;
+            _thisTile = hoveringTile;
+            Target = maker;
+            Maker = maker;
+            _stormCapacitor = sc;
+            _size = size;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            if (stormCapacitor != null)
-            {
-                stormCapacitor.SetCooldown();
-            }
-            
-            var excute = new StormCapacitorExcute(
-                thisTile.rank, 
-                thisTile.file, 
-                size, 
-                thisTile.corner, 
-                stormCapacitor.Color
+            _stormCapacitor?.SetCooldown();
+
+            var execute = new StormCapacitorExcute(
+                _thisTile.rank, 
+                _thisTile.file, 
+                _size, 
+                _thisTile.corner, 
+                _stormCapacitor is { Color: true }
             );
-            BoardViewer.Ins.ExecuteAction(excute);
+            CommitResult(execute);
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -47,7 +44,7 @@ namespace Game.Action.Internal.Pending.Relic
         public void Dispose()
         {
             BoardViewer.SelectingFunction = 0;
-            stormCapacitor = null;
+            _stormCapacitor = null;
             Tile.Tile.OnPointEnterHandle = null;
         }
     }

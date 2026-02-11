@@ -6,8 +6,8 @@ namespace Game.Action.Relics
 {
     public class RayStingerExcute : Action, IRelicAction
     {
-        private int bleedingStack = 3;
-        private int brokenDuration = 2;
+        private readonly int bleedingStack = 3;
+        private readonly int brokenDuration = 2;
 
         public RayStingerExcute(int target) : base(-1)
         {

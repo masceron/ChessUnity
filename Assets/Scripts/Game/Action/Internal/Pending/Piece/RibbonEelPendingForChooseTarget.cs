@@ -8,15 +8,15 @@ namespace Game.Action.Internal.Pending.Piece
 {
     public class RibbonEelPendingForChooseTarget : PendingAction, ISkills
     {
-        private int sourcePiecePos;
+        private readonly int _sourcePiecePos;
         public RibbonEelPendingForChooseTarget(int maker, int sourcePiece) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)maker;
-            sourcePiecePos = sourcePiece;
+            _sourcePiecePos = sourcePiece;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
@@ -25,7 +25,7 @@ namespace Game.Action.Internal.Pending.Piece
                 var index = BoardUtils.IndexOf(rankOff, fileOff);
                 var pOn = BoardUtils.PieceOn(index);
                 if (pOn != null) continue;
-                var newAction = new RibbonEelPendingForChooseMove(index, sourcePiecePos, Maker);
+                var newAction = new RibbonEelPendingForChooseMove(index, _sourcePiecePos, Maker);
                 BoardViewer.ListOf.Add(newAction);
                 TileManager.Ins.MarkAsMoveable(index);
             }

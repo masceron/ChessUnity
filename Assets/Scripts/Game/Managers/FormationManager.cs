@@ -35,7 +35,7 @@ namespace Game.Managers
                 RemoveFormation(pos);
             }
             formations[pos] = env;
-            BoardUtils.AddEffectObserver(env);
+            AddEffectObserver(env);
             if (PieceOn(pos) != null){
                 formations[pos].OnCreated(PieceOn(pos));
             }

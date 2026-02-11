@@ -1,11 +1,10 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
-namespace Game.Effects.Augmentation
+namespace Game.Effects.Traits
 {
     public class GluttonousJawPassive : Effect, IAfterPieceActionEffect
     {

@@ -7,10 +7,10 @@ namespace Game.Action.Internal.Pending.Relic
 {
     public class OvergrownSlugPending : PendingAction, System.IDisposable
     {
-        private OvergrownSlug overgrownSlug;
-        public OvergrownSlugPending(OvergrownSlug ogs, int maker, bool pos = false) : base(maker)
+        private OvergrownSlug _overgrownSlug;
+        public OvergrownSlugPending(OvergrownSlug ogs, int maker) : base(maker)
         {
-            overgrownSlug = ogs;
+            _overgrownSlug = ogs;
             Maker = (ushort)maker;
         }
 
@@ -47,13 +47,13 @@ namespace Game.Action.Internal.Pending.Relic
         //     Dispose();
         // }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            BoardViewer.Ins.ExecuteAction(new OvergrownSlugAction(Maker));
+            CommitResult(new OvergrownSlugAction(Maker));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             
-            overgrownSlug.SetCooldown();
+            _overgrownSlug.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
             Dispose();
@@ -61,7 +61,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void Dispose()
         {
-            overgrownSlug = null;
+            _overgrownSlug = null;
             BoardViewer.SelectingFunction = 0;
         }
     }

@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using Autotiles3D;
+using Third_Party.Autotiles3D.Scripts.Core;
 using UnityEditor;
 using UnityEngine;
 using ZLinq;

@@ -50,7 +50,7 @@ namespace Game.Effects
             Category = info.category;
             priority = info.priority;
 
-            Stats = new();
+            Stats = new UDictionary<EffectStat, List<int>>();
             if (strength != -1)
             {
                 SetStat(EffectStat.Strength, strength);

@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     {
         private const int TurnToActive = 4;
         private int turnsPassed = 0;
-        private int Target;
+        private readonly int Target;
         public TemporalWarpReturn(PieceLogic piece, int target) : base(12, 1, piece, "effect_temporal_warp_return")
         {
             Target = target;

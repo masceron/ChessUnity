@@ -6,8 +6,8 @@ namespace Game.Action.Skills
 {
     public class RibbonEelActive : Action
     {
-        private int sourcePiecePos;
-        private int targetPiecePos;
+        private readonly int sourcePiecePos;
+        private readonly int targetPiecePos;
         private const int BoundDuration = 1;
         
         public RibbonEelActive(int maker, int sourcePiece, int targetPiece) : base(maker)

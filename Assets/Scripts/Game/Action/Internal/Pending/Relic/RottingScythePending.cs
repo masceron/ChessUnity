@@ -8,28 +8,28 @@ namespace Game.Action.Internal.Pending.Relic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RottingScythePending : PendingAction, System.IDisposable
     {
-        private RottingScythe rottingScythe;
+        private RottingScythe _rottingScythe;
 
-        public RottingScythePending(RottingScythe rottingScythe, int maker, bool pos) : base(maker)
+        public RottingScythePending(RottingScythe rottingScythe, int maker) : base(maker)
         {
-            this.rottingScythe = rottingScythe;
+            _rottingScythe = rottingScythe;
             Maker = (ushort)maker;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
-            rottingScythe.SetCooldown();
-            BoardViewer.Ins.ExecuteAction(new RottingScytheAction(Maker));
+            _rottingScythe.SetCooldown();
+            CommitResult(new RottingScytheAction(Maker));
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
         }
         
         public void Dispose()
         {
-            rottingScythe = null;
+            _rottingScythe = null;
             BoardViewer.SelectingFunction = 0;
         }
 

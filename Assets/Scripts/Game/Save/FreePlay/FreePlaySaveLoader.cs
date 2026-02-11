@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using Game.Save.FreePlay;
 using Game.Save.Player;
 
-namespace Game.Save.Army
+namespace Game.Save.FreePlay
 {
     public static class FreePlaySaveLoader
     {

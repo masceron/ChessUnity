@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine;
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     [CreateAssetMenu(menuName = "Autotiles3D/TileGroup")]
     public class Autotiles3D_TileGroup : ScriptableObject, ISerializationCallbackReceiver

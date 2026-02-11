@@ -1,9 +1,9 @@
 using System.Collections.Generic;
+using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.Serialization;
-using Third_Party.Autotiles3D.Scripts.Utility;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     public class Autotiles3D_Anchor : MonoBehaviour
     {

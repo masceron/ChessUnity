@@ -8,8 +8,8 @@ namespace Game.Action.Skills
 {
     public class EyeshadeSculpinActive : Action, ISkills, IAIAction
     {
-        private int firstTargetPos;
-        private int secondTargetPos;
+        private readonly int firstTargetPos;
+        private readonly int secondTargetPos;
         
         public EyeshadeSculpinActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {

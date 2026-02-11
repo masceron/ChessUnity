@@ -24,11 +24,11 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                 {
-                    var (rank, file) = BoardUtils.RankFileOf(Pos);
+                    var (rank, file) = RankFileOf(Pos);
 
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                     {
-                        var index = BoardUtils.IndexOf(rankOff, fileOff);
+                        var index = IndexOf(rankOff, fileOff);
                         list.Add(new ArcticBrittleStarActive(Pos, index));
                     }
                 } else

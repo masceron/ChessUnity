@@ -9,19 +9,19 @@ namespace Game.Action.Internal.Pending.Relic
 
     public class FrostSigilPending : PendingAction, System.IDisposable
     {
-        private FrostSigil frostSigil;
+        private FrostSigil _frostSigil;
         public FrostSigilPending(int maker, FrostSigil fs) : base(maker)
         {
             Maker = (ushort)maker;
-            frostSigil = fs;
+            _frostSigil = fs;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            frostSigil.SetCooldown();
+            _frostSigil.SetCooldown();
 
-            var excute = new FrostSigilExcute(Maker, frostSigil.Color);
-            BoardViewer.Ins.ExecuteAction(excute);
+            var execute = new FrostSigilExcute(Maker, _frostSigil.Color);
+            CommitResult(execute);
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             TileManager.Ins.UnmarkAll();
@@ -32,7 +32,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void Dispose()
         {
-            frostSigil = null;
+            _frostSigil = null;
             Tile.Tile.OnPointEnterHandle = null;
         }
     }

@@ -25,7 +25,7 @@ namespace Game.Relics
                 {
                     Debug.Log(piece.Type);
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new TemporalWarpPending(piece.Pos, this);
+                    var pending = new TemporalWarpPending(piece.Pos);
                     BoardViewer.ListOf.Add(pending);
 
                     BoardViewer.Selecting = -2;

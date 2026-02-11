@@ -44,8 +44,8 @@ namespace Game.Tile
         {
             Color = color;
             var info = AssetManager.Ins.FormationData[GetFormationType()];
-            this.priority = info.priority;
-            this.category = info.formationCategory;
+            priority = info.priority;
+            category = info.formationCategory;
         }
         /// <summary>
         /// Hiện hàm này được gọi chủ động bởi FormationManager::SetFormation() nên mọi người không cần phải động tới

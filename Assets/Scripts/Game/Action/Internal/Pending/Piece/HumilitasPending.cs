@@ -18,42 +18,30 @@ namespace Game.Action.Internal.Pending.Piece
             if (pieceAI.Color != maker.Color) return -20;
             return 0;
         }
-        public static int FirstTarget;
+
+        private static int _firstTarget;
         public static int SecondTarget;
 
-        private bool isExecuting;
+        private bool _isExecuting;
         public HumilitasPending(int maker, int to) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)to;
-            isExecuting = false;
+            _isExecuting = false;
         }
-
-        // protected override void ModifyGameState()
-        // {
-        //     if (FirstTarget == null) return;
-        //     if (SecondTarget == null) return;
-        //     
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, FirstTarget), PieceOn(Maker)));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, SecondTarget), PieceOn(Maker)));
-        //     isExecuting = false;
-        //     Dispose();
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        // }
-        public override void CompleteAction()
+        
+        protected override void CompleteAction()
         {
-            var hovering = PieceOn(BoardViewer.HoveringPos);
-            UnityEngine.Debug.Log("Executing HumilitasPending" + FirstTarget);
-            if (FirstTarget == 0)
+            UnityEngine.Debug.Log("Executing HumilitasPending" + _firstTarget);
+            if (_firstTarget == 0)
             {
-
-                FirstTarget = BoardViewer.HoveringPos;
+                _firstTarget = BoardViewer.HoveringPos;
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
                 var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 5);
                 foreach (var piece in listPieces)
                 {
-                    if (piece == FirstTarget) continue;
+                    if (piece == _firstTarget) continue;
                     var newAction = new HumilitasPending(Maker, piece);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(piece);
@@ -61,13 +49,13 @@ namespace Game.Action.Internal.Pending.Piece
                 return;
             }
             SecondTarget = BoardViewer.HoveringPos;
-            BoardViewer.Ins.ExecuteAction(new HumilitasActive(Maker, FirstTarget, SecondTarget));
-            isExecuting = true;
+            CommitResult(new HumilitasActive(Maker, _firstTarget, SecondTarget));
+            _isExecuting = true;
         }
         public void Dispose()
         {
-            if (!isExecuting) return;
-            FirstTarget = -1;
+            if (!_isExecuting) return;
+            _firstTarget = -1;
             SecondTarget = -1;
             BoardViewer.SelectingFunction = 0;
         }

@@ -16,21 +16,17 @@ namespace Game.Relics
 
         public override void Activate()
         {
-            if (CurrentCooldown == 0)
+            if (CurrentCooldown != 0) return;
+            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
-                {
-                    if (piece == null || piece.Color != Color) continue;
-                    if (BoardUtils.IsOnBlackSide(piece.Pos) != Color)
-                    {
-                        TileManager.Ins.MarkAsMoveable(piece.Pos);
-                        var pending = new AdrenalineRadiatorPending(this, piece.Pos);
-                        BoardViewer.ListOf.Add(pending);
-                    }
-                }
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
+                if (piece == null || piece.Color != Color) continue;
+                if (BoardUtils.IsOnBlackSide(piece.Pos) == Color) continue;
+                TileManager.Ins.MarkAsMoveable(piece.Pos);
+                var pending = new AdrenalineRadiatorPending(this, piece.Pos);
+                BoardViewer.ListOf.Add(pending);
             }
+            BoardViewer.Selecting = -2;
+            BoardViewer.SelectingFunction = 4;
         }
 
         public override void ActiveForAI()

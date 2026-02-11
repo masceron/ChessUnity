@@ -42,7 +42,7 @@ namespace Game.AI
         /// <summary>
         /// [For UI Button] Triggers the AI to find and execute its best action.
         /// </summary>
-        public void UIMethod_PlayBestAction()
+        private void UIMethod_PlayBestAction()
         {
             var sideToMove = MatchManager.Ins.GameState.SideToMove;
             AIPlayAndExecuteBestAction(sideToMove);
@@ -84,11 +84,9 @@ namespace Game.AI
         {
             var relic = sideToMove ? MatchManager.Ins.GameState.BlackRelic : MatchManager.Ins.GameState.WhiteRelic;
 
-            if (relic != null && relic.CurrentCooldown == 0)
-            {
-                Debug.Log("Use relic " + relic.type);
-                relic.ActiveForAI();
-            }
+            if (relic is not { CurrentCooldown: 0 }) return;
+            Debug.Log("Use relic " + relic.type);
+            relic.ActiveForAI();
         }
 
         // Build snapshot of enemy actions (opposite of side)
@@ -107,7 +105,10 @@ namespace Game.AI
                 {
                     p.MoveList(list, isPlayer: false, excludeEmptyTile: false);
                 }
-                catch { }
+                catch
+                {
+                    // ignored
+                }
             }
 
             return list;

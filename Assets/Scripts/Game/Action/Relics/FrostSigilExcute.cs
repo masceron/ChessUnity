@@ -8,9 +8,9 @@ namespace Game.Action.Relics
 
     public class FrostSigilExcute : Action, IRelicAction
     {
-        private int radius = 3;
-        private bool ourSide;
-        private int probabilityBound = 25;
+        private readonly int radius = 3;
+        private readonly bool ourSide;
+        private readonly int probabilityBound = 25;
 
         public FrostSigilExcute(int maker, bool ourSide) : base(maker)
         {

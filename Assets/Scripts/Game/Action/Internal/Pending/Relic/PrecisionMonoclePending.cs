@@ -7,20 +7,20 @@ namespace Game.Action.Internal.Pending.Relic
 {
     public class PrecisionMonoclePending : PendingAction, System.IDisposable
     {
-        private PrecisionMonocle precisionMonocle;
-        public PrecisionMonoclePending(PrecisionMonocle pm, int maker, bool pos = false) : base(maker)
+        private PrecisionMonocle _precisionMonocle;
+        public PrecisionMonoclePending(PrecisionMonocle pm, int maker) : base(maker)
         {
-            precisionMonocle = pm;
+            _precisionMonocle = pm;
             Maker = (ushort)maker;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            BoardViewer.Ins.ExecuteAction(new PrecisionMonocleAction(Maker));
+            CommitResult(new PrecisionMonocleAction(Maker));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
-            precisionMonocle.SetCooldown();
+            _precisionMonocle.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
             Dispose();
@@ -28,7 +28,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void Dispose()
         {
-            precisionMonocle = null;
+            _precisionMonocle = null;
             BoardViewer.SelectingFunction = 0;
         }
     }

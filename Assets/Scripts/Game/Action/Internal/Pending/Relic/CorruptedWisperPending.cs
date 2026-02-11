@@ -9,21 +9,21 @@ namespace Game.Action.Internal.Pending.Relic
 
     public class CorruptedWisperPending : PendingAction, System.IDisposable
     {
-        private CorruptedWisper corruptedWisper;
+        private readonly CorruptedWisper _corruptedWisper;
 
         public CorruptedWisperPending(int target, CorruptedWisper corruptedWisper) : base(target)
         {
             Target = (ushort)target;
-            this.corruptedWisper = corruptedWisper;
+            _corruptedWisper = corruptedWisper;
         }
 
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             var execute = new CorruptedWisperExecute(Target);
 
-            BoardViewer.Ins.ExecuteAction(execute);
-            corruptedWisper.LevelUp();
+            CommitResult(execute);
+            _corruptedWisper.LevelUp();
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

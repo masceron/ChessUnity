@@ -28,7 +28,7 @@ namespace Game.Relics
                     if (piece == null) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new EyeOfMimicPending(this, piece.Pos, piece.Color);
+                    var pending = new EyeOfMimicPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -41,7 +41,7 @@ namespace Game.Relics
             }
         }
 
-        public override void ActiveForAI()
+        public async override void ActiveForAI()
         {
             var ourPieces = new List<PieceLogic>();
             var enemyPieces = new List<PieceLogic>();
@@ -85,39 +85,36 @@ namespace Game.Relics
                 }
             }
 
-            if (ourPieces.Count == 0)
+            switch (ourPieces.Count)
             {
-                //
-            }
-            else if (ourPieces.Count == 1)
-            {
-                ourPiece = ourPieces[0];
-            }
-            else
-            {
-                ourPiece = ourPieces[Random.Range(0, ourPieces.Count)];
-            }
-
-            if (enemyPieces.Count == 0)
-            {
-                //
-            }
-            else if (enemyPieces.Count == 1)
-            {
-                enemyPiece = enemyPieces[0];
-            }
-            else
-            {
-                enemyPiece = enemyPieces[Random.Range(0, enemyPieces.Count)];
+                case 0:
+                    break;
+                case 1:
+                    ourPiece = ourPieces[0];
+                    break;
+                default:
+                    ourPiece = ourPieces[Random.Range(0, ourPieces.Count)];
+                    break;
             }
 
-            if (ourPiece != null && enemyPiece != null)
+            switch (enemyPieces.Count)
             {
-                var ourPending = new EyeOfMimicPending(this, ourPiece.Pos, ourPiece.Color);
-                ourPending.CompleteAction();
-                var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos, enemyPiece.Color);
-                enemyPending.CompleteAction();
+                case 0:
+                    break;
+                case 1:
+                    enemyPiece = enemyPieces[0];
+                    break;
+                default:
+                    enemyPiece = enemyPieces[Random.Range(0, enemyPieces.Count)];
+                    break;
             }
+
+            if (ourPiece == null || enemyPiece == null) return;
+            
+            var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);
+            BoardViewer.Ins.ExecuteAction(await ourPending.WaitForCompletion());
+            var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos);
+            BoardViewer.Ins.ExecuteAction(await enemyPending.WaitForCompletion());
         }
     }
 }

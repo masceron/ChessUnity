@@ -1,4 +1,6 @@
-﻿namespace Game.Action.Internal.Pending
+﻿using Cysharp.Threading.Tasks;
+
+namespace Game.Action.Internal.Pending
 {
     /* Dành cho những thao tác chọn mục tiêu phức tạp, ví dụ chọn 2 mục tiêu, 
         cần logic riêng không ExecuteAction ngay sau khi chọn Target */
@@ -10,6 +12,21 @@
         protected sealed override void ModifyGameState()
         {}
 
-        public abstract void CompleteAction();
+        public UniTask<Action> WaitForCompletion()
+        {
+            _task = new UniTaskCompletionSource<Action>();
+            CompleteAction();
+
+            return _task.Task;
+        }
+
+        public void CommitResult(Action action)
+        {
+            _task.TrySetResult(action);
+        }
+
+        protected abstract void CompleteAction();
+
+        private UniTaskCompletionSource<Action> _task;
     }
 }

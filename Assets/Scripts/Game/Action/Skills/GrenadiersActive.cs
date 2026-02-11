@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            BoardUtils.SetFormation(Target, new NavalMines(true, PieceOn(Maker).Color));
+            SetFormation(Target, new NavalMines(true, PieceOn(Maker).Color));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
@@ -46,7 +46,7 @@ namespace Game.Action.Skills
             var random = new System.Random();
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
             
-            BoardUtils.SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
+            SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

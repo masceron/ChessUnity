@@ -449,7 +449,7 @@ namespace Game.Common
         public static void DestroyTile(int index)
         {
             TileManager.Ins.DestroyTile(index);
-            BoardUtils.RemoveFormation(index);
+            RemoveFormation(index);
             if (PieceOn(index) != null)
             {
                 ActionManager.EnqueueAction(new KillPiece(index));

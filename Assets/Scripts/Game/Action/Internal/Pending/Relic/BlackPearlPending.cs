@@ -9,11 +9,11 @@ namespace Game.Action.Internal.Pending.Relic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BlackPearlPending : PendingAction, System.IDisposable, IRelicAction
     {
-        private BlackPearl blackPearl;
+        private BlackPearl _blackPearl;
         
-        public BlackPearlPending(BlackPearl cp, int maker, bool pos = false) : base(maker)
+        public BlackPearlPending(BlackPearl cp, int maker) : base(maker)
         {
-            blackPearl = cp;
+            _blackPearl = cp;
             Target = (ushort)maker;
         }
 
@@ -67,17 +67,17 @@ namespace Game.Action.Internal.Pending.Relic
         //         _ => null
         //     };
         // }
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             // ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == blackPearl.Color
             //     ? new ApplyEffect(GetRandomBuffEffect())
             //     : new ApplyEffect(GetRandomDebuffEffect()));
 
-            BoardViewer.Ins.ExecuteAction(new BlackPearlExecute(Target, blackPearl.Color));
+            CommitResult(new BlackPearlExecute(Target, _blackPearl.Color));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
-            blackPearl.SetCooldown();
+            _blackPearl.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
@@ -86,7 +86,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void Dispose()
         {
-            blackPearl = null;
+            _blackPearl = null;
             BoardViewer.SelectingFunction = 0;
         }
 

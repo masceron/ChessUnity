@@ -10,28 +10,26 @@ namespace Game.Action.Internal.Pending.Relic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MethaneCasingPending : PendingAction, System.IDisposable
     {
-        private MethaneCasing methaneCasing;
+        private MethaneCasing _methaneCasing;
 
         public MethaneCasingPending(MethaneCasing methaneCasing, int maker) : base(maker)
         {
-            this.methaneCasing = methaneCasing;
+            _methaneCasing = methaneCasing;
             Maker = (ushort)maker;
         }
 
-        
-
         public void Dispose()
         {
-            methaneCasing = null;
+            _methaneCasing = null;
             BoardViewer.SelectingFunction = 0;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            methaneCasing.SetCooldown();
+            _methaneCasing.SetCooldown();
 
             var excute = new MethaneCasingExcute(Maker);
-            BoardViewer.Ins.ExecuteAction(excute);
+            CommitResult(excute);
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

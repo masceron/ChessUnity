@@ -1,21 +1,21 @@
-using Game.Action;
-using Game.Action.Relics;
 using Game.Common;
 
-public class TimelessHourglassExcute : Action, IRelicAction
+namespace Game.Action.Relics
 {
-    private bool relicColor;
-    private bool targetColor;
-    public TimelessHourglassExcute(int maker, bool relicColor, int target) : base(maker)
+    public class TimelessHourglassExcute : Action, IRelicAction
     {
-        this.relicColor = relicColor;
-        Target = target;
-        targetColor = BoardUtils.PieceOn(target).Color;
-    }
+        private readonly bool relicColor;
+        private readonly bool targetColor;
+        public TimelessHourglassExcute(int maker, bool relicColor, int target) : base(maker)
+        {
+            this.relicColor = relicColor;
+            Target = target;
+            targetColor = BoardUtils.PieceOn(target).Color;
+        }
 
-    protected override void ModifyGameState()
-    {
-         if(targetColor == relicColor)
+        protected override void ModifyGameState()
+        {
+            if(targetColor == relicColor)
             {
                 BoardUtils.PieceOn(Target).SkillCooldown = (sbyte)UnityEngine.Mathf.Max(0, BoardUtils.PieceOn(Target).SkillCooldown);
             }
@@ -23,5 +23,6 @@ public class TimelessHourglassExcute : Action, IRelicAction
             {
                 BoardUtils.PieceOn(Target).SkillCooldown += 2;
             }
+        }
     }
 }

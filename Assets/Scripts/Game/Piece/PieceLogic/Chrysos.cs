@@ -16,7 +16,7 @@ namespace Game.Piece.PieceLogic
         public Chrysos(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SlayersCoin(this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
                 if (isPlayer)

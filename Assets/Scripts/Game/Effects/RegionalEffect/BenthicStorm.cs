@@ -5,8 +5,8 @@ namespace Game.Effects.RegionalEffect
 {
     public class BenthicStorm : RegionalEffect
     {
-        private int startingSizeX;
-        private int startingSizeY;
+        private readonly int startingSizeX;
+        private readonly int startingSizeY;
         private const int TurnToActive = 10;
         private int numTurns;
 

@@ -1,10 +1,8 @@
-﻿using Game.Effects;
-using Game.Action;
+﻿using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
-using Game.Action.Captures;
 using static Game.Common.BoardUtils;
 
-namespace Assets.Scripts.Game.Effects.Traits
+namespace Game.Effects.Traits
 {
     public class RustyParrotfishPassive : Effect, IAfterPieceActionEffect
     {
@@ -13,9 +11,9 @@ namespace Assets.Scripts.Game.Effects.Traits
             
         }
 
-        public void OnCallAfterPieceAction(Action action)
+        public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action == null || action is not ICaptures) return;
+            if (action is not ICaptures) return;
 
             var target = PieceOn(action.Target);
 

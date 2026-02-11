@@ -8,11 +8,11 @@ namespace Game.Action.Relics
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class StormCapacitorExcute : Action, IRelicAction
     {
-        private int rank;
-        private int file;
-        private int size;
-        private Corner corner;
-        private bool Color;
+        private readonly int rank;
+        private readonly int file;
+        private readonly int size;
+        private readonly Corner corner;
+        private readonly bool Color;
         
         public StormCapacitorExcute(int rank, int file, int size, Corner corner, bool color) : base(-1)
         {

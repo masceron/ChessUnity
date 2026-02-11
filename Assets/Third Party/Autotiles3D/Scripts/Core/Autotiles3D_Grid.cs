@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-using UnityEngine;
 using System;
-#if UNITY_EDITOR
+using System.Collections.Generic;
 using UnityEditor;
-#endif
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     public enum GridMode
     {
@@ -96,16 +94,16 @@ namespace Autotiles3D
         }
         #endregion
 #if UNITY_EDITOR
-        Color outlineGridColor = new Color(0.811f, 0.811f, 0.811f, 0.686f);
-        Color red = new Color(1.000f, 0.000f, 0.000f, 0.686f);
-        Color green = new Color(0.172f, 1.000f, 0.000f, 0.686f);
-        Color blue = new Color(0.000f, 0.568f, 1.000f, 0.686f);
+        readonly Color outlineGridColor = new Color(0.811f, 0.811f, 0.811f, 0.686f);
+        readonly Color red = new Color(1.000f, 0.000f, 0.000f, 0.686f);
+        readonly Color green = new Color(0.172f, 1.000f, 0.000f, 0.686f);
+        readonly Color blue = new Color(0.000f, 0.568f, 1.000f, 0.686f);
         public void DrawLevelGrid(int controlID, bool drawCurrentLayer = true)
         {
             var offset = -Vector3.one * 0.5f;
 
             var drawWidth = (float)Width;
-            var halfWidth = (float)Width / 2f;
+            var halfWidth = Width / 2f;
 
             //Draw Color Handles
             Handles.color = red;

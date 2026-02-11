@@ -42,7 +42,7 @@ namespace Game.Relics
             }
         }
 
-        public override void ActiveForAI()
+        public async override void ActiveForAI()
         {
             var listPieces = new List<PieceLogic>();
 
@@ -66,13 +66,13 @@ namespace Game.Relics
             );
             
             var topValue = listPieces[0].GetValueForAI();
-            var topGroup = listPieces.Where(p => p.GetValueForAI() == topValue).ToList();
+            var topGroup = listPieces.Where(pieceLogic => pieceLogic.GetValueForAI() == topValue).ToList();
             var idx = UnityEngine.Random.Range(0, topGroup.Count);
             
             var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
             if (pending is PendingAction p)
             {
-                p.CompleteAction();
+                BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
             }
         }
     }

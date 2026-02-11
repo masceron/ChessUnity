@@ -11,7 +11,6 @@ namespace Game.AI.Consider
     {
         public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight, PieceLogic maker)
         {
-            if (action == null) return 0f;
             if (action is not ISkills) return 0f;
 
             float score = weight;

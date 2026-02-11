@@ -34,7 +34,7 @@ namespace Game.Relics
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
 
-                Tile.Tile.OnPointEnterHandle = (thisTile) =>
+                Tile.Tile.OnPointEnterHandle = thisTile =>
                 {
                     if (hoveringTile == thisTile) return;
                     if (hoveringTile != null)

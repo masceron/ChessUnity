@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
 {
     public class ThreadPipefishEffect : Effect, IEndTurnEffect, IOnApply, IOnRemove
     {
-        private PieceLogic Target;
+        private readonly PieceLogic Target;
         private int distance; // distance between 2 connected pieces
         private const int MaxDistance = 3;
         public ThreadPipefishEffect(PieceLogic piece, PieceLogic target) : base(-1, -1, piece, "effect_thread_pipefish_effect")

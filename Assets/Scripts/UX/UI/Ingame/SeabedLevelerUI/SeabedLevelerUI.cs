@@ -12,7 +12,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
     {
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject formationItem;
-        private List<int> formationList = new();
+        private readonly List<int> formationList = new();
 
 
         private void OnEnable()

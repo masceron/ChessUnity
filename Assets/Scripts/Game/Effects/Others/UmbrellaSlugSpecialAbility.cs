@@ -10,7 +10,7 @@ namespace Game.Effects.Others
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UmbrellaSlugSpecialAbility : Effect, IAfterPieceActionEffect
     {
-        private int probability = 100;
+        private readonly int probability = 100;
         public UmbrellaSlugSpecialAbility(PieceLogic piece) : base(-1, 1, piece, "effect_umbrella_slug_special_ability")
         {
             

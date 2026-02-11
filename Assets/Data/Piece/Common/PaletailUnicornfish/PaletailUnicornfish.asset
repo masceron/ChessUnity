@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PaletailUnicornfish
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_paletail_unicornfish
-  prefab: {fileID: 0}
+  prefab: {fileID: 8173648701499371763, guid: 82a8471a2382ed5488a3c232bf1281c7, type: 3}
   rank: 0
   moveRange: 0
   attackRange: 0

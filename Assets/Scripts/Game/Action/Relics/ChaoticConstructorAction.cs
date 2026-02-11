@@ -20,7 +20,7 @@ namespace Game.Action.Relics
             for (var i = 0; i < BoardSize; ++i)
             {
                 var p = PieceOn(i);
-                if (p == null || p.PieceRank != Game.Piece.PieceRank.Construct) continue;
+                if (p == null || p.PieceRank != Piece.PieceRank.Construct) continue;
 
                 _storedPos.Add(p.Pos);
                 ActionManager.EnqueueAction(new KillPiece(p.Pos));

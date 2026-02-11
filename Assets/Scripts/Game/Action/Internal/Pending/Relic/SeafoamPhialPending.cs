@@ -10,21 +10,21 @@ namespace Game.Action.Internal.Pending.Relic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeafoamPhialPending : PendingAction, System.IDisposable
     {
-        private SeafoamPhial seafoamPhial;
+        private SeafoamPhial _seafoamPhial;
 
-        public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker, bool pos) : base(maker)
+        public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker) : base(maker)
         {
-            this.seafoamPhial = seafoamPhial;
+            _seafoamPhial = seafoamPhial;
             Maker = (ushort)maker;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             
-            BoardViewer.Ins.ExecuteAction(new SeafoamPhialAction(Maker));
-            seafoamPhial.SetCooldown();
+            CommitResult(new SeafoamPhialAction(Maker));
+            _seafoamPhial.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic(); 
         }
@@ -44,7 +44,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public void Dispose()
         {
-            seafoamPhial = null;
+            _seafoamPhial = null;
             BoardViewer.SelectingFunction = 0;
         }
     }

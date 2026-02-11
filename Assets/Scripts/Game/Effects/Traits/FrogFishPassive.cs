@@ -20,7 +20,7 @@ namespace Game.Effects.Traits
         {
             if (action.Maker != Piece.Pos) return;
             if (action.Maker == action.Target) return;
-            var targetFormation = BoardUtils.GetFormation(action.Target);
+            var targetFormation = GetFormation(action.Target);
             if (targetFormation == null || targetFormation is not PredatorLair) return;
             
             var (rank, file) = RankFileOf(action.Target);

@@ -10,20 +10,20 @@ namespace Game.Action.Internal.Pending.Relic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RayStingerPending : PendingAction, System.IDisposable
     {
-        private RayStinger rayStinger;
+        private RayStinger _rayStinger;
 
         public RayStingerPending(RayStinger seafoamPhial, int target) : base(target)
         {
-            rayStinger = seafoamPhial;
+            _rayStinger = seafoamPhial;
             Target = (ushort)target;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            rayStinger.SetCooldown();
+            _rayStinger.SetCooldown();
 
-            var excute = new RayStingerExcute(Target);
-            BoardViewer.Ins.ExecuteAction(excute);
+            var execute = new RayStingerExcute(Target);
+            CommitResult(execute);
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -31,7 +31,7 @@ namespace Game.Action.Internal.Pending.Relic
         }
         public void Dispose()
         {
-            rayStinger = null;
+            _rayStinger = null;
             BoardViewer.SelectingFunction = 0;
         }
     }

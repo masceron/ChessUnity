@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
-using Autotiles3D;
+using Third_Party.Autotiles3D.Scripts.Core;
 using UnityEditor;
 using UnityEngine;
 

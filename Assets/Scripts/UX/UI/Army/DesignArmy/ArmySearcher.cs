@@ -35,8 +35,8 @@ namespace UX.UI.Army.DesignArmy
         public virtual void Load()
         {
             data = AssetManager.Ins.PieceData;
-            ArmyDesign.Ins.board.OnAddTroop += (_) => FilterByCondition();
-            ArmyDesign.Ins.board.OnRemoveTroop += (_) => FilterByCondition();
+            ArmyDesign.Ins.board.OnAddTroop += _ => FilterByCondition();
+            ArmyDesign.Ins.board.OnRemoveTroop += _ => FilterByCondition();
             lastSearchResult = data.Values.ToList();
             FilterByCondition();
             SearchByKeyword("");

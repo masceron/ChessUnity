@@ -38,11 +38,11 @@ namespace Game.Relics
             }
         }
 
-        public override void ActiveForAI()
+        public async override void ActiveForAI()
         {
             // Gather all pieces
             var pieces = MatchManager.Ins.GameState.PieceBoard
-                .Where(p => p != null)
+                .Where(pieceLogic => pieceLogic != null)
                 .ToList();
 
             if (pieces.Count == 0) return;
@@ -65,14 +65,14 @@ namespace Game.Relics
 
             if (candidates.Count == 0) return;
             
-            var bestScore = candidates.Max((p) => p.GetValueForAI());
-            var top = candidates.Where(p => p.GetValueForAI() == bestScore).ToList();
+            var bestScore = candidates.Max(pieceLogic => pieceLogic.GetValueForAI());
+            var top = candidates.Where(pieceLogic => pieceLogic.GetValueForAI() == bestScore).ToList();
             var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
             var pending = new TimelessHourglassPending(this, chosen.Pos);
             if (pending is PendingAction p)
             {
-                p.CompleteAction();
+                BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
             }
         }
     

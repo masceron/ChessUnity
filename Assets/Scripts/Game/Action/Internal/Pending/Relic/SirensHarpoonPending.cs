@@ -1,3 +1,4 @@
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
@@ -10,18 +11,18 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SirensHarpoon _sirensHarpoon;
 
-        public SirensHarpoonPending(SirensHarpoon s, int target, bool pos = false) : base(s.CommanderPiece.Pos)
+        public SirensHarpoonPending(SirensHarpoon s, int target) : base(s.CommanderPiece.Pos)
         {
             _sirensHarpoon = s;
 
             Target = (ushort)target;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             _sirensHarpoon.SetCooldown();
-            var excute = new SirenHarpoonExcute(Maker, Target);
-            BoardViewer.Ins.ExecuteAction(excute);
+            var execute = new SirenHarpoonExcute(Maker, Target);
+            CommitResult(execute);
 
             BoardViewer.Ins.Unmark();
             BoardViewer.Selecting = -1;

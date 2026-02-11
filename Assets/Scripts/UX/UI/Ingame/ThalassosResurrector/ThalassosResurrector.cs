@@ -1,4 +1,5 @@
-﻿using Game.Action.Skills;
+﻿using Game.Action.Internal.Pending.Piece;
+using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece;
@@ -13,12 +14,14 @@ namespace UX.UI.Ingame.ThalassosResurrector
     {
         [SerializeField] private GameObject selector;
         [SerializeField] private GameObject item;
-        private int caller;
-        private int to;
-        public void Load(int c, int t)
+        private int _caller;
+        private int _to;
+        private ThalassosResurrectCandidate _cd;
+        public void Load(int c, int t, ThalassosResurrectCandidate cd)
         {
-            caller = c;
-            to = t;
+            _caller = c;
+            _to = t;
+            _cd = cd;
             var gameState = MatchManager.Ins.GameState;
             var pieceCaller = BoardUtils.PieceOn(c);
             var collection = !pieceCaller.Color ? gameState.WhiteCaptured : gameState.BlackCaptured;
@@ -66,7 +69,7 @@ namespace UX.UI.Ingame.ThalassosResurrector
 
         public void Choose(string type)
         {
-            MatchManager.Ins.InputProcessor.ExecuteAction(new ThalassosResurrect(caller, to, type));
+            _cd.CommitResult(new ThalassosResurrect(_caller, _to, type));
             Disable();
         }
     }

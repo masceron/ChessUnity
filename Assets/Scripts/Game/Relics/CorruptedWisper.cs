@@ -14,7 +14,7 @@ namespace Game.Relics
     {
         public readonly CorruptedWisperCharge corruptedWisperCharge;
         private int currentLevel;
-        private List<PieceRank> possibleRank;
+        private readonly List<PieceRank> possibleRank;
         public CorruptedWisper(RelicConfig config) : base(config)
         {
             type = config.Type;

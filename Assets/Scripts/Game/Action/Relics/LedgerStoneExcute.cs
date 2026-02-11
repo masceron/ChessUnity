@@ -6,7 +6,7 @@ namespace Game.Action.Relics
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class LedgerStoneExcute : Action, IRelicAction
     {
-        private bool isFirstOption;
+        private readonly bool isFirstOption;
         
         public LedgerStoneExcute(bool isFirstOption) : base(-1)
         {

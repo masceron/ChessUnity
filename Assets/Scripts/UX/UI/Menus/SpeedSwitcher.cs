@@ -5,7 +5,7 @@ namespace UX.UI.Menus
 {
     public class SpeedSwitcher : MonoBehaviour
     {
-        float[] values = { 0.25f, 0.5f, 1f };
+        readonly float[] values = { 0.25f, 0.5f, 1f };
         private int index = 0;
         [SerializeField] private TMP_Text delayTMP;
         public void NextValue()

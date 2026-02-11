@@ -8,25 +8,25 @@ namespace Game.Action.Internal.Pending.Relic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AdrenalineRadiatorPending : PendingAction, System.IDisposable
     {
-        private AdrenalineRadiator relic;
+        private AdrenalineRadiator _relic;
         public AdrenalineRadiatorPending(AdrenalineRadiator relic, int maker) : base(maker)
         {
-            this.relic = relic;
+            _relic = relic;
             Maker = (ushort)maker;
         }
 
         public void Dispose()
         {
-            relic = null;
+            _relic = null;
             BoardViewer.SelectingFunction = 0;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            relic.SetCooldown();
+            _relic.SetCooldown();
 
-            var excute = new AdrenalineRadiatorExcute(Maker);
-            BoardViewer.Ins.ExecuteAction(excute);
+            var execute = new AdrenalineRadiatorExcute(Maker);
+            CommitResult(execute);
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

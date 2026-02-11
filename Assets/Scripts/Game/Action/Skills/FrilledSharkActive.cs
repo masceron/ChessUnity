@@ -9,7 +9,9 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrilledSharkActive: Action, ISkills
     {
-        int drank, dfile;
+        readonly int drank;
+        readonly int dfile;
+
         public FrilledSharkActive(int from, int drank, int dfile) : base(from)
         {
             this.dfile = dfile;

@@ -1,5 +1,4 @@
 ﻿using Game.Managers;
-using Game.Relics;
 using UX.UI.Ingame;
 using Game.Action.Relics;
 using Game.Piece.PieceLogic.Commons;
@@ -9,20 +8,17 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class TemporalWarpPending : PendingAction, System.IDisposable, IInternal
+    public class TemporalWarpPending : PendingAction, System.IDisposable
     {
-        private TemporalWarp _temporalWarp;
-
         private static PieceLogic _firstTarget;
         private static int _secondPos;
 
-        public TemporalWarpPending(int maker, TemporalWarp tw) : base(maker)
+        public TemporalWarpPending(int maker) : base(maker)
         {
             Maker = (ushort)maker;
-            _temporalWarp = tw;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
             
@@ -39,7 +35,7 @@ namespace Game.Action.Internal.Pending.Relic
             TileManager.Ins.UnmarkAll();
 
             var execute = new TemporalWarpExecute(_firstTarget.Pos, _secondPos);
-            BoardViewer.Ins.ExecuteAction(execute);
+            CommitResult(execute);
             ResetTargets();
 
             BoardViewer.Selecting = -1;
@@ -89,7 +85,6 @@ namespace Game.Action.Internal.Pending.Relic
         public void Dispose()
         {
             BoardViewer.SelectingFunction = 0;
-            _temporalWarp = null;
 
             Tile.Tile.OnPointEnterHandle = null;
         }

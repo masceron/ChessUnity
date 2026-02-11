@@ -9,22 +9,22 @@ namespace Game.Action.Internal.Pending.Piece
 	[Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 	public class RedtailParrotfishPending : PendingAction, System.IDisposable
 	{
-		public static int formationPos = -1;
-		public static int moveTo = -1;
-		private readonly PieceLogic redtail;
+		private static int _formationPos = -1;
+		private static int _moveTo = -1;
+		private readonly PieceLogic _redtail;
 
 		public RedtailParrotfishPending(int maker, int target) : base(maker)
 		{
 			Maker = (ushort)maker;
 			Target = (ushort)target;
-			redtail = PieceOn(Maker);
+			_redtail = PieceOn(Maker);
 		}
 
-		public override void CompleteAction()
+		protected override void CompleteAction()
 		{
-			if (formationPos == -1)
+			if (_formationPos == -1)
 			{
-				formationPos = Target;
+				_formationPos = Target;
 				TileManager.Ins.UnmarkAll();
 				BoardViewer.ListOf.Clear();
 				for (var i = 0; i < BoardSize; ++i)
@@ -32,17 +32,16 @@ namespace Game.Action.Internal.Pending.Piece
 					if (!IsActive(i)) { return; }
 					var formation = GetFormation(i);
 					if (formation != null) { continue; }
-					if (IsOnBlackSide(Maker) == redtail.Color)
-					{
-						BoardViewer.ListOf.Add(new RedtailParrotfishPending(Maker, i));
-						TileManager.Ins.MarkAsMoveable(i);
-					}
+
+					if (IsOnBlackSide(Maker) != _redtail.Color) continue;
+					BoardViewer.ListOf.Add(new RedtailParrotfishPending(Maker, i));
+					TileManager.Ins.MarkAsMoveable(i);
 				}
 			}
 			else
 			{
-				moveTo = Target;
-				BoardViewer.Ins.ExecuteAction(new RedtailParrotfishActive(Maker, formationPos, moveTo));
+				_moveTo = Target;
+				CommitResult(new RedtailParrotfishActive(Maker, _formationPos, _moveTo));
 				Reset();
 			}
 		}
@@ -60,8 +59,8 @@ namespace Game.Action.Internal.Pending.Piece
 
 		private static void Reset()
 		{
-			formationPos = -1;
-			moveTo = -1;
+			_formationPos = -1;
+			_moveTo = -1;
 		}
 	}
 }

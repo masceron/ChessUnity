@@ -3,7 +3,7 @@ using UnityEngine;
 #if UNITY_EDITOR
 #endif
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     public class Autotiles3D_BlockBehaviour : MonoBehaviour
     {

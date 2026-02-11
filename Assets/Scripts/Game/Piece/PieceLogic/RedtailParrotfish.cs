@@ -39,12 +39,12 @@ namespace Game.Piece.PieceLogic
                     var listB = new System.Collections.Generic.List<int>();
                     var bestValue = int.MinValue;
 
-                    for (int i = 0; i < BoardSize; ++i)
+                    for (var i = 0; i < BoardSize; ++i)
                     {
                         if (!IsActive(i)) { continue; }
 
-                        bool isOurSide = IsOnBlackSide(i) == Color;
-                        Formation formation = GetFormation(i);
+                        var isOurSide = IsOnBlackSide(i) == Color;
+                        var formation = GetFormation(i);
 
                         if (formation == null)
                         {
@@ -58,7 +58,7 @@ namespace Game.Piece.PieceLogic
                         if (isOurSide) { continue; }
                         if (formation.category != FormationCategory.Positive) { continue; }
 
-                        int value = formation.GetValueForAI();
+                        var value = formation.GetValueForAI();
                         if (value > bestValue)
                         {
                             bestValue = value;
@@ -77,7 +77,7 @@ namespace Game.Piece.PieceLogic
                         ? listA[0]
                         : listA[Random.Range(0, listA.Count)];
 
-                    int chosenTarget = listB.Count == 1
+                    var chosenTarget = listB.Count == 1
                         ? listB[0]
                         : listB[Random.Range(0, listB.Count)];
 

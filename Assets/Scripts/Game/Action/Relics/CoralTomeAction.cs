@@ -5,8 +5,8 @@ namespace Game.Action.Relics
 {
     public class CoralTomeAction : Action, IRelicAction
     {
-        private string pieceType;
-        private bool relicColor;
+        private readonly string pieceType;
+        private readonly bool relicColor;
         
         public CoralTomeAction(bool color, string type, int maker) : base(maker)
         {

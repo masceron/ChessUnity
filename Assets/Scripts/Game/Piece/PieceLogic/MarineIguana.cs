@@ -13,7 +13,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MarineIguana : Commons.PieceLogic, IPieceWithSkill
     {
-        private int skillRadius = 4;
+        private readonly int skillRadius = 4;
         public MarineIguana(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));

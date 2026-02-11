@@ -3,6 +3,7 @@ using static Game.Common.BoardUtils;
 using UX.UI.Ingame;
 using Game.Managers;
 using Game.Action.Skills;
+using ZLinq;
 
 // <-- thêm để dùng LINQ
 
@@ -11,48 +12,42 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TemperantiaPending : PendingAction, System.IDisposable
     {
-        public static int ally = -1;
-        public static int enemy = -1; // -1 nếu chưa chọn enemy
-        private PieceLogic temperantia;
+        private static int _ally = -1;
+        private static int _enemy = -1; // -1 nếu chưa chọn enemy
+        private readonly PieceLogic _temperantia;
         public TemperantiaPending(int maker, int target) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)target;
-            temperantia = PieceOn(Maker);
+            _temperantia = PieceOn(Maker);
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            if (ally == -1 || enemy == -1)
+            if (_ally == -1 || _enemy == -1)
             {
-                if (PieceOn(Target).Color == temperantia.Color)
+                if (PieceOn(Target).Color == _temperantia.Color)
                 {
-                    ally = Target;
-                    foreach(var pending in BoardViewer.ListOf)
+                    _ally = Target;
+                    foreach (var pending in BoardViewer.ListOf.Where(pending => PieceOn(pending.Target).Color == _temperantia.Color))
                     {
-                        if (PieceOn(pending.Target).Color == temperantia.Color)
-                        {
-                            TileManager.Ins.UnMark(pending.Target);
-                        }
+                        TileManager.Ins.UnMark(pending.Target);
                     }
                 }
                 else
                 {
-                    enemy = Target;
-                    foreach(var pending in BoardViewer.ListOf)
+                    _enemy = Target;
+                    foreach (var pending in BoardViewer.ListOf.Where(pending => PieceOn(pending.Target).Color != _temperantia.Color))
                     {
-                        if (PieceOn(pending.Target).Color != temperantia.Color)
-                        {
-                            TileManager.Ins.UnMark(pending.Target);
-                        }
+                        TileManager.Ins.UnMark(pending.Target);
                     }
                 }
             }
             else
             {
-                BoardViewer.Ins.ExecuteAction(new TemperantiaSwap(Maker, ally, enemy));
-                ally = -1;
-                enemy = -1;
+                CommitResult(new TemperantiaSwap(Maker, _ally, _enemy));
+                _ally = -1;
+                _enemy = -1;
             }
         }
         public int AIPenaltyValue(PieceLogic p)
@@ -61,8 +56,8 @@ namespace Game.Action.Internal.Pending.Piece
         }
         public void Dispose()
         {
-            ally = -1;
-            enemy = -1;
+            _ally = -1;
+            _enemy = -1;
             BoardViewer.SelectingFunction = 0;
         }
     }

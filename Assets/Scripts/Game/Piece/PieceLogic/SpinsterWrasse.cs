@@ -26,7 +26,7 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new SpinsterWrassePending(Pos, idx, Color));
+                        list.Add(new SpinsterWrassePending(Pos, idx));
                     }
                 }
                 else

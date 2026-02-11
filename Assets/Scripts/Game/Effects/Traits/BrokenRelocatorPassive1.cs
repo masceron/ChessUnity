@@ -1,18 +1,18 @@
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using System.Collections.Generic;
 
-namespace Game.Effects.Augmentation
+namespace Game.Effects.Traits
 {
     public class BrokenRelocatorPassive : Effect, IAfterPieceActionEffect, IOnApply
     {
         private Effect Relentless;
         private const int Radius = 5;
-        private List<int> possiblePositions = new();
+        private readonly List<int> possiblePositions = new();
         public BrokenRelocatorPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_broken_relocator_passive")
         { }
 

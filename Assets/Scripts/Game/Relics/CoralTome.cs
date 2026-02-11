@@ -1,5 +1,4 @@
 ﻿using Game.Relics.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Ingame.CoralTome;
 
@@ -17,18 +16,7 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                var ui = Object.FindAnyObjectByType<CoralTomeUI>(FindObjectsInactive.Include);
-
-                if (!ui)
-                {
-                    var canvas = Object.FindAnyObjectByType<BoardViewer>(FindObjectsInactive.Exclude);
-                    ui = Object.Instantiate(UIHolder.Ins.Get(IngameSubmenus.CoralTomeUI), canvas.transform)
-                        .GetComponent<CoralTomeUI>();
-                }
-                else
-                {
-                    ui.gameObject.SetActive(true);
-                }
+                var ui = BoardViewer.Ins.GetOrInstantiateUI<CoralTomeUI>(IngameSubmenus.CoralTomeUI);
 
                 ui.Load();
             }

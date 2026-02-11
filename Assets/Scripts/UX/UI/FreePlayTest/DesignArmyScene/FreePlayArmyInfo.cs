@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UX.UI.FreePlayTest
+namespace UX.UI.FreePlayTest.DesignArmyScene
 {
     public class FreePlayArmyInfo: MonoBehaviour
     {

@@ -13,17 +13,15 @@ namespace Game.Action.Internal.Pending.Relic
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
-        private bool Color;
-        private MangroveCharm mangroveCharm;
-        public MangroveCharmPending(MangroveCharm e, int Target, bool color) : base(-1)
+        private MangroveCharm _mangroveCharm;
+        public MangroveCharmPending(MangroveCharm e, int target) : base(-1)
         {
-            mangroveCharm = e;
-            Target = (ushort)Target;
-            Maker = (ushort)Target;
-            Color = color;
+            _mangroveCharm = e;
+            target = (ushort)target;
+            Maker = (ushort)target;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
             if (FirstTarget == null) 
@@ -36,9 +34,9 @@ namespace Game.Action.Internal.Pending.Relic
             }
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-            BoardViewer.Ins.ExecuteAction(new MangroveCharmExcute((ushort)FirstTarget.Pos, (ushort)SecondTarget.Pos));
+            CommitResult(new MangroveCharmExcute(FirstTarget.Pos, SecondTarget.Pos));
 
-            mangroveCharm.SetCooldown();
+            _mangroveCharm.SetCooldown();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.UpdateRelic();
@@ -56,7 +54,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             ResetTargets();
 
-            mangroveCharm = null;
+            _mangroveCharm = null;
 
             BoardViewer.SelectingFunction = 0;
         }
