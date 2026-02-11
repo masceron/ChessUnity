@@ -4,7 +4,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class EpauletteSharkActive : Action, ISkills, IAIAction
+    public class EpauletteSharkActive : Action, ISkills
     {
         public EpauletteSharkActive(int maker, int target) : base(maker)
         {
@@ -16,11 +16,6 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new KillPiece(Target));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-        
-        public void CompleteActionForAI()
-        {
-            
         }
 
         public int AIPenaltyValue(PieceLogic maker)

@@ -7,7 +7,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChamberedNautilusActive : Action, ISkills, IAIAction
+    public class ChamberedNautilusActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -26,11 +26,6 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, PieceOn(Target)), PieceOn(Maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
-
-        public void CompleteActionForAI()
-        {
-            
         }
     }
 }

@@ -14,7 +14,7 @@ using ZLinq;
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate: PendingAction, ISkills, IAIAction
+    public class ChrysosUpgradeCandidate: PendingAction, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {
@@ -61,50 +61,50 @@ namespace Game.Action.Internal.Pending.Piece
         {
             MatchManager.Ins.InputProcessor.ExecuteAction(new ChrysosUpgrade(Maker, new PieceConfig(type, p.Color, p.Pos), cost));
         }
-        public void CompleteActionForAI()
-        {
-            //Implement for AI automatically
-            var hasElite = false;
-            var hasCommon = false;
-            var hasSwarm = false;
-            var hasChampion = false;
+        // public void CompleteActionForAI()
+        // {
+        //     //Implement for AI automatically
+        //     var hasElite = false;
+        //     var hasCommon = false;
+        //     var hasSwarm = false;
+        //     var hasChampion = false;
 
-            for (var i = 0; i < BoardUtils.BoardSize; ++i)
-            {
-                var p = BoardUtils.PieceOn(i);
-                if (p == null || p.Color != BoardUtils.PieceOn(Maker).Color) continue;
-                allyPieces.Add(p);
-                if (p.PieceRank == PieceRank.Champion) hasChampion = true;
-                if (p.PieceRank == PieceRank.Elite) hasElite = true;
-                if (p.PieceRank == PieceRank.Common) hasCommon = true;
-                if (p.PieceRank == PieceRank.Swarm) hasSwarm = true;
-            }
+        //     for (var i = 0; i < BoardUtils.BoardSize; ++i)
+        //     {
+        //         var p = BoardUtils.PieceOn(i);
+        //         if (p == null || p.Color != BoardUtils.PieceOn(Maker).Color) continue;
+        //         allyPieces.Add(p);
+        //         if (p.PieceRank == PieceRank.Champion) hasChampion = true;
+        //         if (p.PieceRank == PieceRank.Elite) hasElite = true;
+        //         if (p.PieceRank == PieceRank.Common) hasCommon = true;
+        //         if (p.PieceRank == PieceRank.Swarm) hasSwarm = true;
+        //     }
 
-            if (allyPieces.Count == 0) return;
+        //     if (allyPieces.Count == 0) return;
             
-            if (hasElite && _chrysos.Coin >= 5)
-            {
-                HandleUpgrade(5);
-                return;
-            }
+        //     if (hasElite && _chrysos.Coin >= 5)
+        //     {
+        //         HandleUpgrade(5);
+        //         return;
+        //     }
 
-            if (hasCommon && _chrysos.Coin >= 3)
-            {
-                HandleUpgrade(3);
-                return;
-            }
+        //     if (hasCommon && _chrysos.Coin >= 3)
+        //     {
+        //         HandleUpgrade(3);
+        //         return;
+        //     }
 
-            if (hasSwarm && _chrysos.Coin >= 1)
-            {
-                HandleUpgrade(1);
-                return;
-            }
+        //     if (hasSwarm && _chrysos.Coin >= 1)
+        //     {
+        //         HandleUpgrade(1);
+        //         return;
+        //     }
 
-            if (hasChampion && _chrysos.Coin >= 6)
-            {
-                HandleUpgrade(6);
-            }
-        }
+        //     if (hasChampion && _chrysos.Coin >= 6)
+        //     {
+        //         HandleUpgrade(6);
+        //     }
+        // }
 
         private void HandleUpgrade(byte cost)
         {

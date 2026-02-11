@@ -9,7 +9,7 @@ using ZLinq;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GrenadiersActive: Action, ISkills, IAIAction
+    public class GrenadiersActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -30,24 +30,24 @@ namespace Game.Action.Skills
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
-        public void CompleteActionForAI()
-        {
-            var listPieces = new List<PieceLogic>();
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 3);
-            foreach (var target in targets)
-            {
-                listPieces.Add(PieceOn(target));
-            }
+        // public void CompleteActionForAI()
+        // {
+        //     var listPieces = new List<PieceLogic>();
+        //     var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 3);
+        //     foreach (var target in targets)
+        //     {
+        //         listPieces.Add(PieceOn(target));
+        //     }
 
-            if (listPieces.Count == 0) return;
-            var maxValue = listPieces.Max(p => p.GetValueForAI());
-            var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
-            if (bestPieces.Count == 0) return;
-            var random = new System.Random();
-            var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+        //     if (listPieces.Count == 0) return;
+        //     var maxValue = listPieces.Max(p => p.GetValueForAI());
+        //     var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+        //     if (bestPieces.Count == 0) return;
+        //     var random = new System.Random();
+        //     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
             
-            BoardUtils.SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-        }
+        //     BoardUtils.SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
+        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        // }
     }
 }
