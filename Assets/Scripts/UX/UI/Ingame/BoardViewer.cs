@@ -108,7 +108,6 @@ namespace UX.UI.Ingame
 
         public async void ExecuteAction(Action action)
         {
-            Unmark();
             if (action is PendingAction pendingAction)
             {
                 action = await pendingAction.WaitForCompletion();
@@ -118,6 +117,7 @@ namespace UX.UI.Ingame
             {
                 EndTurn();
             }
+            Unmark();
         }
 
         public void MarkPiece(int pos)
