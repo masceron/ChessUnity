@@ -1,26 +1,27 @@
 ﻿using Game.Common;
 using Game.Effects;
+using UnityEngine;
 
 namespace Game.Action.Internal
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RemoveEffect: Action, IInternal
     {
-        private readonly Effect effect;
+        private readonly Effect _effect;
         
         public RemoveEffect(Effect e) : base(-1)
         {
-            effect = e;
+            _effect = e;
         }
 
         protected override void ModifyGameState()
         {
-            if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0) return;
-            BoardUtils.RemoveObserver(effect);
+            Debug.Log("Removing " + _effect.GetType() + ": " + _effect.Duration);
+            BoardUtils.RemoveObserver(_effect);
             
-            if (effect is IOnRemove onRemove)
+            if (_effect is IOnRemove onRemove)
                 onRemove.OnRemove();
-            effect.Piece.Effects.Remove(effect);
+            _effect.Piece.Effects.Remove(_effect);
         }
     }
 }

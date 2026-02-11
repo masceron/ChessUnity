@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
+using UnityEngine;
 using ZLinq;
 
 namespace Game.Action
@@ -70,7 +71,8 @@ namespace Game.Action
             }
             else if (mainAction is not IInternal)
             {
-                foreach (var listener in afterPieceActionListeners.Where(listener => BoardUtils.IsAlive(((Effect)listener).Piece)))
+                foreach (var listener in afterPieceActionListeners.Where(listener =>
+                             BoardUtils.IsAlive(((Effect)listener).Piece)))
                 {
                     _buffering = true;
                     listener.OnCallAfterPieceAction(mainAction);
@@ -81,13 +83,14 @@ namespace Game.Action
                 }
             }
         }
-        
+
         private static void ProcessStack()
         {
             while (_actionStack.Count > 0)
             {
                 var currentActionStack = _actionStack.Peek();
                 var currentAction = currentActionStack.Action;
+                Debug.Log(currentAction.GetType());
 
                 if (!currentActionStack.TriggerCalled)
                 {
@@ -100,6 +103,7 @@ namespace Game.Action
                         case IRelicAction relicAction: BoardUtils.NotifyBeforeRelicAction(relicAction); break;
                         default: BoardUtils.NotifyBeforePieceAction(currentAction); break;
                     }
+
                     _buffering = false;
                     FlushBuffer();
 
@@ -113,7 +117,7 @@ namespace Game.Action
                     _buffering = true;
                     currentAction.Execute();
                     _buffering = false;
-            
+
                     FlushBuffer();
                 }
 
@@ -125,13 +129,13 @@ namespace Game.Action
         {
             CurrentPhase = Phase.BeforeEndTurn;
             var startTurnListeners = BoardUtils.GetEffectHookList<IStartTurnEffect>();
-    
+
             foreach (var effect in startTurnListeners)
             {
                 if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) continue;
-        
+
                 var shouldTrigger = false;
-                
+
                 if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
                 {
                     shouldTrigger = true;
@@ -162,12 +166,15 @@ namespace Game.Action
             CurrentPhase = Phase.AfterEndTurn;
 
             var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnEffect>();
+            _buffering = true;
             endTurnListeners.ForEach(effect =>
             {
                 if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
                 if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
                 {
                     effect.OnCallEnd(mainAction);
+
+                    FlushBuffer();
                     ProcessStack();
                 }
                 //The next turn is ours.
@@ -175,6 +182,8 @@ namespace Game.Action
                 {
                     if (effect.EndTurnEffectType != EndTurnEffectType.EndOfEnemyTurn) return;
                     effect.OnCallEnd(mainAction);
+
+                    FlushBuffer();
                     ProcessStack();
                 }
                 //The next turn is of the opponent.
@@ -182,14 +191,18 @@ namespace Game.Action
                 {
                     if (effect.EndTurnEffectType != EndTurnEffectType.EndOfAllyTurn) return;
                     effect.OnCallEnd(mainAction);
+
+                    FlushBuffer();
                     ProcessStack();
                 }
             });
             
             _state.EffectCountdown();
+            FlushBuffer();
+            _buffering = false;
             ProcessStack();
         }
-        
+
         private static bool ShouldEndTurn(Action action)
         {
             switch (action)
@@ -219,7 +232,7 @@ namespace Game.Action
             {
                 return false;
             }
-     
+
             EndTurnProcess(action);
             StartTurnProcess(action);
             return true;
@@ -245,7 +258,7 @@ namespace Game.Action
             {
                 _actionStack.Push(_buffer[i]);
             }
-    
+
             _buffer.Clear();
         }
 

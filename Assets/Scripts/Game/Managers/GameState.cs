@@ -141,7 +141,7 @@ namespace Game.Managers
 
                 piece.PassTurn();
 
-                foreach (var effect in piece.Effects.Where(effect => effect.Duration >= 0))
+                foreach (var effect in piece.Effects.Where(effect => effect.Duration > 0))
                 {
                     effect.Duration -= 1;
 

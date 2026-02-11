@@ -39,12 +39,13 @@ namespace Game.Effects
         public sbyte Strength;
         public PieceLogic Piece;
         public readonly EffectCategory Category;
-        private readonly UDictionary<EffectStat, List<int>> Stats;
+        public readonly UDictionary<EffectStat, List<int>> Stats;
         protected Effect(sbyte duration, sbyte strength, PieceLogic piece, string name)
         {
             Piece = piece;
             EffectName = name;
             Color = Piece.Color;
+            Duration = duration;
             
             var info = AssetManager.Ins.EffectData[name];
             Category = info.category;
@@ -68,13 +69,13 @@ namespace Game.Effects
 
         public int GetRawStat(EffectStat stat, int num = 1)
         {
-            if (!Stats.ContainsKey(stat)) { return 0; }
-            return Stats[stat][num - 1];
+            return !Stats.TryGetValue(stat, out var stat1) ? 0 : stat1[num - 1];
         }
-        public int GetStat(EffectStat stat, int num = 1)
+
+        protected int GetStat(EffectStat stat, int num = 1)
         {
-            if (!Stats.ContainsKey(stat)) { return 0; }
-            var finalStat = Stats[stat][num - 1];
+            if (!Stats.TryGetValue(stat, out var statin)) { return 0; }
+            var finalStat = statin[num - 1];
             foreach (var effect in Piece.Effects)
             {
                 if (effect is IEffectStatModifier modifier)
@@ -84,7 +85,8 @@ namespace Game.Effects
             }
             return finalStat;
         }
-        public void SetStat(EffectStat stat, int value, int num = 1)
+
+        protected void SetStat(EffectStat stat, int value, int num = 1)
         {
             if (!Stats.ContainsKey(stat))
             {

@@ -180,6 +180,7 @@ namespace UX.UI.Ingame
 
         public void Hover(int pos)
         {
+            if (Selecting != -1) return;
             HoveringPos = pos;
             if (pos == -1)
             {
