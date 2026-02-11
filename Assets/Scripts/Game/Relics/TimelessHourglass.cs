@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -69,11 +70,14 @@ namespace Game.Relics
             var top = candidates.Where(pieceLogic => pieceLogic.GetValueForAI() == bestScore).ToList();
             var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
-            var pending = new TimelessHourglassPending(this, chosen.Pos);
-            if (pending is PendingAction p)
-            {
-                BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
-            }
+            var excute = new TimelessHourglassExcute(CommanderPiece.Pos, Color ,chosen.Pos);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            // var pending = new TimelessHourglassPending(this, chosen.Pos);
+            // if (pending is PendingAction p)
+            // {
+            //     BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
+            // }
         }
     
     }

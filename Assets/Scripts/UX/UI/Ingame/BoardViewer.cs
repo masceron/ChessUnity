@@ -100,6 +100,10 @@ namespace UX.UI.Ingame
                 {
                     disposable.Dispose();
                 }
+                if (action is PendingAction pending)
+                {
+                    pending.CancelResult(); //hủy những task đang treo
+                }
             }
 
             ListOf.Clear();
