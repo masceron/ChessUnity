@@ -1,6 +1,5 @@
 using Game.Action.Internal;
 using static Game.Common.BoardUtils;
-using Game.AI;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 

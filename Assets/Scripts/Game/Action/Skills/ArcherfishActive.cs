@@ -2,8 +2,6 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
-using Game.AI;
-using ZLinq;
 
 namespace Game.Action.Skills
 {

@@ -29,13 +29,13 @@ namespace UX.UI.Ingame
         private static ColorBlock _normalColors;
         private static ColorBlock _activeColors;
 
-        private List<Action> listOf;
-        private List<Action> moveList;
+        private List<Action> _listOf;
+        private List<Action> _moveList;
 
         public void Load(List<Action> l, List<Action> ml)
         {
-            listOf = l;
-            moveList = ml;
+            _listOf = l;
+            _moveList = ml;
         }
 
         private void Start()
@@ -144,9 +144,7 @@ namespace UX.UI.Ingame
         {
             if (SelectingFunction == 3)
             {
-                // thêm dispose vào đây được dể cleardata của chọn 2 quân được không 
-                //TileManager.Ins.UnmarkAll();
-                BoardViewer.Ins.Unmark();
+                TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;
             }
@@ -189,47 +187,47 @@ namespace UX.UI.Ingame
         private bool MarkMove()
         {
             TileManager.Ins.UnmarkAll();
-            listOf.Clear();
+            _listOf.Clear();
             
-            foreach (var _move in moveList.OfType<IQuiets>())
+            foreach (var quiets in _moveList.OfType<IQuiets>())
             {
-                listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
+                _listOf.Add((Action)quiets);
+                TileManager.Ins.MarkAsMoveable(((Action)quiets).Target);
             }
             
-            return listOf.Count > 0;
+            return _listOf.Count > 0;
         }
 
         private bool MarkCapture()
         {
             TileManager.Ins.UnmarkAll();
-            listOf.Clear();
+            _listOf.Clear();
             
-            foreach (var _move in moveList.OfType<ICaptures>())
+            foreach (var captures in _moveList.OfType<ICaptures>())
             {
-                var targetPos = ((Action)_move).Target;
+                var targetPos = ((Action)captures).Target;
                 if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
-                listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
+                _listOf.Add((Action)captures);
+                TileManager.Ins.MarkAsMoveable(((Action)captures).Target);
             }
 
-            return listOf.Count > 0;
+            return _listOf.Count > 0;
         }
 
-        public bool MarkSkill()
+        private bool MarkSkill()
         {
             TileManager.Ins.UnmarkAll();
-            listOf.Clear();
+            _listOf.Clear();
             
-            foreach (var _move in moveList.OfType<ISkills>())
+            foreach (var skills in _moveList.OfType<ISkills>())
             {
-                var targetPos = ((Action)_move).Target;
+                var targetPos = ((Action)skills).Target;
                 if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
-                listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
+                _listOf.Add((Action)skills);
+                TileManager.Ins.MarkAsMoveable(((Action)skills).Target);
             }
             
-            return listOf.Count > 0;
+            return _listOf.Count > 0;
         }
     }
 }

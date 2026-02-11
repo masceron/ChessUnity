@@ -2,7 +2,6 @@ using UnityEngine.UI;
 using UnityEngine;
 using Game.Save.FreePlay;
 using TMPro;
-using Game.Save.Army;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {

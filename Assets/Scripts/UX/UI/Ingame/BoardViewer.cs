@@ -108,23 +108,15 @@ namespace UX.UI.Ingame
 
         public async void ExecuteAction(Action action)
         {
-            try
+            Unmark();
+            if (action is PendingAction pendingAction)
             {
-                Unmark();
-                if (action is PendingAction pendingAction)
-                {
-                    action = await pendingAction.WaitForCompletion();
-                    Debug.Log(action.GetType() + " " + action.Maker + " " + action.Target);
-                }
-
-                if (ActionManager.DoManualAction(action))
-                {
-                    EndTurn();
-                }
+                action = await pendingAction.WaitForCompletion();
             }
-            catch (Exception)
+
+            if (ActionManager.DoManualAction(action))
             {
-                // ignored
+                EndTurn();
             }
         }
 

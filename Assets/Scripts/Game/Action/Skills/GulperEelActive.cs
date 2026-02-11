@@ -1,8 +1,6 @@
-using Game.AI;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using System.Collections.Generic;
 
 namespace Game.Action.Skills
 {

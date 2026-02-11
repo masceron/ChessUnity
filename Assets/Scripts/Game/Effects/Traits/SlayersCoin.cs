@@ -1,4 +1,5 @@
 ﻿using Game.Action;
+using Game.Action.Captures;
 using Game.Common;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
@@ -13,7 +14,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Result != ResultFlag.Success) return;
+            if (action is not ICaptures || action.Result != ResultFlag.Success) return;
             
             var caller = BoardUtils.PieceOn(action.Maker);
             var captured = BoardUtils.PieceOn(action.Target);
