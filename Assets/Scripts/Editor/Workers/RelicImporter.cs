@@ -32,7 +32,7 @@ namespace Editor.Workers
                     EditorUtility.SetDirty(relicInfo);
                     Debug.Log($"Key for {relicInfo.key} auto-generated.");
                 }
-                else if (!relicInfo.key.StartsWith("effect_") || !Regex.IsMatch(relicInfo.key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!relicInfo.key.StartsWith("relic_") || !Regex.IsMatch(relicInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
                         $"{fileName}'s key '{relicInfo.key}' doesn't follow naming convention for Relic objects. Suggestion: {newKey}");
