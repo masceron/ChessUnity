@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartGame.unity
     guid: 40636736cc8cad64da55760fc65a719a
+  - enabled: 1
+    path: Assets/Third Party/Autotiles3D/Map 1.unity
+    guid: 83f5f581b077aa54ca2fc02ecf7cfc6c
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 90658fa8cf5c39b409cb1e3ff5fcfd67, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: d7ad0ed453a4e594fba0559c874746a5, type: 2}
