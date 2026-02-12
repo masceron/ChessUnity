@@ -13,22 +13,33 @@ namespace Game.Player
 
         private Vector3 velocity = Vector3.zero;
         [SerializeField] private float smoothTime = 0.1f;
-        private Vector3 lastTargetPosition; // Track target movement
-        private Transform targetTransform; // Cache target transform 
+        private Vector3 lastTargetPosition; 
+
+        private void Start()
+        {
+            if (target != null)
+            {
+                lastTargetPosition = target.position;
+                transform.position = target.position + offset;
+                
+                if (lookAtTarget)
+                {
+                    transform.LookAt(target);
+                }
+            }
+        }
 
         private void LateUpdate()
         {
             if (target == null)
                 return;
 
-            // Cache target position to avoid multiple property accesses (reduces allocations)
             var targetPos = target.position;
             var desiredPosition = targetPos + offset;
             transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothTime);
 
             if (lookAtTarget)
             {
-                // Only call LookAt if target has moved to avoid unnecessary calculations
                 if (targetPos != lastTargetPosition)
                 {
                     transform.LookAt(target);
