@@ -9,7 +9,7 @@ using UnityEditor.Build.Reporting;
 using UnityEngine;
 using Action = Game.Action.Action;
 
-namespace Editor.Worker
+namespace Editor.Validators
 {
     [InitializeOnLoad]
     public class ActionsValidator : IPreprocessBuildWithReport

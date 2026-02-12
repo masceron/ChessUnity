@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
@@ -7,19 +8,21 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgrade: Action, ISkills
+    [MemoryPackable]
+    public partial class ChrysosUpgrade : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
 
-        private readonly PieceConfig _target;
-        private readonly byte _cost;
+        [MemoryPackInclude] private readonly PieceConfig _target;
 
-        public ChrysosUpgrade(int maker, PieceConfig t, byte cost) : base(maker)
+        [MemoryPackInclude] private readonly byte _cost;
+
+        public ChrysosUpgrade(int maker, PieceConfig target, byte cost) : base(maker)
         {
-            _target = t;
+            _target = target;
             _cost = cost;
         }
 

@@ -22,17 +22,16 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    if (SkillCooldown == 0)
+                    if (SkillCooldown != 0) return;
+                    
+                    var (rank, file) = RankFileOf(Pos);
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
                     {
-                        var (rank, file) = RankFileOf(Pos);
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
-                        {
-                            var index = IndexOf(rankOff, fileOff);
+                        var index = IndexOf(rankOff, fileOff);
 
-                            var pOn = PieceOn(index);
-                            if (pOn == null || pOn.Color == Color) continue;
-                            list.Add(new SnipeEelActive(Pos, index));
-                        }
+                        var pOn = PieceOn(index);
+                        if (pOn == null || pOn.Color == Color) continue;
+                        list.Add(new SnipeEelActive(Pos, index));
                     }
                 }
                 else
@@ -72,7 +71,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

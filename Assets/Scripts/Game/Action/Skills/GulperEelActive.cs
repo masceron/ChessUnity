@@ -1,10 +1,12 @@
+using MemoryPack;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class GulperEelActive : Action, ISkills
+    [MemoryPackable]
+    public partial class GulperEelActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

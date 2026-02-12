@@ -12,7 +12,7 @@ namespace Game.Effects.Debuffs
     public class Frenzied : Effect, IEndTurnEffect
     {
         private List<Action.Action> list;
-        public Frenzied(PieceLogic piece, sbyte duration = -1) : base(duration, 1, piece, "effect_frenzied")
+        public Frenzied(PieceLogic piece, int duration = -1) : base(duration, 1, piece, "effect_frenzied")
         {
             list = new List<Action.Action>();
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;

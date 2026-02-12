@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
 {
     public class EpauletteShark : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
         public EpauletteShark(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new EpauletteSharkPurify(this)));
@@ -96,7 +96,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Linq;
-using Third_Party.Autotiles3D.Scripts.Core;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEditor;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core.Editor
 {
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Autotiles3D_BlockBehaviour), true)]

@@ -1,4 +1,5 @@
 using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -19,7 +20,7 @@ namespace Game.Effects.Traits
         /// <param name="action">Toàn bộ những Action kế thừa từ ICaptures sẽ được truyền vào hàm này </param>
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (PieceOn(action.Target).Color != Piece.Color ||
+            if (PieceOn(action.Target).Color != Piece.Color || action is not ICaptures ||
                 action.Result != ResultFlag.Success) return;
             action.Result = ResultFlag.SurvivedHit;
             Debug.Log("[UndyingDevotion] Failed capture");

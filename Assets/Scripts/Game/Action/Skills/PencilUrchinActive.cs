@@ -1,9 +1,11 @@
-﻿using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class PencilUrchinActive : Action, ISkills
+    [MemoryPackable]
+    public partial class PencilUrchinActive : Action, ISkills
     {
         public PencilUrchinActive(int maker, int target) : base(maker)
         {

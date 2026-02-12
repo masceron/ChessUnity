@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Traits;
 using Game.Piece;
@@ -7,7 +8,8 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineFlatwormActive : Action, ISkills
+    [MemoryPackable]
+    public partial class MarineFlatwormActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

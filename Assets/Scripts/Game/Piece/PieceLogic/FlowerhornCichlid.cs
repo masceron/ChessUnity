@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
 {
     public class FlowerhornCichlid : Commons.PieceLogic, IPieceWithSkill
     {
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
         public FlowerhornCichlid(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {

@@ -7,7 +7,7 @@ namespace Game.Piece.PieceLogic
 {
     public class PistolShrimp : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
         public PistolShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
@@ -50,7 +50,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

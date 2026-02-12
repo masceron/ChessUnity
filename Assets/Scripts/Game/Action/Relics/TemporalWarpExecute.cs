@@ -1,4 +1,5 @@
-﻿// thêm để nhận Action, ActionManager
+using MemoryPack;
+// thêm để nhận Action, ActionManager
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
@@ -7,7 +8,8 @@ using Game.Effects.Others;
 namespace Game.Action.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemporalWarpExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class TemporalWarpExecute : Action, IRelicAction
     {
         public TemporalWarpExecute(int maker, int target) : base(maker)
         {

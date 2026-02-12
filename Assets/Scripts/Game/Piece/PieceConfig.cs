@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using MemoryPack;
 
 namespace Game.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public readonly struct PieceConfig : IEquatable<PieceConfig>
+    [MemoryPackable]
+    public readonly partial struct PieceConfig : IEquatable<PieceConfig>
     {
         public readonly string Type;
         public readonly bool Color;
-        public readonly ushort Index;
+        public readonly int Index;
         public readonly List<Augmentation.AugmentationName> AugmentationNames;
 
-        public PieceConfig(string type, bool color, ushort index, List<Augmentation.AugmentationName> augmentationNames = null)
+        public PieceConfig(string type, bool color, int index, List<Augmentation.AugmentationName> augmentationNames = null)
         {
             Type = type;
             Color = color;

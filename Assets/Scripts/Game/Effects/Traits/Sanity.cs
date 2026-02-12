@@ -14,7 +14,7 @@ namespace Game.Effects.Traits
             "effect_fear",
             "effect_taunted"
         };
-        public Sanity(sbyte duration, PieceLogic owner) : base(duration, 1, owner, "effect_sanity")
+        public Sanity(int duration, PieceLogic owner) : base(duration, 1, owner, "effect_sanity")
         {
         }
 

@@ -1,8 +1,10 @@
+using MemoryPack;
 using Game.Common;
 
 namespace Game.Action.Relics
 {
-    public class AdrenalineRadiatorExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class AdrenalineRadiatorExcute : Action, IRelicAction
     {
         public AdrenalineRadiatorExcute(int maker) : base(maker)
         {

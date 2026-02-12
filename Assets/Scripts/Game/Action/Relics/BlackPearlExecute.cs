@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
@@ -9,8 +10,10 @@ using ZLinq;
 namespace Game.Action.Relics
 {
 
-    public class BlackPearlExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class BlackPearlExecute : Action, IRelicAction
     {
+        [MemoryPackInclude]
         private readonly bool _color;
         public BlackPearlExecute(int target, bool color) : base(-1)
         {
@@ -51,7 +54,7 @@ namespace Game.Action.Relics
 
         private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var randomDuration = (sbyte)new System.Random().Next(6, 8);
+            var randomDuration = new System.Random().Next(6, 8);
             return effectName switch
             {
                 "effect_shield" => new Effects.Buffs.Shield(piece),

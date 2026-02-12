@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
         private Effect Relentless;
         private const int Radius = 5;
         private readonly List<int> possiblePositions = new();
-        public BrokenRelocatorPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_broken_relocator_passive")
+        public BrokenRelocatorPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_broken_relocator_passive")
         { }
 
         public void OnApply()

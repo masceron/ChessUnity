@@ -6,22 +6,11 @@ using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Worker
+namespace Editor.Workers
 {
-    public class EffectImporter : AssetPostprocessor
+    public class RelicImporter : AssetPostprocessor
     {
-        private const string EffectsManagerPath = "Assets/Data/Collections/EffectsData.asset";
-
-        private static EffectsData LoadCentralDataManager()
-        {
-            var centralData = AssetDatabase.LoadAssetAtPath<EffectsData>(EffectsManagerPath);
-            if (!centralData)
-            {
-                Debug.LogError($"Central Data Manager asset not found at: {EffectsManagerPath}.");
-            }
-
-            return centralData;
-        }
+        private const string RelicsManagerPath = "Assets/Data/Collections/RelicsData.asset";
 
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
@@ -31,32 +20,32 @@ namespace Editor.Worker
 
             foreach (var path in importedAssets.Concat(movedAssets))
             {
-                var effectInfo = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
+                var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
-                if (!effectInfo) continue;
+                if (!relicInfo) continue;
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "effect_" + ToSnakeCase(fileName);
+                var newKey = "relic_" + ToSnakeCase(fileName);
 
-                if (string.IsNullOrEmpty(effectInfo.key))
+                if (string.IsNullOrEmpty(relicInfo.key))
                 {
-                    effectInfo.key = newKey;
-                    EditorUtility.SetDirty(effectInfo);
-                    Debug.Log($"Key for {effectInfo.key} auto-generated.");
+                    relicInfo.key = newKey;
+                    EditorUtility.SetDirty(relicInfo);
+                    Debug.Log($"Key for {relicInfo.key} auto-generated.");
                 }
-                else if (!effectInfo.key.StartsWith("effect_") || !Regex.IsMatch(effectInfo.key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!relicInfo.key.StartsWith("relic_") || !Regex.IsMatch(relicInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '{effectInfo.key}' doesn't follow naming convention for Effect objects. Suggestion: {newKey}");
+                        $"{fileName}'s key '{relicInfo.key}' doesn't follow naming convention for Relic objects. Suggestion: {newKey}");
                 }
 
-                if (centralData && centralData.effectsData.All(p => p.key != effectInfo.key))
+                if (centralData && centralData.relicsData.All(p => p.key != relicInfo.key))
                 {
-                    centralData.effectsData.Add(effectInfo);
-                    Debug.Log($"CentralDataManager: Added new EffectInfo '{effectInfo.key}' to the master list.");
+                    centralData.relicsData.Add(relicInfo);
+                    Debug.Log($"CentralDataManager: Added new RelicInfo '{relicInfo.key}' to the master list.");
                     collectionChanged = true;
                 }
 
-                UpdateLocalizationTables(effectInfo);
+                UpdateLocalizationTables(relicInfo);
             }
 
             if (!collectionChanged) return;
@@ -77,12 +66,19 @@ namespace Editor.Worker
             }
         }
 
-        private static void UpdateLocalizationTables(EffectInfo effectInfo)
+        private static RelicsData LoadCentralDataManager()
         {
-            var key = effectInfo.key;
+            var centralData = AssetDatabase.LoadAssetAtPath<RelicsData>(RelicsManagerPath);
+            if (!centralData) Debug.LogError($"Central Data Manager asset not found at: {RelicsManagerPath}.");
+            return centralData;
+        }
 
-            AddKeyToTableCollection("effect_name", key);
-            AddKeyToTableCollection("effect_description", key + "_description");
+        private static void UpdateLocalizationTables(RelicInfo relicInfo)
+        {
+            var key = relicInfo.key;
+
+            AddKeyToTableCollection("relic_name", key);
+            AddKeyToTableCollection("relic_description", key + "_description");
         }
 
         private static void AddKeyToTableCollection(string collectionName, string key)

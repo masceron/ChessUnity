@@ -1,10 +1,12 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
 
 namespace Game.Action.Relics
 {
-    public class SirenHarpoonExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class SirenHarpoonExcute : Action, IRelicAction
     {
         public SirenHarpoonExcute(int maker, int target) : base(maker)
         {

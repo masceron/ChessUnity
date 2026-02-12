@@ -1,8 +1,10 @@
+using MemoryPack;
 using Game.Common;
 
 namespace Game.Action.Relics
 {
-    public class HermosHornExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class HermosHornExcute : Action, IRelicAction
     {
         /// <summary>
         /// 
@@ -15,7 +17,10 @@ namespace Game.Action.Relics
             this.relicColor = relicColor;
         }
 
+        [MemoryPackInclude]
+
         private readonly bool isFirstOption;
+        [MemoryPackInclude]
         private readonly bool relicColor;
 
         protected override void ModifyGameState()

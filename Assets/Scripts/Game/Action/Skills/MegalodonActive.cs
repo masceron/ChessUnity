@@ -1,25 +1,29 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class MegalodonActive : Action, ISkills
+    [MemoryPackable]
+    public partial class MegalodonActive : Action, ISkills
     {
-        private readonly int firstTargetPos;
-        private readonly int secondTargetPos;
+        [MemoryPackInclude]
+        private readonly int _firstTargetPos;
+        [MemoryPackInclude]
+        private readonly int _secondTargetPos;
         
-        public MegalodonActive(int maker, int firstTarget, int secondTarget) : base(maker)
+        public MegalodonActive(int maker, int firstTargetPos, int secondTargetPos) : base(maker)
         {
             Maker = (ushort)maker;
-            firstTargetPos = firstTarget;
-            secondTargetPos = secondTarget;
+            _firstTargetPos = firstTargetPos;
+            _secondTargetPos = secondTargetPos;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(firstTargetPos));
-            ActionManager.EnqueueAction(new KillPiece(secondTargetPos));
+            ActionManager.EnqueueAction(new KillPiece(_firstTargetPos));
+            ActionManager.EnqueueAction(new KillPiece(_secondTargetPos));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 

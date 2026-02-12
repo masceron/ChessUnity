@@ -16,7 +16,7 @@ namespace Game.Effects.RegionalEffect
             isActive = 1;
         }
 
-        private static Effect CreateEffect(string effectName, sbyte duration, sbyte strength, PieceLogic piece)
+        private static Effect CreateEffect(string effectName, int duration, int strength, PieceLogic piece)
         {
 
             return effectName switch
@@ -61,8 +61,8 @@ namespace Game.Effects.RegionalEffect
 
                 if (validPieces.Count > 0) {
                     var randomInd = Random.Range(0, validPieces.Count);
-                    sbyte duration = 5;
-                    sbyte strength = 1;
+                    int duration = 5;
+                    int strength = 1;
                     var roll = Random.Range(1, 101);
                     Debug.Log("roll: " + roll + " " + validPieces[randomInd].Type);
                     switch (roll)
@@ -82,7 +82,7 @@ namespace Game.Effects.RegionalEffect
             }
             isActive++;
         }
-        private static Effect GetRandomDebuffEffect(PieceLogic piece, sbyte duration, sbyte strength)
+        private static Effect GetRandomDebuffEffect(PieceLogic piece, int duration, int strength)
         {
             var debuffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
@@ -93,7 +93,7 @@ namespace Game.Effects.RegionalEffect
             var selectedEffectName = debuffEffects[random.Next(debuffEffects.Length)];
             return CreateEffect(selectedEffectName, duration, strength, piece);
         }
-        private Effect GetRandomBuffEffect(PieceLogic piece, sbyte duration, sbyte strength)
+        private Effect GetRandomBuffEffect(PieceLogic piece, int duration, int strength)
         {
             var buffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Buff)

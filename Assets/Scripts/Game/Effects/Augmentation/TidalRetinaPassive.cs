@@ -8,7 +8,7 @@ namespace Game.Effects.Augmentation
         {
             return baseRange + Strength;
         }
-        public TidalRetinaPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_tidal_retina_passive")
+        public TidalRetinaPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_tidal_retina_passive")
         { }
     }
 }

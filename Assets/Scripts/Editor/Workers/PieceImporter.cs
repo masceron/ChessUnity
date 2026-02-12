@@ -6,18 +6,18 @@ using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Worker
+namespace Editor.Workers
 {
-    public class FormationImporter : AssetPostprocessor
+    public class PieceImporter : AssetPostprocessor
     {
-        private const string FormationManagerPath = "Assets/Data/Collections/FormationData.asset";
+        private const string PiecesManagerPath = "Assets/Data/Collections/PiecesData.asset";
 
-        private static FormationsData LoadCentralDataManager()
+        private static PiecesData LoadCentralDataManager()
         {
-            var centralData = AssetDatabase.LoadAssetAtPath<FormationsData>(FormationManagerPath);
+            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(PiecesManagerPath);
             if (!centralData)
             {
-                Debug.LogError($"Central Data Manager asset not found at: {FormationManagerPath}.");
+                Debug.LogError($"Central Data Manager asset not found at: {PiecesManagerPath}.");
             }
 
             return centralData;
@@ -31,34 +31,32 @@ namespace Editor.Worker
 
             foreach (var path in importedAssets.Concat(movedAssets))
             {
-                var formationInfo = AssetDatabase.LoadAssetAtPath<FormationInfo>(path);
+                var pieceInfo = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
 
-                if (!formationInfo) continue;
+                if (!pieceInfo) continue;
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "formation_" + ToSnakeCase(fileName);
+                var newKey = "piece_" + ToSnakeCase(fileName);
 
-                if (string.IsNullOrEmpty(formationInfo.key))
+                if (string.IsNullOrEmpty(pieceInfo.key))
                 {
-                    formationInfo.key = newKey;
-                    EditorUtility.SetDirty(formationInfo);
-                    Debug.Log($"Key for {formationInfo.key} auto-generated.");
+                    pieceInfo.key = newKey;
+                    EditorUtility.SetDirty(pieceInfo);
+                    Debug.Log($"Key for {pieceInfo.key} auto-generated.");
                 }
-                else if (!formationInfo.key.StartsWith("formation_") || !Regex.IsMatch(formationInfo.key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!pieceInfo.key.StartsWith("piece_") || !Regex.IsMatch(pieceInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '{formationInfo.key}' doesn't follow naming convention for Formation objects. Suggestion: {newKey}");
+                        $"{fileName}'s key '{pieceInfo.key}' doesn't follow naming convention for Piece objects. Suggestion: {newKey}");
                 }
 
-                if (formationInfo.type != 0 && centralData &&
-                    centralData.formationsData.Values.All(p => p.key != formationInfo.key))
+                if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))
                 {
-                    centralData.formationsData.Add(formationInfo.type, formationInfo);
-                    Debug.Log(
-                        $"CentralDataManager: Added new FormationInfo '{formationInfo.key}' to the master list.");
+                    centralData.piecesData.Add(pieceInfo);
+                    Debug.Log($"CentralDataManager: Added new PieceInfo '{pieceInfo.key}' to the master list.");
                     collectionChanged = true;
                 }
 
-                UpdateLocalizationTables(formationInfo);
+                UpdateLocalizationTables(pieceInfo);
             }
 
             if (!collectionChanged) return;
@@ -79,14 +77,21 @@ namespace Editor.Worker
             }
         }
 
-        private static void UpdateLocalizationTables(FormationInfo formationInfo)
+        private static void UpdateLocalizationTables(PieceInfo pieceInfo)
         {
-            var key = formationInfo.key;
+            var key = pieceInfo.key;
 
-            AddKeyToTableCollection("formation_name", key);
-            AddKeyToTableCollection("formation_description", key + "_description");
+            AddKeyToTableCollection("piece_name", key);
+
+            if (!pieceInfo.hasSkill) return;
+
+            AddKeyToTableCollection("piece_skill", key + "_skill");
+            AddKeyToTableCollection("piece_skill_description", key + "_skill_description");
         }
 
+        /// <summary>
+        ///     Helper method to find a String Table Collection and add a key if it doesn't exist.
+        /// </summary>
         private static void AddKeyToTableCollection(string collectionName, string key)
         {
             var tableCollection = LocalizationEditorSettings.GetStringTableCollection(collectionName);

@@ -7,7 +7,7 @@ namespace Game.Effects.Augmentation
 {
     public class PredatorEyesPassive : Effect, IOnApply
     {
-        public PredatorEyesPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public PredatorEyesPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_predator_eyes_passive")
         { }
 

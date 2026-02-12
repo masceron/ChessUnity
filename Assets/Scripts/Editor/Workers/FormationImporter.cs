@@ -6,18 +6,18 @@ using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Worker
+namespace Editor.Workers
 {
-    public class AugmentationImporter : AssetPostprocessor
+    public class FormationImporter : AssetPostprocessor
     {
-        private const string AugmentationsManagerPath = "Assets/Data/Collections/AugmentationData.asset";
+        private const string FormationManagerPath = "Assets/Data/Collections/FormationData.asset";
 
-        private static AugmentationData LoadCentralDataManager()
+        private static FormationsData LoadCentralDataManager()
         {
-            var centralData = AssetDatabase.LoadAssetAtPath<AugmentationData>(AugmentationsManagerPath);
+            var centralData = AssetDatabase.LoadAssetAtPath<FormationsData>(FormationManagerPath);
             if (!centralData)
             {
-                Debug.LogError($"Central Data Manager asset not found at: {AugmentationsManagerPath}.");
+                Debug.LogError($"Central Data Manager asset not found at: {FormationManagerPath}.");
             }
 
             return centralData;
@@ -31,34 +31,34 @@ namespace Editor.Worker
 
             foreach (var path in importedAssets.Concat(movedAssets))
             {
-                var augmentationInfo = AssetDatabase.LoadAssetAtPath<AugmentationInfo>(path);
+                var formationInfo = AssetDatabase.LoadAssetAtPath<FormationInfo>(path);
 
-                if (!augmentationInfo) continue;
+                if (!formationInfo) continue;
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "augmentation_" + ToSnakeCase(fileName);
+                var newKey = "formation_" + ToSnakeCase(fileName);
 
-                if (string.IsNullOrEmpty(augmentationInfo.Key))
+                if (string.IsNullOrEmpty(formationInfo.key))
                 {
-                    augmentationInfo.Key = newKey;
-                    EditorUtility.SetDirty(augmentationInfo);
-                    Debug.Log($"Key for {augmentationInfo.Key} auto-generated.");
+                    formationInfo.key = newKey;
+                    EditorUtility.SetDirty(formationInfo);
+                    Debug.Log($"Key for {formationInfo.key} auto-generated.");
                 }
-                else if (!augmentationInfo.Key.StartsWith("augmentation_") || !Regex.IsMatch(augmentationInfo.Key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!formationInfo.key.StartsWith("formation_") || !Regex.IsMatch(formationInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '{augmentationInfo.Key}' doesn't follow naming convention for Augmentation objects. Suggestion: {newKey}");
+                        $"{fileName}'s key '{formationInfo.key}' doesn't follow naming convention for Formation objects. Suggestion: {newKey}");
                 }
 
-                if (augmentationInfo.Name != 0 && centralData &&
-                    centralData.augmentationsData.Values.All(p => p.Key != augmentationInfo.Key))
+                if (formationInfo.type != 0 && centralData &&
+                    centralData.formationsData.Values.All(p => p.key != formationInfo.key))
                 {
-                    centralData.augmentationsData.Add(augmentationInfo.Name, augmentationInfo);
+                    centralData.formationsData.Add(formationInfo.type, formationInfo);
                     Debug.Log(
-                        $"CentralDataManager: Added new AugmentationInfo '{augmentationInfo.Key}' to the master list.");
+                        $"CentralDataManager: Added new FormationInfo '{formationInfo.key}' to the master list.");
                     collectionChanged = true;
                 }
 
-                UpdateLocalizationTables(augmentationInfo);
+                UpdateLocalizationTables(formationInfo);
             }
 
             if (!collectionChanged) return;
@@ -79,12 +79,12 @@ namespace Editor.Worker
             }
         }
 
-        private static void UpdateLocalizationTables(AugmentationInfo augmentationInfo)
+        private static void UpdateLocalizationTables(FormationInfo formationInfo)
         {
-            var key = augmentationInfo.Key;
+            var key = formationInfo.key;
 
-            AddKeyToTableCollection("augmentation_name", key);
-            AddKeyToTableCollection("augmentation_description", key + "_description");
+            AddKeyToTableCollection("formation_name", key);
+            AddKeyToTableCollection("formation_description", key + "_description");
         }
 
         private static void AddKeyToTableCollection(string collectionName, string key)

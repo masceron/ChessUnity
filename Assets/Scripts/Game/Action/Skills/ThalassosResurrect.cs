@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
@@ -7,12 +8,14 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosResurrect : Action, ISkills
+    [MemoryPackable]
+    public partial class ThalassosResurrect : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
+        [MemoryPackInclude]
         private readonly string typeTo;
         public ThalassosResurrect(int maker, int to, string typeTo) : base(maker)
         {

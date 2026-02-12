@@ -1,9 +1,11 @@
-﻿using Game.Action.Quiets;
+using MemoryPack;
+using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
-    public class DiurnalActive : Action, ISkills
+    [MemoryPackable]
+    public partial class DiurnalActive : Action, ISkills
     {
         public DiurnalActive(int maker, int target) : base(maker)
         {

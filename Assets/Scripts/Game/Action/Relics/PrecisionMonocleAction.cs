@@ -1,14 +1,16 @@
-﻿using Game.Common;
+using MemoryPack;
+using Game.Common;
 using Game.Effects.Traits;
 using ZLinq;
 
 namespace Game.Action.Relics
 {
-    public class PrecisionMonocleAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class PrecisionMonocleAction : Action, IRelicAction
     {
         private const int EvasionProbabilityDecrease = 5;
-        private readonly string effectName = "effect_marked";
-        
+        private const string EffectName = "effect_marked";
+
         public PrecisionMonocleAction(int maker) : base(maker)
         {
             Maker = (ushort)maker;
@@ -17,27 +19,19 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             var allyColor = BoardUtils.PieceOn(Maker).Color;
-            var markedEnemy = BoardUtils.FindPiecesWithEffectName(!allyColor, effectName);
-            var markedAlly = BoardUtils.FindPiecesWithEffectName(allyColor, effectName);
+            var markedEnemy = BoardUtils.FindPiecesWithEffectName(!allyColor, EffectName);
+            var markedAlly = BoardUtils.FindPiecesWithEffectName(allyColor, EffectName);
 
-            foreach (var enemy in markedEnemy)
+            foreach (var evasion in markedEnemy.Select(enemy => enemy.Effects.OfType<Evasion>().FirstOrDefault()).Where(evasion => evasion != null))
             {
-                var evasion = enemy.Effects.OfType<Evasion>().FirstOrDefault();
-                if (evasion != null)
-                {
-                    evasion.Probability -= EvasionProbabilityDecrease;
-                    if (evasion.Probability < 0) evasion.Probability = 0;
-                }
+                evasion.Strength -= EvasionProbabilityDecrease;
+                if (evasion.Strength < 0) evasion.Strength = 0;
             }
             
-            foreach (var ally in markedAlly)
+            foreach (var evasion in markedAlly.Select(ally => ally.Effects.OfType<Evasion>().FirstOrDefault()).Where(evasion => evasion != null))
             {
-                var evasion = ally.Effects.OfType<Evasion>().FirstOrDefault();
-                if (evasion != null)
-                {
-                    evasion.Probability -= EvasionProbabilityDecrease;
-                    if (evasion.Probability < 0) evasion.Probability = 0;
-                }
+                evasion.Strength -= EvasionProbabilityDecrease;
+                if (evasion.Strength < 0) evasion.Strength = 0;
             }
         }
     }

@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -7,9 +8,10 @@ using Game.Effects.Traits;
 
 namespace Game.Action.Skills
 {
-    public class SurgeWrasseActive : Action, ISkills
+    [MemoryPackable]
+    public partial class SurgeWrasseActive : Action, ISkills
     {
-        public SurgeWrasseActive(ushort maker) : base(maker)
+        public SurgeWrasseActive(int maker) : base(maker)
         {
             Target = maker;
         }

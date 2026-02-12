@@ -20,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _timelessHourglass.SetCooldown();
 
-            var execute = new TimelessHourglassExcute(Maker, _timelessHourglass.Color, Target);
+            var execute = new TimelessHourglassExecute(Maker, _timelessHourglass.Color, Target);
             CommitResult(execute);
 
             BoardViewer.Ins.Unmark();

@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     {
         private readonly int maker;
         private readonly int target;
-        public MarineIguanaKillEffect(sbyte duration, PieceLogic piece, int maker, int target) : base(duration, 1, piece, "effect_marine_iguana_kill_effect")
+        public MarineIguanaKillEffect(int duration, PieceLogic piece, int maker, int target) : base(duration, 1, piece, "effect_marine_iguana_kill_effect")
         {
             this.target = target;
             this.maker = maker;

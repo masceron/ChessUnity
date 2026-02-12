@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
@@ -6,7 +7,8 @@ using Game.Managers;
 namespace Game.Action.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class OrnetesEdictExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class OrnetesEdictExecute : Action, IRelicAction
     {
         public OrnetesEdictExecute(int target) : base(target)
         {

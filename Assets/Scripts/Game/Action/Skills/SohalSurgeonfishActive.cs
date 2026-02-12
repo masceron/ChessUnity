@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
@@ -6,7 +7,8 @@ using Game.Effects.Debuffs;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SohalSurgeonfishActive: Action, ISkills
+    [MemoryPackable]
+    public partial class SohalSurgeonfishActive: Action, ISkills
     {
         public SohalSurgeonfishActive(int maker, int target) : base(maker)
         {

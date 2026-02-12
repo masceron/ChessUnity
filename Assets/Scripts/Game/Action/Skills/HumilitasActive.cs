@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 using Game.Piece.PieceLogic.Commons;
@@ -6,7 +7,8 @@ using Game.Effects.Debuffs;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasActive : Action, ISkills
+    [MemoryPackable]
+    public partial class HumilitasActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

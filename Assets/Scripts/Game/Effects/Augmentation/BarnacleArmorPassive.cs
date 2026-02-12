@@ -7,7 +7,7 @@ namespace Game.Effects.Augmentation
 {
     public class BarnacleArmorPassive : Effect, IOnApply
     {
-        public BarnacleArmorPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public BarnacleArmorPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_barnacle_armor_passive")
         { }
 

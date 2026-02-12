@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -5,7 +6,8 @@ using Game.Managers;
 
 namespace Game.Action.Relics
 {
-    public class MethaneCasingExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class MethaneCasingExcute : Action, IRelicAction
     {
         public MethaneCasingExcute(int maker) : base(maker)
         {

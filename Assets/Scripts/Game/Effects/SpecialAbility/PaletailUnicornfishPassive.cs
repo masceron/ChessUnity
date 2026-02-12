@@ -24,7 +24,7 @@ namespace Game.Effects.SpecialAbility
         {
             if (action is ICaptures && action.Maker == Piece.Pos && (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded((sbyte)GetStat(EffectStat.Duration), 50, PieceOn(action.Target)), Piece));
+                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(GetStat(EffectStat.Duration), 50, PieceOn(action.Target)), Piece));
             }
         }
     }

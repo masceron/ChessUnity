@@ -1,8 +1,10 @@
-﻿using Game.Managers;
+using MemoryPack;
+using Game.Managers;
 
 namespace Game.Action.Relics
 {
-    public class SeabedLevelerExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class SeabedLevelerExecute : Action, IRelicAction
     {
         public SeabedLevelerExecute(int maker, int target) : base(maker)
         {

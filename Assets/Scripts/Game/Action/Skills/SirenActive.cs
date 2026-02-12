@@ -1,11 +1,13 @@
-﻿using Game.Managers;
+using MemoryPack;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SirenActive: Action, ISkills
+    [MemoryPackable]
+    public partial class SirenActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -13,23 +15,23 @@ namespace Game.Action.Skills
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
-        private readonly ushort moveTo;
-        public SirenActive(ushort maker, int f, int t) : base(maker)
+        [MemoryPackInclude]
+        private readonly int _moveTo;
+        public SirenActive(int maker, int target, int moveTo) : base(maker)
         {
-            Maker = maker;
-            Target = (ushort)f;
-            moveTo = (ushort)t;
+            Target = target;
+            _moveTo = moveTo;
         }
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Target, moveTo);
+            PieceManager.Ins.Move(Target, _moveTo);
         }
 
         protected override void ModifyGameState()
         {
-            Move(Target, moveTo);
+            Move(Target, _moveTo);
             
-            FlipPieceColor(moveTo);
+            FlipPieceColor(_moveTo);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

@@ -9,7 +9,7 @@ namespace Game.Effects.Buffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Carapace: Effect, IBeforePieceActionEffect, IAfterPieceActionEffect
     {
-        public Carapace(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_carapace")
+        public Carapace(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_carapace")
         {}
 
         public void OnCallBeforePieceAction(Action.Action action)

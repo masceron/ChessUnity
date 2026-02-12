@@ -6,7 +6,7 @@ namespace Game.Effects.Debuffs
     public class Controlled: Effect, IOnApply, IOnRemove
     {
         private readonly bool initSide;
-        public Controlled(sbyte duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
+        public Controlled(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
         {
             initSide = piece.Color;
         }

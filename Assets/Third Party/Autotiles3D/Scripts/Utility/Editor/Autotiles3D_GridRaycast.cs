@@ -1,9 +1,9 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
 using Third_Party.Autotiles3D.Scripts.Core;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public static class Autotiles3D_GridRaycast
     {

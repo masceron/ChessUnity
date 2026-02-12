@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
 using System;
+using System.Collections.Generic;
 using Third_Party.Autotiles3D.Scripts.Core;
-using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public static class Autotiles3D_EditorUtility
     {

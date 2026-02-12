@@ -8,7 +8,7 @@ namespace Game.Effects.Augmentation
 {
     public class KineticDiffuserPassive : Effect, IOnApply
     {
-        private const int evasionProbability = 25;
+        private const int EvasionProbability = 25;
         public KineticDiffuserPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kinetic_diffuser_passive")
         {
             
@@ -21,12 +21,12 @@ namespace Game.Effects.Augmentation
 
             if (evasion != null)
             {
-                evasion.Probability += evasionProbability;
+                evasion.Strength += EvasionProbability;
             }
             else
             {
                 ActionManager.EnqueueAction(
-                    new ApplyEffect(new Evasion(-1, evasionProbability, Piece))
+                    new ApplyEffect(new Evasion(-1, EvasionProbability, Piece))
                 );
             }
 

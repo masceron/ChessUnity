@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -5,7 +6,8 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HermitCrabSwap: Action, ISkills
+    [MemoryPackable]
+    public partial class HermitCrabSwap: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

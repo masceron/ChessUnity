@@ -6,18 +6,18 @@ using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Worker
+namespace Editor.Workers
 {
-    public class PieceImporter : AssetPostprocessor
+    public class AugmentationImporter : AssetPostprocessor
     {
-        private const string PiecesManagerPath = "Assets/Data/Collections/PiecesData.asset";
+        private const string AugmentationsManagerPath = "Assets/Data/Collections/AugmentationData.asset";
 
-        private static PiecesData LoadCentralDataManager()
+        private static AugmentationData LoadCentralDataManager()
         {
-            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(PiecesManagerPath);
+            var centralData = AssetDatabase.LoadAssetAtPath<AugmentationData>(AugmentationsManagerPath);
             if (!centralData)
             {
-                Debug.LogError($"Central Data Manager asset not found at: {PiecesManagerPath}.");
+                Debug.LogError($"Central Data Manager asset not found at: {AugmentationsManagerPath}.");
             }
 
             return centralData;
@@ -31,32 +31,34 @@ namespace Editor.Worker
 
             foreach (var path in importedAssets.Concat(movedAssets))
             {
-                var pieceInfo = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
+                var augmentationInfo = AssetDatabase.LoadAssetAtPath<AugmentationInfo>(path);
 
-                if (!pieceInfo) continue;
+                if (!augmentationInfo) continue;
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "piece_" + ToSnakeCase(fileName);
+                var newKey = "augmentation_" + ToSnakeCase(fileName);
 
-                if (string.IsNullOrEmpty(pieceInfo.key))
+                if (string.IsNullOrEmpty(augmentationInfo.Key))
                 {
-                    pieceInfo.key = newKey;
-                    EditorUtility.SetDirty(pieceInfo);
-                    Debug.Log($"Key for {pieceInfo.key} auto-generated.");
+                    augmentationInfo.Key = newKey;
+                    EditorUtility.SetDirty(augmentationInfo);
+                    Debug.Log($"Key for {augmentationInfo.Key} auto-generated.");
                 }
-                else if (!pieceInfo.key.StartsWith("piece_") || !Regex.IsMatch(pieceInfo.key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!augmentationInfo.Key.StartsWith("augmentation_") || !Regex.IsMatch(augmentationInfo.Key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '{pieceInfo.key}' doesn't follow naming convention for Piece objects. Suggestion: {newKey}");
+                        $"{fileName}'s key '{augmentationInfo.Key}' doesn't follow naming convention for Augmentation objects. Suggestion: {newKey}");
                 }
 
-                if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))
+                if (augmentationInfo.Name != 0 && centralData &&
+                    centralData.augmentationsData.Values.All(p => p.Key != augmentationInfo.Key))
                 {
-                    centralData.piecesData.Add(pieceInfo);
-                    Debug.Log($"CentralDataManager: Added new PieceInfo '{pieceInfo.key}' to the master list.");
+                    centralData.augmentationsData.Add(augmentationInfo.Name, augmentationInfo);
+                    Debug.Log(
+                        $"CentralDataManager: Added new AugmentationInfo '{augmentationInfo.Key}' to the master list.");
                     collectionChanged = true;
                 }
 
-                UpdateLocalizationTables(pieceInfo);
+                UpdateLocalizationTables(augmentationInfo);
             }
 
             if (!collectionChanged) return;
@@ -77,21 +79,14 @@ namespace Editor.Worker
             }
         }
 
-        private static void UpdateLocalizationTables(PieceInfo pieceInfo)
+        private static void UpdateLocalizationTables(AugmentationInfo augmentationInfo)
         {
-            var key = pieceInfo.key;
+            var key = augmentationInfo.Key;
 
-            AddKeyToTableCollection("piece_name", key);
-
-            if (!pieceInfo.hasSkill) return;
-
-            AddKeyToTableCollection("piece_skill", key + "_skill");
-            AddKeyToTableCollection("piece_skill_description", key + "_skill_description");
+            AddKeyToTableCollection("augmentation_name", key);
+            AddKeyToTableCollection("augmentation_description", key + "_description");
         }
 
-        /// <summary>
-        ///     Helper method to find a String Table Collection and add a key if it doesn't exist.
-        /// </summary>
         private static void AddKeyToTableCollection(string collectionName, string key)
         {
             var tableCollection = LocalizationEditorSettings.GetStringTableCollection(collectionName);

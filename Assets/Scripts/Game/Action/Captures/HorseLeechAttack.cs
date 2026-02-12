@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
@@ -6,12 +7,12 @@ namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class HorseLeechAttack: Action, ICaptures
+    [MemoryPackable]
+    public partial class HorseLeechAttack: Action, ICaptures
     {
-        public HorseLeechAttack(int maker, int to) : base(maker)
+        public HorseLeechAttack(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Target = target;
         }
         
         protected override void ModifyGameState()

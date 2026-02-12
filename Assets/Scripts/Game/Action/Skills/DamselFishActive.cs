@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -7,7 +8,8 @@ using ZLinq;
 
 namespace Game.Action.Skills
 {
-    public class DamselFishActive: Action, ISkills
+    [MemoryPackable]
+    public partial class DamselFishActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

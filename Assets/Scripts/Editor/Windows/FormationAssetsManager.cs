@@ -1,28 +1,30 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Game.Common;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
+using Game.Tile;
 using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Window
-{ 
-    public class EffectAssetsManager : EditorWindow
+namespace Editor.Windows
+{
+    public class FormationAssetsManager: EditorWindow
     {
-        private readonly string[] _tableNamesToValidate = { "effect_name", "effect_description" };
+        private readonly string[] _tableNamesToValidate = { "formation_name", "formation_description" };
         
-        private readonly List<EffectInfo> _allEffects = new();
+        private readonly List<FormationInfo> _allFormations = new();
         private bool _hasScannedForOrphans;
         private Vector2 _manageScrollPos;
         private readonly List<OrphanedKey> _orphanedKeys = new();
         private int _toolbarIndex;
-        private readonly string[] _toolbarStrings = { "Manage Effects", "Validate Localization" };
+        private readonly string[] _toolbarStrings = { "Manage Formations", "Validate Localization" };
         private Vector2 _validateScrollPos;
 
         private void OnEnable()
         {
-            FindAllEffectInfos();
+            FindAllFormationInfos();
         }
 
         private void OnGUI()
@@ -41,80 +43,83 @@ namespace Editor.Window
         }
 
         
-        [MenuItem("Tools/Effect Manager")]
+        [MenuItem("Tools/Formation Manager")]
         public static void ShowWindow()
         {
-            GetWindow<EffectAssetsManager>("Effect Manager");
+            GetWindow<FormationAssetsManager>("Formation Manager");
         }
 
         private void DrawManageTab()
         {
-            EditorGUILayout.LabelField("EffectInfo Asset Management", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField("FormationInfo Asset Management", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "This list shows all EffectInfo assets in your project.",
+                "This list shows all FormationInfo assets in your project.",
                 MessageType.Info);
 
-            if (GUILayout.Button("Refresh List")) FindAllEffectInfos();
+            if (GUILayout.Button("Refresh List")) FindAllFormationInfos();
             if (GUILayout.Button("Reimport List")) SyncWithCentralData();
 
             EditorGUILayout.Space();
-
-            // --- List of all effects ---
+            
             _manageScrollPos = EditorGUILayout.BeginScrollView(_manageScrollPos);
-            foreach (var effect in _allEffects)
+            foreach (var formation in _allFormations)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
                 
-                EditorGUILayout.ObjectField(effect, typeof(EffectInfo), false);
+                EditorGUILayout.ObjectField(formation, typeof(FormationInfo), false);
                 
-                if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(effect);
+                if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(formation);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
         
-        private void FindAllEffectInfos()
+        private void FindAllFormationInfos()
         {
-            _allEffects.Clear();
-            var guids = AssetDatabase.FindAssets("t:EffectInfo");
+            _allFormations.Clear();
+            var guids = AssetDatabase.FindAssets("t:FormationInfo");
             foreach (var guid in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-                var effect = AssetDatabase.LoadAssetAtPath<EffectInfo>(path);
-                if (effect) _allEffects.Add(effect);
+                var formation = AssetDatabase.LoadAssetAtPath<FormationInfo>(path);
+                if (formation) _allFormations.Add(formation);
             }
+            
         }
         
         private void SyncWithCentralData()
         {
-            var dataGuids = AssetDatabase.FindAssets("t:EffectsData");
+            var dataGuids = AssetDatabase.FindAssets("t:FormationsData");
             if (dataGuids.Length == 0)
             {
-                Debug.LogError("No central data object for EffectInfo found.");
+                Debug.LogError("No central data object for FormationInfo found.");
                 return;
             }
 
             var path = AssetDatabase.GUIDToAssetPath(dataGuids[0]);
-            var centralData = AssetDatabase.LoadAssetAtPath<EffectsData>(path);
+            var centralData = AssetDatabase.LoadAssetAtPath<FormationsData>(path);
 
             if (!centralData) return;
-            centralData.effectsData ??= new List<EffectInfo>();
-            
-            centralData.effectsData.Clear();
-            centralData.effectsData.AddRange(_allEffects);
+            centralData.formationsData ??= new UDictionary<FormationType, FormationInfo>();
+
+            centralData.formationsData.Clear();
+            foreach (var formation in _allFormations)
+            {
+                centralData.formationsData.Add(formation.type, formation);
+            }
             
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
 
-            Debug.Log($"EffectManager: Rebuilt EffectsData list. Total items: {centralData.effectsData.Count}");
+            Debug.Log($"FormationManager: Rebuilt FormationData list. Total items: {centralData.formationsData.Count}");
         }
 
         private void DrawValidateTab()
         {
             EditorGUILayout.LabelField("Localization Key Validator", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "This tool finds localization keys that do not match any existing EffectInfo asset.", MessageType.Info);
+                "This tool finds localization keys that do not match any existing FormationInfo asset.", MessageType.Info);
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
             if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
@@ -159,7 +164,7 @@ namespace Editor.Window
                             "Cancel"))
                     {
                         RemoveKeyFromTable(orphan.Key, orphan.TableName);
-                        _orphanedKeys.RemoveAt(i); // Remove from our list
+                        _orphanedKeys.RemoveAt(i);
                     }
 
                 EditorGUILayout.EndHorizontal();
@@ -167,7 +172,7 @@ namespace Editor.Window
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void DeleteAllOrphanedKeys()
         {
             foreach (var orphanedKey in _orphanedKeys)
@@ -182,12 +187,12 @@ namespace Editor.Window
             _orphanedKeys.Clear();
             
             var validKeys = new HashSet<string>();
-            FindAllEffectInfos();
+            FindAllFormationInfos();
 
-            foreach (var effect in _allEffects.Where(effect => !string.IsNullOrEmpty(effect.key)))
+            foreach (var formation in _allFormations.Where(formation => !string.IsNullOrEmpty(formation.key)))
             {
-                validKeys.Add(effect.key);
-                validKeys.Add(effect.key + "_description");
+                validKeys.Add(formation.key);
+                validKeys.Add(formation.key + "_description");
             }
             
             foreach (var tableName in _tableNamesToValidate)
@@ -213,11 +218,10 @@ namespace Editor.Window
             var sharedData = tableCollection.SharedData;
             if (sharedData.GetEntry(key) == null) return;
             sharedData.RemoveKey(key);
-            EditorUtility.SetDirty(sharedData); // Mark the asset as modified
+            EditorUtility.SetDirty(sharedData);
             Debug.Log($"Removed key '{key}' from table '{tableName}'");
         }
-
-        // --- Tab 2: Validate Localization ---
+        
         private struct OrphanedKey
         {
             public string Key;

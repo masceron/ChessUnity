@@ -6,7 +6,7 @@ namespace Game.Effects.Buffs
 {
     public class Rally: Effect, IAfterPieceActionEffect
     {
-        public Rally(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_rally")
+        public Rally(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_rally")
         {}
 
         public void OnCallAfterPieceAction(Action.Action action)

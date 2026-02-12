@@ -4,7 +4,7 @@ namespace Game.Effects.Augmentation
 {
     public class BubbleFinPassive : Effect, IAttackRangeModifier
     {
-        public BubbleFinPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public BubbleFinPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_bubble_fin_passive")
         { }
 

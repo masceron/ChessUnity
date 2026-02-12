@@ -1,9 +1,11 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class EpauletteSharkActive : Action, ISkills
+    [MemoryPackable]
+    public partial class EpauletteSharkActive : Action, ISkills
     {
         public EpauletteSharkActive(int maker, int target) : base(maker)
         {

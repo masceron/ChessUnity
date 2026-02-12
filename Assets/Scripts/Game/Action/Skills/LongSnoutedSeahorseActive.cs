@@ -1,11 +1,13 @@
-﻿using System;
+using MemoryPack;
+using System;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class LongSnoutedSeahorseActive : Action, ISkills
+    [MemoryPackable]
+    public partial class LongSnoutedSeahorseActive : Action, ISkills
     {
         public LongSnoutedSeahorseActive(int maker, int target) : base(maker)
         {

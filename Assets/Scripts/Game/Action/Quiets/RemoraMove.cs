@@ -1,13 +1,15 @@
-﻿using Game.Managers;
+using MemoryPack;
+using Game.Managers;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Quiets
 {
-    public class RemoraMove: Action, IQuiets
+    [MemoryPackable]
+    public partial class RemoraMove: Action, IQuiets
     {
-        public RemoraMove(int maker, int to) : base(maker)
+        public RemoraMove(int maker, int target) : base(maker)
         {
-            Target = to;
+            Target = target;
         }
 
         protected override void Animate()

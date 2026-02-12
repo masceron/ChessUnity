@@ -19,7 +19,7 @@ namespace Game.ScriptableObjects
         [SerializeField] public Texture2D capturePattern;
         
         [SerializeField] public bool hasSkill;
-        [SerializeField] public sbyte normalSkillCooldown;
+        [SerializeField] public int normalSkillCooldown;
         [SerializeField] public AugmentationSlotMask availableSlots;
         [SerializeField] public string logicClassName;
         [SerializeField] public int baseValue;

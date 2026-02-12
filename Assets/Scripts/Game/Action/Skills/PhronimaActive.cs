@@ -1,10 +1,12 @@
-﻿using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class PhronimaActive : Action, ISkills
+    [MemoryPackable]
+    public partial class PhronimaActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

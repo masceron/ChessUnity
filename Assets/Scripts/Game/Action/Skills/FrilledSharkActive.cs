@@ -1,3 +1,4 @@
+using MemoryPack;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
@@ -7,7 +8,8 @@ using Game.Effects.Debuffs;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrilledSharkActive: Action, ISkills
+    [MemoryPackable]
+    public partial class FrilledSharkActive: Action, ISkills
     {
         readonly int drank;
         readonly int dfile;

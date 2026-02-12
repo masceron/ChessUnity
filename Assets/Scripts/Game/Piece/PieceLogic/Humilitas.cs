@@ -59,11 +59,9 @@ namespace Game.Piece.PieceLogic
                     {
                         var idx = IndexOf(rank, file);
                         var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != PieceOn(Pos).Color)
-                        {
-                            if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
-                            listPieces.Add(pOn);
-                        }
+                        if (pOn == null || pOn.Color == PieceOn(Pos).Color) continue;
+                        if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        listPieces.Add(pOn);
                     }
                     // neu khong co quan nao
                     if (listPieces.Count == 0) return;
@@ -117,7 +115,7 @@ namespace Game.Piece.PieceLogic
         }
 
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

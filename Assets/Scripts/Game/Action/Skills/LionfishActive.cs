@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -6,7 +7,8 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LionfishActive: Action, ISkills
+    [MemoryPackable]
+    public partial class LionfishActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

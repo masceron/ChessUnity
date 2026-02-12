@@ -1,11 +1,9 @@
 #if UNITY_2020_1_OR_NEWER
-using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEditor;
 
-
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public class Autotiles3D_SettingsProvider : SettingsProvider
     {

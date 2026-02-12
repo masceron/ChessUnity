@@ -1,3 +1,4 @@
+using MemoryPack;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
 using Game.AI;
@@ -9,7 +10,8 @@ using ZLinq;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BarnacleActive: Action, ISkills, IAIAction
+    [MemoryPackable]
+    public partial class BarnacleActive: Action, ISkills, IAIAction
     {
         public BarnacleActive(int maker, int target) : base(maker)
         {

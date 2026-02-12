@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using Action = Game.Action.Action;
 
-namespace Editor.Window
+namespace Editor.Windows
 {
     public class ActionClassPacker : EditorWindow
     {

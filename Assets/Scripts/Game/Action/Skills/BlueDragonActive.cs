@@ -1,10 +1,12 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class BlueDragonActive : Action, ISkills
+    [MemoryPackable]
+    public partial class BlueDragonActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

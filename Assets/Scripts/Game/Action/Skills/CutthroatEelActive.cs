@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Tile;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -7,7 +8,8 @@ using Game.Action.Internal;
 
 namespace Game.Action.Skills
 {
-    public class CutthroatEelActive  : Action, ISkills
+    [MemoryPackable]
+    public partial class CutthroatEelActive  : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {

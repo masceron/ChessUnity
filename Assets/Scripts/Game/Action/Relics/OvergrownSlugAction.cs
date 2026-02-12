@@ -1,10 +1,12 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Relics
 {
-    public class OvergrownSlugAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class OvergrownSlugAction : Action, IRelicAction
     {
-        private readonly string effectName = "effect_poison";
+        private const string EffectName = "effect_poison";
         
         public OvergrownSlugAction(int maker) : base(maker)
         {
@@ -24,7 +26,7 @@ namespace Game.Action.Relics
                 {
                     var p = PieceOn(IndexOf(rankOff, fileOff));
                     if (p == null || p.Color != caller.Color) continue;
-                    var poison = p.Effects.Find(effect => effect.EffectName == effectName);
+                    var poison = p.Effects.Find(effect => effect.EffectName == EffectName);
                     if (poison != null)
                     {
                         poison.Strength--;

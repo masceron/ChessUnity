@@ -45,7 +45,7 @@ namespace Game.Piece.PieceLogic
             list.Add(new AnomalocarisActive(Pos, index));
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

@@ -1,17 +1,19 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PegasusSeamothMove : Action, IQuiets
+    [MemoryPackable]
+    public partial class PegasusSeamothMove : Action, IQuiets
     {
-        private const int pacifiedDuration = 3;
-        public PegasusSeamothMove(int maker, int to) : base(maker)
+        private const int PacifiedDuration = 3;
+        public PegasusSeamothMove(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void Animate()
@@ -37,7 +39,7 @@ namespace Game.Action.Quiets
                 var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.Color == caller.Color) continue;
                 
-                ActionManager.EnqueueAction(new ApplyEffect(new Pacified(pacifiedDuration, p)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Pacified(PacifiedDuration, p)));
                 break;
             }
             

@@ -9,7 +9,7 @@ namespace Game.Effects.Augmentation
 {
     public class EeriePresencePassive : Effect, IAfterPieceActionEffect
     {
-        public EeriePresencePassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public EeriePresencePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_eerie_presence_passive")
         { }
 

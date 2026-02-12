@@ -8,7 +8,7 @@ namespace Game.Effects.Buffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Shield: Effect, IBeforePieceActionEffect
     {
-        public Shield(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, "effect_shield")
+        public Shield(PieceLogic piece, int stack = 1) : base(-1, stack, piece, "effect_shield")
         {}
 
         public void OnCallBeforePieceAction(Action.Action action)

@@ -11,7 +11,7 @@ namespace Game.Effects.Others
     {
         private readonly int Pos;
         public EndTurnEffectType EndTurnEffectType { get; }
-        public SeaTurtleCountdown(sbyte Duration, PieceLogic piece) : base(Duration, 1, piece, "effect_sea_turtle_countdown")
+        public SeaTurtleCountdown(int Duration, PieceLogic piece) : base(Duration, 1, piece, "effect_sea_turtle_countdown")
         { Pos = piece.Pos; }
         public void OnCallEnd(Action.Action action)
         {

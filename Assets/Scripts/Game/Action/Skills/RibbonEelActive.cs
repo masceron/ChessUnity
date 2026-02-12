@@ -1,12 +1,16 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class RibbonEelActive : Action
+    [MemoryPackable]
+    public partial class RibbonEelActive : Action
     {
+        [MemoryPackInclude]
         private readonly int sourcePiecePos;
+        [MemoryPackInclude]
         private readonly int targetPiecePos;
         private const int BoundDuration = 1;
         
