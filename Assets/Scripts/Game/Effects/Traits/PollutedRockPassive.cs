@@ -31,11 +31,9 @@ namespace Game.Effects.Traits
         public void OnCallEnd(Action.Action lastMainAction)
         {
             numTurns--;
-            if (numTurns == 0)
-            {
-                numTurns = TurnsToActive;
-                SpawnMedicalLeech();
-            }
+            if (numTurns != 0) return;
+            numTurns = TurnsToActive;
+            SpawnMedicalLeech();
         }
 
         private void SpawnMedicalLeech()
@@ -49,7 +47,7 @@ namespace Game.Effects.Traits
             if (emptySpots.Count > 0)
             {
                 var indexToSpawn = emptySpots[random.Next(emptySpots.Count)];
-                ActionManager.ExecuteImmediately(
+                ActionManager.EnqueueAction(
                     new SpawnPiece(new PieceConfig("piece_medicinal_leech", Piece.Color, indexToSpawn))
                 );
             }

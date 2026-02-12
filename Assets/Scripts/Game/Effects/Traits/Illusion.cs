@@ -44,7 +44,7 @@ namespace Game.Effects.Traits
                 }
                 else
                 {
-                    ActionManager.ExecuteImmediately(new RemoveEffect(effect));
+                    ActionManager.EnqueueAction(new RemoveEffect(effect));
                 }
             }
         }

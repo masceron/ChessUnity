@@ -22,7 +22,7 @@ namespace Game.Effects.RegionalEffect
                 }
             }
             var randomInd = Random.Range(0, pieces.Count);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(1, pieces[randomInd])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieces[randomInd])));
         }
     }
 }

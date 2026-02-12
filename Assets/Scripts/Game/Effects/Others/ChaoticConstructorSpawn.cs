@@ -47,7 +47,7 @@ namespace Game.Effects.Others
                     var rd = UnityEngine.Random.Range(0, 101);
                     var color = rd > 50;
                     var cfg = new PieceConfig(constructPieces[idx], color, (ushort)pos);
-                    ActionManager.ExecuteImmediately(new SpawnPiece(cfg));
+                    ActionManager.EnqueueAction(new SpawnPiece(cfg));
                 }
 
             }

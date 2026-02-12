@@ -82,7 +82,7 @@ namespace Game.Effects.RegionalEffect
                 // If piece already on whirlpool -> destroy it
                 if (centralIndices.Contains(fromIndex))
                 {
-                    ActionManager.ExecuteImmediately(new KillPiece(piece.Pos));
+                    ActionManager.EnqueueAction(new KillPiece(piece.Pos));
                     continue;
                 }
 
@@ -128,12 +128,12 @@ namespace Game.Effects.RegionalEffect
                 if (MatchManager.Ins.GameState.PieceBoard[nextIndex] != null) continue;
 
                 // Execute immediate move
-                ActionManager.ExecuteImmediately(new NormalMove((ushort)fromIndex, (ushort)nextIndex));
+                ActionManager.EnqueueAction(new NormalMove((ushort)fromIndex, (ushort)nextIndex));
 
                 // If the piece lands in a whirlpool cell, destroy it
                 if (centralIndices.Contains(nextIndex))
                 {
-                    ActionManager.ExecuteImmediately(new KillPiece(piece.Pos));
+                    ActionManager.EnqueueAction(new KillPiece(piece.Pos));
                 }
             }
         }
