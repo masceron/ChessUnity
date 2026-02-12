@@ -1,9 +1,8 @@
-using UX.UI.Ingame;
-using UX.UI.Ingame.DeathDefianceUI;
 using Game.Piece.PieceLogic.Commons;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Effects.Buffs;
 
 namespace Game.Effects.Traits
 {
@@ -37,16 +36,22 @@ namespace Game.Effects.Traits
 
             if (_deathDefianceCount <= 0) return;
             
-            var ui = BoardViewer.Ins.GetOrInstantiateUI<DeathDefianceUI>(IngameSubmenus.DeathDefianceUI);
-            ui.Load(Piece.Pos, this);  
             _deathDefianceCount--;
-        }
 
-        public void OnEffectChosen(string effectName)
-        {
-            var piece = Piece;
-            var effect = DeathDefianceUI.CreateEffectStatic(effectName, piece);
-            ActionManager.EnqueueAction(new ApplyEffect(effect, piece));
+            switch (_deathDefianceCount)
+            {
+                case 3:
+                    ActionManager.EnqueueAction(new ApplyEffect(new Carapace(-1, Piece)));
+                    break;
+                case 2:
+                    ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(Piece)));
+                    break;
+                case 1:
+                    ActionManager.EnqueueAction(new ApplyEffect(new Extremophile(Piece)));
+                    break;
+                default:
+                    return;
+            }
         }
 
         public override int GetValueForAI()
