@@ -17,7 +17,7 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(bleedingStack, BoardUtils.PieceOn(Target))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken((sbyte)brokenDuration, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Broken(brokenDuration, BoardUtils.PieceOn(Target))));
         }
     }
 }

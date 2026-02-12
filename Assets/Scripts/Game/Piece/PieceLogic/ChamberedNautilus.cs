@@ -14,7 +14,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChamberedNautilus : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
 
         public ChamberedNautilus(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BarracudaMoves.Captures)
         {
@@ -99,7 +99,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

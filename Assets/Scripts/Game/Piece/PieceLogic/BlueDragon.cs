@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic
 {
     public class BlueDragon : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
         public BlueDragon(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, SpinningMoves.Captures)
         {
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(this)));
@@ -127,7 +127,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

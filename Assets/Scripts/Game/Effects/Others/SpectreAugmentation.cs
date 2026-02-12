@@ -47,7 +47,7 @@ namespace Game.Effects.Others
 
         private Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var randomDuration = (sbyte)new System.Random().Next(2, 6);
+            var randomDuration = new System.Random().Next(2, 6);
 
             return effectName switch
             {

@@ -13,23 +13,23 @@ namespace Game.Action.Skills
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
-        private readonly ushort moveTo;
-        public SirenActive(ushort maker, int f, int t) : base(maker)
+        private readonly int _moveTo;
+        public SirenActive(int maker, int f, int t) : base(maker)
         {
             Maker = maker;
-            Target = (ushort)f;
-            moveTo = (ushort)t;
+            Target = f;
+            _moveTo = t;
         }
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Target, moveTo);
+            PieceManager.Ins.Move(Target, _moveTo);
         }
 
         protected override void ModifyGameState()
         {
-            Move(Target, moveTo);
+            Move(Target, _moveTo);
             
-            FlipPieceColor(moveTo);
+            FlipPieceColor(_moveTo);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

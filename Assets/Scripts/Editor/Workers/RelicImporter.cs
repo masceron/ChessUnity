@@ -6,22 +6,11 @@ using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Worker
+namespace Editor.Workers
 {
-    public class PieceImporter : AssetPostprocessor
+    public class RelicImporter : AssetPostprocessor
     {
-        private const string PiecesManagerPath = "Assets/Data/Collections/PiecesData.asset";
-
-        private static PiecesData LoadCentralDataManager()
-        {
-            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(PiecesManagerPath);
-            if (!centralData)
-            {
-                Debug.LogError($"Central Data Manager asset not found at: {PiecesManagerPath}.");
-            }
-
-            return centralData;
-        }
+        private const string RelicsManagerPath = "Assets/Data/Collections/RelicsData.asset";
 
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
@@ -31,32 +20,32 @@ namespace Editor.Worker
 
             foreach (var path in importedAssets.Concat(movedAssets))
             {
-                var pieceInfo = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
+                var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
-                if (!pieceInfo) continue;
+                if (!relicInfo) continue;
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
-                var newKey = "piece_" + ToSnakeCase(fileName);
+                var newKey = "relic_" + ToSnakeCase(fileName);
 
-                if (string.IsNullOrEmpty(pieceInfo.key))
+                if (string.IsNullOrEmpty(relicInfo.key))
                 {
-                    pieceInfo.key = newKey;
-                    EditorUtility.SetDirty(pieceInfo);
-                    Debug.Log($"Key for {pieceInfo.key} auto-generated.");
+                    relicInfo.key = newKey;
+                    EditorUtility.SetDirty(relicInfo);
+                    Debug.Log($"Key for {relicInfo.key} auto-generated.");
                 }
-                else if (!pieceInfo.key.StartsWith("piece_") || !Regex.IsMatch(pieceInfo.key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!relicInfo.key.StartsWith("effect_") || !Regex.IsMatch(relicInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
-                        $"{fileName}'s key '{pieceInfo.key}' doesn't follow naming convention for Piece objects. Suggestion: {newKey}");
+                        $"{fileName}'s key '{relicInfo.key}' doesn't follow naming convention for Relic objects. Suggestion: {newKey}");
                 }
 
-                if (centralData && centralData.piecesData.All(p => p.key != pieceInfo.key))
+                if (centralData && centralData.relicsData.All(p => p.key != relicInfo.key))
                 {
-                    centralData.piecesData.Add(pieceInfo);
-                    Debug.Log($"CentralDataManager: Added new PieceInfo '{pieceInfo.key}' to the master list.");
+                    centralData.relicsData.Add(relicInfo);
+                    Debug.Log($"CentralDataManager: Added new RelicInfo '{relicInfo.key}' to the master list.");
                     collectionChanged = true;
                 }
 
-                UpdateLocalizationTables(pieceInfo);
+                UpdateLocalizationTables(relicInfo);
             }
 
             if (!collectionChanged) return;
@@ -77,21 +66,21 @@ namespace Editor.Worker
             }
         }
 
-        private static void UpdateLocalizationTables(PieceInfo pieceInfo)
+        private static RelicsData LoadCentralDataManager()
         {
-            var key = pieceInfo.key;
-
-            AddKeyToTableCollection("piece_name", key);
-
-            if (!pieceInfo.hasSkill) return;
-
-            AddKeyToTableCollection("piece_skill", key + "_skill");
-            AddKeyToTableCollection("piece_skill_description", key + "_skill_description");
+            var centralData = AssetDatabase.LoadAssetAtPath<RelicsData>(RelicsManagerPath);
+            if (!centralData) Debug.LogError($"Central Data Manager asset not found at: {RelicsManagerPath}.");
+            return centralData;
         }
 
-        /// <summary>
-        ///     Helper method to find a String Table Collection and add a key if it doesn't exist.
-        /// </summary>
+        private static void UpdateLocalizationTables(RelicInfo relicInfo)
+        {
+            var key = relicInfo.key;
+
+            AddKeyToTableCollection("relic_name", key);
+            AddKeyToTableCollection("relic_description", key + "_description");
+        }
+
         private static void AddKeyToTableCollection(string collectionName, string key)
         {
             var tableCollection = LocalizationEditorSettings.GetStringTableCollection(collectionName);

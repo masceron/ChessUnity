@@ -1,6 +1,5 @@
 ﻿using Game.Action.Internal;
 using Game.Piece;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
@@ -23,7 +22,6 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieceOn = PieceOn(Maker);
             ActionManager.EnqueueAction(new DestroyPiece(_target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

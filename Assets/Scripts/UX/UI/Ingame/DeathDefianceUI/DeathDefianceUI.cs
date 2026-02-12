@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
+using Game.Effects.Buffs;
 using UnityEngine;
 using PrimeTween;
-using Game.Action;
-using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
@@ -35,7 +34,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
             "effect_ambush",
             "effect_quick_reflex",
         };
-        private int _piecePos;
+
         private DeathDefiance _sourceEffect;
         private List<string> _selectedEffects = new();
         private static readonly System.Random Random = new();
@@ -43,7 +42,6 @@ namespace UX.UI.Ingame.DeathDefianceUI
         
         public void Load(int piecePos, DeathDefiance source)
         {
-            _piecePos = piecePos;
             _sourceEffect = source;
             BoardUtils.PieceOn(piecePos);
             GetRandomEffect();
@@ -87,27 +85,27 @@ namespace UX.UI.Ingame.DeathDefianceUI
 
         public static Effect CreateEffectStatic(string effectName, PieceLogic piece)
         {
-            const sbyte duration = 5;
+            const int duration = 5;
             return effectName switch
             {
                 // Buffs 
                 // thiếu true bite 
                 // đỏ mà ra mấy cái shield liên tục thì bất tử :<
-                "effect_carapace" => new Game.Effects.Buffs.Carapace(duration, piece),
-                "effect_hardened_shield" => new Game.Effects.Buffs.HardenedShield(piece),
-                "effect_piercing" => new Game.Effects.Buffs.Piercing(duration, piece),
-                "effect_shield" => new Game.Effects.Buffs.Shield(piece),
-                "effect_camouflage" => new Game.Effects.Buffs.Camouflage(piece, duration),
-                "effect_haste" => new Game.Effects.Buffs.Haste(duration, 1, piece),
+                "effect_carapace" => new Carapace(duration, piece),
+                "effect_hardened_shield" => new HardenedShield(piece),
+                "effect_piercing" => new Piercing(duration, piece),
+                "effect_shield" => new Shield(piece),
+                "effect_camouflage" => new Camouflage(piece, duration),
+                "effect_haste" => new Haste(duration, 1, piece),
                 
                 // Traits 
-                "effect_evasion" => new Game.Effects.Traits.Evasion(duration, 50, piece),
-                "effect_construct" => new Game.Effects.Traits.Construct(piece),
-                "effect_demolisher" => new Game.Effects.Traits.Demolisher(piece),
-                "effect_consume" => new Game.Effects.Traits.Consume(piece),
-                "effect_surpass" => new Game.Effects.Traits.Surpass(piece),
-                "effect_ambush" => new Game.Effects.Traits.Ambush(piece),
-                "effect_quick_relfex" => new Game.Effects.Traits.QuickReflex(piece),
+                "effect_evasion" => new Evasion(duration, 50, piece),
+                "effect_construct" => new Construct(piece),
+                "effect_demolisher" => new Demolisher(piece),
+                "effect_consume" => new Consume(piece),
+                "effect_surpass" => new Surpass(piece),
+                "effect_ambush" => new Ambush(piece),
+                "effect_quick_reflex" => new QuickReflex(piece),
                 
                 _ => null
             };
@@ -115,10 +113,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
         
         public void ChooseEffect(string effectName)
         {
-            if (_sourceEffect != null)
-            {
-                _sourceEffect.OnEffectChosen(effectName);
-            }
+            _sourceEffect?.OnEffectChosen(effectName);
             Disable();
             DestroyEffectItems();
         }

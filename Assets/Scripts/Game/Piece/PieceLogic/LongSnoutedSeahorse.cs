@@ -7,7 +7,7 @@ namespace Game.Piece.PieceLogic
 {
     public class LongSnoutedSeahorse : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
 
         public LongSnoutedSeahorse(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
@@ -51,7 +51,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Game.Action;
-using Game.Action.Internal;
 using Game.Action.Internal.Pending;
 using Game.Action.Skills;
 using Game.Common;
@@ -14,7 +12,7 @@ namespace UX.UI.Ingame.DormantFossil
     
     public class DormantFossilUI : IngamePendingMenu
     {
-        private ushort piecePos;
+        private int piecePos;
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject pieceItem;
 
@@ -38,7 +36,7 @@ namespace UX.UI.Ingame.DormantFossil
             ((RectTransform)transform.GetChild(0)).anchoredPosition = new Vector2(-50, 0);
         }
 
-        public void Load(ushort spawnPos)
+        public void Load(int spawnPos)
         {
             piecePos = spawnPos;
             

@@ -7,7 +7,7 @@ namespace Game.Effects.Augmentation
 {
     public class NerveCoolantPassive : Effect, IOnApply
     {
-        public NerveCoolantPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public NerveCoolantPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_nerve_coolant_passive")
         { }
 

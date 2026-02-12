@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     {
         private readonly bool color;
 
-        public Charge(sbyte strength, bool color) : base(-1, strength, null, "effect_charge")
+        public Charge(int strength, bool color) : base(-1, strength, null, "effect_charge")
         {
             this.color = color;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;

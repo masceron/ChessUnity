@@ -13,7 +13,7 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public VelkarisKill(int p, ushort f, ushort t) : base(p)
+        public VelkarisKill(int p, int f, int t) : base(p)
         {
             Maker = f;
             Target = t;

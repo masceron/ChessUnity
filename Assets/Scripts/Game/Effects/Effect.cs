@@ -35,12 +35,12 @@ namespace Game.Effects
     public abstract class Effect : Observer
     {
         public readonly string EffectName;
-        public sbyte Duration;
-        public sbyte Strength;
+        public int Duration;
+        public int Strength;
         public PieceLogic Piece;
         public readonly EffectCategory Category;
         public readonly UDictionary<EffectStat, List<int>> Stats;
-        protected Effect(sbyte duration, sbyte strength, PieceLogic piece, string name)
+        protected Effect(int duration, int strength, PieceLogic piece, string name)
         {
             Piece = piece;
             EffectName = name;

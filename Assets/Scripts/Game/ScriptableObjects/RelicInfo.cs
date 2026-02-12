@@ -7,7 +7,7 @@ namespace Game.ScriptableObjects
     {
         [SerializeField] public string key;
         [SerializeField] public Texture2D icon;
-        [SerializeField] public sbyte cooldown;
+        [SerializeField] public int cooldown;
         [SerializeField] public string logicClassName;
     }
 }

@@ -3,7 +3,6 @@ using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
-using Game.Effects;
 
 namespace Game.Effects.Traits
 {

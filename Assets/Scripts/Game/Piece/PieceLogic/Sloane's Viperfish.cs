@@ -7,7 +7,7 @@ namespace Game.Piece.PieceLogic
 {
     public class SloaneSViperfish : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
 
         public SloaneSViperfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
@@ -44,7 +44,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

@@ -10,7 +10,7 @@ namespace Game.Effects.Debuffs
             return baseRange - Strength;
         }
     
-        public Slow(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_slow")
+        public Slow(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_slow")
         {}
 
         public override int GetValueForAI()

@@ -5,7 +5,7 @@ namespace Game.Effects.Augmentation
 {
     public class MetalScopePassive : Effect, IApplyEffect
     {
-        public MetalScopePassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public MetalScopePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_metal_scope_passive")
         { }
         public void OnCallApplyEffect(ApplyEffect applyEffect)

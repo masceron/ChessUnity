@@ -14,7 +14,7 @@ namespace Game.Effects.Others
         private int _currentTurn = 1;
         private readonly List<int> _storedPos;
 
-        public ChaoticConstructorSpawn(sbyte strength, List<int> storedPos) : base(1, strength, null, "effect_chaotic_constructor_spawn")
+        public ChaoticConstructorSpawn(int strength, List<int> storedPos) : base(1, strength, null, "effect_chaotic_constructor_spawn")
         {
             _storedPos = storedPos;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;

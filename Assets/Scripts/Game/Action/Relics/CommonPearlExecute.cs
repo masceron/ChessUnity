@@ -41,7 +41,7 @@ namespace Game.Action.Relics
 
         private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var randomDuration = (sbyte)new System.Random().Next(2, 6);
+            var randomDuration = new System.Random().Next(2, 6);
             
             // TODO: Add more effects missing
             return effectName switch

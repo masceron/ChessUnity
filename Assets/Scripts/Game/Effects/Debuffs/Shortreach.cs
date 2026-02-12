@@ -4,7 +4,7 @@ namespace Game.Effects.Debuffs
 {
     public class Shortreach : Effect, IAttackRangeModifier
     {
-        public Shortreach(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_shortreach")
+        public Shortreach(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_shortreach")
         {}
 
         public override int GetValueForAI()

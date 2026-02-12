@@ -48,7 +48,7 @@ namespace Game.Effects.Traits
 
             if (emptySpots.Count > 0)
             {
-                var indexToSpawn = (ushort)emptySpots[random.Next(emptySpots.Count)];
+                var indexToSpawn = emptySpots[random.Next(emptySpots.Count)];
                 ActionManager.ExecuteImmediately(
                     new SpawnPiece(new PieceConfig("piece_medicinal_leech", Piece.Color, indexToSpawn))
                 );

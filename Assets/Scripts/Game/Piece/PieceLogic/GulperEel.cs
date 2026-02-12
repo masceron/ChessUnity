@@ -42,7 +42,7 @@ namespace Game.Piece.PieceLogic
         }
 
         public SkillsDelegate Skills { get; set; }
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
     }
 
 }

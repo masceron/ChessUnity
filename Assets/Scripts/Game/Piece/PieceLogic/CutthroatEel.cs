@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
 {
     public class CutthroatEel : Commons.PieceLogic, IPieceWithSkill
     {
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
         public CutthroatEel(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {

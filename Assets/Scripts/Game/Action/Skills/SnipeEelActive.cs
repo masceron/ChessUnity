@@ -13,7 +13,7 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public SnipeEelActive(ushort maker, int to) : base(maker)
+        public SnipeEelActive(int maker, int to) : base(maker)
         {
             Maker = maker;
             Target = (ushort)to;

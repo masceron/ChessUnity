@@ -5,7 +5,7 @@ namespace Game.Effects.Augmentation
 {
     public class MetalSpinePassive : Effect, IApplyEffect
     {
-        public MetalSpinePassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public MetalSpinePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_metal_spine_passive")
         { }
         public void OnCallApplyEffect(ApplyEffect applyEffect)

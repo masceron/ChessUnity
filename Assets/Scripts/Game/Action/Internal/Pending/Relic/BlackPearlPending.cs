@@ -44,7 +44,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         // private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         // {
-        //     var randomDuration = (sbyte)new System.Random().Next(6, 8);
+        //     var randomDuration = (int)new System.Random().Next(6, 8);
         //     return effectName switch
         //     {
         //         "effect_shield" => new Effects.Buffs.Shield(piece),

@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEditor.Localization;
 using UnityEngine;
 
-namespace Editor.Window
+namespace Editor.Windows
 {
     public class AugmentationAssetsManager: EditorWindow
     {

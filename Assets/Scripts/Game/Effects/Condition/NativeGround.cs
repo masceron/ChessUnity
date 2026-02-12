@@ -43,8 +43,8 @@ namespace Game.Effects.Condition
 
         private Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var duration = (sbyte)Random.Range(1, 11);
-            sbyte strength = 1;
+            var duration = Random.Range(1, 11);
+            int strength = 1;
 
             return effectName switch
             {

@@ -9,7 +9,7 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Taunted: Effect, IEndTurnEffect
     {
-        public Taunted(sbyte duration, PieceLogic piece) : base(duration, 1, piece, "effect_taunted")
+        public Taunted(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_taunted")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }

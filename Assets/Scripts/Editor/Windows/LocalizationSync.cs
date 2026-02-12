@@ -5,7 +5,7 @@ using UnityEditor.Localization;
 using UnityEditor.Localization.Plugins.Google;
 using UnityEngine;
 
-namespace Editor.Window
+namespace Editor.Windows
 {
     public class LocalizationSync : EditorWindow
     {

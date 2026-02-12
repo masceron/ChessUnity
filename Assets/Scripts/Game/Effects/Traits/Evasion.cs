@@ -9,19 +9,16 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Evasion: Effect, IBeforePieceActionEffect
     {
-        // ReSharper disable once MemberCanBePrivate.Global
-        public int Probability;
 
-        public Evasion(sbyte duration, int probability, PieceLogic piece) : base(duration, 1, piece, "effect_evasion")
+        public Evasion(int duration, int probability, PieceLogic piece) : base(duration, probability, piece, "effect_evasion")
         {
-            Probability = probability;
         }
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success) return;
             if (Distance(action.Maker, action.Target) < 3) return;
-            if (!MatchManager.Roll(Probability)) return;
+            if (!MatchManager.Roll(Strength)) return;
 
             if (PieceOn(action.Target).Effects.Any(e => e.EffectName == "effect_bound"))
             {
@@ -36,10 +33,10 @@ namespace Game.Effects.Traits
             var pieceTarget = PieceOn(action.Maker);
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy)) 
             {
-                if (!MatchManager.Roll(Probability - 15)) return;
+                if (!MatchManager.Roll(Strength - 15)) return;
             } else
             {
-                if (!MatchManager.Roll(Probability)) return;
+                if (!MatchManager.Roll(Strength)) return;
             }
             
             action.Result = ResultFlag.Evade;
@@ -47,7 +44,7 @@ namespace Game.Effects.Traits
 
         public override int GetValueForAI()
         {
-            return base.GetValueForAI() - 2 * Probability;
+            return base.GetValueForAI() - 2 * Strength;
         }
     }
 }

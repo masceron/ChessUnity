@@ -9,7 +9,7 @@ namespace Game.Action.Skills
 {
     public class SurgeWrasseActive : Action, ISkills
     {
-        public SurgeWrasseActive(ushort maker) : base(maker)
+        public SurgeWrasseActive(int maker) : base(maker)
         {
             Target = maker;
         }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Managers;
@@ -39,7 +38,7 @@ namespace Game.Relics
             }
         }
 
-        public async override void ActiveForAI()
+        public override async void ActiveForAI()
         {
             // Gather all pieces
             var pieces = MatchManager.Ins.GameState.PieceBoard

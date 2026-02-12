@@ -4,7 +4,7 @@ namespace Game.Effects.Buffs
 {
     public class Haste: Effect, IMoveRangeModifier
     {
-        public Haste(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_haste")
+        public Haste(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_haste")
         {}
 
         public int ModifyMoveRange(int baseRange)

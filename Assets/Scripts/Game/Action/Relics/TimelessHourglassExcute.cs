@@ -17,7 +17,7 @@ namespace Game.Action.Relics
         {
             if(targetColor == relicColor)
             {
-                BoardUtils.PieceOn(Target).SkillCooldown = (sbyte)UnityEngine.Mathf.Max(0, BoardUtils.PieceOn(Target).SkillCooldown);
+                BoardUtils.PieceOn(Target).SkillCooldown = UnityEngine.Mathf.Max(0, BoardUtils.PieceOn(Target).SkillCooldown);
             }
             else
             {

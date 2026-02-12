@@ -13,7 +13,7 @@ namespace Game.Piece.PieceLogic
 {
     public class PencilUrchin : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
+        private int timeToCooldown;
         private const int SkillRange = 3;
 
         public PencilUrchin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
@@ -92,7 +92,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
+        int IPieceWithSkill.TimeToCooldown
         {
             get => timeToCooldown;
             set => timeToCooldown = value;

@@ -5,7 +5,7 @@ namespace Game.Effects.Augmentation
 {
     public class ColdBloodedPassive : Effect, IApplyEffect
     {
-        public ColdBloodedPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public ColdBloodedPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_cold_blooded_passive")
         { }
         public void OnCallApplyEffect(ApplyEffect applyEffect)

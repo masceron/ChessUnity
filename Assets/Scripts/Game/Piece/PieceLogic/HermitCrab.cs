@@ -67,7 +67,7 @@ namespace Game.Piece.PieceLogic
             list.Add(new HermitCrabSwap(Pos, index));
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

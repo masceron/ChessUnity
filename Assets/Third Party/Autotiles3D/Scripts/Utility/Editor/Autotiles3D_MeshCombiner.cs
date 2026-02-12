@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEditor;
-using System.Linq;
-using System.IO;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
 	public static class Autotiles3D_MeshCombiner
 	{

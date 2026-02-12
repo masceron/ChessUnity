@@ -82,7 +82,7 @@ namespace Game.Piece.PieceLogic
             return -1;
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

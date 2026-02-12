@@ -140,7 +140,7 @@ namespace Game.Common
             gameState.PieceBoard[pos].Color = !gameState.PieceBoard[pos].Color;
         }
 
-        public static void SetCooldown(int pos, sbyte cd)
+        public static void SetCooldown(int pos, int cd)
         {
             MatchManager.Ins.GameState.PieceBoard[pos].SkillCooldown = cd;
         }

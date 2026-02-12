@@ -5,9 +5,9 @@ namespace Game.Relics.Commons
     {
         public readonly string Type;
         public readonly bool Color;
-        public sbyte TimeCooldown;
+        public int TimeCooldown;
 
-        public RelicConfig(string t, bool c, sbyte timeCooldown)
+        public RelicConfig(string t, bool c, int timeCooldown)
         {
             Type = t;
             Color = c;

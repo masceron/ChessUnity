@@ -1,10 +1,9 @@
-using UnityEngine;
-using UnityEditor;
 using System.Linq;
-using Third_Party.Autotiles3D.Scripts.Core;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEditor;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core.Editor
 {
     [CustomEditor(typeof(Autotiles3D_Grid), true)]
     public class Autotiles3D_GridInspector : UnityEditor.Editor

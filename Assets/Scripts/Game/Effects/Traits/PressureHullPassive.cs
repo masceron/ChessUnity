@@ -7,7 +7,7 @@ namespace Game.Effects.Traits
 {
     public class PressureHullPassive : Effect, IOnApply
     {
-        public PressureHullPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_pressure_hull_passive")
+        public PressureHullPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_pressure_hull_passive")
         { }
 
         public void OnApply()

@@ -1,12 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Linq;
 using System;
-using Third_Party.Autotiles3D.Scripts.Core;
+using System.Collections.Generic;
+using System.Linq;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using Third_Party.Autotiles3D.Scripts.Utility.Editor;
+using UnityEditor;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core.Editor
 {
     [CustomEditor(typeof(Autotiles3D_TileLayer))]
     public class Autotiles3D_TileLayerInspector : UnityEditor.Editor

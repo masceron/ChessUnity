@@ -10,17 +10,14 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CoffinFishVengeful : Effect, IAfterPieceActionEffect
     {
-        public readonly int Probability;
-        public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, 1, piece, "effect_coffin_fish_vengeful")
-        {
-            Probability = probability;
-        }
+        public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, probability, piece, "effect_coffin_fish_vengeful")
+        {}
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success) return;
 
-            if (!MatchManager.Roll(Probability)) return;
+            if (!MatchManager.Roll(Strength)) return;
 
             if (action.Target == Piece.Pos)
             {

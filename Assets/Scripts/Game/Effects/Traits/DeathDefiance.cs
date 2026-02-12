@@ -1,11 +1,9 @@
 using UX.UI.Ingame;
 using UX.UI.Ingame.DeathDefianceUI;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Effects;
 
 namespace Game.Effects.Traits
 {
@@ -15,7 +13,7 @@ namespace Game.Effects.Traits
         private int _deathDefianceCount;
         public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
         {
-            this._deathDefianceCount = deathDefianceCount;
+            _deathDefianceCount = deathDefianceCount;
         }
 
         public void OnCallBeforePieceAction(Action.Action action)

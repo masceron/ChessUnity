@@ -32,7 +32,7 @@ namespace Game.Effects.Traits
             var existingEvasion = Piece.Effects.OfType<Evasion>().FirstOrDefault();
             if (existingEvasion != null)
             {
-                existingEvasion.Probability = evasion;
+                existingEvasion.Strength = evasion;
             }
             else
             {

@@ -18,7 +18,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         [SerializeField] private FPRelicSearcher relicSearcher;
         [SerializeField] private Transform nextButton;
         [NonSerialized] public int size;
-        public Game.Save.FreePlay.FPPreset army;
+        public FPPreset army;
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
@@ -31,7 +31,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             else FreePlayNotification.Ins.Close();     
         }
 
-        public void Load(int s, Game.Save.FreePlay.FPPreset? armyToLoad)
+        public void Load(int s, FPPreset? armyToLoad)
         {
             size = s;
             info.Load(size);
@@ -48,7 +48,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         {
             Load(s, null);
         }
-        private void LoadSave(Game.Save.FreePlay.FPPreset armyToLoad)
+        private void LoadSave(FPPreset armyToLoad)
         {
             army = armyToLoad;
             board.LoadSave(army.Troops, army.EnemyTroops);

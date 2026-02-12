@@ -3,7 +3,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Traits{
     public class LongReach : Effect, IAttackRangeModifier
     {
-        public LongReach(PieceLogic piece, sbyte duration, sbyte strength) : base(duration, strength, piece, "effect_long_reach")
+        public LongReach(PieceLogic piece, int duration, int strength) : base(duration, strength, piece, "effect_long_reach")
         {}
 
         public override int GetValueForAI()

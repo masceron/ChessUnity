@@ -6,35 +6,35 @@ namespace Game.Effects.Others
 {
     public class CopyCapturesMethod : Effect, IOnApply, IOnRemove
     {
-        private readonly PieceLogic ourPiece;
-        private readonly PieceLogic opponentPiece;
-        private byte ourPieceAttackRangeSaver;
-        private CapturesDelegate ourPieceCapturesSaver;
+        private readonly PieceLogic _ourPiece;
+        private readonly PieceLogic _opponentPiece;
+        private int _ourPieceAttackRangeSaver;
+        private CapturesDelegate _ourPieceCapturesSaver;
 
-        public CopyCapturesMethod(int firstPiece, int secondPiece, sbyte duration) : base(duration, 1, BoardUtils.PieceOn(firstPiece), "effect_copy_captures_method")
+        public CopyCapturesMethod(int firstPiece, int secondPiece, int duration) : base(duration, 1, BoardUtils.PieceOn(firstPiece), "effect_copy_captures_method")
         {
             Duration = duration;
-            ourPiece = BoardUtils.PieceOn(firstPiece);
-            opponentPiece = BoardUtils.PieceOn(secondPiece);
+            _ourPiece = BoardUtils.PieceOn(firstPiece);
+            _opponentPiece = BoardUtils.PieceOn(secondPiece);
         }
 
         public void OnApply()
         {
-            if (ourPiece == null || opponentPiece == null) return;
+            if (_ourPiece == null || _opponentPiece == null) return;
 
-            ourPieceAttackRangeSaver = ourPiece.AttackRange();
-            ourPiece.SetAttackRange(opponentPiece.AttackRange());
+            _ourPieceAttackRangeSaver = _ourPiece.AttackRange();
+            _ourPiece.SetAttackRange(_opponentPiece.AttackRange());
 
-            ourPieceCapturesSaver = ourPiece.Captures;
-            ourPiece.Captures = opponentPiece.Captures;
+            _ourPieceCapturesSaver = _ourPiece.Captures;
+            _ourPiece.Captures = _opponentPiece.Captures;
         }
 
         public void OnRemove()
         {
-            if (ourPiece != null)
+            if (_ourPiece != null)
             {
-                ourPiece.SetAttackRange(ourPieceAttackRangeSaver);
-                ourPiece.Captures = ourPieceCapturesSaver;
+                _ourPiece.SetAttackRange(_ourPieceAttackRangeSaver);
+                _ourPiece.Captures = _ourPieceCapturesSaver;
             }
         }
     }

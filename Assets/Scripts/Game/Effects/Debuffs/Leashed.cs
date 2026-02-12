@@ -8,7 +8,7 @@ namespace Game.Effects.Debuffs
     public class Leashed: Effect, IOnMoveGenEffect
     {
         public readonly int Position;
-        public Leashed(PieceLogic piece, int position, sbyte duration) : base(duration, 1, piece, "effect_leashed")
+        public Leashed(PieceLogic piece, int position, int duration) : base(duration, 1, piece, "effect_leashed")
         {
             Position = position;
         }

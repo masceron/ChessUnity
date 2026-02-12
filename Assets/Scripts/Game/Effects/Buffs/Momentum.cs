@@ -6,7 +6,7 @@ namespace Game.Effects.Buffs
 {
     public class Momentum: Effect, IAfterPieceActionEffect
     {
-        public Momentum(sbyte duration, PieceLogic piece) : base(duration, -1, piece, "effect_momentum")
+        public Momentum(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_momentum")
         {}
 
         public override int GetValueForAI()

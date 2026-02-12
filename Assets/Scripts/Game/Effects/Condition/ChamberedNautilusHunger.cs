@@ -8,7 +8,7 @@ namespace Game.Effects.Condition
 {
     public class ChamberedNautilusHunger : Effect, IAfterPieceActionEffect
     {
-        public ChamberedNautilusHunger(PieceLogic piece, sbyte stack = 1) : base(-1, stack, piece, "effect_chambered_nautilus_hunger")
+        public ChamberedNautilusHunger(PieceLogic piece, int stack = 1) : base(-1, stack, piece, "effect_chambered_nautilus_hunger")
         {
             
         }

@@ -9,7 +9,7 @@ namespace Game.Effects.Augmentation
 {
     public class RibcagePassive : Effect, IStartTurnEffect
     {
-        public RibcagePassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public RibcagePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_ribcage_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;

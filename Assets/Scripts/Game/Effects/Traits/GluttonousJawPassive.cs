@@ -10,7 +10,7 @@ namespace Game.Effects.Traits
     {
         
 
-        public GluttonousJawPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_gluttonous_jaw_passive")
+        public GluttonousJawPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_gluttonous_jaw_passive")
         { }
 
         public void OnCallAfterPieceAction(Action.Action action)

@@ -6,8 +6,8 @@ namespace Game.Relics.Commons
     public abstract class RelicLogic
     {
         public string type;
-        protected sbyte TimeCooldown;
-        public sbyte CurrentCooldown { get; protected set; }
+        protected int TimeCooldown;
+        public int CurrentCooldown { get; protected set; }
         public bool Color; // false for white, true for black
 
         public PieceLogic CommanderPiece

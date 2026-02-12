@@ -2,7 +2,6 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects;
 
 namespace Game.Effects.Augmentation
 {
@@ -10,7 +9,7 @@ namespace Game.Effects.Augmentation
     {
         
 
-        public DuelistReflexPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_duelist_reflex_passive")
+        public DuelistReflexPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_duelist_reflex_passive")
         { }
 
 

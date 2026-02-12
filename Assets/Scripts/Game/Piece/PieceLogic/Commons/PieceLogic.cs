@@ -33,40 +33,40 @@ namespace Game.Piece.PieceLogic.Commons
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
-        public ushort Pos;
+        public int Pos;
         public bool Color;
         public bool IsVisible = true;
-        private byte moveRange;
-        private byte attackRange;
-        public sbyte SkillCooldown;
+        private int _moveRange;
+        private int _attackRange;
+        public int SkillCooldown;
         public readonly PieceRank PieceRank;
         public readonly List<Effect> Effects;
         public readonly List<int> PreviousMoves;
         public readonly string Type;
-        private readonly bool hasSkill;
+        private readonly bool _hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
         public readonly List<ImmunityType> Immunities;
         public readonly List<FormationType> SpecificFormations;
         private readonly UDictionary<SkillStat, List<int>> SkillStats;
         
-        public byte MoveRange()
+        public int MoveRange()
         {
-            return moveRange;
+            return _moveRange;
         }
         
-        public byte AttackRange()
+        public int AttackRange()
         {
-            return attackRange;
+            return _attackRange;
         }
 
         public void SetMoveRange(byte newRange)
         {
-            moveRange = newRange;
+            _moveRange = newRange;
         }
 
-        public void SetAttackRange(byte newRange)
+        public void SetAttackRange(int newRange)
         {
-            attackRange = newRange;
+            _attackRange = newRange;
         }
 
         protected PieceLogic(PieceConfig cfg, QuietsDelegate quiets = null, CapturesDelegate captures = null)
@@ -78,17 +78,17 @@ namespace Game.Piece.PieceLogic.Commons
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
-            moveRange =  info.moveRange;
-            attackRange = info.attackRange;
+            _moveRange =  info.moveRange;
+            _attackRange = info.attackRange;
             PieceRank = info.rank;
-            hasSkill = info.hasSkill;
+            _hasSkill = info.hasSkill;
             Immunities = new List<ImmunityType>();
             SpecificFormations = new List<FormationType>();
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
-                SkillStats = new();
-                pieceWithSkill.TimeToCooldown = (sbyte)(info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1);
+                SkillStats = new UDictionary<SkillStat, List<int>>();
+                pieceWithSkill.TimeToCooldown = info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1;
             }
             else SkillCooldown = -1;
             
@@ -188,7 +188,7 @@ namespace Game.Piece.PieceLogic.Commons
             Quiets(list, Pos, isPlayer);
             Captures(list, Pos, excludeEmptyTile);
 
-            if (hasSkill)
+            if (_hasSkill)
             {
                 if (Effects.Any(e => e.EffectName == "effect_silenced") ||
                     Effects.Any(e => e.EffectName == "effect_illusion") ||
@@ -204,7 +204,7 @@ namespace Game.Piece.PieceLogic.Commons
 
         public int GetMoveRange()
         {
-            int range = moveRange;
+            var range = _moveRange;
             if (Effects.Any(e => e.EffectName == "effect_bound")) return 0;
 
             if (range > MaxLength) return range;
@@ -222,7 +222,7 @@ namespace Game.Piece.PieceLogic.Commons
 
         public int GetAttackRange()
         {
-            int range = attackRange;
+            int range = _attackRange;
             if (Effects.Any(e => e.EffectName == "effect_pacified")) return 0;
 
             if (range > MaxLength) return range;
@@ -335,8 +335,8 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetRawStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.ContainsKey(stat)) { return 0; }
-            return SkillStats[stat][num - 1];
+            if (!SkillStats.TryGetValue(stat, out var skillStat)) { return 0; }
+            return skillStat[num - 1];
         }
         /// <summary>
         /// Trả về stat sau khi đã qua sự chỉnh sửa của các Effect
@@ -346,8 +346,8 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.ContainsKey(stat)) { return 0; }
-            var finalStat = SkillStats[stat][num - 1];
+            if (!SkillStats.TryGetValue(stat, out var skillStat)) { return 0; }
+            var finalStat = skillStat[num - 1];
             foreach (var effect in Effects)
             {
                 if (effect is ISkillStatModifier modifier)

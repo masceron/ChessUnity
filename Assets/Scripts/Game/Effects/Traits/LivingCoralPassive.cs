@@ -79,7 +79,7 @@ namespace Game.Effects.Traits
         {
             if (piece.Effects.FirstOrDefault(e => e is Evasion) is Evasion evasion)
             {
-                evasion.Probability += EvasionValue;
+                evasion.Strength += EvasionValue;
             }
             else
             {
@@ -93,13 +93,13 @@ namespace Game.Effects.Traits
         {
             if (piece.Effects.FirstOrDefault(e => e is Evasion) is not Evasion evasion) return;
 
-            if (evasion.Probability <= EvasionValue)
+            if (evasion.Strength <= EvasionValue)
             {
                 ActionManager.EnqueueAction(new RemoveEffect(evasion));
             }
             else
             {
-                evasion.Probability -= EvasionValue;
+                evasion.Strength -= EvasionValue;
             }
         }
 

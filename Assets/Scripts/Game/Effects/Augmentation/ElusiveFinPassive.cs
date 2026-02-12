@@ -8,7 +8,7 @@ namespace Game.Effects.Augmentation
 {
     public class ElusiveFinPassive : Effect, IOnApply
     {
-        public ElusiveFinPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public ElusiveFinPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_elusive_fin_passive")
         { }
 
@@ -17,7 +17,7 @@ namespace Game.Effects.Augmentation
             var already = Piece.Effects.FirstOrDefault(e => e.EffectName == "effect_evasion");
             if (already != null)
             {
-                already.Strength = (sbyte)Math.Min(100, already.Strength + 10);
+                already.Strength = Math.Min(100, already.Strength + 10);
             }
             else
             {

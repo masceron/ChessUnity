@@ -8,7 +8,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SnappingStrike: Effect, IOnMoveGenEffect
     {
-        public SnappingStrike(PieceLogic piece, sbyte duration = -1) : base(duration, -1, piece,
+        public SnappingStrike(PieceLogic piece, int duration = -1) : base(duration, -1, piece,
             "effect_snapping_strike")
         {}
 
