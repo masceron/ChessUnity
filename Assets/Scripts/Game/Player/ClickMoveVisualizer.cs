@@ -24,7 +24,7 @@ namespace Game.Player
                 playerTransform = playerController.transform; // Cache on enable
             }
             
-            hideDistanceSqr = hideDistance * hideDistance; // Pre-calculate squared distance
+            hideDistanceSqr = 1f + hideDistance * hideDistance; // Pre-calculate squared distance
             offsetUp = Vector3.up * 0.1f; // Cache offset to avoid allocation each frame
         }
 

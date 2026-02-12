@@ -13,6 +13,7 @@ namespace UX.UI
         EndGameMessage,
         FreePlayMenu,
         StartGame, Assignment, MurkyTower, OutworldInvader, TrainingGround, Trader, Vault,
+        StatueBattlePopup,
         None,
     }
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]

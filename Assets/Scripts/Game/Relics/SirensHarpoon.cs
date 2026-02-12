@@ -43,7 +43,7 @@ namespace Game.Relics
             }
         }
 
-        public async override void ActiveForAI()
+        public override void ActiveForAI()
         {
             var listPieces = new List<PieceLogic>();
 

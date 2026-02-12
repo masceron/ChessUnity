@@ -13,6 +13,7 @@ namespace UX.UI.Loader
     {
         private static bool _isRegistered = false;
         private static GameMode chosenGameMode = GameMode.PlayerVsAI;
+        private static System.Collections.Generic.List<Game.Piece.PieceConfig> statuePieceConfigs = null;
         public static void Start()
         {
             if (_isRegistered) { return; }
@@ -26,6 +27,11 @@ namespace UX.UI.Loader
                         UIManager.Ins.Load(CanvasID.MainMenu);
                         break;
                     case 1:
+                        if (statuePieceConfigs != null)
+                        {
+                            Config.SetBlackPieceConfig(statuePieceConfigs);
+                            statuePieceConfigs = null;
+                        }
                         MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)), chosenGameMode);
                         break;
                     case 2:
@@ -33,6 +39,8 @@ namespace UX.UI.Loader
                         break;
                     case 3:
                         UIManager.Ins.Load(CanvasID.StartGame);
+                        break;
+                    case 4:
                         break;
                 }
             };
@@ -48,8 +56,16 @@ namespace UX.UI.Loader
             LoadSceneWithLoadingScreen(1);
             chosenGameMode = gameMode;
         }
+        
+        public static void LoadStatueBattle(System.Collections.Generic.List<Game.Piece.PieceConfig> blackPieceConfigs)
+        {
+            statuePieceConfigs = blackPieceConfigs;
+            chosenGameMode = GameMode.PlayerVsPlayer;
+            LoadSceneWithLoadingScreen(1);
+        }
         private static IEnumerator Load(int id)
         {
+            yield return new WaitForSeconds(0.2f);
             var op = LoadSceneAsync(id, LoadSceneMode.Single);
             while (!op.isDone)
             {

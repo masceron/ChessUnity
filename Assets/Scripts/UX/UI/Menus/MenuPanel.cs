@@ -21,6 +21,11 @@ namespace UX.UI.Menus
             SceneLoader.LoadSceneWithLoadingScreen(2);
         }
 
+        public void OnClickMapMode()
+        {
+            SceneLoader.LoadSceneWithLoadingScreen(4);
+        }
+
         public void OnClickExit()
         {
             Application.Quit();

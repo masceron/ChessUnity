@@ -36,7 +36,7 @@ namespace Game.Relics
             }
         }
 
-        public async override void ActiveForAI()
+        public override void ActiveForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
             var bestPieces = new List<PieceLogic>();

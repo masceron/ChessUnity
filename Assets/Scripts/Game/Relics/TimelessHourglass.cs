@@ -39,7 +39,7 @@ namespace Game.Relics
             }
         }
 
-        public async override void ActiveForAI()
+        public override void ActiveForAI()
         {
             // Gather all pieces
             var pieces = MatchManager.Ins.GameState.PieceBoard
