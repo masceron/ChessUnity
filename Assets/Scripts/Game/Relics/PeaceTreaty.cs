@@ -29,8 +29,8 @@ namespace Game.Relics
                 // BoardViewer.SelectingFunction = 4;
                 var excute = new PeaceTreatyExcute(Color);
                 BoardViewer.Ins.ExecuteAction(excute);
-                MatchManager.Ins.InputProcessor.UpdateRelic();
                 SetCooldown();
+                MatchManager.Ins.InputProcessor.UpdateRelic();
             }
         }
 

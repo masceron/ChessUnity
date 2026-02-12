@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Common;
 using Game.Effects;
+using Game.Effects.Traits;
 using UnityEngine;
 using PrimeTween;
 using Game.Action;
@@ -35,13 +36,15 @@ namespace UX.UI.Ingame.DeathDefianceUI
             "effect_quick_reflex",
         };
         private int _piecePos;
+        private DeathDefiance _sourceEffect;
         private List<string> _selectedEffects = new();
         private static readonly System.Random Random = new();
         
         
-        public void Load(int piecePos)
+        public void Load(int piecePos, DeathDefiance source)
         {
             _piecePos = piecePos;
+            _sourceEffect = source;
             BoardUtils.PieceOn(piecePos);
             GetRandomEffect();
             CreateEffectItems();
@@ -82,7 +85,7 @@ namespace UX.UI.Ingame.DeathDefianceUI
             ((RectTransform)transform.GetChild(0)).anchoredPosition = new Vector2(-50, 0);
         }
 
-        private static Effect CreateEffect(string effectName, PieceLogic piece)
+        public static Effect CreateEffectStatic(string effectName, PieceLogic piece)
         {
             const sbyte duration = 5;
             return effectName switch
@@ -109,11 +112,13 @@ namespace UX.UI.Ingame.DeathDefianceUI
                 _ => null
             };
         }
+        
         public void ChooseEffect(string effectName)
         {
-            var piece = BoardUtils.PieceOn(_piecePos);
-            var effect = CreateEffect(effectName, piece);
-            ActionManager.EnqueueAction(new ApplyEffect(effect, piece));
+            if (_sourceEffect != null)
+            {
+                _sourceEffect.OnEffectChosen(effectName);
+            }
             Disable();
             DestroyEffectItems();
         }

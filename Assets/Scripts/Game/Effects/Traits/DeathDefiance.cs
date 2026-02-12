@@ -2,42 +2,58 @@ using UX.UI.Ingame;
 using UX.UI.Ingame.DeathDefianceUI;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
+using Game.Action;
 using Game.Action.Captures;
+using Game.Action.Internal;
+using Game.Effects;
+
 namespace Game.Effects.Traits
 {
-	[Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-	public class DeathDefiance: Effect, IAfterPieceActionEffect
-	{
-		private int _deathDefianceCount;
-		public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
-		{
-		this._deathDefianceCount = deathDefianceCount;
-		}
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class DeathDefiance: Effect, IBeforePieceActionEffect, IAfterPieceActionEffect
+    {
+        private int _deathDefianceCount;
+        public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
+        {
+            this._deathDefianceCount = deathDefianceCount;
+        }
 
-		public void OnCallAfterPieceAction(Action.Action action)
-		{
-			 if (action is not ICaptures)
-			 {
-				 return;
-			 }
-			 //còn né nữa chưa tính
-			 if(!BoardUtils.IsAlive(Piece)) return;
-			 if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
-			     || Piece.Effects.Any(e => e.EffectName == "effect_carapace") 
-			     || Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
-			 if (action.Target != Piece.Pos || action.Maker == action.Target) {
-				 return;
-			 }
-			 if (_deathDefianceCount <= 1) return;
-			 var ui = BoardViewer.Ins.GetOrInstantiateUI<DeathDefianceUI>(IngameSubmenus.DeathDefianceUI);
+        public void OnCallBeforePieceAction(Action.Action action)
+        {
+            if (action is not ICaptures) return;
+            if (action.Target != Piece.Pos || action.Maker == action.Target) return;
+            if (action.Result != ResultFlag.Success) return;  
+            if (Piece.Effects.Any(e => e.EffectName == "effect_shield") 
+                || Piece.Effects.Any(e => e.EffectName == "effect_carapace") 
+                || Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
+            if (_deathDefianceCount <= 0) return;  
 
-			 ui.Load(Piece.Pos);
-			 _deathDefianceCount--;
-		}
+            action.Result = ResultFlag.SurvivedHit;
+        }
 
-		public override int GetValueForAI()
+        public void OnCallAfterPieceAction(Action.Action action)
+        {
+            if (action is not ICaptures) return;
+            if (action.Target != Piece.Pos) return;
+            if (action.Result != ResultFlag.SurvivedHit) return;  
+
+            if (_deathDefianceCount <= 0) return;
+            
+            var ui = BoardViewer.Ins.GetOrInstantiateUI<DeathDefianceUI>(IngameSubmenus.DeathDefianceUI);
+            ui.Load(Piece.Pos, this);  
+            _deathDefianceCount--;
+        }
+
+        public void OnEffectChosen(string effectName)
+        {
+            var piece = Piece;
+            var effect = DeathDefianceUI.CreateEffectStatic(effectName, piece);
+            ActionManager.EnqueueAction(new ApplyEffect(effect, piece));
+        }
+
+        public override int GetValueForAI()
         {
             return base.GetValueForAI() + 80;
         }
-	}
+    }
 }
