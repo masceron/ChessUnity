@@ -1,26 +1,29 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 using System.Collections.Generic;
 
 namespace Game.Action.Relics
 {
-    public class ChaoticConstructorAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class ChaoticConstructorAction : Action, IRelicAction
     {
-    private readonly List<int> _storedPos;
+    [MemoryPackInclude]
+    private readonly List<int> _storedPos = new();
 
-        public ChaoticConstructorAction(int maker) : base(maker)
+        public ChaoticConstructorAction(int maker, List<int> storedPos = null) : base(maker)
         {
             Target = (ushort)maker;
             Maker = (ushort)maker;
-            _storedPos = new List<int>();
         }
 
         protected override void ModifyGameState()
         {
+            _storedPos.Clear();
             for (var i = 0; i < BoardSize; ++i)
             {
                 var p = PieceOn(i);
-                if (p == null || p.PieceRank != Piece.PieceRank.Construct) continue;
+                if (p is not { PieceRank: Piece.PieceRank.Construct }) continue;
 
                 _storedPos.Add(p.Pos);
                 ActionManager.EnqueueAction(new KillPiece(p.Pos));

@@ -1,9 +1,11 @@
-﻿using Game.Tile;
+using MemoryPack;
+using Game.Tile;
 using static Game.Common.BoardUtils;    
 
 namespace Game.Action.Relics
 {
-    public class KelpBannerAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class KelpBannerAction : Action, IRelicAction
     {
         public KelpBannerAction(int maker) : base(maker)
         {

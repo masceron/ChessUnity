@@ -1,9 +1,11 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Others;
 
 namespace Game.Action.Relics
 {
-    public class EyeOfMimicExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class EyeOfMimicExcute : Action, IRelicAction
     {
         public EyeOfMimicExcute(int maker, int target) : base(maker)
         {

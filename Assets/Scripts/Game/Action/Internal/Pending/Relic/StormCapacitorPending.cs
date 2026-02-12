@@ -16,7 +16,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _thisTile = hoveringTile;
             Target = maker;
-            Maker = maker;
             _stormCapacitor = sc;
             _size = size;
         }

@@ -1,15 +1,16 @@
+using MemoryPack;
 using Game.Managers;
 using UnityEngine;
 
 namespace Game.Action.Captures
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrenziedCapture: Action, IDontEndTurn, ICaptures
+    [MemoryPackable]
+    public partial class FrenziedCapture: Action, IDontEndTurn, ICaptures
     {
-        public FrenziedCapture(int f, int t) : base(f)
+        public FrenziedCapture(int maker, int target) : base(maker)
         {
-            Maker = f;
-            Target = t;
+            Target = target;
         }
         protected override void Animate()
         {

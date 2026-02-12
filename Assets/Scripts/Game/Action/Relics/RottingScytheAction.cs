@@ -1,8 +1,10 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 
 namespace Game.Action.Relics
 {
-    public class RottingScytheAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class RottingScytheAction : Action, IRelicAction
     {
         public RottingScytheAction(int maker) : base(maker)
         {

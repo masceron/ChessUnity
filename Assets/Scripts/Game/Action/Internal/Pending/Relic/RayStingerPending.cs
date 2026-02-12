@@ -22,7 +22,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _rayStinger.SetCooldown();
 
-            var execute = new RayStingerExcute(Target);
+            var execute = new RayStingerExecute(Target);
             CommitResult(execute);
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;

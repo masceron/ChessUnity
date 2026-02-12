@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 using Game.Effects.Others;
@@ -7,7 +8,8 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeaTurtleActive: Action, ISkills
+    [MemoryPackable]
+    public partial class SeaTurtleActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

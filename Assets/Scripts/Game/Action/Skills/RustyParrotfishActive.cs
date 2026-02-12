@@ -1,11 +1,13 @@
-﻿using Game.Managers;
+using MemoryPack;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RustyParrotfishActive : Action, ISkills
+    [MemoryPackable]
+    public partial class RustyParrotfishActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using MemoryPack;
 
 namespace Game.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public readonly struct PieceConfig : IEquatable<PieceConfig>
+    [MemoryPackable]
+    public readonly partial struct PieceConfig : IEquatable<PieceConfig>
     {
         public readonly string Type;
         public readonly bool Color;

@@ -1,4 +1,4 @@
-﻿
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
@@ -6,9 +6,11 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
-    public class SloaneSViperfishActive : Action, ISkills
+    [MemoryPackable]
+    public partial class SloaneViperfishActive : Action, ISkills
     {
-        private readonly bool bleeding;
+        [MemoryPackInclude]
+        private readonly bool _bleeding;
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -17,23 +19,18 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public SloaneSViperfishActive(int maker, bool _bleeding) : base(maker)
+        public SloaneViperfishActive(int maker, bool bleeding) : base(maker)
         {
             Maker = (ushort)maker;
             Target = (ushort)maker;
-            bleeding = _bleeding;
+            this._bleeding = bleeding;
         }
 
         protected override void ModifyGameState()
         {
-            if (bleeding)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target)), PieceOn(Maker)));
-            }
-            else
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(Target)), PieceOn(Maker)));
-            }
+            ActionManager.EnqueueAction(_bleeding
+                ? new ApplyEffect(new Poison(1, PieceOn(Target)), PieceOn(Maker))
+                : new ApplyEffect(new Bleeding(5, PieceOn(Target)), PieceOn(Maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

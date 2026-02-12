@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
@@ -8,7 +9,8 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaSwap : Action, ISkills
+    [MemoryPackable]
+    public partial class TemperantiaSwap : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {

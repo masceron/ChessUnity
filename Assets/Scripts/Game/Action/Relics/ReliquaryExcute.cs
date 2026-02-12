@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Common;
 using Game.Managers;
 using Game.Tile;
@@ -5,7 +6,8 @@ using Game.Tile;
 namespace Game.Action.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ReliquaryExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class ReliquaryExcute : Action, IRelicAction
     {
         public ReliquaryExcute() : base(-1)
         {

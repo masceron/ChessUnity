@@ -1,15 +1,16 @@
+using MemoryPack;
 using Game.Managers;
 using UnityEngine;
 
 namespace Game.Action.Quiets
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrenziedMove: Action, IDontEndTurn
+    [MemoryPackable]
+    public partial class FrenziedMove: Action, IDontEndTurn
     {
-        public FrenziedMove(int f, int t) : base(f)
+        public FrenziedMove(int maker, int target) : base(maker)
         {
-            Maker = (ushort)f;
-            Target = (ushort)t;
+            Target = target;
         }
 
         protected override void Animate()

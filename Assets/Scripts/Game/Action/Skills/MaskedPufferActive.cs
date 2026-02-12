@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 using Game.Piece.PieceLogic.Commons;
 using Game.Effects.Buffs;
@@ -7,7 +8,8 @@ using Game.Effects.Debuffs;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MaskedPufferActive : Action, ISkills
+    [MemoryPackable]
+    public partial class MaskedPufferActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

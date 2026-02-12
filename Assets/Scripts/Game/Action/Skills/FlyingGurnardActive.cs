@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Tile;
@@ -7,7 +8,8 @@ using Game.Action.Internal;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FlyingGurnardActive: Action, ISkills
+    [MemoryPackable]
+    public partial class FlyingGurnardActive: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

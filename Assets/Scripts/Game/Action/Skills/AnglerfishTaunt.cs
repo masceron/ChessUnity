@@ -1,11 +1,13 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class AnglerfishTaunt: Action, ISkills
+    [MemoryPackable]
+    public partial class AnglerfishTaunt: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -15,9 +17,9 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public AnglerfishTaunt(int maker, int to) : base(maker)
+        public AnglerfishTaunt(int maker, int target) : base(maker)
         {
-            Target = (ushort)to;
+            Target = target;
         }
 
         protected override void ModifyGameState()

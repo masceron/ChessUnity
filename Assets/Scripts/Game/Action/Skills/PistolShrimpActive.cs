@@ -1,9 +1,11 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class PistolShrimpActive : Action, ISkills
+    [MemoryPackable]
+    public partial class PistolShrimpActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

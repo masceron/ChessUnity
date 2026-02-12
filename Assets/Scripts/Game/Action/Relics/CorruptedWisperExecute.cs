@@ -1,10 +1,12 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics
 {
-    public class CorruptedWisperExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class CorruptedWisperExecute : Action, IRelicAction
     {
         public CorruptedWisperExecute(int target) : base(-1)
         {

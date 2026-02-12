@@ -16,13 +16,11 @@ namespace Game.Relics
         }
         public override void Activate()
         {
-            if (CurrentCooldown == 0)
-            {
-                var action = new ChaoticConstructorAction(-1);
-                BoardViewer.Ins.ExecuteAction(action);
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            if (CurrentCooldown != 0) return;
+            var action = new ChaoticConstructorAction(-1);
+            BoardViewer.Ins.ExecuteAction(action);
+            BoardViewer.Selecting = -2;
+            BoardViewer.SelectingFunction = 4;
         }
 
         public override void ActiveForAI()

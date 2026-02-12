@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.AI;
@@ -9,7 +10,8 @@ using ZLinq;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GrenadiersActive: Action, ISkills, IAIAction
+    [MemoryPackable]
+    public partial class GrenadiersActive: Action, ISkills, IAIAction
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

@@ -1,3 +1,4 @@
+using MemoryPack;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
@@ -6,7 +7,8 @@ using Game.Effects.Debuffs;
 
 namespace Game.Action.Skills
 {
-    public class FlowerhornCichlidActive : Action, ISkills
+    [MemoryPackable]
+    public partial class FlowerhornCichlidActive : Action, ISkills
     {
         public FlowerhornCichlidActive(int maker, int target) : base(maker)
         {

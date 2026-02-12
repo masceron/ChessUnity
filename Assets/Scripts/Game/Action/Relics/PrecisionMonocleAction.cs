@@ -1,10 +1,12 @@
-﻿using Game.Common;
+using MemoryPack;
+using Game.Common;
 using Game.Effects.Traits;
 using ZLinq;
 
 namespace Game.Action.Relics
 {
-    public class PrecisionMonocleAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class PrecisionMonocleAction : Action, IRelicAction
     {
         private const int EvasionProbabilityDecrease = 5;
         private const string EffectName = "effect_marked";

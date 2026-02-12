@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Tile;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -6,7 +7,8 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BobtailSquidActive : Action, ISkills
+    [MemoryPackable]
+    public partial class BobtailSquidActive : Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic p)
         {

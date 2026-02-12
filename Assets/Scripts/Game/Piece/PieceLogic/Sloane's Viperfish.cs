@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
 
                             var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
 
-                            list.Add(new SloaneSViperfishActive(idx, bleeding));
+                            list.Add(new SloaneViperfishActive(idx, bleeding));
                         }
                     }
                 }

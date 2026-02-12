@@ -1,12 +1,16 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Relics
 {
 
-    public class MangroveCharmExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class MangroveCharmExcute : Action, IRelicAction
     {
+        [MemoryPackInclude]
         private readonly int FirstTarget;
+        [MemoryPackInclude]
         private readonly int SecondTarget;
 
         public MangroveCharmExcute(int FirstTarget, int SecondTarget) : base(-1)

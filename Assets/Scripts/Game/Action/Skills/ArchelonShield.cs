@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -6,7 +7,8 @@ using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArchelonShield: Action, ISkills
+    [MemoryPackable]
+    public partial class ArchelonShield: Action, ISkills
     {
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -16,10 +18,10 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public ArchelonShield(int maker, int to) : base(maker)
+        public ArchelonShield(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

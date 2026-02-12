@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -10,11 +11,11 @@ using ZLinq;
 
 namespace Game.Action.Skills
 {
-    public class HatchetfishActive : Action, ISkills, IAIAction
+    [MemoryPackable]
+    public partial class HatchetfishActive : Action, ISkills, IAIAction
     {
         public HatchetfishActive(int maker, int target) : base(maker)
         {
-            Maker = maker;
             Target =  target;
         }
 

@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -6,12 +7,18 @@ using Game.Managers;
 namespace Game.Action.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class StormCapacitorExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class StormCapacitorExcute : Action, IRelicAction
     {
+        [MemoryPackInclude]
         private readonly int rank;
+        [MemoryPackInclude]
         private readonly int file;
+        [MemoryPackInclude]
         private readonly int size;
+        [MemoryPackInclude]
         private readonly Corner corner;
+        [MemoryPackInclude]
         private readonly bool Color;
         
         public StormCapacitorExcute(int rank, int file, int size, Corner corner, bool color) : base(-1)

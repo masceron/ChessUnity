@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Common;
 using Game.Managers;
 using UX.UI.Ingame;
@@ -5,8 +6,10 @@ using UX.UI.Ingame;
 namespace Game.Action.Relics
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PeaceTreatyExcute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class PeaceTreatyExcute : Action, IRelicAction
     {
+        [MemoryPackInclude]
         private readonly bool Color;
         private const int TurnToEnd = 50;
         

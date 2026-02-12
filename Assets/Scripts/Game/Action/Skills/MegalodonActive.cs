@@ -1,12 +1,16 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class MegalodonActive : Action, ISkills
+    [MemoryPackable]
+    public partial class MegalodonActive : Action, ISkills
     {
+        [MemoryPackInclude]
         private readonly int firstTargetPos;
+        [MemoryPackInclude]
         private readonly int secondTargetPos;
         
         public MegalodonActive(int maker, int firstTarget, int secondTarget) : base(maker)

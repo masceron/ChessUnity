@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
@@ -8,7 +9,8 @@ using ZLinq;
 namespace Game.Action.Relics
 {
 
-    public class CommonPearlExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class CommonPearlExecute : Action, IRelicAction
     {
 
         public CommonPearlExecute(int target) : base(target)

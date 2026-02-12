@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 using Game.Effects.Traits;
@@ -5,7 +6,8 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
-    public class ThreadPipefishActive : Action, ISkills
+    [MemoryPackable]
+    public partial class ThreadPipefishActive : Action, ISkills
     {
         public ThreadPipefishActive(int maker, int target) : base(maker)
         {

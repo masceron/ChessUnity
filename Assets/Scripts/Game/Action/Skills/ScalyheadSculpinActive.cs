@@ -1,10 +1,12 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Action.Skills
 {
-    public class ScalyheadSculpinActive : Action, ISkills
+    [MemoryPackable]
+    public partial class ScalyheadSculpinActive : Action, ISkills
     {
         private const int carapaceDuration = 4;
         public ScalyheadSculpinActive(int maker) : base(maker)
