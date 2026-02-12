@@ -27,6 +27,7 @@ namespace Game.Action.Internal.Pending
 
         public void CancelResult()
         {
+            if (_task == null) return;
             _task.TrySetCanceled();
         }
 
