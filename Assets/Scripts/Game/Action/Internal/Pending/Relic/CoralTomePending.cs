@@ -13,8 +13,8 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _coralTome = ct;
             _pieceType = type;
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
+            Target = maker;
+            Maker = maker;
         }
 
         // protected override void ModifyGameState()

@@ -7,6 +7,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class NormalCapture: Action, ICaptures
     {
+        [MemoryPackConstructor]
+        private NormalCapture() { }
+
         public NormalCapture(int maker, int target) : base(maker)
         {
             Target = target;

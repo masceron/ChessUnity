@@ -6,11 +6,14 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class OvergrownSlugAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private OvergrownSlugAction() { }
+
         private const string EffectName = "effect_poison";
         
         public OvergrownSlugAction(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

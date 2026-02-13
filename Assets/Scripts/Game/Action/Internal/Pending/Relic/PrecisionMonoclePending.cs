@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
         public PrecisionMonoclePending(PrecisionMonocle pm, int maker) : base(maker)
         {
             _precisionMonocle = pm;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

@@ -55,6 +55,12 @@ namespace Game.Action
             
         }
 
+        [MemoryPackConstructor]
+        protected Action()
+        {
+            
+        }
+
         public bool IsValid()
         {
             return Result == ResultFlag.Success;

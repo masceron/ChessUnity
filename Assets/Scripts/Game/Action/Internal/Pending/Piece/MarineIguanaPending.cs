@@ -13,8 +13,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         public MarineIguanaPending(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

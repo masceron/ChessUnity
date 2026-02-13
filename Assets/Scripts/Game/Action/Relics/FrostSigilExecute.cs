@@ -10,16 +10,19 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class FrostSigilExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private FrostSigilExecute() { }
+
         private const int Radius = 3;
         
         [MemoryPackInclude]
-        private readonly bool _ourSide;
+        private bool _ourSide;
         
         private const int ProbabilityBound = 25;
 
         public FrostSigilExecute(int maker, bool ourSide) : base(maker)
         {
-            this._ourSide = ourSide;
+            _ourSide = ourSide;
         }
 
         protected override void ModifyGameState()

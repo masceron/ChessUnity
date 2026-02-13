@@ -11,14 +11,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ChrysosUpgrade : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ChrysosUpgrade() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
 
-        [MemoryPackInclude] private readonly PieceConfig _target;
+        [MemoryPackInclude] private PieceConfig _target;
 
-        [MemoryPackInclude] private readonly byte _cost;
+        [MemoryPackInclude] private byte _cost;
 
         public ChrysosUpgrade(int maker, PieceConfig target, byte cost) : base(maker)
         {

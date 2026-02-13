@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
         public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker) : base(maker)
         {
             _seafoamPhial = seafoamPhial;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

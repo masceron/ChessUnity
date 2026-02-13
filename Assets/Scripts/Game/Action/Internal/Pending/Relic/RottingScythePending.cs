@@ -13,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
         public RottingScythePending(RottingScythe rottingScythe, int maker) : base(maker)
         {
             _rottingScythe = rottingScythe;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

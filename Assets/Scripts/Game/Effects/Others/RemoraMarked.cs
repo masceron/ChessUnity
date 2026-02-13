@@ -12,7 +12,7 @@ namespace Game.Effects.Others
         private readonly PieceLogic _caster;
         public RemoraMarked(PieceLogic caster, PieceLogic piece) : base(-1, 1, piece, "effect_remora_marked")
         {
-            this._caster = caster;
+            _caster = caster;
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 

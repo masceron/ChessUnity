@@ -8,14 +8,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class MegalodonActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private MegalodonActive() { }
+
         [MemoryPackInclude]
-        private readonly int _firstTargetPos;
+        private int _firstTargetPos;
         [MemoryPackInclude]
-        private readonly int _secondTargetPos;
+        private int _secondTargetPos;
         
         public MegalodonActive(int maker, int firstTargetPos, int secondTargetPos) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             _firstTargetPos = firstTargetPos;
             _secondTargetPos = secondTargetPos;
         }

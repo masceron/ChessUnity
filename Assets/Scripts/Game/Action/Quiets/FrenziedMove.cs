@@ -8,6 +8,9 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class FrenziedMove: Action, IDontEndTurn
     {
+        [MemoryPackConstructor]
+        private FrenziedMove() { }
+
         public FrenziedMove(int maker, int target) : base(maker)
         {
             Target = target;

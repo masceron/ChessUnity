@@ -9,6 +9,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class MethaneCasingExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private MethaneCasingExecute() { }
+
         public MethaneCasingExecute(int maker) : base(maker)
         {
         }

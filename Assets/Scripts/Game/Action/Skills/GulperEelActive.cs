@@ -8,6 +8,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class GulperEelActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private GulperEelActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
@@ -15,8 +18,8 @@ namespace Game.Action.Skills
 
         public GulperEelActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

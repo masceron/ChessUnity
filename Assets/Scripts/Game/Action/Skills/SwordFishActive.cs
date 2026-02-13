@@ -10,14 +10,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SwordFishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SwordFishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
         public SwordFishActive(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
         }
 
         protected override void ModifyGameState()

@@ -38,7 +38,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 //     infos.Add(info);
                 // }
                 var pieceConfig = new PieceConfig(troop.PieceType, false,
-                    (ushort)(troop.Rank * Config.boardSize + troop.File), augNameLst);
+                    (troop.Rank * Config.boardSize + troop.File), augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
             }
@@ -54,7 +54,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 //     infos.Add(info);
                 // }
                 var pieceConfig = new PieceConfig(troop.PieceType, true,
-                    (ushort)(troop.Rank * Config.boardSize + troop.File), augNameLst);
+                    (troop.Rank * Config.boardSize + troop.File), augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigBlack.Add(pieceConfig);
             }

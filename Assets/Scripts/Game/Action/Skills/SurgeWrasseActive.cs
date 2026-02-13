@@ -11,6 +11,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SurgeWrasseActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SurgeWrasseActive() { }
+
         public SurgeWrasseActive(int maker) : base(maker)
         {
             Target = maker;

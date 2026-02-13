@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
         public AdrenalineRadiatorPending(AdrenalineRadiator relic, int maker) : base(maker)
         {
             _relic = relic;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         public void Dispose()

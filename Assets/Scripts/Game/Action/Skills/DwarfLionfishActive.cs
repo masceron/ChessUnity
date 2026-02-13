@@ -11,14 +11,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class DwarfLionfishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private DwarfLionfishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return -30;
         }
         public DwarfLionfishActive(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
         }
         protected override void ModifyGameState()
         {

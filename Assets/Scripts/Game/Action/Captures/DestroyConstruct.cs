@@ -7,6 +7,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class DestroyConstruct: Action, ICaptures
     {
+        [MemoryPackConstructor]
+        private DestroyConstruct() { }
+
         public DestroyConstruct(int maker, int target) : base(maker)
         {
             Target = target;

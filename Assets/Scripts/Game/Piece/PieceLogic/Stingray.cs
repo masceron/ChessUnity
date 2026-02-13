@@ -47,7 +47,7 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (!excludeEmptyTile)
                     {
-                        var board = PieceBoard();
+                        PieceBoard();
                         var active = ActiveBoard();
 
                         for (var rankTo = rank - 2; rankTo <= rank + 2; rankTo += 2)

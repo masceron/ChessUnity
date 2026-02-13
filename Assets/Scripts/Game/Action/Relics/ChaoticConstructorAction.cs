@@ -8,12 +8,15 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class ChaoticConstructorAction : Action, IRelicAction
     {
-        [MemoryPackInclude] private readonly List<int> _storedPos = new();
+        [MemoryPackConstructor]
+        private ChaoticConstructorAction() { }
 
-        public ChaoticConstructorAction(int maker, List<int> storedPos = null) : base(maker)
+        [MemoryPackInclude] private List<int> _storedPos = new();
+
+        public ChaoticConstructorAction(int maker) : base(maker)
         {
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
+            Target = maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

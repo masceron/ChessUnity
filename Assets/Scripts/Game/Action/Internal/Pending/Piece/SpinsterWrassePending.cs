@@ -16,8 +16,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         public SpinsterWrassePending(int maker, int to) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
         }
 
         // protected override void ModifyGameState()

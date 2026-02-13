@@ -10,6 +10,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class OrnetesEdictExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private OrnetesEdictExecute() { }
+
         public OrnetesEdictExecute(int target) : base(target)
         {
             Target = target;

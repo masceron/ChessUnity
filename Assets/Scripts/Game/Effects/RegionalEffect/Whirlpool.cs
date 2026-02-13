@@ -128,7 +128,7 @@ namespace Game.Effects.RegionalEffect
                 if (MatchManager.Ins.GameState.PieceBoard[nextIndex] != null) continue;
 
                 // Execute immediate move
-                ActionManager.EnqueueAction(new NormalMove((ushort)fromIndex, (ushort)nextIndex));
+                ActionManager.EnqueueAction(new NormalMove(fromIndex, nextIndex));
 
                 // If the piece lands in a whirlpool cell, destroy it
                 if (centralIndices.Contains(nextIndex))

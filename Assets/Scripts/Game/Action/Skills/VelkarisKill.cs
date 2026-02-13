@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class VelkarisKill: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private VelkarisKill() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;

@@ -7,8 +7,8 @@ namespace Game.Action.Internal
     {
         public CarapaceKill(int maker, int to) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
         }
 
         protected override void Animate()

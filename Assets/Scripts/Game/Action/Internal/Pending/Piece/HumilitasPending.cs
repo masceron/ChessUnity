@@ -25,8 +25,8 @@ namespace Game.Action.Internal.Pending.Piece
         private bool _isExecuting;
         public HumilitasPending(int maker, int to) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
             _isExecuting = false;
         }
         

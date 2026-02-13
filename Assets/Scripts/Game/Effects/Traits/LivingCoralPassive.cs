@@ -129,7 +129,7 @@ namespace Game.Effects.Traits
                 new SpawnPiece(new PieceConfig(
                     "piece_clown_fish",
                     Piece.Color,
-                    (ushort)emptyTiles[rand]))
+                    emptyTiles[rand]))
             );
         }
         

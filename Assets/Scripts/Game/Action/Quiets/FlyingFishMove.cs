@@ -7,6 +7,9 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class FlyingFishMove: Action, IQuiets
     {
+        [MemoryPackConstructor]
+        private FlyingFishMove() { }
+
         public int From;
         public FlyingFishMove(int maker, int target) : base(maker)
         {

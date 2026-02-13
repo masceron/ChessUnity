@@ -6,9 +6,12 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class RottingScytheAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private RottingScytheAction() { }
+
         public RottingScytheAction(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

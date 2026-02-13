@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ArcherfishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ArcherfishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -22,8 +25,8 @@ namespace Game.Action.Skills
 
         public ArcherfishActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void Animate()

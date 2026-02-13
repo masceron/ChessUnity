@@ -12,6 +12,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class BottlenoseDolphinActive: Action, ISkills, IAIAction
     {
+        [MemoryPackConstructor]
+        private BottlenoseDolphinActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;

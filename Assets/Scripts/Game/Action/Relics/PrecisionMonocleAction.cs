@@ -8,12 +8,15 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class PrecisionMonocleAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private PrecisionMonocleAction() { }
+
         private const int EvasionProbabilityDecrease = 5;
         private const string EffectName = "effect_marked";
 
         public PrecisionMonocleAction(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
         public OvergrownSlugPending(OvergrownSlug ogs, int maker) : base(maker)
         {
             _overgrownSlug = ogs;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         // protected override void ModifyGameState()

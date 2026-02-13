@@ -1,4 +1,4 @@
-using MemoryPack;
+﻿using MemoryPack;
 using Game.Managers;
 using static Game.Common.BoardUtils;
 
@@ -8,9 +8,13 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class LedgerStoneExecute : Action, IRelicAction
     {
-        [MemoryPackInclude]
-        private readonly bool _isFirstOption;
-        
+        [MemoryPackConstructor]
+        private LedgerStoneExecute()
+        {
+        }
+
+        [MemoryPackInclude] private bool _isFirstOption;
+
         public LedgerStoneExecute(bool isFirstOption) : base(-1)
         {
             this._isFirstOption = isFirstOption;
@@ -21,14 +25,11 @@ namespace Game.Action.Relics
             UnityEngine.Debug.Log("LedgerStoneExecute: " + _isFirstOption);
             var startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
             var startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;
-            
+
             if (_isFirstOption)
             {
-                var isFillColumn = false;
-                if(!IsColumnFull(startingSizeY)){
-                    isFillColumn = true;
-                }
-                if(isFillColumn)
+                var isFillColumn = !IsColumnFull(startingSizeY);
+                if (isFillColumn)
                 {
                     for (var rank = startingSizeX; rank < startingSizeX + MatchManager.Ins.StartingSize.x; rank++)
                     {
@@ -38,7 +39,9 @@ namespace Game.Action.Relics
                             TileManager.Ins.ActivateTile(rank, startingSizeY);
                         }
                     }
-                } else {
+                }
+                else
+                {
                     var leftColumnFile = startingSizeY - 1;
                     if (leftColumnFile >= 0)
                     {
@@ -50,38 +53,40 @@ namespace Game.Action.Relics
                 }
 
                 isFillColumn = false;
-                var RightColumnFile = (MaxLength - MatchManager.Ins.StartingSize.y) / 2 + MatchManager.Ins.StartingSize.x - 1;
-                if(!IsColumnFull(RightColumnFile)){
+                var rightColumnFile = (MaxLength - MatchManager.Ins.StartingSize.y) / 2 +
+                    MatchManager.Ins.StartingSize.x - 1;
+                if (!IsColumnFull(rightColumnFile))
+                {
                     isFillColumn = true;
                 }
-                if(isFillColumn)
+
+                if (isFillColumn)
                 {
                     for (var rank = startingSizeX; rank < startingSizeX + MatchManager.Ins.StartingSize.x; rank++)
                     {
-                        var index = IndexOf(rank, RightColumnFile);
+                        var index = IndexOf(rank, rightColumnFile);
                         if (TileManager.Ins.IsTileEmpty(index))
                         {
-                            TileManager.Ins.ActivateTile(rank, RightColumnFile);
+                            TileManager.Ins.ActivateTile(rank, rightColumnFile);
                         }
                     }
-                } else {
-                    RightColumnFile++;
-                    if (RightColumnFile >= 0)
+                }
+                else
+                {
+                    rightColumnFile++;
+                    if (rightColumnFile >= 0)
                     {
                         for (var rank = startingSizeX; rank < startingSizeX + MatchManager.Ins.StartingSize.x; rank++)
                         {
-                            TileManager.Ins.ActivateTile(rank, RightColumnFile);
+                            TileManager.Ins.ActivateTile(rank, rightColumnFile);
                         }
                     }
                 }
             }
             else
             {
-                var isFillRow = false;
-                if(!IsRowFull(startingSizeX)){
-                    isFillRow = true;
-                }
-                if(isFillRow)
+                var isFillRow = !IsRowFull(startingSizeX);
+                if (isFillRow)
                 {
                     for (var file = startingSizeY; file < startingSizeY + MatchManager.Ins.StartingSize.y; file++)
                     {
@@ -91,7 +96,9 @@ namespace Game.Action.Relics
                             TileManager.Ins.ActivateTile(startingSizeX, file);
                         }
                     }
-                } else {
+                }
+                else
+                {
                     var topRowRank = startingSizeX - 1;
                     if (topRowRank >= 0)
                     {
@@ -104,10 +111,12 @@ namespace Game.Action.Relics
 
                 isFillRow = false;
                 var bottomRowRank = startingSizeX + MatchManager.Ins.StartingSize.x - 1;
-                if(!IsRowFull(bottomRowRank)){
+                if (!IsRowFull(bottomRowRank))
+                {
                     isFillRow = true;
                 }
-                if(isFillRow)
+
+                if (isFillRow)
                 {
                     for (var file = startingSizeY; file < startingSizeY + MatchManager.Ins.StartingSize.y; file++)
                     {
@@ -117,7 +126,9 @@ namespace Game.Action.Relics
                             TileManager.Ins.ActivateTile(bottomRowRank, file);
                         }
                     }
-                } else {
+                }
+                else
+                {
                     var bottomRowRankPlus = bottomRowRank + 1;
                     if (bottomRowRankPlus < MaxLength)
                     {
@@ -136,25 +147,27 @@ namespace Game.Action.Relics
             for (var i = startingSizeX; i < startingSizeX + MatchManager.Ins.StartingSize.x; i++)
             {
                 UnityEngine.Debug.Log("IsColumnFull: " + i + ", " + column + ", " + MatchManager.Ins.StartingSize.x);
-                if(TileManager.Ins.IsTileEmpty(IndexOf(i,column))) 
+                if (TileManager.Ins.IsTileEmpty(IndexOf(i, column)))
                 {
                     UnityEngine.Debug.Log("IsNotColumnFull");
                     return false;
                 }
             }
+
             return true;
         }
-        
+
         private bool IsRowFull(int row)
         {
             var startingSizeY = (MaxLength - MatchManager.Ins.StartingSize.y) / 2;
             for (var file = startingSizeY; file < startingSizeY + MatchManager.Ins.StartingSize.y; file++)
             {
-                if(TileManager.Ins.IsTileEmpty(IndexOf(row, file))) 
+                if (TileManager.Ins.IsTileEmpty(IndexOf(row, file)))
                 {
                     return false;
                 }
             }
+
             return true;
         }
     }

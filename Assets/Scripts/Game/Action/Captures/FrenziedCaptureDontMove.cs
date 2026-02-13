@@ -7,6 +7,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class FrenziedCaptureDontMove: Action, IDontEndTurn
     {
+        [MemoryPackConstructor]
+        private FrenziedCaptureDontMove() { }
+
         public FrenziedCaptureDontMove(int maker, int target) : base(maker)
         {
             Target = target;

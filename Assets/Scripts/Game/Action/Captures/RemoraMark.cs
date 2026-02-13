@@ -9,6 +9,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class RemoraMark: Action, ICaptures
     {
+        [MemoryPackConstructor]
+        private RemoraMark() { }
+
         public RemoraMark(int maker, int target) : base(maker)
         {
             Target = target;

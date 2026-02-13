@@ -9,6 +9,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class AnglerfishTaunt: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private AnglerfishTaunt() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);

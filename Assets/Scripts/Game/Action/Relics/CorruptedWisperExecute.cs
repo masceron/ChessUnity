@@ -8,6 +8,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class CorruptedWisperExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private CorruptedWisperExecute() { }
+
         public CorruptedWisperExecute(int target) : base(-1)
         {
             Target = target;

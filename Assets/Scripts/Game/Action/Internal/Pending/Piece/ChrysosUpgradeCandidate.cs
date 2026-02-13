@@ -31,8 +31,8 @@ namespace Game.Action.Internal.Pending.Piece
         
         public ChrysosUpgradeCandidate(int maker, int to, int cost, Chrysos ch) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
             Cost = (byte)cost;
             _chrysos = ch;
             

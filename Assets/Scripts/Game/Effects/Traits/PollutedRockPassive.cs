@@ -42,7 +42,7 @@ namespace Game.Effects.Traits
             var random = new System.Random();
             var emptySpots = _rangeSpawn
                 .Select(offset => IndexOf(RankOf(Piece.Pos) + offset.Item1, FileOf(Piece.Pos) + offset.Item2))
-                .Where(index => PieceOn((ushort)index) == null)
+                .Where(index => PieceOn(index) == null)
                 .ToList();
 
             if (emptySpots.Count > 0)

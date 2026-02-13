@@ -48,7 +48,7 @@ namespace Game.Movesets
 
         private List<int> GenerateShellfishMovePattern(int makerPos)
         {
-            var caller = PieceOn(makerPos);
+            PieceOn(makerPos);
             var positions = new List<int>();
             var (rank, file) = RankFileOf(makerPos);
 

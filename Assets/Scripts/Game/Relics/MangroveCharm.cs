@@ -80,7 +80,7 @@ namespace Game.Relics
             var bestDuo = new List<(int pos1, int pos2)>();
             for (var i = 0; i < BoardSize; ++i)
             {
-                var (rank, file) = RankFileOf(i);
+                var (_, _) = RankFileOf(i);
                 var piece = PieceOn(i);
 
                 if (piece == null || piece.Color != Color) continue;

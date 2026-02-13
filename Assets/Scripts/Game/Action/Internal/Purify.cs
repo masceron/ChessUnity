@@ -8,7 +8,7 @@ namespace Game.Action.Internal
     {
         public Purify(int maker, int target) : base(maker)
         {
-            Target = (ushort)target;
+            Target = target;
         }
 
         protected override void ModifyGameState()

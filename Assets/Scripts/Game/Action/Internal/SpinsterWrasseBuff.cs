@@ -10,7 +10,7 @@ namespace Game.Action.Internal
 
         public SpinsterWrasseBuff(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             this.secondTarget = secondTarget;
             this.firstTarget = firstTarget;
         }

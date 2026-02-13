@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class HumilitasActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private HumilitasActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
@@ -19,7 +22,7 @@ namespace Game.Action.Skills
 
         public HumilitasActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             FirstTarget = firstTarget;
             SecondTarget = secondTarget;
         }

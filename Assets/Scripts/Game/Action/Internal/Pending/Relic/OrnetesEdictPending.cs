@@ -13,8 +13,8 @@ namespace Game.Action.Internal.Pending.Relic
         public OrnetesEdictPending(OrnetesEdict cp, int maker) : base(maker)
         {
             _ornetesEdict = cp;
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
+            Target = maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

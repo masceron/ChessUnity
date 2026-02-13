@@ -6,10 +6,13 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class TimelessHourglassExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private TimelessHourglassExecute() { }
+
         [MemoryPackInclude]
-        private readonly bool _relicColor;
+        private bool _relicColor;
         [MemoryPackInclude]
-        private readonly bool _targetColor;
+        private bool _targetColor;
         public TimelessHourglassExecute(int maker, bool relicColor, int target, bool targetColor = false) : base(maker)
         {
             _relicColor = relicColor;

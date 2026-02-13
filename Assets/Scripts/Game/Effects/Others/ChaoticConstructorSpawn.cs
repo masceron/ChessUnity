@@ -40,7 +40,7 @@ namespace Game.Effects.Others
             {
                 Shuffle(_storedPos);
 
-                foreach (var cfg in from pos in _storedPos let constructPieces = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == PieceRank.Construct select piece.key).ToList() let idx = UnityEngine.Random.Range(0, constructPieces.Count) let rd = UnityEngine.Random.Range(0, 101) let color = rd > 50 select new PieceConfig(constructPieces[idx], color, (ushort)pos))
+                foreach (var cfg in from pos in _storedPos let constructPieces = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == PieceRank.Construct select piece.key).ToList() let idx = UnityEngine.Random.Range(0, constructPieces.Count) let rd = UnityEngine.Random.Range(0, 101) let color = rd > 50 select new PieceConfig(constructPieces[idx], color, pos))
                 {
                     ActionManager.EnqueueAction(new SpawnPiece(cfg));
                 }

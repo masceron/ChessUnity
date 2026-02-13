@@ -66,7 +66,7 @@ namespace Game.AI
             AIShowScoreAction(bestAction, bestScore);
 
             // Execute action
-            if (bestAction is IAIAction aiAction)
+            if (bestAction is IAIAction)
             {
                 //aiAction.CompleteActionForAI();
             }

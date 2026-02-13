@@ -7,10 +7,13 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class CoralTomeAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private CoralTomeAction() { }
+
         [MemoryPackInclude]
-        private readonly string _pieceType;
+        private string _pieceType;
         [MemoryPackInclude]
-        private readonly bool _relicColor;
+        private bool _relicColor;
         
         public CoralTomeAction(bool relicColor, string pieceType, int maker) : base(maker)
         {
@@ -20,7 +23,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor , (ushort)Maker)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor , Maker)));
         }
     }
 }

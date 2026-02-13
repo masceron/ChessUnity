@@ -7,6 +7,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class EyeOfMimicExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private EyeOfMimicExecute() { }
+
         public EyeOfMimicExecute(int maker, int target) : base(maker)
         {
             Target = target;

@@ -7,6 +7,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class SnappingStrike: Action, ICaptures
     {
+        [MemoryPackConstructor]
+        private SnappingStrike() { }
+
         public SnappingStrike(int maker, int target) : base(maker)
         {
             Target = target;

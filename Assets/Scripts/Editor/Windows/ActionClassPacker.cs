@@ -58,7 +58,8 @@ namespace Editor.Windows
                 modified = true;
             }
 
-            var classRegex = new Regex($@"(public|internal|private)\s+(abstract\s+)?(sealed\s+)?class\s+{type.Name}\b");
+            var classRegex =
+                new Regex($@"(public|internal|private)\s+(abstract\s+)?(sealed\s+)?(partial\s+)?class\s+{type.Name}\b");
             var match = classRegex.Match(content);
 
             if (match.Success)
@@ -67,44 +68,70 @@ namespace Editor.Windows
                 {
                     const string insertStr = "[MemoryPackable]\n    ";
                     content = content.Insert(match.Index, insertStr);
+                    modified = true;
 
                     match = classRegex.Match(content);
-                    modified = true;
                 }
 
-                var classIndex = match.Index;
-                var classLine = content.Substring(classIndex, match.Length);
-
-                if (!classLine.Contains("partial"))
+                if (!match.Value.Contains("partial"))
                 {
-                    var newClassLine = classLine.Replace("class", "partial class");
-                    content = content.Remove(classIndex, match.Length).Insert(classIndex, newClassLine);
+                    var oldValue = match.Value;
+                    var newValue = oldValue.Replace("class", "partial class");
+
+                    content = content.Remove(match.Index, oldValue.Length).Insert(match.Index, newValue);
                     modified = true;
+
+                    match = classRegex.Match(content);
+                }
+
+                var ctorRegex = new Regex($@"(public|protected|internal|private)\s+{type.Name}\s*\(\s*\)");
+
+                if (!ctorRegex.IsMatch(content))
+                {
+                    var openBraceIndex = content.IndexOf('{', match.Index + match.Length);
+                    if (openBraceIndex != -1)
+                    {
+                        var ctorCode = $"\n        [MemoryPackConstructor]\n        private {type.Name}() {{ }}\n";
+                        content = content.Insert(openBraceIndex + 1, ctorCode);
+                        modified = true;
+                    }
                 }
             }
 
-            var fieldRegex =
-                new Regex(
-                    @"(?<indent>^\s*)private\s+(?!static|const|void)(?:readonly\s+)?[\w.<>\[\]?]+\s+\w+\s*(?:=.*?)?;",
-                    RegexOptions.Multiline);
+            var fieldRegex = new Regex(
+                @"(?<indent>^\s*)private\s+(?!static|const|void)(?:readonly\s+)?[\w.<>\[\]?]+\s+\w+\s*(?:=.*?)?;",
+                RegexOptions.Multiline);
 
-            var newContent = fieldRegex.Replace(content, (m) =>
+            var contentCopy = content;
+            content = fieldRegex.Replace(content, (m) =>
             {
-                var precedingText = content[..m.Index].TrimEnd();
+                var precedingText = contentCopy[..m.Index].TrimEnd();
+                var hasAttribute = precedingText.EndsWith("MemoryPackInclude]") ||
+                                   precedingText.EndsWith("MemoryPackIncludeAttribute]");
 
-                if (precedingText.EndsWith("MemoryPackInclude]") ||
-                    precedingText.EndsWith("MemoryPackIncludeAttribute]"))
+                var text = m.Value;
+                
+                var hasReadonly = text.Contains("readonly");
+                
+                if (hasAttribute && !hasReadonly)
                 {
                     return m.Value;
                 }
 
                 modified = true;
+
+                if (hasReadonly)
+                {
+                    text = Regex.Replace(text, @"\breadonly\s+", "");
+                }
+
+                if (hasAttribute) return text;
                 var indent = m.Groups["indent"].Value;
-                return $"{indent}[MemoryPackInclude]\n{m.Value}";
+                return $"{indent}[MemoryPackInclude]\n{text}";
             });
 
             if (!modified) return false;
-            File.WriteAllText(path, newContent);
+            File.WriteAllText(path, content);
             return true;
         }
 

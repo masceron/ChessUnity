@@ -7,6 +7,9 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class NormalSwap : Action, IQuiets
     {
+        [MemoryPackConstructor]
+        private NormalSwap() { }
+
         public NormalSwap(int maker, int target) : base(maker)
         {
             Target = target;

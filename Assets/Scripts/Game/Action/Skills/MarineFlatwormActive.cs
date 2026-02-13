@@ -11,6 +11,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class MarineFlatwormActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private MarineFlatwormActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -21,12 +24,12 @@ namespace Game.Action.Skills
 
         public MarineFlatwormActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
         protected override void ModifyGameState()
         {
-            var config = new PieceConfig(PieceOn(Maker).Type, PieceOn(Maker).Color, (ushort)Target);
+            var config = new PieceConfig(PieceOn(Maker).Type, PieceOn(Maker).Color, Target);
             ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(PieceOn(Target))));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

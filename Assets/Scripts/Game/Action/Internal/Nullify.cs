@@ -8,7 +8,7 @@ namespace Game.Action.Internal
     {
         public Nullify(int maker, int to) : base(maker)
         {
-            Target = (ushort)to;
+            Target = to;
         }
 
         protected override void ModifyGameState()

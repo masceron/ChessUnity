@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class HourglassJellyActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private HourglassJellyActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -18,32 +21,30 @@ namespace Game.Action.Skills
             return 0;
         }
         [MemoryPackInclude]
-        private readonly ushort destination;
+        private int _destination;
         public HourglassJellyActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
             var piece = PieceOn(target);
-            destination = (ushort)piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
+            _destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
         }
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Target, destination);
-            var destinationPiece = PieceOn(destination);
+            PieceManager.Ins.Move(Target, _destination);
+            var destinationPiece = PieceOn(_destination);
             if (destinationPiece != null){
-                PieceManager.Ins.Destroy(destination);
+                PieceManager.Ins.Destroy(_destination);
             }
         }
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var target = PieceOn(Target);
-            var destinationPiece = PieceOn(destination);
+            var destinationPiece = PieceOn(_destination);
             if (destinationPiece != null)
             {
-                MatchManager.Ins.GameState.Destroy(destination);
+                MatchManager.Ins.GameState.Destroy(_destination);
             }
-            MatchManager.Ins.GameState.Move(Target, destination);
+            MatchManager.Ins.GameState.Move(Target, _destination);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
         // public void CompleteActionForAI()
@@ -58,10 +59,10 @@ namespace Game.Action.Skills
         //     var top = enemies.Where(p => p.GetValueForAI() == bestScore).ToList();
         //     var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
-        //     Target = (ushort)chosen.Pos;
+        //     Target = chosen.Pos;
         //     var targetPiece = PieceOn(Target);
         //     if (targetPiece == null) return;
-        //     destination = (ushort)targetPiece.PreviousMoves[Math.Max(0, targetPiece.PreviousMoves.Count - 5)];
+        //     destination = targetPiece.PreviousMoves[Math.Max(0, targetPiece.PreviousMoves.Count - 5)];
 
         //     BoardViewer.Ins.ExecuteAction(this);
         // }

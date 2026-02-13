@@ -7,10 +7,13 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class MangroveCharmExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private MangroveCharmExecute() { }
+
         [MemoryPackInclude]
-        private readonly int _firstTarget;
+        private int _firstTarget;
         [MemoryPackInclude]
-        private readonly int _secondTarget;
+        private int _secondTarget;
 
         public MangroveCharmExecute(int firstTarget, int secondTarget) : base(-1)
         {

@@ -9,6 +9,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SirenActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SirenActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -16,7 +19,7 @@ namespace Game.Action.Skills
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
         [MemoryPackInclude]
-        private readonly int _moveTo;
+        private int _moveTo;
         public SirenActive(int maker, int target, int moveTo) : base(maker)
         {
             Target = target;

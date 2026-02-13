@@ -11,6 +11,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SunfishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SunfishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -20,8 +23,8 @@ namespace Game.Action.Skills
         
         public SunfishActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

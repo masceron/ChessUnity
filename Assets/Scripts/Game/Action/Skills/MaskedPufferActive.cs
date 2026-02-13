@@ -11,6 +11,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class MaskedPufferActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private MaskedPufferActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             throw new System.NotImplementedException();
@@ -18,8 +21,8 @@ namespace Game.Action.Skills
 
         public MaskedPufferActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
         protected override void ModifyGameState()
         {

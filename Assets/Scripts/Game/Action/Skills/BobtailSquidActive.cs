@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class BobtailSquidActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private BobtailSquidActive() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
@@ -17,8 +20,8 @@ namespace Game.Action.Skills
 
         public BobtailSquidActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
         protected override void Animate()
         {
@@ -38,8 +41,8 @@ namespace Game.Action.Skills
                 steps++;
             }
             var finalPos = IndexOf(oldRank + steps * direction, oldFile);
-            MatchManager.Ins.GameState.Move(Maker, (ushort)finalPos);
-            PieceManager.Ins.Move(Maker, (ushort)finalPos);
+            MatchManager.Ins.GameState.Move(Maker, finalPos);
+            PieceManager.Ins.Move(Maker, finalPos);
             for (var x = oldRank + (Color ? 0 : -1); x <= oldRank + (Color ? 1 : 0); ++x){
                 for (var y = oldFile - 1; y <= oldFile + 1; ++y){  
                     if (IsActive(IndexOf(x, y)))

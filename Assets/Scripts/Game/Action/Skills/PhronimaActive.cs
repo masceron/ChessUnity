@@ -8,6 +8,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class PhronimaActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private PhronimaActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);

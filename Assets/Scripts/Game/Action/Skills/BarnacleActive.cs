@@ -13,10 +13,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class BarnacleActive: Action, ISkills, IAIAction
     {
+        [MemoryPackConstructor]
+        private BarnacleActive() { }
+
         public BarnacleActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void Animate()

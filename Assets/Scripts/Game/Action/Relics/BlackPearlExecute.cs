@@ -13,8 +13,11 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class BlackPearlExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private BlackPearlExecute() { }
+
         [MemoryPackInclude]
-        private readonly bool _color;
+        private bool _color;
         public BlackPearlExecute(int target, bool color) : base(-1)
         {
             Target = target;

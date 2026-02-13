@@ -6,6 +6,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class HermosHornExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private HermosHornExecute() { }
+
         /// <summary>
         /// 
         /// </summary>
@@ -13,23 +16,22 @@ namespace Game.Action.Relics
         /// <param name="isFirstOption">Option 1 là tăng strength ShortReach của tất cả quân địch. Option 2 là tăng strength của tất cả các quân đồng minh</param>
         public HermosHornExecute(bool relicColor, bool isFirstOption) : base(-1)
         {
-            this.isFirstOption = isFirstOption;
-            this.relicColor = relicColor;
+            _isFirstOption = isFirstOption;
+            _relicColor = relicColor;
         }
 
         [MemoryPackInclude]
-
-        private readonly bool isFirstOption;
+        private bool _isFirstOption;
         [MemoryPackInclude]
-        private readonly bool relicColor;
+        private bool _relicColor;
 
         protected override void ModifyGameState()
         {
-            if (isFirstOption)
+            if (_isFirstOption)
             {
                 foreach(var piece in BoardUtils.PieceBoard())
                 {
-                    if (piece == null || piece.Color != relicColor) { continue; }
+                    if (piece == null || piece.Color != _relicColor) { continue; }
                     foreach(var effect in piece.Effects)
                     {
                         if (effect.EffectName == "effect_shortreach")
@@ -43,7 +45,7 @@ namespace Game.Action.Relics
             {
                 foreach(var piece in BoardUtils.PieceBoard())
                 {
-                    if (piece == null || piece.Color == relicColor) { continue; }
+                    if (piece == null || piece.Color == _relicColor) { continue; }
                     foreach(var effect in piece.Effects)
                     {
                         if (effect.EffectName == "effect_long_reach")

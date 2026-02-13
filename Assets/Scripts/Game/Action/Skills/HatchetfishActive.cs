@@ -14,6 +14,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class HatchetfishActive : Action, ISkills, IAIAction
     {
+        [MemoryPackConstructor]
+        private HatchetfishActive() { }
+
         public HatchetfishActive(int maker, int target) : base(maker)
         {
             Target =  target;

@@ -10,7 +10,7 @@ namespace Game.Save.FreePlay
     {
         public Relic Relic, EnemyRelic;
         public string Name;
-        public ushort BoardSize;
+        public int BoardSize;
         public Troop[] Troops, EnemyTroops;
         public RegionalEffectType regionalEffect;
     }

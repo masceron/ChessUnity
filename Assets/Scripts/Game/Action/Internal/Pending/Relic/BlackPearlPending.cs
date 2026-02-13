@@ -14,7 +14,7 @@ namespace Game.Action.Internal.Pending.Relic
         public BlackPearlPending(BlackPearl cp, int maker) : base(maker)
         {
             _blackPearl = cp;
-            Target = (ushort)maker;
+            Target = maker;
         }
 
         // private Effect GetRandomBuffEffect()

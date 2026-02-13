@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SnipeEelActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SnipeEelActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;

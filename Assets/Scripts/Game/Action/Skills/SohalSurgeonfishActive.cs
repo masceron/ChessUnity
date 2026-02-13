@@ -10,10 +10,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SohalSurgeonfishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SohalSurgeonfishActive() { }
+
         public SohalSurgeonfishActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
         public int AIPenaltyValue(PieceLogic pieceAI)
         {

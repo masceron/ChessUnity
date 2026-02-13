@@ -9,6 +9,9 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class PegasusSeamothMove : Action, IQuiets
     {
+        [MemoryPackConstructor]
+        private PegasusSeamothMove() { }
+
         private const int PacifiedDuration = 3;
         public PegasusSeamothMove(int maker, int target) : base(maker)
         {

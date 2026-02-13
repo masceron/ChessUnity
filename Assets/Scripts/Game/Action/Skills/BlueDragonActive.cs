@@ -8,6 +8,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class BlueDragonActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private BlueDragonActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -17,8 +20,8 @@ namespace Game.Action.Skills
 
         public BlueDragonActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
         
         protected override void ModifyGameState()

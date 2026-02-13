@@ -8,6 +8,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class SirenHarpoonExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private SirenHarpoonExecute() { }
+
         public SirenHarpoonExecute(int maker, int target) : base(maker)
         {
             Target = target;

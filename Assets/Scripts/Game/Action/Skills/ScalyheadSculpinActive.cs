@@ -8,11 +8,14 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ScalyheadSculpinActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ScalyheadSculpinActive() { }
+
         private const int carapaceDuration = 4;
         public ScalyheadSculpinActive(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
         }
 
         protected override void ModifyGameState()

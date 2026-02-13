@@ -15,8 +15,8 @@ namespace Game.Action.Internal.Pending.Piece
 
 		public RedtailParrotfishPending(int maker, int target) : base(maker)
 		{
-			Maker = (ushort)maker;
-			Target = (ushort)target;
+			Maker = maker;
+			Target = target;
 			_redtail = PieceOn(Maker);
 		}
 

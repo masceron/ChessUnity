@@ -11,16 +11,19 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ThalassosResurrect : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ThalassosResurrect() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
         [MemoryPackInclude]
-        private readonly string typeTo;
+        private string typeTo;
         public ThalassosResurrect(int maker, int to, string typeTo) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
             this.typeTo = typeTo;
         }
 
@@ -29,7 +32,7 @@ namespace Game.Action.Skills
             var gameState = MatchManager.Ins.GameState;
             var color = ColorOfPiece(Maker);
             var collection = !color ? gameState.WhiteCaptured : gameState.BlackCaptured;
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, (ushort)Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, Target)));
 
             collection.Remove(collection.First(e => e.Type == typeTo));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);

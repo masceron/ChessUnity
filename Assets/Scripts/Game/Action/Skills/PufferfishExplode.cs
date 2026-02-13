@@ -10,13 +10,16 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class PufferfishExplode: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private PufferfishExplode() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
         public PufferfishExplode(int maker) : base(maker)
         {
-            Target = (ushort)maker;
+            Target = maker;
         }
 
         protected override void Animate()

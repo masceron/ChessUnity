@@ -195,7 +195,7 @@ namespace Game.Managers
         public void Move(int f, int t)
         {
             PieceBoard[t] = PieceBoard[f];
-            PieceBoard[t].Pos = (ushort)t;
+            PieceBoard[t].Pos = t;
             PieceBoard[t].PreviousMoves.Add(f);
             PieceBoard[f] = null;
         }
@@ -204,9 +204,9 @@ namespace Game.Managers
         {
             var pieceB = PieceBoard[b];
             PieceBoard[b] = PieceBoard[a];
-            PieceBoard[b].Pos = (ushort)b;
+            PieceBoard[b].Pos = b;
             PieceBoard[a] = pieceB;
-            PieceBoard[a].Pos = (ushort)a;
+            PieceBoard[a].Pos = a;
         }
 
         public void FlipSideToMove()

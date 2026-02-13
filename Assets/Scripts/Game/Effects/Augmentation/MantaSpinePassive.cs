@@ -99,7 +99,7 @@ namespace Game.Effects.Augmentation
 
                     foreach (var selectedIndex in selectedIndices)
                     {
-                        var config = new PieceConfig(piece.Type, Piece.Color, (ushort)selectedIndex);
+                        var config = new PieceConfig(piece.Type, Piece.Color, selectedIndex);
                         ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(PieceOn(selectedIndex)))); 
                     }
                 }

@@ -8,6 +8,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class IllusionCapture: Action, ICaptures
     {
+        [MemoryPackConstructor]
+        private IllusionCapture() { }
+
         public IllusionCapture(int maker, int target) : base(maker)
         {
             Target = target;

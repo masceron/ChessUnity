@@ -80,7 +80,7 @@ namespace Game.Movesets
 
         private List<int> GenerateSpinningMovePattern(int makerPos)
         {
-            var caller = PieceOn(makerPos);
+            PieceOn(makerPos);
             var positions = new List<int>();
             var (rank, file) = RankFileOf(makerPos);
 

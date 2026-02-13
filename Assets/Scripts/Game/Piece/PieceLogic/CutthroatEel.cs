@@ -29,7 +29,7 @@ namespace Game.Piece.PieceLogic
                         {
                             foreach (var effect in pieceOn.Effects)
                             {
-                                if (effect is Bleeding bleeding)
+                                if (effect is Bleeding)
                                 {
                                     list.Add(new CutthroatEelActive(Pos, targetPos));
                                     break;

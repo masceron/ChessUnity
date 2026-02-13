@@ -8,6 +8,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class FrenziedCapture: Action, IDontEndTurn, ICaptures
     {
+        [MemoryPackConstructor]
+        private FrenziedCapture() { }
+
         public FrenziedCapture(int maker, int target) : base(maker)
         {
             Target = target;

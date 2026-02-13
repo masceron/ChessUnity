@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ArchelonShield: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ArchelonShield() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);

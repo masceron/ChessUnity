@@ -9,10 +9,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ThreadPipefishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ThreadPipefishActive() { }
+
         public ThreadPipefishActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

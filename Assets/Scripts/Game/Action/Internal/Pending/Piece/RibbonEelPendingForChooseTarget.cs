@@ -11,8 +11,8 @@ namespace Game.Action.Internal.Pending.Piece
         private readonly int _sourcePiecePos;
         public RibbonEelPendingForChooseTarget(int maker, int sourcePiece) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
             _sourcePiecePos = sourcePiece;
         }
 

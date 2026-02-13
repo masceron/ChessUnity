@@ -10,6 +10,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class TemporalWarpExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private TemporalWarpExecute() { }
+
         public TemporalWarpExecute(int maker, int target) : base(maker)
         {
             Target = target;

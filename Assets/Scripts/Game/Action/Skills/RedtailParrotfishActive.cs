@@ -8,17 +8,20 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class RedtailParrotfishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private RedtailParrotfishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
         [MemoryPackInclude]
-        private readonly int formationPos;
+        private int formationPos;
         [MemoryPackInclude]
-        private readonly int moveTo;
+        private int moveTo;
         public RedtailParrotfishActive(int maker, int formationPos, int moveTo) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             this.formationPos = formationPos;
             this.moveTo = moveTo;
         }

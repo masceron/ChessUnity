@@ -8,9 +8,12 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class SeafoamPhialAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private SeafoamPhialAction() { }
+
         public SeafoamPhialAction(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

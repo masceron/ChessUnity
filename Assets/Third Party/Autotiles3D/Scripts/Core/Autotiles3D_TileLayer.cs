@@ -259,7 +259,6 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             (var minY, var maxY) = (internalPositions.Min(l => l.y), internalPositions.Max(l => l.y));
             (var minZ, var maxZ) = (internalPositions.Min(l => l.z), internalPositions.Max(l => l.z));
 
-            var myNeighbors = new List<Vector3Int>();
             Vector3Int iteration;
             for (var x = minX - 1; x <= maxX + 1; x++)
             {

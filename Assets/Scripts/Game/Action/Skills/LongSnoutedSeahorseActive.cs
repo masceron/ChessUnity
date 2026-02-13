@@ -9,10 +9,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class LongSnoutedSeahorseActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private LongSnoutedSeahorseActive() { }
+
         public LongSnoutedSeahorseActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void Animate()

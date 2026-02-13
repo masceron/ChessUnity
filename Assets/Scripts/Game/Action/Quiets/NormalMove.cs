@@ -1,4 +1,4 @@
-﻿using Game.Common;
+using Game.Common;
 using Game.Managers;
 using MemoryPack;
 
@@ -8,6 +8,9 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class NormalMove: Action, IQuiets
     {
+        [MemoryPackConstructor]
+        private NormalMove() { }
+
         public NormalMove(int maker, int target) : base(maker)
         {
             Target = target;

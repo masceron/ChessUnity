@@ -8,27 +8,30 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class RibbonEelActive : Action
     {
+        [MemoryPackConstructor]
+        private RibbonEelActive() { }
+
         [MemoryPackInclude]
-        private readonly int sourcePiecePos;
+        private int _sourcePiecePos;
         [MemoryPackInclude]
-        private readonly int targetPiecePos;
+        private int _targetPiecePos;
         private const int BoundDuration = 1;
         
         public RibbonEelActive(int maker, int sourcePiece, int targetPiece) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
-            sourcePiecePos = sourcePiece;
-            targetPiecePos = targetPiece;
+            Maker = maker;
+            Target = maker;
+            _sourcePiecePos = sourcePiece;
+            _targetPiecePos = targetPiece;
         }
 
         protected override void ModifyGameState()
         {
-            var sourcePiece = PieceOn(sourcePiecePos);
-            var targetPiece = PieceOn(targetPiecePos);
+            var sourcePiece = PieceOn(_sourcePiecePos);
+            var targetPiece = PieceOn(_targetPiecePos);
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(BoundDuration, sourcePiece), sourcePiece));
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(BoundDuration, targetPiece), sourcePiece));
-            ActionManager.EnqueueAction(new NormalMove(sourcePiecePos, Maker));
+            ActionManager.EnqueueAction(new NormalMove(_sourcePiecePos, Maker));
             
         }
     }

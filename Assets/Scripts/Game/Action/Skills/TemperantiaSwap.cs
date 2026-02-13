@@ -12,6 +12,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class TemperantiaSwap : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private TemperantiaSwap() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
@@ -20,7 +23,7 @@ namespace Game.Action.Skills
         public int enemyIndex = -1; // -1 nếu chưa chọn enemy
         public TemperantiaSwap(int maker, int allyIndex, int enemyIndex) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             this.allyIndex = allyIndex;
             this.enemyIndex = enemyIndex;
         }

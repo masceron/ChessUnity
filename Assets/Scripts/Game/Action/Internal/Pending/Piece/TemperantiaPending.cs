@@ -17,8 +17,8 @@ namespace Game.Action.Internal.Pending.Piece
         private readonly PieceLogic _temperantia;
         public TemperantiaPending(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
             _temperantia = PieceOn(Maker);
         }
 

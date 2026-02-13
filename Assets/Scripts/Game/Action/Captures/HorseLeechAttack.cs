@@ -10,6 +10,9 @@ namespace Game.Action.Captures
     [MemoryPackable]
     public partial class HorseLeechAttack: Action, ICaptures
     {
+        [MemoryPackConstructor]
+        private HorseLeechAttack() { }
+
         public HorseLeechAttack(int maker, int target) : base(maker)
         {
             Target = target;

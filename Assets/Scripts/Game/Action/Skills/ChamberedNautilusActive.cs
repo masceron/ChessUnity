@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ChamberedNautilusActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ChamberedNautilusActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -19,8 +22,8 @@ namespace Game.Action.Skills
 
         public ChamberedNautilusActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
         
         protected override void ModifyGameState()

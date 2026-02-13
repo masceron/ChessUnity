@@ -12,8 +12,8 @@ namespace Game.Action.Internal.Pending.Relic
 
         public SeabedLevelerPending(Charge charge, int maker) : base(maker)
         {
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
+            Target = maker;
+            Maker = maker;
             _charges = charge;
         }
 

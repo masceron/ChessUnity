@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _sirensHarpoon = s;
 
-            Target = (ushort)target;
+            Target = target;
         }
 
         protected override void CompleteAction()

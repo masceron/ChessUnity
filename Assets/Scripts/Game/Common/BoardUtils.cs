@@ -355,9 +355,9 @@ namespace Game.Common
             return PieceOn(piece.Pos) == piece;
         }
         
-        public static List<ushort> AllSidePos(bool side)
+        public static List<int> AllSidePos(bool side)
         {
-            var positions = new List<ushort>();
+            var positions = new List<int>();
             if (side)
             {
                 for (var rank = MaxLength / 2; rank > 0; rank--)
@@ -366,7 +366,7 @@ namespace Game.Common
                     for (var file = 0; file < MaxLength; file++)
                     {
                         if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
-                        positions.Add((ushort)IndexOf(rank, file));
+                        positions.Add(IndexOf(rank, file));
                     }
                 }
             }
@@ -378,7 +378,7 @@ namespace Game.Common
                     for (var file = 0; file < MaxLength; file++)
                     {
                         if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
-                        positions.Add((ushort)IndexOf(rank, file));
+                        positions.Add(IndexOf(rank, file));
                     }
                 }
             }
@@ -401,7 +401,7 @@ namespace Game.Common
                     {
                         var idx = IndexOf(r, f);
                         var p = PieceOn(idx);
-                        if (p != null && p.Color == side) list.Add(p);
+                        if (p != null) list.Add(p);
                     }
                 }
             }
@@ -413,7 +413,7 @@ namespace Game.Common
                     {
                         var idx = IndexOf(r, f);
                         var p = PieceOn(idx);
-                        if (p != null && p.Color == side) list.Add(p);
+                        if (p != null) list.Add(p);
                     }
                 }
             }

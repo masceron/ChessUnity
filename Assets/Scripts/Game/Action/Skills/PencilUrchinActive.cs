@@ -7,10 +7,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class PencilUrchinActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private PencilUrchinActive() { }
+
         public PencilUrchinActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

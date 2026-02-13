@@ -9,13 +9,16 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class PeaceTreatyExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private PeaceTreatyExecute() { }
+
         [MemoryPackInclude]
-        private readonly bool Color;
+        private bool _color;
         private const int TurnToEnd = 50;
         
         public PeaceTreatyExecute(bool color) : base(-1)
         {
-            Color = color;
+            _color = color;
         }
 
         protected override void ModifyGameState()
@@ -25,10 +28,10 @@ namespace Game.Action.Relics
                 BoardUtils.NotifyGameEnd(EndGameUI.MessageID.Win);
             }
             
-            var relic = BoardUtils.GetRelicOf(Color);
+            var relic = BoardUtils.GetRelicOf(_color);
             if (relic != null)
             {
-                if (Color)
+                if (_color)
                 {
                     MatchManager.Ins.GameState.BlackRelic = null;
                 }

@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
         private int _deathDefianceCount;
         public Relentless(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_relentless")
         {
-            this._deathDefianceCount = deathDefianceCount;
+            _deathDefianceCount = deathDefianceCount;
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;

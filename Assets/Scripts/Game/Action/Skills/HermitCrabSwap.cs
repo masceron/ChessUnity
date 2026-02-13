@@ -9,13 +9,16 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class HermitCrabSwap: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private HermitCrabSwap() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
         public HermitCrabSwap(int maker, int to) : base(maker)
         {
-            Target = (ushort)to;
+            Target = to;
         }
         protected override void Animate()
         {
@@ -27,13 +30,13 @@ namespace Game.Action.Skills
             // int a = Maker;
             // int b = Target;
 
-            // var pieceA = board[(ushort)a];
-            // var pieceB = board[(ushort)b];
+            // var pieceA = board[a];
+            // var pieceB = board[b];
 
-            // board[(ushort)a] = pieceB;
-            // if (pieceB != null) pieceB.Pos = (ushort)a;
-            // board[(ushort)b] = pieceA;
-            // if (pieceA != null) pieceA.Pos = (ushort)b;
+            // board[a] = pieceB;
+            // if (pieceB != null) pieceB.Pos = a;
+            // board[b] = pieceA;
+            // if (pieceA != null) pieceA.Pos = b;
             // SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
 
             MatchManager.Ins.GameState.Swap(Maker, Target);

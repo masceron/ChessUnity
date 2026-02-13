@@ -13,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public CorruptedWisperPending(int target, CorruptedWisper corruptedWisper) : base(target)
         {
-            Target = (ushort)target;
+            Target = target;
             _corruptedWisper = corruptedWisper;
         }
 

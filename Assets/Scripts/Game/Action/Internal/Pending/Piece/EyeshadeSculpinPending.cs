@@ -16,8 +16,8 @@ namespace Game.Action.Internal.Pending.Piece
         
         public EyeshadeSculpinPending(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void CompleteAction()

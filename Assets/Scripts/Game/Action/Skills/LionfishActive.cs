@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class LionfishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private LionfishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -19,8 +22,8 @@ namespace Game.Action.Skills
 
         public LionfishActive(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
         }
 
         protected override void ModifyGameState()

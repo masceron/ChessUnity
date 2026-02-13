@@ -17,7 +17,7 @@ namespace Game.Action.Internal.Pending.Relic
         public EyeOfMimicPending(EyeOfMimic e, int maker) : base(maker)
         {
             _eyeOfMimic = e;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

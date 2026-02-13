@@ -9,8 +9,11 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SloaneViperfishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SloaneViperfishActive() { }
+
         [MemoryPackInclude]
-        private readonly bool _bleeding;
+        private bool _bleeding;
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -21,9 +24,9 @@ namespace Game.Action.Skills
 
         public SloaneViperfishActive(int maker, bool bleeding) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
-            this._bleeding = bleeding;
+            Maker = maker;
+            Target = maker;
+            _bleeding = bleeding;
         }
 
         protected override void ModifyGameState()

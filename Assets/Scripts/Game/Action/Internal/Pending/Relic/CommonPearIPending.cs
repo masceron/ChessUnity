@@ -13,8 +13,8 @@ namespace Game.Action.Internal.Pending.Relic
         public CommonPearlPending(CommonPearl cp, int maker) : base(maker)
         {
             _commonPearl = cp;
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
+            Target = maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

@@ -19,20 +19,16 @@ namespace Game.Relics
         }
         public override void Activate()
         {
-            if (CurrentCooldown == 0)
+            if (CurrentCooldown != 0) return;
+            foreach (var piece in BoardUtils.FindAllAlliesInEnemyHalf(Color))
             {
-                foreach (var piece in BoardUtils.FindAllAlliesInEnemyHalf(Color))
-                {
-                    Debug.Log(piece.Type);
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new TemporalWarpPending(piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                Debug.Log(piece.Type);
+                TileManager.Ins.MarkAsMoveable(piece.Pos);
+                var pending = new TemporalWarpPending(piece.Pos);
+                BoardViewer.ListOf.Add(pending);
 
-                    BoardViewer.Selecting = -2;
-                    BoardViewer.SelectingFunction = 4;
-                }
-
-
+                BoardViewer.Selecting = -2;
+                BoardViewer.SelectingFunction = 4;
             }
         }
 

@@ -7,10 +7,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class EpauletteSharkActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private EpauletteSharkActive() { }
+
         public EpauletteSharkActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

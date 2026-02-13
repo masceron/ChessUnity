@@ -17,8 +17,8 @@ namespace Game.Action.Internal.Pending.Relic
         public MangroveCharmPending(MangroveCharm e, int target) : base(-1)
         {
             _mangroveCharm = e;
-            target = (ushort)target;
-            Maker = (ushort)target;
+            target = target;
+            Maker = target;
         }
 
         protected override void CompleteAction()

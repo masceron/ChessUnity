@@ -8,6 +8,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class RayStingerExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private RayStingerExecute() { }
+
         private const int BleedingStack = 3;
         private const int BrokenDuration = 2;
 

@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class StingrayDash: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private StingrayDash() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -18,7 +21,7 @@ namespace Game.Action.Skills
         }
         public StingrayDash(int maker, int to) : base(maker)
         {
-            Target = (ushort)to;
+            Target = to;
         }
         
 

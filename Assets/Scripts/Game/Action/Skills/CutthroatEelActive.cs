@@ -11,6 +11,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class CutthroatEelActive  : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private CutthroatEelActive() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;

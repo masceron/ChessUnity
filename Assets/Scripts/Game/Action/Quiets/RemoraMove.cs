@@ -7,6 +7,9 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class RemoraMove: Action, IQuiets
     {
+        [MemoryPackConstructor]
+        private RemoraMove() { }
+
         public RemoraMove(int maker, int target) : base(maker)
         {
             Target = target;

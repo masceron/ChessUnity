@@ -9,14 +9,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class RustyParrotfishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private RustyParrotfishActive() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
         public RustyParrotfishActive(int maker, int to) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
         }
 
         protected override void ModifyGameState()

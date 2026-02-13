@@ -13,6 +13,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class GrenadiersActive: Action, ISkills, IAIAction
     {
+        [MemoryPackConstructor]
+        private GrenadiersActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -22,8 +25,8 @@ namespace Game.Action.Skills
 
         public GrenadiersActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

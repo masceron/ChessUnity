@@ -13,8 +13,8 @@ namespace Game.Action.Internal.Pending.Piece
         
         public RibbonEelPendingForChooseMove(int maker, int sourcePiece, int targetPiece) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
             sourcePiecePos = sourcePiece;
             targetPiecePos = targetPiece;
         }

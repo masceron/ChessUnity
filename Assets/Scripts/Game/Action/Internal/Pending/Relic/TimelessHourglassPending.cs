@@ -13,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
         public TimelessHourglassPending(TimelessHourglass t, int target) : base(t.CommanderPiece.Pos)
         {
             _timelessHourglass = t;
-            Target = (ushort)target;
+            Target = target;
         }
 
         protected override void CompleteAction()

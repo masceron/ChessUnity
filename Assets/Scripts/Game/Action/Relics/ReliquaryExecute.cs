@@ -9,6 +9,7 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class ReliquaryExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
         public ReliquaryExecute() : base(-1)
         {
         }

@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FlowerhornCichlidActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private FlowerhornCichlidActive() { }
+
         public FlowerhornCichlidActive(int maker, int target) : base(maker)
         {
             Target = target;

@@ -7,6 +7,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class DiurnalActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private DiurnalActive() { }
+
         public DiurnalActive(int maker, int target) : base(maker)
         {
             Target = target;

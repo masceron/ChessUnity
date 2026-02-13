@@ -19,16 +19,17 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         [SerializeField] private Transform nextButton;
         [NonSerialized] public int size;
         public FPPreset army;
+
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            
+
             if (relicSearcher.container.gameObject.activeSelf)
             {
                 relicSearcher.Toggle();
                 return;
             }
-            else FreePlayNotification.Ins.Close();     
+            else FreePlayNotification.Ins.Close();
         }
 
         public void Load(int s, FPPreset? armyToLoad)
@@ -41,13 +42,16 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             {
                 LoadSave(armyToLoad.Value);
             }
+
             nextButton?.gameObject.SetActive(true);
             notification.Close();
         }
+
         public void Load(int s)
         {
             Load(s, null);
         }
+
         private void LoadSave(FPPreset armyToLoad)
         {
             army = armyToLoad;
@@ -58,7 +62,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
 
         public void Save()
         {
-            army.BoardSize = (ushort) size;
+            army.BoardSize = size;
             board.Troops.Sort();
             army.Troops = board.Troops.ToArray();
             board.EnemyTroops.Sort();

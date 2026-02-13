@@ -12,6 +12,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SnaggletoothsActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SnaggletoothsActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -20,8 +23,8 @@ namespace Game.Action.Skills
         }
         public SnaggletoothsActive(int maker, int to) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
         }
         protected override void ModifyGameState()
         {

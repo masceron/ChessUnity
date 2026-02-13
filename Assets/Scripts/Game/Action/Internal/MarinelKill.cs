@@ -9,7 +9,7 @@ namespace Game.Action.Internal
         
         public MarinelKill(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Target = (ushort)firstTarget;
+            Target = firstTarget;
             this.secondTarget = secondTarget;
         }
         

@@ -11,13 +11,16 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SeaTurtleActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SeaTurtleActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
         public SeaTurtleActive(int maker) : base(maker)
         {
-            Target = (ushort)maker;
+            Target = maker;
         }
         protected override void Animate()
         {

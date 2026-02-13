@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class DormantFossilAwake : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private DormantFossilAwake() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
@@ -17,7 +20,7 @@ namespace Game.Action.Skills
 
         [MemoryPackInclude]
 
-        private readonly PieceConfig _target;
+        private PieceConfig _target;
 
         public DormantFossilAwake(int maker, PieceConfig t) : base(maker)
         {

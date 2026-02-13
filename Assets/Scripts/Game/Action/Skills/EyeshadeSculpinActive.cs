@@ -9,14 +9,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class EyeshadeSculpinActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private EyeshadeSculpinActive() { }
+
         [MemoryPackInclude]
-        private readonly int firstTargetPos;
+        private int firstTargetPos;
         [MemoryPackInclude]
-        private readonly int secondTargetPos;
+        private int secondTargetPos;
         
         public EyeshadeSculpinActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
             firstTargetPos = firstTarget;
             secondTargetPos = secondTarget;
         }

@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ElectricEelActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ElectricEelActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -19,7 +22,7 @@ namespace Game.Action.Skills
 
         public ElectricEelActive(int maker) : base(maker)
         {
-            Target = (ushort)maker;
+            Target = maker;
         }
 
         protected override void ModifyGameState()

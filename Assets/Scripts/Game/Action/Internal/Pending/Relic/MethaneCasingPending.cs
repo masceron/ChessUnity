@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
         public MethaneCasingPending(MethaneCasing methaneCasing, int maker) : base(maker)
         {
             _methaneCasing = methaneCasing;
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         public void Dispose()

@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
         public RayStingerPending(RayStinger seafoamPhial, int target) : base(target)
         {
             _rayStinger = seafoamPhial;
-            Target = (ushort)target;
+            Target = target;
         }
 
         protected override void CompleteAction()

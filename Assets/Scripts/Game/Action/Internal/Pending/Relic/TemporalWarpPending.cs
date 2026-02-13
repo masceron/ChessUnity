@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         public TemporalWarpPending(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void CompleteAction()

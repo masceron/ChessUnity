@@ -10,6 +10,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class AnomalocarisActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private AnomalocarisActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             if (PieceOn(Maker) == null || pieceAI == null) return 0;

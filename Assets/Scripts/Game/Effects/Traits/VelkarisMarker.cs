@@ -52,7 +52,7 @@ namespace Game.Effects.Traits
                 return;
             }
             
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, (ushort)lastMainAction.Target));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, lastMainAction.Target));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 

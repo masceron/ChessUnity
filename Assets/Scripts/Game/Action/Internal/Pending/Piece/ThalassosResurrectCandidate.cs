@@ -15,8 +15,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         public ThalassosResurrectCandidate(int maker, int pos) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)pos;
+            Maker = maker;
+            Target = pos;
         }
 
         protected override void CompleteAction()

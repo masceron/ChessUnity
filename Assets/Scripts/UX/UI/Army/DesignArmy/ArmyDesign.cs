@@ -82,7 +82,7 @@ namespace UX.UI.Army.DesignArmy
         }
         public void Save()
         {
-            army.BoardSize = (ushort) size;
+            army.BoardSize =  size;
             SetTroops();
             ArmySaveLoader.Save(army);
             UIManager.Ins.Load(CanvasID.Followers);

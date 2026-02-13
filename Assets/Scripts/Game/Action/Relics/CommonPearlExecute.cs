@@ -11,6 +11,9 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class CommonPearlExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private CommonPearlExecute() { }
+
 
         public CommonPearlExecute(int target) : base(target)
         {

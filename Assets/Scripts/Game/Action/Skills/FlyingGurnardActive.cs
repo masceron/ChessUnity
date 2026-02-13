@@ -11,14 +11,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FlyingGurnardActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private FlyingGurnardActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return -40;
         }
         public FlyingGurnardActive(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
         }
         protected override void Animate()
         {

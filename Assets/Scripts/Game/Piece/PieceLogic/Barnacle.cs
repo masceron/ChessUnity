@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
+                    var (_, _) = RankFileOf(Pos);
                     foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                     {
                         if (piece == null) continue;

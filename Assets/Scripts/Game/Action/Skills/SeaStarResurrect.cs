@@ -10,13 +10,16 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SeaStarResurrect: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SeaStarResurrect() { }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
         public SeaStarResurrect(int maker, int to) : base(maker)
         {
-            Target = (ushort)to;
+            Target = to;
         }
 
         protected override void ModifyGameState()
@@ -24,7 +27,7 @@ namespace Game.Action.Skills
             var caller = PieceOn(Maker);
             var collection = !caller.Color ? WhiteCaptured() : BlackCaptured();
             
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, (ushort)Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, Target)));
             collection.Remove(collection.First(p => p.Type == "piece_sea_star"));
             SetCooldown(Target, -1);
             SetCooldown(Maker, ((IPieceWithSkill) PieceOn(Maker)).TimeToCooldown);

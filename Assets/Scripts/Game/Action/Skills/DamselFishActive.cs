@@ -11,6 +11,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class DamselFishActive: Action, ISkills
     {
+        [MemoryPackConstructor]
+        private DamselFishActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
@@ -18,8 +21,8 @@ namespace Game.Action.Skills
 
         public DamselFishActive(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
+            Maker = maker;
+            Target = maker;
         }
 
         protected override void ModifyGameState()

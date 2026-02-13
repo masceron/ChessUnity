@@ -7,9 +7,12 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class KelpBannerAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private KelpBannerAction() { }
+
         public KelpBannerAction(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

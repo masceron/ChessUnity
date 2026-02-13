@@ -9,6 +9,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ArcticBrittleStarActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ArcticBrittleStarActive() { }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
