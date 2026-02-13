@@ -6,14 +6,12 @@ using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
 using ZLinq;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false)]
-    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SirensHarpoon : RelicLogic
     {
         public SirensHarpoon(RelicConfig config) : base(config)
@@ -23,10 +21,10 @@ namespace Game.Relics
             TimeCooldown = 2;
             CurrentCooldown = 0;
         }
-
         public override void Activate()
         {
             if (CurrentCooldown == 0)
+            {
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null) continue;
@@ -38,13 +36,13 @@ namespace Game.Relics
                         var pending = new SirensHarpoonPending(this, piece.Pos);
                         BoardViewer.ListOf.Add(pending);
                     }
-
                     BoardViewer.Selecting = -2;
                     BoardViewer.SelectingFunction = 4;
                 }
+            }
         }
 
-        public override async void ActiveForAI()
+        public override void ActiveForAI()
         {
             var listPieces = new List<PieceLogic>();
 
@@ -54,23 +52,24 @@ namespace Game.Relics
                 if (piece == null || piece.Color == Color) continue;
                 if (piece.PieceRank > PieceRank.Common) continue;
 
-                if (piece.Effects.Any(e => e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity")
+                if (piece.Effects.Any(e => (
+                        e.EffectName == "effect_extremophile" || e.EffectName == "effect_sanity"))
                    ) continue;
 
                 listPieces.Add(piece);
             }
 
             if (listPieces.Count == 0) return;
-
-            listPieces.Sort((a, b) =>
+            
+            listPieces.Sort((a, b) => 
                 b.GetValueForAI().CompareTo(a.GetValueForAI())
             );
-
+            
             var topValue = listPieces[0].GetValueForAI();
             var topGroup = listPieces.Where(pieceLogic => pieceLogic.GetValueForAI() == topValue).ToList();
-            var idx = Random.Range(0, topGroup.Count);
-
-            var excute = new SirenHarpoonExecute(CommanderPiece.Pos, topGroup[idx].Pos);
+            var idx = UnityEngine.Random.Range(0, topGroup.Count);
+            
+            var excute = new SirenHarpoonExcute(CommanderPiece.Pos ,topGroup[idx].Pos);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);

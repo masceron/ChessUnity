@@ -38,7 +38,7 @@ namespace Game.Relics
             BoardViewer.SelectingFunction = 4;
         }
 
-        public override async void ActiveForAI()
+        public override void ActiveForAI()
         {
             // Gather all pieces
             var pieces = MatchManager.Ins.GameState.PieceBoard
