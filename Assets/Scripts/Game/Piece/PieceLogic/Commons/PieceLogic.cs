@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Game.Augmentation;
 using Game.Augmentation.Set;
 using Game.Common;
 using Game.Effects;
@@ -20,7 +21,7 @@ namespace Game.Piece.PieceLogic.Commons
     {
         None,
         FormationDebuff,
-        FormationSpecific,
+        FormationSpecific
     }
 
     public enum SkillStat
@@ -29,47 +30,31 @@ namespace Game.Piece.PieceLogic.Commons
         Target,
         Unit,
         Range,
-        Cooldown,
+        Cooldown
     }
 
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
-        public int Pos;
-        public bool Color;
-        public bool IsVisible = true;
-        private int _moveRange;
-        private int _attackRange;
-        public int SkillCooldown;
-        public readonly PieceRank PieceRank;
-        public readonly List<Effect> Effects;
-        public readonly List<int> PreviousMoves;
-        public readonly string Type;
         private readonly bool _hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
+        public readonly List<Effect> Effects;
         public readonly List<ImmunityType> Immunities;
-        public readonly List<FormationType> SpecificFormations;
+        public readonly PieceRank PieceRank;
+        public readonly List<int> PreviousMoves;
         private readonly UDictionary<SkillStat, List<int>> SkillStats;
+        public readonly List<FormationType> SpecificFormations;
+        public readonly string Type;
+        private int _attackRange;
+        private int _moveRange;
+        public CapturesDelegate Captures;
+        public bool Color;
+        public bool IsVisible = true;
+        public int Pos;
 
-        public int MoveRange()
-        {
-            return _moveRange;
-        }
-
-        public int AttackRange()
-        {
-            return _attackRange;
-        }
-
-        public void SetMoveRange(byte newRange)
-        {
-            _moveRange = newRange;
-        }
-
-        public void SetAttackRange(int newRange)
-        {
-            _attackRange = newRange;
-        }
+        public QuietsDelegate Quiets;
+        public int SkillCooldown;
 
         protected PieceLogic(PieceConfig cfg, QuietsDelegate quiets = null, CapturesDelegate captures = null)
         {
@@ -92,25 +77,41 @@ namespace Game.Piece.PieceLogic.Commons
                 SkillStats = new UDictionary<SkillStat, List<int>>();
                 pieceWithSkill.TimeToCooldown = info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1;
             }
-            else SkillCooldown = -1;
+            else
+            {
+                SkillCooldown = -1;
+            }
 
             Quiets = quiets;
             Captures = captures;
 
             Augmentations = new List<Augmentation.Augmentation>();
             if (cfg.AugmentationNames != null)
-            {
                 foreach (var augmentationName in cfg.AugmentationNames)
-                {
                     Augmentations.Add(AugmentationHelper.NameToNewAugmentation(augmentationName));
-                }
-            }
 
             if (Augmentations is not { Count: > 0 }) return;
-            if (ValidAugmentation(Augmentations))
-            {
-                ApplyAugmentationEffects(Augmentations);
-            }
+            if (ValidAugmentation(Augmentations)) ApplyAugmentationEffects(Augmentations);
+        }
+
+        public int MoveRange()
+        {
+            return _moveRange;
+        }
+
+        public int AttackRange()
+        {
+            return _attackRange;
+        }
+
+        public void SetMoveRange(byte newRange)
+        {
+            _moveRange = newRange;
+        }
+
+        public void SetAttackRange(int newRange)
+        {
+            _attackRange = newRange;
         }
 
         private bool ValidAugmentation(List<Augmentation.Augmentation> augmentations)
@@ -121,13 +122,13 @@ namespace Game.Piece.PieceLogic.Commons
             return augmentations.All(ag => CanEquip(pieceInfo, ag));
         }
 
-        bool IsDulicatedSlot(List<Augmentation.Augmentation> augmentations)
+        private bool IsDulicatedSlot(List<Augmentation.Augmentation> augmentations)
         {
-            var slotSet = new HashSet<Augmentation.AugmentationSlot>();
+            var slotSet = new HashSet<AugmentationSlot>();
             return augmentations.Any(ag => !slotSet.Add(ag.Slot));
         }
 
-        bool CanEquip(PieceInfo piece, Augmentation.Augmentation augment)
+        private bool CanEquip(PieceInfo piece, Augmentation.Augmentation augment)
         {
             return piece.availableSlots.HasFlag(
                 (AugmentationSlotMask)(1 << (int)augment.Slot)
@@ -159,17 +160,15 @@ namespace Game.Piece.PieceLogic.Commons
                      where setInfo.HaveBonus && count >= setInfo.RequiredPieces
                      where setInfo.BonusEffects != null
                      select setInfo)
-            {
                 setInfo.ApplyBonusEffects();
-            }
         }
 
-        public bool HasAugmentation(Augmentation.AugmentationName augmentationName)
+        public bool HasAugmentation(AugmentationName augmentationName)
         {
             return Augmentations.Any(a => a.Name == augmentationName);
         }
 
-        public Augmentation.Augmentation GetAugmentation(Augmentation.AugmentationName augmentationName)
+        public Augmentation.Augmentation GetAugmentation(AugmentationName augmentationName)
         {
             return Augmentations.FirstOrDefault(a => a.Name == augmentationName);
         }
@@ -179,15 +178,13 @@ namespace Game.Piece.PieceLogic.Commons
             if (SkillCooldown > 0) SkillCooldown--;
         }
 
-        public QuietsDelegate Quiets;
-        public CapturesDelegate Captures;
-
         /// <summary>
-        /// Thêm vào tham số list những Action có thể thực thi. Ví dụ: Moves, Captures, ISkills <br/>
-        /// List này sau đó sẽ được hiển thị lên Board bởi BoardViewer
-        /// isPlayer là để phân biệt người dùng hay AI
-        /// excludeEmptyTile = false thì sẽ lấy cả những ô không có target, mục đích là để lấy enemySnapshot để đánh giá điểm cho action của Maker
-        /// excludeEmptyTile = true thì sẽ là logic thông thường, để mark những ô có thể đi/ăn/skill
+        ///     Thêm vào tham số list những Action có thể thực thi. Ví dụ: Moves, Captures, ISkills <br />
+        ///     List này sau đó sẽ được hiển thị lên Board bởi BoardViewer
+        ///     isPlayer là để phân biệt người dùng hay AI
+        ///     excludeEmptyTile = false thì sẽ lấy cả những ô không có target, mục đích là để lấy enemySnapshot để đánh giá điểm
+        ///     cho action của Maker
+        ///     excludeEmptyTile = true thì sẽ là logic thông thường, để mark những ô có thể đi/ăn/skill
         /// </summary>
         /// <param name="list"></param>
         public void MoveList(List<Action.Action> list, bool isPlayer = true, bool excludeEmptyTile = true)
@@ -203,9 +200,7 @@ namespace Game.Piece.PieceLogic.Commons
             {
                 if (Effects.Any(e =>
                         e.EffectName is "effect_illusion" or "effect_silenced" or "effect_crown_of_silence_passive"))
-                {
                     return;
-                }
 
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
@@ -221,30 +216,22 @@ namespace Game.Piece.PieceLogic.Commons
             if (range > MaxLength) return range;
 
             foreach (var e in Effects)
-            {
                 if (e is IMoveRangeModifierTrigger modifier)
-                {
                     range = modifier.ModifyMoveRange(range);
-                }
-            }
 
             return Math.Max(1, range);
         }
 
         public int GetAttackRange()
         {
-            int range = _attackRange;
+            var range = _attackRange;
             if (Effects.Any(e => e.EffectName == "effect_pacified")) return 0;
 
             if (range > MaxLength) return range;
 
             foreach (var e in Effects)
-            {
                 if (e is IAttackRangeModifier modifier)
-                {
                     range = modifier.ModifyAttackRange(range);
-                }
-            }
 
             return Math.Max(1, range);
         }
@@ -255,25 +242,18 @@ namespace Game.Piece.PieceLogic.Commons
 
             if (Immunities.Contains(ImmunityType.FormationDebuff) &&
                 appliedEffect.Category == EffectCategory.Debuff)
-            {
                 return true;
-            }
 
             if (Immunities.Contains(ImmunityType.FormationSpecific) &&
                 SpecificFormations.Contains(formationType))
-            {
                 return true;
-            }
 
             return false;
         }
 
         public void AddImmunity(ImmunityType immunityType)
         {
-            if (!Immunities.Contains(immunityType))
-            {
-                Immunities.Add(immunityType);
-            }
+            if (!Immunities.Contains(immunityType)) Immunities.Add(immunityType);
         }
 
         public void RemoveImmunity(ImmunityType immunityType)
@@ -283,10 +263,7 @@ namespace Game.Piece.PieceLogic.Commons
 
         public void AddSpecificFormation(FormationType formationType)
         {
-            if (!SpecificFormations.Contains(formationType))
-            {
-                SpecificFormations.Add(formationType);
-            }
+            if (!SpecificFormations.Contains(formationType)) SpecificFormations.Add(formationType);
         }
 
         public void RemoveSpecificFormation(FormationType formationType)
@@ -299,15 +276,9 @@ namespace Game.Piece.PieceLogic.Commons
             var value = RankToValue(PieceRank);
             value += AssetManager.Ins.PieceData[Type].baseValue;
 
-            foreach (var effect in Effects)
-            {
-                value += effect.GetValueForAI();
-            }
+            foreach (var effect in Effects) value += effect.GetValueForAI();
 
-            foreach (var aug in Augmentations)
-            {
-                value += aug.GetValueForAI();
-            }
+            foreach (var aug in Augmentations) value += aug.GetValueForAI();
 
             value += GetQuitesValue();
 
@@ -316,13 +287,13 @@ namespace Game.Piece.PieceLogic.Commons
 
         public int GetQuitesValue()
         {
-            var value = Quiets(new List<Action.Action>(), Pos, isPlayer: true);
+            var value = Quiets(new List<Action.Action>(), Pos, true);
             return value;
         }
 
         public int GetCapturesValue()
         {
-            return Captures(new List<Action.Action>(), Pos, excludeEmptyTile: false);
+            return Captures(new List<Action.Action>(), Pos, false);
         }
 
         private int RankToValue(PieceRank rank)
@@ -341,58 +312,42 @@ namespace Game.Piece.PieceLogic.Commons
         }
 
         /// <summary>
-        /// Trả về chỉ 
+        ///     Trả về chỉ
         /// </summary>
         /// <param name="stat"></param>
         /// <param name="num"></param>
         /// <returns></returns>
         public int GetRawStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat))
-            {
-                return 0;
-            }
+            if (!SkillStats.TryGetValue(stat, out var skillStat)) return 0;
 
             return skillStat[num - 1];
         }
 
         /// <summary>
-        /// Trả về stat sau khi đã qua sự chỉnh sửa của các Effect
+        ///     Trả về stat sau khi đã qua sự chỉnh sửa của các Effect
         /// </summary>
         /// <param name="stat">Loại stat</param>
         /// <param name="num">Số thứ tự của stat</param>
         /// <returns></returns>
         public int GetStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat))
-            {
-                return 0;
-            }
+            if (!SkillStats.TryGetValue(stat, out var skillStat)) return 0;
 
             var finalStat = skillStat[num - 1];
             foreach (var effect in Effects)
-            {
                 if (effect is ISkillStatModifierTrigger modifier)
-                {
                     finalStat += modifier.Modify(stat);
-                }
-            }
 
             return finalStat;
         }
 
         public void SetStat(SkillStat stat, int value, int num = 1)
         {
-            if (!SkillStats.ContainsKey(stat))
-            {
-                SkillStats.Add(stat, new());
-            }
+            if (!SkillStats.ContainsKey(stat)) SkillStats.Add(stat, new List<int>());
 
             var lst = SkillStats[stat];
-            while (lst.Count < num)
-            {
-                lst.Add(0);
-            }
+            while (lst.Count < num) lst.Add(0);
 
             SkillStats[stat][num - 1] = value;
         }

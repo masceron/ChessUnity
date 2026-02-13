@@ -13,29 +13,26 @@ using Random = UnityEngine.Random;
 
 namespace Game.Action.Internal.Pending.Piece
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate: PendingAction, ISkills, IAIAction
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ChrysosUpgradeCandidate : PendingAction, ISkills, IAIAction
     {
-        public int AIPenaltyValue(PieceLogic p)
-        {
-            return 0;
-        }
-        private PieceConfig _config;
+        private readonly List<PieceLogic> _allyPieces;
+        private readonly Chrysos _chrysos;
+        public readonly byte Cost;
 
         public readonly string CurrentPiece;
-        public readonly PieceRank UpgradeFrom;
         public readonly PieceRank UpgradableTo;
-        public readonly byte Cost;
-        private readonly Chrysos _chrysos;
-        private readonly List<PieceLogic> _allyPieces;
-        
+        public readonly PieceRank UpgradeFrom;
+        private PieceConfig _config;
+
         public ChrysosUpgradeCandidate(int maker, int to, int cost, Chrysos ch) : base(maker)
         {
             Maker = maker;
             Target = to;
             Cost = (byte)cost;
             _chrysos = ch;
-            
+
             var cr = BoardUtils.PieceOn(to);
             UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
             UpgradeFrom = cr.PieceRank;
@@ -44,16 +41,6 @@ namespace Game.Action.Internal.Pending.Piece
             _allyPieces = new List<PieceLogic>();
         }
 
-        protected override void CompleteAction()
-        {
-            var shop = BoardViewer.Ins.GetOrInstantiateUI<ChrysosShop>(IngameSubmenus.ChrysosShop);
-            shop.Load(_chrysos, this);
-        }
-
-        private void ActivateSkill(PieceLogic p, string type, byte cost)
-        {
-            CommitResult(new ChrysosUpgrade(Maker, new PieceConfig(type, p.Color, p.Pos), cost));
-        }
         public void CompleteActionForAI()
         {
             //Implement for AI automatically
@@ -91,7 +78,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
 
             if (_allyPieces.Count == 0) return;
-            
+
             if (hasElite && _chrysos.Coin >= 5)
             {
                 HandleUpgrade(5);
@@ -110,26 +97,40 @@ namespace Game.Action.Internal.Pending.Piece
                 return;
             }
 
-            if (hasChampion && _chrysos.Coin >= 6)
-            {
-                HandleUpgrade(6);
-            }
+            if (hasChampion && _chrysos.Coin >= 6) HandleUpgrade(6);
+        }
+
+        public int AIPenaltyValue(PieceLogic p)
+        {
+            return 0;
+        }
+
+        protected override void CompleteAction()
+        {
+            var shop = BoardViewer.Ins.GetOrInstantiateUI<ChrysosShop>(IngameSubmenus.ChrysosShop);
+            shop.Load(_chrysos, this);
+        }
+
+        private void ActivateSkill(PieceLogic p, string type, byte cost)
+        {
+            CommitResult(new ChrysosUpgrade(Maker, new PieceConfig(type, p.Color, p.Pos), cost));
         }
 
         private void HandleUpgrade(byte cost)
         {
-            _allyPieces.Sort((a, b) => 
+            _allyPieces.Sort((a, b) =>
                 a.GetValueForAI().CompareTo(b.GetValueForAI()));
-                
+
             var topValue = _allyPieces[0].GetValueForAI();
             var topGroup = _allyPieces.Where(p => p.GetValueForAI() == topValue).ToList();
 
-            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values 
-                where piece.rank == UpgradableTo select piece.key).ToList();
+            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values
+                where piece.rank == UpgradableTo
+                select piece.key).ToList();
             if (UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(CurrentPiece);
-                
+
             var idx = Random.Range(0, upgradableTo.Count);
-                
+
             if (topGroup.Count == 1)
             {
                 ActivateSkill(_allyPieces[0], upgradableTo[idx], cost);

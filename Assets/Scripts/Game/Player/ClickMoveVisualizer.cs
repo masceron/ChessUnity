@@ -4,37 +4,17 @@ namespace Game.Player
 {
     public class ClickMoveVisualizer : MonoBehaviour
     {
-        [Header("Settings")]
-        [SerializeField] private PlayerController playerController;
+        [Header("Settings")] [SerializeField] private PlayerController playerController;
+
         [SerializeField] private GameObject clickEffectPrefab;
         [SerializeField] private float hideDistance = 0.05f;
 
         private GameObject currentEffectInstance;
-        private Transform playerTransform; // Cache player transform
         private Transform effectTransform; // Cache effect transform
         private float hideDistanceSqr; // Store squared distance to avoid sqrt
-        private Vector3 offsetUp; // Cache Vector3.up * 0.1f to avoid allocation
         private Vector3 lastDestination; // Cache last destination to avoid repeated GetDestination calls
-
-        private void OnEnable()
-        {
-            if (playerController != null)
-            {
-                playerController.OnMoveTargetSet += ShowEffect;
-                playerTransform = playerController.transform; // Cache on enable
-            }
-            
-            hideDistanceSqr = hideDistance * hideDistance; // Pre-calculate squared distance
-            offsetUp = Vector3.up * 0.1f; // Cache offset to avoid allocation each frame
-        }
-
-        private void OnDisable()
-        {
-            if (playerController != null)
-            {
-                playerController.OnMoveTargetSet -= ShowEffect;
-            }
-        }
+        private Vector3 offsetUp; // Cache Vector3.up * 0.1f to avoid allocation
+        private Transform playerTransform; // Cache player transform
 
         private void Update()
         {
@@ -43,18 +23,30 @@ namespace Game.Player
                 // Update position to follow the destination (in case path changes)
                 lastDestination = playerController.GetDestination();
                 if (lastDestination != Vector3.zero)
-                {
                     effectTransform.position = lastDestination + offsetUp; // Use cached offset - no allocation
-                }
-                
+
                 // Use sqrMagnitude to avoid expensive sqrt calculation
                 var distanceSqr = (playerTransform.position - effectTransform.position).sqrMagnitude;
-                
-                if (distanceSqr < hideDistanceSqr)
-                {
-                    currentEffectInstance.SetActive(false);
-                }
+
+                if (distanceSqr < hideDistanceSqr) currentEffectInstance.SetActive(false);
             }
+        }
+
+        private void OnEnable()
+        {
+            if (playerController != null)
+            {
+                playerController.OnMoveTargetSet += ShowEffect;
+                playerTransform = playerController.transform; // Cache on enable
+            }
+
+            hideDistanceSqr = hideDistance * hideDistance; // Pre-calculate squared distance
+            offsetUp = Vector3.up * 0.1f; // Cache offset to avoid allocation each frame
+        }
+
+        private void OnDisable()
+        {
+            if (playerController != null) playerController.OnMoveTargetSet -= ShowEffect;
         }
 
         private void ShowEffect(Vector3 position)

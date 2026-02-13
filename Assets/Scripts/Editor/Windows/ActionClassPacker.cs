@@ -103,27 +103,21 @@ namespace Editor.Windows
                 RegexOptions.Multiline);
 
             var contentCopy = content;
-            content = fieldRegex.Replace(content, (m) =>
+            content = fieldRegex.Replace(content, m =>
             {
                 var precedingText = contentCopy[..m.Index].TrimEnd();
                 var hasAttribute = precedingText.EndsWith("MemoryPackInclude]") ||
                                    precedingText.EndsWith("MemoryPackIncludeAttribute]");
 
                 var text = m.Value;
-                
+
                 var hasReadonly = text.Contains("readonly");
-                
-                if (hasAttribute && !hasReadonly)
-                {
-                    return m.Value;
-                }
+
+                if (hasAttribute && !hasReadonly) return m.Value;
 
                 modified = true;
 
-                if (hasReadonly)
-                {
-                    text = Regex.Replace(text, @"\breadonly\s+", "");
-                }
+                if (hasReadonly) text = Regex.Replace(text, @"\breadonly\s+", "");
 
                 if (hasAttribute) return text;
                 var indent = m.Groups["indent"].Value;
@@ -157,9 +151,7 @@ namespace Editor.Windows
             sb.AppendLine("{");
 
             for (var i = 0; i < subTypes.Count; i++)
-            {
                 sb.AppendLine($"    [MemoryPackUnion({i}, typeof({subTypes[i].Name}))]");
-            }
 
             sb.AppendLine($"    public abstract partial class {baseType.Name}");
             sb.AppendLine("    {");

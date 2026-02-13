@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -10,7 +10,7 @@ namespace Game.Action.Internal.Pending.Piece
     {
         private readonly int sourcePiecePos;
         private readonly int targetPiecePos;
-        
+
         public RibbonEelPendingForChooseMove(int maker, int sourcePiece, int targetPiece) : base(maker)
         {
             Maker = maker;
@@ -19,17 +19,17 @@ namespace Game.Action.Internal.Pending.Piece
             targetPiecePos = targetPiece;
         }
 
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void CompleteAction()
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
             var newAction = new RibbonEelActive(Maker, sourcePiecePos, targetPiecePos);
             CommitResult(newAction);
-        }
-
-        public int AIPenaltyValue(PieceLogic maker)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

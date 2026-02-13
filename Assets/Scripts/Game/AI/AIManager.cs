@@ -10,27 +10,32 @@ namespace Game.AI
     // Simple AI manager that finds BrainComponents for the side to move and picks the best action.
     public class AIManager : MonoBehaviour
     {
-        public static AIManager Ins { get; private set; }
         [SerializeField] private Transform canvas;
         [SerializeField] private TileScore tileScorePrefab;
-        [SerializeField] private List<TileScore> spawnedTileScores = new(); 
+        [SerializeField] private List<TileScore> spawnedTileScores = new();
         [SerializeField] private bool showScoreOnHover;
         [SerializeField] private Button showScoreButton, playActionButton;
+        public static AIManager Ins { get; private set; }
 
         private void Awake()
         {
-            if (Ins != null && Ins != this) { Destroy(this); return; }
+            if (Ins != null && Ins != this)
+            {
+                Destroy(this);
+                return;
+            }
+
             Ins = this;
         }
 
-        void Start()
+        private void Start()
         {
             playActionButton.onClick.AddListener(UIMethod_PlayBestAction);
             showScoreButton.onClick.AddListener(ShowScoreToggle);
         }
 
         /// <summary>
-        /// [For UI Button] Triggers the AI to show scores for all possible actions.
+        ///     [For UI Button] Triggers the AI to show scores for all possible actions.
         /// </summary>
         public void UIMethod_ShowAllScores()
         {
@@ -40,7 +45,7 @@ namespace Game.AI
         }
 
         /// <summary>
-        /// [For UI Button] Triggers the AI to find and execute its best action.
+        ///     [For UI Button] Triggers the AI to find and execute its best action.
         /// </summary>
         private void UIMethod_PlayBestAction()
         {
@@ -77,7 +82,7 @@ namespace Game.AI
         }
 
         /// <summary>
-        /// #AIUseRelic: Checks if the current side to move can use a relic and activates it.
+        ///     #AIUseRelic: Checks if the current side to move can use a relic and activates it.
         /// </summary>
         /// <param name="sideToMove">The color of the side currently making a move.</param>
         private void AIUseRelic(bool sideToMove)
@@ -103,7 +108,7 @@ namespace Game.AI
                 if (p.Color == side) continue;
                 try
                 {
-                    p.MoveList(list, isPlayer: false, excludeEmptyTile: false);
+                    p.MoveList(list, false, false);
                 }
                 catch
                 {
@@ -115,14 +120,15 @@ namespace Game.AI
         }
 
         /// <summary>
-        /// #AIPlayBestAction: Finds the best action for the given side by evaluating all possible moves
-        /// from all BrainComponents.
+        ///     #AIPlayBestAction: Finds the best action for the given side by evaluating all possible moves
+        ///     from all BrainComponents.
         /// </summary>
         /// <param name="sideToMove">The color of the side currently making a move.</param>
         /// <param name="enemySnapshot">A list of all possible actions for the opposing side.</param>
         /// <param name="globalBestScore">Output parameter: The score of the globally best action found.</param>
         /// <returns>The best action found, or null if no valid actions are available.</returns>
-        private Action.Action AIPlayBestAction(bool sideToMove, List<Action.Action> enemySnapshot, out float globalBestScore)
+        private Action.Action AIPlayBestAction(bool sideToMove, List<Action.Action> enemySnapshot,
+            out float globalBestScore)
         {
             var brains = FindObjectsByType<BrainComponent>(FindObjectsSortMode.None);
             if (brains == null || brains.Length == 0)
@@ -143,7 +149,9 @@ namespace Game.AI
                 if (actions == null || actions.Count == 0) continue;
 
                 var bestForBrains = brain.ChooseBest(actions, enemySnapshot);
-                var bestForBrain = bestForBrains[Random.Range(0, bestForBrains.Count)]; // Randomly pick one if multiple have same best score
+                var bestForBrain =
+                    bestForBrains
+                        [Random.Range(0, bestForBrains.Count)]; // Randomly pick one if multiple have same best score
                 if (bestForBrain == null) continue;
 
                 var score = brain.Evaluate(bestForBrain, actions, enemySnapshot);
@@ -153,11 +161,12 @@ namespace Game.AI
                     globalBest = bestForBrain;
                 }
             }
+
             return globalBest;
         }
 
         /// <summary>
-        /// #AIShowAllActionScores: Scans and displays scores for all possible actions for the given side.
+        ///     #AIShowAllActionScores: Scans and displays scores for all possible actions for the given side.
         /// </summary>
         /// <param name="sideToMove">The color of the side to evaluate.</param>
         private void AIShowAllActionScores(bool sideToMove)
@@ -183,20 +192,21 @@ namespace Game.AI
                 }
             }
         }
+
         /// <summary>
-        /// #AIShowScoreAction: Displays the score of a given action on the board using a TileScore prefab.
-        /// Clears any previously displayed scores.
+        ///     #AIShowScoreAction: Displays the score of a given action on the board using a TileScore prefab.
+        ///     Clears any previously displayed scores.
         /// </summary>
         /// <param name="action">The action whose score is to be displayed.</param>
         /// <param name="score">The score of the action.</param>
         private void AIShowScoreAction(Action.Action action, float score)
         {
-            ClearTileScores(); 
+            ClearTileScores();
             ShowScoreForAction(action, score);
         }
 
         /// <summary>
-        /// Instantiates and displays a single TileScore at a given board position.
+        ///     Instantiates and displays a single TileScore at a given board position.
         /// </summary>
         /// <param name="position">The board position to display the score at.</param>
         /// <param name="score">The score to display.</param>
@@ -212,7 +222,7 @@ namespace Game.AI
         }
 
         /// <summary>
-        /// Instantiates and displays a single TileScore for a given action without clearing previous ones.
+        ///     Instantiates and displays a single TileScore for a given action without clearing previous ones.
         /// </summary>
         /// <param name="action">The action to display the score for.</param>
         /// <param name="score">The score of the action.</param>
@@ -224,20 +234,17 @@ namespace Game.AI
 
 
         /// <summary>
-        /// Clears all currently displayed TileScore objects from the board.
+        ///     Clears all currently displayed TileScore objects from the board.
         /// </summary>
         public void ClearTileScores()
         {
-            foreach (var ts in spawnedTileScores)
-            {
-                Destroy(ts.gameObject);
-            }
+            foreach (var ts in spawnedTileScores) Destroy(ts.gameObject);
             spawnedTileScores.Clear();
         }
 
         /// <summary>
-        /// Shows the action scores for a specific piece when hovering over it.
-        /// Controlled by the 'showScoreOnHover' flag.
+        ///     Shows the action scores for a specific piece when hovering over it.
+        ///     Controlled by the 'showScoreOnHover' flag.
         /// </summary>
         /// <param name="pos">The board position of the piece.</param>
         public void ShowPieceActionScore(int pos)
@@ -252,13 +259,11 @@ namespace Game.AI
             var brains = FindObjectsByType<BrainComponent>(FindObjectsSortMode.None);
             BrainComponent targetBrain = null;
             foreach (var brain in brains)
-            {
                 if (brain.Maker != null && brain.Maker.Pos == pos)
                 {
                     targetBrain = brain;
                     break;
                 }
-            }
 
             if (targetBrain == null) return;
 
@@ -275,10 +280,7 @@ namespace Game.AI
 
                 if (targetScores.TryGetValue(targetPos, out var existingScore))
                 {
-                    if (score > existingScore)
-                    {
-                        targetScores[targetPos] = score;
-                    }
+                    if (score > existingScore) targetScores[targetPos] = score;
                 }
                 else
                 {
@@ -286,10 +288,7 @@ namespace Game.AI
                 }
             }
 
-            foreach (var (targetPos, score) in targetScores)
-            {
-                ShowScoreAtPosition(targetPos, score);
-            }
+            foreach (var (targetPos, score) in targetScores) ShowScoreAtPosition(targetPos, score);
         }
 
         private void ShowScoreToggle()
@@ -298,15 +297,12 @@ namespace Game.AI
             if (showScoreOnHover)
             {
                 showScoreButton.GetComponentInChildren<Text>().text = "Hide Score";
-                if (BoardViewer.Selecting != -1)
-                {
-                    ShowPieceActionScore(BoardViewer.Selecting);
-                }
+                if (BoardViewer.Selecting != -1) ShowPieceActionScore(BoardViewer.Selecting);
             }
             else
             {
-                showScoreButton.GetComponentInChildren<Text>().text = "Show Score";   
-                ClearTileScores(); 
+                showScoreButton.GetComponentInChildren<Text>().text = "Show Score";
+                ClearTileScores();
             }
         }
     }

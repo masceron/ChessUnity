@@ -8,19 +8,16 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
     public class Autotiles3D_SettingsProvider : SettingsProvider
     {
         private Autotiles3DSettings _settings;
-        class Styles
-        {
-            public static GUIContent UndoAPI = new GUIContent("Use Undo API");
-            public static GUIContent Suppress = new GUIContent("Suppress high tile amount warning");
-        }
 
         public Autotiles3D_SettingsProvider(string path, SettingsScope scope = SettingsScope.User)
-            : base(path, scope) { }
+            : base(path, scope)
+        {
+        }
 
         public static bool IsSettingsAvailable()
         {
             var settings = Autotiles3DSettings.EditorInstance;
-            return (settings != null);
+            return settings != null;
         }
 
         public override void OnActivate(string searchContext, VisualElement rootElement)
@@ -34,12 +31,12 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
             // Use IMGUI to display UI:
             if (_settings != null)
             {
-                _settings.suppressTileAmountWarning = EditorGUILayout.Toggle(Styles.Suppress, _settings.suppressTileAmountWarning, GUILayout.Width(200));
+                _settings.suppressTileAmountWarning = EditorGUILayout.Toggle(Styles.Suppress,
+                    _settings.suppressTileAmountWarning, GUILayout.Width(200));
                 EditorGUILayout.LabelField("(Experimental)");
-                bool useUndo = EditorGUILayout.Toggle(Styles.UndoAPI, _settings.UseUndoAPI);
+                var useUndo = EditorGUILayout.Toggle(Styles.UndoAPI, _settings.UseUndoAPI);
                 if (useUndo != _settings.UseUndoAPI)
                     _settings.SetUndoAPI(useUndo);
-
             }
         }
 
@@ -59,8 +56,12 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
             // Settings Asset doesn't exist yet; no need to display anything in the Settings window.
             return null;
         }
-    }
 
+        private class Styles
+        {
+            public static readonly GUIContent UndoAPI = new("Use Undo API");
+            public static readonly GUIContent Suppress = new("Suppress high tile amount warning");
+        }
+    }
 }
 #endif
-

@@ -7,8 +7,6 @@ namespace Game.Piece.PieceLogic
 {
     public class SloaneSViperfish : Commons.PieceLogic, IPieceWithSkill
     {
-        private int timeToCooldown;
-
         public SloaneSViperfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
@@ -37,18 +35,11 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        int IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

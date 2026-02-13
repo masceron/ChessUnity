@@ -12,12 +12,14 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class StormCapacitor : RelicLogic
     {
-        private Tile.Tile hoveringTile;
         private const int Size = 2;
         private readonly Charge charge;
+        private Tile.Tile hoveringTile;
+
         public StormCapacitor(RelicConfig cfg) : base(cfg)
         {
             CurrentCooldown = 0;
@@ -30,35 +32,25 @@ namespace Game.Relics
             Debug.Log("Charge: " + charge.Strength);
             if (charge.Strength >= 3)
             {
-                
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
 
                 Tile.Tile.OnPointEnterHandle = thisTile =>
                 {
                     if (hoveringTile == thisTile) return;
-                    if (hoveringTile != null)
-                    {
-                        TileManager.Ins.MarkTileInRange(hoveringTile, Size, isMark: false);
-                    }
+                    if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, Size, false);
 
                     hoveringTile = thisTile;
-                    TileManager.Ins.MarkTileInRange(hoveringTile, Size, isMark: true, onlyMarkEnemy: false);
-                    
-                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    var pending = new StormCapacitorPending(pos ,hoveringTile, this, Size);
+                    TileManager.Ins.MarkTileInRange(hoveringTile, Size, true, false);
 
-                    if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
-                    {
-                        BoardViewer.ListOf.Add(pending);
-                    }
+                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
+                    var pending = new StormCapacitorPending(pos, hoveringTile, this, Size);
+
+                    if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
                 };
             }
-            if(CurrentCooldown > 0)
-            {
-                charge.Strength = 0;
-            }
 
+            if (CurrentCooldown > 0) charge.Strength = 0;
         }
 
         public override void ActiveForAI()
@@ -69,24 +61,23 @@ namespace Game.Relics
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var (rank, file) = BoardUtils.RankFileOf(i);
-                var pieces = BoardUtils.GetPiecesInSize(rank, file, Size, Corner.BottomRight, p => p != null && p.Color != Color);
+                var pieces = BoardUtils.GetPiecesInSize(rank, file, Size, Corner.BottomRight,
+                    p => p != null && p.Color != Color);
 
                 if (pieces.Count > maxSize)
                 {
                     maxSize = pieces.Count;
                     topGroup.Clear();
                 }
-                
+
                 if (pieces.Count == maxSize) topGroup.Add(i);
             }
 
             var pos = topGroup[Random.Range(0, topGroup.Count() - 1)];
-            var maxArea = BoardUtils.GetPiecesInSize(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), Size, Corner.BottomRight, p => p != null && p.Color != Color);
-            foreach (var piece in maxArea)
-            {
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));
-            }
-            
+            var maxArea = BoardUtils.GetPiecesInSize(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), Size,
+                Corner.BottomRight, p => p != null && p.Color != Color);
+            foreach (var piece in maxArea) BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));
+
             charge.Strength = 0;
         }
     }

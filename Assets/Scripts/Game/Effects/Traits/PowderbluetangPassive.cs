@@ -1,15 +1,16 @@
-using Game.Piece.PieceLogic.Commons;
-using Game.Effects.Buffs;
-using Game.Tile;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
+using Game.Effects.Buffs;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PowderbluetangPassive : Effect, IAfterPieceActionTrigger
     {
         private int _count;
@@ -30,7 +31,7 @@ namespace Game.Effects.Traits
                 BoardUtils.GetFormation(action.Target) is HydroidThicket)
             {
                 _count--;
-                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece, 1), FormationType.HydroidThicket));
+                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece), FormationType.HydroidThicket));
             }
         }
     }

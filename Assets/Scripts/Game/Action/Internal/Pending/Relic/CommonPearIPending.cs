@@ -1,20 +1,28 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearlPending : PendingAction, System.IDisposable, IRelicAction
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class CommonPearlPending : PendingAction, IDisposable, IRelicAction
     {
         private CommonPearl _commonPearl;
-        
+
         public CommonPearlPending(CommonPearl cp, int maker) : base(maker)
         {
             _commonPearl = cp;
             Target = maker;
             Maker = maker;
+        }
+
+        public void Dispose()
+        {
+            _commonPearl = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -30,12 +38,6 @@ namespace Game.Action.Internal.Pending.Relic
             Dispose();
         }
 
-        public void Dispose()
-        {
-            _commonPearl = null;
-            BoardViewer.SelectingFunction = 0;
-        }
-
         // protected override void ModifyGameState()
         // {
         //     ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(PieceOn(Target)), commonPearl));
@@ -47,7 +49,6 @@ namespace Game.Action.Internal.Pending.Relic
         //     MatchManager.Ins.InputProcessor.UpdateRelic();
         //     Dispose();
         // }
-
 
 
         // public void CompleteActionForAI()

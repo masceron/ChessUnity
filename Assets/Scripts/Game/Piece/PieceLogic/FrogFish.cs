@@ -10,9 +10,8 @@ namespace Game.Piece.PieceLogic
     {
         public FrogFish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(this)));   
-            ActionManager.ExecuteImmediately(new ApplyEffect(new FrogFishPassive(this)));   
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new FrogFishPassive(this)));
         }
-        
     }
 }

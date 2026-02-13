@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UX.UI.Followers
 {
-    public class RelicDescriptions: MonoBehaviour
+    public class RelicDescriptions : MonoBehaviour
     {
         [SerializeField] private TMP_Text nameText;
         [SerializeField] private TMP_Text description;

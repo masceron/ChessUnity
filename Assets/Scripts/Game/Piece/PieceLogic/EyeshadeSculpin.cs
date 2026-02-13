@@ -7,6 +7,7 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
@@ -14,8 +15,6 @@ namespace Game.Piece.PieceLogic
 {
     public class EyeshadeSculpin : Commons.PieceLogic, IPieceWithSkill
     {
-        private int timeToCooldown;
-
         public EyeshadeSculpin(PieceConfig cfg) : base(cfg, AmbushPredatorMoves.Quiets, AmbushPredatorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Infected(this)));
@@ -39,62 +38,64 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        var listPieces = new List<Commons.PieceLogic>(); 
+                        var listPieces = new List<Commons.PieceLogic>();
                         foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 4))
                         {
                             var idx = IndexOf(rank, file);
                             var pOn = PieceOn(idx);
                             if (pOn != null && pOn.Color != Color)
                             {
-                                if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                                if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile"))
+                                    continue;
                                 listPieces.Add(pOn);
                             }
                         }
+
                         // neu khong co quan nao
                         if (listPieces.Count == 0) return;
                         // neu co dung mot quan
-                        if (listPieces.Count == 1)
-                        {
-                            return;
-                        }
-                        
+                        if (listPieces.Count == 1) return;
+
                         // neu co nhieu quan           
                         listPieces.Sort((a, b) =>
                             b.GetValueForAI()
                                 .CompareTo(a.GetValueForAI()));
-                    
+
                         var selectedPieces = new List<Commons.PieceLogic>();
-                    
+
                         var topValue = listPieces[0].GetValueForAI();
                         var topGroup = listPieces.Where(p =>
                             p.GetValueForAI() == topValue).ToList();
-                    
+
                         if (topGroup.Count >= 2)
                         {
-                            var idx1 = UnityEngine.Random.Range(0, topGroup.Count);
+                            var idx1 = Random.Range(0, topGroup.Count);
                             int idx2;
-                            do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
-                            while (idx2 == idx1);
-                    
+                            do
+                            {
+                                idx2 = Random.Range(0, topGroup.Count);
+                            } while (idx2 == idx1);
+
                             selectedPieces.Add(topGroup[idx1]);
                             selectedPieces.Add(topGroup[idx2]);
                         }
                         else
                         {
                             selectedPieces.Add(listPieces[0]);
-                    
+
                             if (listPieces.Count > 1)
                             {
                                 var secondValue = listPieces[1].GetValueForAI();
                                 var secondGroup = listPieces.Where(p =>
                                     p.GetValueForAI() == secondValue).ToList();
                                 if (secondGroup.Count == 0) return;
-                                var idx = UnityEngine.Random.Range(0, secondGroup.Count);
+                                var idx = Random.Range(0, secondGroup.Count);
                                 selectedPieces.Add(secondGroup[idx]);
                             }
                         }
-                    
-                        var eyeshadeSculpinActive = new EyeshadeSculpinActive(Pos, selectedPieces[0].Pos, selectedPieces[1].Pos);
+
+                        var eyeshadeSculpinActive =
+                            new EyeshadeSculpinActive(Pos, selectedPieces[0].Pos, selectedPieces[1].Pos);
                         list.Add(eyeshadeSculpinActive);
                     }
                     else
@@ -104,25 +105,22 @@ namespace Game.Piece.PieceLogic
                             var index1 = IndexOf(rankOff1, fileOff1);
                             var pOn1 = PieceOn(index1);
                             if (pOn1 == null || pOn1 == this || pOn1.Color == Color) continue;
-                            foreach (var (rankOff2, fileOff2) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 4))
+                            foreach (var (rankOff2, fileOff2) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos),
+                                         4))
                             {
                                 var index2 = IndexOf(rankOff2, fileOff2);
                                 var pOn2 = PieceOn(index2);
-                                if (pOn2 == null || pOn2 == this || pOn2.Color == Color || pOn2.Pos == pOn1.Pos) continue;
+                                if (pOn2 == null || pOn2 == this || pOn2.Color == Color || pOn2.Pos == pOn1.Pos)
+                                    continue;
                                 list.Add(new EyeshadeSculpinActive(Pos, pOn1.Pos, pOn2.Pos));
                             }
                         }
                     }
-                    
                 }
             };
         }
 
-        int IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

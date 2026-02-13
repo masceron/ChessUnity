@@ -1,11 +1,12 @@
+using Game.Action.Relics;
+using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Managers;
-using Game.Action.Relics;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PeaceTreaty : RelicLogic
     {
         public PeaceTreaty(RelicConfig cfg) : base(cfg)

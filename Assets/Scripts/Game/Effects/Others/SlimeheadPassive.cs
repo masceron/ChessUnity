@@ -8,16 +8,12 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SlimeheadPassive : Effect, IAfterPieceActionTrigger
     {
         public SlimeheadPassive(PieceLogic piece) : base(-1, 1, piece, "slimehead_passive")
         {
-        }
-
-        public override int GetValueForAI()
-        {
-            return base.GetValueForAI() + 50;
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
@@ -31,6 +27,11 @@ namespace Game.Effects.Others
             if (buffEffect < 2) return;
             ActionManager.EnqueueAction(new ApplyEffect(new Infected(maker), Piece));
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, maker), Piece));
+        }
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 50;
         }
     }
 }

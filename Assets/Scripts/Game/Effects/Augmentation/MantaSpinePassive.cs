@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Traits;
-using UnityEngine;
-using Game.Piece;
-using Game.Action.Captures;
 using Game.Effects.Triggers;
+using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Augmentation
 {
@@ -34,9 +34,9 @@ namespace Game.Effects.Augmentation
             //     e.EffectName == "effect_shield" || 
             //     e.EffectName == "effect_hardened_shield" || 
             //     e.EffectName == "effect_carapace");
-            
+
             // if (hasBlockingEffect) return;
-            
+
             // if (action.Result != ResultFlag.Success) return;
             //action.Result = ResultFlag.Dodged;
 
@@ -48,7 +48,6 @@ namespace Game.Effects.Augmentation
                 action.Result = ResultFlag.Blocked;
                 MovePieceAndMakeIllusion(action);
             }
-
         }
 
         private void MovePieceAndMakeIllusion(Action.Action action)
@@ -61,33 +60,29 @@ namespace Game.Effects.Augmentation
                 var color = piece.Color;
                 var push = color ? -1 : 1;
                 var rankOff = rank;
-                
-                while (rankOff + push != rank + push * 4) {
-                
+
+                while (rankOff + push != rank + push * 4)
+                {
                     var curPos = IndexOf(rankOff + push, file);
-                    if (!VerifyIndex(curPos) || !IsActive(curPos) || PieceOn(curPos) != null)
-                    {
-                        break;
-                    }
+                    if (!VerifyIndex(curPos) || !IsActive(curPos) || PieceOn(curPos) != null) break;
 
                     rankOff += push;
                 }
+
                 var indexList = new List<int>();
                 foreach (var (r, l) in MoveEnumerators.AroundUntil(rankOff, file, 1))
                 {
                     var index = IndexOf(r, l);
-                    if (PieceOn(index) != null || !VerifyIndex(index) || !IsActive(index))
-                    {
-                        continue;
-                    }
+                    if (PieceOn(index) != null || !VerifyIndex(index) || !IsActive(index)) continue;
                     indexList.Add(index);
                 }
+
                 if (indexList.Count > 0)
                 {
                     var countToSelect = Mathf.Min(2, indexList.Count);
                     var selectedIndices = new List<int>();
                     var available = new List<int>(indexList);
-                    
+
                     for (var i = 0; i < countToSelect; i++)
                     {
                         if (available.Count == 0) break;
@@ -95,12 +90,14 @@ namespace Game.Effects.Augmentation
                         selectedIndices.Add(available[randomIdx]);
                         available.RemoveAt(randomIdx);
                     }
+
                     ActionManager.EnqueueAction(new NormalMove(action.Target, IndexOf(rankOff, file)));
 
                     foreach (var selectedIndex in selectedIndices)
                     {
                         var config = new PieceConfig(piece.Type, Piece.Color, selectedIndex);
-                        ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(PieceOn(selectedIndex)))); 
+                        ActionManager.EnqueueAction(new SpawnPieceWithEffect(config,
+                            new Illusion(PieceOn(selectedIndex))));
                     }
                 }
             }

@@ -2,7 +2,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ApplyEffectAndRemoveFormation : Action, IInternal
     {
         private readonly ApplyEffect _applyEffectAction;
@@ -20,10 +21,7 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            if (_applyEffectAction.Result == ResultFlag.Success)
-            {
-                RemoveFormation(_formationPos);
-            }
+            if (_applyEffectAction.Result == ResultFlag.Success) RemoveFormation(_formationPos);
         }
     }
 }

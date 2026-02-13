@@ -14,17 +14,10 @@ using Action = Game.Action.Action;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BoardViewer : Singleton<BoardViewer>
     {
-        [SerializeField] private PieceInfoMenu pieceInfoMenu;
-        [SerializeField] private PieceActions pieceActions;
-        [SerializeField] private GameActions gameActions;
-        [SerializeField] private EffectBar effectBar;
-
-        private AIManager _aiManager;
-
-        private Transform _mainCameraCenter;
         public static PieceLogic Hovering;
 
         public static int HoveringPos;
@@ -36,6 +29,14 @@ namespace UX.UI.Ingame
         public static int SelectingFunction;
         private static readonly List<Action> MoveList = new();
         public static readonly List<Action> ListOf = new();
+        [SerializeField] private PieceInfoMenu pieceInfoMenu;
+        [SerializeField] private PieceActions pieceActions;
+        [SerializeField] private GameActions gameActions;
+        [SerializeField] private EffectBar effectBar;
+
+        private AIManager _aiManager;
+
+        private Transform _mainCameraCenter;
 
         private void Start()
         {
@@ -96,14 +97,8 @@ namespace UX.UI.Ingame
             pieceActions.DisablePieceInteractions();
             foreach (var action in ListOf)
             {
-                if (action is IDisposable disposable)
-                {
-                    disposable.Dispose();
-                }
-                if (action is PendingAction pending)
-                {
-                    pending.CancelResult(); //hủy những task đang treo
-                }
+                if (action is IDisposable disposable) disposable.Dispose();
+                if (action is PendingAction pending) pending.CancelResult(); //hủy những task đang treo
             }
 
             ListOf.Clear();
@@ -112,15 +107,9 @@ namespace UX.UI.Ingame
 
         public async void ExecuteAction(Action action)
         {
-            if (action is PendingAction pendingAction)
-            {
-                action = await pendingAction.WaitForCompletion();
-            }
+            if (action is PendingAction pendingAction) action = await pendingAction.WaitForCompletion();
 
-            if (ActionManager.DoManualAction(action))
-            {
-                EndTurn();
-            }
+            if (ActionManager.DoManualAction(action)) EndTurn();
             Unmark();
         }
 
@@ -173,13 +162,9 @@ namespace UX.UI.Ingame
         private void EndTurn()
         {
             if (SideToMove() != OurSide())
-            {
                 gameActions.DisableGameInteractions();
-            }
             else
-            {
                 gameActions.EnableGameInteractions();
-            }
         }
 
         public void Hover(int pos)
@@ -194,26 +179,19 @@ namespace UX.UI.Ingame
                 return;
             }
 
-            if (FormationManager.IsHideByFog(pos, SideToMove()))
-            {
-                return;
-            }
-            
+            if (FormationManager.IsHideByFog(pos, SideToMove())) return;
+
             SetPieceHover(pos);
         }
 
         public T GetOrInstantiateUI<T>(IngameSubmenus submenuType) where T : Component
         {
             var menu = FindAnyObjectByType<T>(FindObjectsInactive.Include);
-        
+
             if (!menu)
-            {
                 menu = Instantiate(UIHolder.Ins.Get(submenuType), transform).GetComponent<T>();
-            }
-            else 
-            {
+            else
                 menu.gameObject.SetActive(true);
-            }
 
             return menu;
         }

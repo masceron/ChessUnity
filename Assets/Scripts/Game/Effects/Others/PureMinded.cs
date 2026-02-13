@@ -5,20 +5,23 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PureMinded: Effect, IEndTurnTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class PureMinded : Effect, IEndTurnTrigger
     {
         private const int RoundsPerSelfPurify = 5;
         private int _count;
+
         public PureMinded(PieceLogic piece) : base(-1, 1, piece, "effect_pure_minded")
-        {   
+        {
             _count = RoundsPerSelfPurify;
         }
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
             if (_count > 0) _count--;
-            if (_count == 0) {
+            if (_count == 0)
+            {
                 ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
                 _count = RoundsPerSelfPurify;
             }
@@ -32,6 +35,5 @@ namespace Game.Effects.Others
         {
             return base.GetValueForAI() + 10;
         }
-    
     }
 }

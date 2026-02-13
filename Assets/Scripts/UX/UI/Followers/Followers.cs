@@ -1,28 +1,19 @@
-﻿using UnityEngine;
+﻿using Game.Common;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Followers: Game.Common.Singleton<Followers>
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Followers : Singleton<Followers>
     {
         [SerializeField] private SavedArmies savedArmies;
         [SerializeField] private TroopList troopList;
         [SerializeField] private RelicList relicList;
         [SerializeField] private Toggle pieceButton;
         [SerializeField] private Toggle relicButton;
-
-        private void OnDisable()
-        {
-            troopList.Close();
-            relicList.Close();
-        }
-
-        private void OnEnable()
-        {
-            savedArmies.Load();
-        }
 
         protected override void Awake()
         {
@@ -33,7 +24,7 @@ namespace UX.UI.Followers
                     var color = pieceButton.GetComponent<Image>().color;
                     color.a = 1f;
                     pieceButton.GetComponent<Image>().color = color;
-                    
+
                     ChooseTroops();
                 }
                 else
@@ -43,7 +34,7 @@ namespace UX.UI.Followers
                     pieceButton.GetComponent<Image>().color = color;
                 }
             });
-            
+
             relicButton.onValueChanged.AddListener(delegate
             {
                 if (relicButton.isOn)
@@ -51,7 +42,7 @@ namespace UX.UI.Followers
                     var color = relicButton.GetComponent<Image>().color;
                     color.a = 1f;
                     relicButton.GetComponent<Image>().color = color;
-                    
+
                     ChooseRelics();
                 }
                 else
@@ -61,6 +52,17 @@ namespace UX.UI.Followers
                     relicButton.GetComponent<Image>().color = color;
                 }
             });
+        }
+
+        private void OnEnable()
+        {
+            savedArmies.Load();
+        }
+
+        private void OnDisable()
+        {
+            troopList.Close();
+            relicList.Close();
         }
 
         private void ChooseTroops()
@@ -85,7 +87,7 @@ namespace UX.UI.Followers
         {
             UIManager.Ins.Load(CanvasID.CreateArmy);
         }
-        
+
         public void OnClickPrevious()
         {
             UIManager.Ins.LoadPreviousCanvas();

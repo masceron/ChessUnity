@@ -4,15 +4,14 @@ using UnityEngine;
 
 namespace UX.UI.Army.DesignArmy
 {
-
     public enum DesignNotifications
     {
         Quit,
         EmptyName,
         Overwrite
     }
-    
-    public class DesignNotification: MonoBehaviour
+
+    public class DesignNotification : MonoBehaviour
     {
         [SerializeField] private TMP_Text text;
         [SerializeField] private RectTransform menuRect;
@@ -26,7 +25,7 @@ namespace UX.UI.Army.DesignArmy
             {
                 eulerAngles = new Vector3(90, 0, 0)
             };
-            
+
             Tween.Rotation(menuRect, Vector3.zero, 0.15f);
         }
 
@@ -39,7 +38,7 @@ namespace UX.UI.Army.DesignArmy
         {
             stage = ntf;
             gameObject.SetActive(true);
-            
+
             switch (ntf)
             {
                 case DesignNotifications.Quit:
@@ -61,7 +60,7 @@ namespace UX.UI.Army.DesignArmy
                     break;
             }
         }
-        
+
         public void No()
         {
             gameObject.SetActive(false);
@@ -74,14 +73,10 @@ namespace UX.UI.Army.DesignArmy
                 case DesignNotifications.Quit:
                     gameObject.SetActive(false);
                     if (UIManager.Ins.GetCanvasID() == CanvasID.FreePlayDesignArmy)
-                    {
                         UIManager.Ins.Load(CanvasID.MainMenu);
-                    }
                     else
-                    {
                         UIManager.Ins.Load(CanvasID.Followers);
-                    }
-                    
+
                     break;
                 case DesignNotifications.EmptyName:
                     gameObject.SetActive(false);
@@ -90,7 +85,6 @@ namespace UX.UI.Army.DesignArmy
                     ArmyDesign.Ins.Save();
                     break;
             }
-            
         }
     }
 }

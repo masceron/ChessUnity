@@ -1,13 +1,16 @@
+using System;
+using System.Collections.Generic;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
-using Game.Common;
-using System.Collections.Generic;
 using ZLinq;
+using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SohalSurgeonfish : Commons.PieceLogic, IPieceWithSkill
     {
         public SohalSurgeonfish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
@@ -23,9 +26,7 @@ namespace Game.Piece.PieceLogic
                         var piece = PieceOn(target);
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_slow"))
-                        {
                             list.Add(new SohalSurgeonfishActive(Pos, target));
-                        }
                     }
                 }
                 else
@@ -42,28 +43,24 @@ namespace Game.Piece.PieceLogic
                     else
                     {
                         var listPieces = new List<Commons.PieceLogic>();
-            
+
                         foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 6))
                         {
                             var idx = IndexOf(rank, file);
                             var pOn = PieceOn(idx);
                             if (pOn != null && pOn.Color != Color)
-                            {
-                                if (pOn.Effects != null && !pOn.Effects.Any(e => e.EffectName == "effect_leashed") 
+                                if (pOn.Effects != null && !pOn.Effects.Any(e => e.EffectName == "effect_leashed")
                                                         && pOn.Effects.Any(e => e.EffectName == "effect_slow"))
-                                {
                                     listPieces.Add(pOn);
-                                }
-                            }
                         }
+
                         if (listPieces.Count == 0) return;
                         var maxValue = listPieces.Max(p => p.GetValueForAI());
                         var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
                         if (bestPieces.Count == 0) return;
-                        var random = new System.Random();
+                        var random = new Random();
                         var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
                         list.Add(new SohalSurgeonfishActive(Pos, selectedPiece.Pos));
-
                     }
                 }
             };

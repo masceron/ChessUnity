@@ -3,10 +3,11 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    public class Haste: Effect, IMoveRangeModifierTrigger
+    public class Haste : Effect, IMoveRangeModifierTrigger
     {
         public Haste(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_haste")
-        {}
+        {
+        }
 
         public int ModifyMoveRange(int baseRange)
         {

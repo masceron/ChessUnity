@@ -7,7 +7,7 @@ namespace Game.Piece.PieceLogic
 {
     public class KelpBass : Commons.PieceLogic
     {
-        public KelpBass(PieceConfig cfg) : base(cfg, BishopMoves.Quiets , KingMoves.Captures)
+        public KelpBass(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Dominator(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));

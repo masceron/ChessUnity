@@ -1,9 +1,9 @@
-﻿using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
+﻿using Game.Action.Skills;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
-using Game.Managers;
-using Game.Action.Skills;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
@@ -12,15 +12,15 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _selectedPiece;
         private static int _movePosTo;
 
-        public int AIPenaltyValue(PieceLogic pieceAI)
-        {
-            return 0;
-        }
-
         public DiurnalPending(int maker, int target) : base(maker)
         {
             Maker = maker;
             Target = target;
+        }
+
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            return 0;
         }
 
         protected override void CompleteAction()

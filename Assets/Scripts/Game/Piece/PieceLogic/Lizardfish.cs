@@ -16,4 +16,3 @@ namespace Game.Piece.PieceLogic
         }
     }
 }
-

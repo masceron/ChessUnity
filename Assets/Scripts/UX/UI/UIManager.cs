@@ -7,30 +7,47 @@ namespace UX.UI
 {
     public enum CanvasID
     {
-        MainMenu, PlayMenu, Settings, Ingame, Loading, Followers, CreateArmy,
-        DesignArmy, QuitToMainMenu, LineupEdit,
-        FreePlayPreset, FreePlayDesignArmy, RegionalEffect, Augmentation,
+        MainMenu,
+        PlayMenu,
+        Settings,
+        Ingame,
+        Loading,
+        Followers,
+        CreateArmy,
+        DesignArmy,
+        QuitToMainMenu,
+        LineupEdit,
+        FreePlayPreset,
+        FreePlayDesignArmy,
+        RegionalEffect,
+        Augmentation,
         EndGameMessage,
         FreePlayMenu,
-        StartGame, Assignment, MurkyTower, OutworldInvader, TrainingGround, Trader, Vault,
-        None,
+        StartGame,
+        Assignment,
+        MurkyTower,
+        OutworldInvader,
+        TrainingGround,
+        Trader,
+        Vault,
+        None
     }
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIManager : Singleton<UIManager>
     {
+        [SerializeField] private CanvasDict canvasDict;
+        private readonly Dictionary<CanvasID, GameObject> loadedCanvases = new();
         private RectTransform currentCanvas;
         private CanvasID currentCanvasID;
         private CanvasID previousCanvasID;
-        
-        [Serializable]
-        public class CanvasDict : UDictionary<CanvasID, Canvas> {}
 
-        [SerializeField] private CanvasDict canvasDict;
-        private readonly Dictionary<CanvasID, GameObject> loadedCanvases = new();
         protected override void Awake()
         {
             base.Awake();
         }
+
         public void Load(CanvasID id)
         {
             previousCanvasID = currentCanvasID;
@@ -61,11 +78,15 @@ namespace UX.UI
         {
             Load(previousCanvasID);
         }
+
         public CanvasID GetCanvasID()
         {
             return currentCanvasID;
         }
-        
-        
+
+        [Serializable]
+        public class CanvasDict : UDictionary<CanvasID, Canvas>
+        {
+        }
     }
 }

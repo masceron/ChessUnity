@@ -1,6 +1,6 @@
-using Game.Action.Internal;
 using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Internal;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -15,7 +15,8 @@ namespace Game.Effects.Traits
         };
 
         public FreeMovement(PieceLogic piece) : base(-1, 1, piece, "effect_free_movement")
-        { }
+        {
+        }
 
         public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
@@ -25,10 +26,7 @@ namespace Game.Effects.Traits
 
             var effect = applyEffect.Effect;
 
-            if (_blockedEffects.Contains(effect.EffectName))
-            {
-                applyEffect.Result = ResultFlag.Unshaken;
-            }
+            if (_blockedEffects.Contains(effect.EffectName)) applyEffect.Result = ResultFlag.Unshaken;
         }
 
         public override int GetValueForAI()

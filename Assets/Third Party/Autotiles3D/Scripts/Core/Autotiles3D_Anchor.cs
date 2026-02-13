@@ -7,41 +7,44 @@ namespace Third_Party.Autotiles3D.Scripts.Core
 {
     public class Autotiles3D_Anchor : MonoBehaviour
     {
-        [SerializeField]
-        [FormerlySerializedAs("TileID")]
-        [HideInInspector]
+        [SerializeField] [FormerlySerializedAs("TileID")] [HideInInspector]
         private int _tileID;
+
         [HideInInspector] public GameObject BakedParent;
-        [HideInInspector][SerializeField] private int _childCount;  //serializng for perfomance
-        [HideInInspector][SerializeField] private int _bakeCount;
+        [HideInInspector] [SerializeField] private int _childCount; //serializng for perfomance
+        [HideInInspector] [SerializeField] private int _bakeCount;
         public int Childcount => _childCount;
         public int BakeCount => _bakeCount;
+        public int TileID => _tileID;
+
+        public Autotiles3D_TileLayer Layer => transform.GetComponentInParent<Autotiles3D_TileLayer>();
 
         public void IncreaseBlockCount()
         {
             _childCount++;
         }
+
         public void DecreaseBlockCount()
         {
             _childCount--;
         }
+
         public void SetBakeCount(int count)
         {
             _bakeCount = count;
         }
-        public int TileID => _tileID;
+
         public void SetTileID(int tileID)
         {
             _tileID = tileID;
         }
+
         public List<Autotiles3D_BlockBehaviour> GetBlocks()
         {
             var children = GetComponentsInChildren<Autotiles3D_BlockBehaviour>(true).ToList();
             _childCount = children.Count();
             return children;
         }
-
-        public Autotiles3D_TileLayer Layer => transform.GetComponentInParent<Autotiles3D_TileLayer>();
 
         public void ToggleViews(bool enable, bool includeBaked = false)
         {
@@ -76,15 +79,10 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             {
                 var blocks = GetBlocks();
                 foreach (var block in blocks)
-                {
                     if (block.GetTile() == null)
-                    {
                         Autotiles3DUtility.RepairBlocks(block, blocks, tile.Group, tile.Name, tile.TileID);
-                    }
-                }
             }
         }
 #endif
     }
 }
-

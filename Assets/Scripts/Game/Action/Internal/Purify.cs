@@ -15,9 +15,7 @@ namespace Game.Action.Internal
         {
             foreach (var effect in BoardUtils.PieceOn(Target).Effects
                          .Where(effect => effect.Category == EffectCategory.Debuff))
-            {
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
         }
     }
 }

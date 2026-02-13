@@ -7,28 +7,21 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ElectricEel : Commons.PieceLogic, IPieceWithSkill
     {
         public ElectricEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, SmallPredatorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ElectricEelVengeful(this)));
-            
+
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
 
                 if (isPlayer)
-                {
                     if (SkillCooldown == 0)
-                    {
                         list.Add(new ElectricEelActive(Pos));
-                    }
-                }
-                else
-                {
-                    
-                }
             };
         }
 

@@ -7,17 +7,16 @@ using UnityEditor.Localization;
 using UnityEngine;
 
 namespace Editor.Windows
-{ 
+{
     public class EffectAssetsManager : EditorWindow
     {
-        private readonly string[] _tableNamesToValidate = { "effect_name", "effect_description" };
-        
         private readonly List<EffectInfo> _allEffects = new();
+        private readonly List<OrphanedKey> _orphanedKeys = new();
+        private readonly string[] _tableNamesToValidate = { "effect_name", "effect_description" };
+        private readonly string[] _toolbarStrings = { "Manage Effects", "Validate Localization" };
         private bool _hasScannedForOrphans;
         private Vector2 _manageScrollPos;
-        private readonly List<OrphanedKey> _orphanedKeys = new();
         private int _toolbarIndex;
-        private readonly string[] _toolbarStrings = { "Manage Effects", "Validate Localization" };
         private Vector2 _validateScrollPos;
 
         private void OnEnable()
@@ -40,7 +39,7 @@ namespace Editor.Windows
             }
         }
 
-        
+
         [MenuItem("Tools/Effect Manager")]
         public static void ShowWindow()
         {
@@ -64,16 +63,16 @@ namespace Editor.Windows
             foreach (var effect in _allEffects)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-                
+
                 EditorGUILayout.ObjectField(effect, typeof(EffectInfo), false);
-                
+
                 if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(effect);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void FindAllEffectInfos()
         {
             _allEffects.Clear();
@@ -85,7 +84,7 @@ namespace Editor.Windows
                 if (effect) _allEffects.Add(effect);
             }
         }
-        
+
         private void SyncWithCentralData()
         {
             var dataGuids = AssetDatabase.FindAssets("t:EffectsData");
@@ -100,10 +99,10 @@ namespace Editor.Windows
 
             if (!centralData) return;
             centralData.effectsData ??= new List<EffectInfo>();
-            
+
             centralData.effectsData.Clear();
             centralData.effectsData.AddRange(_allEffects);
-            
+
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
 
@@ -118,7 +117,6 @@ namespace Editor.Windows
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
             if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
-            {
                 if (EditorUtility.DisplayDialog(
                         "Remove All Orphaned Keys?",
                         "Are you sure you want to permanently remove all orphaned keys from the table?",
@@ -128,7 +126,6 @@ namespace Editor.Windows
                     DeleteAllOrphanedKeys();
                     FindOrphanedKeys();
                 }
-            }
 
             if (!_hasScannedForOrphans) return;
 
@@ -141,9 +138,9 @@ namespace Editor.Windows
             }
 
             EditorGUILayout.LabelField($"Found {_orphanedKeys.Count} orphaned keys:", EditorStyles.boldLabel);
-            
+
             _validateScrollPos = EditorGUILayout.BeginScrollView(_validateScrollPos);
-            
+
             for (var i = _orphanedKeys.Count - 1; i >= 0; i--)
             {
                 var orphan = _orphanedKeys[i];
@@ -167,20 +164,17 @@ namespace Editor.Windows
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void DeleteAllOrphanedKeys()
         {
-            foreach (var orphanedKey in _orphanedKeys)
-            {
-                RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
-            }
+            foreach (var orphanedKey in _orphanedKeys) RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
         }
 
         private void FindOrphanedKeys()
         {
             _hasScannedForOrphans = true;
             _orphanedKeys.Clear();
-            
+
             var validKeys = new HashSet<string>();
             FindAllEffectInfos();
 
@@ -189,7 +183,7 @@ namespace Editor.Windows
                 validKeys.Add(effect.key);
                 validKeys.Add(effect.key + "_description");
             }
-            
+
             foreach (var tableName in _tableNamesToValidate)
             {
                 var tableCollection = LocalizationEditorSettings.GetStringTableCollection(tableName);

@@ -1,5 +1,3 @@
-
-
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
@@ -14,17 +12,15 @@ namespace Game.Effects.SpecialAbility
     {
         public CabezonPassive(PieceLogic piece) : base(-1, 1, piece, "effect_cabezon_passive")
         {
-
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.Maker == Piece.Pos && (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
-            {
+            if (action is ICaptures && action.Maker == Piece.Pos &&
+                (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target)), Piece));
-            }
         }
     }
 }

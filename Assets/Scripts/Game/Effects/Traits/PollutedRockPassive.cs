@@ -1,3 +1,4 @@
+using System;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Triggers;
@@ -9,21 +10,22 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     /// <summary>
-    /// Bioluminescent Beacon Passive Effect
-    /// 
+    ///     Bioluminescent Beacon Passive Effect
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PollutedRockPassive : Effect, IEndTurnTrigger
     {
         private const byte TurnsToActive = 2;
-        private byte _numTurns = TurnsToActive;
-        
-        private readonly (int, int)[] _rangeSpawn = new (int, int)[]
+
+        private readonly (int, int)[] _rangeSpawn =
         {
             (1, 0), (0, -1),
             (-1, 0), (0, 1)
         };
+
+        private byte _numTurns = TurnsToActive;
+
         public PollutedRockPassive(PieceLogic piece) : base(-1, 1, piece, "effect_polluted_rock_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
@@ -37,9 +39,13 @@ namespace Game.Effects.Traits
             SpawnMedicalLeech();
         }
 
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
+
+        public EndTurnEffectType EndTurnEffectType { get; }
+
         private void SpawnMedicalLeech()
         {
-            var random = new System.Random();
+            var random = new Random();
             var emptySpots = _rangeSpawn
                 .Select(offset => IndexOf(RankOf(Piece.Pos) + offset.Item1, FileOf(Piece.Pos) + offset.Item2))
                 .Where(index => PieceOn(index) == null)
@@ -53,10 +59,5 @@ namespace Game.Effects.Traits
                 );
             }
         }
-
-        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
-
-        public EndTurnEffectType EndTurnEffectType { get; }
     }
 }
-

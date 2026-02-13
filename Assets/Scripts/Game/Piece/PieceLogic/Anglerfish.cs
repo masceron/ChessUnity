@@ -8,7 +8,8 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Anglerfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Anglerfish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PawnPushMoves.Captures)
@@ -23,21 +24,18 @@ namespace Game.Piece.PieceLogic
                 {
                     // if (!Color)
                     // {
-                        // foreach (var (rank, file) in MoveEnumerators.Up(RankOf(Pos), FileOf(Pos), 3))
-                        // {
-                        //     var idx = IndexOf(rank, file);
-                        //     var pOn = PieceOn(idx);
-                        //     if (pOn != null && pOn.Color != Color)
-                        //     {
-                        //         list.Add(new AnglerfishTaunt(Pos, idx));
-                        //     }
-                        // }
-                        var targets = SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, 3);
-                        foreach (var target in targets)
-                        {
-                            list.Add(new AnglerfishTaunt(Pos, target));
-                        }
-                        
+                    // foreach (var (rank, file) in MoveEnumerators.Up(RankOf(Pos), FileOf(Pos), 3))
+                    // {
+                    //     var idx = IndexOf(rank, file);
+                    //     var pOn = PieceOn(idx);
+                    //     if (pOn != null && pOn.Color != Color)
+                    //     {
+                    //         list.Add(new AnglerfishTaunt(Pos, idx));
+                    //     }
+                    // }
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, 3);
+                    foreach (var target in targets) list.Add(new AnglerfishTaunt(Pos, target));
+
                     // }
                     // else
                     // {
@@ -52,10 +50,7 @@ namespace Game.Piece.PieceLogic
                     //     }
                     // }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 

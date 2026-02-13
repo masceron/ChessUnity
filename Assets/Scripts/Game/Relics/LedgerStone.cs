@@ -1,10 +1,11 @@
-using UX.UI.Ingame;
 using Game.Relics.Commons;
+using UX.UI.Ingame;
 using UX.UI.Ingame.LedgerStoneUI;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class LedgerStone : RelicLogic
     {
         public LedgerStone(RelicConfig cfg) : base(cfg)

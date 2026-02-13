@@ -3,7 +3,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ElectricEelMoves : BaseMovePattern // Pillar Move
     {
         public override List<int> GenerateBaseMovePattern(int makerPos)
@@ -47,7 +48,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new ElectricEelMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 50 + 5 * moveRange;
         }
@@ -56,7 +57,7 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new ElectricEelMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 50 + 5 * attackRange;
         }
     }

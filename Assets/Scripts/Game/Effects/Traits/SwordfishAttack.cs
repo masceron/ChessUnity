@@ -7,11 +7,13 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SwordfishAttack : Effect, IAfterPieceActionTrigger
     {
         public SwordfishAttack(PieceLogic piece) : base(-1, 1, piece, "effect_swordfish_capture")
-        { }
+        {
+        }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
@@ -24,12 +26,9 @@ namespace Game.Effects.Traits
 
             var pieceBehind = PieceOn(behind);
             if (pieceBehind != null && pieceBehind.Color != Piece.Color)
-            {
                 ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieceBehind), Piece));
-            } else
-            {
+            else
                 action.Flag = ActionFlag.Unblockable;
-            }
         }
 
         public override int GetValueForAI()

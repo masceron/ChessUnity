@@ -9,7 +9,8 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EyeOfMimic : RelicLogic
     {
         public EyeOfMimic(RelicConfig config) : base(config)
@@ -19,11 +20,11 @@ namespace Game.Relics
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
             CurrentCooldown = 0;
         }
+
         public override void Activate()
         {
             if (CurrentCooldown == 0)
             {
-                
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null) continue;
@@ -49,10 +50,10 @@ namespace Game.Relics
 
             PieceLogic ourPiece = null;
             PieceLogic enemyPiece = null;
-            
+
             var minMoveset = int.MaxValue;
             var maxMoveset = int.MinValue;
-            
+
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
@@ -113,7 +114,7 @@ namespace Game.Relics
             if (ourPiece == null || enemyPiece == null) return;
             var excute = new EyeOfMimicExecute(ourPiece.Pos, enemyPiece.Pos);
             BoardViewer.Ins.ExecuteAction(excute);
-            
+
             // var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);
             // BoardViewer.Ins.ExecuteAction(await ourPending.WaitForCompletion());
             // var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos);

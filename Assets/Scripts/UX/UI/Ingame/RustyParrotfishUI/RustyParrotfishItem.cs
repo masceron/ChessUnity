@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.RustyParrotfishUI
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RustyParrotfishItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text formationName;

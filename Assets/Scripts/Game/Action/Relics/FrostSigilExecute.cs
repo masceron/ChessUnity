@@ -1,24 +1,24 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Relics
 {
-
     [MemoryPackable]
     public partial class FrostSigilExecute : Action, IRelicAction
     {
-        [MemoryPackConstructor]
-        private FrostSigilExecute() { }
-
         private const int Radius = 3;
-        
-        [MemoryPackInclude]
-        private bool _ourSide;
-        
+
         private const int ProbabilityBound = 25;
+
+        [MemoryPackInclude] private bool _ourSide;
+
+        [MemoryPackConstructor]
+        private FrostSigilExecute()
+        {
+        }
 
         public FrostSigilExecute(int maker, bool ourSide) : base(maker)
         {
@@ -37,9 +37,7 @@ namespace Game.Action.Relics
                 ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece)));
 
                 if (MatchManager.Roll(ProbabilityBound))
-                {
                     ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, piece)));
-                }
             }
         }
     }

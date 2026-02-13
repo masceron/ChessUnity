@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Game.Save.FreePlay;
+using UnityEngine;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
@@ -8,13 +8,15 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
     {
         [SerializeField] protected RectTransform list;
         [SerializeField] protected FreePlaySavedArmy saved;
-        public static FPSavedArmies Ins{ get; private set; }
         public List<FreePlaySavedArmy> savedArmies;
+        public static FPSavedArmies Ins { get; private set; }
+
         protected void Awake()
         {
             Ins = this;
             Load();
         }
+
         public void Load()
         {
             var dict = FreePlaySaveLoader.ReadAll();
@@ -24,10 +26,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
 
             if (already < needed)
             {
-                for (var i = 1; i <= needed - already; i++)
-                {
-                    Instantiate(saved, list.transform, true);
-                }
+                for (var i = 1; i <= needed - already; i++) Instantiate(saved, list.transform, true);
             }
             else if (already > needed)
             {

@@ -15,10 +15,12 @@ namespace UX.UI.FreePlayTest.AugmentationScene
             Debug.Log($"{name} category button clicked");
             AugmentationFilter.Ins.ToggleFilter(slot);
         }
+
         public void GreyOut()
         {
             greyImage.enabled = true;
         }
+
         public void DeGreyOut()
         {
             greyImage.enabled = false;

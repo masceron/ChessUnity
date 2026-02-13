@@ -16,19 +16,13 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new SurgeWrassePassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown != 0){ return; }
-                if (isPlayer)
-                {
-                    list.Add(new SurgeWrasseActive(Pos));
-                }
-                else
-                {
-                    // ....
-                }
+                if (SkillCooldown != 0) return;
+                if (isPlayer) list.Add(new SurgeWrasseActive(Pos));
+                // ....
             };
         }
+
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }
-

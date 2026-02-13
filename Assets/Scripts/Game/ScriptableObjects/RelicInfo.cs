@@ -3,7 +3,7 @@
 namespace Game.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Relic", menuName = "ScriptableObjects/Relic")]
-    public class RelicInfo: ScriptableObject
+    public class RelicInfo : ScriptableObject
     {
         [SerializeField] public string key;
         [SerializeField] public Texture2D icon;

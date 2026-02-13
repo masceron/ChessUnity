@@ -1,5 +1,5 @@
-using MemoryPack;
 using Game.Common;
+using MemoryPack;
 
 namespace Game.Action.Relics
 {
@@ -7,7 +7,9 @@ namespace Game.Action.Relics
     public partial class AdrenalineRadiatorExecute : Action, IRelicAction
     {
         [MemoryPackConstructor]
-        private AdrenalineRadiatorExecute() { }
+        private AdrenalineRadiatorExecute()
+        {
+        }
 
         public AdrenalineRadiatorExecute(int maker) : base(maker)
         {

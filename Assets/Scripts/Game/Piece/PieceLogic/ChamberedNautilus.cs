@@ -11,11 +11,10 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChamberedNautilus : Commons.PieceLogic, IPieceWithSkill
     {
-        private int timeToCooldown;
-
         public ChamberedNautilus(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BarracudaMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ChamberedNautilusHunger(this)));
@@ -33,10 +32,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this) continue;
-                        if (pOn.Color != Color)
-                        {
-                            list.Add(new ChamberedNautilusActive(Pos, index));
-                        }
+                        if (pOn.Color != Color) list.Add(new ChamberedNautilusActive(Pos, index));
                     }
                 }
                 else
@@ -47,7 +43,7 @@ namespace Game.Piece.PieceLogic
                         var bestPieces = new List<Commons.PieceLogic>();
                         Commons.PieceLogic bestPiece = null;
                         var maxPoint = int.MinValue;
-            
+
                         var (rank, file) = RankFileOf(Pos);
 
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
@@ -55,8 +51,10 @@ namespace Game.Piece.PieceLogic
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);
                             if (pOn == null || pOn.Pos == Pos || pOn.Color == Color
-                                || pOn.Effects.Any(effect => effect.EffectName == "effect_bound" || effect.EffectName == "effect_extremophiles")) continue;
-                
+                                || pOn.Effects.Any(effect =>
+                                    effect.EffectName == "effect_bound" || effect.EffectName == "effect_extremophiles"))
+                                continue;
+
                             var AIValue = pOn.GetValueForAI();
                             if (AIValue > maxPoint)
                             {
@@ -64,7 +62,10 @@ namespace Game.Piece.PieceLogic
                                 bestPieces.Add(pOn);
                                 maxPoint = AIValue;
                             }
-                            else if (AIValue == maxPoint) bestPieces.Add(pOn);
+                            else if (AIValue == maxPoint)
+                            {
+                                bestPieces.Add(pOn);
+                            }
                         }
 
                         if (bestPieces.Count == 0)
@@ -80,10 +81,7 @@ namespace Game.Piece.PieceLogic
                             bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                         }
 
-                        if (bestPiece != null)
-                        {
-                            list.Add(new ChamberedNautilusActive(Pos, bestPiece.Pos));
-                        }
+                        if (bestPiece != null) list.Add(new ChamberedNautilusActive(Pos, bestPiece.Pos));
                     }
                     else
                     {
@@ -99,11 +97,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        int IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

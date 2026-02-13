@@ -1,10 +1,10 @@
+using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Managers;
-using Game.Action.Internal;
-using UnityEngine;
-using System.Collections.Generic;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
@@ -21,15 +21,17 @@ namespace Game.Effects.RegionalEffect
 {
     public class Whirlpool : RegionalEffect
     {
+        private readonly List<int> centralIndices;
 
         private readonly int startTurn = 4;
-        private readonly List<int> centralIndices;
+
         public Whirlpool() : base(RegionalEffectType.Whirlpool)
         {
             // Use MaxLength to derive center coordinates (board is MaxLength x MaxLength)
             var half = MaxLength / 2;
             // Hố xoáy 2x2 nên chiếm 4 vị trí (rank, file)
-            var centralPos1 = new List<(int, int)>(){
+            var centralPos1 = new List<(int, int)>
+            {
                 (half - 1, half - 1),
                 (half - 1, half),
                 (half, half - 1),
@@ -38,12 +40,10 @@ namespace Game.Effects.RegionalEffect
             AssetManager.Ins.regionalsData.CreateWhirlPool(FromRankFileToWorldPos(half - 1.0f / 2, half - 1.0f / 2));
             centralIndices = centralPos1.Select(p => IndexOf(p.Item1, p.Item2)).ToList();
         }
+
         protected override void ApplyEffect(int currentTurn)
         {
-            if (currentTurn < startTurn)
-            {
-                return;
-            }
+            if (currentTurn < startTurn) return;
 
             // Precompute their indices
 
@@ -54,7 +54,7 @@ namespace Game.Effects.RegionalEffect
             var pieceInfos = new List<(PieceLogic piece, int nearestCentralIndex, int distance)>();
             foreach (var piece in pieces)
             {
-                int pos = piece.Pos;
+                var pos = piece.Pos;
                 // find nearest central index by chebyshev distance
                 var bestIdx = centralIndices[0];
                 var bestDist = Distance(pos, bestIdx);
@@ -67,6 +67,7 @@ namespace Game.Effects.RegionalEffect
                         bestIdx = c;
                     }
                 }
+
                 pieceInfos.Add((piece, bestIdx, bestDist));
             }
 
@@ -78,7 +79,7 @@ namespace Game.Effects.RegionalEffect
                 var piece = info.piece;
                 if (piece == null || IsAlive(piece)) continue;
 
-                int fromIndex = piece.Pos;
+                var fromIndex = piece.Pos;
                 // If piece already on whirlpool -> destroy it
                 if (centralIndices.Contains(fromIndex))
                 {
@@ -97,24 +98,20 @@ namespace Game.Effects.RegionalEffect
                 var df = targetFile - file;
 
                 // Compute one-step move direction
-                var stepRank = dr == 0 ? 0 : (dr > 0 ? 1 : -1);
-                var stepFile = df == 0 ? 0 : (df > 0 ? 1 : -1);
+                var stepRank = dr == 0 ? 0 : dr > 0 ? 1 : -1;
+                var stepFile = df == 0 ? 0 : df > 0 ? 1 : -1;
 
                 // If vector is NOT aligned vertically, horizontally or perfectly diagonal,
                 // round to the dominant cardinal direction (no diagonal rounding).
-                var isAligned = (dr == 0) || (df == 0) || (Mathf.Abs(dr) == Mathf.Abs(df));
+                var isAligned = dr == 0 || df == 0 || Mathf.Abs(dr) == Mathf.Abs(df);
                 if (!isAligned)
                 {
                     if (Mathf.Abs(dr) > Mathf.Abs(df))
-                    {
                         // move vertically only
                         stepFile = 0;
-                    }
                     else
-                    {
                         // move horizontally only
                         stepRank = 0;
-                    }
                 }
 
                 var nextRank = rank + stepRank;
@@ -131,10 +128,7 @@ namespace Game.Effects.RegionalEffect
                 ActionManager.EnqueueAction(new NormalMove(fromIndex, nextIndex));
 
                 // If the piece lands in a whirlpool cell, destroy it
-                if (centralIndices.Contains(nextIndex))
-                {
-                    ActionManager.EnqueueAction(new KillPiece(piece.Pos));
-                }
+                if (centralIndices.Contains(nextIndex)) ActionManager.EnqueueAction(new KillPiece(piece.Pos));
             }
         }
     }

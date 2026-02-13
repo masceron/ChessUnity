@@ -6,7 +6,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeaStar : Commons.PieceLogic, IPieceWithSkill
     {
         public SeaStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
@@ -22,16 +23,10 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rank, file) in MoveEnumerators.Around(startRank, startFile, 1))
                     {
                         var idx = IndexOf(rank, file);
-                        if (PieceOn(idx) == null)
-                        {
-                            list.Add(new SeaStarResurrect(Pos, idx));
-                        }
+                        if (PieceOn(idx) == null) list.Add(new SeaStarResurrect(Pos, idx));
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 

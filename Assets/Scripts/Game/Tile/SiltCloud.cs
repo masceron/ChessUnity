@@ -7,17 +7,20 @@ namespace Game.Tile
 {
     public class SiltCloud : Formation
     {
-        
         public SiltCloud(bool haveDuration)
         {
             HaveDuration = haveDuration;
         }
-        public override FormationType GetFormationType() => FormationType.SiltCloud;
+
+        public override FormationType GetFormationType()
+        {
+            return FormationType.SiltCloud;
+        }
 
         protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            
+
             ActionManager.EnqueueAction(new ApplyEffect(new Broken(-1, piece), FormationType.SiltCloud));
         }
 
@@ -31,5 +34,4 @@ namespace Game.Tile
             return -20;
         }
     }
-    
 }

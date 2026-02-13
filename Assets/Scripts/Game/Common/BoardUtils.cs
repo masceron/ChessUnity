@@ -2,30 +2,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Relics;
 using Game.Effects;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
-using UnityEngine;
-using UX.UI.Ingame;
-using UX.UI;
-using ZLinq;
 using Game.Tile;
-using Game.Action;
-using Game.Effects.Triggers;
+using UnityEngine;
+using UX.UI;
+using UX.UI.Ingame;
+using ZLinq;
 
 namespace Game.Common
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BoardUtils
     {
         public const int MaxLength = 40;
         public const int BoardSize = MaxLength * MaxLength;
 
         public const float YCoordinate = 1.64f;
+
         public static int RankOf(int index)
         {
             return index / MaxLength;
@@ -45,7 +47,7 @@ namespace Game.Common
         {
             return rank * MaxLength + file;
         }
-        
+
         public static bool IsAtPromotionRank(int index)
         {
             var rank = RankOf(index);
@@ -71,7 +73,7 @@ namespace Game.Common
         {
             return index < BoardSize;
         }
- 
+
         public static int PushWhite(int pos)
         {
             return pos - MaxLength;
@@ -96,7 +98,7 @@ namespace Game.Common
         {
             return row * MaxLength;
         }
-        
+
         public static int Distance(int pos1, int pos2)
         {
             return Math.Max(Math.Abs(RankOf(pos1) - RankOf(pos2)), Math.Abs(FileOf(pos1) - FileOf(pos2)));
@@ -196,7 +198,8 @@ namespace Game.Common
             MatchManager.Ins.GameState.TriggerHooks.RemoveObserver(effect);
         }
 
-        public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius, Predicate<PieceLogic> predicate)
+        public static List<PieceLogic> GetPiecesInRadius(int rank, int file, int radius,
+            Predicate<PieceLogic> predicate)
         {
             // Get all pieces in range of (rank, file) that match the predicate
             var pieces = new List<PieceLogic>();
@@ -208,16 +211,15 @@ namespace Game.Common
                 {
                     if (!VerifyBounds(fileOff)) continue;
                     var piece = PieceOn(IndexOf(rankOff, fileOff));
-                    if (predicate(piece))
-                    {
-                        pieces.Add(piece);
-                    }
+                    if (predicate(piece)) pieces.Add(piece);
                 }
             }
+
             return pieces;
         }
 
-        public static List<PieceLogic> GetPiecesInSize(int rank, int file, int size, Corner corner, Predicate<PieceLogic> predicate)
+        public static List<PieceLogic> GetPiecesInSize(int rank, int file, int size, Corner corner,
+            Predicate<PieceLogic> predicate)
         {
             var pieces = new List<PieceLogic>();
             switch (corner)
@@ -249,12 +251,10 @@ namespace Game.Common
                 {
                     if (!VerifyBounds(f)) continue;
                     var piece = PieceOn(IndexOf(r, f));
-                    if (piece != null && predicate(piece))
-                    {
-                        pieces.Add(piece);
-                    }
+                    if (piece != null && predicate(piece)) pieces.Add(piece);
                 }
             }
+
             return pieces;
         }
 
@@ -267,35 +267,36 @@ namespace Game.Common
         {
             return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece != null && piece.Color == side).ToList();
         }
-        
+
         public static RelicLogic GetRelicOf(bool side)
         {
             return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
         }
-        
+
         public static PieceLogic GetCommanderOf(bool side)
         {
             return side ? MatchManager.Ins.GameState.BlackCommander : MatchManager.Ins.GameState.WhiteCommander;
         }
 
-        public static Vector3 FromRankFileToWorldPos(float rank, float file) {
+        public static Vector3 FromRankFileToWorldPos(float rank, float file)
+        {
             return new Vector3(rank, YCoordinate, file);
         }
+
         public static bool IsNextEachOther(PieceLogic piece)
         {
             var pos = piece.Pos;
             for (var i = -1; i <= 1; i++)
+            for (var j = -1; j <= 1; j++)
             {
-                for (var j = -1; j <= 1; j++)
-                {
-                    if (i == 0 && j == 0) continue;
-                    var indexOff = IndexOf(RankOf(pos) + i, FileOf(pos) + j);
+                if (i == 0 && j == 0) continue;
+                var indexOff = IndexOf(RankOf(pos) + i, FileOf(pos) + j);
 
-                    if (!VerifyIndex(indexOff)) continue;
-                    var pieceOff = PieceOn(indexOff);
-                    if (pieceOff != null && pieceOff.Color == piece.Color) return true;
-                }
+                if (!VerifyIndex(indexOff)) continue;
+                var pieceOff = PieceOn(indexOff);
+                if (pieceOff != null && pieceOff.Color == piece.Color) return true;
             }
+
             return false;
         }
 
@@ -334,7 +335,7 @@ namespace Game.Common
         {
             MatchManager.Ins.GameState.TriggerHooks.NotifyBeforePieceAction(action);
         }
-        
+
         public static void NotifyBeforeRelicAction(IRelicAction action)
         {
             MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeRelicAction(action);
@@ -342,10 +343,7 @@ namespace Game.Common
 
         public static void NotifyInternalAction(IInternal action)
         {
-            if (action is ApplyEffect apply)
-            {
-                MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
-            }
+            if (action is ApplyEffect apply) MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
         }
 
         public static bool IsAlive(PieceLogic piece)
@@ -354,34 +352,31 @@ namespace Game.Common
 
             return PieceOn(piece.Pos) == piece;
         }
-        
+
         public static List<int> AllSidePos(bool side)
         {
             var positions = new List<int>();
             if (side)
-            {
                 for (var rank = MaxLength / 2; rank > 0; rank--)
                 {
                     if (!VerifyBounds(rank)) continue;
                     for (var file = 0; file < MaxLength; file++)
                     {
-                        if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
+                        if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file)) != null) continue;
                         positions.Add(IndexOf(rank, file));
                     }
                 }
-            }
             else
-            {
                 for (var rank = MaxLength / 2; rank < MaxLength; rank++)
                 {
                     if (!VerifyBounds(rank)) continue;
                     for (var file = 0; file < MaxLength; file++)
                     {
-                        if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file )) != null) continue;
+                        if (!VerifyBounds(file) || PieceOn(IndexOf(rank, file)) != null) continue;
                         positions.Add(IndexOf(rank, file));
                     }
                 }
-            }
+
             return positions;
         }
 
@@ -394,29 +389,21 @@ namespace Game.Common
             var midRank = rankStart + startingSize.x / 2;
 
             if (!side) // white: enemy half = ranks >= midRank
-            {
                 for (var r = midRank; r < rankStart + startingSize.x; r++)
+                for (var f = fileStart; f < fileStart + startingSize.y; f++)
                 {
-                    for (var f = fileStart; f < fileStart + startingSize.y; f++)
-                    {
-                        var idx = IndexOf(r, f);
-                        var p = PieceOn(idx);
-                        if (p != null) list.Add(p);
-                    }
+                    var idx = IndexOf(r, f);
+                    var p = PieceOn(idx);
+                    if (p != null) list.Add(p);
                 }
-            }
             else // black: enemy half = ranks < midRank
-            {
                 for (var r = rankStart; r < midRank; r++)
+                for (var f = fileStart; f < fileStart + startingSize.y; f++)
                 {
-                    for (var f = fileStart; f < fileStart + startingSize.y; f++)
-                    {
-                        var idx = IndexOf(r, f);
-                        var p = PieceOn(idx);
-                        if (p != null) list.Add(p);
-                    }
+                    var idx = IndexOf(r, f);
+                    var p = PieceOn(idx);
+                    if (p != null) list.Add(p);
                 }
-            }
 
             return list;
         }
@@ -426,35 +413,52 @@ namespace Game.Common
             UIManager.Ins.Load(CanvasID.EndGameMessage);
             EndGameUI.Ins.SetMessage(messageID);
         }
+
         public static bool IsOnBlackSide(int pos)
         {
             return RankOf(pos) <= BoardSize / 2 - 1;
         }
+
         public static void SetFormation(int pos, Formation env)
         {
             FormationManager.Ins.SetFormation(pos, env);
         }
+
         public static void MoveFormation(int from, int to)
         {
             FormationManager.Ins.MoveFormation(from, to);
         }
+
         public static void RemoveFormation(int pos)
         {
             FormationManager.Ins.RemoveFormation(pos);
         }
-        public static List<Formation> GetFormation(FormationType type) => GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
-        public static Formation[] GetFormations() => MatchManager.Ins.GameState.formations;
-        public static Formation GetFormation(int pos) => MatchManager.Ins.GameState.formations[pos];
-        public static bool HasFormation(int pos) => MatchManager.Ins.GameState.formations[pos] != null;
-        
+
+        public static List<Formation> GetFormation(FormationType type)
+        {
+            return GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
+        }
+
+        public static Formation[] GetFormations()
+        {
+            return MatchManager.Ins.GameState.formations;
+        }
+
+        public static Formation GetFormation(int pos)
+        {
+            return MatchManager.Ins.GameState.formations[pos];
+        }
+
+        public static bool HasFormation(int pos)
+        {
+            return MatchManager.Ins.GameState.formations[pos] != null;
+        }
+
         public static void DestroyTile(int index)
         {
             TileManager.Ins.DestroyTile(index);
             RemoveFormation(index);
-            if (PieceOn(index) != null)
-            {
-                ActionManager.EnqueueAction(new KillPiece(index));
-            }
+            if (PieceOn(index) != null) ActionManager.EnqueueAction(new KillPiece(index));
         }
     }
 }

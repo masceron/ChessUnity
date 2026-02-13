@@ -1,29 +1,35 @@
-using MemoryPack;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class HermitCrabSwap: Action, ISkills
+    public partial class HermitCrabSwap : Action, ISkills
     {
         [MemoryPackConstructor]
-        private HermitCrabSwap() { }
+        private HermitCrabSwap()
+        {
+        }
+
+        public HermitCrabSwap(int maker, int to) : base(maker)
+        {
+            Target = to;
+        }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
-        public HermitCrabSwap(int maker, int to) : base(maker)
-        {
-            Target = to;
-        }
+
         protected override void Animate()
         {
-           PieceManager.Ins.Swap(Maker, Target);
+            PieceManager.Ins.Swap(Maker, Target);
         }
+
         protected override void ModifyGameState()
         {
             // var board = PieceBoard();
@@ -42,7 +48,5 @@ namespace Game.Action.Skills
             MatchManager.Ins.GameState.Swap(Maker, Target);
             SetCooldown(Target, ((IPieceWithSkill)PieceOn(Target)).TimeToCooldown);
         }
-
-    
     }
 }

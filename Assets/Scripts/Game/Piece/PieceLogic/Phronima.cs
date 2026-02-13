@@ -1,3 +1,4 @@
+using Game.Action.Skills;
 using Game.Effects;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -17,14 +18,12 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     for (var x = rank - 3; x <= rank + 3; ++x)
+                    for (var y = file - 3; y <= file + 3; ++y)
                     {
-                        for (var y = file - 3; y <= file + 3; ++y)
-                        {
-                            if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
-                            var targetPiece = PieceOn(IndexOf(x, y));
-                            if (targetPiece == null || targetPiece.Color == Color) continue;
-                            list.Add(new Action.Skills.PhronimaActive(Pos, targetPiece.Pos));
-                        }
+                        if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
+                        var targetPiece = PieceOn(IndexOf(x, y));
+                        if (targetPiece == null || targetPiece.Color == Color) continue;
+                        list.Add(new PhronimaActive(Pos, targetPiece.Pos));
                     }
                 }
                 else
@@ -39,36 +38,29 @@ namespace Game.Piece.PieceLogic
                         {
                             int buffCountA = 0, buffCountB = 0;
                             foreach (var effect in a.Effects)
-                            {
                                 if (effect.Category == EffectCategory.Buff)
                                     buffCountA++;
-                            }
 
                             foreach (var effect in b.Effects)
-                            {
                                 if (effect.Category == EffectCategory.Buff)
                                     buffCountB++;
-                            }
 
                             return buffCountA.CompareTo(buffCountB);
                         });
 
                         var idx = Random.Range(0, listPieces.Count - 1);
 
-                        list.Add(new Action.Skills.PhronimaActive(Pos, listPieces[idx].Pos));
+                        list.Add(new PhronimaActive(Pos, listPieces[idx].Pos));
                     }
                     else
                     {
                         for (var x = rank - 3; x <= rank + 3; x++)
+                        for (var y = file - 3; y <= file + 3; y++)
                         {
-                            for (var y = file - 3; y <= file + 3; y++)
-                            {
-                                if (x == rank && y == file) continue;
-                                list.Add(new Action.Skills.PhronimaActive(Pos, IndexOf(x, y)));
-                            }
+                            if (x == rank && y == file) continue;
+                            list.Add(new PhronimaActive(Pos, IndexOf(x, y)));
                         }
                     }
-
                 }
             };
         }

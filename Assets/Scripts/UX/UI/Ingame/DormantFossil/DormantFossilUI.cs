@@ -8,11 +8,10 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.DormantFossil
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DormantFossilUI : IngamePendingMenu
     {
-        private int piecePos;
         [SerializeField] private GameObject chooseField;
         [SerializeField] private GameObject pieceItem;
 
@@ -20,9 +19,13 @@ namespace UX.UI.Ingame.DormantFossil
         {
             "piece_helicoprion",
             "piece_anomalocaris",
-            "piece_archelon" 
+            "piece_archelon"
         };
-        
+
+        private int piecePos;
+
+        protected override PendingAction PendingAction { get; set; }
+
         private void OnEnable()
         {
             var rect = (RectTransform)transform.GetChild(0);
@@ -39,14 +42,13 @@ namespace UX.UI.Ingame.DormantFossil
         public void Load(int spawnPos)
         {
             piecePos = spawnPos;
-            
+
             for (var i = 0; i < 3; ++i)
             {
                 if (chooseField.transform.childCount >= 3) continue;
                 Instantiate(pieceItem, chooseField.transform, true);
                 chooseField.transform.GetChild(i).GetComponent<DormantFossilItem>().Load(spawnPiece[i]);
             }
-
         }
 
         public void Choose(string type)
@@ -54,10 +56,8 @@ namespace UX.UI.Ingame.DormantFossil
             var color = BoardUtils.ColorOfPiece(piecePos);
 
             PendingAction.CommitResult(new DormantFossilAwake(piecePos, new PieceConfig(type, color, piecePos)));
-            
+
             Disable();
         }
-
-        protected override PendingAction PendingAction { get; set; }
     }
 }

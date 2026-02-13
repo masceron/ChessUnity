@@ -1,14 +1,16 @@
-﻿using Game.Save.Army;
+﻿using Game.Common;
+using Game.Save.Army;
 using UnityEngine;
-using Game.Common;
 
 namespace UX.UI.Followers
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SavedArmies: Singleton<SavedArmies>
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class SavedArmies : Singleton<SavedArmies>
     {
         [SerializeField] protected RectTransform list;
         [SerializeField] protected SavedArmy saved;
+
         public void Load()
         {
             var dict = ArmySaveLoader.ReadAll();
@@ -18,10 +20,7 @@ namespace UX.UI.Followers
 
             if (already < needed)
             {
-                for (var i = 1; i <= needed - already; i++)
-                {
-                    Instantiate(saved, list.transform, true);
-                }
+                for (var i = 1; i <= needed - already; i++) Instantiate(saved, list.transform, true);
             }
             else if (already > needed)
             {
@@ -34,10 +33,7 @@ namespace UX.UI.Followers
             }
 
             var vlist = dict.Values.ToList();
-            for (var i = 0; i < needed; i++)
-            {
-                list.transform.GetChild(i).GetComponent<SavedArmy>().Load(vlist[i]);
-            }
+            for (var i = 0; i < needed; i++) list.transform.GetChild(i).GetComponent<SavedArmy>().Load(vlist[i]);
         }
     }
 }

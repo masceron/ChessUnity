@@ -10,25 +10,23 @@ namespace Game.Effects.Others
     {
         private readonly int maker;
         private readonly int target;
-        public MarineIguanaKillEffect(int duration, PieceLogic piece, int maker, int target) : base(duration, 1, piece, "effect_marine_iguana_kill_effect")
+
+        public MarineIguanaKillEffect(int duration, PieceLogic piece, int maker, int target) : base(duration, 1, piece,
+            "effect_marine_iguana_kill_effect")
         {
             this.target = target;
             this.maker = maker;
         }
 
+        public void OnCallDead(PieceLogic pieceToDie)
+        {
+            if (pieceToDie != Piece) return;
+            ActionManager.EnqueueAction(new DestroyPiece(target));
+        }
+
         public void OnApply()
         {
             ActionManager.EnqueueAction(new NormalCapture(maker, Piece.Pos));
-
-        }
-
-        public void OnCallDead(PieceLogic pieceToDie)
-        {
-            if (pieceToDie != Piece) 
-            {
-                return;
-            }
-            ActionManager.EnqueueAction(new DestroyPiece(target));
         }
     }
 }

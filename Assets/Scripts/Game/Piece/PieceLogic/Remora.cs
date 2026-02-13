@@ -5,7 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class Remora: Commons.PieceLogic
+    public class Remora : Commons.PieceLogic
     {
         public Remora(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {

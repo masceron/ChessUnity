@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+﻿using Game.Action;
+using Game.Action.Internal;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -13,13 +14,13 @@ namespace Game.Effects.Augmentation
         public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
         /// <summary>
-        /// Kháng hiệu ứng Infected
+        ///     Kháng hiệu ứng Infected
         /// </summary>
         /// <param name="applyEffect">Effect is applied</param>
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             if (applyEffect.Effect.Piece != Piece || applyEffect.Effect.EffectName != "effect_infected") return;
-            applyEffect.Result = Action.ResultFlag.EffectResistance;
+            applyEffect.Result = ResultFlag.EffectResistance;
         }
     }
 }

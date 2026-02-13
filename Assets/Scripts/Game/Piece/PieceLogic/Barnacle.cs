@@ -6,12 +6,12 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Barnacle : Commons.PieceLogic, IPieceWithSkill
     {
         public Barnacle(PieceConfig cfg) : base(cfg, ShellfishMoves.Quiets, RookMoves.Captures)
         {
-
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -24,18 +24,13 @@ namespace Game.Piece.PieceLogic
                         if (piece == null) continue;
                         if (piece.Color == Color) continue;
 
-                        var hasShield = PieceOn(piece.Pos).Effects.Any(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield");
+                        var hasShield = PieceOn(piece.Pos).Effects.Any(effect =>
+                            effect.EffectName is "effect_shield" or "effect_hardened_shield");
 
-                        if (hasShield)
-                        {
-                            list.Add(new BarnacleActive(Pos, piece.Pos));
-                        }
+                        if (hasShield) list.Add(new BarnacleActive(Pos, piece.Pos));
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 

@@ -5,13 +5,13 @@ namespace Game.Effects.RegionalEffect
 {
     public abstract class RegionalEffect : Observer
     {
-        public RegionalEffectType Type { get; }
-
         protected RegionalEffect(RegionalEffectType type)
         {
             Type = type;
             MatchManager.Ins.GameState.OnIncreaseTurn += ApplyEffect;
         }
+
+        public RegionalEffectType Type { get; }
         protected abstract void ApplyEffect(int currentTurn);
 
         public override bool Equals(object obj)
@@ -47,6 +47,6 @@ namespace Game.Effects.RegionalEffect
         DjinnBlessing,
         RedTide,
         BenthicStorm,
-        None,
+        None
     }
 }

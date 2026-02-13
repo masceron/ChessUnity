@@ -6,15 +6,17 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Bleeding: Effect, IEndTurnTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Bleeding : Effect, IEndTurnTrigger
     {
+        private const int TurnToRemoveEffect = 5;
+
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TurnLeftToDie;
+
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TurnSinceLastMove;
-
-        private const int TurnToRemoveEffect = 5;
 
         public Bleeding(int turnToDie, PieceLogic piece) : base(-1, 1, piece, "effect_bleeding")
         {
@@ -25,9 +27,10 @@ namespace Game.Effects.Debuffs
         public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
 
         public EndTurnEffectType EndTurnEffectType { get; }
+
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction is not IQuiets) return; 
+            if (lastMainAction is not IQuiets) return;
             if (lastMainAction.Maker != Piece.Pos)
             {
                 TurnSinceLastMove++;
@@ -40,8 +43,8 @@ namespace Game.Effects.Debuffs
                 TurnLeftToDie--;
                 if (TurnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.Maker));
             }
-
         }
+
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 20 - TurnLeftToDie * 10;

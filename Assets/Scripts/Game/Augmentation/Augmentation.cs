@@ -1,25 +1,27 @@
-using Game.Effects;
+using System;
 using System.Collections.Generic;
-using Game.Augmentation.Set;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Augmentation.Set;
+using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
-using System;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class Augmentation
     {
         public AugmentationName Name;
-        public AugmentationRarity Rarity;
-        public AugmentationSlot Slot;
-        public AugmentationSet Set;
         public List<Effect> PassiveEffects;
+        public AugmentationRarity Rarity;
+        public AugmentationSet Set;
+        public AugmentationSlot Slot;
 
         protected PieceLogic Target;
 
-        public Augmentation(AugmentationName name, AugmentationRarity rarity, AugmentationSlot slot, AugmentationSet set, List<Effect> passiveEffects)
+        public Augmentation(AugmentationName name, AugmentationRarity rarity, AugmentationSlot slot,
+            AugmentationSet set, List<Effect> passiveEffects)
         {
             Name = name;
             Rarity = rarity;
@@ -35,13 +37,13 @@ namespace Game.Augmentation
 
         public void ApplyPassiveEffects()
         {
-            foreach (var e in PassiveEffects)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(e));
-            }
+            foreach (var e in PassiveEffects) ActionManager.EnqueueAction(new ApplyEffect(e));
         }
 
-        public virtual int GetValueForAI() { return RarityValue(); }
+        public virtual int GetValueForAI()
+        {
+            return RarityValue();
+        }
 
         protected int RarityValue()
         {
@@ -104,7 +106,7 @@ namespace Game.Augmentation
         CursedModule = 43,
         CursedFin = 44,
         CursedPlate = 45,
-        None = 10000,
+        None = 10000
     }
 
     public enum AugmentationRarity
@@ -127,4 +129,3 @@ namespace Game.Augmentation
         Chassis
     }
 }
-

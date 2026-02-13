@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using Game.Common;
 using Game.Managers;
 using Game.Save.Relics;
@@ -13,7 +13,7 @@ using ZLinq;
 
 namespace UX.UI.Army.DesignArmy
 {
-    public class ArmyRelicSearcher: Singleton<ArmyRelicSearcher>, IPointerClickHandler
+    public class ArmyRelicSearcher : Singleton<ArmyRelicSearcher>, IPointerClickHandler
     {
         [SerializeField] public RectTransform container;
         [SerializeField] private RelicsData relicsData;
@@ -23,22 +23,16 @@ namespace UX.UI.Army.DesignArmy
         [SerializeField] protected ArmyDesignRelicDescription description;
         [SerializeField] public ArmyDesignRelic relicDisplay;
         [SerializeField] protected TMP_Text relicText;
+        private readonly List<ArmyDesignRelic> pool = new();
+        private string lastKeyword;
+        public Action<string> OnRelicSelecting;
 
         private List<RelicInfo> searchResult;
-        private string lastKeyword;
-        private readonly List<ArmyDesignRelic> pool = new();
         protected string selecting;
-        public Action<string> OnRelicSelecting;
 
         protected override void Awake()
         {
             SearchByKeyword("");
-        }
-
-        public void Toggle()
-        {
-            container.gameObject.SetActive(!container.gameObject.activeSelf);
-            mainPanel.gameObject.SetActive(true);
         }
 
         private void OnEnable()
@@ -53,26 +47,40 @@ namespace UX.UI.Army.DesignArmy
             }, 0.2f);
         }
 
-        public void Load(Relic? relic)
-        {
-            relicText.text = !relic.HasValue ? Localizer.GetText("game", "relic", null)
-                : Localizer.GetText("relic_name", AssetManager.Ins.RelicData[relic.Value.Type].key, null);
-            
-        }
-
         private void OnDisable()
         {
             selecting = null;
             description.Undisplay();
         }
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (selecting == null || eventData.button != PointerEventData.InputButton.Right) return;
+
+            selecting = null;
+            description.Undisplay();
+        }
+
+        public void Toggle()
+        {
+            container.gameObject.SetActive(!container.gameObject.activeSelf);
+            mainPanel.gameObject.SetActive(true);
+        }
+
+        public void Load(Relic? relic)
+        {
+            relicText.text = !relic.HasValue
+                ? Localizer.GetText("game", "relic", null)
+                : Localizer.GetText("relic_name", AssetManager.Ins.RelicData[relic.Value.Type].key, null);
+        }
+
         public void SearchByKeyword(string start)
         {
             start = start.ToLower();
-            
+
             if (lastKeyword != null && start.StartsWith(lastKeyword))
             {
-                var result = searchResult.Where(r => 
+                var result = searchResult.Where(r =>
                     r.key.Contains(start)).ToList();
 
                 if (result.SequenceEqual(searchResult)) return;
@@ -80,14 +88,14 @@ namespace UX.UI.Army.DesignArmy
             }
             else
             {
-                searchResult = AssetManager.Ins.RelicData.Values.Where(r => 
+                searchResult = AssetManager.Ins.RelicData.Values.Where(r =>
                     Localizer.GetText("relic_name", r.key, null).Contains(start)).ToList();
             }
-            
+
             lastKeyword = start;
             DisplaySearchResult();
         }
-        
+
         private void DisplaySearchResult()
         {
             var needed = searchResult.Count - pool.Count;
@@ -96,55 +104,35 @@ namespace UX.UI.Army.DesignArmy
                 case > 0:
                 {
                     for (var i = 1; i <= needed; i++)
-                    {
                         pool.Add(Instantiate(relicDisplay.gameObject, list).GetComponent<ArmyDesignRelic>());
-                    }
 
                     break;
                 }
                 case < 0:
                 {
-                    for (var i = pool.Count - 1; i > searchResult.Count - 1; i--)
-                    {
-                        pool[i].gameObject.SetActive(false);
-                    }
+                    for (var i = pool.Count - 1; i > searchResult.Count - 1; i--) pool[i].gameObject.SetActive(false);
 
                     break;
                 }
             }
-            
+
             for (var i = 0; i < searchResult.Count; i++)
             {
                 var obj = pool[i].gameObject;
-                if (!obj.activeSelf)
-                {
-                    obj.SetActive(true);
-                }
+                if (!obj.activeSelf) obj.SetActive(true);
 
-                if (pool[i].Relic != searchResult[i])
-                {
-                    pool[i].Load(searchResult[i]);
-                }
+                if (pool[i].Relic != searchResult[i]) pool[i].Load(searchResult[i]);
             }
         }
 
         public void Select(ArmyDesignRelic relic)
         {
             if (selecting != null)
-            {
-                if (selecting == relic.Relic.key) return;
-            }
+                if (selecting == relic.Relic.key)
+                    return;
             selecting = relic.Relic.key;
             OnRelicSelecting?.Invoke(selecting);
             description.Display(relic.Relic);
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (selecting == null || eventData.button != PointerEventData.InputButton.Right) return;
-            
-            selecting = null;
-            description.Undisplay();
         }
 
         public virtual void SelectRelic()

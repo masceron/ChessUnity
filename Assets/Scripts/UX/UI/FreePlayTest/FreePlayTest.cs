@@ -1,19 +1,20 @@
-
-using Game.Common;
-using TMPro;
 using System.Collections.Generic;
+using Game.Common;
 using Game.Piece;
-using UX.UI.Army.DesignArmy;
-using UnityEngine;
 using Game.ScriptableObjects.Collections;
+using TMPro;
+using UnityEngine;
+using UX.UI.Army.DesignArmy;
 
-namespace UX.UI.FreePlayTest{
+namespace UX.UI.FreePlayTest
+{
     public enum FreePlayScene
     {
         DesignArmy,
         Augmentation,
-        RegionalEffect,
+        RegionalEffect
     }
+
     public class FreePlayTest : Singleton<FreePlayTest>
     {
         // public FreePlayConfig Config;
@@ -21,6 +22,7 @@ namespace UX.UI.FreePlayTest{
         [SerializeField] public UDictionary<FreePlayScene, RectTransform> panelDict;
         public ArmyDesignBoard armyDesignBoard;
         public TMP_Text boardSizeText;
+
         public void ChangeBoardSize(int value)
         {
             boardSizeText.text = $"Board size: {value}x{value}";
@@ -30,20 +32,22 @@ namespace UX.UI.FreePlayTest{
         {
             Config.PieceConfigBlack.Add(pieceConfig);
         }
+
         public void RemoveEnemy(PieceConfig pieceConfig)
         {
             Config.PieceConfigWhite.Add(pieceConfig);
         }
+
         public void AddRegionalEffect(RegionalsData regionalsData)
         {
-
         }
-    
+
         public void ToPresetPanel()
         {
             // Debug.Log("")
             UIManager.Ins.Load(CanvasID.FreePlayPreset);
         }
+
         public void ToDesignArmyPanel()
         {
             UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);

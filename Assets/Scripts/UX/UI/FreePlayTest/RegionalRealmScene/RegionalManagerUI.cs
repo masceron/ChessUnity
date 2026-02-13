@@ -14,6 +14,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
         public RegionalSearcher searcher;
         public RegionalIcon chosenRegional;
         public FreePlayArmyBoard board;
+
         public void Load()
         {
             enemyRelic.Load(AssetManager.Ins.RelicData[Config.relicBlackConfig.Type]);
@@ -38,7 +39,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 //     infos.Add(info);
                 // }
                 var pieceConfig = new PieceConfig(troop.PieceType, false,
-                    (troop.Rank * Config.boardSize + troop.File), augNameLst);
+                    troop.Rank * Config.boardSize + troop.File, augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
             }
@@ -54,7 +55,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 //     infos.Add(info);
                 // }
                 var pieceConfig = new PieceConfig(troop.PieceType, true,
-                    (troop.Rank * Config.boardSize + troop.File), augNameLst);
+                    troop.Rank * Config.boardSize + troop.File, augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigBlack.Add(pieceConfig);
             }
@@ -62,6 +63,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             Debug.Log($"BoardSize: {FPArmyDesign.Ins.army.BoardSize}");
             SceneLoader.LoadFreePlay(LoadCanvasByFunc.chosenGameMode);
         }
+
         public void ToDesignArmyPanel()
         {
             UIManager.Ins.Load(CanvasID.FreePlayDesignArmy);

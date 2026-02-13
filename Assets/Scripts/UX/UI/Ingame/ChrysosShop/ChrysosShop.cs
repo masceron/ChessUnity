@@ -12,7 +12,8 @@ using ZLinq;
 
 namespace UX.UI.Ingame.ChrysosShop
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChrysosShop : IngamePendingMenu
     {
         [SerializeField] private GameObject shopItem;
@@ -21,6 +22,8 @@ namespace UX.UI.Ingame.ChrysosShop
         [SerializeField] private GameObject itemLine;
         private PieceLogic _chrysos;
         private byte _cost;
+
+        protected override PendingAction PendingAction { get; set; }
 
         private void OnEnable()
         {
@@ -52,10 +55,7 @@ namespace UX.UI.Ingame.ChrysosShop
 
             if (already < needed)
             {
-                for (var i = 1; i <= needed - already; i++)
-                {
-                    Instantiate(shopItem, itemLine.transform, true);
-                }
+                for (var i = 1; i <= needed - already; i++) Instantiate(shopItem, itemLine.transform, true);
             }
             else if (already > needed)
             {
@@ -68,9 +68,7 @@ namespace UX.UI.Ingame.ChrysosShop
             }
 
             for (var i = 0; i < needed; i++)
-            {
                 itemLine.transform.GetChild(i).GetComponent<ChrysosShopItem>().Load(upgradableTo[i]);
-            }
         }
 
         public void Buy(string type)
@@ -79,7 +77,5 @@ namespace UX.UI.Ingame.ChrysosShop
                 new PieceConfig(type, _chrysos.Color, PendingAction.Target), _cost));
             Disable();
         }
-
-        protected override PendingAction PendingAction { get; set; }
     }
 }

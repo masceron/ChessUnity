@@ -8,11 +8,28 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HardenedShield : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
         public HardenedShield(PieceLogic piece, int stack = 1) : base(-1, stack, piece, "effect_hardened_shield")
         {
+        }
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Debuff;
+
+        public void OnCallAfterPieceAction(Action.Action action)
+        {
+            if (action is not ICaptures
+                || action.Target != Piece.Pos
+                || action.Result != ResultFlag.Blocked
+                || action.Result != ResultFlag.HardenedBlock
+                || action.Result != ResultFlag.Evade) return;
+
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker)), Piece));
+            if (Strength > 1) Strength--;
+            else
+                ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;
@@ -22,24 +39,6 @@ namespace Game.Effects.Buffs
             if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success ||
                 (action.Flag & ActionFlag.Unblockable) != 0) return;
             action.Result = ResultFlag.HardenedBlock;
-        }
-
-        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Debuff;
-
-        public void OnCallAfterPieceAction(Action.Action action)
-        {
-            if (action is not ICaptures 
-                || action.Target != Piece.Pos 
-                || action.Result != ResultFlag.Blocked 
-                || action.Result != ResultFlag.HardenedBlock
-                || action.Result != ResultFlag.Evade) return;
-            
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker)), Piece));
-            if (Strength > 1) Strength--;
-            else
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(this));
-            }
         }
 
         public override int GetValueForAI()

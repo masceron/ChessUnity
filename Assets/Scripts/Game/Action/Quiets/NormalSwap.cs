@@ -3,12 +3,15 @@ using MemoryPack;
 
 namespace Game.Action.Quiets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
     public partial class NormalSwap : Action, IQuiets
     {
         [MemoryPackConstructor]
-        private NormalSwap() { }
+        private NormalSwap()
+        {
+        }
 
         public NormalSwap(int maker, int target) : base(maker)
         {

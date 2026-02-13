@@ -14,19 +14,16 @@ namespace Game.Effects.SpecialAbility
     {
         public SurgeWrassePassive(PieceLogic piece) : base(-1, 1, piece, "effect_surge_wrasse_passive")
         {
-
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not IQuiets) { return; }
+            if (action is not IQuiets) return;
             var fmt = BoardUtils.GetFormation(Piece.Pos);
-            if (fmt != null && AssetManager.Ins.FormationData[fmt.GetFormationType()].formationCategory == FormationCategory.Negative)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Haste(2, 4, Piece)));
-            }
+            if (fmt != null && AssetManager.Ins.FormationData[fmt.GetFormationType()].formationCategory ==
+                FormationCategory.Negative) ActionManager.EnqueueAction(new ApplyEffect(new Haste(2, 4, Piece)));
         }
     }
 }

@@ -2,12 +2,12 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Silenced : Effect
     {
         public Silenced(PieceLogic piece, int duration = -1) : base(duration, 1, piece, "effect_silenced")
         {
-            
         }
 
         public override int GetValueForAI()

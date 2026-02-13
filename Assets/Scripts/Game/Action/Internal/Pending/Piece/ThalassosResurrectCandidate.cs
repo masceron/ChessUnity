@@ -5,18 +5,19 @@ using UX.UI.Ingame.ThalassosResurrector;
 
 namespace Game.Action.Internal.Pending.Piece
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrectCandidate : PendingAction, ISkills
     {
-        public int AIPenaltyValue(PieceLogic p)
-        {
-            return 0;
-        }
-
         public ThalassosResurrectCandidate(int maker, int pos) : base(maker)
         {
             Maker = maker;
             Target = pos;
+        }
+
+        public int AIPenaltyValue(PieceLogic p)
+        {
+            return 0;
         }
 
         protected override void CompleteAction()

@@ -1,18 +1,19 @@
-using Game.Movesets;
-using Game.Piece.PieceLogic.Commons;
 using Game.Common;
 using Game.Effects.Triggers;
+using Game.Movesets;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
     public class CopyCapturesMethod : Effect, IOnApplyTrigger, IOnRemoveTrigger
     {
-        private readonly PieceLogic _ourPiece;
         private readonly PieceLogic _opponentPiece;
+        private readonly PieceLogic _ourPiece;
         private int _ourPieceAttackRangeSaver;
         private CapturesDelegate _ourPieceCapturesSaver;
 
-        public CopyCapturesMethod(int firstPiece, int secondPiece, int duration) : base(duration, 1, BoardUtils.PieceOn(firstPiece), "effect_copy_captures_method")
+        public CopyCapturesMethod(int firstPiece, int secondPiece, int duration) : base(duration, 1,
+            BoardUtils.PieceOn(firstPiece), "effect_copy_captures_method")
         {
             Duration = duration;
             _ourPiece = BoardUtils.PieceOn(firstPiece);

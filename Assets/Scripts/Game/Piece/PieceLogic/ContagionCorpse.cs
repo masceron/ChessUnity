@@ -5,9 +5,10 @@ using Game.Effects.Traits;
 namespace Game.Piece.PieceLogic
 {
     /// <summary>
-    /// Contagion Corpse Construct
+    ///     Contagion Corpse Construct
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ContagionCorpse : Commons.PieceLogic
     {
         public ContagionCorpse(PieceConfig cfg) : base(cfg)
@@ -16,4 +17,3 @@ namespace Game.Piece.PieceLogic
         }
     }
 }
-

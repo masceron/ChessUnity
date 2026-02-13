@@ -27,7 +27,8 @@
 //         }
 //         public override void OnCallMoveGen(List<Action.Action> actions)
 //         {
-            
+
 //         }
 //     }
 // }
+

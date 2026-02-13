@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+
 #region Namespace Imports
 
 using UnityEditor;
@@ -7,23 +8,26 @@ using UnityEngine;
 #endregion
 
 namespace UI.UIObject3D.Scripts
-{    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+{
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class UIObject3DLayerManager
-    {        
+    {
         [InitializeOnLoadMethod]
         public static void ManageLayer()
-        {            
+        {
             var layer = LayerMask.NameToLayer("UIObject3D");
             // layer already exists; nothing to do here
             if (layer != -1) return;
 
-            var tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset"));
+            var tagManager =
+                new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset"));
             var layers = tagManager.FindProperty("layers");
 
             if (layers is not { isArray: true })
             {
-                Debug.LogWarning("[UIObject3D][Warning] Unable to set up layers. You can resolve this issue by manually adding a layer named 'UIObject3D'.");
+                Debug.LogWarning(
+                    "[UIObject3D][Warning] Unable to set up layers. You can resolve this issue by manually adding a layer named 'UIObject3D'.");
                 return;
             }
 
@@ -37,7 +41,7 @@ namespace UI.UIObject3D.Scripts
                 if (element.stringValue != "") continue;
                 element.stringValue = "UIObject3D";
                 set = true;
-                    
+
                 // we're done
                 break;
             }
@@ -45,11 +49,12 @@ namespace UI.UIObject3D.Scripts
             if (set)
             {
                 Debug.Log("[UIObject3D] Layer 'UIObject3D' created.");
-                tagManager.ApplyModifiedProperties();                
+                tagManager.ApplyModifiedProperties();
             }
             else
             {
-                Debug.LogWarning("[UIObject3d][Warning] Unable to create Layer 'UIObject3D' - no blank layers found to replace! Please create the layer 'UIObject3d' manually in order to continue.");
+                Debug.LogWarning(
+                    "[UIObject3d][Warning] Unable to create Layer 'UIObject3D' - no blank layers found to replace! Please create the layer 'UIObject3d' manually in order to continue.");
             }
         }
     }

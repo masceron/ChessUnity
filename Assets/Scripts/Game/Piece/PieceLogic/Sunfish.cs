@@ -1,15 +1,17 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
-using Game.Common;
+
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Sunfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Sunfish(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
@@ -21,10 +23,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
-                {
                     if (SkillCooldown == 0)
-                    {
-
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 4))
                         {
                             var index = IndexOf(rankOff, fileOff);
@@ -32,13 +31,7 @@ namespace Game.Piece.PieceLogic
                             var pending = new SunfishActive(Pos, index);
                             list.Add(pending);
                         }
-                    }
-
-                }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 

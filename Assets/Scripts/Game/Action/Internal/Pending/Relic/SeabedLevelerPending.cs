@@ -1,12 +1,14 @@
-﻿using Game.Managers;
-using UX.UI.Ingame;
+﻿using System;
 using Game.Action.Relics;
 using Game.Effects.Others;
+using Game.Managers;
+using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeabedLevelerPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class SeabedLevelerPending : PendingAction, IDisposable
     {
         private readonly Charge _charges;
 
@@ -15,6 +17,11 @@ namespace Game.Action.Internal.Pending.Relic
             Target = maker;
             Maker = maker;
             _charges = charge;
+        }
+
+        public void Dispose()
+        {
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -29,11 +36,6 @@ namespace Game.Action.Internal.Pending.Relic
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-        }
-
-        public void Dispose()
-        {
-            BoardViewer.SelectingFunction = 0;
         }
     }
 }

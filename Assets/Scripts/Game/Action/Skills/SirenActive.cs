@@ -1,16 +1,27 @@
-using MemoryPack;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class SirenActive: Action, ISkills
+    public partial class SirenActive : Action, ISkills
     {
+        [MemoryPackInclude] private int _moveTo;
+
         [MemoryPackConstructor]
-        private SirenActive() { }
+        private SirenActive()
+        {
+        }
+
+        public SirenActive(int maker, int target, int moveTo) : base(maker)
+        {
+            Target = target;
+            _moveTo = moveTo;
+        }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -18,13 +29,7 @@ namespace Game.Action.Skills
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
-        [MemoryPackInclude]
-        private int _moveTo;
-        public SirenActive(int maker, int target, int moveTo) : base(maker)
-        {
-            Target = target;
-            _moveTo = moveTo;
-        }
+
         protected override void Animate()
         {
             PieceManager.Ins.Move(Target, _moveTo);
@@ -33,7 +38,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             Move(Target, _moveTo);
-            
+
             FlipPieceColor(_moveTo);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

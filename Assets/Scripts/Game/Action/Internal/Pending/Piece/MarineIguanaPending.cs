@@ -1,3 +1,4 @@
+using System;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
@@ -6,7 +7,7 @@ using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Piece
 {
-    public class MarineIguanaPending : PendingAction, System.IDisposable, ISkills
+    public class MarineIguanaPending : PendingAction, IDisposable, ISkills
     {
         private static PieceLogic _firstTarget;
         public static PieceLogic SecondTarget;
@@ -15,6 +16,13 @@ namespace Game.Action.Internal.Pending.Piece
         {
             Maker = maker;
             Target = target;
+        }
+
+        public void Dispose()
+        {
+            _firstTarget = null;
+            SecondTarget = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -49,13 +57,6 @@ namespace Game.Action.Internal.Pending.Piece
 
                 BoardViewer.Ins.Unmark();
             }
-        }
-
-        public void Dispose()
-        {
-            _firstTarget = null;
-            SecondTarget = null;
-            BoardViewer.SelectingFunction = 0;
         }
     }
 }

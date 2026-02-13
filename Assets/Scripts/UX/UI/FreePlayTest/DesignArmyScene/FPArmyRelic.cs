@@ -1,6 +1,6 @@
 using Game.ScriptableObjects;
-using UX.UI.Army.DesignArmy;
 using UnityEngine;
+using UX.UI.Army.DesignArmy;
 using UX.UI.Tooltip;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
@@ -8,6 +8,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
     public class FPArmyRelic : ArmyDesignRelic
     {
         [SerializeField] private TooltipTrigger tooltipTrigger;
+
         public override void Load(RelicInfo relicInfo)
         {
             base.Load(relicInfo);

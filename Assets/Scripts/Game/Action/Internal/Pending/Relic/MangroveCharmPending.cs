@@ -1,19 +1,21 @@
+using System;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class MangroveCharmPending : PendingAction, System.IDisposable, IRelicAction
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class MangroveCharmPending : PendingAction, IDisposable, IRelicAction
     {
         public static PieceLogic FirstTarget;
         public static PieceLogic SecondTarget;
         private MangroveCharm _mangroveCharm;
+
         public MangroveCharmPending(MangroveCharm e, int target) : base(-1)
         {
             _mangroveCharm = e;
@@ -21,10 +23,19 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = target;
         }
 
+        public void Dispose()
+        {
+            ResetTargets();
+
+            _mangroveCharm = null;
+
+            BoardViewer.SelectingFunction = 0;
+        }
+
         protected override void CompleteAction()
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
-            if (FirstTarget == null) 
+            if (FirstTarget == null)
             {
                 FirstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
@@ -32,6 +43,7 @@ namespace Game.Action.Internal.Pending.Relic
                 TileManager.Ins.Select(FirstTarget.Pos);
                 return;
             }
+
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
             CommitResult(new MangroveCharmExecute(FirstTarget.Pos, SecondTarget.Pos));
@@ -48,15 +60,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
             FirstTarget = null;
             SecondTarget = null;
-        }
-
-        public void Dispose()
-        {
-            ResetTargets();
-
-            _mangroveCharm = null;
-
-            BoardViewer.SelectingFunction = 0;
         }
 
         // protected override void ModifyGameState()
@@ -82,7 +85,5 @@ namespace Game.Action.Internal.Pending.Relic
 
         //     ResetTargets();
         // }
-
     }
-
 }

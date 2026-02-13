@@ -12,12 +12,16 @@ namespace Editor.Windows
 {
     public class PieceAssetsManager : EditorWindow
     {
+        private const string FactoryFilePath = "Assets/Scripts/Game/Piece/PieceLogic/Commons/PieceFactory.cs";
+        private const string FactoryClassName = "PieceFactory";
+        private const string BaseLogicClass = "PieceLogic";
+        private const string TargetNamespace = "Game.Piece.PieceLogic.Commons";
         private readonly List<PieceInfo> _allPieces = new();
+        private readonly List<OrphanedKey> _orphanedKeys = new();
         private readonly string[] _tableNamesToValidate = { "piece_name", "piece_skill", "piece_skill_description" };
         private readonly string[] _toolbarStrings = { "Manage Pieces", "Validate Localization" };
         private bool _hasScannedForOrphans;
         private Vector2 _manageScrollPos;
-        private readonly List<OrphanedKey> _orphanedKeys = new();
         private int _toolbarIndex;
         private Vector2 _validateScrollPos;
 
@@ -40,7 +44,7 @@ namespace Editor.Windows
                     break;
             }
         }
-        
+
         [MenuItem("Tools/Piece Manager")]
         public static void ShowWindow()
         {
@@ -58,21 +62,21 @@ namespace Editor.Windows
             if (GUILayout.Button("Generate Factory Code")) GenerateFactoryCode();
 
             EditorGUILayout.Space();
-            
+
             _manageScrollPos = EditorGUILayout.BeginScrollView(_manageScrollPos);
             foreach (var piece in _allPieces)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-                
+
                 EditorGUILayout.ObjectField(piece, typeof(PieceInfo), false);
-                
+
                 if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(piece);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void FindAllPieceInfos()
         {
             _allPieces.Clear();
@@ -84,7 +88,7 @@ namespace Editor.Windows
                 if (piece) _allPieces.Add(piece);
             }
         }
-        
+
         private void SyncWithCentralData()
         {
             var dataGuids = AssetDatabase.FindAssets("t:PiecesData");
@@ -98,18 +102,18 @@ namespace Editor.Windows
             var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(path);
 
             if (!centralData) return;
-            
+
             centralData.piecesData ??= new List<PieceInfo>();
-            
+
             centralData.piecesData.Clear();
             centralData.piecesData.AddRange(_allPieces);
-            
+
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
-            
+
             Debug.Log($"PieceManager: Rebuilt PiecesData list. Total items: {centralData.piecesData.Count}");
         }
-        
+
         private void DrawValidateTab()
         {
             EditorGUILayout.LabelField("Localization Key Validator", EditorStyles.boldLabel);
@@ -119,7 +123,6 @@ namespace Editor.Windows
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
             if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
-            {
                 if (EditorUtility.DisplayDialog(
                         "Remove All Orphaned Keys?",
                         "Are you sure you want to permanently remove all orphaned keys from the table?",
@@ -129,7 +132,6 @@ namespace Editor.Windows
                     DeleteAllOrphanedKeys();
                     FindOrphanedKeys();
                 }
-            }
 
             if (!_hasScannedForOrphans) return;
 
@@ -142,9 +144,9 @@ namespace Editor.Windows
             }
 
             EditorGUILayout.LabelField($"Found {_orphanedKeys.Count} orphaned keys:", EditorStyles.boldLabel);
-            
+
             _validateScrollPos = EditorGUILayout.BeginScrollView(_validateScrollPos);
-            
+
             for (var i = _orphanedKeys.Count - 1; i >= 0; i--)
             {
                 var orphan = _orphanedKeys[i];
@@ -168,19 +170,17 @@ namespace Editor.Windows
 
             EditorGUILayout.EndScrollView();
         }
+
         private void DeleteAllOrphanedKeys()
         {
-            foreach (var orphanedKey in _orphanedKeys)
-            {
-                RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
-            }
+            foreach (var orphanedKey in _orphanedKeys) RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
         }
 
         private void FindOrphanedKeys()
         {
             _hasScannedForOrphans = true;
             _orphanedKeys.Clear();
-            
+
             var validKeys = new HashSet<string>();
             FindAllPieceInfos();
 
@@ -191,14 +191,11 @@ namespace Editor.Windows
                 validKeys.Add(piece.key + "_skill");
                 validKeys.Add(piece.key + "_skill_description");
             }
-            
+
             foreach (var tableName in _tableNamesToValidate)
             {
                 var tableCollection = LocalizationEditorSettings.GetStringTableCollection(tableName);
-                if (!tableCollection)
-                {
-                    continue;
-                }
+                if (!tableCollection) continue;
 
                 var sharedData = tableCollection.SharedData;
                 foreach (var entry in sharedData.Entries.Where(entry => !validKeys.Contains(entry.Key)))
@@ -213,23 +210,12 @@ namespace Editor.Windows
 
             var sharedData = tableCollection.SharedData;
             if (sharedData.GetEntry(key) == null) return;
-            
+
             sharedData.RemoveKey(key);
             EditorUtility.SetDirty(sharedData);
             Debug.Log($"Removed key '{key}' from table '{tableName}'");
         }
-        
-        private struct OrphanedKey
-        {
-            public string Key;
-            public string TableName;
-        }
-        
-        private const string FactoryFilePath = "Assets/Scripts/Game/Piece/PieceLogic/Commons/PieceFactory.cs";
-        private const string FactoryClassName = "PieceFactory";
-        private const string BaseLogicClass = "PieceLogic";
-        private const string TargetNamespace = "Game.Piece.PieceLogic.Commons";
-        
+
         public static void GenerateFactoryCode()
         {
             var guids = AssetDatabase.FindAssets("t:PieceInfo");
@@ -248,11 +234,12 @@ namespace Editor.Windows
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("        public static " + BaseLogicClass + " CreateLogicInstance(string key, PieceConfig cfg)");
+            sb.AppendLine("        public static " + BaseLogicClass +
+                          " CreateLogicInstance(string key, PieceConfig cfg)");
             sb.AppendLine("        {");
             sb.AppendLine("            return key switch");
             sb.AppendLine("            {");
-            
+
             foreach (var piece in pieces.OrderBy(p => p.key))
             {
                 if (string.IsNullOrEmpty(piece.key) || string.IsNullOrEmpty(piece.logicClassName))
@@ -263,8 +250,8 @@ namespace Editor.Windows
 
                 sb.AppendLine($"                \"{piece.key}\" => new {piece.logicClassName}(cfg),");
             }
-            
-            sb.AppendLine($"                _ => null");
+
+            sb.AppendLine("                _ => null");
             sb.AppendLine("            };");
             sb.AppendLine("        }");
 
@@ -288,6 +275,12 @@ namespace Editor.Windows
             sb.AppendLine("}");
 
             return sb.ToString();
+        }
+
+        private struct OrphanedKey
+        {
+            public string Key;
+            public string TableName;
         }
     }
 }

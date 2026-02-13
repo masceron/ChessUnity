@@ -3,10 +3,12 @@ using Game.Piece;
 
 namespace Game.Action.Internal
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SpawnPiece: Action, IInternal
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class SpawnPiece : Action, IInternal
     {
         public readonly PieceConfig pieceToSpawn;
+
         public SpawnPiece(PieceConfig p) : base(-1)
         {
             pieceToSpawn = p;

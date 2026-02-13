@@ -1,7 +1,6 @@
-using UnityEngine;
 using Game.Managers;
 using TMPro;
-
+using UnityEngine;
 
 namespace UX.UI.Ingame
 {
@@ -9,18 +8,17 @@ namespace UX.UI.Ingame
     {
         public TMP_Text round, day;
 
-        void Start()
+        private void Start()
         {
             MatchManager.Ins.GameState.OnIncreaseTurn += UpdateUI;
             UpdateUI(1);
         }
 
-        
-        void UpdateUI(int turn)
+
+        private void UpdateUI(int turn)
         {
             round.text = $"Round : {turn}/150";
             day.text = MatchManager.Ins.GameState.IsDay ? "Day" : "Night";
         }
     }
-
 }

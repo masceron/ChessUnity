@@ -1,12 +1,14 @@
-﻿using Game.Managers;
+﻿using System;
+using Game.Action.Relics;
+using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RottingScythePending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class RottingScythePending : PendingAction, IDisposable
     {
         private RottingScythe _rottingScythe;
 
@@ -14,6 +16,12 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _rottingScythe = rottingScythe;
             Maker = maker;
+        }
+
+        public void Dispose()
+        {
+            _rottingScythe = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -24,14 +32,7 @@ namespace Game.Action.Internal.Pending.Relic
             _rottingScythe.SetCooldown();
             CommitResult(new RottingScytheAction(Maker));
             MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic(); 
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
-        
-        public void Dispose()
-        {
-            _rottingScythe = null;
-            BoardViewer.SelectingFunction = 0;
-        }
-
     }
 }

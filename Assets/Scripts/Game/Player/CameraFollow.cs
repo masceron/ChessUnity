@@ -4,16 +4,15 @@ namespace Game.Player
 {
     public class CameraFollow : MonoBehaviour
     {
-        [Header("Target")]
-        [SerializeField] private Transform target;
+        [Header("Target")] [SerializeField] private Transform target;
 
-        [Header("Settings")]
-        [SerializeField] private Vector3 offset = new Vector3(0, 10, -10); 
+        [Header("Settings")] [SerializeField] private Vector3 offset = new(0, 10, -10);
+
         [SerializeField] private bool lookAtTarget = true;
+        [SerializeField] private float smoothTime = 0.1f;
+        private Vector3 lastTargetPosition;
 
         private Vector3 velocity = Vector3.zero;
-        [SerializeField] private float smoothTime = 0.1f;
-        private Vector3 lastTargetPosition; 
 
         private void Start()
         {
@@ -21,11 +20,8 @@ namespace Game.Player
             {
                 lastTargetPosition = target.position;
                 transform.position = target.position + offset;
-                
-                if (lookAtTarget)
-                {
-                    transform.LookAt(target);
-                }
+
+                if (lookAtTarget) transform.LookAt(target);
             }
         }
 
@@ -39,22 +35,17 @@ namespace Game.Player
             transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothTime);
 
             if (lookAtTarget)
-            {
                 if (targetPos != lastTargetPosition)
                 {
                     transform.LookAt(target);
                     lastTargetPosition = targetPos;
                 }
-            }
         }
 
         public void SetTarget(Transform newTarget)
         {
             target = newTarget;
-            if (newTarget != null)
-            {
-                lastTargetPosition = newTarget.position;
-            }
+            if (newTarget != null) lastTargetPosition = newTarget.position;
         }
     }
 }

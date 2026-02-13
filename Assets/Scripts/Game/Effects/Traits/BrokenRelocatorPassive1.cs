@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using ZLinq;
 
 namespace Game.Effects.Traits
@@ -14,16 +15,10 @@ namespace Game.Effects.Traits
     {
         private const int Radius = 5;
         private readonly List<int> _possiblePositions = new();
-        public BrokenRelocatorPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_broken_relocator_passive")
-        { }
 
-        public void OnApply()
+        public BrokenRelocatorPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
+            "effect_broken_relocator_passive")
         {
-            foreach (Effect effect in Piece.Effects.Where(effect => effect.EffectName == "effect_relentless").Where(effect => effect.Strength > 0))
-            {
-                effect.Strength--;
-                break;
-            }
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Kill;
@@ -31,29 +26,35 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            
+
             if (action.Target != Piece.Pos) return;
 
             var (nRank, nFile) = BoardUtils.RankFileOf(action.Maker);
 
             foreach (var (r, f) in MoveEnumerators.AroundUntil(nRank, nFile, Radius))
-            {
                 _possiblePositions.Add(BoardUtils.IndexOf(r, f));
-            }
 
             int idx;
             do
             {
-                idx = UnityEngine.Random.Range(0, _possiblePositions.Count);
-
-            } while (BoardUtils.PieceOn(_possiblePositions[idx]) != null && BoardUtils.PieceOn(_possiblePositions[idx]).Color == Piece.Color);
+                idx = Random.Range(0, _possiblePositions.Count);
+            } while (BoardUtils.PieceOn(_possiblePositions[idx]) != null &&
+                     BoardUtils.PieceOn(_possiblePositions[idx]).Color == Piece.Color);
 
             if (BoardUtils.PieceOn(_possiblePositions[idx]) != null)
-            {
                 ActionManager.EnqueueAction(new KillPiece(_possiblePositions[idx]));
-            }
-            
+
             MatchManager.Ins.GameState.Move(action.Target, _possiblePositions[idx]);
+        }
+
+        public void OnApply()
+        {
+            foreach (var effect in Piece.Effects.Where(effect => effect.EffectName == "effect_relentless")
+                         .Where(effect => effect.Strength > 0))
+            {
+                effect.Strength--;
+                break;
+            }
         }
     }
 }

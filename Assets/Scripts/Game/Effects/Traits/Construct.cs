@@ -1,7 +1,7 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using System.Collections.Generic;
 using Game.Action.Captures;
-using System.Collections.Generic;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
@@ -17,12 +17,8 @@ namespace Game.Effects.Traits
             if (actions == null || actions.Count == 0) return;
 
             for (var i = actions.Count - 1; i >= 0; i--)
-            {
                 if (actions[i] is not DestroyConstruct && actions[i].Target == Piece.Pos)
-                {
                     actions.RemoveAt(i);
-                }
-            }
         }
     }
 }

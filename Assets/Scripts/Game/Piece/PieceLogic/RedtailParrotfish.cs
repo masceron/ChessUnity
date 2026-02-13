@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
@@ -20,43 +21,37 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new RedtailParrotfishPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown != 0){ return; }
+                if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    for(var i = 0; i < BoardSize; ++i)
+                    for (var i = 0; i < BoardSize; ++i)
                     {
-                        if (!IsActive(i)) { continue; }
+                        if (!IsActive(i)) continue;
                         var formation = GetFormation(i);
-                        if (formation != null)
-                        {
-                            list.Add(new RedtailParrotfishPending(Pos, i));
-                        }
+                        if (formation != null) list.Add(new RedtailParrotfishPending(Pos, i));
                     }
                 }
                 else
                 {
-                    var listA = new System.Collections.Generic.List<Formation>();
-                    var listB = new System.Collections.Generic.List<int>();
+                    var listA = new List<Formation>();
+                    var listB = new List<int>();
                     var bestValue = int.MinValue;
 
                     for (var i = 0; i < BoardSize; ++i)
                     {
-                        if (!IsActive(i)) { continue; }
+                        if (!IsActive(i)) continue;
 
                         var isOurSide = IsOnBlackSide(i) == Color;
                         var formation = GetFormation(i);
 
                         if (formation == null)
                         {
-                            if (isOurSide)
-                            {
-                                listB.Add(i);
-                            }
+                            if (isOurSide) listB.Add(i);
                             continue;
                         }
 
-                        if (isOurSide) { continue; }
-                        if (formation.category != FormationCategory.Positive) { continue; }
+                        if (isOurSide) continue;
+                        if (formation.category != FormationCategory.Positive) continue;
 
                         var value = formation.GetValueForAI();
                         if (value > bestValue)
@@ -71,7 +66,7 @@ namespace Game.Piece.PieceLogic
                         }
                     }
 
-                    if (listA.Count == 0 || listB.Count == 0) { return; }
+                    if (listA.Count == 0 || listB.Count == 0) return;
 
                     var chosenFormation = listA.Count == 1
                         ? listA[0]
@@ -85,8 +80,8 @@ namespace Game.Piece.PieceLogic
                 }
             };
         }
+
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }
-

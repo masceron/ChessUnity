@@ -10,16 +10,15 @@ using UnityEngine;
 
 namespace Editor.Windows
 {
-    public class AugmentationAssetsManager: EditorWindow
+    public class AugmentationAssetsManager : EditorWindow
     {
-        private readonly string[] _tableNamesToValidate = { "augmentation_name", "augmentation_description" };
-        
         private readonly List<AugmentationInfo> _allAugments = new();
+        private readonly List<OrphanedKey> _orphanedKeys = new();
+        private readonly string[] _tableNamesToValidate = { "augmentation_name", "augmentation_description" };
+        private readonly string[] _toolbarStrings = { "Manage Augmentations", "Validate Localization" };
         private bool _hasScannedForOrphans;
         private Vector2 _manageScrollPos;
-        private readonly List<OrphanedKey> _orphanedKeys = new();
         private int _toolbarIndex;
-        private readonly string[] _toolbarStrings = { "Manage Augmentations", "Validate Localization" };
         private Vector2 _validateScrollPos;
 
         private void OnEnable()
@@ -42,7 +41,7 @@ namespace Editor.Windows
             }
         }
 
-        
+
         [MenuItem("Tools/Augmentation Manager")]
         public static void ShowWindow()
         {
@@ -60,21 +59,21 @@ namespace Editor.Windows
             if (GUILayout.Button("Reimport List")) SyncWithCentralData();
 
             EditorGUILayout.Space();
-            
+
             _manageScrollPos = EditorGUILayout.BeginScrollView(_manageScrollPos);
             foreach (var augment in _allAugments)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-                
+
                 EditorGUILayout.ObjectField(augment, typeof(AugmentationInfo), false);
-                
+
                 if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(augment);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void FindAllAugmentationInfos()
         {
             _allAugments.Clear();
@@ -85,9 +84,8 @@ namespace Editor.Windows
                 var augment = AssetDatabase.LoadAssetAtPath<AugmentationInfo>(path);
                 if (augment) _allAugments.Add(augment);
             }
-            
         }
-        
+
         private void SyncWithCentralData()
         {
             var dataGuids = AssetDatabase.FindAssets("t:AugmentationData");
@@ -104,26 +102,24 @@ namespace Editor.Windows
             centralData.augmentationsData ??= new UDictionary<AugmentationName, AugmentationInfo>();
 
             centralData.augmentationsData.Clear();
-            foreach (var augment in _allAugments)
-            {
-                centralData.augmentationsData.Add(augment.Name, augment);
-            }
-            
+            foreach (var augment in _allAugments) centralData.augmentationsData.Add(augment.Name, augment);
+
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
 
-            Debug.Log($"AugmentationManager: Rebuilt AugmentationData list. Total items: {centralData.augmentationsData.Count}");
+            Debug.Log(
+                $"AugmentationManager: Rebuilt AugmentationData list. Total items: {centralData.augmentationsData.Count}");
         }
 
         private void DrawValidateTab()
         {
             EditorGUILayout.LabelField("Localization Key Validator", EditorStyles.boldLabel);
             EditorGUILayout.HelpBox(
-                "This tool finds localization keys that do not match any existing AugmentationInfo asset.", MessageType.Info);
+                "This tool finds localization keys that do not match any existing AugmentationInfo asset.",
+                MessageType.Info);
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
             if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
-            {
                 if (EditorUtility.DisplayDialog(
                         "Remove All Orphaned Keys?",
                         "Are you sure you want to permanently remove all orphaned keys from the table?",
@@ -133,7 +129,6 @@ namespace Editor.Windows
                     DeleteAllOrphanedKeys();
                     FindOrphanedKeys();
                 }
-            }
 
             if (!_hasScannedForOrphans) return;
 
@@ -146,9 +141,9 @@ namespace Editor.Windows
             }
 
             EditorGUILayout.LabelField($"Found {_orphanedKeys.Count} orphaned keys:", EditorStyles.boldLabel);
-            
+
             _validateScrollPos = EditorGUILayout.BeginScrollView(_validateScrollPos);
-            
+
             for (var i = _orphanedKeys.Count - 1; i >= 0; i--)
             {
                 var orphan = _orphanedKeys[i];
@@ -175,17 +170,14 @@ namespace Editor.Windows
 
         private void DeleteAllOrphanedKeys()
         {
-            foreach (var orphanedKey in _orphanedKeys)
-            {
-                RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
-            }
+            foreach (var orphanedKey in _orphanedKeys) RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
         }
 
         private void FindOrphanedKeys()
         {
             _hasScannedForOrphans = true;
             _orphanedKeys.Clear();
-            
+
             var validKeys = new HashSet<string>();
             FindAllAugmentationInfos();
 
@@ -194,7 +186,7 @@ namespace Editor.Windows
                 validKeys.Add(augment.Key);
                 validKeys.Add(augment.Key + "_description");
             }
-            
+
             foreach (var tableName in _tableNamesToValidate)
             {
                 var tableCollection = LocalizationEditorSettings.GetStringTableCollection(tableName);
@@ -221,7 +213,7 @@ namespace Editor.Windows
             EditorUtility.SetDirty(sharedData);
             Debug.Log($"Removed key '{key}' from table '{tableName}'");
         }
-        
+
         private struct OrphanedKey
         {
             public string Key;

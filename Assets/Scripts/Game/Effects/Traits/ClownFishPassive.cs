@@ -1,24 +1,28 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     public class ClownFishPassive : Effect, IEndTurnTrigger
     {
-        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
-
-        public EndTurnEffectType EndTurnEffectType { get; }
-        private static readonly (int, int)[] DistanceToAnotherPiece = {
+        private static readonly (int, int)[] DistanceToAnotherPiece =
+        {
             (2, 0), (2, 2), (0, 2), (-2, 2),
             (-2, 0), (-2, -2), (0, -2), (2, -2)
         };
-        public ClownFishPassive(Piece.PieceLogic.Commons.PieceLogic piece) : base(-1, 1, piece, "effect_clown_fish_passive")
+
+        public ClownFishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_clown_fish_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
-        
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
+
+        public EndTurnEffectType EndTurnEffectType { get; }
+
         public void OnCallEnd(Action.Action lastMainAction)
         {
             var rank = RankOf(Piece.Pos);
@@ -26,7 +30,8 @@ namespace Game.Effects.Traits
 
             for (var i = 0; i < DistanceToAnotherPiece.Length; i++)
             {
-                var anotherPiecePos = IndexOf(rank + DistanceToAnotherPiece[i].Item1, file + DistanceToAnotherPiece[i].Item2);
+                var anotherPiecePos = IndexOf(rank + DistanceToAnotherPiece[i].Item1,
+                    file + DistanceToAnotherPiece[i].Item2);
                 var anotherPiece = PieceOn(anotherPiecePos);
 
                 if (anotherPiece is not { Type: "piece_clown_fish" }) continue;
@@ -35,12 +40,10 @@ namespace Game.Effects.Traits
                 var middlePiece = PieceOn(middlePiecePos);
 
                 if (middlePiece != null && middlePiece.Color != Piece.Color)
-                {
                     ActionManager.EnqueueAction(new KillPiece(middlePiecePos));
-                }
-
             }
         }
+
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 20;

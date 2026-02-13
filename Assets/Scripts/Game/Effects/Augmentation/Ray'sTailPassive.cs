@@ -5,6 +5,7 @@ using Game.Effects.Debuffs;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+
 namespace Game.Effects.Augmentation
 {
     public class RaySTailPassive : Effect, IAfterPieceActionTrigger
@@ -26,10 +27,7 @@ namespace Game.Effects.Augmentation
             Effect shield = null;
             foreach (var t in targetPiece.Effects)
             {
-                if (t.EffectName == "effect_carapace")
-                {
-                    hasCarapace = true;
-                }
+                if (t.EffectName == "effect_carapace") hasCarapace = true;
 
                 if (t.EffectName == "effect_hardened_shield")
                 {
@@ -46,15 +44,9 @@ namespace Game.Effects.Augmentation
             }
 
             if (!hasCarapace)
-            {
                 if (hasHardenedShield || hasShield)
-                {
                     if (shield.Strength == 1)
-                    {
                         ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, targetPiece)));
-                    }
-                }
-            }
         }
     }
 }

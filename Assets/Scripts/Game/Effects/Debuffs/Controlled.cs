@@ -3,10 +3,12 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Controlled: Effect, IOnApplyTrigger, IOnRemoveTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Controlled : Effect, IOnApplyTrigger, IOnRemoveTrigger
     {
         private readonly bool initSide;
+
         public Controlled(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
         {
             initSide = piece.Color;

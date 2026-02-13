@@ -8,16 +8,18 @@ namespace Game.Effects.Triggers
         Kill = 90,
         Debuff = 80,
         Buff = 70,
-        Other = 60,
+        Other = 60
     }
-    public interface IAfterPieceActionTrigger: IComparable<IAfterPieceActionTrigger>
+
+    public interface IAfterPieceActionTrigger : IComparable<IAfterPieceActionTrigger>
     {
         public AfterActionPriority Priority { get; }
-        public void OnCallAfterPieceAction(Action.Action action);
 
         int IComparable<IAfterPieceActionTrigger>.CompareTo(IAfterPieceActionTrigger other)
         {
             return other.Priority.CompareTo(Priority);
         }
+
+        public void OnCallAfterPieceAction(Action.Action action);
     }
 }

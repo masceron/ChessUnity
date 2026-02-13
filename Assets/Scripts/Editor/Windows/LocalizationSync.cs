@@ -23,7 +23,9 @@ namespace Editor.Windows
                 if (!sharedData) continue;
 
                 var seenKeys = new HashSet<string>();
-                var idsToRemove = (from entry in sharedData.Entries where string.IsNullOrEmpty(entry.Key) || !seenKeys.Add(entry.Key) select entry.Id)
+                var idsToRemove = (from entry in sharedData.Entries
+                        where string.IsNullOrEmpty(entry.Key) || !seenKeys.Add(entry.Key)
+                        select entry.Id)
                     .ToList();
 
                 if (idsToRemove.Count <= 0) continue;
@@ -57,15 +59,9 @@ namespace Editor.Windows
             var stringTableCollections = LocalizationEditorSettings.GetStringTableCollections();
 
             foreach (var collection in stringTableCollections)
-            {
-                foreach (var extension in collection.Extensions)
-                {
-                    if (extension is GoogleSheetsExtension googleExtension)
-                    {
-                        Pull(googleExtension);
-                    }
-                }
-            }
+            foreach (var extension in collection.Extensions)
+                if (extension is GoogleSheetsExtension googleExtension)
+                    Pull(googleExtension);
         }
 
         [MenuItem("Tools/Localizations/Push")]
@@ -74,15 +70,9 @@ namespace Editor.Windows
             var stringTableCollections = LocalizationEditorSettings.GetStringTableCollections();
 
             foreach (var collection in stringTableCollections)
-            {
-                foreach (var extension in collection.Extensions)
-                {
-                    if (extension is GoogleSheetsExtension googleExtension)
-                    {
-                        Push(googleExtension);
-                    }
-                }
-            }
+            foreach (var extension in collection.Extensions)
+                if (extension is GoogleSheetsExtension googleExtension)
+                    Push(googleExtension);
         }
 
         private static void Push(GoogleSheetsExtension googleExtension)

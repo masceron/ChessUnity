@@ -21,18 +21,18 @@ namespace Game.Managers
     {
         AIvsAI,
         PlayerVsAI,
-        PlayerVsPlayer,
+        PlayerVsPlayer
     }
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MatchManager: Singleton<MatchManager>
-    {
-        [NonSerialized]
-        public GameState GameState;
-        
-        [NonSerialized]
-        public BoardViewer InputProcessor;
 
-        public Vector2Int StartingSize {get; private set;}
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class MatchManager : Singleton<MatchManager>
+    {
+        [NonSerialized] public GameState GameState;
+
+        [NonSerialized] public BoardViewer InputProcessor;
+
+        public Vector2Int StartingSize { get; private set; }
 
         private static void MakeBoard()
         {
@@ -44,11 +44,10 @@ namespace Game.Managers
         {
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
-            
-            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color,  PosMap(cfg.Index, StartingSize), cfg.AugmentationNames)))
-            {
+
+            foreach (var pieceConfig in config.Select(cfg =>
+                         new PieceConfig(cfg.Type, cfg.Color, PosMap(cfg.Index, StartingSize), cfg.AugmentationNames)))
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
-            }
         }
 
         private void MakeGame(GameConfig cfg)
@@ -69,13 +68,11 @@ namespace Game.Managers
                 Config.relicBlackConfig,
                 Config.regionalEffectType
             );
-            if (gameMode == GameMode.AIvsAI)
-            {
-                gameObject.AddComponent<AIvsAIController>();
-            }
+            if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
+
         // public void InitForFreePlay(GameConfig cfg, GameMode gameMode)
         // {
         //     Init(cfg);
@@ -110,10 +107,10 @@ namespace Game.Managers
         {
             var a = Random.Range(1, 101);
             return a <= chance;
-        } 
+        }
+
         public void CallDraw(bool side)
         {
-            
         }
     }
 }

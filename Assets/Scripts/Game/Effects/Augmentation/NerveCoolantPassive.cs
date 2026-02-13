@@ -10,7 +10,8 @@ namespace Game.Effects.Augmentation
     {
         public NerveCoolantPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_nerve_coolant_passive")
-        { }
+        {
+        }
 
         public void OnApply()
         {

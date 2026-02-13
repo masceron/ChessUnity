@@ -1,7 +1,7 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using MemoryPack;
 
 namespace Game.Action.Relics
 {
@@ -9,7 +9,9 @@ namespace Game.Action.Relics
     public partial class SirenHarpoonExecute : Action, IRelicAction
     {
         [MemoryPackConstructor]
-        private SirenHarpoonExecute() { }
+        private SirenHarpoonExecute()
+        {
+        }
 
         public SirenHarpoonExecute(int maker, int target) : base(maker)
         {

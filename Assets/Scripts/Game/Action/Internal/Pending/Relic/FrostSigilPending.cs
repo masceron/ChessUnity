@@ -1,19 +1,27 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class FrostSigilPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class FrostSigilPending : PendingAction, IDisposable
     {
         private FrostSigil _frostSigil;
+
         public FrostSigilPending(int maker, FrostSigil fs) : base(maker)
         {
             Maker = maker;
             _frostSigil = fs;
+        }
+
+        public void Dispose()
+        {
+            _frostSigil = null;
+            Tile.Tile.OnPointEnterHandle = null;
         }
 
         protected override void CompleteAction()
@@ -29,12 +37,5 @@ namespace Game.Action.Internal.Pending.Relic
 
             Dispose();
         }
-
-        public void Dispose()
-        {
-            _frostSigil = null;
-            Tile.Tile.OnPointEnterHandle = null;
-        }
     }
 }
-

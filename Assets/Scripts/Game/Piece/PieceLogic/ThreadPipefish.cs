@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -5,12 +6,13 @@ using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using System.Collections.Generic;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThreadPipefish : Commons.PieceLogic, IPieceWithSkill
     {
         public ThreadPipefish(PieceConfig cfg) : base(cfg, UpDoorMoves.Quiets, UpDoorMoves.Captures)
@@ -42,16 +44,15 @@ namespace Game.Piece.PieceLogic
                             var pOn = PieceOn(idx);
                             if (pOn != null && pOn.Color == Color)
                             {
-                                if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                                if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile"))
+                                    continue;
 
                                 var numberOfBuff = 0;
                                 foreach (var effect in pOn.Effects)
-                                {
-                                    if (effect.EffectName == "effect_truebite" || effect.EffectName == "effect_momentum" || effect.EffectName == "effect_piercing")
-                                    {
+                                    if (effect.EffectName == "effect_truebite" ||
+                                        effect.EffectName == "effect_momentum" ||
+                                        effect.EffectName == "effect_piercing")
                                         numberOfBuff++;
-                                    }
-                                }
 
                                 if (numberOfBuff > 0)
                                     listPieces.Add((pOn, numberOfBuff));
@@ -63,7 +64,8 @@ namespace Game.Piece.PieceLogic
                         // neu co dung mot quan
                         if (listPieces.Count == 1)
                         {
-                            ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(PieceOn(Pos), listPieces[0].Item1)));
+                            ActionManager.EnqueueAction(
+                                new ApplyEffect(new ThreadPipefishEffect(PieceOn(Pos), listPieces[0].Item1)));
                             return;
                         }
 
@@ -72,18 +74,16 @@ namespace Game.Piece.PieceLogic
                             b.Item2
                                 .CompareTo(a.Item2));
 
-                        var randomIdx = UnityEngine.Random.Range(0, listPieces.Count);
-                        ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(PieceOn(Pos), listPieces[randomIdx].Item1)));
-
+                        var randomIdx = Random.Range(0, listPieces.Count);
+                        ActionManager.EnqueueAction(
+                            new ApplyEffect(new ThreadPipefishEffect(PieceOn(Pos), listPieces[randomIdx].Item1)));
                     }
                 }
             };
         }
-        
-        
+
+
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
-    
-    
 }

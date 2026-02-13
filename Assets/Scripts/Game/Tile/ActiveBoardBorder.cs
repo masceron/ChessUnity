@@ -1,46 +1,48 @@
-﻿using UnityEngine;
-using System.Collections;
-using Game.Managers;
-using Game.Common;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Game.Common;
+using Game.Managers;
+using UnityEngine;
 using ZLinq;
+using Color = UnityEngine.Color;
 
 namespace Game.Tile
 {
     public class ActiveBoardBorder : MonoBehaviour
     {
-        [Header("Board Settings")]
-        public int boardWidth => BoardUtils.MaxLength;
+        public float heightOffset = 1.2f;
+
+        [Header("Border Settings")] public float lineWidth = 0.1f;
+
+        public Color lineColor = Color.blue;
+        public bool tightBorder; // use Minmax or Tight Outer Border
+
+        [Header("Middle Line Settings")] public Color middleLineColor = Color.red;
+
+        public float middleLineWidth = 0.05f;
+
+        [Header("LineRender")] [SerializeField]
+        private LineRenderer borderRenderer;
+
+        [SerializeField] private LineRenderer midLineRenderer;
+        public Material lineMaterial;
+        private float borderXMin = float.PositiveInfinity, borderXMax = float.NegativeInfinity;
+        private float borderZMin = float.PositiveInfinity, borderZMax = float.NegativeInfinity;
+
+        private int minX, maxX, minY, maxY;
+
+        [Header("Board Settings")] public int boardWidth => BoardUtils.MaxLength;
+
         public int boardHeight => BoardUtils.MaxLength;
         public BitArray ActiveBoard => MatchManager.Ins.GameState.ActiveBoard;
 
-        public float heightOffset = 1.2f;
-
-        [Header("Border Settings")]
-        public float lineWidth = 0.1f;
-        public UnityEngine.Color lineColor = UnityEngine.Color.blue;
-        public bool tightBorder; // use Minmax or Tight Outer Border
-
-        [Header("Middle Line Settings")]
-        public UnityEngine.Color middleLineColor = UnityEngine.Color.red;
-        public float middleLineWidth = 0.05f;
-
-        [Header("LineRender")]
-        [SerializeField] private LineRenderer borderRenderer;
-        [SerializeField] private LineRenderer midLineRenderer;
-        public Material lineMaterial;
-
-        private int minX, maxX, minY, maxY;
-        private float borderZMin = float.PositiveInfinity, borderZMax = float.NegativeInfinity;
-        private float borderXMin = float.PositiveInfinity, borderXMax = float.NegativeInfinity;
-
-        void Awake()
+        private void Awake()
         {
             SetupLine(borderRenderer, lineWidth, lineColor, true);
             SetupLine(midLineRenderer, middleLineWidth, middleLineColor, false);
         }
 
-        void SetupLine(LineRenderer lr, float width, UnityEngine.Color color, bool loop)
+        private void SetupLine(LineRenderer lr, float width, Color color, bool loop)
         {
             lr.useWorldSpace = true;
             lr.loop = loop;
@@ -61,19 +63,20 @@ namespace Game.Tile
             }
 
             // compute min/max for middle line (kept)
-            minX = boardWidth; maxX = -1; minY = boardHeight; maxY = -1;
+            minX = boardWidth;
+            maxX = -1;
+            minY = boardHeight;
+            maxY = -1;
             for (var x = 0; x < boardWidth; x++)
+            for (var y = 0; y < boardHeight; y++)
             {
-                for (var y = 0; y < boardHeight; y++)
+                var index = IndexOf(x, y);
+                if (ActiveBoard[index])
                 {
-                    var index = IndexOf(x, y);
-                    if (ActiveBoard[index])
-                    {
-                        if (x < minX) minX = x;
-                        if (x > maxX) maxX = x;
-                        if (y < minY) minY = y;
-                        if (y > maxY) maxY = y;
-                    }
+                    if (x < minX) minX = x;
+                    if (x > maxX) maxX = x;
+                    if (y < minY) minY = y;
+                    if (y > maxY) maxY = y;
                 }
             }
 
@@ -85,8 +88,10 @@ namespace Game.Tile
             }
 
             // reset extents
-            borderXMin = float.PositiveInfinity; borderXMax = float.NegativeInfinity;
-            borderZMin = float.PositiveInfinity; borderZMax = float.NegativeInfinity;
+            borderXMin = float.PositiveInfinity;
+            borderXMax = float.NegativeInfinity;
+            borderZMin = float.PositiveInfinity;
+            borderZMax = float.NegativeInfinity;
 
             if (!tightBorder)
                 DrawMinMaxBorder();
@@ -99,7 +104,7 @@ namespace Game.Tile
         private void DrawMinMaxBorder()
         {
             var half = 0.5f;
-            var corners = new Vector3[]
+            var corners = new[]
             {
                 new Vector3(minX - half, heightOffset, minY - half),
                 new Vector3(minX - half, heightOffset, maxY + 1 - half),
@@ -126,22 +131,20 @@ namespace Game.Tile
             var edgeSet = new HashSet<(Vector2Int a, Vector2Int b)>();
 
             for (var x = 0; x < boardWidth; x++)
+            for (var y = 0; y < boardHeight; y++)
             {
-                for (var y = 0; y < boardHeight; y++)
-                {
-                    if (!IsActive(x, y)) continue;
+                if (!IsActive(x, y)) continue;
 
-                    var bl = new Vector2Int(2 * x - 1, 2 * y - 1);
-                    var tl = new Vector2Int(2 * x - 1, 2 * y + 1);
-                    var tr = new Vector2Int(2 * x + 1, 2 * y + 1);
-                    var br = new Vector2Int(2 * x + 1, 2 * y - 1);
+                var bl = new Vector2Int(2 * x - 1, 2 * y - 1);
+                var tl = new Vector2Int(2 * x - 1, 2 * y + 1);
+                var tr = new Vector2Int(2 * x + 1, 2 * y + 1);
+                var br = new Vector2Int(2 * x + 1, 2 * y - 1);
 
-                    // add exposed edges: if neighbor tile exists and active -> that edge is internal, ignored.
-                    if (!IsActive(x - 1, y)) ToggleEdge(edgeSet, tl, bl); // left
-                    if (!IsActive(x + 1, y)) ToggleEdge(edgeSet, br, tr); // right
-                    if (!IsActive(x, y + 1)) ToggleEdge(edgeSet, tr, tl); // top
-                    if (!IsActive(x, y - 1)) ToggleEdge(edgeSet, bl, br); // bottom
-                }
+                // add exposed edges: if neighbor tile exists and active -> that edge is internal, ignored.
+                if (!IsActive(x - 1, y)) ToggleEdge(edgeSet, tl, bl); // left
+                if (!IsActive(x + 1, y)) ToggleEdge(edgeSet, br, tr); // right
+                if (!IsActive(x, y + 1)) ToggleEdge(edgeSet, tr, tl); // top
+                if (!IsActive(x, y - 1)) ToggleEdge(edgeSet, bl, br); // bottom
             }
 
             if (edgeSet.Count == 0)
@@ -172,12 +175,12 @@ namespace Game.Tile
                 // if all incident edges already used, skip
                 var allUsed = true;
                 foreach (var nb in adj[start])
-                {
                     if (!usedEdges.Contains((start, nb)) && !usedEdges.Contains((nb, start)))
                     {
-                        allUsed = false; break;
+                        allUsed = false;
+                        break;
                     }
-                }
+
                 if (allUsed) continue;
 
                 // pick an initial previous such that we approach start from "outside" (a point slightly left)
@@ -246,7 +249,7 @@ namespace Game.Tile
         // Toggle undirected edge: add if missing, remove if present (internal edges cancel)
         private void ToggleEdge(HashSet<(Vector2Int, Vector2Int)> set, Vector2Int a, Vector2Int b)
         {
-            var key = (a.x < b.x || (a.x == b.x && a.y <= b.y)) ? (a, b) : (b, a);
+            var key = a.x < b.x || (a.x == b.x && a.y <= b.y) ? (a, b) : (b, a);
             if (set.Contains(key)) set.Remove(key);
             else set.Add(key);
         }
@@ -258,11 +261,13 @@ namespace Game.Tile
                 list = new List<Vector2Int>();
                 adj[from] = list;
             }
+
             if (!list.Contains(to)) list.Add(to);
         }
 
         // Prefer continuing straight (collinear) if possible; otherwise pick the neighbor with smallest CCW angle from incoming dir.
-        private Vector2Int ChooseNextNeighbor_KeepStraightThenAngle(Dictionary<Vector2Int, List<Vector2Int>> adj, Vector2Int curr, Vector2Int prev, HashSet<(Vector2Int, Vector2Int)> usedEdges)
+        private Vector2Int ChooseNextNeighbor_KeepStraightThenAngle(Dictionary<Vector2Int, List<Vector2Int>> adj,
+            Vector2Int curr, Vector2Int prev, HashSet<(Vector2Int, Vector2Int)> usedEdges)
         {
             if (!adj.TryGetValue(curr, out var neighbors) || neighbors.Count == 0)
                 return new Vector2Int(int.MinValue, int.MinValue);
@@ -274,15 +279,15 @@ namespace Game.Tile
             var candidates = new List<Vector2Int>();
             foreach (var n in neighbors)
             {
-                if (usedEdges.Contains((curr, n)) || usedEdges.Contains((n, curr))) // if edge already used in either direction, prefer not to reuse
+                if (usedEdges.Contains((curr, n)) ||
+                    usedEdges.Contains((n, curr))) // if edge already used in either direction, prefer not to reuse
                     continue;
                 candidates.Add(n);
             }
+
             if (candidates.Count == 0)
-            {
                 // if all edges used, allow reuse to try close loop
                 candidates.AddRange(neighbors);
-            }
 
             // check for exact straight continuation (colinear and same direction)
             foreach (var n in candidates)
@@ -340,6 +345,7 @@ namespace Game.Tile
                 if (cross != 0)
                     res.Add(curr);
             }
+
             return res.Count > 0 ? res : new List<Vector2Int>(poly);
         }
 
@@ -353,6 +359,7 @@ namespace Game.Tile
                 var b = poly[(i + 1) % n];
                 sum += (long)a.x * b.y - (long)b.x * a.y;
             }
+
             return sum * 0.5f;
         }
 

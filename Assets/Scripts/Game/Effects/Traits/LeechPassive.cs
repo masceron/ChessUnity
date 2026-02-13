@@ -9,19 +9,12 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Effects.Traits
 {
     /// <summary>
-    ///  Khi tấn công trúng đối phương, đối phương không chết mà bị Bleeding 4. Chết sau khi thực hiện ăn quân địch.
+    ///     Khi tấn công trúng đối phương, đối phương không chết mà bị Bleeding 4. Chết sau khi thực hiện ăn quân địch.
     /// </summary>
     public class LeechPassive : Effect, IAfterPieceActionTrigger
     {
-        
         public LeechPassive(PieceLogic piece) : base(-1, 1, piece, "effect_horse_leech_passive")
-        { }
-
-        
-        
-        public override int GetValueForAI()
         {
-            return base.GetValueForAI() + 0;
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Kill;
@@ -29,10 +22,16 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success || action.Maker != Piece.Pos) return;
-            
+
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, BoardUtils.PieceOn(action.Target)), Piece));
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             action.Result = ResultFlag.SelfDestroy;
+        }
+
+
+        public override int GetValueForAI()
+        {
+            return base.GetValueForAI() + 0;
         }
     }
 }

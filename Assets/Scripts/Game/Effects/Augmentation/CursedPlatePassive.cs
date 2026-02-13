@@ -7,16 +7,9 @@ namespace Game.Effects.Augmentation
     {
         private const int moveRangeModifier = 2;
         private const int attackRangeModifier = 2;
-        
+
         public CursedPlatePassive(PieceLogic piece) : base(-1, 1, piece, "effect_cursed_plate_passive")
         {
-        }
-
-        public int ModifyMoveRange(int baseRange)
-        {
-            if (baseRange >= moveRangeModifier) 
-                return baseRange - moveRangeModifier;
-            return 0;
         }
 
         public int ModifyAttackRange(int baseRange)
@@ -26,9 +19,15 @@ namespace Game.Effects.Augmentation
             return 0;
         }
 
+        public int ModifyMoveRange(int baseRange)
+        {
+            if (baseRange >= moveRangeModifier)
+                return baseRange - moveRangeModifier;
+            return 0;
+        }
+
         public void OnApply()
         {
-            
         }
     }
 }

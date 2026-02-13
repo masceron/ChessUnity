@@ -4,12 +4,14 @@ using Game.Action.Relics;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
+using UnityEngine;
 using UX.UI.Ingame;
 using ZLinq;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TimelessHourglass : RelicLogic
     {
         public TimelessHourglass(RelicConfig config) : base(config)
@@ -19,6 +21,7 @@ namespace Game.Relics
             TimeCooldown = config.TimeCooldown;
             CurrentCooldown = 0;
         }
+
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
@@ -49,7 +52,6 @@ namespace Game.Relics
             // Candidates: allies with cooldown >= 2, enemies with cooldown == 1
             var candidates = new List<PieceLogic>();
             foreach (var piece in pieces)
-            {
                 if (piece.Color == relicColor)
                 {
                     if (piece.SkillCooldown >= 2) candidates.Add(piece);
@@ -58,15 +60,14 @@ namespace Game.Relics
                 {
                     if (piece.SkillCooldown == 1) candidates.Add(piece);
                 }
-            }
 
             if (candidates.Count == 0) return;
-            
+
             var bestScore = candidates.Max(pieceLogic => pieceLogic.GetValueForAI());
             var top = candidates.Where(pieceLogic => pieceLogic.GetValueForAI() == bestScore).ToList();
-            var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
+            var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
-            var excute = new TimelessHourglassExecute(CommanderPiece.Pos, Color ,chosen.Pos);
+            var excute = new TimelessHourglassExecute(CommanderPiece.Pos, Color, chosen.Pos);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new TimelessHourglassPending(this, chosen.Pos);
@@ -75,6 +76,5 @@ namespace Game.Relics
             //     BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
             // }
         }
-    
     }
 }

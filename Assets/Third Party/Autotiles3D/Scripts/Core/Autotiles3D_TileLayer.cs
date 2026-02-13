@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Third_Party.Autotiles3D.Scripts.Utility;
 using UnityEditor;
@@ -7,34 +8,27 @@ using ZLinq;
 
 namespace Third_Party.Autotiles3D.Scripts.Core
 {
-    [System.Serializable]
+    [Serializable]
     public class InternalNode
     {
         public Autotiles3D_TileLayer Layer;
         public Vector3Int InternalPosition; // integer position inside the grid != local position of the transform
         public Quaternion LocalRotation = Quaternion.identity;
 
-        [FormerlySerializedAs("Block")]
-        [SerializeField] Autotiles3D_BlockBehaviour _block;
+        [FormerlySerializedAs("Block")] [SerializeField]
+        private Autotiles3D_BlockBehaviour _block;
+
         [SerializeField] private GameObject _instance;
         [SerializeField] private string _group; //added in update 1.3
         [SerializeField] private string _tileName; //added in update 1.3
         [SerializeField] private int _tileID = -1; //added in update 1.3
-        [SerializeField] private int _ruleID = -1; //added in update 1.3 , -1 signifies that standard object is used (no rule applies), might need testing
 
-        public int TileID { get => _tileID; }
-        public int RuleID { get => _ruleID; }
+        [SerializeField]
+        private int
+            _ruleID = -1; //added in update 1.3 , -1 signifies that standard object is used (no rule applies), might need testing
 
-        /// <summary>
-        /// -1 means default object is being used
-        /// </summary>
-        public void SetRuleID(int ruleId)
-        {
-            _ruleID = ruleId;
-        }
-        public string TileGroupName => _group;
-        public string TileName => _tileName;
-        public InternalNode(Autotiles3D_TileLayer layer, string group, string tileName, int tileID, Vector3Int internalPosition, Quaternion localRotation, GameObject instance = null)
+        public InternalNode(Autotiles3D_TileLayer layer, string group, string tileName, int tileID,
+            Vector3Int internalPosition, Quaternion localRotation, GameObject instance = null)
         {
             Layer = layer;
             UpdateTileInfo(tileID, tileName, group);
@@ -42,10 +36,46 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             LocalRotation = localRotation;
             InternalPosition = internalPosition;
 
-            if (instance != null)
+            if (instance != null) Instance = instance;
+        }
+
+        public int TileID => _tileID;
+        public int RuleID => _ruleID;
+        public string TileGroupName => _group;
+        public string TileName => _tileName;
+
+        public GameObject Instance
+        {
+            get => _instance;
+            set => _instance = value;
+        }
+
+        public Autotiles3D_BlockBehaviour Block
+        {
+            get
             {
-                Instance = instance;
+                if (_block == null)
+                    if (_instance != null)
+                    {
+                        _block = _instance.GetComponent<Autotiles3D_BlockBehaviour>();
+                        if (_block == null)
+                        {
+                            //if instance is missing, add blockbehaviour
+                            _block = _instance.AddComponent<Autotiles3D_BlockBehaviour>();
+                            _block.View = _instance;
+                        }
+                    }
+
+                return _block;
             }
+        }
+
+        /// <summary>
+        ///     -1 means default object is being used
+        /// </summary>
+        public void SetRuleID(int ruleId)
+        {
+            _ruleID = ruleId;
         }
 
         public void UpdateTileInfo(int tileID, string tileName, string group)
@@ -61,98 +91,77 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             return Autotiles3DUtility.GetTile(_tileID, _tileName, _group);
         }
 #endif
-
-        public GameObject Instance
-        {
-            get { return _instance; }
-            set { _instance = value; }
-        }
-
-        public Autotiles3D_BlockBehaviour Block
-        {
-            get
-            {
-                if (_block == null)
-                {
-                    if (_instance != null)
-                    {
-                        _block = _instance.GetComponent<Autotiles3D_BlockBehaviour>();
-                        if (_block == null)
-                        {
-                            //if instance is missing, add blockbehaviour
-                            _block = _instance.AddComponent<Autotiles3D_BlockBehaviour>();
-                            _block.View = _instance;
-                        }
-                    }
-                }
-                return _block;
-            }
-        }
     }
 
     public class Autotiles3D_TileLayer : MonoBehaviour, ISerializationCallbackReceiver
     {
         public string LayerName;
-        private Dictionary<Vector3Int, InternalNode> _internalNodes = new Dictionary<Vector3Int, InternalNode>();
-        public Dictionary<int, Autotiles3D_Anchor> Anchors = new Dictionary<int, Autotiles3D_Anchor>(); // tileID, anchor
+        public Autotiles3D_TileGroup Group;
+        private Autotiles3D_Grid _Grid;
+        private Dictionary<Vector3Int, InternalNode> _internalNodes = new();
+        public Dictionary<int, Autotiles3D_Anchor> Anchors = new(); // tileID, anchor
+        public bool IsLayerEmpty => _internalNodes.Count() == 0;
+        public List<Autotiles3D_Tile> Tiles => Group != null ? Group.Tiles : new List<Autotiles3D_Tile>();
+        public int ActiveTileID { get; private set; } = -1;
+
+        public Autotiles3D_Grid Grid
+        {
+            get
+            {
+                if (_Grid == null)
+                    _Grid = GetComponentsInParent<Autotiles3D_Grid>(true)[0];
+                return _Grid;
+            }
+            set => _Grid = value;
+        }
+
         public bool ContainsKey(Vector3Int internalPosition)
         {
             return _internalNodes.ContainsKey(internalPosition);
         }
+
         public InternalNode GetInternalNode(Vector3Int internalPosition)
         {
             _internalNodes.TryGetValue(internalPosition, out var node);
             return node;
         }
+
         public List<Vector3Int> GetAllInternalPositions()
         {
             return _internalNodes.Keys.ToList();
         }
+
         public List<InternalNode> GetAllInternalNodes()
         {
             return _internalNodes.Values.ToList();
         }
-        public bool IsLayerEmpty => _internalNodes.Count() == 0;
+
         public Autotiles3D_Anchor GetAnchor(int tileID)
         {
             if (Anchors.ContainsKey(tileID))
                 return Anchors[tileID];
             return null;
         }
-        public Autotiles3D_TileGroup Group;
-        public List<Autotiles3D_Tile> Tiles => Group != null ? Group.Tiles : new List<Autotiles3D_Tile>();
-        private int _activeTileID = -1;
-        public int ActiveTileID => _activeTileID;
+
         public void SetActiveTileID(int tileID)
         {
-            _activeTileID = tileID;
+            ActiveTileID = tileID;
         }
+
         public void ResetActiveTileID()
         {
-            _activeTileID = -1;
+            ActiveTileID = -1;
             if (Tiles.Count > 0)
-                _activeTileID = Tiles[0].TileID;
-        }
-        private Autotiles3D_Grid _Grid;
-        public Autotiles3D_Grid Grid
-        {
-            get
-            {
-                if (_Grid == null)
-                    _Grid = GetComponentsInParent<Autotiles3D_Grid>(includeInactive: true)[0];
-                return _Grid;
-            }
-            set
-            {
-                _Grid = value;
-            }
+                ActiveTileID = Tiles[0].TileID;
         }
 
         #region Serialization
-        [SerializeField] private List<Vector3Int> _NodesKeys = new List<Vector3Int>();
-        [SerializeField] private List<InternalNode> _NodesValues = new List<InternalNode>();
-        [SerializeField] private List<int> _AnchorKeys = new List<int>();
-        [SerializeField] private List<Autotiles3D_Anchor> _AnchorValues = new List<Autotiles3D_Anchor>();
+
+        [SerializeField] private List<Vector3Int> _NodesKeys = new();
+        [SerializeField] private List<InternalNode> _NodesValues = new();
+        [SerializeField] private List<int> _AnchorKeys = new();
+        [SerializeField] private List<Autotiles3D_Anchor> _AnchorValues = new();
+
         public void OnBeforeSerialize()
         {
             _NodesKeys = _internalNodes.Keys.ToList();
@@ -164,16 +173,11 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         public void OnAfterDeserialize()
         {
             _internalNodes = new Dictionary<Vector3Int, InternalNode>();
-            for (var i = 0; i < _NodesKeys.Count; i++)
-            {
-                _internalNodes.Add(_NodesKeys[i], _NodesValues[i]);
-            }
+            for (var i = 0; i < _NodesKeys.Count; i++) _internalNodes.Add(_NodesKeys[i], _NodesValues[i]);
             Anchors = new Dictionary<int, Autotiles3D_Anchor>();
-            for (var i = 0; i < _AnchorKeys.Count; i++)
-            {
-                Anchors.Add(_AnchorKeys[i], _AnchorValues[i]);
-            }
+            for (var i = 0; i < _AnchorKeys.Count; i++) Anchors.Add(_AnchorKeys[i], _AnchorValues[i]);
         }
+
         #endregion
 
 #if UNITY_EDITOR
@@ -182,21 +186,28 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         public static bool SHOW_LAYER_OUTLINE;
         public static bool SHOW_HOVER_GIZMO;
 
-        public List<Autotiles3D_TileGroup> LoadedGroups = new List<Autotiles3D_TileGroup>();
-        private readonly List<Vector3Int> _toVerify = new List<Vector3Int>();
-        private readonly List<Vector3Int> _toUpdate = new List<Vector3Int>();
+        public List<Autotiles3D_TileGroup> LoadedGroups = new();
+        private readonly List<Vector3Int> _toVerify = new();
+        private readonly List<Vector3Int> _toUpdate = new();
         public bool RequireNodeVerification => _toVerify.Count > 0;
         public bool RequiresNodeUpdate => _toUpdate.Count > 0;
 
         #region HOVER
+
         private (int tileID, GameObject instance) _hoverInstance;
-        public (int tileID, GameObject instance) HoverInstance { get => _hoverInstance; set => _hoverInstance = value; }
+
+        public (int tileID, GameObject instance) HoverInstance
+        {
+            get => _hoverInstance;
+            set => _hoverInstance = value;
+        }
 
         public GameObject HoverPrefabObject; //the object of the rule that won, not the instance
         public Vector3Int LocalHoverPosition;
         public Vector3Int PrevLocalHoverPosition;
 
         #endregion
+
         public bool HideGridOutlineRenderer { get; set; }
         public Vector3Int SearchedInternalPosition;
         public InternalNode SearchedInternalNode;
@@ -208,10 +219,8 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             //remove deleted blocks from nodes. update internal nodes with block tile info if missing or different
             var nodes = GetAllInternalNodes();
             foreach (var internalNode in nodes)
-            {
                 if (internalNode.Instance == null)
                     _internalNodes.Remove(internalNode.InternalPosition);
-            }
 
             //add blocks to nodes 
             foreach (var anchor in anchors)
@@ -225,14 +234,14 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 }
 
                 foreach (var block in blocks)
-                {
                     if (!_internalNodes.ContainsKey(block.InternalPosition))
                     {
-                        _internalNodes.Add(block.InternalPosition, new InternalNode(this, block.GroupName, block.TileName, block.TileID, block.InternalPosition, block.LocalRotation, block.gameObject));
+                        _internalNodes.Add(block.InternalPosition,
+                            new InternalNode(this, block.GroupName, block.TileName, block.TileID,
+                                block.InternalPosition, block.LocalRotation, block.gameObject));
                         if (!Anchors.ContainsKey(block.TileID))
                             this.EnsureAnchor(block.GroupName, block.TileName, block.TileID);
                     }
-                }
             }
 
             //rebuild dictionary
@@ -243,50 +252,41 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                     continue;
 
                 if (!Anchors.ContainsKey(anchor.TileID))
-                {
                     Anchors.Add(anchor.TileID, anchor);
-                }
                 else
-                {
                     Debug.LogWarning($"Autotiles3D: Duplicate Anchor {anchor.TileID} {anchor.name}");
-                }
             }
         }
 
         public void UpdateNeighborsCubeAlgorithm(HashSet<Vector3Int> internalPositions)
         {
-            (var minX, var maxX) = (internalPositions.Min(l => l.x), internalPositions.Max(l => l.x));
-            (var minY, var maxY) = (internalPositions.Min(l => l.y), internalPositions.Max(l => l.y));
-            (var minZ, var maxZ) = (internalPositions.Min(l => l.z), internalPositions.Max(l => l.z));
+            var (minX, maxX) = (internalPositions.Min(l => l.x), internalPositions.Max(l => l.x));
+            var (minY, maxY) = (internalPositions.Min(l => l.y), internalPositions.Max(l => l.y));
+            var (minZ, maxZ) = (internalPositions.Min(l => l.z), internalPositions.Max(l => l.z));
 
             Vector3Int iteration;
             for (var x = minX - 1; x <= maxX + 1; x++)
+            for (var y = minY - 1; y <= maxY + 1; y++)
+            for (var z = minZ - 1; z <= maxZ + 1; z++)
             {
-                for (var y = minY - 1; y <= maxY + 1; y++)
-                {
-                    for (var z = minZ - 1; z <= maxZ + 1; z++)
-                    {
-                        iteration = new Vector3Int(x, y, z);
+                iteration = new Vector3Int(x, y, z);
 
-                        if (_internalNodes.ContainsKey(iteration))
-                            RequireVerification(iteration); //this used to be UpdateNode before 1.3
-                    }
-                }
+                if (_internalNodes.ContainsKey(iteration))
+                    RequireVerification(iteration); //this used to be UpdateNode before 1.3
             }
         }
-        void UpdateNeighbors(Vector3Int originalInternalPosition) //slow if called repeatly while overlapping
+
+        private void UpdateNeighbors(Vector3Int originalInternalPosition) //slow if called repeatly while overlapping
         {
             var neighbors = this.GetNeighborsPosition(originalInternalPosition);
             foreach (var neighbor in neighbors)
-            {
                 if (_internalNodes.ContainsKey(neighbor))
                     RequireVerification(neighbor); ////this used to be UpdateNode before 1.3
-            }
         }
 
 
         /// <summary>
-        /// Adds a single node to the layer
+        ///     Adds a single node to the layer
         /// </summary>
         /// <param name="internalPosition"></param>
         /// <param name="localRotation"></param>
@@ -303,13 +303,15 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             AddNodeInternal(tile.TileID, tile.Name, tile.Group, internalPosition, localRotation);
             UpdateNeighbors(internalPosition);
         }
+
         /// <summary>
-        /// Adds multiple nodes to the layer
+        ///     Adds multiple nodes to the layer
         /// </summary>
         /// <param name="localPositions"></param>
         /// <param name="localRotations"></param>
         /// <param name="tiles"></param>
-        public void TryPlacementMany(List<Vector3Int> localPositions, List<Quaternion> localRotations, List<int> tileIDs, List<string> tileNames, List<string> groupNames)
+        public void TryPlacementMany(List<Vector3Int> localPositions, List<Quaternion> localRotations,
+            List<int> tileIDs, List<string> tileNames, List<string> groupNames)
         {
             var size = localPositions.Count;
             if (size == 0)
@@ -319,17 +321,14 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 Undo.RegisterCompleteObjectUndo(this, "TryPlacementMany");
 
             for (var i = 0; i < size; i++)
-            {
                 AddNodeInternal(tileIDs[i], tileNames[i], groupNames[i], localPositions[i], localRotations[i]);
-            }
 
             var hashedPositions = new HashSet<Vector3Int>(localPositions);
             UpdateNeighborsCubeAlgorithm(hashedPositions);
-
         }
 
         /// <summary>
-        /// Removes a single node from the layer
+        ///     Removes a single node from the layer
         /// </summary>
         /// <param name="internalPosition"></param>
         public void TryUnplacingSingle(Vector3Int internalPosition)
@@ -342,10 +341,13 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         }
 
         /// <summary>
-        /// Removes multiple nodes together (better performance than removing one by one)
+        ///     Removes multiple nodes together (better performance than removing one by one)
         /// </summary>
         /// <param name="internalPosition"></param>
-        /// <param name="waitForDestroy">used internally for extruding/inv. extruding nodes and should NOT be used if you're not knowing what it does</param>
+        /// <param name="waitForDestroy">
+        ///     used internally for extruding/inv. extruding nodes and should NOT be used if you're not
+        ///     knowing what it does
+        /// </param>
         public void TryUnplacingMany(IEnumerable<Vector3Int> internalPosition)
         {
             if (!internalPosition.Any())
@@ -354,17 +356,14 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 Undo.RegisterCompleteObjectUndo(this, "TryUnplacingMany");
 
-            foreach (var p in internalPosition)
-            {
-                RemoveNodeInternal(p);
-            }
+            foreach (var p in internalPosition) RemoveNodeInternal(p);
             var hashedPositions = new HashSet<Vector3Int>(internalPosition);
             UpdateNeighborsCubeAlgorithm(hashedPositions);
-
         }
 
         /// <summary>
-        /// Refreshes a single node which checks the neighboring conditions anew and updates the gameobject instance accordingly.
+        ///     Refreshes a single node which checks the neighboring conditions anew and updates the gameobject instance
+        ///     accordingly.
         /// </summary>
         /// <param name="node"></param>
         public void RequireUpdate(Vector3Int internalPosition)
@@ -396,14 +395,13 @@ namespace Third_Party.Autotiles3D.Scripts.Core
 
             var blocks = anchor.GetBlocks();
             foreach (var block in blocks)
-            {
                 if (_internalNodes.ContainsKey(block.InternalPosition))
                 {
                     var node = _internalNodes[block.InternalPosition];
                     node.UpdateInstance();
                 }
-            }
         }
+
         public void VerifyAllImmediate(Autotiles3D_Anchor anchor)
         {
             if (anchor == null)
@@ -411,53 +409,47 @@ namespace Third_Party.Autotiles3D.Scripts.Core
 
             var blocks = anchor.GetBlocks();
             foreach (var block in blocks)
-            {
                 if (_internalNodes.ContainsKey(block.InternalPosition))
                 {
                     var node = _internalNodes[block.InternalPosition];
                     node.VerifyInstance();
                 }
-            }
         }
+
         public void VerifyNodes()
         {
             Autotiles3DSettings.IsLocked = true;
             for (var i = 0; i < _toVerify.Count; i++)
-            {
                 if (_internalNodes.TryGetValue(_toVerify[i], out var node))
-                {
                     node.VerifyInstance();
-                }
-            }
+
             _toVerify.Clear();
             Autotiles3DSettings.IsLocked = false;
         }
+
         public void RefreshNodes()
         {
             Autotiles3DSettings.IsLocked = true;
             for (var i = 0; i < _toUpdate.Count; i++)
-            {
                 if (_internalNodes.TryGetValue(_toUpdate[i], out var node))
-                {
                     node.UpdateInstance();
-                }
-            }
+
             _toUpdate.Clear();
             Autotiles3DSettings.IsLocked = false;
         }
 
-        private void AddNodeInternal(int tileId, string tileName, string group, Vector3Int internalPosition, Quaternion localRotation)
+        private void AddNodeInternal(int tileId, string tileName, string group, Vector3Int internalPosition,
+            Quaternion localRotation)
         {
             if (!_internalNodes.ContainsKey(internalPosition))
             {
                 //check for boundaries
                 if (Grid.GridSize == LevelSize.Finite)
-                {
                     if (Grid.IsExceedingLevelGrid(internalPosition))
                         return;
-                }
 
-                _internalNodes.Add(internalPosition, new InternalNode(this, group, tileName, tileId, internalPosition, localRotation));
+                _internalNodes.Add(internalPosition,
+                    new InternalNode(this, group, tileName, tileId, internalPosition, localRotation));
 
                 if (!Anchors.TryGetValue(tileId, out var anchor))
                 {
@@ -477,18 +469,18 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             {
                 //dont allow remove of baked nodes
                 if (node.Block != null)
-                {
                     if (node.Block.IsBaked)
                     {
                         Debug.Log("Autotiles3D: Will not remove baked blocks.");
                         return;
                     }
-                }
+
                 node.Block.Anchor.DecreaseBlockCount();
                 node.DeleteInstance();
                 _internalNodes.Remove(internalPosition);
             }
         }
+
         public void DestroyHoverInstance()
         {
             if (_hoverInstance.instance != null)
@@ -498,12 +490,14 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 _hoverInstance.instance = null;
             }
         }
+
         public void ToggleView(Autotiles3D_Tile tile, bool enable)
         {
             var matches = _internalNodes.Where(p => p.Value.TileID == tile.TileID).ToList();
             foreach (var match in matches)
                 match.Value.Block?.ToggleView(enable);
         }
+
         public void RemoveAllBlocks(Autotiles3D_Anchor anchor)
         {
             if (anchor != null)
@@ -512,22 +506,21 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 blocks.ForEach(b => RemoveNodeInternal(b.InternalPosition));
             }
         }
+
         public void RemoveAll()
         {
             foreach (var placement in _internalNodes.ToArray())
                 RemoveNodeInternal(placement.Key);
         }
+
         #region hotkeys
-        void OnGUI()
+
+        private void OnGUI()
         {
             var e = Event.current;
             if (e?.isKey == true)
-            {
                 if (e.type == EventType.KeyDown)
-                {
                     HotKeySelection(e.keyCode);
-                }
-            }
         }
 
         public bool HotKeySelection(KeyCode keycode)
@@ -555,6 +548,7 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 case KeyCode.Alpha0:
                     return TryHotkey(9);
             }
+
             return false;
         }
 
@@ -565,10 +559,12 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 SetActiveTileID(Tiles[hotkey].TileID);
                 return true;
             }
+
             return false;
         }
+
         #endregion
+
 #endif
     }
-
 }

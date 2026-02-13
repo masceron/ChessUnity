@@ -3,35 +3,29 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.Action.Relics;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
-using Game.Effects.Triggers;
 
 namespace Game.Managers
 {
     public class TriggerHooks
     {
-        private readonly List<IOnApplyTrigger> _onApplies = new();
-        private readonly List<IOnRemoveTrigger> _onRemoves = new();
-        private readonly List<IOnMoveGenTrigger> _onMoveGens = new();
         private readonly List<IAfterPieceActionTrigger> _afterPieceActions = new();
+        private readonly List<IAfterRelicActionTrigger> _afterRelicActions = new();
         private readonly List<IBeforePieceActionTrigger> _beforePieceActions = new();
         private readonly List<IBeforeRelicActionTrigger> _beforeRelicActions = new();
-        private readonly List<IAfterRelicActionTrigger> _afterRelicActions = new();
-        private readonly List<IDeadTrigger> _onDies = new();
-        private readonly List<IStartTurnTrigger> _onStartTurns = new();
-        private readonly List<IEndTurnTrigger> _onEndTurns = new();
-        private readonly List<IBeforeApplyEffectTrigger> _onEffectApplies = new();
-        private readonly List<IMoveRangeModifierTrigger> _onMoveRanges = new();
-        private readonly List<IOnPieceSpawnedTrigger> _onSpawns = new();
-        private class HookBinding
-        {
-            public IList List;
-            public Action<Observer> Add;
-            public Action<Observer> Remove;
-        }
-        
+
         private readonly Dictionary<Type, HookBinding> _bindings = new();
+        private readonly List<IOnApplyTrigger> _onApplies = new();
+        private readonly List<IDeadTrigger> _onDies = new();
+        private readonly List<IBeforeApplyEffectTrigger> _onEffectApplies = new();
+        private readonly List<IEndTurnTrigger> _onEndTurns = new();
+        private readonly List<IOnMoveGenTrigger> _onMoveGens = new();
+        private readonly List<IMoveRangeModifierTrigger> _onMoveRanges = new();
+        private readonly List<IOnRemoveTrigger> _onRemoves = new();
+        private readonly List<IOnPieceSpawnedTrigger> _onSpawns = new();
+        private readonly List<IStartTurnTrigger> _onStartTurns = new();
 
         public TriggerHooks()
         {
@@ -49,7 +43,7 @@ namespace Game.Managers
             Register(_onMoveRanges);
             Register(_onSpawns);
         }
-        
+
         private void Register<T>(List<T> list)
         {
             _bindings[typeof(T)] = new HookBinding
@@ -59,30 +53,21 @@ namespace Game.Managers
                 Remove = e => RemoveFromList(list, (T)(object)e)
             };
         }
-        
+
 
         public void AddObserver(Observer effect)
         {
-            foreach (var kvp in _bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
-            {
-                kvp.Value.Add(effect);
-            }
+            foreach (var kvp in _bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect))) kvp.Value.Add(effect);
         }
 
         public void RemoveObserver(Observer effect)
         {
-            foreach (var kvp in _bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect)))
-            {
-                kvp.Value.Remove(effect);
-            }
+            foreach (var kvp in _bindings.Where(kvp => kvp.Key.IsInstanceOfType(effect))) kvp.Value.Remove(effect);
         }
 
         public List<T> GetList<T>()
         {
-            if (_bindings.TryGetValue(typeof(T), out var binding))
-            {
-                return (List<T>)binding.List;
-            }
+            if (_bindings.TryGetValue(typeof(T), out var binding)) return (List<T>)binding.List;
             return null;
         }
 
@@ -92,17 +77,11 @@ namespace Game.Managers
             var pos = list.BinarySearch(effect, comparer);
 
             if (pos >= 0)
-            {
                 //Making sure the last added item will be inserted at the lowest index possible.
                 while (pos > 0 && comparer.Compare(list[pos - 1], effect) == 0)
-                {
                     pos--;
-                }
-            }
             else
-            {
                 pos = ~pos;
-            }
 
             list.Insert(pos, effect);
         }
@@ -111,16 +90,16 @@ namespace Game.Managers
         {
             list.Remove(effect);
         }
-        
+
         public void NotifyDead(PieceLogic pieceToDie)
         {
-            _onDies.ForEach (effect =>
+            _onDies.ForEach(effect =>
             {
                 if (((Observer)effect).disabled) return;
                 effect.OnCallDead(pieceToDie);
             });
         }
-        
+
         public void NotifyOnMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
             _onMoveGens.ForEach(e =>
@@ -129,7 +108,7 @@ namespace Game.Managers
                 e.OnCallMoveGen(caller, actions);
             });
         }
-        
+
         public void NotifyWhenApplyEffect(ApplyEffect action)
         {
             _onEffectApplies.ForEach(e =>
@@ -156,14 +135,22 @@ namespace Game.Managers
                 e.OnCallBeforeRelicAction(relicAction);
             });
         }
+
         public void NotifySpawnPiece(PieceLogic piece)
         {
             _onSpawns.ForEach(e =>
             {
                 if (((Observer)e).disabled) return;
-                
+
                 e.OnPieceSpawn(piece);
             });
+        }
+
+        private class HookBinding
+        {
+            public Action<Observer> Add;
+            public IList List;
+            public Action<Observer> Remove;
         }
     }
 }

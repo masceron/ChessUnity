@@ -7,20 +7,19 @@ using UnityEngine.UI;
 namespace UI.UIObject3D.Scripts.Editor
 {
     public class UIObject3DMenuItems
-    {        
+    {
         [MenuItem("GameObject/UI/UIObject3D")]
         private static void NewUIObject3D()
-        {                        
-            var parent = Selection.activeTransform;     
+        {
+            var parent = Selection.activeTransform;
 
-            if (parent == null || !(parent is RectTransform))
-            {
-                parent = GetCanvasTransform();
-            }
+            if (parent == null || !(parent is RectTransform)) parent = GetCanvasTransform();
 
             var prefabGUID = AssetDatabase.FindAssets("UIObject3D t:GameObject").FirstOrDefault();
             if (prefabGUID == null) return;
-            var prefab = (GameObject)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(prefabGUID), typeof(GameObject));                
+            var prefab =
+                (GameObject)AssetDatabase.LoadAssetAtPath(AssetDatabase.GUIDToAssetPath(prefabGUID),
+                    typeof(GameObject));
 
             var newUIObject3D = Object.Instantiate(prefab, parent, true);
 
@@ -29,10 +28,10 @@ namespace UI.UIObject3D.Scripts.Editor
             var transform = newUIObject3D.transform as RectTransform;
 
             transform.localPosition = Vector3.zero;
-            transform.anchoredPosition3D = Vector3.zero;                
+            transform.anchoredPosition3D = Vector3.zero;
             transform.localScale = Vector3.one;
             transform.localRotation = Quaternion.identity;
-                
+
             transform.SetParent(parent);
 
             transform.anchorMin = Vector2.zero;
@@ -41,7 +40,7 @@ namespace UI.UIObject3D.Scripts.Editor
             transform.offsetMax = Vector2.zero;
 
             var uiObject3D = newUIObject3D.GetComponent<UIObject3D>();
-              
+
             UIObject3DTimer.DelayedCall(0.01f, () => uiObject3D.HardUpdateDisplay(), uiObject3D);
         }
 
@@ -51,9 +50,7 @@ namespace UI.UIObject3D.Scripts.Editor
 #if UNITY_EDITOR
             // Attempt to locate a canvas object parented to the currently selected object
             if (!Application.isPlaying && Selection.activeGameObject != null)
-            {
-                canvas = FindParentOfType<Canvas>(Selection.activeGameObject);                
-            }
+                canvas = FindParentOfType<Canvas>(Selection.activeGameObject);
 #endif
 
             if (!canvas)
@@ -83,7 +80,7 @@ namespace UI.UIObject3D.Scripts.Editor
             var eventSystem = Object.FindAnyObjectByType<EventSystem>();
 
             if (eventSystem != null) return canvas.transform;
-            
+
             var eventSystemGameObject = new GameObject("EventSystem");
             eventSystemGameObject.AddComponent<EventSystem>();
             eventSystemGameObject.AddComponent<StandaloneInputModule>();
@@ -102,7 +99,7 @@ namespace UI.UIObject3D.Scripts.Editor
         private static T FindParentOfType<T>(GameObject childObject)
             where T : Object
         {
-            Transform t = childObject.transform;
+            var t = childObject.transform;
             while (t.parent != null)
             {
                 var component = t.parent.GetComponent<T>();

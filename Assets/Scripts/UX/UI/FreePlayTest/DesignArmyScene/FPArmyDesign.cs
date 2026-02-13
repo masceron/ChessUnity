@@ -8,7 +8,8 @@ using UX.UI.FreePlayTest.RegionalRealmScene;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FPArmyDesign : Singleton<FPArmyDesign>
     {
         [SerializeField] private FreePlayArmyInfo info;
@@ -17,18 +18,15 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         [SerializeField] private FPArmySearcher searcher;
         [SerializeField] private FPRelicSearcher relicSearcher;
         [SerializeField] private Transform nextButton;
-        [NonSerialized] public int size;
         public FPPreset army;
+        [NonSerialized] public int size;
 
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
 
             if (relicSearcher.container.gameObject.activeSelf)
-            {
                 relicSearcher.Toggle();
-                return;
-            }
             else FreePlayNotification.Ins.Close();
         }
 
@@ -38,10 +36,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             info.Load(size);
             board.Load(size);
             searcher.Load();
-            if (armyToLoad != null)
-            {
-                LoadSave(armyToLoad.Value);
-            }
+            if (armyToLoad != null) LoadSave(armyToLoad.Value);
 
             nextButton?.gameObject.SetActive(true);
             notification.Close();
@@ -75,13 +70,9 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
         public void SelectRelic(string type, bool side)
         {
             if (side)
-            {
                 army.EnemyRelic = new Relic(type);
-            }
             else
-            {
                 army.Relic = new Relic(type);
-            }
         }
     }
 }

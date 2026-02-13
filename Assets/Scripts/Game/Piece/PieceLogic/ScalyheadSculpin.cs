@@ -9,8 +9,6 @@ namespace Game.Piece.PieceLogic
 {
     public class ScalyheadSculpin : Commons.PieceLogic, IPieceWithSkill
     {
-        private int timeToCooldown;
-
         public ScalyheadSculpin(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, FrontDefenderMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ScalyheadSculpinPassive(this)));
@@ -27,21 +25,12 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        
-                    }
-                    else
-                    {
-                        
                     }
                 }
             };
         }
 
-        int IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

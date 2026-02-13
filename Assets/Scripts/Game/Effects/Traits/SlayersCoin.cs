@@ -7,21 +7,23 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SlayersCoin: Effect, IAfterPieceActionTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class SlayersCoin : Effect, IAfterPieceActionTrigger
     {
         public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, "effect_slayers_coin")
-        {}
+        {
+        }
 
         public AfterActionPriority Priority => AfterActionPriority.Other;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success) return;
-            
+
             var caller = BoardUtils.PieceOn(action.Maker);
             var captured = BoardUtils.PieceOn(action.Target);
-            
+
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
         }
 

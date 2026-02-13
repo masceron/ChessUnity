@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
@@ -12,17 +13,6 @@ namespace Editor.Workers
     {
         private const string FormationManagerPath = "Assets/Data/Collections/FormationData.asset";
 
-        private static FormationsData LoadCentralDataManager()
-        {
-            var centralData = AssetDatabase.LoadAssetAtPath<FormationsData>(FormationManagerPath);
-            if (!centralData)
-            {
-                Debug.LogError($"Central Data Manager asset not found at: {FormationManagerPath}.");
-            }
-
-            return centralData;
-        }
-
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
         {
@@ -34,7 +24,7 @@ namespace Editor.Workers
                 var formationInfo = AssetDatabase.LoadAssetAtPath<FormationInfo>(path);
 
                 if (!formationInfo) continue;
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var fileName = Path.GetFileNameWithoutExtension(path);
                 var newKey = "formation_" + ToSnakeCase(fileName);
 
                 if (string.IsNullOrEmpty(formationInfo.key))
@@ -43,7 +33,8 @@ namespace Editor.Workers
                     EditorUtility.SetDirty(formationInfo);
                     Debug.Log($"Key for {formationInfo.key} auto-generated.");
                 }
-                else if (!formationInfo.key.StartsWith("formation_") || !Regex.IsMatch(formationInfo.key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!formationInfo.key.StartsWith("formation_") ||
+                         !Regex.IsMatch(formationInfo.key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
                         $"{fileName}'s key '{formationInfo.key}' doesn't follow naming convention for Formation objects. Suggestion: {newKey}");
@@ -77,6 +68,14 @@ namespace Editor.Workers
 
                 return text.ToLower();
             }
+        }
+
+        private static FormationsData LoadCentralDataManager()
+        {
+            var centralData = AssetDatabase.LoadAssetAtPath<FormationsData>(FormationManagerPath);
+            if (!centralData) Debug.LogError($"Central Data Manager asset not found at: {FormationManagerPath}.");
+
+            return centralData;
         }
 
         private static void UpdateLocalizationTables(FormationInfo formationInfo)

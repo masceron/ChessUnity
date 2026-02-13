@@ -10,14 +10,18 @@ using UnityEngine;
 
 namespace Editor.Windows
 {
-    public class RelicAssetsManager: EditorWindow
+    public class RelicAssetsManager : EditorWindow
     {
+        private const string FactoryFilePath = "Assets/Scripts/Game/Relics/Commons/RelicFactory.cs";
+        private const string FactoryClassName = "RelicFactory";
+        private const string BaseLogicClass = "RelicLogic";
+        private const string TargetNamespace = "Game.Relics.Commons";
         private readonly List<RelicInfo> _allRelics = new();
+        private readonly List<OrphanedKey> _orphanedKeys = new();
         private readonly string[] _tableNamesToValidate = { "relic_name", "relic_description" };
         private readonly string[] _toolbarStrings = { "Manage Relics", "Validate Localization" };
         private bool _hasScannedForOrphans;
         private Vector2 _manageScrollPos;
-        private readonly List<OrphanedKey> _orphanedKeys = new();
         private int _toolbarIndex;
         private Vector2 _validateScrollPos;
 
@@ -40,7 +44,7 @@ namespace Editor.Windows
                     break;
             }
         }
-        
+
         [MenuItem("Tools/Relic Manager")]
         public static void ShowWindow()
         {
@@ -58,21 +62,21 @@ namespace Editor.Windows
             if (GUILayout.Button("Generate Factory Code")) GenerateFactoryCode();
 
             EditorGUILayout.Space();
-            
+
             _manageScrollPos = EditorGUILayout.BeginScrollView(_manageScrollPos);
             foreach (var relic in _allRelics)
             {
                 EditorGUILayout.BeginHorizontal(EditorStyles.helpBox);
-                
+
                 EditorGUILayout.ObjectField(relic, typeof(RelicInfo), false);
-                
+
                 if (GUILayout.Button("Find", GUILayout.Width(50))) EditorGUIUtility.PingObject(relic);
                 EditorGUILayout.EndHorizontal();
             }
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void FindAllRelicInfos()
         {
             _allRelics.Clear();
@@ -84,7 +88,7 @@ namespace Editor.Windows
                 if (relic) _allRelics.Add(relic);
             }
         }
-        
+
         private void SyncWithCentralData()
         {
             var dataGuids = AssetDatabase.FindAssets("t:RelicsData");
@@ -98,18 +102,18 @@ namespace Editor.Windows
             var centralData = AssetDatabase.LoadAssetAtPath<RelicsData>(path);
 
             if (!centralData) return;
-            
+
             centralData.relicsData ??= new List<RelicInfo>();
-            
+
             centralData.relicsData.Clear();
             centralData.relicsData.AddRange(_allRelics);
-            
+
             EditorUtility.SetDirty(centralData);
             AssetDatabase.SaveAssets();
-            
+
             Debug.Log($"PieceManager: Rebuilt PiecesData list. Total items: {centralData.relicsData.Count}");
         }
-        
+
         private void DrawValidateTab()
         {
             EditorGUILayout.LabelField("Localization Key Validator", EditorStyles.boldLabel);
@@ -119,7 +123,6 @@ namespace Editor.Windows
 
             if (GUILayout.Button("Find Orphaned Keys", GUILayout.Height(30))) FindOrphanedKeys();
             if (GUILayout.Button("Delete all orphaned keys", GUILayout.Height(30)))
-            {
                 if (EditorUtility.DisplayDialog(
                         "Remove All Orphaned Keys?",
                         "Are you sure you want to permanently remove all orphaned keys from the table?",
@@ -129,7 +132,6 @@ namespace Editor.Windows
                     DeleteAllOrphanedKeys();
                     FindOrphanedKeys();
                 }
-            }
 
             if (!_hasScannedForOrphans) return;
 
@@ -142,9 +144,9 @@ namespace Editor.Windows
             }
 
             EditorGUILayout.LabelField($"Found {_orphanedKeys.Count} orphaned keys:", EditorStyles.boldLabel);
-            
+
             _validateScrollPos = EditorGUILayout.BeginScrollView(_validateScrollPos);
-            
+
             for (var i = _orphanedKeys.Count - 1; i >= 0; i--)
             {
                 var orphan = _orphanedKeys[i];
@@ -168,20 +170,17 @@ namespace Editor.Windows
 
             EditorGUILayout.EndScrollView();
         }
-        
+
         private void DeleteAllOrphanedKeys()
         {
-            foreach (var orphanedKey in _orphanedKeys)
-            {
-                RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
-            }
+            foreach (var orphanedKey in _orphanedKeys) RemoveKeyFromTable(orphanedKey.Key, orphanedKey.TableName);
         }
 
         private void FindOrphanedKeys()
         {
             _hasScannedForOrphans = true;
             _orphanedKeys.Clear();
-            
+
             var validKeys = new HashSet<string>();
             FindAllRelicInfos();
 
@@ -190,14 +189,11 @@ namespace Editor.Windows
                 validKeys.Add(relic.key);
                 validKeys.Add(relic.key + "_description");
             }
-            
+
             foreach (var tableName in _tableNamesToValidate)
             {
                 var tableCollection = LocalizationEditorSettings.GetStringTableCollection(tableName);
-                if (!tableCollection)
-                {
-                    continue;
-                }
+                if (!tableCollection) continue;
 
                 var sharedData = tableCollection.SharedData;
                 foreach (var entry in sharedData.Entries.Where(entry => !validKeys.Contains(entry.Key)))
@@ -212,23 +208,12 @@ namespace Editor.Windows
 
             var sharedData = tableCollection.SharedData;
             if (sharedData.GetEntry(key) == null) return;
-            
+
             sharedData.RemoveKey(key);
             EditorUtility.SetDirty(sharedData);
             Debug.Log($"Removed key '{key}' from table '{tableName}'");
         }
-        
-        private struct OrphanedKey
-        {
-            public string Key;
-            public string TableName;
-        }
-        
-        private const string FactoryFilePath = "Assets/Scripts/Game/Relics/Commons/RelicFactory.cs";
-        private const string FactoryClassName = "RelicFactory";
-        private const string BaseLogicClass = "RelicLogic";
-        private const string TargetNamespace = "Game.Relics.Commons";
-        
+
         public static void GenerateFactoryCode()
         {
             var guids = AssetDatabase.FindAssets("t:RelicInfo");
@@ -247,11 +232,12 @@ namespace Editor.Windows
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("        public static " + BaseLogicClass + " CreateLogicInstance(string key, RelicConfig cfg)");
+            sb.AppendLine("        public static " + BaseLogicClass +
+                          " CreateLogicInstance(string key, RelicConfig cfg)");
             sb.AppendLine("        {");
             sb.AppendLine("            return key switch");
             sb.AppendLine("            {");
-            
+
             foreach (var relic in relics.OrderBy(p => p.key))
             {
                 if (string.IsNullOrEmpty(relic.key) || string.IsNullOrEmpty(relic.logicClassName))
@@ -262,8 +248,8 @@ namespace Editor.Windows
 
                 sb.AppendLine($"                \"{relic.key}\" => new {relic.logicClassName}(cfg),");
             }
-            
-            sb.AppendLine($"                _ => null");
+
+            sb.AppendLine("                _ => null");
             sb.AppendLine("            };");
             sb.AppendLine("        }");
 
@@ -287,6 +273,12 @@ namespace Editor.Windows
             sb.AppendLine("}");
 
             return sb.ToString();
+        }
+
+        private struct OrphanedKey
+        {
+            public string Key;
+            public string TableName;
         }
     }
 }

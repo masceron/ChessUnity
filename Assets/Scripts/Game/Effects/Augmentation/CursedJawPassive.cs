@@ -13,14 +13,9 @@ namespace Game.Effects.Augmentation
     public class CursedJawPassive : Effect, IOnApplyTrigger, IAfterPieceActionTrigger
     {
         private const int stunDuration = 1;
+
         public CursedJawPassive(PieceLogic piece) : base(-1, 1, piece, "effect_cursed_jaw_passive")
         {
-        }
-
-        public void OnApply()
-        {
-            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(Piece)));
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(Piece)));
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
@@ -29,8 +24,14 @@ namespace Game.Effects.Augmentation
         {
             if (action is not ICaptures) return;
             if (BoardUtils.PieceOn(action.Maker) != Piece) return;
-            
+
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(stunDuration, Piece)));
+        }
+
+        public void OnApply()
+        {
+            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(Piece)));
+            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(Piece)));
         }
     }
 }

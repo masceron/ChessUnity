@@ -2,10 +2,10 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Triggers;
 
-
 namespace Game.Effects.Others
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Charge : Effect, IEndTurnTrigger
     {
         private readonly bool color;

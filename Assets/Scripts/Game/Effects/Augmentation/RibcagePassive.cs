@@ -19,17 +19,17 @@ namespace Game.Effects.Augmentation
         public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
 
         public StartTurnEffectType StartTurnEffectType { get; }
+
         public void OnCallStart(Action.Action lastMainAction)
         {
             var (rank, file) = RankFileOf(Piece.Pos);
-            
+
             foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 3))
             {
                 var pOn = PieceOn(IndexOf(r, f));
-                if (pOn == null || pOn.Color != Piece.Color) continue; 
+                if (pOn == null || pOn.Color != Piece.Color) continue;
                 ActionManager.EnqueueAction(new ApplyEffect(new LongReach(Piece, 1, 1)));
             }
-           
         }
     }
 }

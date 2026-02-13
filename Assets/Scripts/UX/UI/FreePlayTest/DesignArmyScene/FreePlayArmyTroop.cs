@@ -1,40 +1,26 @@
+using Game.Piece;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using UX.UI.Army.DesignArmy;
 using UX.UI.FreePlayTest.AugmentationScene;
 using UX.UI.Tooltip;
-using UnityEngine.UI;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FreePlayArmyTroop: ArmyDesignTroop, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class FreePlayArmyTroop : ArmyDesignTroop, IBeginDragHandler, IDragHandler, IEndDragHandler,
+        IPointerClickHandler
     {
-        public new void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button == PointerEventData.InputButton.Right
-                && UIManager.Ins.GetCanvasID() == CanvasID.FreePlayDesignArmy)
-            {
-                Debug.Log("Go to Augmentation");
-                UIManager.Ins.Load(CanvasID.Augmentation);
-                var troopSide = FPArmyDesign.Ins.board.GetComponent<FreePlayArmyBoard>().GetTroopByCoordinate(Rank, File);
-                AugmentationManagerUI.Ins.Load(troopSide.troop, troopSide.side);
-
-                return;
-            }
-            else if (!Placed) return;
-
-            FindAnyObjectByType<FreePlayArmyBoard>().Remove(Rank, File);
-            Destroy(gameObject);
-        }
         public new void OnBeginDrag(PointerEventData eventData)
         {
-            if (isGreyOut) { return; }
+            if (isGreyOut) return;
             oldParent = transform.parent;
             transform.SetParent(FindAnyObjectByType<Canvas>().transform);
             image.raycastTarget = false;
             Parent = null;
-            FindAnyObjectByType<FreePlayArmyBoard>().SetAllowed(Piece.rank == Game.Piece.PieceRank.Construct);
+            FindAnyObjectByType<FreePlayArmyBoard>().SetAllowed(Piece.rank == PieceRank.Construct);
             trigger.enabled = false;
             TooltipManager.Ins.Disable();
 
@@ -52,10 +38,10 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             obj.Load(Piece);
             pool[idx] = obj;
         }
-        
+
         public new void OnEndDrag(PointerEventData eventData)
         {
-            if (isGreyOut){ return; }
+            if (isGreyOut) return;
             FPArmyDesign.Ins.board.UnSet();
             trigger.enabled = true;
             TooltipManager.Ins.Enable();
@@ -77,10 +63,30 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
 
                 var size = Parent.transform.GetComponent<GridLayoutGroup>().cellSize;
                 GetComponent<RectTransform>().sizeDelta = size;
-                
+
                 image.raycastTarget = true;
                 Placed = true;
             }
+        }
+
+        public new void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right
+                && UIManager.Ins.GetCanvasID() == CanvasID.FreePlayDesignArmy)
+            {
+                Debug.Log("Go to Augmentation");
+                UIManager.Ins.Load(CanvasID.Augmentation);
+                var troopSide = FPArmyDesign.Ins.board.GetComponent<FreePlayArmyBoard>()
+                    .GetTroopByCoordinate(Rank, File);
+                AugmentationManagerUI.Ins.Load(troopSide.troop, troopSide.side);
+
+                return;
+            }
+
+            if (!Placed) return;
+
+            FindAnyObjectByType<FreePlayArmyBoard>().Remove(Rank, File);
+            Destroy(gameObject);
         }
     }
 }

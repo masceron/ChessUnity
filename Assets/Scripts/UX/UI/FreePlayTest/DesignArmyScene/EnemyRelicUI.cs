@@ -6,9 +6,10 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
     public class EnemyRelicUI : MonoBehaviour
     {
         public TMP_Text tmp;
-        void Awake()
+
+        private void Awake()
         {
-            tmp.text = Config.relicBlackConfig.Type.ToString();
+            tmp.text = Config.relicBlackConfig.Type;
         }
     }
 }

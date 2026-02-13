@@ -1,14 +1,15 @@
-﻿using Game.Managers;
-using UX.UI.Ingame;
+﻿using System;
 using Game.Action.Relics;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class TemporalWarpPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class TemporalWarpPending : PendingAction, IDisposable
     {
         private static PieceLogic _firstTarget;
         private static int _secondPos;
@@ -18,16 +19,23 @@ namespace Game.Action.Internal.Pending.Relic
             Maker = maker;
         }
 
+        public void Dispose()
+        {
+            BoardViewer.SelectingFunction = 0;
+
+            Tile.Tile.OnPointEnterHandle = null;
+        }
+
         protected override void CompleteAction()
         {
             var hovering = PieceOn(BoardViewer.HoveringPos);
-            
+
             if (_firstTarget == null || _firstTarget.Color == hovering.Color)
             {
                 _firstTarget = hovering;
                 TileManager.Ins.Select(_firstTarget.Pos);
                 SecondMark();
-                
+
                 return;
             }
 
@@ -55,38 +63,23 @@ namespace Game.Action.Internal.Pending.Relic
             var side = _firstTarget.Color;
 
             if (side)
-            {
                 for (var r = midRank; r < rankStart + startingSize.x; r++)
+                for (var f = fileStart; f < fileStart + startingSize.y; f++)
                 {
-                    for (var f = fileStart; f < fileStart + startingSize.y; f++)
-                    {
-                        var idx = IndexOf(r, f);
-                        var p = PieceOn(idx);
-                        if (p == null)
-                            TileManager.Ins.MarkAsMoveable(idx);
-                    }
+                    var idx = IndexOf(r, f);
+                    var p = PieceOn(idx);
+                    if (p == null)
+                        TileManager.Ins.MarkAsMoveable(idx);
                 }
-            }
             else
-            {
                 for (var r = rankStart; r < midRank; r++)
+                for (var f = fileStart; f < fileStart + startingSize.y; f++)
                 {
-                    for (var f = fileStart; f < fileStart + startingSize.y; f++)
-                    {
-                        var idx = IndexOf(r, f);
-                        var p = PieceOn(idx);
-                        if (p == null) 
-                            TileManager.Ins.MarkAsMoveable(idx);
-                    }
+                    var idx = IndexOf(r, f);
+                    var p = PieceOn(idx);
+                    if (p == null)
+                        TileManager.Ins.MarkAsMoveable(idx);
                 }
-            }
-        }
-
-        public void Dispose()
-        {
-            BoardViewer.SelectingFunction = 0;
-
-            Tile.Tile.OnPointEnterHandle = null;
         }
 
         private static void ResetTargets()
@@ -96,4 +89,3 @@ namespace Game.Action.Internal.Pending.Relic
         }
     }
 }
-

@@ -1,14 +1,16 @@
-using MemoryPack;
 using Game.Managers;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Quiets
 {
     [MemoryPackable]
-    public partial class RemoraMove: Action, IQuiets
+    public partial class RemoraMove : Action, IQuiets
     {
         [MemoryPackConstructor]
-        private RemoraMove() { }
+        private RemoraMove()
+        {
+        }
 
         public RemoraMove(int maker, int target) : base(maker)
         {

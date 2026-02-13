@@ -5,19 +5,22 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class OneMoreTurn: Effect, IEndTurnTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class OneMoreTurn : Effect, IEndTurnTrigger
     {
-        // private bool willDie = false;
-        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
-
-        public EndTurnEffectType EndTurnEffectType { get; }
         public OneMoreTurn(PieceLogic piece) : base(-1, 1, piece, "effect_one_more_turn")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
-        public void OnCallEnd(Action.Action lastMainAction){
+        // private bool willDie = false;
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
+
+        public EndTurnEffectType EndTurnEffectType { get; }
+
+        public void OnCallEnd(Action.Action lastMainAction)
+        {
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
         }
     }

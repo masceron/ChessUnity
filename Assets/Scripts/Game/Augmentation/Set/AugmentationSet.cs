@@ -1,16 +1,21 @@
-﻿using Game.Action;
+﻿using System.Collections.Generic;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Effects;
-using System.Collections.Generic;
 
 namespace Game.Augmentation.Set
 {
     public class AugmentationSet
     {
-        public AugmentationSetType Type;
-        public bool HaveBonus;
-
         public List<Effect> BonusEffects;
+        public bool HaveBonus;
+        public AugmentationSetType Type;
+
+        public AugmentationSet(AugmentationSetType type, bool haveBonus)
+        {
+            Type = type;
+            HaveBonus = haveBonus;
+        }
 
         public int RequiredPieces
         {
@@ -27,18 +32,9 @@ namespace Game.Augmentation.Set
             }
         }
 
-        public AugmentationSet(AugmentationSetType type, bool haveBonus)
-        {
-            Type = type;
-            HaveBonus = haveBonus;
-        }
-
         public void ApplyBonusEffects()
         {
-            foreach (var e in BonusEffects)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(e));
-            }
+            foreach (var e in BonusEffects) ActionManager.EnqueueAction(new ApplyEffect(e));
         }
     }
 

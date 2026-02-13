@@ -8,18 +8,21 @@ using UnityEngine.UI;
 namespace UI.UIObject3D.Scripts
 {
     /// <summary>
-    /// Subclass of the Unity 'Image' component which avoids the default layout sizing behaviour
+    ///     Subclass of the Unity 'Image' component which avoids the default layout sizing behaviour
     /// </summary>
-    [RequireComponent(typeof(RectTransform)), DisallowMultipleComponent, ExecuteInEditMode]    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [RequireComponent(typeof(RectTransform))]
+    [DisallowMultipleComponent]
+    [ExecuteInEditMode]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3DImage : Image, ILayoutElement
-    {        
+    {
         void ILayoutElement.CalculateLayoutInputHorizontal()
-        {            
+        {
         }
 
         void ILayoutElement.CalculateLayoutInputVertical()
-        {            
+        {
         }
 
         float ILayoutElement.flexibleHeight => 1;

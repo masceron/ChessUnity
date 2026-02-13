@@ -8,8 +8,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Swordfish: Commons.PieceLogic, IPieceWithSkill
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Swordfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Swordfish(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
@@ -18,14 +19,8 @@ namespace Game.Piece.PieceLogic
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
-                if (isPlayer)
-                {
-                    list.Add(new SwordFishActive(Pos));
-                }
-                else
-                {
-                    //query for AI in here
-                }
+                if (isPlayer) list.Add(new SwordFishActive(Pos));
+                //query for AI in here
             };
         }
 

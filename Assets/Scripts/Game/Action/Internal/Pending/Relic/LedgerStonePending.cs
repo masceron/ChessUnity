@@ -1,19 +1,26 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LedgerStonePending : PendingAction, System.IDisposable, IRelicAction, IInternal
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class LedgerStonePending : PendingAction, IDisposable, IRelicAction, IInternal
     {
-        private LedgerStone _ledgerStone;
         private readonly bool _isFirstOption;
-        
+        private LedgerStone _ledgerStone;
+
         public LedgerStonePending(LedgerStone cp, bool isFirstOption) : base(-1)
         {
             _ledgerStone = cp;
             _isFirstOption = isFirstOption;
+        }
+
+        public void Dispose()
+        {
+            _ledgerStone = null;
         }
 
         protected override void CompleteAction()
@@ -23,11 +30,6 @@ namespace Game.Action.Internal.Pending.Relic
             _ledgerStone?.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-        }
-
-        public void Dispose()
-        {
-            _ledgerStone = null;
         }
     }
 }

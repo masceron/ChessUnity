@@ -1,7 +1,6 @@
 using UnityEngine;
 using UX.UI.Loader;
 
-
 namespace UX.UI.Ingame
 {
     public class MainMenuButton : MonoBehaviour
@@ -11,5 +10,4 @@ namespace UX.UI.Ingame
             SceneLoader.LoadSceneWithLoadingScreen(0);
         }
     }
-
 }

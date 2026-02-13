@@ -1,8 +1,8 @@
-    using Game.Action;
+using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
 using Game.Effects.Debuffs;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
@@ -10,6 +10,7 @@ namespace Game.Effects.Augmentation
     {
         private const int TurnCounter = 4;
         private const int Radius = 3;
+
         public FungalSacPassive(PieceLogic piece) : base(-1, 1, piece, "effect_fungal_sac_passive")
         {
         }

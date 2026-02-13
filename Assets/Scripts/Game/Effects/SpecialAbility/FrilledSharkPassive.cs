@@ -13,20 +13,17 @@ namespace Game.Effects.SpecialAbility
     {
         public FrilledSharkPassive(PieceLogic piece) : base(-1, 1, piece, "effect_frilled_shark_passive")
         {
-
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Maker != Piece.Pos) { return; }
+            if (action is not ICaptures || action.Maker != Piece.Pos) return;
             var pieceOn = PieceOn(action.Target);
-            if (pieceOn == null) { return; }
+            if (pieceOn == null) return;
             if (pieceOn.Effects.Any(e => e is Relentless) && IsAlive(pieceOn))
-            {
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), Piece));
-            }
         }
     }
 }

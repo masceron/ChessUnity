@@ -16,7 +16,7 @@ namespace Editor
                 var path = AssetDatabase.GUIDToAssetPath(guid);
                 var importer = AssetImporter.GetAtPath(path) as ModelImporter;
                 if (!importer || importer.generateMeshLods) continue;
-                
+
                 importer.generateMeshLods = true;
                 importer.SaveAndReimport();
                 count++;

@@ -1,23 +1,32 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Action.Relics;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class EyeOfMimicPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class EyeOfMimicPending : PendingAction, IDisposable
     {
         private static PieceLogic _firstTarget;
         private static PieceLogic _secondTarget;
         private EyeOfMimic _eyeOfMimic;
+
         public EyeOfMimicPending(EyeOfMimic e, int maker) : base(maker)
         {
             _eyeOfMimic = e;
             Maker = maker;
+        }
+
+        public void Dispose()
+        {
+            ResetTargets();
+            _eyeOfMimic = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -52,13 +61,5 @@ namespace Game.Action.Internal.Pending.Relic
             _firstTarget = null;
             _secondTarget = null;
         }
-
-        public void Dispose()
-        {
-            ResetTargets();
-            _eyeOfMimic = null;
-            BoardViewer.SelectingFunction = 0;
-        }
     }
-
 }

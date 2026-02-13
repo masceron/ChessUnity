@@ -10,13 +10,24 @@ using ZLinq;
 
 namespace UX.UI.Ingame.ThalassosResurrector
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosResurrector: IngamePendingMenu
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ThalassosResurrector : IngamePendingMenu
     {
         [SerializeField] private GameObject selector;
         [SerializeField] private GameObject item;
         private int _caller;
         private int _to;
+
+        protected override PendingAction PendingAction { get; set; }
+
+        private void OnEnable()
+        {
+            var rect = (RectTransform)transform.GetChild(0);
+            rect.anchoredPosition = new Vector2(-50, 0);
+            Tween.UIAnchoredPosition(rect, Vector3.zero, 0.3f);
+        }
+
         public void Load(int c, int t, ThalassosResurrectCandidate cd)
         {
             _caller = c;
@@ -26,17 +37,15 @@ namespace UX.UI.Ingame.ThalassosResurrector
             var pieceCaller = BoardUtils.PieceOn(c);
             var collection = !pieceCaller.Color ? gameState.WhiteCaptured : gameState.BlackCaptured;
             var pieceInfos = AssetManager.Ins.PieceData;
-            var candidates = collection.Where(e => pieceInfos[e.Type].rank is PieceRank.Common or PieceRank.Swarm).Distinct().ToList();
-            
+            var candidates = collection.Where(e => pieceInfos[e.Type].rank is PieceRank.Common or PieceRank.Swarm)
+                .Distinct().ToList();
+
             var already = selector.transform.childCount;
             var needed = candidates.Count;
-            
+
             if (already < needed)
             {
-                for (var i = 1; i <= needed - already; i++)
-                {
-                    Instantiate(item, selector.transform, true);
-                }
+                for (var i = 1; i <= needed - already; i++) Instantiate(item, selector.transform, true);
             }
             else if (already > needed)
             {
@@ -49,16 +58,7 @@ namespace UX.UI.Ingame.ThalassosResurrector
             }
 
             for (var i = 0; i < needed; i++)
-            {
                 selector.transform.GetChild(i).GetComponent<ResurrectorItem>().Load(candidates[i].Type);
-            }
-        }
-        
-        private void OnEnable()
-        {
-            var rect = (RectTransform)transform.GetChild(0);
-            rect.anchoredPosition = new Vector2(-50, 0);
-            Tween.UIAnchoredPosition(rect, Vector3.zero, 0.3f);
         }
 
         public void Disable()
@@ -72,7 +72,5 @@ namespace UX.UI.Ingame.ThalassosResurrector
             PendingAction.CommitResult(new ThalassosResurrect(_caller, _to, type));
             Disable();
         }
-
-        protected override PendingAction PendingAction { get; set; }
     }
 }

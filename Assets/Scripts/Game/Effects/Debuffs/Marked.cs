@@ -6,7 +6,6 @@ namespace Game.Effects.Debuffs
     {
         public Marked(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_marked")
         {
-
         }
 
         public override int GetValueForAI()
@@ -15,4 +14,3 @@ namespace Game.Effects.Debuffs
         }
     }
 }
-

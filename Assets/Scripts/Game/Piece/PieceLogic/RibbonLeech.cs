@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
     {
         public RibbonLeech(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new LeechPassive(this)));   
+            ActionManager.ExecuteImmediately(new ApplyEffect(new LeechPassive(this)));
         }
     }
 }

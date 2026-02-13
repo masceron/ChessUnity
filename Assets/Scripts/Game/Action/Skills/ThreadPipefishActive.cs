@@ -1,8 +1,9 @@
-using MemoryPack;
+using System;
 using Game.Action.Internal;
-using static Game.Common.BoardUtils;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
@@ -10,7 +11,9 @@ namespace Game.Action.Skills
     public partial class ThreadPipefishActive : Action, ISkills
     {
         [MemoryPackConstructor]
-        private ThreadPipefishActive() { }
+        private ThreadPipefishActive()
+        {
+        }
 
         public ThreadPipefishActive(int maker, int target) : base(maker)
         {
@@ -18,14 +21,14 @@ namespace Game.Action.Skills
             Target = target;
         }
 
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(PieceOn(Maker), PieceOn(Target))));
-        }
-
-        public int AIPenaltyValue(PieceLogic maker)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

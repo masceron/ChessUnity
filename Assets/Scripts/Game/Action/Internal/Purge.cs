@@ -10,13 +10,12 @@ namespace Game.Action.Internal
         {
             Target = to;
         }
+
         protected override void ModifyGameState()
         {
             foreach (var effect in BoardUtils.PieceOn(Target).Effects.Where
-            (effect => effect.Category == EffectCategory.Debuff || effect.Category == EffectCategory.Buff))
-            {
+                         (effect => effect.Category == EffectCategory.Debuff || effect.Category == EffectCategory.Buff))
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
         }
-    } 
+    }
 }

@@ -8,7 +8,8 @@ namespace Game.Augmentation
 {
     public class PuppeteerSpirit : Augmentation
     {
-        public PuppeteerSpirit() : base(AugmentationName.PuppeteerSpirit, AugmentationRarity.Corrupted, AugmentationSlot.Neural, null, null)
+        public PuppeteerSpirit() : base(AugmentationName.PuppeteerSpirit, AugmentationRarity.Corrupted,
+            AugmentationSlot.Neural, null, null)
         {
             PassiveEffects = new List<Effect>();
         }
@@ -16,7 +17,7 @@ namespace Game.Augmentation
         public override void SetTarget(PieceLogic target)
         {
             Target = target;
-            Set = new AugmentationSet(AugmentationSetType.None,false);
+            Set = new AugmentationSet(AugmentationSetType.None, false);
             PassiveEffects.Add(new PuppeteerSpiritPassive(Target));
         }
     }

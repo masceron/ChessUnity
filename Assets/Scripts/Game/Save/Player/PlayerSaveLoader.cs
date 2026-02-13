@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Game.Save.FreePlay;
 using MemoryPack;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ namespace Game.Save.Player
                     writer.Write(MemoryPackSerializer.Serialize(Player));
                 }
             }
-            
+
             File.Delete(ReadPath);
             File.Move(WritePath, ReadPath);
         }
@@ -41,7 +42,7 @@ namespace Game.Save.Player
         private static void MakeNewPlayer()
         {
             Player.SavedArmies = new Dictionary<string, Army.Army>();
-            Player.SavedPresets = new Dictionary<string, FreePlay.FPPreset>();
+            Player.SavedPresets = new Dictionary<string, FPPreset>();
             Player.Money = 0;
             Player.CollectedUnits = new List<string>();
             Player.CollectedRelics = new List<string>();

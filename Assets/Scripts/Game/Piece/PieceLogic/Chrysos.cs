@@ -8,8 +8,9 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Chrysos: Commons.PieceLogic, IPieceWithSkill
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Chrysos : Commons.PieceLogic, IPieceWithSkill
     {
         public byte Coin = 10;
 
@@ -26,23 +27,20 @@ namespace Game.Piece.PieceLogic
                     {
                         var piece = pieceBoard[i];
                         if (piece == null || piece.Color != Color) continue;
-                    
+
                         var upgradableTo = UpgradableTo(piece.PieceRank);
                         if (upgradableTo == PieceRank.None) continue;
-                    
+
                         var cost = CalculateCost(piece.PieceRank, upgradableTo);
-                        if (Coin >= cost)
-                        {
-                            list.Add(new ChrysosUpgradeCandidate(Pos, i, cost, this));
-                        }
+                        if (Coin >= cost) list.Add(new ChrysosUpgradeCandidate(Pos, i, cost, this));
                     }
-                } else
-                {
-                    // query for AI
                 }
-                
+                // query for AI
             };
         }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
 
         public static PieceRank UpgradableTo(PieceRank from)
         {
@@ -81,8 +79,5 @@ namespace Game.Piece.PieceLogic
 
             return -1;
         }
-
-        int IPieceWithSkill.TimeToCooldown { get; set; }
-        public SkillsDelegate Skills { get; set; }
     }
 }

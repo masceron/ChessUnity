@@ -10,7 +10,8 @@ namespace Game.Effects.Augmentation
     {
         public PredatorEyesPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_predator_eyes_passive")
-        { }
+        {
+        }
 
         public void OnApply()
         {

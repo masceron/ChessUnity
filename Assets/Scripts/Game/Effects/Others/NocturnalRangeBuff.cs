@@ -10,27 +10,21 @@ namespace Game.Effects.Others
         {
         }
 
+        public int ModifyAttackRange(int baseRange)
+        {
+            if (!MatchManager.Ins.GameState.IsDay) baseRange += Strength;
+            return baseRange;
+        }
+
         public int ModifyMoveRange(int baseRange)
         {
-            if (!MatchManager.Ins.GameState.IsDay)
-            {
-                baseRange += Strength;
-            }
+            if (!MatchManager.Ins.GameState.IsDay) baseRange += Strength;
             return baseRange;
         }
 
         public override int GetValueForAI()
         {
             return base.GetValueForAI() - 20;
-        }
-
-        public int ModifyAttackRange(int baseRange)
-        {
-            if (!MatchManager.Ins.GameState.IsDay)
-            {
-                baseRange += Strength;
-            }
-            return baseRange;
         }
     }
 }

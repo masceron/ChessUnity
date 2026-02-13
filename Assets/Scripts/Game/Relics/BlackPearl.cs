@@ -1,10 +1,11 @@
+using System;
 using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
+using Game.Effects;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Effects;
-using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 
 namespace Game.Relics
@@ -20,7 +21,7 @@ namespace Game.Relics
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
-            
+
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
@@ -28,6 +29,7 @@ namespace Game.Relics
                 var pending = new BlackPearlPending(this, piece.Pos);
                 BoardViewer.ListOf.Add(pending);
             }
+
             BoardViewer.Selecting = -2;
             BoardViewer.SelectingFunction = 4;
         }
@@ -35,8 +37,10 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPiecesA = allPieces.Where(p => p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
-            var listPiecesB = allPieces.Where(p => p != null && p.Color != Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var listPiecesA = allPieces.Where(p =>
+                p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
+            var listPiecesB = allPieces.Where(p =>
+                p != null && p.Color != Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
 
             if (listPiecesA.Count == 0 || listPiecesB.Count == 0) return;
             var minValueA = listPiecesA.Min(p => p.GetValueForAI());
@@ -45,20 +49,28 @@ namespace Game.Relics
 
             var bestPiecesValuesA = listPiecesA.Where(p => p.GetValueForAI() == minValueA).ToList();
             var minBuffA = bestPiecesValuesA.Min(p => p.Effects.Count(e => e.Category == EffectCategory.Buff));
-            var bestPiecesA = bestPiecesValuesA.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA).ToList();
+            var bestPiecesA = bestPiecesValuesA
+                .Where(p => p.Effects.Count(e => e.Category == EffectCategory.Buff) == minBuffA).ToList();
             var bestPiecesValuesB = listPiecesB.Where(p => p.GetValueForAI() == maxValueB).ToList();
-            var bestPiecesB = bestPiecesValuesB.Where(p => p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5).ToList();
+            var bestPiecesB = bestPiecesValuesB
+                .Where(p => p.Effects.Count(e => e.Category == EffectCategory.Debuff) <= 5).ToList();
 
             PieceLogic selectedPiece = null;
-            if (bestPiecesB.Count != 0) {
-                var random = new System.Random();
+            if (bestPiecesB.Count != 0)
+            {
+                var random = new Random();
                 selectedPiece = bestPiecesB[random.Next(bestPiecesB.Count)];
-            } else if (bestPiecesA.Count != 0) {
-                var random = new System.Random();
+            }
+            else if (bestPiecesA.Count != 0)
+            {
+                var random = new Random();
                 selectedPiece = bestPiecesA[random.Next(bestPiecesA.Count)];
-            } else {
+            }
+            else
+            {
                 return;
             }
+
             if (selectedPiece == null) return;
             var pending = new BlackPearlPending(this, selectedPiece.Pos);
             BoardViewer.Ins.ExecuteAction(pending);

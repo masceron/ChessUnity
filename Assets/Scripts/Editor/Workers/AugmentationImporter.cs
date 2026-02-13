@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
@@ -12,17 +13,6 @@ namespace Editor.Workers
     {
         private const string AugmentationsManagerPath = "Assets/Data/Collections/AugmentationData.asset";
 
-        private static AugmentationData LoadCentralDataManager()
-        {
-            var centralData = AssetDatabase.LoadAssetAtPath<AugmentationData>(AugmentationsManagerPath);
-            if (!centralData)
-            {
-                Debug.LogError($"Central Data Manager asset not found at: {AugmentationsManagerPath}.");
-            }
-
-            return centralData;
-        }
-
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
         {
@@ -34,7 +24,7 @@ namespace Editor.Workers
                 var augmentationInfo = AssetDatabase.LoadAssetAtPath<AugmentationInfo>(path);
 
                 if (!augmentationInfo) continue;
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var fileName = Path.GetFileNameWithoutExtension(path);
                 var newKey = "augmentation_" + ToSnakeCase(fileName);
 
                 if (string.IsNullOrEmpty(augmentationInfo.Key))
@@ -43,7 +33,8 @@ namespace Editor.Workers
                     EditorUtility.SetDirty(augmentationInfo);
                     Debug.Log($"Key for {augmentationInfo.Key} auto-generated.");
                 }
-                else if (!augmentationInfo.Key.StartsWith("augmentation_") || !Regex.IsMatch(augmentationInfo.Key, "^[a-z]+(_[a-z]+)*$"))
+                else if (!augmentationInfo.Key.StartsWith("augmentation_") ||
+                         !Regex.IsMatch(augmentationInfo.Key, "^[a-z]+(_[a-z]+)*$"))
                 {
                     Debug.LogWarning(
                         $"{fileName}'s key '{augmentationInfo.Key}' doesn't follow naming convention for Augmentation objects. Suggestion: {newKey}");
@@ -77,6 +68,14 @@ namespace Editor.Workers
 
                 return text.ToLower();
             }
+        }
+
+        private static AugmentationData LoadCentralDataManager()
+        {
+            var centralData = AssetDatabase.LoadAssetAtPath<AugmentationData>(AugmentationsManagerPath);
+            if (!centralData) Debug.LogError($"Central Data Manager asset not found at: {AugmentationsManagerPath}.");
+
+            return centralData;
         }
 
         private static void UpdateLocalizationTables(AugmentationInfo augmentationInfo)

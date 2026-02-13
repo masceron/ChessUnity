@@ -6,8 +6,6 @@ namespace Game.Augmentation.Set
     {
         public ScrapCollector(bool haveBonus, PieceLogic target) : base(AugmentationSetType.ScrapCollector, haveBonus)
         {
-            
         }
     }
-
 }

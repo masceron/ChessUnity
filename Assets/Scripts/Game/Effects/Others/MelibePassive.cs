@@ -5,13 +5,13 @@ using Game.Effects.Debuffs;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+
 namespace Game.Effects.Others
 {
     public class MelibePassive : Effect, IAfterPieceActionTrigger
     {
         public MelibePassive(PieceLogic piece) : base(-1, 1, piece, "effect_melibe_passive")
         {
-            
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
@@ -22,20 +22,16 @@ namespace Game.Effects.Others
             var targetPos = action.Target;
             var targetRank = RankOf(targetPos);
             var targetFile = FileOf(targetPos);
-            
+
             var leftTargetFile = targetFile - 1;
             var pieceOnLeft = PieceOn(IndexOf(targetRank, leftTargetFile));
             if (pieceOnLeft != null && pieceOnLeft != Piece)
-            {
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnLeft), Piece));
-            }
-            
+
             var rightTargetFile = targetFile + 1;
             var pieceOnRight = PieceOn(IndexOf(targetRank, rightTargetFile));
             if (pieceOnRight != null && pieceOnRight != Piece)
-            {
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(pieceOnRight), Piece));
-            }
         }
 
         public override int GetValueForAI()

@@ -8,17 +8,18 @@ namespace Third_Party.Autotiles3D.Scripts.Core.Editor
     [CustomEditor(typeof(Autotiles3D_Grid), true)]
     public class Autotiles3D_GridInspector : UnityEditor.Editor
     {
-        Autotiles3D_Grid _grid;
+        private Autotiles3D_Grid _grid;
+
         private string _gridHierarchyName
         {
             get
             {
                 if (_grid.GridSize == LevelSize.Finite)
                     return $"Grid ({_grid.Width}x{_grid.Height}x{_grid.Width})";
-                else
-                    return "Infinite Grid";
+                return "Infinite Grid";
             }
         }
+
         public virtual void OnEnable()
         {
             _grid = (Autotiles3D_Grid)target;
@@ -27,6 +28,17 @@ namespace Third_Party.Autotiles3D.Scripts.Core.Editor
 
             var layers = _grid.GetComponentsInChildren<Autotiles3D_TileLayer>();
             _grid.TileLayers = layers.ToList();
+        }
+
+        private void OnSceneGUI()
+        {
+            var controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
+            var rotationMatrix =
+                Matrix4x4.TRS(_grid.transform.position, _grid.transform.rotation, Vector3.one * _grid.Unit);
+            Handles.matrix = rotationMatrix;
+
+            EnsureTransformIsOnGrid();
+            _grid.DrawLevelGrid(controlID);
         }
 
         public override void OnInspectorGUI()
@@ -66,21 +78,9 @@ namespace Third_Party.Autotiles3D.Scripts.Core.Editor
                 EditorUtility.SetDirty(_grid);
         }
 
-        private void OnSceneGUI()
-        {
-            int controlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
-            Matrix4x4 rotationMatrix = Matrix4x4.TRS(_grid.transform.position, _grid.transform.rotation, Vector3.one * _grid.Unit);
-            Handles.matrix = rotationMatrix;
-
-            EnsureTransformIsOnGrid();
-            _grid.DrawLevelGrid(controlID);
-        }
-
         private void EnsureTransformIsOnGrid()
         {
             _grid.transform.position = Vector3Int.RoundToInt(_grid.transform.position);
         }
-
-
     }
 }

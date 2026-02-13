@@ -9,6 +9,7 @@ namespace Game.Effects.Augmentation
     public class CursedModulePassive : Effect, IOnApplyTrigger
     {
         private const int cooldownDecrease = 4;
+
         public CursedModulePassive(PieceLogic piece) : base(-1, 1, piece, "effect_cursed_module_passive")
         {
         }
@@ -18,9 +19,7 @@ namespace Game.Effects.Augmentation
             if (Piece is IPieceWithSkill skillPiece)
             {
                 if (skillPiece.TimeToCooldown >= cooldownDecrease)
-                {
                     skillPiece.TimeToCooldown -= cooldownDecrease;
-                }
                 else skillPiece.TimeToCooldown = 0;
             }
 

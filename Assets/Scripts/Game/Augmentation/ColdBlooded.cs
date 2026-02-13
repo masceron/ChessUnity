@@ -6,14 +6,16 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ColdBlooded : Augmentation
     {
-        public ColdBlooded() : base(AugmentationName.ColdBlooded, AugmentationRarity.Epic, AugmentationSlot.Blood, null, null)
+        public ColdBlooded() : base(AugmentationName.ColdBlooded, AugmentationRarity.Epic, AugmentationSlot.Blood, null,
+            null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
+
         public override void SetTarget(PieceLogic target)
         {
             Target = target;

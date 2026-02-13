@@ -1,20 +1,27 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
-
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackPearlPending : PendingAction, System.IDisposable, IRelicAction
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class BlackPearlPending : PendingAction, IDisposable, IRelicAction
     {
         private BlackPearl _blackPearl;
-        
+
         public BlackPearlPending(BlackPearl cp, int maker) : base(maker)
         {
             _blackPearl = cp;
             Target = maker;
+        }
+
+        public void Dispose()
+        {
+            _blackPearl = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         // private Effect GetRandomBuffEffect()
@@ -23,7 +30,7 @@ namespace Game.Action.Internal.Pending.Relic
         //         .Where(kvp => kvp.Value.category == EffectCategory.Buff)
         //         .Select(kvp => kvp.Key)
         //         .ToArray();
-            
+
         //     var random = new System.Random();
         //     var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
         //     Debug.Log("Selected Effect Name: " + selectedEffectName);
@@ -36,7 +43,7 @@ namespace Game.Action.Internal.Pending.Relic
         //         .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
         //         .Select(kvp => kvp.Key)
         //         .ToArray();
-            
+
         //     var random = new System.Random();
         //     var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
         //     return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
@@ -81,14 +88,6 @@ namespace Game.Action.Internal.Pending.Relic
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-
         }
-
-        public void Dispose()
-        {
-            _blackPearl = null;
-            BoardViewer.SelectingFunction = 0;
-        }
-
     }
 }

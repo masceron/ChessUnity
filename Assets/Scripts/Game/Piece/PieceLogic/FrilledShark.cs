@@ -1,30 +1,30 @@
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Skills;
+using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
-using Game.Effects.SpecialAbility;
-using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
-using System.Collections.Generic;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrilledShark : Commons.PieceLogic, IPieceWithSkill
     {
-        int IPieceWithSkill.TimeToCooldown { get; set; }
-        public SkillsDelegate Skills { get; set; }
-        readonly int step = 4;
+        private readonly int step = 4;
+
         public FrilledShark(PieceConfig cfg) : base(cfg, KnightMoves.Quiets, KnightMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new FrilledSharkPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown != 0) { return; }
-                
+                if (SkillCooldown != 0) return;
+
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                     // 8 directions: N, S, E, W, NE, NW, SE, SW
                     int[] dRank = { -1, 1, 0, 0, -1, -1, 1, 1 };
                     int[] dFile = { 0, 0, -1, 1, -1, 1, -1, 1 };
-                    
+
                     for (var dir = 0; dir < 8; dir++)
                     {
                         var r = rank + dRank[dir] * step;
@@ -116,6 +116,8 @@ namespace Game.Piece.PieceLogic
                 }
             };
         }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
     }
 }
-

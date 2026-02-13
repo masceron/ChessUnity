@@ -9,12 +9,12 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FrogFishPassive : Effect, IAfterPieceActionTrigger
     {
         public FrogFishPassive(PieceLogic piece) : base(-1, -1, piece, "effect_frog_fish_passive")
         {
-            
         }
 
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
@@ -25,7 +25,7 @@ namespace Game.Effects.Traits
             if (action.Maker == action.Target) return;
             var targetFormation = GetFormation(action.Target);
             if (targetFormation is not PredatorLair) return;
-            
+
             var (rank, file) = RankFileOf(action.Target);
             foreach (var (nRank, nFile) in MoveEnumerators.AroundUntil(rank, file, 2))
             {

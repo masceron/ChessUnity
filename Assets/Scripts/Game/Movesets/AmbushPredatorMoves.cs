@@ -3,7 +3,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AmbushPredatorMoves : BaseMovePattern
     {
         /*public static void Quiets(List<Action.Action> list, int pos)
@@ -12,29 +13,29 @@ namespace Game.Movesets
             var file = FileOf(pos);
             var piece = PieceOn(pos);
             var effectiveMoveRange = piece.GetMoveRange(ref index);
-            
+
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= effectiveMoveRange; rankOff--)
             {
                 if (!MakeStraightQuiets(IndexOf(rankOff, file))) break;
             }
-            
+
             for (var rankOff = rank + 1; VerifyUpperBound(rankOff) && rankOff - rank <= effectiveMoveRange; rankOff++)
             {
                 if (!MakeStraightQuiets(IndexOf(rankOff, file))) break;
             }
-            
+
             for (var fileOff = file - 1; fileOff >= 0 && file - fileOff <= effectiveMoveRange; fileOff--)
             {
                 if (!MakeStraightQuiets(IndexOf(rank, fileOff))) break;
             }
-            
+
             for (var fileOff = file + 1; VerifyUpperBound(fileOff) && fileOff - file <= effectiveMoveRange; fileOff++)
             {
                 if (!MakeStraightQuiets(IndexOf(rank, fileOff))) break;
             }
-            
+
             if (effectiveMoveRange <= 1) return;
-            
+
             var rankTo = rank - effectiveMoveRange;
             if (rankTo >= 0)
             {
@@ -42,10 +43,10 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tFileTo)) continue;
                     var idx = IndexOf(rankTo, tFileTo);
-                    
+
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalMove(pos, idx));
                 }
             }
@@ -58,10 +59,10 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tFileTo)) continue;
                     var idx = IndexOf(rankTo, tFileTo);
-                    
+
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalMove(pos, idx));
                 }
             }
@@ -74,10 +75,10 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tRankTo)) continue;
                     var idx = IndexOf(tRankTo, fileTo);
-                    
+
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalMove(pos, idx));
                 }
             }
@@ -90,20 +91,20 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tRankTo)) continue;
                     var idx = IndexOf(tRankTo, fileTo);
-                    
+
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalMove(pos, idx));
                 }
             }
 
             return;
-            
+
             bool MakeStraightQuiets(int index)
             {
                 if (!IsActive(index) || PieceOn(index) != null) return false;
-            
+
                 list.Add(new NormalMove(pos, index));
                 return true;
             }
@@ -115,29 +116,29 @@ namespace Game.Movesets
             var piece = PieceOn(pos);
             var color = piece.Color;
             var effectiveMoveRange = piece.AttackRange;
-            
+
             for (var rankOff = rank - 1; rankOff >= 0 && rank - rankOff <= effectiveMoveRange; rankOff--)
             {
                 if (!MakeStraightCaptures(IndexOf(rankOff, file))) break;
             }
-            
+
             for (var rankOff = rank + 1; VerifyUpperBound(rankOff) && rankOff - rank <= effectiveMoveRange; rankOff++)
             {
                 if (!MakeStraightCaptures(IndexOf(rankOff, file))) break;
             }
-            
+
             for (var fileOff = file - 1; fileOff >= 0 && file - fileOff <= effectiveMoveRange; fileOff--)
             {
                 if (!MakeStraightCaptures(IndexOf(rank, fileOff))) break;
             }
-            
+
             for (var fileOff = file + 1; VerifyUpperBound(fileOff) && fileOff - file <= effectiveMoveRange; fileOff++)
             {
                 if (!MakeStraightCaptures(IndexOf(rank, fileOff))) break;
             }
-            
+
             if (effectiveMoveRange <= 1) return;
-            
+
             var rankTo = rank - effectiveMoveRange;
             if (rankTo >= 0)
             {
@@ -145,12 +146,12 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tFileTo)) continue;
                     var idx = IndexOf(rankTo, tFileTo);
-                    
+
                     if (!IsActive(idx)) continue;
                     var targetPiece = PieceOn(idx);
                     if (targetPiece == null || targetPiece.Color == color) continue;
                     if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
@@ -163,12 +164,12 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tFileTo)) continue;
                     var idx = IndexOf(rankTo, tFileTo);
-                    
+
                     if (!IsActive(idx)) continue;
                     var targetPiece = PieceOn(idx);
                     if (targetPiece == null || targetPiece.Color == color) continue;
                     if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
@@ -181,12 +182,12 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tRankTo)) continue;
                     var idx = IndexOf(tRankTo, fileTo);
-                    
+
                     if (!IsActive(idx)) continue;
                     var targetPiece = PieceOn(idx);
                     if (targetPiece == null || targetPiece.Color == color) continue;
                     if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
@@ -199,18 +200,18 @@ namespace Game.Movesets
                 {
                     if (!VerifyBounds(tRankTo)) continue;
                     var idx = IndexOf(tRankTo, fileTo);
-                    
+
                     if (!IsActive(idx)) continue;
                     var targetPiece = PieceOn(idx);
                     if (targetPiece == null || targetPiece.Color == color) continue;
                     if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
 
             return;
-            
+
             bool MakeStraightCaptures(int index)
             {
                 if (!IsActive(index)) return false;
@@ -264,7 +265,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new AmbushPredatorMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
             return 40 + 5 * moveRange;
         }
 
@@ -272,11 +273,8 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).AttackRange();
             var basePattern = new HashSet<int>(new AmbushPredatorMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 40 + 5 * attackRange;
         }
-
     }
-
-
 }

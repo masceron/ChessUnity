@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -5,13 +7,13 @@ using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using System.Collections.Generic;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArcticBrittleStar : Commons.PieceLogic, IPieceWithSkill
     {
         public ArcticBrittleStar(PieceConfig cfg) : base(cfg, KingMoves.Quiets, BishopMoves.Captures)
@@ -31,7 +33,8 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         list.Add(new ArcticBrittleStarActive(Pos, index));
                     }
-                } else
+                }
+                else
                 {
                     //query for AI in here
 
@@ -49,15 +52,15 @@ namespace Game.Piece.PieceLogic
                     var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
                     if (bestPieces.Count == 0) return;
 
-                    var random = new System.Random();
+                    var random = new Random();
                     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
                     list.Add(new ArcticBrittleStarActive(Pos, selectedPiece.Pos));
                 }
             };
         }
+
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
-    
 }

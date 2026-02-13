@@ -5,8 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Poison: Effect, IEndTurnTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Poison : Effect, IEndTurnTrigger
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TimeLeft = 3;
@@ -19,10 +20,7 @@ namespace Game.Effects.Debuffs
         public void OnCallEnd(Action.Action lastMainAction)
         {
             if (Strength >= 5) TimeLeft--;
-            if (TimeLeft <= 0)
-            {
-                ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
-            }
+            if (TimeLeft <= 0) ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
         }
 
         public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
@@ -33,6 +31,5 @@ namespace Game.Effects.Debuffs
         {
             return base.GetValueForAI() + 80 - Strength * 10;
         }
-    
     }
 }

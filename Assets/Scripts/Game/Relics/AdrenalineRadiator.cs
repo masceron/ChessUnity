@@ -6,7 +6,8 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AdrenalineRadiator : RelicLogic
     {
         public AdrenalineRadiator(RelicConfig cfg) : base(cfg)
@@ -25,13 +26,13 @@ namespace Game.Relics
                 var pending = new AdrenalineRadiatorPending(this, piece.Pos);
                 BoardViewer.ListOf.Add(pending);
             }
+
             BoardViewer.Selecting = -2;
             BoardViewer.SelectingFunction = 4;
         }
 
         public override void ActiveForAI()
         {
-            
         }
     }
 }

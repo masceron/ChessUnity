@@ -4,7 +4,8 @@ using UX.UI.Ingame.HermosHornUI;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HermosHorn : RelicLogic
     {
         public HermosHorn(RelicConfig cfg) : base(cfg)
@@ -22,7 +23,6 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            
         }
     }
 }

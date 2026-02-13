@@ -1,12 +1,13 @@
 using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
+using Game.Piece;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Piece;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class OrnetesEdict : RelicLogic
     {
         public OrnetesEdict(RelicConfig cfg) : base(cfg)
@@ -27,6 +28,7 @@ namespace Game.Relics
                     var pending = new OrnetesEdictPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
+
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
             }

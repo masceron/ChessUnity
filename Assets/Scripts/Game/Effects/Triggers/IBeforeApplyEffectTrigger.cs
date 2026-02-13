@@ -7,16 +7,18 @@ namespace Game.Effects.Triggers
     {
         Prevention = 100,
         Survival = 90,
-        Reaction = 80,
+        Reaction = 80
     }
-    public interface IBeforeApplyEffectTrigger: IComparable<IBeforeApplyEffectTrigger>
+
+    public interface IBeforeApplyEffectTrigger : IComparable<IBeforeApplyEffectTrigger>
     {
         public BeforeApplyEffectTriggerPriority Priority { get; }
-        void OnCallApplyEffect(ApplyEffect applyEffect);
-        
+
         int IComparable<IBeforeApplyEffectTrigger>.CompareTo(IBeforeApplyEffectTrigger other)
         {
             return other.Priority.CompareTo(Priority);
         }
+
+        void OnCallApplyEffect(ApplyEffect applyEffect);
     }
 }

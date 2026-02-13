@@ -5,13 +5,14 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.ThalassosResurrector
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ResurrectorItem: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ResurrectorItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text pieceName;
-        private string pieceType;
         [SerializeField] private UIObject3D pieceModel;
-        
+        private string pieceType;
+
         public void Load(string type)
         {
             pieceType = type;

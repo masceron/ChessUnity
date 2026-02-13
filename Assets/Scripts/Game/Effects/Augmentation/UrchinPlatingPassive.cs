@@ -1,8 +1,8 @@
-    using Game.Action;
+using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
 using Game.Effects.Buffs;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {

@@ -1,6 +1,6 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics
@@ -9,7 +9,9 @@ namespace Game.Action.Relics
     public partial class SeafoamPhialAction : Action, IRelicAction
     {
         [MemoryPackConstructor]
-        private SeafoamPhialAction() { }
+        private SeafoamPhialAction()
+        {
+        }
 
         public SeafoamPhialAction(int maker) : base(maker)
         {

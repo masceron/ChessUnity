@@ -1,24 +1,28 @@
 using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Buffs;
 using Game.Effects.RegionalEffect;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using ZLinq;
+using Random = System.Random;
 
 namespace Game.Effects.Condition
 {
     public class NativeGround : Effect
     {
         private readonly RegionalEffectType regionalEffect;
-        public NativeGround(PieceLogic piece, RegionalEffectType fitRegionalEffect) : base(-1, 1, piece, "effect_native_ground")
+
+        public NativeGround(PieceLogic piece, RegionalEffectType fitRegionalEffect) : base(-1, 1, piece,
+            "effect_native_ground")
         {
             regionalEffect = fitRegionalEffect;
 
             ApplyEffectIfFitRegion();
         }
 
-        private void ApplyEffectIfFitRegion() 
+        private void ApplyEffectIfFitRegion()
         {
             if (regionalEffect != MatchManager.Ins.GameState.RegionalEffect.Type) return;
 
@@ -35,7 +39,7 @@ namespace Game.Effects.Condition
                 .Select(kvp => kvp.Key)
                 .ToArray();
 
-            var random = new System.Random();
+            var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
 
             return CreateEffectFromName(selectedEffectName, Piece);
@@ -43,19 +47,19 @@ namespace Game.Effects.Condition
 
         private Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var duration = Random.Range(1, 11);
-            int strength = 1;
+            var duration = UnityEngine.Random.Range(1, 11);
+            var strength = 1;
 
             return effectName switch
             {
-                "effect_shield" => new Buffs.Shield(piece),
-                "effect_carapace" => new Buffs.Carapace(duration, piece),
-                "effect_haste" => new Buffs.Haste(duration, strength, piece),
-                "effect_piercing" => new Buffs.Piercing(duration, piece),
-                "effect_hardened_shield" => new Buffs.HardenedShield(piece),
-                "effect_true_bite" => new Buffs.TrueBite(piece),
-                "effect_camouflage" => new Buffs.Camouflage(piece),
-                _ => new Buffs.Shield(piece)
+                "effect_shield" => new Shield(piece),
+                "effect_carapace" => new Carapace(duration, piece),
+                "effect_haste" => new Haste(duration, strength, piece),
+                "effect_piercing" => new Piercing(duration, piece),
+                "effect_hardened_shield" => new HardenedShield(piece),
+                "effect_true_bite" => new TrueBite(piece),
+                "effect_camouflage" => new Camouflage(piece),
+                _ => new Shield(piece)
             };
         }
 
@@ -65,4 +69,3 @@ namespace Game.Effects.Condition
         }
     }
 }
-

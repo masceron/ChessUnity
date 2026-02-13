@@ -8,7 +8,8 @@ namespace Game.Tile
     /// <summary>
     ///     Placeholder for BubbleVentEffect implementation.
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BubbleVent : Formation
     {
         public BubbleVent(int d, bool hd, bool color) : base(color)
@@ -38,7 +39,4 @@ namespace Game.Tile
             return -10;
         }
     }
-
-
 }
-

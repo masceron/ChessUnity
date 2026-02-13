@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Managers;
-using UnityEngine;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.AI
 {
@@ -68,7 +68,14 @@ namespace Game.AI
         {
             var list = new List<Action.Action>();
             if (Maker == null) return list;
-            try { Maker.MoveList(list, isPlayer: false ,excludeEmptyTile: true); } catch { }
+            try
+            {
+                Maker.MoveList(list, false, true);
+            }
+            catch
+            {
+            }
+
             return list;
         }
     }

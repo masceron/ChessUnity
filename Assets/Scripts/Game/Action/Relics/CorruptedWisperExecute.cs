@@ -1,6 +1,6 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics
@@ -9,7 +9,9 @@ namespace Game.Action.Relics
     public partial class CorruptedWisperExecute : Action, IRelicAction
     {
         [MemoryPackConstructor]
-        private CorruptedWisperExecute() { }
+        private CorruptedWisperExecute()
+        {
+        }
 
         public CorruptedWisperExecute(int target) : base(-1)
         {

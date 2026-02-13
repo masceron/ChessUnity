@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game.Augmentation;
-using MemoryPack;
-using Game.ScriptableObjects;
 using Game.Managers;
+using Game.ScriptableObjects;
+using MemoryPack;
 
 namespace Game.Save.Army
 {
@@ -24,7 +24,7 @@ namespace Game.Save.Army
             Rank = rank;
             File = file;
             // Side = side;
-            equippedAugmentation = new();
+            equippedAugmentation = new Dictionary<AugmentationSlot, AugmentationName>();
         }
 
         public int CompareTo(Troop other)

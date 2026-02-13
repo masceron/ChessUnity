@@ -13,6 +13,5 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new LeechPassive(this)));
         }
-
     }
 }

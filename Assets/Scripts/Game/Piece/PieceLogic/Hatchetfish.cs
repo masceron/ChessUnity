@@ -31,10 +31,7 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
@@ -42,4 +39,3 @@ namespace Game.Piece.PieceLogic
         public SkillsDelegate Skills { get; set; }
     }
 }
-

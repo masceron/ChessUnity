@@ -8,7 +8,7 @@ namespace Game.Effects.Augmentation
         public FocusModulePassive(PieceLogic piece) : base(-1, 1, piece, "effect_focus_module_passive")
         {
         }
-        
+
         public void OnApply()
         {
             switch (Piece.SkillCooldown)

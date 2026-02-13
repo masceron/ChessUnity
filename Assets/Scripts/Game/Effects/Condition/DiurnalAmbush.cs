@@ -4,16 +4,24 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Condition
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DiurnalAmbush: Effect, IEndTurnTrigger, IAttackRangeModifier
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class DiurnalAmbush : Effect, IEndTurnTrigger, IAttackRangeModifier
     {
-        private byte _lastUsed;
-        private bool _active;
         private const byte RangeOffset = 2;
+        private bool _active;
+        private byte _lastUsed;
 
         public DiurnalAmbush(PieceLogic piece) : base(-1, -1, piece, "effect_diurnal_ambush")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+        }
+
+        public int ModifyAttackRange(int baseRange)
+        {
+            if (_active) return baseRange + RangeOffset;
+
+            return baseRange;
         }
 
         public void OnCallEnd(Action.Action action)
@@ -38,14 +46,7 @@ namespace Game.Effects.Condition
 
         public override int GetValueForAI()
         {
-            return base.GetValueForAI() - 20;    
-        }
-
-        public int ModifyAttackRange(int baseRange)
-        {
-            if (_active) return baseRange + RangeOffset;
-
-            return baseRange;
+            return base.GetValueForAI() - 20;
         }
     }
 }

@@ -17,9 +17,11 @@ namespace UX.UI.Ingame.CoralTome
         {
             "piece_barnacle",
             "piece_melibe",
-            "piece_blue_dragon" 
+            "piece_blue_dragon"
         };
-        
+
+        protected override PendingAction PendingAction { get; set; }
+
         private void OnEnable()
         {
             var rect = (RectTransform)transform.GetChild(0);
@@ -41,7 +43,6 @@ namespace UX.UI.Ingame.CoralTome
                 Instantiate(pieceItem, chooseField.transform, true);
                 chooseField.transform.GetChild(i).GetComponent<CoralTomeItem>().Load(_spawnPiece[i]);
             }
-
         }
 
         public void Choose(string type)
@@ -56,10 +57,9 @@ namespace UX.UI.Ingame.CoralTome
                 var pending = new CoralTomePending(coralTome, pos, type);
                 BoardViewer.ListOf.Add(pending);
             }
+
             BoardViewer.Selecting = -2;
             BoardViewer.SelectingFunction = 4;
         }
-
-        protected override PendingAction PendingAction { get; set; }
     }
 }

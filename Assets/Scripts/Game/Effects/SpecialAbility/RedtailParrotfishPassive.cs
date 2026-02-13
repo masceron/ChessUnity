@@ -8,7 +8,5 @@ namespace Game.Effects.SpecialAbility
         {
             // Không làm gì cả vì if-else đã đặt ở Demolisher
         }
-
     }
-
 }

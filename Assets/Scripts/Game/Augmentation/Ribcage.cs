@@ -5,14 +5,16 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Ribcage : Augmentation
     {
-        public Ribcage() : base(AugmentationName.Ribcage, AugmentationRarity.Heroic, AugmentationSlot.Chassis, null, null)
+        public Ribcage() : base(AugmentationName.Ribcage, AugmentationRarity.Heroic, AugmentationSlot.Chassis, null,
+            null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
+
         public override void SetTarget(PieceLogic target)
         {
             Target = target;

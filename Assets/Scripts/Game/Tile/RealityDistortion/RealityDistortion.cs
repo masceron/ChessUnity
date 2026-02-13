@@ -2,15 +2,24 @@ using Game.Effects.Triggers;
 
 namespace Game.Tile.RealityDistortion
 {
-    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RealityDistortion : Formation, IStartTurnTrigger
     {
-        
         public RealityDistortion(bool haveDuration, bool color) : base(color)
         {
             HaveDuration = haveDuration;
         }
+
+        public void OnCallStart(Action.Action lastMainAction)
+        {
+            if (!RealityDistortionManager.Ins) return;
+            RealityDistortionManager.Ins.OnTurnStart();
+        }
+
+        public new StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Other;
+
+        public StartTurnEffectType StartTurnEffectType => StartTurnEffectType.StartOfAnyTurn;
 
         public override FormationType GetFormationType()
         {
@@ -21,15 +30,5 @@ namespace Game.Tile.RealityDistortion
         {
             return -10;
         }
-        
-        public void OnCallStart(Action.Action lastMainAction)
-        {
-            if (!RealityDistortionManager.Ins) return;
-            RealityDistortionManager.Ins.OnTurnStart();
-        }
-
-        public new StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Other;
-
-        public StartTurnEffectType StartTurnEffectType => StartTurnEffectType.StartOfAnyTurn;
     }
 }

@@ -13,8 +13,9 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Archelon: Commons.PieceLogic, IPieceWithSkill
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Archelon : Commons.PieceLogic, IPieceWithSkill
     {
         public Archelon(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {
@@ -39,15 +40,12 @@ namespace Game.Piece.PieceLogic
                     //     }
                     // }
                     var targets = SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
-                    foreach (var target in targets)
-                    {
-                        list.Add(new ArchelonShield(Pos, target));
-                    }
-                } else
+                    foreach (var target in targets) list.Add(new ArchelonShield(Pos, target));
+                }
+                else
                 {
                     //query for AI in here
                     if (!excludeEmptyTile)
-                    {
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
                         {
                             var index = IndexOf(rankOff, fileOff);
@@ -55,33 +53,29 @@ namespace Game.Piece.PieceLogic
                             if (pOn == this) continue;
                             list.Add(new ArchelonShield(Pos, index));
                         }
-                    }
+
                     var rank = RankOf(Pos);
                     var file = FileOf(Pos);
 
                     // Gather allies within radius 3
                     var candidates = new List<Commons.PieceLogic>();
                     for (var dr = -3; dr <= 3; dr++)
+                    for (var df = -3; df <= 3; df++)
                     {
-                        for (var df = -3; df <= 3; df++)
-                        {
-                            var r = rank + dr;
-                            var f = file + df;
-                            if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
+                        var r = rank + dr;
+                        var f = file + df;
+                        if (!VerifyBounds(r) || !VerifyBounds(f)) continue;
 
-                            var piece = PieceOn(IndexOf(r, f));
-                            if (piece == null || piece.Color != Color) continue;
+                        var piece = PieceOn(IndexOf(r, f));
+                        if (piece == null || piece.Color != Color) continue;
 
-                            // Filter: no Shield, Hardened Shield, or Extremophile effect
-                            if (piece.Effects.Any(e => e.EffectName == "effect_shield" || 
-                                                        e.EffectName == "effect_hardened_shield" || 
-                                                        e.EffectName == "effect_extremophile")) 
-                            {
-                                continue;
-                            }
+                        // Filter: no Shield, Hardened Shield, or Extremophile effect
+                        if (piece.Effects.Any(e => e.EffectName == "effect_shield" ||
+                                                   e.EffectName == "effect_hardened_shield" ||
+                                                   e.EffectName == "effect_extremophile"))
+                            continue;
 
-                            candidates.Add(piece);
-                        }
+                        candidates.Add(piece);
                     }
 
                     if (candidates.Count == 0) return;

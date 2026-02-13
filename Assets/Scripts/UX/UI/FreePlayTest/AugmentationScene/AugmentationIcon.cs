@@ -9,39 +9,69 @@ using UX.UI.Tooltip;
 
 namespace UX.UI.FreePlayTest.AugmentationScene
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class AugmentationIcon: MonoBehaviour, IPointerClickHandler
-            // IBeginDragHandler, IDragHandler, IEndDragHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class AugmentationIcon : MonoBehaviour, IPointerClickHandler
+    // IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        public AugmentationSlot slot;
-        [SerializeField] private Texture2D defaultImage;
-        private Sprite defaultImageSprite;
-        [SerializeField] private Image image;
-        [SerializeField] private TooltipTrigger trigger;
-        [NonSerialized] public Transform Parent;
-        private Transform oldParent;
-        [NonSerialized] public bool Placed;
-        [NonSerialized] public int Rank = -1;
-        [NonSerialized] public int File = -1;
-        public AugmentationInfo Aug;
         public enum Position
         {
             Equipped,
-            Unequipped,
+            Unequipped
         }
+
+        public AugmentationSlot slot;
+        [SerializeField] private Texture2D defaultImage;
+        [SerializeField] private Image image;
+        [SerializeField] private TooltipTrigger trigger;
+        public AugmentationInfo Aug;
         public bool slotInSearchBox = true;
         public Position position = Position.Unequipped;
-        void Awake()
+        private Sprite defaultImageSprite;
+        [NonSerialized] public int File = -1;
+        private Transform oldParent;
+        [NonSerialized] public Transform Parent;
+        [NonSerialized] public bool Placed;
+        [NonSerialized] public int Rank = -1;
+
+        private void Awake()
         {
             defaultImageSprite = Sprite.Create(
-                    defaultImage,
-                    new Rect(0, 0, defaultImage.width, defaultImage.height),
-                    new Vector2(0.5f, 0.5f) // pivot at center
-                );
+                defaultImage,
+                new Rect(0, 0, defaultImage.width, defaultImage.height),
+                new Vector2(0.5f, 0.5f) // pivot at center
+            );
         }
+
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button == PointerEventData.InputButton.Right) return;
+
+            if (slotInSearchBox)
+            {
+                foreach (var icon in AugmentationManagerUI.Ins.icons)
+                    if (icon.slot == slot)
+                    {
+                        AugmentationManagerUI.Ins.AddAugmentation(Aug);
+                        icon.Load(Aug.Name);
+                        break;
+                    }
+            }
+            else if (position == Position.Equipped)
+            {
+                // Debug.Log((AugmentationManagerUI.Ins == null) ? "Null augmentationui" : "not null");
+                AugmentationManagerUI.Ins.RemoveAugmentation(Aug.Slot);
+                Load(AugmentationName.None);
+            }
+            else if (position == Position.Unequipped)
+            {
+                // AugmentationFilter.Ins.ToggleFilter(slot);
+            }
+        }
+
         public void Load(AugmentationName name)
         {
-            
             if (name == AugmentationName.None) // Called when users click at AugmentationIcon in left panel
             {
                 position = Position.Unequipped;
@@ -61,7 +91,6 @@ namespace UX.UI.FreePlayTest.AugmentationScene
                 image.sprite = sprite;
                 SetTooltip();
             }
-
         }
 
         private void SetTooltip()
@@ -70,39 +99,6 @@ namespace UX.UI.FreePlayTest.AugmentationScene
             var pieceDescriptions = "This is a description";
 
             trigger.SetText(pieceName, "", pieceDescriptions);
-        }
-
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button == PointerEventData.InputButton.Right) return;
-
-            if (slotInSearchBox)
-            {
-                foreach(var icon in AugmentationManagerUI.Ins.icons)
-                {
-                    if (icon.slot == slot)
-                    {
-                        AugmentationManagerUI.Ins.AddAugmentation(Aug);
-                        icon.Load(Aug.Name);
-                        break;
-                    }
-                }
-            }
-            else if (position == Position.Equipped)
-            {
-                
-                // Debug.Log((AugmentationManagerUI.Ins == null) ? "Null augmentationui" : "not null");
-                AugmentationManagerUI.Ins.RemoveAugmentation(Aug.Slot);
-                Load(AugmentationName.None);
-
-            }
-            else if (position == Position.Unequipped)
-            {
-                // AugmentationFilter.Ins.ToggleFilter(slot);
-            }
-            
-
         }
     }
 }

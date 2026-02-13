@@ -1,20 +1,21 @@
-using UnityEngine;
-using Game.Save.Relics;
-using Game.Save.Player;
-using Game.Managers;
 using Game.Common;
+using Game.Managers;
+using Game.Save.Player;
+using Game.Save.Relics;
+using UnityEngine;
 
 namespace UX.UI.Trader
 {
     public class TraderUISell : MonoBehaviour
     {
-        [Header("Content Containers")]
-        [SerializeField] private Transform relicsContent;
+        [Header("Content Containers")] [SerializeField]
+        private Transform relicsContent;
+
         [SerializeField] private Transform creaturesContent;
         [SerializeField] private Transform augmentationsContent;
 
-        [Header("Settings")]
-        [SerializeField] private GameObject itemPrefab;
+        [Header("Settings")] [SerializeField] private GameObject itemPrefab;
+
         [SerializeField] private TraderConfirmPopup confirmPopup;
 
 
@@ -52,45 +53,34 @@ namespace UX.UI.Trader
 
             // 1. Load Relics
             foreach (var relic in ownedRelics)
-            {
-                if (allRelics.TryGetValue(relic, out var relicInfo)) 
+                if (allRelics.TryGetValue(relic, out var relicInfo))
                     SpawnItem(relicInfo, TraderItemUIType.Relic, relicsContent);
-            }
 
             // 2. Load Creatures
             foreach (var creature in ownedCreatures)
-            {
-                if (allCreatures.TryGetValue(creature, out var pieceInfo)) 
+                if (allCreatures.TryGetValue(creature, out var pieceInfo))
                     SpawnItem(pieceInfo, TraderItemUIType.Creature, creaturesContent);
-            }
 
             // 3. Load Augmentations
             foreach (var augmentationString in ownedAugmentations)
-            {
                 if (AugmentationHelper.TryStringToAugmentationName(augmentationString, out var augmentationName))
-                {
-                    if (allAugmentations.TryGetValue(augmentationName, out var augmentationInfo)) 
+                    if (allAugmentations.TryGetValue(augmentationName, out var augmentationInfo))
                         SpawnItem(augmentationInfo, TraderItemUIType.Augmentation, augmentationsContent);
-                }
-            }
         }
 
         private void ClearContent(Transform content)
         {
             if (content == null) return;
-            foreach (Transform child in content)
-            {
-                Destroy(child.gameObject);
-            }
+            foreach (Transform child in content) Destroy(child.gameObject);
         }
 
         private void SpawnItem(object data, TraderItemUIType type, Transform parent)
         {
             if (itemPrefab == null || parent == null) return;
-            
+
             var newItem = Instantiate(itemPrefab, parent);
             var itemUI = newItem.GetComponent<TraderItemUI>();
-            itemUI.Setup(data, type, isSell: true);
+            itemUI.Setup(data, type, true);
             itemUI.OnItemClicked += OnItemClicked;
         }
 
@@ -98,6 +88,5 @@ namespace UX.UI.Trader
         {
             confirmPopup.Show(data, isSell);
         }
-
     }
 }

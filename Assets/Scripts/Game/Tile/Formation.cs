@@ -10,9 +10,9 @@ namespace Game.Tile
     {
         Positive,
         Negative,
-        Miscellaneous,
-
+        Miscellaneous
     }
+
     public enum FormationType
     {
         None,
@@ -32,57 +32,26 @@ namespace Game.Tile
         HopkinsRose,
         RealityDistortion
     }
+
     public abstract class Formation : Observer, IAfterPieceActionTrigger, IOnPieceSpawnedTrigger
     {
-        public int Pos { get; private set; }
-        protected PieceLogic PieceOnFormation { get; set; }
-        public bool HaveDuration { get; protected set; }
-        public int Duration { get; protected set; }
         public readonly FormationCategory category;
-        protected Formation() {}
+
+        protected Formation()
+        {
+        }
+
         protected Formation(bool color)
         {
             Color = color;
             var info = AssetManager.Ins.FormationData[GetFormationType()];
             category = info.formationCategory;
         }
-        /// <summary>
-        /// Hiện hàm này được gọi chủ động bởi FormationManager::SetFormation() nên mọi người không cần phải động tới
-        /// </summary>
-        /// <param name="index"></param>
-        public void SetPositon(int index)
-        {
-            Pos = index;
-        }
-        public void SetDuration(int duration)
-        {
-            Duration = duration;
-            HaveDuration = true;
-        }
-        public bool GetColor() => Color;
-        /// <summary>
-        /// Trả về FormationType tương ứng với class
-        /// </summary>
-        public abstract FormationType GetFormationType();
-        /// <summary>
-        /// Được gọi 1 lần duy nhất sau khi tạo Formation, thường dùng để gây effect lên quân đứng sẵn trên đó
-        /// </summary>
-        /// <param name="piece"></param>
-        public virtual void OnCreated(PieceLogic piece)
-        {
-            OnPieceEnter(piece);
-        }
-        public void OnRemove(PieceLogic piece)
-        {
-            OnPieceExit(piece);
-        }
-        public void OnPieceSpawn(PieceLogic piece)
-        {
-            if (BoardUtils.IsAlive(piece) && piece.Pos == Pos)
-            {
-                OnPieceEnter(piece);
-            }
-        }
+
+        public int Pos { get; private set; }
+        protected PieceLogic PieceOnFormation { get; set; }
+        public bool HaveDuration { get; protected set; }
+        public int Duration { get; protected set; }
 
         public AfterActionPriority Priority => AfterActionPriority.Move;
 
@@ -90,30 +59,75 @@ namespace Game.Tile
         {
             if (action is not IQuiets) return;
             var pieceOn = BoardUtils.PieceOn(action.Target);
-            if (pieceOn == null){ return; }
+            if (pieceOn == null) return;
             if (action.Target == Pos)
-            {
                 OnPieceEnter(pieceOn);
-            }
-            else if (action.Maker == Pos)
-            {
-                OnPieceExit(pieceOn);
-            }
+            else if (action.Maker == Pos) OnPieceExit(pieceOn);
         }
+
+        public void OnPieceSpawn(PieceLogic piece)
+        {
+            if (BoardUtils.IsAlive(piece) && piece.Pos == Pos) OnPieceEnter(piece);
+        }
+
         /// <summary>
-        /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
+        ///     Hiện hàm này được gọi chủ động bởi FormationManager::SetFormation() nên mọi người không cần phải động tới
+        /// </summary>
+        /// <param name="index"></param>
+        public void SetPositon(int index)
+        {
+            Pos = index;
+        }
+
+        public void SetDuration(int duration)
+        {
+            Duration = duration;
+            HaveDuration = true;
+        }
+
+        public bool GetColor()
+        {
+            return Color;
+        }
+
+        /// <summary>
+        ///     Trả về FormationType tương ứng với class
+        /// </summary>
+        public abstract FormationType GetFormationType();
+
+        /// <summary>
+        ///     Được gọi 1 lần duy nhất sau khi tạo Formation, thường dùng để gây effect lên quân đứng sẵn trên đó
+        /// </summary>
+        /// <param name="piece"></param>
+        public virtual void OnCreated(PieceLogic piece)
+        {
+            OnPieceEnter(piece);
+        }
+
+        public void OnRemove(PieceLogic piece)
+        {
+            OnPieceExit(piece);
+        }
+
+        /// <summary>
+        ///     Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
         /// </summary>
         protected virtual void OnPieceEnter(PieceLogic piece)
         {
             PieceOnFormation = piece;
         }
+
         /// <summary>
-        /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân rời khỏi vị trí
+        ///     Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân rời khỏi vị trí
         /// </summary>
         protected virtual void OnPieceExit(PieceLogic piece)
         {
             PieceOnFormation = null;
         }
-        public virtual int GetValueForAI(){return 0;}
+
+        public virtual int GetValueForAI()
+        {
+            return 0;
+        }
     }
 }

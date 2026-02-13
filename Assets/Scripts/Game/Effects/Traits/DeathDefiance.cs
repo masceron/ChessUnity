@@ -1,13 +1,14 @@
-using Game.Piece.PieceLogic.Commons;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DeathDefiance : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
         private int _deathDefianceCount;
@@ -15,20 +16,6 @@ namespace Game.Effects.Traits
         public DeathDefiance(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_death_defiance")
         {
             _deathDefianceCount = deathDefianceCount;
-        }
-
-        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
-
-        public void OnCallBeforePieceAction(Action.Action action)
-        {
-            if (action is not ICaptures) return;
-            if (action.Target != Piece.Pos || action.Maker == action.Target) return;
-            if (action.Result != ResultFlag.Success) return;
-            if (Piece.Effects.Any(e =>
-                    e.EffectName is "effect_shield" or "effect_carapace" or "effect_hardened_shield")) return;
-            if (_deathDefianceCount <= 0) return;
-
-            action.Result = ResultFlag.SurvivedHit;
         }
 
         AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Buff;
@@ -57,6 +44,20 @@ namespace Game.Effects.Traits
                 default:
                     return;
             }
+        }
+
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
+
+        public void OnCallBeforePieceAction(Action.Action action)
+        {
+            if (action is not ICaptures) return;
+            if (action.Target != Piece.Pos || action.Maker == action.Target) return;
+            if (action.Result != ResultFlag.Success) return;
+            if (Piece.Effects.Any(e =>
+                    e.EffectName is "effect_shield" or "effect_carapace" or "effect_hardened_shield")) return;
+            if (_deathDefianceCount <= 0) return;
+
+            action.Result = ResultFlag.SurvivedHit;
         }
 
         public override int GetValueForAI()

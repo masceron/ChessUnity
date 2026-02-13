@@ -5,6 +5,7 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.Effects.Augmentation
 {
@@ -34,10 +35,9 @@ namespace Game.Effects.Augmentation
 
                 if (targets.Count > 0)
                 {
-                    var target = targets[UnityEngine.Random.Range(0, targets.Count)];
+                    var target = targets[Random.Range(0, targets.Count)];
                     ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, target), Piece));
                 }
-                
             }
         }
     }

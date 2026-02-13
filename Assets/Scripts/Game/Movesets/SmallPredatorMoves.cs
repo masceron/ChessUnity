@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using static Game.Common.BoardUtils;
+
 namespace Game.Movesets
 {
     public class SmallPredatorMoves : BaseMovePattern
@@ -32,7 +33,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new SmallPredatorMoves().GenerateSmallPredatorMovesPattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 20 + 5 * moveRange;
         }
@@ -41,7 +42,7 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new SmallPredatorMoves().GenerateSmallPredatorMovesPattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 20 + 5 * attackRange;
         }
     }

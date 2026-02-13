@@ -7,8 +7,10 @@ namespace Game.Effects.Augmentation
 {
     public class ProtectiveLensPassive : Effect, IBeforeApplyEffectTrigger
     {
-        public ProtectiveLensPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_protected_lens_passive")
-        { }
+        public ProtectiveLensPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
+            "effect_protected_lens_passive")
+        {
+        }
 
         public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
@@ -16,10 +18,7 @@ namespace Game.Effects.Augmentation
         {
             if (applyEffect.Effect.Piece != Piece) return;
 
-            if (applyEffect.Effect.EffectName == "effect_blinded")
-            {
-                applyEffect.Result = ResultFlag.EffectResistance;
-            }
+            if (applyEffect.Effect.EffectName == "effect_blinded") applyEffect.Result = ResultFlag.EffectResistance;
         }
     }
 }

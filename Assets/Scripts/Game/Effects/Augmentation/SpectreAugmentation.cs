@@ -1,5 +1,7 @@
-﻿using Game.Action;
+﻿using System;
+using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Buffs;
 using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -11,7 +13,7 @@ namespace Game.Effects.Others
     {
         private int _buffForEachTurn = 1;
         private int _lastProcessedTurn = -1;
-        
+
         public SpectreAugmentation(PieceLogic piece) : base(-1, 1, piece, "effect_spectre_augmentation")
         {
         }
@@ -27,40 +29,41 @@ namespace Game.Effects.Others
                 _lastProcessedTurn = currentTurn;
                 _buffForEachTurn = 1;
             }
-            
-            if (applyEffect.Effect.Category == EffectCategory.Debuff && applyEffect.SourcePiece == Piece && _buffForEachTurn > 0)
+
+            if (applyEffect.Effect.Category == EffectCategory.Debuff && applyEffect.SourcePiece == Piece &&
+                _buffForEachTurn > 0)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(Piece), Piece));
                 _buffForEachTurn--;
             }
         }
-        
+
         private Effect GetRandomBuffEffect(PieceLogic piece)
         {
             var buffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Buff)
                 .Select(kvp => kvp.Key)
                 .ToArray();
-            
-            var random = new System.Random();
+
+            var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            
+
             return CreateEffectFromName(selectedEffectName, piece);
         }
 
         private Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var randomDuration = new System.Random().Next(2, 6);
+            var randomDuration = new Random().Next(2, 6);
 
             return effectName switch
             {
-                "effect_shield" => new Buffs.Shield(piece),
-                "effect_carapace" => new Buffs.Carapace(randomDuration, piece),
-                "effect_haste" => new Buffs.Haste(randomDuration, 1, piece),
-                "effect_piercing" => new Buffs.Piercing(randomDuration, piece),
-                "effect_hardened_shield" => new Buffs.HardenedShield(piece),
-                "effect_true_bite" => new Buffs.TrueBite(piece),
-                "effect_camouflage" => new Buffs.Camouflage(piece),
+                "effect_shield" => new Shield(piece),
+                "effect_carapace" => new Carapace(randomDuration, piece),
+                "effect_haste" => new Haste(randomDuration, 1, piece),
+                "effect_piercing" => new Piercing(randomDuration, piece),
+                "effect_hardened_shield" => new HardenedShield(piece),
+                "effect_true_bite" => new TrueBite(piece),
+                "effect_camouflage" => new Camouflage(piece),
                 _ => null
             };
         }

@@ -1,12 +1,12 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
-    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HopkinsRose : Formation
     {
         public HopkinsRose(bool haveDuration, bool color) : base(color)

@@ -1,15 +1,24 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
+
 namespace Game.Action.Skills
 {
     [MemoryPackable]
     public partial class BlueDragonActive : Action, ISkills
     {
         [MemoryPackConstructor]
-        private BlueDragonActive() { }
+        private BlueDragonActive()
+        {
+        }
+
+        public BlueDragonActive(int maker, int target) : base(maker)
+        {
+            Maker = maker;
+            Target = target;
+        }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -18,12 +27,6 @@ namespace Game.Action.Skills
             return pieceAI.Color != maker.Color ? -15 : 0;
         }
 
-        public BlueDragonActive(int maker, int target) : base(maker)
-        {
-            Maker = maker;
-            Target = target;
-        }
-        
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target)), PieceOn(Maker)));

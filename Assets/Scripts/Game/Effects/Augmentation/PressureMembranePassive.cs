@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+﻿using Game.Action;
+using Game.Action.Internal;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -7,14 +8,9 @@ namespace Game.Effects.Augmentation
     public class PressureMembranePassive : Effect, IMoveRangeModifierTrigger, IBeforeApplyEffectTrigger
     {
         private const int moveRangeModifier = 2;
-        
+
         public PressureMembranePassive(PieceLogic piece) : base(-1, 1, piece, "effect_pressure_membrane_passive")
         {
-        }
-
-        public int ModifyMoveRange(int baseRange)
-        {
-            return baseRange + moveRangeModifier;
         }
 
         public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
@@ -25,11 +21,12 @@ namespace Game.Effects.Augmentation
 
             if (pieceApplied != Piece) return;
 
-            if (applyEffect.Effect.EffectName == "effect_shortreach")
-            {
-                applyEffect.Result = Action.ResultFlag.EffectResistance;
-            }
+            if (applyEffect.Effect.EffectName == "effect_shortreach") applyEffect.Result = ResultFlag.EffectResistance;
         }
-        
+
+        public int ModifyMoveRange(int baseRange)
+        {
+            return baseRange + moveRangeModifier;
+        }
     }
 }

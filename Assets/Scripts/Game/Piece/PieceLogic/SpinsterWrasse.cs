@@ -4,9 +4,10 @@ using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects;
 using Game.Movesets;
-
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
     public class SpinsterWrasse : Commons.PieceLogic, IPieceWithSkill
@@ -32,22 +33,18 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     var listA = GetPiecesInRadius(rank, file, 5, p => p != null && p.Color == Color);
-            
+
                     if (listA.Count == 0) return;
                     listA.Sort((a, b) =>
                     {
                         int buffCountA = 0, buffCountB = 0;
                         foreach (var effect in a.Effects)
-                        {
                             if (effect.Category == EffectCategory.Debuff)
                                 buffCountA++;
-                        }
 
                         foreach (var effect in b.Effects)
-                        {
                             if (effect.Category == EffectCategory.Debuff)
                                 buffCountB++;
-                        }
 
                         return buffCountA.CompareTo(buffCountB);
                     });
@@ -56,19 +53,19 @@ namespace Game.Piece.PieceLogic
                     for (var i = 0; i < BoardSize; ++i)
                     {
                         var piece = PieceOn(i);
-                        if (piece == null || piece.Color != Color || piece.Effects.Any(
-                                e => e.EffectName == "effect_extremophiles" || e.EffectName == "effect_Adaptation"))
+                        if (piece == null || piece.Color != Color || piece.Effects.Any(e =>
+                                e.EffectName == "effect_extremophiles" || e.EffectName == "effect_Adaptation"))
                             continue;
-                
+
                         listB.Add(piece);
                     }
-            
+
                     if (listB.Count == 0) return;
-            
+
                     listB.Sort((a, b) => b.GetValueForAI().CompareTo(a.GetValueForAI()));
-            
-                    var idxA = UnityEngine.Random.Range(0, listA.Count - 1);
-                    var idxB = UnityEngine.Random.Range(0, listB.Count - 1);
+
+                    var idxA = Random.Range(0, listA.Count - 1);
+                    var idxB = Random.Range(0, listB.Count - 1);
 
                     list.Add(new SpinsterWrasseBuff(Pos, listA[idxA].Pos, listB[idxB].Pos));
                 }
@@ -78,5 +75,4 @@ namespace Game.Piece.PieceLogic
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
-    
 }

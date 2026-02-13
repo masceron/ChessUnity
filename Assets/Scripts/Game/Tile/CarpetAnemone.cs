@@ -1,12 +1,12 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
-    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CarpetAnemone : Formation
     {
         public CarpetAnemone(bool haveDuration, bool color) : base(color)
@@ -24,7 +24,8 @@ namespace Game.Tile
             base.OnPieceEnter(piece);
             if (piece != null && piece.Color != Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, piece.Pos, 3), FormationType.CarpetAnemone));
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, piece.Pos, 3),
+                    FormationType.CarpetAnemone));
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, piece), FormationType.CarpetAnemone));
             }
         }
@@ -35,4 +36,3 @@ namespace Game.Tile
         }
     }
 }
-

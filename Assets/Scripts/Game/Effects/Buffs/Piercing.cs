@@ -5,11 +5,13 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Piercing: Effect, IBeforePieceActionTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Piercing : Effect, IBeforePieceActionTrigger
     {
         public Piercing(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_piercing")
-        {}
+        {
+        }
 
         public BeforeActionPriority Priority => BeforeActionPriority.Declaration;
 

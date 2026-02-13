@@ -1,12 +1,14 @@
-﻿using Game.Action.Relics;
+﻿using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TimelessHourglassPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class TimelessHourglassPending : PendingAction, IDisposable
     {
         private TimelessHourglass _timelessHourglass;
 
@@ -14,6 +16,13 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _timelessHourglass = t;
             Target = target;
+        }
+
+        public void Dispose()
+        {
+            _timelessHourglass = null;
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -27,13 +36,6 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
-
-        public void Dispose()
-        {
-            _timelessHourglass = null;
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
         }
     }
 }

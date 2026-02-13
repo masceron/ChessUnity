@@ -1,18 +1,20 @@
-using Game.Common;
-using Game.Movesets;
-using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
+using Game.Common;
 using Game.Effects.Others;
 using Game.Effects.Traits;
+using Game.Movesets;
+using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using ZLinq;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Humilitas : Commons.PieceLogic, IPieceWithSkill
     {
         public Humilitas(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
@@ -31,10 +33,7 @@ namespace Game.Piece.PieceLogic
                     {
                         var idx = IndexOf(rank, file);
                         var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != Color)
-                        {
-                            list.Add(new HumilitasPending(Pos, idx));
-                        }
+                        if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
                     }
                 }
                 else
@@ -45,11 +44,9 @@ namespace Game.Piece.PieceLogic
                         {
                             var idx = IndexOf(rank, file);
                             var pOn = PieceOn(idx);
-                            if (pOn != null && pOn.Color != Color)
-                            {
-                                list.Add(new HumilitasPending(Pos, idx));
-                            }
+                            if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
                         }
+
                         return;
                     }
 
@@ -60,16 +57,15 @@ namespace Game.Piece.PieceLogic
                         var idx = IndexOf(rank, file);
                         var pOn = PieceOn(idx);
                         if (pOn == null || pOn.Color == PieceOn(Pos).Color) continue;
-                        if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile"))
+                            continue;
                         listPieces.Add(pOn);
                     }
+
                     // neu khong co quan nao
                     if (listPieces.Count == 0) return;
                     // neu co dung mot quan
-                    if (listPieces.Count == 1)
-                    {
-                        return;
-                    }
+                    if (listPieces.Count == 1) return;
                     // neu co nhieu quan           
                     listPieces.Sort((a, b) =>
                         b.GetValueForAI()
@@ -83,10 +79,12 @@ namespace Game.Piece.PieceLogic
 
                     if (topGroup.Count >= 2)
                     {
-                        var idx1 = UnityEngine.Random.Range(0, topGroup.Count);
+                        var idx1 = Random.Range(0, topGroup.Count);
                         int idx2;
-                        do { idx2 = UnityEngine.Random.Range(0, topGroup.Count); }
-                        while (idx2 == idx1);
+                        do
+                        {
+                            idx2 = Random.Range(0, topGroup.Count);
+                        } while (idx2 == idx1);
 
                         selectedPieces.Add(topGroup[idx1]);
                         selectedPieces.Add(topGroup[idx2]);
@@ -101,10 +99,11 @@ namespace Game.Piece.PieceLogic
                             var secondGroup = listPieces.Where(p =>
                                 p.GetValueForAI() == secondValue).ToList();
                             if (secondGroup.Count == 0) return;
-                            var idx = UnityEngine.Random.Range(0, secondGroup.Count);
+                            var idx = Random.Range(0, secondGroup.Count);
                             selectedPieces.Add(secondGroup[idx]);
                         }
                     }
+
                     if (selectedPieces.Count < 2) return;
 
                     var action = new HumilitasPending(Pos, selectedPieces[0].Pos);

@@ -8,12 +8,13 @@ namespace Game.Augmentation
 {
     public class CursedFin : Augmentation
     {
-        public CursedFin() : base(AugmentationName.CursedFin, AugmentationRarity.Cursed, AugmentationSlot.Fin, null, null)
+        public CursedFin() : base(AugmentationName.CursedFin, AugmentationRarity.Cursed, AugmentationSlot.Fin, null,
+            null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
-        public override void SetTarget(PieceLogic target) 
+
+        public override void SetTarget(PieceLogic target)
         {
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.None, false);

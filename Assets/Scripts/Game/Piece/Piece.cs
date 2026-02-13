@@ -16,20 +16,22 @@ namespace Game.Piece
         Champion,
         Commander
     }
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Piece : MonoBehaviour
     {
-        private int rank;
-        private int file;
         private bool color;
-        
+        private int file;
+        private int rank;
+
         public void Spawn(int pos, bool c)
         {
             rank = RankOf(pos);
             file = FileOf(pos);
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
             transform.position = new Vector3(rank, YCoordinate, file);
-            
+
             var angles = new Quaternion
             {
                 eulerAngles = !c
@@ -39,12 +41,12 @@ namespace Game.Piece
 
             transform.rotation = angles;
         }
-        
+
         public void Move(int rankTo, int fileTo)
         {
             rank = rankTo;
             file = fileTo;
-            
+
             Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
         }
     }

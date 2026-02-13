@@ -4,7 +4,6 @@ using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
 
-
 namespace Game.Piece.PieceLogic
 {
     public class DuskyButterflyfish : Commons.PieceLogic
@@ -16,4 +15,3 @@ namespace Game.Piece.PieceLogic
         }
     }
 }
-

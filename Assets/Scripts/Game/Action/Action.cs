@@ -4,15 +4,14 @@ using MemoryPack;
 
 namespace Game.Action
 {
-
     [Flags]
     public enum ActionFlag : byte
     {
         None = 0,
         Unblockable = 1,
-        Undodgeable = 1 << 1,
-
+        Undodgeable = 1 << 1
     }
+
     public enum ResultFlag
     {
         Success = 0, // Action thành công
@@ -28,22 +27,29 @@ namespace Game.Action
         CantApplyEffect = 10, // Không thể áp dụng effect nói chung
         EffectResistance = 11, // Sử dụng trong trường hợp Kháng Effect
         SurvivedHit = 12, // bị ăn nhưng không chết
-        SelfDestroy = 13, // Tự chết khi thực hiện ăn quân khác
+        SelfDestroy = 13 // Tự chết khi thực hiện ăn quân khác
     }
-    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
     public abstract partial class Action
     {
-        public int Target = -1;
+        public ActionFlag Flag = ActionFlag.None;
         public int Maker;
         public ResultFlag Result = ResultFlag.Success;
-        public ActionFlag Flag = ActionFlag.None;
+        public int Target = -1;
+
         protected Action(int maker)
         {
             Maker = maker;
         }
-        
+
+        [MemoryPackConstructor]
+        protected Action()
+        {
+        }
+
         public void Execute()
         {
             Animate();
@@ -52,24 +58,19 @@ namespace Game.Action
 
         protected virtual void Animate()
         {
-            
-        }
-
-        [MemoryPackConstructor]
-        protected Action()
-        {
-            
         }
 
         public bool IsValid()
         {
             return Result == ResultFlag.Success;
         }
+
         protected abstract void ModifyGameState();
     }
 
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ActionComparer: IEqualityComparer<Action>
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ActionComparer : IEqualityComparer<Action>
     {
         public bool Equals(Action x, Action y)
         {

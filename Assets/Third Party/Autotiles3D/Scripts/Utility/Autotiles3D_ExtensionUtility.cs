@@ -26,6 +26,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             if (node.Instance)
                 node.Instance.SetActive(false);
         }
+
         public static void EnableInstance(this InternalNode node)
         {
             if (node.Instance)
@@ -39,7 +40,8 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
         }
 
         /// <summary>
-        /// similar to update instance, but will try to keep the current skin/gameobject if possible. will change instance if necessary because of neighbor changes
+        ///     similar to update instance, but will try to keep the current skin/gameobject if possible. will change instance if
+        ///     necessary because of neighbor changes
         /// </summary>
         /// <param name="node"></param>
         public static void VerifyInstance(this InternalNode node)
@@ -61,6 +63,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                     Debug.LogError("Autotiles3D: Internal node  is missing tile");
                     return;
                 }
+
                 var addedRotation = new[] { -1, 0 };
                 if (tile.HasRules)
                 {
@@ -72,7 +75,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                         if (rule.RuleID != node.RuleID)
                         {
                             node.SetRuleID(rule.RuleID);
-                            prefab = (rule.Random) ? rule.GetRandomObject() : rule.Object;
+                            prefab = rule.Random ? rule.GetRandomObject() : rule.Object;
                         }
                     }
                     else
@@ -80,7 +83,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                         if (node.RuleID != -1)
                         {
                             node.SetRuleID(-1);
-                            prefab = (tile.Random) ? tile.GetRandomDefault() : tile.Default;
+                            prefab = tile.Random ? tile.GetRandomDefault() : tile.Default;
                         }
                     }
                 }
@@ -88,7 +91,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 {
                     if (node.RuleID != -1)
                     {
-                        prefab = (tile.Random) ? tile.GetRandomDefault() : tile.Default;
+                        prefab = tile.Random ? tile.GetRandomDefault() : tile.Default;
                         node.SetRuleID(-1);
                     }
                 }
@@ -105,25 +108,18 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 
                 if (prefab != null)
                 {
-                    if (node.Instance == null || (node.Instance != null && PrefabUtility.GetCorrespondingObjectFromSource(node.Instance) != prefab))
-                    {
-                        node.CreateInstance(prefab);
-                    }
+                    if (node.Instance == null || (node.Instance != null &&
+                                                  PrefabUtility.GetCorrespondingObjectFromSource(node.Instance) !=
+                                                  prefab)) node.CreateInstance(prefab);
 
                     if (node.Instance.name != prefab.name)
                         node.Instance.name = prefab.name;
                 }
 
 
-                if (node.Block != null)
-                {
-                    node.Block.OnInstanceUpdate(node);
-                }
+                if (node.Block != null) node.Block.OnInstanceUpdate(node);
 
-                if (node.Instance != null)
-                {
-                    node.UpdateInstanceTransform();
-                }
+                if (node.Instance != null) node.UpdateInstanceTransform();
 
 #if UNITY_EDITOR
                 if (node.Instance != null)
@@ -133,12 +129,12 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 #endif
             }
         }
+
         /// <summary>
-        /// in addition to what verify instance does, this function also allows for randomization of the instance if possible
+        ///     in addition to what verify instance does, this function also allows for randomization of the instance if possible
         /// </summary>
         public static void UpdateInstance(this InternalNode node)
         {
-
             //dont allow baked node to update
             if (node.Block && node.Block.IsBaked)
                 return;
@@ -152,7 +148,6 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 tile = node.GetTile();
                 if (tile == null)
                 {
-
                     Debug.LogError($"Autotiles3D: Internal node is can't retrieve tile {node.TileName} {node.TileID}");
                     return;
                 }
@@ -166,17 +161,17 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 if (rule != null)
                 {
                     node.SetRuleID(rule.RuleID);
-                    prefab = (rule.Random) ? rule.GetRandomObject() : rule.Object;
+                    prefab = rule.Random ? rule.GetRandomObject() : rule.Object;
                 }
                 else
                 {
-                    prefab = (tile.Random) ? tile.GetRandomDefault() : tile.Default;
+                    prefab = tile.Random ? tile.GetRandomDefault() : tile.Default;
                     node.SetRuleID(-1);
                 }
             }
             else
             {
-                prefab = (tile.Random) ? tile.GetRandomDefault() : tile.Default;
+                prefab = tile.Random ? tile.GetRandomDefault() : tile.Default;
                 node.SetRuleID(-1);
             }
 
@@ -193,25 +188,18 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 
             if (prefab != null)
             {
-                if (node.Instance == null || (node.Instance != null && PrefabUtility.GetCorrespondingObjectFromSource(node.Instance) != prefab))
-                {
+                if (node.Instance == null || (node.Instance != null &&
+                                              PrefabUtility.GetCorrespondingObjectFromSource(node.Instance) != prefab))
                     node.CreateInstance(prefab);
-                }
 
                 if (node.Instance.name != prefab.name)
                     node.Instance.name = prefab.name;
             }
 
 
-            if (node.Block != null)
-            {
-                node.Block.OnInstanceUpdate(node);
-            }
+            if (node.Block != null) node.Block.OnInstanceUpdate(node);
 
-            if (node.Instance != null)
-            {
-                node.UpdateInstanceTransform();
-            }
+            if (node.Instance != null) node.UpdateInstanceTransform();
 
 #if UNITY_EDITOR
             if (node.Instance != null)
@@ -223,6 +211,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 
 
         #region DEBUGGING
+
         private static void DebugNeighbors(InternalNode node, bool[] neighbors)
         {
             var middle = node.InternalPosition.ToString();
@@ -231,11 +220,11 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             middle += $"\n{neighbors[15]}  {neighbors[16]}  {neighbors[17]}";
             Debug.Log(middle);
         }
+
         #endregion
 
         public static void Randomize(this InternalNode node, bool dontAllowSame = true)
         {
-
             if (node.TryRandomize(out var random, dontAllowSame))
             {
                 node.CreateInstance(random);
@@ -273,7 +262,9 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             var instance = dontAllowSame ? node.Instance : null;
 
             //case we can onyl place default:
-            random = rule == null ? tile.GetRandomDefaultExclude(instance) :
+            random = rule == null
+                ? tile.GetRandomDefaultExclude(instance)
+                :
                 //case: a rule applies.
                 rule.GetRandomObjectExclude(instance);
 
@@ -284,7 +275,8 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
         {
             if (node.Instance != null)
             {
-                node.Instance.transform.position = node.Layer.Grid.ToWorldPoint((Vector3)node.InternalPosition * node.Layer.Grid.Unit);
+                node.Instance.transform.position =
+                    node.Layer.Grid.ToWorldPoint((Vector3)node.InternalPosition * node.Layer.Grid.Unit);
                 node.Instance.transform.rotation = node.Layer.Grid.transform.rotation * node.LocalRotation;
             }
         }
@@ -302,6 +294,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 Debug.LogError("Tile ID unset. Do you have any unlinked blocks in your scene?");
                 return;
             }
+
             var anchor = node.Layer.GetAnchor(node.TileID);
             if (!anchor)
                 anchor = node.Layer.EnsureAnchor(node.TileGroupName, node.TileName, node.TileID);
@@ -348,21 +341,22 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             var destinationType = destination.GetType();
             if (destinationType.IsSubclassOf(originalType))
             {
-                var originalFields = originalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+                var originalFields =
+                    originalType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
                 foreach (var field in originalFields)
                     field.SetValue(destination, field.GetValue(original));
             }
             else if (originalType.IsSubclassOf(destinationType))
             {
-                var destinationFields = destinationType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
+                var destinationFields =
+                    destinationType.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic);
                 foreach (var field in destinationFields)
                     field.SetValue(destination, field.GetValue(original));
-
             }
         }
 
         /// <summary>
-        /// utility function for deepcloing any serializable class.
+        ///     utility function for deepcloing any serializable class.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="obj"></param>
@@ -377,7 +371,8 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             return (T)formatter.Deserialize(ms);
         }
 
-        public static Autotiles3D_Anchor EnsureAnchor(this Autotiles3D_TileLayer layer, string group, string tileName, int tileID)
+        public static Autotiles3D_Anchor EnsureAnchor(this Autotiles3D_TileLayer layer, string group, string tileName,
+            int tileID)
         {
             if (!layer.Anchors.ContainsKey(tileID))
             {
@@ -397,27 +392,26 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
         }
 
 
-        public static List<Vector3Int> GetNeighborsPosition(this Autotiles3D_TileLayer layer, Vector3Int internalPosition)
+        public static List<Vector3Int> GetNeighborsPosition(this Autotiles3D_TileLayer layer,
+            Vector3Int internalPosition)
         {
             var myNeighbors = new List<Vector3Int>();
             for (var x = internalPosition.x - 1; x <= internalPosition.x + 1; x++)
+            for (var y = internalPosition.y - 1; y <= internalPosition.y + 1; y++)
+            for (var z = internalPosition.z - 1; z <= internalPosition.z + 1; z++)
             {
-                for (var y = internalPosition.y - 1; y <= internalPosition.y + 1; y++)
-                {
-                    for (var z = internalPosition.z - 1; z <= internalPosition.z + 1; z++)
-                    {
-                        var iteration = new Vector3Int(x, y, z);
-                        if (iteration == internalPosition)
-                            continue;
-                        if (layer.ContainsKey(iteration))
-                            myNeighbors.Add(iteration);
-                    }
-                }
+                var iteration = new Vector3Int(x, y, z);
+                if (iteration == internalPosition)
+                    continue;
+                if (layer.ContainsKey(iteration))
+                    myNeighbors.Add(iteration);
             }
+
             return myNeighbors;
         }
 
-        public static bool[] GetNeighborsBoolSelfSpace(this Autotiles3D_TileLayer layer, Vector3Int internalPosition, Quaternion localRotation)
+        public static bool[] GetNeighborsBoolSelfSpace(this Autotiles3D_TileLayer layer, Vector3Int internalPosition,
+            Quaternion localRotation)
         {
             var neighbors = new bool[27];
             var deltay = 0;
@@ -429,23 +423,24 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                     var deltax = 0;
                     for (var x = -1; x <= 1; x++)
                     {
-                        var iteration = Vector3Int.RoundToInt(internalPosition + localRotation * new Vector3Int(x, y, z));
+                        var iteration =
+                            Vector3Int.RoundToInt(internalPosition + localRotation * new Vector3Int(x, y, z));
 
                         if (iteration != internalPosition)
-                        {
                             if (layer.ContainsKey(iteration))
                                 neighbors[deltay * 9 + deltaz * 3 + deltax] = true;
-                        }
                         deltax++;
                     }
+
                     deltaz++;
                 }
+
                 deltay++;
             }
+
             return neighbors;
         }
     }
-
 }
 
 #endif

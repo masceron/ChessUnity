@@ -1,17 +1,30 @@
-using MemoryPack;
-using Game.Managers;
 using System;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class HourglassJellyActive: Action, ISkills
+    public partial class HourglassJellyActive : Action, ISkills
     {
+        [MemoryPackInclude] private int _destination;
+
         [MemoryPackConstructor]
-        private HourglassJellyActive() { }
+        private HourglassJellyActive()
+        {
+        }
+
+        public HourglassJellyActive(int maker, int target) : base(maker)
+        {
+            Maker = maker;
+            Target = target;
+            var piece = PieceOn(target);
+            _destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
+        }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -20,30 +33,18 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -25;
             return 0;
         }
-        [MemoryPackInclude]
-        private int _destination;
-        public HourglassJellyActive(int maker, int target) : base(maker)
-        {
-            Maker = maker;
-            Target = target;
-            var piece = PieceOn(target);
-            _destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
-        }
+
         protected override void Animate()
         {
             PieceManager.Ins.Move(Target, _destination);
             var destinationPiece = PieceOn(_destination);
-            if (destinationPiece != null){
-                PieceManager.Ins.Destroy(_destination);
-            }
+            if (destinationPiece != null) PieceManager.Ins.Destroy(_destination);
         }
+
         protected override void ModifyGameState()
         {
             var destinationPiece = PieceOn(_destination);
-            if (destinationPiece != null)
-            {
-                MatchManager.Ins.GameState.Destroy(_destination);
-            }
+            if (destinationPiece != null) MatchManager.Ins.GameState.Destroy(_destination);
             MatchManager.Ins.GameState.Move(Target, _destination);
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }

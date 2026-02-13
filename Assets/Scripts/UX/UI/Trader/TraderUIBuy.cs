@@ -1,18 +1,19 @@
-using UnityEngine;
 using Game.Managers;
 using Game.Save.Player;
 using Game.Save.Relics;
+using UnityEngine;
 
 namespace UX.UI.Trader
 {
     public class TraderUIBuy : MonoBehaviour
     {
-        [Header("Content Containers")]
-        [SerializeField] private Transform relicsContent;
+        [Header("Content Containers")] [SerializeField]
+        private Transform relicsContent;
+
         [SerializeField] private Transform creaturesContent;
 
-        [Header("Settings")]
-        [SerializeField] private GameObject itemPrefab;
+        [Header("Settings")] [SerializeField] private GameObject itemPrefab;
+
         [SerializeField] private TraderConfirmPopup confirmPopup;
 
 
@@ -41,7 +42,7 @@ namespace UX.UI.Trader
             ClearContent(creaturesContent);
 
             // TODO: Retrieve data from AssetManager and PlayerSaveLoader
-            
+
             // 1. Get all available items
             var allRelics = AssetManager.Ins.RelicData;
             var allCreatures = AssetManager.Ins.PieceData;
@@ -52,34 +53,29 @@ namespace UX.UI.Trader
 
             // 3. Load Relics (Exclude owned)
             foreach (var relic in allRelics)
-            {
-                if (!ownedRelics.Contains(relic.Key)) SpawnItem(relic.Value, TraderItemUIType.Relic, relicsContent);
-            }
+                if (!ownedRelics.Contains(relic.Key))
+                    SpawnItem(relic.Value, TraderItemUIType.Relic, relicsContent);
 
             // 4. Load Creatures (Exclude owned)
             foreach (var creature in allCreatures)
-            {
-                if (!ownedCreatures.Contains(creature.Key)) SpawnItem(creature.Value, TraderItemUIType.Creature, creaturesContent);
-            }
+                if (!ownedCreatures.Contains(creature.Key))
+                    SpawnItem(creature.Value, TraderItemUIType.Creature, creaturesContent);
         }
 
         private void ClearContent(Transform content)
         {
             if (content == null) return;
-            foreach (Transform child in content)
-            {
-                Destroy(child.gameObject);
-            }
+            foreach (Transform child in content) Destroy(child.gameObject);
         }
 
-        private void SpawnItem(object data, TraderItemUIType type , Transform parent)
+        private void SpawnItem(object data, TraderItemUIType type, Transform parent)
         {
             if (itemPrefab == null || parent == null) return;
 
             var newItem = Instantiate(itemPrefab, parent);
             // TODO: Setup item UI
             var itemUI = newItem.GetComponent<TraderItemUI>();
-            itemUI.Setup(data, type, isSell: false);
+            itemUI.Setup(data, type, false);
             itemUI.OnItemClicked += OnItemClicked;
         }
 

@@ -9,7 +9,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class FlyingfishPassive: Effect, IOnMoveGenTrigger, IAfterPieceActionTrigger
+    public class FlyingfishPassive : Effect, IOnMoveGenTrigger, IAfterPieceActionTrigger
     {
         public FlyingfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_flying_fish_passive")
         {
@@ -21,7 +21,7 @@ namespace Game.Effects.SpecialAbility
         {
             if (action.Maker != Piece.Pos) return;
             if (action is not FlyingFishMove flyingFishMove) return;
-            
+
             var (rankFrom, fileFrom) = RankFileOf(flyingFishMove.From);
             var (rankTo, fileTo) = RankFileOf(flyingFishMove.Target);
             var board = PieceBoard();
@@ -46,12 +46,8 @@ namespace Game.Effects.SpecialAbility
         {
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
-            {
                 if (actions[i] is IQuiets)
-                {
                     actions[i] = new FlyingFishMove(Piece.Pos, actions[i].Target);
-                }
-            }
         }
     }
 }

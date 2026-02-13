@@ -1,7 +1,7 @@
-using Game.Piece.PieceLogic.Commons;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
@@ -9,12 +9,23 @@ namespace Game.Tile
     {
         private bool _canPurifyEndTurn = true;
 
-        public new EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
-
-        public EndTurnEffectType EndTurnEffectType { get; }
         public HydroidThicket(bool color) : base(color)
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
+        }
+
+        public new EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
+
+        public EndTurnEffectType EndTurnEffectType { get; }
+
+        public void OnCallEnd(Action.Action lastMainAction)
+        {
+            if (PieceOnFormation == null) return;
+            if (_canPurifyEndTurn)
+            {
+                ActionManager.EnqueueAction(new Purify(Pos, PieceOnFormation.Pos));
+                _canPurifyEndTurn = false;
+            }
         }
 
         protected override void OnPieceEnter(PieceLogic piece)
@@ -23,23 +34,19 @@ namespace Game.Tile
             PieceOnFormation = piece;
             ActionManager.EnqueueAction(new Purify(Pos, piece.Pos));
         }
+
         public override FormationType GetFormationType()
         {
             return FormationType.HydroidThicket;
         }
+
         public override int GetValueForAI()
         {
             return 50;
         }
-        public void OnCall(Action.Action action) { }
-        public void OnCallEnd(Action.Action lastMainAction)
+
+        public void OnCall(Action.Action action)
         {
-            if (PieceOnFormation == null){ return; }
-            if (_canPurifyEndTurn)
-            {
-                ActionManager.EnqueueAction(new Purify(Pos, PieceOnFormation.Pos));
-                _canPurifyEndTurn = false;
-            }
         }
     }
 }

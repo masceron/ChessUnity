@@ -4,12 +4,15 @@ using MemoryPack;
 
 namespace Game.Action.Quiets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class NormalMove: Action, IQuiets
+    public partial class NormalMove : Action, IQuiets
     {
         [MemoryPackConstructor]
-        private NormalMove() { }
+        private NormalMove()
+        {
+        }
 
         public NormalMove(int maker, int target) : base(maker)
         {

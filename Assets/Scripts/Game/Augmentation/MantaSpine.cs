@@ -7,17 +7,18 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MantaSpine : Augmentation
     {
-        public MantaSpine() : base(AugmentationName.MantaSpine, AugmentationRarity.Rare, AugmentationSlot.Fin, null, null)
+        public MantaSpine() : base(AugmentationName.MantaSpine, AugmentationRarity.Rare, AugmentationSlot.Fin, null,
+            null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
+
         public override void SetTarget(PieceLogic target)
         {
-
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.ScrapCollector, true);
             PassiveEffects.Add(new Shield(Target));

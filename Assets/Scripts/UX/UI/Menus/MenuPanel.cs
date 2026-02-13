@@ -3,7 +3,8 @@ using UX.UI.Loader;
 
 namespace UX.UI.Menus
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MenuPanel : MonoBehaviour
     {
         public void OnClickPlay()

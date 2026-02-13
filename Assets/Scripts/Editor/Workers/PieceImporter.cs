@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
@@ -12,17 +13,6 @@ namespace Editor.Workers
     {
         private const string PiecesManagerPath = "Assets/Data/Collections/PiecesData.asset";
 
-        private static PiecesData LoadCentralDataManager()
-        {
-            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(PiecesManagerPath);
-            if (!centralData)
-            {
-                Debug.LogError($"Central Data Manager asset not found at: {PiecesManagerPath}.");
-            }
-
-            return centralData;
-        }
-
         private static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets,
             string[] movedAssets, string[] movedFromAssetPaths)
         {
@@ -34,7 +24,7 @@ namespace Editor.Workers
                 var pieceInfo = AssetDatabase.LoadAssetAtPath<PieceInfo>(path);
 
                 if (!pieceInfo) continue;
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var fileName = Path.GetFileNameWithoutExtension(path);
                 var newKey = "piece_" + ToSnakeCase(fileName);
 
                 if (string.IsNullOrEmpty(pieceInfo.key))
@@ -75,6 +65,14 @@ namespace Editor.Workers
 
                 return text.ToLower();
             }
+        }
+
+        private static PiecesData LoadCentralDataManager()
+        {
+            var centralData = AssetDatabase.LoadAssetAtPath<PiecesData>(PiecesManagerPath);
+            if (!centralData) Debug.LogError($"Central Data Manager asset not found at: {PiecesManagerPath}.");
+
+            return centralData;
         }
 
         private static void UpdateLocalizationTables(PieceInfo pieceInfo)

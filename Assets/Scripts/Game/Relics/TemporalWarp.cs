@@ -7,7 +7,8 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TemporalWarp : RelicLogic
     {
         public TemporalWarp(RelicConfig config) : base(config)
@@ -17,6 +18,7 @@ namespace Game.Relics
             TimeCooldown = 2;
             CurrentCooldown = 0;
         }
+
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
@@ -34,7 +36,6 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            
         }
     }
 }

@@ -6,26 +6,25 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public class Autotiles3D_SettingsWindow : EditorWindow
     {
-        [MenuItem("Tools/Autotiles3D/Settings")]
-        static void OpenSettingsWindow()
+        public static GUIStyle RichStyle
         {
-#if UNITY_2020_1_OR_NEWER
-            EditorWindow.CreateWindow<Autotiles3D_SettingsWindow>("Autotiles 3D Settings", typeof(SceneView));
-#else
-
-            var window = EditorWindow.CreateInstance<Autotiles3D_SettingsWindow>();// ("Autotiles 3D Settings", typeof(SceneView));
-            window.Show();
-#endif
+            get
+            {
+                var style = new GUIStyle();
+                style.richText = true;
+                style.normal.textColor = Color.white;
+                return style;
+            }
         }
 
         private void OnGUI()
         {
-
             var tileGroups = Autotiles3DUtility.LoadTileGroups();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-            EditorGUILayout.LabelField($"Found <color=yellow>{tileGroups.Count}</color> TileGroups in Resources", RichStyle);
+            EditorGUILayout.LabelField($"Found <color=yellow>{tileGroups.Count}</color> TileGroups in Resources",
+                RichStyle);
 
             foreach (var tileGroup in tileGroups)
             {
@@ -38,6 +37,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
                     EditorGUIUtility.PingObject(tileGroup);
                     Selection.activeObject = tileGroup;
                 }
+
                 EditorGUILayout.EndHorizontal();
             }
 
@@ -47,7 +47,9 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
             {
                 Autotiles3DUtility.EnsureFolders();
                 var newTileGroup = CreateInstance<Autotiles3D_TileGroup>();
-                string uniquepath = AssetDatabase.GenerateUniqueAssetPath("Assets/Third Party/Autotiles3D/Resources/NewTileGroup.asset");
+                var uniquepath =
+                    AssetDatabase.GenerateUniqueAssetPath(
+                        "Assets/Third Party/Autotiles3D/Resources/NewTileGroup.asset");
                 AssetDatabase.CreateAsset(newTileGroup, uniquepath);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -61,29 +63,32 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.LabelField("<color=yellow>Remark </color>:", RichStyle);
-            EditorGUILayout.LabelField("Not using the Undo API (e.g. disabling undo functionality) is <color=lime>recommended</color> because Unity's Undo functionality does not scale well with placing/removing lots of objects.", RichStyle);
-            EditorGUILayout.LabelField("You can enable this feature, but please be aware that editor perfomance can slow down over time when working with thousands of tiles", RichStyle);
+            EditorGUILayout.LabelField(
+                "Not using the Undo API (e.g. disabling undo functionality) is <color=lime>recommended</color> because Unity's Undo functionality does not scale well with placing/removing lots of objects.",
+                RichStyle);
+            EditorGUILayout.LabelField(
+                "You can enable this feature, but please be aware that editor perfomance can slow down over time when working with thousands of tiles",
+                RichStyle);
 
             EditorGUIUtility.labelWidth = 200;
-            bool useUndo = EditorGUILayout.Toggle("Use Undo API (recommended off)", Autotiles3DSettings.EditorInstance.UseUndoAPI);
+            var useUndo = EditorGUILayout.Toggle("Use Undo API (recommended off)",
+                Autotiles3DSettings.EditorInstance.UseUndoAPI);
             if (useUndo != Autotiles3DSettings.EditorInstance.UseUndoAPI)
-            {
                 Autotiles3DSettings.EditorInstance.SetUndoAPI(useUndo);
-            }
             EditorGUIUtility.labelWidth = 0;
             EditorGUILayout.EndVertical();
         }
 
-        public static GUIStyle RichStyle
+        [MenuItem("Tools/Autotiles3D/Settings")]
+        private static void OpenSettingsWindow()
         {
-            get
-            {
-                var style = new GUIStyle();
-                style.richText = true;
-                style.normal.textColor = Color.white;
-                return style;
-            }
+#if UNITY_2020_1_OR_NEWER
+            CreateWindow<Autotiles3D_SettingsWindow>("Autotiles 3D Settings", typeof(SceneView));
+#else
+            var window =
+ EditorWindow.CreateInstance<Autotiles3D_SettingsWindow>();// ("Autotiles 3D Settings", typeof(SceneView));
+            window.Show();
+#endif
         }
-
     }
 }

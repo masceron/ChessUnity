@@ -7,20 +7,12 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Carapace: Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Carapace : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
         public Carapace(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_carapace")
-        {}
-
-        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;
-
-        public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success
-                || (action.Flag & ActionFlag.Unblockable) != 0) return;
-            
-            action.Result = ResultFlag.Parry;
         }
 
         AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Kill;
@@ -30,10 +22,17 @@ namespace Game.Effects.Buffs
             if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Blocked) return;
 
             ActionManager.EnqueueAction(new RemoveEffect(this));
-            if (MatchManager.Roll(25))
-            {
-                ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));
-            }
+            if (MatchManager.Roll(25)) ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));
+        }
+
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;
+
+        public void OnCallBeforePieceAction(Action.Action action)
+        {
+            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success
+                || (action.Flag & ActionFlag.Unblockable) != 0) return;
+
+            action.Result = ResultFlag.Parry;
         }
 
         public override int GetValueForAI()

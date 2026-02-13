@@ -58,7 +58,6 @@ namespace Game.Action
             var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionTrigger>();
 
             if (mainAction is IRelicAction iRelicAction)
-            {
                 foreach (var listener in afterRelicActionListeners)
                 {
                     _buffering = true;
@@ -68,9 +67,7 @@ namespace Game.Action
 
                     ProcessStack();
                 }
-            }
             else if (mainAction is not IInternal)
-            {
                 foreach (var listener in afterPieceActionListeners.Where(listener =>
                              BoardUtils.IsAlive(((Effect)listener).Piece)))
                 {
@@ -81,12 +78,11 @@ namespace Game.Action
 
                     ProcessStack();
                 }
-            }
         }
 
         private static void ProcessStack(int targetDepth = 0)
         {
-            while (_actionStack.Count > targetDepth) 
+            while (_actionStack.Count > targetDepth)
             {
                 var currentActionStack = _actionStack.Peek();
                 var currentAction = currentActionStack.Action;
@@ -102,6 +98,7 @@ namespace Game.Action
                         case IRelicAction relicAction: BoardUtils.NotifyBeforeRelicAction(relicAction); break;
                         default: BoardUtils.NotifyBeforePieceAction(currentAction); break;
                     }
+
                     _buffering = false;
                     FlushBuffer();
 
@@ -164,13 +161,16 @@ namespace Game.Action
             CurrentPhase = Phase.AfterEndTurn;
 
             var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnTrigger>();
-            
+
             endTurnListeners.ForEach(effect =>
             {
                 if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
-        
+
                 var shouldTrigger = false;
-                if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn) shouldTrigger = true;
+                if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
+                {
+                    shouldTrigger = true;
+                }
                 else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
                 {
                     if (effect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn) shouldTrigger = true;
@@ -181,17 +181,17 @@ namespace Game.Action
                 }
 
                 if (!shouldTrigger) return;
-                var depthBefore = _actionStack.Count; 
-                    
-                _buffering = true; 
+                var depthBefore = _actionStack.Count;
+
+                _buffering = true;
                 effect.OnCallEnd(mainAction);
-                _buffering = false; 
+                _buffering = false;
 
                 FlushBuffer();
-                    
+
                 ProcessStack(depthBefore);
             });
-            
+
             var countdownDepth = _actionStack.Count;
             _buffering = true;
             _state.EffectCountdown();
@@ -225,10 +225,7 @@ namespace Game.Action
             _actionStack.Push(new StackAction(action));
             ProcessStack();
 
-            if (!ShouldEndTurn(action))
-            {
-                return false;
-            }
+            if (!ShouldEndTurn(action)) return false;
 
             EndTurnProcess(action);
             StartTurnProcess(action);
@@ -238,23 +235,16 @@ namespace Game.Action
         public static void EnqueueAction(Action queueAction)
         {
             if (_buffering)
-            {
                 _buffer.Add(new StackAction(queueAction));
-            }
             else
-            {
                 _actionStack.Push(new StackAction(queueAction));
-            }
         }
 
         private static void FlushBuffer()
         {
             if (_buffer.Count == 0) return;
 
-            for (var i = _buffer.Count - 1; i >= 0; i--)
-            {
-                _actionStack.Push(_buffer[i]);
-            }
+            for (var i = _buffer.Count - 1; i >= 0; i--) _actionStack.Push(_buffer[i]);
 
             _buffer.Clear();
         }

@@ -7,9 +7,8 @@ using ZLinq;
 namespace Game.Tile
 {
     /// <summary>
-    /// Urchin Field Tile
+    ///     Urchin Field Tile
     /// </summary>
-    ///       
     public class Saprolegnia : Formation
     {
         public Saprolegnia(bool haveDuration, bool color) : base(color)
@@ -40,5 +39,4 @@ namespace Game.Tile
             return -100;
         }
     }
-
 }

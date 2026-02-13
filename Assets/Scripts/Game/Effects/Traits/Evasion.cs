@@ -1,18 +1,19 @@
 ﻿using Game.Action;
-using Game.Managers;
-using static Game.Common.BoardUtils;
-using Game.Augmentation;
-using Game.Piece.PieceLogic.Commons;
 using Game.Action.Captures;
+using Game.Augmentation;
 using Game.Effects.Triggers;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
+using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Evasion: Effect, IBeforePieceActionTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Evasion : Effect, IBeforePieceActionTrigger
     {
-
-        public Evasion(int duration, int probability, PieceLogic piece) : base(duration, probability, piece, "effect_evasion")
+        public Evasion(int duration, int probability, PieceLogic piece) : base(duration, probability, piece,
+            "effect_evasion")
         {
         }
 
@@ -35,14 +36,15 @@ namespace Game.Effects.Traits
             }
 
             var pieceTarget = PieceOn(action.Maker);
-            if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy)) 
+            if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy))
             {
                 if (!MatchManager.Roll(Strength - 15)) return;
-            } else
+            }
+            else
             {
                 if (!MatchManager.Roll(Strength)) return;
             }
-            
+
             action.Result = ResultFlag.Evade;
         }
 

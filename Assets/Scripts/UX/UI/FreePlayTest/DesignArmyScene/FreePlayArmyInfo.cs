@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace UX.UI.FreePlayTest.DesignArmyScene
 {
-    public class FreePlayArmyInfo: MonoBehaviour
+    public class FreePlayArmyInfo : MonoBehaviour
     {
         [SerializeField] private TMP_Text boardSize;
         [SerializeField] private Button boardSizeButton;

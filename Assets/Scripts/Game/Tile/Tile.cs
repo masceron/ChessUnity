@@ -6,37 +6,28 @@ using Color = Game.Managers.Color;
 
 namespace Game.Tile
 {
-
-
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Tile : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        public int rank;
-        public int file;
-        public Formation tileEffect;
-        [SerializeField] public Color color;
-
-        // đỉnh trong ô 
-        public Corner corner { get; private set; }
         public delegate void OnPointerEnterHandler(Tile thisTile);
 
         public static OnPointerEnterHandler OnPointEnterHandle;
+        public int rank;
+        public int file;
+        [SerializeField] public Color color;
+        public Formation tileEffect;
+
+        // đỉnh trong ô 
+        public Corner corner { get; private set; }
+
         public void Start()
         {
             if (color == Color.None) gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
         }
 
-        public void Spawn(int pos)
-        {
-            rank = RankOf(pos);
-            file = FileOf(pos);
-            
-            transform.position = new Vector3(rank, 1, file);
-        }
-
         public void OnPointerClick(PointerEventData data)
         {
-            
             var processor = MatchManager.Ins.InputProcessor;
             if (!processor) return;
             switch (data.button)
@@ -52,7 +43,7 @@ namespace Game.Tile
                     return;
             }
         }
-        
+
         public void OnPointerEnter(PointerEventData eventData)
         {
             corner = TileManager.Ins.IndexToCorner(eventData.pointerCurrentRaycast.worldPosition, this);
@@ -65,8 +56,16 @@ namespace Game.Tile
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (MatchManager.Ins.InputProcessor) 
+            if (MatchManager.Ins.InputProcessor)
                 MatchManager.Ins.InputProcessor.Hover(-1);
+        }
+
+        public void Spawn(int pos)
+        {
+            rank = RankOf(pos);
+            file = FileOf(pos);
+
+            transform.position = new Vector3(rank, 1, file);
         }
 
         public int GetTileValue()

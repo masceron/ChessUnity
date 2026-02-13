@@ -1,16 +1,19 @@
-using MemoryPack;
 using Game.Action.Internal;
+using MemoryPack;
 using static Game.Common.BoardUtils;
+
 namespace Game.Action.Relics
 {
     [MemoryPackable]
     public partial class OvergrownSlugAction : Action, IRelicAction
     {
-        [MemoryPackConstructor]
-        private OvergrownSlugAction() { }
-
         private const string EffectName = "effect_poison";
-        
+
+        [MemoryPackConstructor]
+        private OvergrownSlugAction()
+        {
+        }
+
         public OvergrownSlugAction(int maker) : base(maker)
         {
             Maker = maker;
@@ -20,11 +23,11 @@ namespace Game.Action.Relics
         {
             var (rank, file) = RankFileOf(Maker);
             var caller = PieceOn(Maker);
-            
+
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
                 if (!VerifyBounds(rankOff)) continue;
-                
+
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     var p = PieceOn(IndexOf(rankOff, fileOff));
@@ -33,10 +36,7 @@ namespace Game.Action.Relics
                     if (poison != null)
                     {
                         poison.Strength--;
-                        if (poison.Strength <= 0)
-                        {
-                            ActionManager.EnqueueAction(new RemoveEffect(poison));
-                        }
+                        if (poison.Strength <= 0) ActionManager.EnqueueAction(new RemoveEffect(poison));
                     }
                 }
             }

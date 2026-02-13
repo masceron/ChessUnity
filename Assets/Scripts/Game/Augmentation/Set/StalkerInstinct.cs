@@ -1,7 +1,7 @@
-using Game.Effects;
 using System.Collections.Generic;
-using Game.Piece.PieceLogic.Commons;
+using Game.Effects;
 using Game.Effects.Augmentation;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation.Set
 {
@@ -15,5 +15,4 @@ namespace Game.Augmentation.Set
             };
         }
     }
-
 }

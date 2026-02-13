@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 
 namespace Game.Effects.Others
 {
@@ -28,14 +29,13 @@ namespace Game.Effects.Others
             {
                 var piecePos = BoardUtils.IndexOf(rankOff, fileOff);
                 var piece = BoardUtils.PieceOn(piecePos);
-                
+
                 if (piece == null) continue;
                 surroundingPieces.Add(piece);
             }
-            
-            var index = UnityEngine.Random.Range(0, surroundingPieces.Count);
+
+            var index = Random.Range(0, surroundingPieces.Count);
             ActionManager.EnqueueAction(new ApplyEffect(new Silenced(surroundingPieces[index]), Piece));
-            
         }
     }
 }

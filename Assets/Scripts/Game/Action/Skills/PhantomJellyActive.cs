@@ -1,17 +1,26 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class PhantomJellyActive: Action, ISkills
+    public partial class PhantomJellyActive : Action, ISkills
     {
         [MemoryPackConstructor]
-        private PhantomJellyActive() { }
+        private PhantomJellyActive()
+        {
+        }
+
+        public PhantomJellyActive(int maker) : base(maker)
+        {
+            Maker = maker;
+            Target = maker;
+        }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -20,15 +29,9 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -30;
             return 0;
         }
-        public PhantomJellyActive(int maker) : base(maker)
-        {
-            Maker = maker;
-            Target = maker;
-        }
 
         protected override void Animate()
         {
-            
         }
 
         protected override void ModifyGameState()
@@ -48,9 +51,7 @@ namespace Game.Action.Skills
                     var p = PieceOn(idx);
 
                     if (p != null && p.Color != caller.Color)
-                    {
                         ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p), PieceOn(Maker)));
-                    }
                 }
             }
         }

@@ -2,8 +2,7 @@
 
 namespace UX.UI.Ingame.EditLineup
 {
-    public class LineupInfo: MonoBehaviour
+    public class LineupInfo : MonoBehaviour
     {
-        
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using UnityEditor;
@@ -11,6 +12,10 @@ namespace Editor.Validators
     [InitializeOnLoad]
     public class ActionManagerGuard : IPreprocessBuildWithReport
     {
+        private const string TargetMethod = "ExecuteImmediately";
+        private const string TargetClass = "ActionManager";
+        private const string AssemblyPath = "Library/ScriptAssemblies/Assembly-CSharp.dll";
+
         static ActionManagerGuard()
         {
             EditorApplication.delayCall += () => ScanViolations();
@@ -21,15 +26,9 @@ namespace Editor.Validators
         public void OnPreprocessBuild(BuildReport report)
         {
             if (ScanViolations())
-            {
                 throw new BuildFailedException(
                     "⛔ Architecture Violation: 'ExecuteImmediately' detected in illegal locations. Check console for details.");
-            }
         }
-
-        private const string TargetMethod = "ExecuteImmediately";
-        private const string TargetClass = "ActionManager";
-        private const string AssemblyPath = "Library/ScriptAssemblies/Assembly-CSharp.dll";
 
         private static bool ScanViolations()
         {
@@ -38,7 +37,7 @@ namespace Editor.Validators
             {
                 assembly = AssemblyDefinition.ReadAssembly(AssemblyPath);
             }
-            catch (System.IO.FileNotFoundException)
+            catch (FileNotFoundException)
             {
                 Debug.LogWarning("⚠️ Could not find Assembly-CSharp.dll. Skipping architecture check.");
                 return false;
@@ -75,15 +74,9 @@ namespace Editor.Validators
 
         private static bool IsUsageAllowed(TypeDefinition callerType, MethodDefinition callerMethod)
         {
-            if (callerType.Name == "MatchManager")
-            {
-                return true;
-            }
+            if (callerType.Name == "MatchManager") return true;
 
-            if (InheritsFrom(callerType, "PieceLogic"))
-            {
-                return callerMethod.Name == ".ctor";
-            }
+            if (InheritsFrom(callerType, "PieceLogic")) return callerMethod.Name == ".ctor";
 
             return false;
         }
@@ -100,13 +93,9 @@ namespace Editor.Validators
                 try
                 {
                     if (current is TypeDefinition { BaseType: not null } def)
-                    {
                         current = def.BaseType;
-                    }
                     else
-                    {
                         break;
-                    }
                 }
                 catch
                 {
@@ -119,7 +108,7 @@ namespace Editor.Validators
 
         private static void LogViolation(TypeDefinition type, MethodDefinition method)
         {
-            Debug.LogError($"ERROR: " + $"Caller: <b>{type.Name}</b>::<b>{method.Name}</b>\n" +
+            Debug.LogError("ERROR: " + $"Caller: <b>{type.Name}</b>::<b>{method.Name}</b>\n" +
                            $"In calling <b>{TargetClass}.{TargetMethod}</b>. This function is strictly limited to PieceLogic Constructors only.");
         }
     }

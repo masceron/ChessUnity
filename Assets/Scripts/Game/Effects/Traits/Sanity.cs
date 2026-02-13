@@ -1,6 +1,6 @@
-using Game.Action.Internal;
 using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Internal;
 using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -15,6 +15,7 @@ namespace Game.Effects.Traits
             "effect_fear",
             "effect_taunted"
         };
+
         public Sanity(int duration, PieceLogic owner) : base(duration, 1, owner, "effect_sanity")
         {
         }
@@ -27,10 +28,7 @@ namespace Game.Effects.Traits
 
             var effect = applyEffect.Effect;
 
-            if (_blockedEffects.Contains(effect.EffectName))
-            {
-                applyEffect.Result = ResultFlag.Incorruptible;
-            }
+            if (_blockedEffects.Contains(effect.EffectName)) applyEffect.Result = ResultFlag.Incorruptible;
         }
 
         public override int GetValueForAI()
@@ -39,4 +37,3 @@ namespace Game.Effects.Traits
         }
     }
 }
-

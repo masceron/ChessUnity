@@ -5,12 +5,14 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ScrapCollector: Effect, IEndTurnTrigger
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ScrapCollector : Effect, IEndTurnTrigger
     {
+        private EndTurnTriggerPriority _priority;
+
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TimeLeft = 3;
-        private EndTurnTriggerPriority _priority;
 
         public ScrapCollector(PieceLogic piece) : base(-1, 1, piece, "effect_scrap_collector")
         {
@@ -30,6 +32,5 @@ namespace Game.Effects.Augmentation
         {
             return base.GetValueForAI() + 80 - Strength * 10;
         }
-    
     }
 }

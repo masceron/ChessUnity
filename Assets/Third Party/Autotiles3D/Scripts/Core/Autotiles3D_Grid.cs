@@ -8,7 +8,7 @@ namespace Third_Party.Autotiles3D.Scripts.Core
     public enum GridMode
     {
         Center,
-        Origin,
+        Origin
     }
 
     public enum LevelSize
@@ -16,22 +16,29 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         Finite,
         Infinite
     }
+
     public class Autotiles3D_Grid : MonoBehaviour
     {
         public LevelSize GridSize;
-        [Min(0)]
-        public int Height = 5;
-        [Min(0)]
-        public int Width = 5;
-        [Min(0)]
-        public float Unit = 1f;
-        public List<Autotiles3D_TileLayer> TileLayers = new List<Autotiles3D_TileLayer>();
+
+        [Min(0)] public int Height = 5;
+
+        [Min(0)] public int Width = 5;
+
+        [Min(0)] public float Unit = 1f;
+
+        public List<Autotiles3D_TileLayer> TileLayers = new();
         [SerializeField] private int _LayerIndex;
-        public int LayerIndex { get { return _LayerIndex; } protected set { _LayerIndex = value; } }
+        public Action<EventType, Event, Vector3> OnGridHover;
 
         //ACTION TO SUBSCRIBE TO
         public Action<EventType, Event, Vector3> OnGridSelection;
-        public Action<EventType, Event, Vector3> OnGridHover;
+
+        public int LayerIndex
+        {
+            get => _LayerIndex;
+            protected set => _LayerIndex = value;
+        }
 
         public void SetLayerIndex(int index)
         {
@@ -39,8 +46,9 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         }
 
         #region EXPOSED API
+
         /// <summary>
-        /// Is the internalPosition exceeding the boundaries of the grid
+        ///     Is the internalPosition exceeding the boundaries of the grid
         /// </summary>
         /// <param name="internalPosition"></param>
         /// <returns></returns>
@@ -59,7 +67,8 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         }
 
         /// <summary>
-        /// Returns a list of all the blockbehaviours at the internalPosition. Can return multiple blocks if working with multiple layers
+        ///     Returns a list of all the blockbehaviours at the internalPosition. Can return multiple blocks if working with
+        ///     multiple layers
         /// </summary>
         /// <param name="internalPosition">the integer position of the block inside the grid</param>
         /// <returns></returns>
@@ -67,15 +76,14 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         {
             var blocks = new List<Autotiles3D_BlockBehaviour>();
             foreach (var layer in TileLayers)
-            {
                 if (layer.ContainsKey(internalPosition))
                     blocks.Add(layer.GetInternalNode(internalPosition).Block);
-            }
 
             return blocks;
         }
+
         /// <summary>
-        /// Grid to world position
+        ///     Grid to world position
         /// </summary>
         /// <param name="internalPosition"></param>
         /// <returns></returns>
@@ -83,8 +91,9 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         {
             return transform.TransformPoint(internalPosition);
         }
+
         /// <summary>
-        /// Grid to world direction
+        ///     Grid to world direction
         /// </summary>
         /// <param name="internalDirection"></param>
         /// <returns></returns>
@@ -92,12 +101,14 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         {
             return transform.TransformDirection(internalDirection);
         }
+
         #endregion
+
 #if UNITY_EDITOR
-        readonly Color outlineGridColor = new Color(0.811f, 0.811f, 0.811f, 0.686f);
-        readonly Color red = new Color(1.000f, 0.000f, 0.000f, 0.686f);
-        readonly Color green = new Color(0.172f, 1.000f, 0.000f, 0.686f);
-        readonly Color blue = new Color(0.000f, 0.568f, 1.000f, 0.686f);
+        private readonly Color outlineGridColor = new(0.811f, 0.811f, 0.811f, 0.686f);
+        private readonly Color red = new(1.000f, 0.000f, 0.000f, 0.686f);
+        private readonly Color green = new(0.172f, 1.000f, 0.000f, 0.686f);
+        private readonly Color blue = new(0.000f, 0.568f, 1.000f, 0.686f);
         public void DrawLevelGrid(int controlID, bool drawCurrentLayer = true)
         {
             var offset = -Vector3.one * 0.5f;
@@ -109,17 +120,20 @@ namespace Third_Party.Autotiles3D.Scripts.Core
             Handles.color = red;
             Handles.DrawLine(offset, offset + drawWidth * Vector3.right);
             if (GridSize == LevelSize.Infinite)
-                Handles.ArrowHandleCap(controlID, offset + (drawWidth + 0.2f) * Vector3.right, Quaternion.AngleAxis(90, Vector3.up), 0.5f, EventType.Repaint);
+                Handles.ArrowHandleCap(controlID, offset + (drawWidth + 0.2f) * Vector3.right,
+                    Quaternion.AngleAxis(90, Vector3.up), 0.5f, EventType.Repaint);
 
             Handles.color = green;
             Handles.DrawLine(offset, offset + Height * Vector3.up);
             if (GridSize == LevelSize.Infinite)
-                Handles.ArrowHandleCap(controlID, offset + (Height + 0.2f) * Vector3.up, Quaternion.AngleAxis(90, Vector3.left), 0.5f, EventType.Repaint);
+                Handles.ArrowHandleCap(controlID, offset + (Height + 0.2f) * Vector3.up,
+                    Quaternion.AngleAxis(90, Vector3.left), 0.5f, EventType.Repaint);
 
             Handles.color = blue;
             Handles.DrawLine(offset, offset + drawWidth * Vector3.forward);
             if (GridSize == LevelSize.Infinite)
-                Handles.ArrowHandleCap(controlID, offset + (drawWidth + 0.2f) * Vector3.forward, Quaternion.identity, 0.5f, EventType.Repaint);
+                Handles.ArrowHandleCap(controlID, offset + (drawWidth + 0.2f) * Vector3.forward, Quaternion.identity,
+                    0.5f, EventType.Repaint);
             Handles.color = outlineGridColor;
 
             //Draw Grid of Current Layer
@@ -134,7 +148,8 @@ namespace Third_Party.Autotiles3D.Scripts.Core
                 for (var i = 0; i < verts.Count; i++)
                     verts[i] += Vector3.up * _LayerIndex;
 
-                Handles.DrawSolidRectangleWithOutline(verts.ToArray(), new Color(0.2f, 0.2f, 0.2f, 0.2f), outlineGridColor);
+                Handles.DrawSolidRectangleWithOutline(verts.ToArray(), new Color(0.2f, 0.2f, 0.2f, 0.2f),
+                    outlineGridColor);
             }
         }
 #endif

@@ -12,21 +12,6 @@ namespace Editor.Validators
     [InitializeOnLoad]
     public class PriorityChecker : IPreprocessBuildWithReport
     {
-        public int callbackOrder => 0;
-
-        static PriorityChecker()
-        {
-            CheckPriorities();
-        }
-
-        public void OnPreprocessBuild(BuildReport report)
-        {
-            if (CheckPriorities())
-            {
-                throw new BuildFailedException("Trigger architecture violations found.");
-            }
-        }
-
         private static readonly Type[] TargetTypes =
         {
             typeof(IAfterPieceActionTrigger), typeof(IAfterRelicActionTrigger), typeof(IBeforeApplyEffectTrigger),
@@ -35,6 +20,18 @@ namespace Editor.Validators
             typeof(IOnApplyTrigger), typeof(IOnMoveGenTrigger), typeof(IOnPieceSpawnedTrigger),
             typeof(IOnRemoveTrigger), typeof(ISkillStatModifierTrigger), typeof(IStartTurnTrigger)
         };
+
+        static PriorityChecker()
+        {
+            CheckPriorities();
+        }
+
+        public int callbackOrder => 0;
+
+        public void OnPreprocessBuild(BuildReport report)
+        {
+            if (CheckPriorities()) throw new BuildFailedException("Trigger architecture violations found.");
+        }
 
         private static bool CheckPriorities()
         {

@@ -9,9 +9,12 @@ namespace UI.UIObject3D.Scripts
 {
     public static class UIObject3DUtilities
     {
-        [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+        private static readonly Dictionary<UIObject3D, Vector3> targetContainers = new();
+
+        [Il2CppSetOption(Option.NullChecks, false)]
+        [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
         public static Vector3 NormalizeRotation(Vector3 rotation)
-        {            
+        {
             return new Vector3(NormalizeAngle(rotation.x), NormalizeAngle(rotation.y), NormalizeAngle(rotation.z));
         }
 
@@ -19,16 +22,10 @@ namespace UI.UIObject3D.Scripts
         {
             value %= 360;
 
-            if (value < 0)
-            {
-                value += 360;
-            }            
+            if (value < 0) value += 360;
 
             return value;
         }
-
-        
-        private static readonly Dictionary<UIObject3D, Vector3> targetContainers = new();        
 
         internal static void RegisterTargetContainerPosition(UIObject3D uiObject3D, Vector3 position)
         {
@@ -37,7 +34,9 @@ namespace UI.UIObject3D.Scripts
 
         internal static Vector3 GetTargetContainerPosition(UIObject3D uiObject3d)
         {
-            return targetContainers.TryGetValue(uiObject3d, out var container) ? container : GetNextFreeTargetContainerPosition();
+            return targetContainers.TryGetValue(uiObject3d, out var container)
+                ? container
+                : GetNextFreeTargetContainerPosition();
         }
 
         private static Vector3 GetNextFreeTargetContainerPosition()

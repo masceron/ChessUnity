@@ -1,3 +1,4 @@
+using System;
 using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
@@ -5,9 +6,9 @@ using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class SirensHarpoonPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class SirensHarpoonPending : PendingAction, IDisposable
     {
         private SirensHarpoon _sirensHarpoon;
 
@@ -16,6 +17,13 @@ namespace Game.Action.Internal.Pending.Relic
             _sirensHarpoon = s;
 
             Target = target;
+        }
+
+
+        public void Dispose()
+        {
+            _sirensHarpoon = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -28,13 +36,6 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.UpdateRelic();
-        }
-
-
-        public void Dispose()
-        {
-            _sirensHarpoon = null;
-            BoardViewer.SelectingFunction = 0;
         }
     }
 }

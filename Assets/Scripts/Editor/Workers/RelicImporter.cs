@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
@@ -23,7 +24,7 @@ namespace Editor.Workers
                 var relicInfo = AssetDatabase.LoadAssetAtPath<RelicInfo>(path);
 
                 if (!relicInfo) continue;
-                var fileName = System.IO.Path.GetFileNameWithoutExtension(path);
+                var fileName = Path.GetFileNameWithoutExtension(path);
                 var newKey = "relic_" + ToSnakeCase(fileName);
 
                 if (string.IsNullOrEmpty(relicInfo.key))

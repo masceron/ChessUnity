@@ -1,5 +1,3 @@
-
-
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
@@ -14,12 +12,12 @@ namespace Game.Effects.SpecialAbility
     {
         public DuskyButterflyfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_dusky_butterfly_passive")
         {
-
         }
 
         public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Debuff;
 
         public StartTurnEffectType StartTurnEffectType { get; }
+
         public void OnCallStart(Action.Action lastMainAction)
         {
             var (rank, file) = RankFileOf(Piece.Pos);
@@ -31,8 +29,6 @@ namespace Game.Effects.SpecialAbility
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(Piece, 1)));
                 ActionManager.EnqueueAction(new ApplyEffect(new Broken(1, Piece)));
             }
-
         }
     }
-
 }

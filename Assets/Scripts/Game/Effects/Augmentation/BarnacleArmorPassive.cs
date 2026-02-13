@@ -10,7 +10,8 @@ namespace Game.Effects.Augmentation
     {
         public BarnacleArmorPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_barnacle_armor_passive")
-        { }
+        {
+        }
 
         public void OnApply()
         {

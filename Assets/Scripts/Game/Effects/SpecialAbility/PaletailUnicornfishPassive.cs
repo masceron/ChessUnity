@@ -15,24 +15,22 @@ namespace Game.Effects.SpecialAbility
             SetStat(EffectStat.Duration, 3);
         }
 
-        BeforeApplyEffectTriggerPriority IBeforeApplyEffectTrigger.Priority => BeforeApplyEffectTriggerPriority.Prevention;
-
-        public void OnCallApplyEffect(ApplyEffect applyEffect)
-        {
-            if (applyEffect.Effect is Blinded)
-            {
-                applyEffect.Result = ResultFlag.Incorruptible;
-            }
-        }
-
         AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.Maker == Piece.Pos && (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(GetStat(EffectStat.Duration), 50, PieceOn(action.Target)), Piece));
-            }
+            if (action is ICaptures && action.Maker == Piece.Pos &&
+                (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
+                ActionManager.EnqueueAction(
+                    new ApplyEffect(new Blinded(GetStat(EffectStat.Duration), 50, PieceOn(action.Target)), Piece));
+        }
+
+        BeforeApplyEffectTriggerPriority IBeforeApplyEffectTrigger.Priority =>
+            BeforeApplyEffectTriggerPriority.Prevention;
+
+        public void OnCallApplyEffect(ApplyEffect applyEffect)
+        {
+            if (applyEffect.Effect is Blinded) applyEffect.Result = ResultFlag.Incorruptible;
         }
     }
 }

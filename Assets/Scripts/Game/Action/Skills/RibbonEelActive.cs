@@ -1,22 +1,25 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Effects.Debuffs;
+using MemoryPack;
 using static Game.Common.BoardUtils;
+
 namespace Game.Action.Skills
 {
     [MemoryPackable]
     public partial class RibbonEelActive : Action
     {
-        [MemoryPackConstructor]
-        private RibbonEelActive() { }
-
-        [MemoryPackInclude]
-        private int _sourcePiecePos;
-        [MemoryPackInclude]
-        private int _targetPiecePos;
         private const int BoundDuration = 1;
-        
+
+        [MemoryPackInclude] private int _sourcePiecePos;
+
+        [MemoryPackInclude] private int _targetPiecePos;
+
+        [MemoryPackConstructor]
+        private RibbonEelActive()
+        {
+        }
+
         public RibbonEelActive(int maker, int sourcePiece, int targetPiece) : base(maker)
         {
             Maker = maker;
@@ -32,7 +35,6 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(BoundDuration, sourcePiece), sourcePiece));
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(BoundDuration, targetPiece), sourcePiece));
             ActionManager.EnqueueAction(new NormalMove(_sourcePiecePos, Maker));
-            
         }
     }
 }

@@ -1,20 +1,28 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class OrnetesEdictPending : PendingAction, System.IDisposable, IRelicAction
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class OrnetesEdictPending : PendingAction, IDisposable, IRelicAction
     {
         private OrnetesEdict _ornetesEdict;
-        
+
         public OrnetesEdictPending(OrnetesEdict cp, int maker) : base(maker)
         {
             _ornetesEdict = cp;
             Target = maker;
             Maker = maker;
+        }
+
+        public void Dispose()
+        {
+            _ornetesEdict = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
@@ -28,12 +36,6 @@ namespace Game.Action.Internal.Pending.Relic
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-        }
-
-        public void Dispose()
-        {
-            _ornetesEdict = null;
-            BoardViewer.SelectingFunction = 0;
         }
     }
 }

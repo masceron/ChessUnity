@@ -1,13 +1,14 @@
-using MemoryPack;
 using Game.Common;
+using MemoryPack;
 
 namespace Game.Action
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class EndTurn: Action
+    public partial class EndTurn : Action
     {
-        public EndTurn(): base(-1)
+        public EndTurn() : base(-1)
         {
             Target = 0;
         }

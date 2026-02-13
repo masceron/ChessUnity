@@ -1,63 +1,29 @@
-using static Game.Common.BoardUtils;
-using UX.UI.Ingame;
+using System;
+using Game.Action.Skills;
+using Game.AI;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
-using Game.Common;
-using Game.AI;
-using Game.Action.Skills;
+using UnityEngine;
+using UX.UI.Ingame;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumilitasPending : PendingAction, System.IDisposable, IAIAction, ISkills
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class HumilitasPending : PendingAction, IDisposable, IAIAction, ISkills
     {
-        public int AIPenaltyValue(PieceLogic pieceAI)
-        {
-            var maker = PieceOn(Maker);
-            if (maker == null || pieceAI == null) return 0;
-            if (pieceAI.Color != maker.Color) return -20;
-            return 0;
-        }
-
         private static int _firstTarget;
         public static int SecondTarget;
 
         private bool _isExecuting;
+
         public HumilitasPending(int maker, int to) : base(maker)
         {
             Maker = maker;
             Target = to;
             _isExecuting = false;
-        }
-        
-        protected override void CompleteAction()
-        {
-            UnityEngine.Debug.Log("Executing HumilitasPending" + _firstTarget);
-            if (_firstTarget == 0)
-            {
-                _firstTarget = BoardViewer.HoveringPos;
-                TileManager.Ins.UnmarkAll();
-                BoardViewer.ListOf.Clear();
-                var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 5);
-                foreach (var piece in listPieces)
-                {
-                    if (piece == _firstTarget) continue;
-                    var newAction = new HumilitasPending(Maker, piece);
-                    BoardViewer.ListOf.Add(newAction);
-                    TileManager.Ins.MarkAsMoveable(piece);
-                }
-                return;
-            }
-            SecondTarget = BoardViewer.HoveringPos;
-            CommitResult(new HumilitasActive(Maker, _firstTarget, SecondTarget));
-            _isExecuting = true;
-        }
-        public void Dispose()
-        {
-            if (!_isExecuting) return;
-            _firstTarget = -1;
-            SecondTarget = -1;
-            BoardViewer.SelectingFunction = 0;
         }
 
         public void CompleteActionForAI()
@@ -126,6 +92,47 @@ namespace Game.Action.Internal.Pending.Piece
             // }
 
             // SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        }
+
+        public void Dispose()
+        {
+            if (!_isExecuting) return;
+            _firstTarget = -1;
+            SecondTarget = -1;
+            BoardViewer.SelectingFunction = 0;
+        }
+
+        public int AIPenaltyValue(PieceLogic pieceAI)
+        {
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            if (pieceAI.Color != maker.Color) return -20;
+            return 0;
+        }
+
+        protected override void CompleteAction()
+        {
+            Debug.Log("Executing HumilitasPending" + _firstTarget);
+            if (_firstTarget == 0)
+            {
+                _firstTarget = BoardViewer.HoveringPos;
+                TileManager.Ins.UnmarkAll();
+                BoardViewer.ListOf.Clear();
+                var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 5);
+                foreach (var piece in listPieces)
+                {
+                    if (piece == _firstTarget) continue;
+                    var newAction = new HumilitasPending(Maker, piece);
+                    BoardViewer.ListOf.Add(newAction);
+                    TileManager.Ins.MarkAsMoveable(piece);
+                }
+
+                return;
+            }
+
+            SecondTarget = BoardViewer.HoveringPos;
+            CommitResult(new HumilitasActive(Maker, _firstTarget, SecondTarget));
+            _isExecuting = true;
         }
     }
 }

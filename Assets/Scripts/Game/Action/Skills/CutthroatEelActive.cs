@@ -1,27 +1,31 @@
-using MemoryPack;
-using Game.Tile;
-using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
-using Game.Effects.Debuffs;
-using Game.Action.Quiets;
 using Game.Action.Internal;
+using Game.Action.Quiets;
+using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     [MemoryPackable]
-    public partial class CutthroatEelActive  : Action, ISkills
+    public partial class CutthroatEelActive : Action, ISkills
     {
         [MemoryPackConstructor]
-        private CutthroatEelActive() { }
+        private CutthroatEelActive()
+        {
+        }
+
+        public CutthroatEelActive(int maker, int target) : base(maker)
+        {
+            Target = target; // Target is enemy
+        }
 
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
         }
-        public CutthroatEelActive(int maker, int target) : base(maker)
-        {
-            Target = target; // Target is enemy
-        }
+
         protected override void ModifyGameState()
         {
             var makerPiece = PieceOn(Maker);
@@ -38,6 +42,5 @@ namespace Game.Action.Skills
                 SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
         }
-        
     }
 }

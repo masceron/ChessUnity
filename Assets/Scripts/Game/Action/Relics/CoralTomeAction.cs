@@ -1,20 +1,21 @@
-using MemoryPack;
 using Game.Action.Internal;
 using Game.Piece;
+using MemoryPack;
 
 namespace Game.Action.Relics
 {
     [MemoryPackable]
     public partial class CoralTomeAction : Action, IRelicAction
     {
-        [MemoryPackConstructor]
-        private CoralTomeAction() { }
+        [MemoryPackInclude] private string _pieceType;
 
-        [MemoryPackInclude]
-        private string _pieceType;
-        [MemoryPackInclude]
-        private bool _relicColor;
-        
+        [MemoryPackInclude] private bool _relicColor;
+
+        [MemoryPackConstructor]
+        private CoralTomeAction()
+        {
+        }
+
         public CoralTomeAction(bool relicColor, string pieceType, int maker) : base(maker)
         {
             _relicColor = relicColor;
@@ -23,7 +24,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor , Maker)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor, Maker)));
         }
     }
 }

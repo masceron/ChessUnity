@@ -1,8 +1,8 @@
-using MemoryPack;
-using static Game.Common.BoardUtils;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
@@ -10,7 +10,14 @@ namespace Game.Action.Skills
     public partial class ArcticBrittleStarActive : Action, ISkills
     {
         [MemoryPackConstructor]
-        private ArcticBrittleStarActive() { }
+        private ArcticBrittleStarActive()
+        {
+        }
+
+        public ArcticBrittleStarActive(int maker, int target) : base(maker)
+        {
+            Target = target;
+        }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
@@ -19,19 +26,14 @@ namespace Game.Action.Skills
             if (pieceAI.Color != maker.Color) return -5;
             return 0;
         }
-        public ArcticBrittleStarActive(int maker, int target) : base(maker)
-        {
-            Target = target;
-        }
 
         protected override void ModifyGameState()
         {
             Formation anchorIce = new AnchorIce(PieceOn(Maker).Color);
             anchorIce.SetDuration(3);
             FormationManager.Ins.SetFormation(Target, anchorIce);
-            
+
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-
     }
 }

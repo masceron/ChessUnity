@@ -4,8 +4,9 @@ using UnityEngine.EventSystems;
 
 namespace UX.UI.Menus
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ButtonEnlarge: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ButtonEnlarge : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         public void OnPointerEnter(PointerEventData eventData)
         {

@@ -7,7 +7,8 @@ namespace Game.Effects.Augmentation
     {
         public BubbleFinPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_bubble_fin_passive")
-        { }
+        {
+        }
 
         public int ModifyAttackRange(int baseRange)
         {

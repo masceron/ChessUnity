@@ -6,16 +6,19 @@ namespace UX.UI.Ingame.HermosHornUI
 {
     public class HermosHornUI : Singleton<HermosHornUI>
     {
-        private RelicLogic _relic; 
+        private RelicLogic _relic;
+
         public void Load(RelicLogic relicLogic)
         {
             _relic = relicLogic;
         }
+
         public void FirstOption()
         {
             BoardViewer.Ins.ExecuteAction(new HermosHornExecute(_relic.Color, true));
             _relic.SetCooldown();
         }
+
         public void SecondOption()
         {
             BoardViewer.Ins.ExecuteAction(new HermosHornExecute(_relic.Color, false));

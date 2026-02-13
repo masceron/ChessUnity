@@ -7,9 +7,8 @@ using ZLinq;
 namespace Game.Tile
 {
     /// <summary>
-    /// Urchin Field Tile
+    ///     Urchin Field Tile
     /// </summary>
-    ///       
     public class UrchinField : Formation
     {
         public UrchinField(bool haveDuration, bool color) : base(color)
@@ -28,10 +27,7 @@ namespace Game.Tile
             //Theo Tân bảo thì bleed không cộng dồn, mà sẽ reset lại 4 turn
             var existingBleeding = piece.Effects.OfType<Bleeding>().ToList();
 
-            foreach (var bleeding in existingBleeding)
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(bleeding));
-            }
+            foreach (var bleeding in existingBleeding) ActionManager.EnqueueAction(new RemoveEffect(bleeding));
 
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece), FormationType.UrchinField));
         }
@@ -46,5 +42,4 @@ namespace Game.Tile
             return -20;
         }
     }
-
 }

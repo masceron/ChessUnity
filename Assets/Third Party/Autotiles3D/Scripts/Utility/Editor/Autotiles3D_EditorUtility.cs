@@ -7,8 +7,8 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public static class Autotiles3D_EditorUtility
     {
-   
-        public static HashSet<Vector3Int> GetAllUnblockedContAdjacentNodesDepthFirst(Autotiles3D_TileLayer tileLayer, Vector3Int internalPosition, Vector3Int faceNormalLocal, HashSet<Vector3Int> results = null)
+        public static HashSet<Vector3Int> GetAllUnblockedContAdjacentNodesDepthFirst(Autotiles3D_TileLayer tileLayer,
+            Vector3Int internalPosition, Vector3Int faceNormalLocal, HashSet<Vector3Int> results = null)
         {
             if (results == null)
                 results = new HashSet<Vector3Int>();
@@ -43,7 +43,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 
                 //gets rid of diagonal blocks
 
-                if (tileLayer.ContainsKey(n + faceNormalLocal))// || tileLayer.Nodes.ContainsKey(n - faceNormal))
+                if (tileLayer.ContainsKey(n + faceNormalLocal)) // || tileLayer.Nodes.ContainsKey(n - faceNormal))
                 {
                     neighbors.Remove(n);
                     continue;
@@ -55,16 +55,12 @@ namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 
                     var depthFirst = GetAllUnblockedContAdjacentNodesDepthFirst(tileLayer, n, faceNormalLocal, results);
                     foreach (var node in depthFirst)
-                    {
                         if (!results.Contains(node))
                             results.Add(node);
-                    }
                 }
             }
 
             return results;
         }
-
-
     }
 }

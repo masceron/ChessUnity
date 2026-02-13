@@ -5,17 +5,18 @@ namespace UX.UI.Ingame
 {
     public class EndGameUI : Singleton<EndGameUI>
     {
-        public TMP_Text tmp;
         public enum MessageID
         {
             Lose,
             Win,
-            Draw,
+            Draw
         }
+
+        public TMP_Text tmp;
+
         public void SetMessage(MessageID messageID)
         {
             tmp.text = messageID.ToString();
         }
-    
     }
 }

@@ -1,14 +1,16 @@
 // Assets/Scripts/Game/Action/Internal/Pending/Relic/SeafoamPhialPending.cs
 
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MethaneCasingPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class MethaneCasingPending : PendingAction, IDisposable
     {
         private MethaneCasing _methaneCasing;
 
@@ -34,7 +36,7 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             BoardViewer.Ins.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic(); 
+            MatchManager.Ins.InputProcessor.UpdateRelic();
         }
     }
 }

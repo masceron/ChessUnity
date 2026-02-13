@@ -5,12 +5,13 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.DormantFossil
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DormantFossilItem: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class DormantFossilItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text pieceName;
+        [SerializeField] private UIObject3D pieceModel;
         private string _pieceType;
-        [SerializeField] private UIObject3D pieceModel; 
 
         public void Load(string type)
         {
