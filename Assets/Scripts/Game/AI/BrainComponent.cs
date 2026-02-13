@@ -70,7 +70,7 @@ namespace Game.AI
             if (Maker == null) return list;
             try
             {
-                Maker.MoveList(list, false, true);
+                Maker.MoveList(list, false);
             }
             catch
             {

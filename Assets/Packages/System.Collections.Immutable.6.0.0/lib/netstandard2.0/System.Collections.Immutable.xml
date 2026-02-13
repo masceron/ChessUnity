@@ -1390,7 +1390,8 @@
                 <see cref="T:System.Collections.Immutable.ImmutableArray`1"/>
                 is
                 <see langword="null"/>
-                or<see cref="F:System.Collections.Immutable.ImmutableArray`1.Empty"/>; otherwise,<see langword="false"/>
+                or<see cref="F:System.Collections.Immutable.ImmutableArray`1.Empty"/>; otherwise,
+                <see langword="false"/>
                 .
             </returns>
         </member>

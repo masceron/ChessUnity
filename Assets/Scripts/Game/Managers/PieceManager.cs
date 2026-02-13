@@ -1,7 +1,6 @@
 using Game.Common;
 using Game.Piece;
 using static Game.Common.BoardUtils;
-using Object = UnityEngine.Object;
 
 namespace Game.Managers
 {

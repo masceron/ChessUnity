@@ -19,8 +19,7 @@ namespace Game.Action.Internal.Pending.Relic
         public MangroveCharmPending(MangroveCharm e, int target) : base(-1)
         {
             _mangroveCharm = e;
-            target = target;
-            Maker = target;
+            Target = target;
         }
 
         public void Dispose()

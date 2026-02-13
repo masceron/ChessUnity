@@ -25,6 +25,12 @@ namespace Third_Party.Autotiles3D.Scripts.Core.Editor
         //broken blocks
         private readonly List<string> _broken = new(); //missing tile
         private readonly List<Autotiles3D_BlockBehaviour> _brokenBlocks = new();
+
+        //Push Pull
+        private readonly List<InternalNode> _ppNodes = new();
+        private readonly List<RepairBlock> _repair = new(); //missing tile
+        private readonly List<InternalNode> _selectedNodes = new();
+        private readonly Dictionary<int, TileData> _TileData = new();
         private int _ControlID;
         private Vector3Int _faceNormalInternal;
         private Vector3 _faceNormalWorld, _ppOffset;
@@ -34,16 +40,10 @@ namespace Third_Party.Autotiles3D.Scripts.Core.Editor
         private Ray _MouseRay;
         private bool _OutOfBounds;
         private int _pIndex;
-
-        //Push Pull
-        private readonly List<InternalNode> _ppNodes = new();
         private Plane _ppPlane;
         private PullMode _PullMode;
-        private readonly List<RepairBlock> _repair = new(); //missing tile
         private bool _ResetHover;
-        private readonly List<InternalNode> _selectedNodes = new();
         private bool _showControls;
-        private readonly Dictionary<int, TileData> _TileData = new();
         private Autotiles3D_TileLayer _tileLayer;
         private int _TileRotation;
         private int _totalBrokenAmt;

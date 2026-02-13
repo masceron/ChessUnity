@@ -33,7 +33,7 @@ namespace Game.Relics
                     if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, 3, false);
 
                     hoveringTile = thisTile;
-                    TileManager.Ins.MarkTileInRange(hoveringTile, 3, true, false);
+                    TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
 
                     var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
                     var pending = new FrostSigilPending(pos, this);

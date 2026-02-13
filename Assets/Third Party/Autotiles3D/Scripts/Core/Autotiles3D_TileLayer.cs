@@ -23,8 +23,7 @@ namespace Third_Party.Autotiles3D.Scripts.Core
         [SerializeField] private string _tileName; //added in update 1.3
         [SerializeField] private int _tileID = -1; //added in update 1.3
 
-        [SerializeField]
-        private int
+        [SerializeField] private int
             _ruleID = -1; //added in update 1.3 , -1 signifies that standard object is used (no rule applies), might need testing
 
         public InternalNode(Autotiles3D_TileLayer layer, string group, string tileName, int tileID,

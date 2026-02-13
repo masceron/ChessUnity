@@ -1,30 +1,33 @@
 using Game.Statue;
-using UX.UI.Loader;
 using UnityEngine;
 using UnityEngine.UI;
+using UX.UI.Loader;
 
 namespace UX.UI.Popup
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class StatueBattlePopup : MonoBehaviour
     {
-        [Header("UI References")]
-        [SerializeField] private Button fightButton;
+        [Header("UI References")] [SerializeField]
+        private Button fightButton;
+
         [SerializeField] private Button skipButton;
 
         private Statue currentStatue;
 
         private void Awake()
         {
-            if (fightButton != null)
-            {
-                fightButton.onClick.AddListener(OnFightClicked);
-            }
+            if (fightButton != null) fightButton.onClick.AddListener(OnFightClicked);
 
-            if (skipButton != null)
-            {
-                skipButton.onClick.AddListener(OnSkipClicked);
-            }
+            if (skipButton != null) skipButton.onClick.AddListener(OnSkipClicked);
+        }
+
+        private void OnDestroy()
+        {
+            if (fightButton != null) fightButton.onClick.RemoveListener(OnFightClicked);
+
+            if (skipButton != null) skipButton.onClick.RemoveListener(OnSkipClicked);
         }
 
         public void Initialize(Statue statue)
@@ -44,19 +47,6 @@ namespace UX.UI.Popup
         private void OnSkipClicked()
         {
             gameObject.SetActive(false);
-        }
-
-        private void OnDestroy()
-        {
-            if (fightButton != null)
-            {
-                fightButton.onClick.RemoveListener(OnFightClicked);
-            }
-
-            if (skipButton != null)
-            {
-                skipButton.onClick.RemoveListener(OnSkipClicked);
-            }
         }
     }
 }

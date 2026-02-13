@@ -41,7 +41,7 @@ namespace Game.Relics
                     if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, Size, false);
 
                     hoveringTile = thisTile;
-                    TileManager.Ins.MarkTileInRange(hoveringTile, Size, true, false);
+                    TileManager.Ins.MarkTileInRange(hoveringTile, Size, true);
 
                     var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
                     var pending = new StormCapacitorPending(pos, hoveringTile, this, Size);
