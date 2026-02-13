@@ -4,26 +4,26 @@ using Game.Action.Quiets;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Tile.RealityDistortion
 {
     public class RealityDistortionManager : Singleton<RealityDistortionManager>
     {
-        private int lastProcessedTurn = -1;
+        private int _lastProcessedTurn = -1;
         
-        public void OnTurnStart(bool color)
+        public void OnTurnStart()
         {
             var gameState = MatchManager.Ins.GameState;
             var currentTurn = gameState.CurrentTurn;
             
-            if (lastProcessedTurn == currentTurn) return;
-            lastProcessedTurn = currentTurn;
+            if (_lastProcessedTurn == currentTurn) return;
+            _lastProcessedTurn = currentTurn;
             
             var allDistortions = new List<RealityDistortion>();
-            for (var pos = 0; pos < gameState.formations.Length; pos++)
+            foreach (var formation in gameState.formations)
             {
-                var formation = gameState.formations[pos];
-                if (formation != null && formation is RealityDistortion distortion)
+                if (formation is RealityDistortion distortion)
                 {
                     allDistortions.Add(distortion);
                 }
@@ -51,28 +51,21 @@ namespace Game.Tile.RealityDistortion
             for (var i = availablePositions.Count - 1; i > 0; i--)
             {
                 var j = UnityEngine.Random.Range(0, i + 1);
-                var temp = availablePositions[i];
-                availablePositions[i] = availablePositions[j];
-                availablePositions[j] = temp;
+                (availablePositions[i], availablePositions[j]) = (availablePositions[j], availablePositions[i]);
             }
             
             // Gán mỗi quân đến một vị trí ngẫu nhiên
             // 2 quân k cùng đến 1 vị trí
             var usedPositions = new HashSet<int>();
             
-            for (var i = 0; i < piecesOnDistortions.Count; i++)
+            foreach (var (_, currentPos) in piecesOnDistortions)
             {
-                var (piece, currentPos) = piecesOnDistortions[i];
-                
                 var targetPos = -1;
                 
-                foreach (var pos in availablePositions)
+                foreach (int pos in availablePositions.Where(pos => !usedPositions.Contains(pos) && pos != currentPos))
                 {
-                    if (!usedPositions.Contains(pos) && pos != currentPos)
-                    {
-                        targetPos = pos;
-                        break;
-                    }
+                    targetPos = pos;
+                    break;
                 }
                 
                 if (targetPos == -1)
@@ -90,18 +83,16 @@ namespace Game.Tile.RealityDistortion
                 if (targetPos == -1) continue;
                 
                 usedPositions.Add(targetPos);
-                
-                if (targetPos != currentPos)
+
+                if (targetPos == currentPos) continue;
+                var pieceAtTarget = gameState.PieceBoard[targetPos];
+                if (pieceAtTarget == null)
                 {
-                    var pieceAtTarget = gameState.PieceBoard[targetPos];
-                    if (pieceAtTarget == null)
-                    {
-                        ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
-                    }
-                    else
-                    {
-                        ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
-                    }
+                    ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
+                }
+                else
+                {
+                    ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
                 }
             }
         }

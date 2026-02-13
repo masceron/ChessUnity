@@ -15,13 +15,13 @@ namespace Game.Tile
             return FormationType.PredatorLair;
         }
 
-        public override void OnPieceEnter(PieceLogic piece){
+        protected override void OnPieceEnter(PieceLogic piece){
             base.OnPieceEnter(piece);
             appliedEffect = new LongReach(PieceOnFormation, -1, 2);
             ActionManager.EnqueueAction(new ApplyEffect(appliedEffect, FormationType.PredatorLair));
         }
 
-        public override void OnPieceExit(PieceLogic piece){
+        protected override void OnPieceExit(PieceLogic piece){
             base.OnPieceExit(piece);
             ActionManager.EnqueueAction(new RemoveEffect(appliedEffect));
         }

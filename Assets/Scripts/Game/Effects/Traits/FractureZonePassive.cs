@@ -3,6 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using UnityEngine;
@@ -10,7 +11,7 @@ using UnityEngine;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FractureZonePassive : Effect, IEndTurnEffect
+    public class FractureZonePassive : Effect, IEndTurnTrigger
     {
         private int countToSpawnEffect;
         private readonly int intervalToSpawn = 2;
@@ -38,6 +39,8 @@ namespace Game.Effects.Traits
 
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
 
         public EndTurnEffectType EndTurnEffectType
         { get; private set; }

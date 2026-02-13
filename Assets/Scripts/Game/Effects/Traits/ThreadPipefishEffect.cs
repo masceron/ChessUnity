@@ -1,16 +1,17 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using Unity.Mathematics;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    public class ThreadPipefishEffect : Effect, IEndTurnEffect, IOnApply, IOnRemove
+    public class ThreadPipefishEffect : Effect, IEndTurnTrigger, IOnApplyTrigger, IOnRemoveTrigger
     {
         private readonly PieceLogic Target;
-        private int distance; // distance between 2 connected pieces
+        private int _distance; // distance between 2 connected pieces
         private const int MaxDistance = 3;
         public ThreadPipefishEffect(PieceLogic piece, PieceLogic target) : base(-1, -1, piece, "effect_thread_pipefish_effect")
         {
@@ -29,11 +30,11 @@ namespace Game.Effects.Traits
         {
             int posMaker = Piece.Pos;
             int posTarget = Target.Pos;
-            distance = math.max(math.abs(RankOf(posMaker) - RankOf(posTarget)),
+            _distance = math.max(math.abs(RankOf(posMaker) - RankOf(posTarget)),
                 math.abs(FileOf(posMaker) - FileOf(posTarget)));
 
             //Debug.Log(distance);
-            if (distance > MaxDistance)
+            if (_distance > MaxDistance)
             {
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             }
@@ -48,7 +49,9 @@ namespace Game.Effects.Traits
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
             }
         }
-        
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
+
         public EndTurnEffectType EndTurnEffectType { get; set; }
     }
 }

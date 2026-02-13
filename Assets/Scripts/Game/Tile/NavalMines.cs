@@ -18,8 +18,8 @@ namespace Game.Tile
         {
             return FormationType.NavalMines;
         }
-        
-        public override void OnPieceEnter(PieceLogic piece)
+
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
 

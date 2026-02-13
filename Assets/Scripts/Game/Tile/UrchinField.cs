@@ -21,7 +21,8 @@ namespace Game.Tile
         {
             return FormationType.UrchinField;
         }
-        public override void OnPieceEnter(PieceLogic piece)
+
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             //Theo Tân bảo thì bleed không cộng dồn, mà sẽ reset lại 4 turn
@@ -35,7 +36,7 @@ namespace Game.Tile
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece), FormationType.UrchinField));
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
             base.OnPieceExit(piece);
         }

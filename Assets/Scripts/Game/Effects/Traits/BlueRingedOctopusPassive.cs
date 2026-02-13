@@ -5,6 +5,7 @@ using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
@@ -12,7 +13,7 @@ namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     
-    public class BlueRingedOctopusPassive : Effect, IAfterPieceActionEffect
+    public class BlueRingedOctopusPassive : Effect, IAfterPieceActionTrigger
     {
         public BlueRingedOctopusPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_ringed_octopus_passive")
         {
@@ -23,6 +24,8 @@ namespace Game.Effects.Traits
         {
             return base.GetValueForAI() + 50;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

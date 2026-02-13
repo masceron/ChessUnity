@@ -2,15 +2,18 @@
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.Augmentation
 {
-    public class RaySTailPassive : Effect, IAfterPieceActionEffect
+    public class RaySTailPassive : Effect, IAfterPieceActionTrigger
     {
         public RaySTailPassive(PieceLogic piece) : base(-1, 1, piece, "effect_ray's_tail_passive")
         {
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

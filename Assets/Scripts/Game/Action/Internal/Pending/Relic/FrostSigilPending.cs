@@ -20,7 +20,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _frostSigil.SetCooldown();
 
-            var execute = new FrostSigilExcute(Maker, _frostSigil.Color);
+            var execute = new FrostSigilExecute(Maker, _frostSigil.Color);
             CommitResult(execute);
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

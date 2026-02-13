@@ -1,8 +1,9 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class CursedPlatePassive : Effect, IMoveRangeModifier, IAttackRangeModifier, IOnApply
+    public class CursedPlatePassive : Effect, IMoveRangeModifierTrigger, IAttackRangeModifier, IOnApplyTrigger
     {
         private const int moveRangeModifier = 2;
         private const int attackRangeModifier = 2;

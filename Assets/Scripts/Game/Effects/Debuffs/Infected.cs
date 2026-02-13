@@ -1,12 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
 {
-    public class Infected : Effect, IEndTurnEffect
+    public class Infected : Effect, IEndTurnTrigger
     {
         private int turnCounter;
         private int turnToActivate = 3;
@@ -33,6 +34,8 @@ namespace Game.Effects.Debuffs
         {
             return base.GetValueForAI() - 200;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
 
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)

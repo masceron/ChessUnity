@@ -42,7 +42,7 @@ namespace Game.Relics
             }
         }
 
-        public async override void ActiveForAI()
+        public override async void ActiveForAI()
         {
             var ourPieces = new List<PieceLogic>();
             var enemyPieces = new List<PieceLogic>();
@@ -111,7 +111,7 @@ namespace Game.Relics
             }
 
             if (ourPiece == null || enemyPiece == null) return;
-            var excute = new EyeOfMimicExcute(ourPiece.Pos, enemyPiece.Pos);
+            var excute = new EyeOfMimicExecute(ourPiece.Pos, enemyPiece.Pos);
             BoardViewer.Ins.ExecuteAction(excute);
             
             // var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);

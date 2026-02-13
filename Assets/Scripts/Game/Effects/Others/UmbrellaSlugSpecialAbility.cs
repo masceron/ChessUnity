@@ -2,18 +2,21 @@
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class UmbrellaSlugSpecialAbility : Effect, IAfterPieceActionEffect
+    public class UmbrellaSlugSpecialAbility : Effect, IAfterPieceActionTrigger
     {
         public UmbrellaSlugSpecialAbility(PieceLogic piece) : base(-1, 100, piece, "effect_umbrella_slug_special_ability")
         {
             
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

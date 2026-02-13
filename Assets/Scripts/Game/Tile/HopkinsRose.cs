@@ -19,7 +19,7 @@ namespace Game.Tile
             return FormationType.HopkinsRose;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             if (piece != null && piece.Color != Color)
@@ -31,7 +31,7 @@ namespace Game.Tile
             }
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
             base.OnPieceExit(piece);
         }

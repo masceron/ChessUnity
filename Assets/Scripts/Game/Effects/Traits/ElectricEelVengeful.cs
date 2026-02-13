@@ -3,15 +3,18 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class  ElectricEelVengeful: Effect, IAfterPieceActionEffect
+    public class  ElectricEelVengeful: Effect, IAfterPieceActionTrigger
     {
         public ElectricEelVengeful(PieceLogic piece) : base(-1, 1, piece, "effect_electric_eel_vengeful")
         {}
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)    
         {

@@ -1,12 +1,13 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Ambush: Effect, IEndTurnEffect, IAttackRangeModifier
+    public class Ambush: Effect, IEndTurnTrigger, IAttackRangeModifier
     {
-        private byte lastUsed;
-        private bool active;
+        private byte _lastUsed;
+        private bool _active;
         private const byte RangeOffset = 2;
         private const byte TurnsToActive = 3;
 
@@ -19,16 +20,18 @@ namespace Game.Effects.Traits
         {
             if (action.Maker != Piece.Pos)
             {
-                lastUsed++;
-                if (lastUsed < TurnsToActive || active) return;
-                active = true;
+                _lastUsed++;
+                if (_lastUsed < TurnsToActive || _active) return;
+                _active = true;
             }
-            else if (active)
+            else if (_active)
             {
-                active = false;
-                lastUsed = 0;
+                _active = false;
+                _lastUsed = 0;
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
         public override int GetValueForAI()
@@ -38,7 +41,7 @@ namespace Game.Effects.Traits
 
         public int ModifyAttackRange(int baseRange)
         {
-            if (active)
+            if (_active)
             {
                 return baseRange + RangeOffset;
             }

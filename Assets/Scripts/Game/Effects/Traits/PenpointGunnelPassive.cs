@@ -4,13 +4,17 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PenpointGunnelPassive: Effect, IAfterPieceActionEffect
+    public class PenpointGunnelPassive: Effect, IAfterPieceActionTrigger
     {
         public PenpointGunnelPassive(PieceLogic piece) : base(-1, 1, piece, "effect_penpoint_gunnel_passive")
         {}
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

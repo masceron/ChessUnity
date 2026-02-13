@@ -1,11 +1,12 @@
 ﻿using Game.Action.Captures;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArchelonDraw: Effect, IBeforePieceActionEffect
+    public class ArchelonDraw: Effect, IBeforePieceActionTrigger
     {
         public ArchelonDraw(PieceLogic piece) : base(-1, 1, piece, "effect_archelon_draw")
         {}
@@ -14,6 +15,8 @@ namespace Game.Effects.Traits
         {
             return base.GetValueForAI() + 100;
         }
+
+        public BeforeActionPriority Priority => BeforeActionPriority.Redirection;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {

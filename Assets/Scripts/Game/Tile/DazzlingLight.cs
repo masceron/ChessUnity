@@ -23,7 +23,7 @@ namespace Game.Tile
             return FormationType.DazzlingLight;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece), FormationType.DazzlingLight));

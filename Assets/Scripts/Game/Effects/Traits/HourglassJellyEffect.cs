@@ -6,7 +6,7 @@
 
 // namespace Game.Effects.Traits
 // {
-//     public class HourglassJellyEffect: Effect, IApplyEffect
+//     public class HourglassJellyEffect: Effect, IBeforeApplyEffectTrigger
 //     {
 //         public HourglassJellyEffect(PieceLogic piece) : base(-1, 1, piece, EffectName.HourglassJelly)
 //         {

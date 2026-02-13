@@ -4,12 +4,13 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using SnappingStrike = Game.Effects.Traits.SnappingStrike;
 
 namespace Game.Effects.Augmentation
 {
-    public class CursedJawPassive : Effect, IOnApply, IAfterPieceActionEffect
+    public class CursedJawPassive : Effect, IOnApplyTrigger, IAfterPieceActionTrigger
     {
         private const int stunDuration = 1;
         public CursedJawPassive(PieceLogic piece) : base(-1, 1, piece, "effect_cursed_jaw_passive")
@@ -21,6 +22,8 @@ namespace Game.Effects.Augmentation
             ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(Piece)));
             ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(Piece)));
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

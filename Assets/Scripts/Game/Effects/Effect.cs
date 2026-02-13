@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX;
@@ -49,7 +50,6 @@ namespace Game.Effects
             
             var info = AssetManager.Ins.EffectData[name];
             Category = info.category;
-            priority = info.priority;
 
             Stats = new UDictionary<EffectStat, List<int>>();
             if (strength != -1)
@@ -78,7 +78,7 @@ namespace Game.Effects
             var finalStat = statin[num - 1];
             foreach (var effect in Piece.Effects)
             {
-                if (effect is IEffectStatModifier modifier)
+                if (effect is IEffectStatModifierTrigger modifier)
                 {
                     finalStat += modifier.Modify(stat);
                 }

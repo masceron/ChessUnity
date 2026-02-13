@@ -1,5 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -7,12 +8,14 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others
 {
-    public class HammerOysterPassive : Effect, IEndTurnEffect
+    public class HammerOysterPassive : Effect, IEndTurnTrigger
     {
         public HammerOysterPassive(PieceLogic piece) : base(-1, 1, piece, "effect_hammer_oyster_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 

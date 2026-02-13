@@ -1,16 +1,19 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SlayersCoin: Effect, IAfterPieceActionEffect
+    public class SlayersCoin: Effect, IAfterPieceActionTrigger
     {
         public SlayersCoin(PieceLogic piece) : base(-1, 1, piece, "effect_slayers_coin")
         {}
+
+        public AfterActionPriority Priority => AfterActionPriority.Other;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

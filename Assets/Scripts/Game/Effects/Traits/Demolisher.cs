@@ -2,6 +2,7 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -9,11 +10,13 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Demolisher: Effect, IAfterPieceActionEffect, IOnMoveGenEffect
+    public class Demolisher: Effect, IAfterPieceActionTrigger, IOnMoveGenTrigger
     {
         public Demolisher(PieceLogic piece) : base(-1, 1, piece, "effect_demolisher")
         { }
-        
+
+        public AfterActionPriority Priority => AfterActionPriority.Kill;
+
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is DestroyConstruct && action.Maker == Piece.Pos && PieceOn(action.Maker).Type != "piece_rusty_parrotfish" && action.Result == ResultFlag.Success)

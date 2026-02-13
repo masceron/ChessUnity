@@ -1,20 +1,23 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MorayEelCamouflage: Effect, IEndTurnEffect
+    public class MorayEelCamouflage: Effect, IEndTurnTrigger
     {
-        private Camouflage already;
+        private Camouflage _already;
 
         public MorayEelCamouflage(PieceLogic piece) : base(-1, 1, piece, "effect_moray_eel_camouflage")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 
@@ -28,10 +31,10 @@ namespace Game.Effects.Traits
                 var idx = IndexOf(rank - 1, file);
                 if (!IsActive(idx))
                 {
-                    if (already != null) return;
+                    if (_already != null) return;
                     
-                    already = new Camouflage(Piece);
-                    ActionManager.EnqueueAction(new ApplyEffect(already));
+                    _already = new Camouflage(Piece);
+                    ActionManager.EnqueueAction(new ApplyEffect(_already));
                     return;
                 }
             }
@@ -41,10 +44,10 @@ namespace Game.Effects.Traits
                 var idx = IndexOf(rank + 1, file);
                 if (!IsActive(idx))
                 {
-                    if (already != null) return;
+                    if (_already != null) return;
                     
-                    already = new Camouflage(Piece);
-                    ActionManager.EnqueueAction(new ApplyEffect(already));
+                    _already = new Camouflage(Piece);
+                    ActionManager.EnqueueAction(new ApplyEffect(_already));
                     return;
                 }
             }
@@ -54,10 +57,10 @@ namespace Game.Effects.Traits
                 var idx = IndexOf(rank, file - 1);
                 if (!IsActive(idx))
                 {
-                    if (already != null) return;
+                    if (_already != null) return;
                     
-                    already = new Camouflage(Piece);
-                    ActionManager.EnqueueAction(new ApplyEffect(already));
+                    _already = new Camouflage(Piece);
+                    ActionManager.EnqueueAction(new ApplyEffect(_already));
                     return;
                 }
             }
@@ -67,18 +70,18 @@ namespace Game.Effects.Traits
                 var idx = IndexOf(rank, file + 1);
                 if (!IsActive(idx))
                 {
-                    if (already != null) return;
+                    if (_already != null) return;
                     
-                    already = new Camouflage(Piece);
-                    ActionManager.EnqueueAction(new ApplyEffect(already));
+                    _already = new Camouflage(Piece);
+                    ActionManager.EnqueueAction(new ApplyEffect(_already));
                     return;
                 }
             }
 
-            if (already == null) return;
+            if (_already == null) return;
             
-            ActionManager.EnqueueAction(new RemoveEffect(already));
-            already = null;
+            ActionManager.EnqueueAction(new RemoveEffect(_already));
+            _already = null;
         }
         public override int GetValueForAI()
         {

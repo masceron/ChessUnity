@@ -38,7 +38,7 @@ namespace Game.Action.Internal.Pending.Relic
             var source = _firstTarget.Color == ourSide ? _firstTarget : _secondTarget;
             var target = _firstTarget.Color == ourSide ? _secondTarget : _firstTarget;
 
-            var execute = new EyeOfMimicExcute(source.Pos, target.Pos);
+            var execute = new EyeOfMimicExecute(source.Pos, target.Pos);
             _eyeOfMimic.SetCooldown();
             CommitResult(execute);
             TileManager.Ins.UnmarkAll();

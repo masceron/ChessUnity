@@ -1,13 +1,16 @@
 ﻿using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class HemolymphFilterPassive : Effect, IApplyEffect
+    public class HemolymphFilterPassive : Effect, IBeforeApplyEffectTrigger
     {
         public HemolymphFilterPassive(PieceLogic piece) : base(-1, 1, piece, "effect_hemolymph_filter_passive")
         {
         }
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
         /// <summary>
         /// Kháng hiệu ứng Infected

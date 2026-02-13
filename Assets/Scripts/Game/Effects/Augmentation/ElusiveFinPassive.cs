@@ -2,11 +2,12 @@ using System;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class ElusiveFinPassive : Effect, IOnApply
+    public class ElusiveFinPassive : Effect, IOnApplyTrigger
     {
         public ElusiveFinPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_elusive_fin_passive")

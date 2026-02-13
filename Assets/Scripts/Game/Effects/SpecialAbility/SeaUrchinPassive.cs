@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class SeaUrchinPassive: Effect, IOnMoveGenEffect
+    public class SeaUrchinPassive: Effect, IOnMoveGenTrigger
     {
         public SeaUrchinPassive(PieceLogic piece) : base(-1, 1, piece, "effect_sea_urchin_passive")
         {}

@@ -1,8 +1,9 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    public class Haste: Effect, IMoveRangeModifier
+    public class Haste: Effect, IMoveRangeModifierTrigger
     {
         public Haste(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_haste")
         {}

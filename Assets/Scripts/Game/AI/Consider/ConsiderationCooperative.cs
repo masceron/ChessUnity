@@ -15,7 +15,7 @@ namespace Game.AI.Consider
         private const int threatenedTilePenalty = 10;
         public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight, PieceLogic maker)
         {
-            if (action == null || action is not IQuiets) return 0f;
+            if (action is not IQuiets) return 0f;
 
             var scaleValue = 1f;
             

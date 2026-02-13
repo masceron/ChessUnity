@@ -42,7 +42,7 @@ namespace Game.Relics
             }
         }
 
-        public async override void ActiveForAI()
+        public override async void ActiveForAI()
         {
             var listPieces = new List<PieceLogic>();
 
@@ -69,7 +69,7 @@ namespace Game.Relics
             var topGroup = listPieces.Where(pieceLogic => pieceLogic.GetValueForAI() == topValue).ToList();
             var idx = UnityEngine.Random.Range(0, topGroup.Count);
             
-            var excute = new SirenHarpoonExcute(CommanderPiece.Pos ,topGroup[idx].Pos);
+            var excute = new SirenHarpoonExecute(CommanderPiece.Pos ,topGroup[idx].Pos);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);

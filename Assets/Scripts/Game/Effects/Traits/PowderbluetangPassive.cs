@@ -5,28 +5,31 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PowderbluetangPassive : Effect, IAfterPieceActionEffect
+    public class PowderbluetangPassive : Effect, IAfterPieceActionTrigger
     {
-        private int count;
+        private int _count;
 
         public PowderbluetangPassive(PieceLogic piece) : base(-1, 1, piece, "effect_powderbluetang_passive")
         {
-            count = 2;
+            _count = 2;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action.Maker == Piece.Pos &&
                 action is NormalMove &&
                 action.Result == ResultFlag.Success &&
-                count > 0 &&
+                _count > 0 &&
                 BoardUtils.GetFormation(action.Target) is HydroidThicket)
             {
-                count--;
+                _count--;
                 ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece, 1), FormationType.HydroidThicket));
             }
         }

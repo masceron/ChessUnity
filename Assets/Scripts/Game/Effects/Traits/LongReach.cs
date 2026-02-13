@@ -1,3 +1,4 @@
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits{

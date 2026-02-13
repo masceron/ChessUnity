@@ -18,7 +18,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            var execute = new LedgerStoneExcute(_isFirstOption);
+            var execute = new LedgerStoneExecute(_isFirstOption);
             CommitResult(execute);
             _ledgerStone?.SetCooldown();
             MatchManager.Ins.InputProcessor.UpdateRelic();

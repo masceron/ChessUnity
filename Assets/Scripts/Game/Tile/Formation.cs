@@ -1,6 +1,6 @@
 using Game.Action.Quiets;
 using Game.Common;
-using Game.Effects;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -32,10 +32,10 @@ namespace Game.Tile
         HopkinsRose,
         RealityDistortion
     }
-    public abstract class Formation : Observer, IAfterPieceActionEffect, IOnPieceSpawned
+    public abstract class Formation : Observer, IAfterPieceActionTrigger, IOnPieceSpawnedTrigger
     {
         public int Pos { get; private set; }
-        public PieceLogic PieceOnFormation { get; protected set; }
+        protected PieceLogic PieceOnFormation { get; set; }
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
         public readonly FormationCategory category;
@@ -44,7 +44,6 @@ namespace Game.Tile
         {
             Color = color;
             var info = AssetManager.Ins.FormationData[GetFormationType()];
-            priority = info.priority;
             category = info.formationCategory;
         }
         /// <summary>
@@ -55,9 +54,9 @@ namespace Game.Tile
         {
             Pos = index;
         }
-        public void SetDuration(int _duration)
+        public void SetDuration(int duration)
         {
-            Duration = _duration;
+            Duration = duration;
             HaveDuration = true;
         }
         public bool GetColor() => Color;
@@ -73,7 +72,7 @@ namespace Game.Tile
         {
             OnPieceEnter(piece);
         }
-        public virtual void OnRemove(PieceLogic piece)
+        public void OnRemove(PieceLogic piece)
         {
             OnPieceExit(piece);
         }
@@ -84,33 +83,34 @@ namespace Game.Tile
                 OnPieceEnter(piece);
             }
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Move;
+
         public virtual void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is IQuiets)
+            if (action is not IQuiets) return;
+            var pieceOn = BoardUtils.PieceOn(action.Target);
+            if (pieceOn == null){ return; }
+            if (action.Target == Pos)
             {
-                var pieceOn = BoardUtils.PieceOn(action.Target);
-                if (pieceOn == null){ return; }
-                if (action.Target == Pos)
-                {
-                    OnPieceEnter(pieceOn);
-                }
-                else if (action.Maker == Pos)
-                {
-                    OnPieceExit(pieceOn);
-                }
+                OnPieceEnter(pieceOn);
+            }
+            else if (action.Maker == Pos)
+            {
+                OnPieceExit(pieceOn);
             }
         }
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân đi vào vị trí
         /// </summary>
-        public virtual void OnPieceEnter(PieceLogic piece)
+        protected virtual void OnPieceEnter(PieceLogic piece)
         {
             PieceOnFormation = piece;
         }
         /// <summary>
         /// Hàm này được gọi tự động giống OnCollisionEnter() của MonoBehaviour. Gọi ngay lập tức khi quân rời khỏi vị trí
         /// </summary>
-        public virtual void OnPieceExit(PieceLogic piece)
+        protected virtual void OnPieceExit(PieceLogic piece)
         {
             PieceOnFormation = null;
         }

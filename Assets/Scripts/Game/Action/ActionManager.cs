@@ -5,6 +5,7 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Managers;
 using ZLinq;
 
@@ -53,8 +54,8 @@ namespace Game.Action
 
         private static void AfterActionResolve(Action mainAction)
         {
-            var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionEffect>();
-            var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionEffect>();
+            var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionTrigger>();
+            var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionTrigger>();
 
             if (mainAction is IRelicAction iRelicAction)
             {
@@ -125,7 +126,7 @@ namespace Game.Action
         private static void StartTurnProcess(Action mainAction)
         {
             CurrentPhase = Phase.BeforeEndTurn;
-            var startTurnListeners = BoardUtils.GetEffectHookList<IStartTurnEffect>();
+            var startTurnListeners = BoardUtils.GetEffectHookList<IStartTurnTrigger>();
 
             foreach (var effect in startTurnListeners)
             {
@@ -162,7 +163,7 @@ namespace Game.Action
             new EndTurn().Execute();
             CurrentPhase = Phase.AfterEndTurn;
 
-            var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnEffect>();
+            var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnTrigger>();
             
             endTurnListeners.ForEach(effect =>
             {

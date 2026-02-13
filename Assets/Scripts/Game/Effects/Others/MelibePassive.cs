@@ -2,17 +2,20 @@
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.Others
 {
-    public class MelibePassive : Effect, IAfterPieceActionEffect
+    public class MelibePassive : Effect, IAfterPieceActionTrigger
     {
         public MelibePassive(PieceLogic piece) : base(-1, 1, piece, "effect_melibe_passive")
         {
             
         }
-        
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
+
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.Maker != Piece.Pos || action.Result != ResultFlag.Success) return;

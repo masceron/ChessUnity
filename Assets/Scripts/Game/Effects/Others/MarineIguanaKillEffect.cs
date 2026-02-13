@@ -1,11 +1,12 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    public class MarineIguanaKillEffect : Effect, IDeadEffect, IOnApply
+    public class MarineIguanaKillEffect : Effect, IDeadTrigger, IOnApplyTrigger
     {
         private readonly int maker;
         private readonly int target;

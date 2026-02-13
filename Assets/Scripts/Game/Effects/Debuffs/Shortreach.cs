@@ -1,4 +1,5 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using Game.Effects.Triggers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {

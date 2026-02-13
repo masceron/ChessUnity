@@ -1,4 +1,4 @@
-using Game.Common;
+using Game.Effects.Triggers;
 using Game.Managers;
 
 namespace Game.Effects.RegionalEffect

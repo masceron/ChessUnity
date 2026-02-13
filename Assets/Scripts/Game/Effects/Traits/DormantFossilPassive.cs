@@ -1,3 +1,4 @@
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DormantFossil;
@@ -6,7 +7,7 @@ namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     
-    public class DormantFossilPassive : Effect, IEndTurnEffect
+    public class DormantFossilPassive : Effect, IEndTurnTrigger
     {
         private const byte TurnsToActive = 15;
         private byte _numTurns = TurnsToActive;
@@ -30,7 +31,9 @@ namespace Game.Effects.Traits
                 ActivePassive();
             }
         }
-        
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
+
         public EndTurnEffectType EndTurnEffectType { get; }
     }
 }

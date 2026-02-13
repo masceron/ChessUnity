@@ -2,19 +2,22 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
 namespace Game.Effects.Augmentation
 {
-    public class PuppeteerSpiritPassive : Effect, IStartTurnEffect
+    public class PuppeteerSpiritPassive : Effect, IStartTurnTrigger
     {
         public PuppeteerSpiritPassive(PieceLogic piece) : base(-1, 1, piece, "effect_puppeteer_spirit_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAnyTurn;
         }
 
+
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
 
         public StartTurnEffectType StartTurnEffectType { get; }
         public void OnCallStart(Action.Action lastMainAction)

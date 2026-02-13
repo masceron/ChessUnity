@@ -1,13 +1,14 @@
 using Game.Action.Internal;
 using System.Collections.Generic;
 using Game.Action;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
-    public class FreeMovement : Effect, IApplyEffect
+    public class FreeMovement : Effect, IBeforeApplyEffectTrigger
     {
-        private readonly List<string> blockedEffects = new()
+        private readonly List<string> _blockedEffects = new()
         {
             "effect_slow",
             "effect_haste"
@@ -16,13 +17,15 @@ namespace Game.Effects.Traits
         public FreeMovement(PieceLogic piece) : base(-1, 1, piece, "effect_free_movement")
         { }
 
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
+
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             if (applyEffect.Effect.Piece != Piece) return;
 
             var effect = applyEffect.Effect;
 
-            if (blockedEffects.Contains(effect.EffectName))
+            if (_blockedEffects.Contains(effect.EffectName))
             {
                 applyEffect.Result = ResultFlag.Unshaken;
             }

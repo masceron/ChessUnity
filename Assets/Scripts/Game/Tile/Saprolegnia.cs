@@ -21,7 +21,8 @@ namespace Game.Tile
         {
             return FormationType.Saprolegnia;
         }
-        public override void OnPieceEnter(PieceLogic piece)
+
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
 
@@ -29,7 +30,7 @@ namespace Game.Tile
             ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece), FormationType.Saprolegnia));
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
             base.OnPieceExit(piece);
         }

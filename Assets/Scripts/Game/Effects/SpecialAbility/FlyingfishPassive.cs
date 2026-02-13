@@ -3,16 +3,19 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class FlyingfishPassive: Effect, IOnMoveGenEffect, IAfterPieceActionEffect
+    public class FlyingfishPassive: Effect, IOnMoveGenTrigger, IAfterPieceActionTrigger
     {
         public FlyingfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_flying_fish_passive")
         {
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

@@ -1,8 +1,9 @@
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class TidalRetinaPassive : Effect, IMoveRangeModifier
+    public class TidalRetinaPassive : Effect, IMoveRangeModifierTrigger
     {
         public int ModifyMoveRange(int baseRange)
         {

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SnappingStrike: Effect, IOnMoveGenEffect
+    public class SnappingStrike: Effect, IOnMoveGenTrigger
     {
         public SnappingStrike(PieceLogic piece, int duration = -1) : base(duration, -1, piece,
             "effect_snapping_strike")

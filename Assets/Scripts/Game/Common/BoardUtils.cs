@@ -15,6 +15,7 @@ using UX.UI;
 using ZLinq;
 using Game.Tile;
 using Game.Action;
+using Game.Effects.Triggers;
 
 namespace Game.Common
 {

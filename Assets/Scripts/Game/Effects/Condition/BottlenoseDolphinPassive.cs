@@ -4,12 +4,13 @@ using Game.Action;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 using System;
+using Game.Effects.Triggers;
 using ZLinq;
 
 namespace Game.Effects.Condition
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BottlenoseDolphinPassive: Effect, IStartTurnEffect
+    public class BottlenoseDolphinPassive: Effect, IStartTurnTrigger
     {
         private bool _surpassed;
         private const int EvasionProbability = 25;
@@ -19,15 +20,12 @@ namespace Game.Effects.Condition
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
         }
 
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
+
         public StartTurnEffectType StartTurnEffectType { get; }
 
         public void OnCallStart(Action.Action lastMainAction)
         {
-            _surpassed = Piece.Effects.Any(e => e.EffectName == "effect_surpass");
-            if (MatchManager.Ins.GameState.IsDay && !_surpassed) 
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Surpass(Piece)));
-            }
             switch (MatchManager.Ins.GameState.IsDay)
             {
                 case true:

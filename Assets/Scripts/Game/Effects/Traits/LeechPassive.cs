@@ -3,6 +3,7 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
@@ -10,7 +11,7 @@ namespace Game.Effects.Traits
     /// <summary>
     ///  Khi tấn công trúng đối phương, đối phương không chết mà bị Bleeding 4. Chết sau khi thực hiện ăn quân địch.
     /// </summary>
-    public class LeechPassive : Effect, IAfterPieceActionEffect
+    public class LeechPassive : Effect, IAfterPieceActionTrigger
     {
         
         public LeechPassive(PieceLogic piece) : base(-1, 1, piece, "effect_horse_leech_passive")
@@ -22,6 +23,8 @@ namespace Game.Effects.Traits
         {
             return base.GetValueForAI() + 0;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Kill;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

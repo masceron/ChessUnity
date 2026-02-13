@@ -25,7 +25,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _relic.SetCooldown();
 
-            var execute = new AdrenalineRadiatorExcute(Maker);
+            var execute = new AdrenalineRadiatorExecute(Maker);
             CommitResult(execute);
 
             BoardViewer.Selecting = -1;

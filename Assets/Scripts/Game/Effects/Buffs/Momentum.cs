@@ -1,10 +1,11 @@
 using Game.Action.Skills;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Buffs
 {
-    public class Momentum: Effect, IAfterPieceActionEffect
+    public class Momentum: Effect, IAfterPieceActionTrigger
     {
         public Momentum(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_momentum")
         {}
@@ -13,6 +14,8 @@ namespace Game.Effects.Buffs
         {
             return base.GetValueForAI() + 20;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

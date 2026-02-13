@@ -3,17 +3,20 @@ using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Relentless: Effect, IBeforePieceActionEffect, IAfterPieceActionEffect
+    public class Relentless: Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
-        private int deathDefianceCount;
+        private int _deathDefianceCount;
         public Relentless(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_relentless")
         {
-            this.deathDefianceCount = deathDefianceCount;
+            this._deathDefianceCount = deathDefianceCount;
         }
+
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
@@ -24,8 +27,10 @@ namespace Game.Effects.Traits
             if (action.Target != Piece.Pos || action.Maker == action.Target) return;
 
             action.Result = ResultFlag.SurvivedHit;
-            deathDefianceCount--;
+            _deathDefianceCount--;
         }
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Other;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
@@ -39,7 +44,7 @@ namespace Game.Effects.Traits
                 ActionManager.EnqueueAction(new KillPiece(action.Maker));
             }
             
-            if (deathDefianceCount <= 0)
+            if (_deathDefianceCount <= 0)
             {
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }

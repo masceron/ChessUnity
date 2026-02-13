@@ -1,13 +1,14 @@
 using Game.Action.Internal;
 using System.Collections.Generic;
 using Game.Action;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
-    public class Sanity : Effect, IApplyEffect
+    public class Sanity : Effect, IBeforeApplyEffectTrigger
     {
-        private readonly List<string> blockedEffects = new()
+        private readonly List<string> _blockedEffects = new()
         {
             "effect_frenzied",
             "effect_controlled",
@@ -18,13 +19,15 @@ namespace Game.Effects.Traits
         {
         }
 
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
+
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             if (applyEffect.Effect.Piece != Piece) return;
 
             var effect = applyEffect.Effect;
 
-            if (blockedEffects.Contains(effect.EffectName))
+            if (_blockedEffects.Contains(effect.EffectName))
             {
                 applyEffect.Result = ResultFlag.Incorruptible;
             }

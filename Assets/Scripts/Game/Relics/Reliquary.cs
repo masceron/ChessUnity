@@ -27,7 +27,7 @@ namespace Game.Relics
                 // }
                 // BoardViewer.Selecting = -2;
                 // BoardViewer.SelectingFunction = 4;
-                var excute = new ReliquaryExcute();
+                var excute = new ReliquaryExecute();
                 BoardViewer.Ins.ExecuteAction(excute);
                 SetCooldown();
                 MatchManager.Ins.InputProcessor.UpdateRelic();

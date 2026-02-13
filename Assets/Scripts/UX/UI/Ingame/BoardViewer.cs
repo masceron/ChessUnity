@@ -74,7 +74,7 @@ namespace UX.UI.Ingame
 
             var piece = PieceOn(pos);
 
-            if (piece == null || !piece.IsVisible) return;
+            if (piece is not { IsVisible: true }) return;
 
             Hovering = piece;
 

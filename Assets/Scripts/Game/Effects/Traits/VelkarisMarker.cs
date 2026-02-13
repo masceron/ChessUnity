@@ -1,5 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -7,7 +8,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class VelkarisMarker: Effect, IEndTurnEffect
+    public class VelkarisMarker: Effect, IEndTurnTrigger
     {
         private readonly int[] rows;
         
@@ -54,6 +55,8 @@ namespace Game.Effects.Traits
             ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, (ushort)lastMainAction.Target));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
         public override int GetValueForAI()

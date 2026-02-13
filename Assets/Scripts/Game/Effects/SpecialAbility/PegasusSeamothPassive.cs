@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Quiets;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class PegasusSeamothPassive: Effect, IOnMoveGenEffect
+    public class PegasusSeamothPassive: Effect, IOnMoveGenTrigger
     {
         public PegasusSeamothPassive(PieceLogic piece) : base(-1, 1, piece, "effect_pegasus_seamoth_passive")
         {

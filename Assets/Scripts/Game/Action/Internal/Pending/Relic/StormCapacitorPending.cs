@@ -24,7 +24,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _stormCapacitor?.SetCooldown();
 
-            var execute = new StormCapacitorExcute(
+            var execute = new StormCapacitorExecute(
                 _thisTile.rank, 
                 _thisTile.file, 
                 _size, 

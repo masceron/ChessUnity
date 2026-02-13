@@ -8,7 +8,6 @@ using ZLinq;
 
 namespace Game.Action.Relics
 {
-
     [MemoryPackable]
     public partial class CommonPearlExecute : Action, IRelicAction
     {

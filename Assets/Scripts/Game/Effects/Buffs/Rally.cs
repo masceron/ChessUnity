@@ -1,13 +1,16 @@
 using Game.Piece.PieceLogic.Commons;
 using Game.Action;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
 using static Game.Common.BoardUtils;
 namespace Game.Effects.Buffs
 {
-    public class Rally: Effect, IAfterPieceActionEffect
+    public class Rally: Effect, IAfterPieceActionTrigger
     {
         public Rally(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_rally")
         {}
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

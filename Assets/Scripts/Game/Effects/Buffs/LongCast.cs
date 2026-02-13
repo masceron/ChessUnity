@@ -1,9 +1,10 @@
 
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    public class LongCast: Effect, ISkillStatModifier
+    public class LongCast: Effect, ISkillStatModifierTrigger
     {
         public LongCast(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_longcast")
         {}

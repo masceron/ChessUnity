@@ -3,16 +3,21 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class TaintedHeartPassive : Effect, IApplyEffect
+    public class TaintedHeartPassive : Effect, IBeforeApplyEffectTrigger
     {
+        private BeforeApplyEffectTriggerPriority _priority;
+
         public TaintedHeartPassive(PieceLogic piece) : base(-1, 1, piece, "effect_tainted_heart_passive")
         {
         }
-        
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Reaction;
+
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
             if (applyEffect.Effect.EffectName == "effect_poison" && applyEffect.SourcePiece == Piece)

@@ -18,14 +18,16 @@ namespace Game.Tile
                 // ToggleVisibility(piece, false);
             }
         }
-        public override void OnPieceEnter(PieceLogic piece)
+
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             if (piece.Color != Color)
             {
                 BoardUtils.RemoveFormation(piece.Pos);
             }
         }
-        public override void OnPieceExit(PieceLogic piece)
+
+        protected override void OnPieceExit(PieceLogic piece)
         {
             // ToggleVisibility(piece, true);
         }

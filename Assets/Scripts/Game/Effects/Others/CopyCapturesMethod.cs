@@ -1,10 +1,11 @@
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using Game.Common;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Others
 {
-    public class CopyCapturesMethod : Effect, IOnApply, IOnRemove
+    public class CopyCapturesMethod : Effect, IOnApplyTrigger, IOnRemoveTrigger
     {
         private readonly PieceLogic _ourPiece;
         private readonly PieceLogic _opponentPiece;

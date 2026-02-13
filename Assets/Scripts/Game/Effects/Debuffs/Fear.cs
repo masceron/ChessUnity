@@ -1,18 +1,21 @@
 using Game.Action;
 using Game.Action.Quiets;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Fear: Effect, IEndTurnEffect
+    public class Fear: Effect, IEndTurnTrigger
     {
         public Fear(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_fear")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
         }
-        
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
+
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {

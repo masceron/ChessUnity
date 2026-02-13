@@ -3,16 +3,19 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HardenedShield : Effect, IBeforePieceActionEffect, IAfterPieceActionEffect
+    public class HardenedShield : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
         public HardenedShield(PieceLogic piece, int stack = 1) : base(-1, stack, piece, "effect_hardened_shield")
         {
         }
+
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
@@ -20,6 +23,8 @@ namespace Game.Effects.Buffs
                 (action.Flag & ActionFlag.Unblockable) != 0) return;
             action.Result = ResultFlag.HardenedBlock;
         }
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

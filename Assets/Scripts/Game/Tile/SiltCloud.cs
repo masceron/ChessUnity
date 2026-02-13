@@ -13,14 +13,15 @@ namespace Game.Tile
             HaveDuration = haveDuration;
         }
         public override FormationType GetFormationType() => FormationType.SiltCloud;
-        public override void OnPieceEnter(PieceLogic piece)
+
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             
             ActionManager.EnqueueAction(new ApplyEffect(new Broken(-1, piece), FormationType.SiltCloud));
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
             base.OnPieceExit(piece);
         }

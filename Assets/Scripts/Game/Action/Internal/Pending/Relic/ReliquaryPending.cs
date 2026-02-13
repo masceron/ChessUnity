@@ -21,7 +21,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _reliquary?.SetCooldown();
 
-            var execute = new ReliquaryExcute();
+            var execute = new ReliquaryExecute();
             CommitResult(execute);
 
             BoardViewer.Selecting = -1;

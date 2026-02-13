@@ -1,5 +1,6 @@
 ﻿using Game.Common;
 using Game.Effects;
+using Game.Effects.Triggers;
 using UnityEngine;
 
 namespace Game.Action.Internal
@@ -19,7 +20,7 @@ namespace Game.Action.Internal
             Debug.Log("Removing " + _effect.GetType() + ": " + _effect.Duration);
             BoardUtils.RemoveObserver(_effect);
             
-            if (_effect is IOnRemove onRemove)
+            if (_effect is IOnRemoveTrigger onRemove)
                 onRemove.OnRemove();
             _effect.Piece.Effects.Remove(_effect);
         }

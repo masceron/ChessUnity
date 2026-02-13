@@ -2,18 +2,22 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Augmentation
 {
-    public class RibcagePassive : Effect, IStartTurnEffect
+    public class RibcagePassive : Effect, IStartTurnTrigger
     {
         public RibcagePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_ribcage_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
         }
+
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
+
         public StartTurnEffectType StartTurnEffectType { get; }
         public void OnCallStart(Action.Action lastMainAction)
         {

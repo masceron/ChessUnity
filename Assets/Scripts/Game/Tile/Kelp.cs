@@ -20,7 +20,7 @@ namespace Game.Tile
             return FormationType.Kelp;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             if (piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
@@ -31,7 +31,7 @@ namespace Game.Tile
             }
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
             if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
             {

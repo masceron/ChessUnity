@@ -1,11 +1,12 @@
 using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.Triggers;
 
 
 namespace Game.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Charge : Effect, IEndTurnEffect
+    public class Charge : Effect, IEndTurnTrigger
     {
         private readonly bool color;
 
@@ -14,6 +15,8 @@ namespace Game.Effects.Others
             this.color = color;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 

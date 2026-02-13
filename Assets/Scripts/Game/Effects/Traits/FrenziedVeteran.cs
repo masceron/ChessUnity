@@ -1,9 +1,10 @@
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrenziedVeteran: Effect, IEndTurnEffect, IAttackRangeModifier
+    public class FrenziedVeteran: Effect, IEndTurnTrigger, IAttackRangeModifier
     {
         public const byte TurnsToActive = 10;
         public byte numTurns;
@@ -18,7 +19,9 @@ namespace Game.Effects.Traits
         {
             numTurns++;
         }
-        
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
+
         public EndTurnEffectType EndTurnEffectType { get; set; }
 
         public override int GetValueForAI()

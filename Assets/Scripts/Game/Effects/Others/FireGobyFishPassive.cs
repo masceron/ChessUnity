@@ -4,16 +4,19 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
-    public class FireGobyFishPassive : Effect, IAfterPieceActionEffect
+    public class FireGobyFishPassive : Effect, IAfterPieceActionTrigger
     {
         public FireGobyFishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_fire_goby_fish_passive")
         {
         }
 
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

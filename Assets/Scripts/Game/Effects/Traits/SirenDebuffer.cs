@@ -2,18 +2,21 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SirenDebuffer: Effect, IStartTurnEffect
+    public class SirenDebuffer: Effect, IStartTurnTrigger
     {
         public SirenDebuffer(PieceLogic p) : base(-1, 1, p, "effect_siren_debuffer")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfEnemyTurn;
         }
+
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Debuff;
 
         public StartTurnEffectType StartTurnEffectType { get; }
 

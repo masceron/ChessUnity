@@ -1,15 +1,18 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Consume: Effect, IAfterPieceActionEffect
+    public class Consume: Effect, IAfterPieceActionTrigger
     {
         public Consume(PieceLogic piece) : base(-1, 1, piece, "effect_consume")
         {}
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

@@ -21,21 +21,18 @@ namespace Game.Relics
         }
         public override void Activate()
         {
-            if (CurrentCooldown == 0)
+            if (CurrentCooldown != 0) return;
+            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
-                
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
-                {
-                    if (piece == null) continue;
+                if (piece == null) continue;
 
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new TimelessHourglassPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
+                TileManager.Ins.MarkAsMoveable(piece.Pos);
+                var pending = new TimelessHourglassPending(this, piece.Pos);
+                BoardViewer.ListOf.Add(pending);
             }
+
+            BoardViewer.Selecting = -2;
+            BoardViewer.SelectingFunction = 4;
         }
 
         public override async void ActiveForAI()

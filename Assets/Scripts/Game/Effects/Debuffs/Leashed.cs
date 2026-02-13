@@ -1,11 +1,12 @@
 using Game.Piece.PieceLogic.Commons;
 using System.Collections.Generic;
+using Game.Effects.Triggers;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Leashed: Effect, IOnMoveGenEffect
+    public class Leashed: Effect, IOnMoveGenTrigger
     {
         public readonly int Position;
         public Leashed(PieceLogic piece, int position, int duration) : base(duration, 1, piece, "effect_leashed")

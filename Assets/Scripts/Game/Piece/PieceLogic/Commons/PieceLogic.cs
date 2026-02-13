@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Augmentation.Set;
 using Game.Common;
 using Game.Effects;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Movesets;
 using Game.ScriptableObjects;
@@ -13,7 +14,6 @@ using static Game.ScriptableObjects.PieceInfo;
 
 namespace Game.Piece.PieceLogic.Commons
 {
-
     // miễn nhiễm với Formation mang debuff
     // miễn nhiễm với Formation cụ thể nào đó   
     public enum ImmunityType
@@ -22,6 +22,7 @@ namespace Game.Piece.PieceLogic.Commons
         FormationDebuff,
         FormationSpecific,
     }
+
     public enum SkillStat
     {
         Duration,
@@ -30,6 +31,7 @@ namespace Game.Piece.PieceLogic.Commons
         Range,
         Cooldown,
     }
+
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
@@ -48,12 +50,12 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly List<ImmunityType> Immunities;
         public readonly List<FormationType> SpecificFormations;
         private readonly UDictionary<SkillStat, List<int>> SkillStats;
-        
+
         public int MoveRange()
         {
             return _moveRange;
         }
-        
+
         public int AttackRange()
         {
             return _attackRange;
@@ -78,7 +80,7 @@ namespace Game.Piece.PieceLogic.Commons
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
-            _moveRange =  info.moveRange;
+            _moveRange = info.moveRange;
             _attackRange = info.attackRange;
             PieceRank = info.rank;
             _hasSkill = info.hasSkill;
@@ -91,7 +93,7 @@ namespace Game.Piece.PieceLogic.Commons
                 pieceWithSkill.TimeToCooldown = info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1;
             }
             else SkillCooldown = -1;
-            
+
             Quiets = quiets;
             Captures = captures;
 
@@ -109,7 +111,6 @@ namespace Game.Piece.PieceLogic.Commons
             {
                 ApplyAugmentationEffects(Augmentations);
             }
-
         }
 
         private bool ValidAugmentation(List<Augmentation.Augmentation> augmentations)
@@ -119,11 +120,13 @@ namespace Game.Piece.PieceLogic.Commons
             var pieceInfo = AssetManager.Ins.PieceData[Type];
             return augmentations.All(ag => CanEquip(pieceInfo, ag));
         }
+
         bool IsDulicatedSlot(List<Augmentation.Augmentation> augmentations)
         {
             var slotSet = new HashSet<Augmentation.AugmentationSlot>();
             return augmentations.Any(ag => !slotSet.Add(ag.Slot));
         }
+
         bool CanEquip(PieceInfo piece, Augmentation.Augmentation augment)
         {
             return piece.availableSlots.HasFlag(
@@ -149,7 +152,13 @@ namespace Game.Piece.PieceLogic.Commons
                 setCount[aug.Set.Type]++;
             }
 
-            foreach (var setInfo in from kv in setCount let setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set where setInfo != null let count = kv.Value where setInfo.HaveBonus && count >= setInfo.RequiredPieces where setInfo.BonusEffects != null select setInfo)
+            foreach (var setInfo in from kv in setCount
+                     let setInfo = augmentations.FirstOrDefault(a => a.Set != null && a.Set.Type == kv.Key)?.Set
+                     where setInfo != null
+                     let count = kv.Value
+                     where setInfo.HaveBonus && count >= setInfo.RequiredPieces
+                     where setInfo.BonusEffects != null
+                     select setInfo)
             {
                 setInfo.ApplyBonusEffects();
             }
@@ -159,10 +168,12 @@ namespace Game.Piece.PieceLogic.Commons
         {
             return Augmentations.Any(a => a.Name == augmentationName);
         }
+
         public Augmentation.Augmentation GetAugmentation(Augmentation.AugmentationName augmentationName)
         {
             return Augmentations.FirstOrDefault(a => a.Name == augmentationName);
         }
+
         public void PassTurn()
         {
             if (SkillCooldown > 0) SkillCooldown--;
@@ -190,15 +201,15 @@ namespace Game.Piece.PieceLogic.Commons
 
             if (_hasSkill)
             {
-                if (Effects.Any(e => e.EffectName == "effect_silenced") ||
-                    Effects.Any(e => e.EffectName == "effect_illusion") ||
-                        Effects.Any(e => e.EffectName == "effect_crown_of_silence_passive"))
+                if (Effects.Any(e =>
+                        e.EffectName is "effect_illusion" or "effect_silenced" or "effect_crown_of_silence_passive"))
                 {
                     return;
                 }
+
                 ((IPieceWithSkill)this).Skills(list, isPlayer, excludeEmptyTile);
             }
-            
+
             NotifyOnMoveGen(this, list);
         }
 
@@ -211,7 +222,7 @@ namespace Game.Piece.PieceLogic.Commons
 
             foreach (var e in Effects)
             {
-                if (e is IMoveRangeModifier modifier)
+                if (e is IMoveRangeModifierTrigger modifier)
                 {
                     range = modifier.ModifyMoveRange(range);
                 }
@@ -241,22 +252,22 @@ namespace Game.Piece.PieceLogic.Commons
         public bool IsImmuneToFormationEffect(FormationType formationType, Effect appliedEffect)
         {
             if (formationType == FormationType.None || appliedEffect == null) return false;
-            
-            if (Immunities.Contains(ImmunityType.FormationDebuff) && 
+
+            if (Immunities.Contains(ImmunityType.FormationDebuff) &&
                 appliedEffect.Category == EffectCategory.Debuff)
             {
                 return true;
             }
 
-            if (Immunities.Contains(ImmunityType.FormationSpecific) && 
+            if (Immunities.Contains(ImmunityType.FormationSpecific) &&
                 SpecificFormations.Contains(formationType))
             {
                 return true;
             }
-            
+
             return false;
         }
-        
+
         public void AddImmunity(ImmunityType immunityType)
         {
             if (!Immunities.Contains(immunityType))
@@ -277,6 +288,7 @@ namespace Game.Piece.PieceLogic.Commons
                 SpecificFormations.Add(formationType);
             }
         }
+
         public void RemoveSpecificFormation(FormationType formationType)
         {
             SpecificFormations.Remove(formationType);
@@ -296,7 +308,7 @@ namespace Game.Piece.PieceLogic.Commons
             {
                 value += aug.GetValueForAI();
             }
-            
+
             value += GetQuitesValue();
 
             return value;
@@ -327,6 +339,7 @@ namespace Game.Piece.PieceLogic.Commons
                 default: return 0;
             }
         }
+
         /// <summary>
         /// Trả về chỉ 
         /// </summary>
@@ -335,9 +348,14 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetRawStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat)) { return 0; }
+            if (!SkillStats.TryGetValue(stat, out var skillStat))
+            {
+                return 0;
+            }
+
             return skillStat[num - 1];
         }
+
         /// <summary>
         /// Trả về stat sau khi đã qua sự chỉnh sửa của các Effect
         /// </summary>
@@ -346,28 +364,36 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat)) { return 0; }
+            if (!SkillStats.TryGetValue(stat, out var skillStat))
+            {
+                return 0;
+            }
+
             var finalStat = skillStat[num - 1];
             foreach (var effect in Effects)
             {
-                if (effect is ISkillStatModifier modifier)
+                if (effect is ISkillStatModifierTrigger modifier)
                 {
                     finalStat += modifier.Modify(stat);
                 }
             }
+
             return finalStat;
         }
+
         public void SetStat(SkillStat stat, int value, int num = 1)
         {
             if (!SkillStats.ContainsKey(stat))
             {
                 SkillStats.Add(stat, new());
             }
+
             var lst = SkillStats[stat];
             while (lst.Count < num)
             {
                 lst.Add(0);
             }
+
             SkillStats[stat][num - 1] = value;
         }
     }

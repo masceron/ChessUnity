@@ -1,16 +1,19 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Carapace: Effect, IBeforePieceActionEffect, IAfterPieceActionEffect
+    public class Carapace: Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
         public Carapace(int duration, PieceLogic piece) : base(duration, 1, piece, "effect_carapace")
         {}
+
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
@@ -19,6 +22,8 @@ namespace Game.Effects.Buffs
             
             action.Result = ResultFlag.Parry;
         }
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Kill;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

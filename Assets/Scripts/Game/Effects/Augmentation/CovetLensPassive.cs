@@ -1,9 +1,10 @@
 ﻿using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class CovetLensPassive : Effect, IAttackRangeModifier, IMoveRangeModifier, IApplyEffect
+    public class CovetLensPassive : Effect, IAttackRangeModifier, IMoveRangeModifierTrigger, IBeforeApplyEffectTrigger
     {
         private const int covetLensLevel = 3;
         public CovetLensPassive(PieceLogic piece) : base(-1, 1, piece, "effect_covet_lens_passive")
@@ -19,6 +20,8 @@ namespace Game.Effects.Augmentation
         {
             return baseRange - 1;
         }
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {

@@ -24,10 +24,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {   
-            var Pieces = FindPiece<PieceLogic>(PieceOn(Maker).Color);
-            var picked = Pieces
+            var pieces = FindPiece<PieceLogic>(PieceOn(Maker).Color);
+            var picked = pieces
                 .OrderBy(_ => Random.value)  
-                .Take(Mathf.Min(3, Pieces.Count))                
+                .Take(Mathf.Min(3, pieces.Count))                
                 .ToList();
             foreach (var piece in picked)
             {

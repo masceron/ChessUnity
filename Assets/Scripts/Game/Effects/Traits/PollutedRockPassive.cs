@@ -1,5 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
@@ -13,12 +14,12 @@ namespace Game.Effects.Traits
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class PollutedRockPassive : Effect, IEndTurnEffect
+    public class PollutedRockPassive : Effect, IEndTurnTrigger
     {
         private const byte TurnsToActive = 2;
-        private byte numTurns = TurnsToActive;
+        private byte _numTurns = TurnsToActive;
         
-        private readonly (int, int)[] rangeSpawn = new (int, int)[]
+        private readonly (int, int)[] _rangeSpawn = new (int, int)[]
         {
             (1, 0), (0, -1),
             (-1, 0), (0, 1)
@@ -30,16 +31,16 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            numTurns--;
-            if (numTurns != 0) return;
-            numTurns = TurnsToActive;
+            _numTurns--;
+            if (_numTurns != 0) return;
+            _numTurns = TurnsToActive;
             SpawnMedicalLeech();
         }
 
         private void SpawnMedicalLeech()
         {
             var random = new System.Random();
-            var emptySpots = rangeSpawn
+            var emptySpots = _rangeSpawn
                 .Select(offset => IndexOf(RankOf(Piece.Pos) + offset.Item1, FileOf(Piece.Pos) + offset.Item2))
                 .Where(index => PieceOn((ushort)index) == null)
                 .ToList();
@@ -52,6 +53,8 @@ namespace Game.Effects.Traits
                 );
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
     }

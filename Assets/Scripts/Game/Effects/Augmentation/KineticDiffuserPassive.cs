@@ -1,12 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 
 namespace Game.Effects.Augmentation
 {
-    public class KineticDiffuserPassive : Effect, IOnApply
+    public class KineticDiffuserPassive : Effect, IOnApplyTrigger
     {
         private const int EvasionProbability = 25;
         public KineticDiffuserPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kinetic_diffuser_passive")

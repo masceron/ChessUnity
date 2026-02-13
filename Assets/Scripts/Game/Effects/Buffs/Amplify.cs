@@ -1,8 +1,9 @@
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    public class Amplify : Effect, IEffectStatModifier
+    public class Amplify : Effect, IEffectStatModifierTrigger
     {
         public Amplify(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_amplify")
         {

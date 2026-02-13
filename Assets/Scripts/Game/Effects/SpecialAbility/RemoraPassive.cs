@@ -4,12 +4,13 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class RemoraPassive: Effect, IOnMoveGenEffect, IAfterPieceActionEffect
+    public class RemoraPassive: Effect, IOnMoveGenTrigger, IAfterPieceActionTrigger
     {
         public RemoraPassive(PieceLogic piece) : base(-1, 1, piece, "effect_remora_passive")
         {
@@ -30,6 +31,8 @@ namespace Game.Effects.SpecialAbility
                 }
             }
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

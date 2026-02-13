@@ -1,17 +1,17 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class DuelistReflexPassive : Effect, IAfterPieceActionEffect, IBeforePieceActionEffect
+    public class DuelistReflexPassive : Effect, IAfterPieceActionTrigger, IBeforePieceActionTrigger
     {
-        
-
         public DuelistReflexPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_duelist_reflex_passive")
         { }
 
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
@@ -26,6 +26,8 @@ namespace Game.Effects.Augmentation
                 action.Result = ResultFlag.Parry;
             }
         }
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Kill;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

@@ -1,11 +1,12 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class NerveCoolantPassive : Effect, IOnApply
+    public class NerveCoolantPassive : Effect, IOnApplyTrigger
     {
         public NerveCoolantPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_nerve_coolant_passive")

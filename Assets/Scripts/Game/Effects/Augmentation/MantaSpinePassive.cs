@@ -9,14 +9,19 @@ using Game.Effects.Traits;
 using UnityEngine;
 using Game.Piece;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
+
 namespace Game.Effects.Augmentation
 {
-    public class MantaSpinePassive : Effect, IBeforePieceActionEffect
+    public class MantaSpinePassive : Effect, IBeforePieceActionTrigger
     {
         private bool isFirstCaptured = true;
+
         public MantaSpinePassive(PieceLogic piece) : base(-1, 1, piece, "effect_manta_spine_passive")
         {
         }
+
+        public BeforeActionPriority Priority => BeforeActionPriority.Mitigation;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {

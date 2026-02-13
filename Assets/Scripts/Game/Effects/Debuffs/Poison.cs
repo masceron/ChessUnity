@@ -1,11 +1,12 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Poison: Effect, IEndTurnEffect
+    public class Poison: Effect, IEndTurnTrigger
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TimeLeft = 3;
@@ -23,6 +24,8 @@ namespace Game.Effects.Debuffs
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
 

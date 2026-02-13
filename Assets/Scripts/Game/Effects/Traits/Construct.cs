@@ -1,10 +1,11 @@
 ﻿using Game.Piece.PieceLogic.Commons;
 using Game.Action.Captures;
 using System.Collections.Generic;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Traits
 {
-    public class Construct : Effect, IOnMoveGenEffect
+    public class Construct : Effect, IOnMoveGenTrigger
     {
         public Construct(PieceLogic piece) : base(-1, 1, piece, "effect_construct")
         {

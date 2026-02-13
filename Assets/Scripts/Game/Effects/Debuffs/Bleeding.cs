@@ -1,12 +1,13 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Bleeding: Effect, IEndTurnEffect
+    public class Bleeding: Effect, IEndTurnTrigger
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TurnLeftToDie;
@@ -20,6 +21,8 @@ namespace Game.Effects.Debuffs
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             TurnLeftToDie = (byte)turnToDie;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
 
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)

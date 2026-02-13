@@ -1,11 +1,10 @@
-using Game.Piece.PieceLogic.Commons;
-using Game.Effects;
+using Game.Effects.Triggers;
 
 namespace Game.Tile.RealityDistortion
 {
     
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RealityDistortion : Formation, IStartTurnEffect
+    public class RealityDistortion : Formation, IStartTurnTrigger
     {
         
         public RealityDistortion(bool haveDuration, bool color) : base(color)
@@ -18,16 +17,6 @@ namespace Game.Tile.RealityDistortion
             return FormationType.RealityDistortion;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
-        {
-            base.OnPieceEnter(piece);
-        }
-
-        public override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
-        }
-
         public override int GetValueForAI()
         {
             return -10;
@@ -35,11 +24,12 @@ namespace Game.Tile.RealityDistortion
         
         public void OnCallStart(Action.Action lastMainAction)
         {
-            if (RealityDistortionManager.Ins == null) return;
-            RealityDistortionManager.Ins.OnTurnStart(Color);
+            if (!RealityDistortionManager.Ins) return;
+            RealityDistortionManager.Ins.OnTurnStart();
         }
-        
-        public StartTurnEffectType StartTurnEffectType { get; set; } 
-            = StartTurnEffectType.StartOfAnyTurn;
+
+        public new StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Other;
+
+        public StartTurnEffectType StartTurnEffectType => StartTurnEffectType.StartOfAnyTurn;
     }
 }

@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Camouflage: Effect, IOnMoveGenEffect
+    public class Camouflage: Effect, IOnMoveGenTrigger
     {
         public Camouflage(PieceLogic piece, int duration = -1) : base(duration, 1, piece, "effect_camouflage")
         {}

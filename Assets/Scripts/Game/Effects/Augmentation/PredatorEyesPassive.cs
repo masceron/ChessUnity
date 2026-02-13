@@ -1,11 +1,12 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class PredatorEyesPassive : Effect, IOnApply
+    public class PredatorEyesPassive : Effect, IOnApplyTrigger
     {
         public PredatorEyesPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_predator_eyes_passive")

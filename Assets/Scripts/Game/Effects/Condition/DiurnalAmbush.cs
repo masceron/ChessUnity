@@ -1,13 +1,14 @@
-﻿using Game.Managers;
+﻿using Game.Effects.Triggers;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Condition
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DiurnalAmbush: Effect, IEndTurnEffect, IAttackRangeModifier
+    public class DiurnalAmbush: Effect, IEndTurnTrigger, IAttackRangeModifier
     {
-        private byte lastUsed;
-        private bool active;
+        private byte _lastUsed;
+        private bool _active;
         private const byte RangeOffset = 2;
 
         public DiurnalAmbush(PieceLogic piece) : base(-1, -1, piece, "effect_diurnal_ambush")
@@ -20,16 +21,18 @@ namespace Game.Effects.Condition
             if (!MatchManager.Ins.GameState.IsDay) return;
             if (action.Maker != Piece.Pos)
             {
-                lastUsed++;
-                if (lastUsed < 6 || active) return;
-                active = true;
+                _lastUsed++;
+                if (_lastUsed < 6 || _active) return;
+                _active = true;
             }
-            else if (active)
+            else if (_active)
             {
-                active = false;
-                lastUsed = 0;
+                _active = false;
+                _lastUsed = 0;
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
 
@@ -40,7 +43,7 @@ namespace Game.Effects.Condition
 
         public int ModifyAttackRange(int baseRange)
         {
-            if (active) return baseRange + RangeOffset;
+            if (_active) return baseRange + RangeOffset;
 
             return baseRange;
         }

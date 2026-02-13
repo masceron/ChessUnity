@@ -13,12 +13,12 @@ namespace UX.UI.Ingame.HermosHornUI
         }
         public void FirstOption()
         {
-            BoardViewer.Ins.ExecuteAction(new HermosHornExcute(_relic.Color, true));
+            BoardViewer.Ins.ExecuteAction(new HermosHornExecute(_relic.Color, true));
             _relic.SetCooldown();
         }
         public void SecondOption()
         {
-            BoardViewer.Ins.ExecuteAction(new HermosHornExcute(_relic.Color, false));
+            BoardViewer.Ins.ExecuteAction(new HermosHornExecute(_relic.Color, false));
             _relic.SetCooldown();
         }
     }

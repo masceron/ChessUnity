@@ -15,7 +15,8 @@ namespace Game.Tile{
         {
             return FormationType.AnchorIce;
         }
-        public override void OnPieceExit(PieceLogic piece)
+
+        protected override void OnPieceExit(PieceLogic piece)
         {
             base.OnPieceExit(piece);
             stack = 0;

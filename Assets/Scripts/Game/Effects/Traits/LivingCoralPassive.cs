@@ -2,6 +2,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
@@ -10,7 +11,7 @@ using static Game.Common.BoardUtils;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LivingCoralPassive : Effect, IStartTurnEffect, IOnApply, IAfterPieceActionEffect
+    public class LivingCoralPassive : Effect, IStartTurnTrigger, IOnApplyTrigger, IAfterPieceActionTrigger
     {
         private const int Interval = 3;
         private const int EvasionValue = 25;
@@ -18,6 +19,8 @@ namespace Game.Effects.Traits
         private int turnCounter;
         
         private readonly HashSet<PieceLogic> alliesInRange = new();
+
+        StartTurnTriggerPriority IStartTurnTrigger.Priority => StartTurnTriggerPriority.Buff;
 
         public StartTurnEffectType StartTurnEffectType { get; }
 
@@ -31,7 +34,9 @@ namespace Game.Effects.Traits
         {
             UpdateAura();
         }
-        
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Buff;
+
         public void OnCallAfterPieceAction(Action.Action action)
         {
             UpdateAura();

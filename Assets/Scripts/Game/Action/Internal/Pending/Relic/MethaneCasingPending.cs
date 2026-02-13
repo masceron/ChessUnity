@@ -28,7 +28,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _methaneCasing.SetCooldown();
 
-            var excute = new MethaneCasingExcute(Maker);
+            var excute = new MethaneCasingExecute(Maker);
             CommitResult(excute);
 
             BoardViewer.Selecting = -1;

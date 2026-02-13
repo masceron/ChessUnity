@@ -3,13 +3,14 @@ using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece;
 using System.Collections.Generic;
+using Game.Effects.Triggers;
 using ZLinq;
 
 
 namespace Game.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChaoticConstructorSpawn : Effect, IStartTurnEffect
+    public class ChaoticConstructorSpawn : Effect, IStartTurnTrigger
     {
         private int _currentTurn = 1;
         private readonly List<int> _storedPos;
@@ -29,6 +30,8 @@ namespace Game.Effects.Others
                 (list[i], list[j]) = (list[j], list[i]);
             }
         }
+
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
 
         public StartTurnEffectType StartTurnEffectType { get; }
         public void OnCallStart(Action.Action lastMainAction)

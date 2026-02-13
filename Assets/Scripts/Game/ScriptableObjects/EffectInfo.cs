@@ -1,4 +1,3 @@
-using Game.Common;
 using Game.Effects;
 using UnityEngine;
 
@@ -11,7 +10,6 @@ namespace Game.ScriptableObjects
         [SerializeField] public string key;
         [SerializeField] public EffectCategory category;
         [SerializeField] public EffectStack stack;
-        [SerializeField] public ObserverPriority priority;
         [SerializeField] public Texture2D icon;
     }
 }

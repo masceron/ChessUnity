@@ -1,12 +1,13 @@
 using Game.Action;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Blinded: Effect, IBeforePieceActionEffect
+    public class Blinded: Effect, IBeforePieceActionTrigger
     {
         public Blinded(int duration, int probability, PieceLogic piece) : base(duration, probability, piece, "effect_blinded")
         {
@@ -16,6 +17,8 @@ namespace Game.Effects.Debuffs
         {
             return base.GetValueForAI() + 20;
         }
+
+        public BeforeActionPriority Priority => BeforeActionPriority.Declaration;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {

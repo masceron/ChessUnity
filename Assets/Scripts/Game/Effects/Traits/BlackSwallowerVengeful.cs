@@ -4,12 +4,13 @@ using Game.Common;
 using static Game.Common.BoardUtils;
 using System.Collections.Generic;
 using System;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class  BlackSwallowerVengeful: Effect, IDeadEffect
+    public class  BlackSwallowerVengeful: Effect, IDeadTrigger
     {
         public BlackSwallowerVengeful(PieceLogic piece) : base(-1, 1, piece, "effect_black_swallower_vengeful")
         {

@@ -19,7 +19,7 @@ namespace Game.Tile
             return FormationType.CarpetAnemone;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             if (piece != null && piece.Color != Color)
@@ -27,11 +27,6 @@ namespace Game.Tile
                 ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, piece.Pos, 3), FormationType.CarpetAnemone));
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, piece), FormationType.CarpetAnemone));
             }
-        }
-
-        public override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
         }
 
         public override int GetValueForAI()

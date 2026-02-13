@@ -2,6 +2,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 using static Game.Common.BoardUtils;
@@ -10,7 +11,7 @@ using static Game.Managers.MatchManager;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ThalassosShielder: Effect, IEndTurnEffect
+    public class ThalassosShielder: Effect, IEndTurnTrigger
     {
         private List<PieceLogic> inRange = new();
         private readonly List<PieceLogic> shielding = new();
@@ -73,6 +74,8 @@ namespace Game.Effects.Traits
                 InRange();
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
 

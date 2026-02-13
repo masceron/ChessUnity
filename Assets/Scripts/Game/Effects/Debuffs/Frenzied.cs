@@ -3,39 +3,42 @@ using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
 using Game.Action.Quiets;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 
 namespace Game.Effects.Debuffs
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Frenzied : Effect, IEndTurnEffect
+    public class Frenzied : Effect, IEndTurnTrigger
     {
-        private List<Action.Action> list;
+        private List<Action.Action> _list;
         public Frenzied(PieceLogic piece, int duration = -1) : base(duration, 1, piece, "effect_frenzied")
         {
-            list = new List<Action.Action>();
+            _list = new List<Action.Action>();
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
             Duration = duration;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Kill;
 
         public EndTurnEffectType EndTurnEffectType { get; }
         public void OnCallEnd(Action.Action lastMainAction)
         {
             if (!IsAlive(Piece) || PieceOn(Piece.Pos) != Piece) return;
-            list.Clear();
+            _list.Clear();
             Piece.Color = !Piece.Color;
-            Piece.Captures(list, Piece.Pos, excludeEmptyTile: true);
-            Piece.Quiets(list, Piece.Pos, isPlayer: true);
-            if (list.Count > 1)
+            Piece.Captures(_list, Piece.Pos, excludeEmptyTile: true);
+            Piece.Quiets(_list, Piece.Pos, isPlayer: true);
+            if (_list.Count > 1)
             {
-                list = list.Distinct(new ActionComparer()).ToList();
+                _list = _list.Distinct(new ActionComparer()).ToList();
             }
             
-            var captureTargets = list.OfType<ICaptures>()
+            var captureTargets = _list.OfType<ICaptures>()
                 .Select(c => ((Action.Action)c).Target)
                 .ToList();
-            var moveTargets = list.OfType<IQuiets>()
+            var moveTargets = _list.OfType<IQuiets>()
                 .Select(c => ((Action.Action)c).Target)
                 .ToList();
             
@@ -45,18 +48,16 @@ namespace Game.Effects.Debuffs
                 var nearestTarget = captureTargets
                     .OrderBy(c => Distance(Piece.Pos, c))
                     .FirstOrDefault();
-                
-                if (nearestTarget >= 0)
+
+                if (nearestTarget < 0) return;
+                var piece = PieceOn(Piece.Pos);
+                if (piece != null && piece.Effects.Any(e => e.EffectName == "effect_snapping_strike"))
                 {
-                    var piece = PieceOn(Piece.Pos);
-                    if (piece != null && piece.Effects.Any(e => e.EffectName == "effect_snapping_strike"))
-                    {
-                        ActionManager.EnqueueAction(new FrenziedCaptureDontMove(Piece.Pos, nearestTarget));
-                    }
-                    else
-                    {
-                        ActionManager.EnqueueAction(new FrenziedCapture(Piece.Pos, nearestTarget));
-                    }
+                    ActionManager.EnqueueAction(new FrenziedCaptureDontMove(Piece.Pos, nearestTarget));
+                }
+                else
+                {
+                    ActionManager.EnqueueAction(new FrenziedCapture(Piece.Pos, nearestTarget));
                 }
             } else if (moveTargets.Count > 0)
             {

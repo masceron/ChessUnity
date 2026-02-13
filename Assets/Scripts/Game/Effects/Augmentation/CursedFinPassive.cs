@@ -1,11 +1,12 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Augmentation
 {
-    public class CursedFinPassive : Effect, IOnApply, IAttackRangeModifier, IMoveRangeModifier
+    public class CursedFinPassive : Effect, IOnApplyTrigger, IAttackRangeModifier, IMoveRangeModifierTrigger
     {
         private const int attackRangeModifer = 4;
         private const int moveRangeModifier = 4;

@@ -17,13 +17,13 @@ namespace Game.Tile
             HaveDuration = hd;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece), FormationType.BubbleVent));
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
             base.OnPieceExit(piece);
         }

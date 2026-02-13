@@ -3,11 +3,12 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DeathDefiance : Effect, IBeforePieceActionEffect, IAfterPieceActionEffect
+    public class DeathDefiance : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
         private int _deathDefianceCount;
 
@@ -15,6 +16,8 @@ namespace Game.Effects.Traits
         {
             _deathDefianceCount = deathDefianceCount;
         }
+
+        BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
@@ -27,6 +30,8 @@ namespace Game.Effects.Traits
 
             action.Result = ResultFlag.SurvivedHit;
         }
+
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

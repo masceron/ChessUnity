@@ -1,3 +1,4 @@
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Tile;
@@ -5,7 +6,7 @@ using Game.Tile;
 namespace Game.Effects.SpecialAbility
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineFlatwormPassive : Effect, IDeadEffect
+    public class MarineFlatwormPassive : Effect, IDeadTrigger
     {
         public MarineFlatwormPassive(PieceLogic piece) : base(-1, 1, piece, "effect_marine_flatworm_passive")
         {

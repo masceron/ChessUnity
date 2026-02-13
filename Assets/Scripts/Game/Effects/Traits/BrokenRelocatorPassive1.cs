@@ -3,38 +3,34 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Effects.Traits
 {
-    public class BrokenRelocatorPassive : Effect, IAfterPieceActionEffect, IOnApply
+    public class BrokenRelocatorPassive : Effect, IAfterPieceActionTrigger, IOnApplyTrigger
     {
-        private Effect Relentless;
         private const int Radius = 5;
-        private readonly List<int> possiblePositions = new();
+        private readonly List<int> _possiblePositions = new();
         public BrokenRelocatorPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece, "effect_broken_relocator_passive")
         { }
 
         public void OnApply()
         {
-            foreach (var effect in Piece.Effects)
+            foreach (Effect effect in Piece.Effects.Where(effect => effect.EffectName == "effect_relentless").Where(effect => effect.Strength > 0))
             {
-                if (effect.EffectName == "effect_relentless")
-                {
-                    if (effect.Strength > 0)
-                    {
-                        effect.Strength--;
-                        Relentless = effect;
-                        break;
-                    }
-                }
+                effect.Strength--;
+                break;
             }
         }
 
+        public AfterActionPriority Priority => AfterActionPriority.Kill;
+
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action == null || action is not ICaptures) return;
+            if (action is not ICaptures) return;
             
             if (action.Target != Piece.Pos) return;
 
@@ -42,22 +38,22 @@ namespace Game.Effects.Traits
 
             foreach (var (r, f) in MoveEnumerators.AroundUntil(nRank, nFile, Radius))
             {
-                possiblePositions.Add(BoardUtils.IndexOf(r, f));
+                _possiblePositions.Add(BoardUtils.IndexOf(r, f));
             }
 
             int idx;
             do
             {
-                idx = UnityEngine.Random.Range(0, possiblePositions.Count);
+                idx = UnityEngine.Random.Range(0, _possiblePositions.Count);
 
-            } while (BoardUtils.PieceOn(possiblePositions[idx]) != null && BoardUtils.PieceOn(possiblePositions[idx]).Color == Piece.Color);
+            } while (BoardUtils.PieceOn(_possiblePositions[idx]) != null && BoardUtils.PieceOn(_possiblePositions[idx]).Color == Piece.Color);
 
-            if (BoardUtils.PieceOn(possiblePositions[idx]) != null)
+            if (BoardUtils.PieceOn(_possiblePositions[idx]) != null)
             {
-                ActionManager.EnqueueAction(new KillPiece(possiblePositions[idx]));
+                ActionManager.EnqueueAction(new KillPiece(_possiblePositions[idx]));
             }
             
-            MatchManager.Ins.GameState.Move(action.Target, possiblePositions[idx]);
+            MatchManager.Ins.GameState.Move(action.Target, _possiblePositions[idx]);
         }
     }
 }

@@ -8,8 +8,7 @@ namespace Game.Action.Relics
     [MemoryPackable]
     public partial class ChaoticConstructorAction : Action, IRelicAction
     {
-    [MemoryPackInclude]
-    private readonly List<int> _storedPos = new();
+        [MemoryPackInclude] private readonly List<int> _storedPos = new();
 
         public ChaoticConstructorAction(int maker, List<int> storedPos = null) : base(maker)
         {
@@ -28,6 +27,7 @@ namespace Game.Action.Relics
                 _storedPos.Add(p.Pos);
                 ActionManager.EnqueueAction(new KillPiece(p.Pos));
             }
+
             AddEffectObserver(new Effects.Others.ChaoticConstructorSpawn(-1, _storedPos));
         }
     }

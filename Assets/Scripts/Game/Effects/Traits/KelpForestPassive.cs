@@ -1,17 +1,20 @@
 using Game.Common;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 
 namespace Game.Effects.Traits
 {
-    public class KelpForestPassive : Effect, IEndTurnEffect 
+    public class KelpForestPassive : Effect, IEndTurnTrigger 
     {
 
         public KelpForestPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kelp_forest_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 

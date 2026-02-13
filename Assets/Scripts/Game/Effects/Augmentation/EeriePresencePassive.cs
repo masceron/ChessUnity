@@ -2,16 +2,19 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Augmentation
 {
-    public class EeriePresencePassive : Effect, IAfterPieceActionEffect
+    public class EeriePresencePassive : Effect, IAfterPieceActionTrigger
     {
         public EeriePresencePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_eerie_presence_passive")
         { }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

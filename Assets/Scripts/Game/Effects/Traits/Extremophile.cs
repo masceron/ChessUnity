@@ -1,11 +1,12 @@
 ﻿using Game.Action.Internal;
 using System.Collections.Generic;
 using Game.Action;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
-    public class Extremophile: Effect, IApplyEffect
+    public class Extremophile: Effect, IBeforeApplyEffectTrigger
     {
         private static readonly List<EffectCategory> BlockCategories = new()
         {
@@ -15,6 +16,8 @@ namespace Game.Effects.Traits
 
         public Extremophile(PieceLogic piece) : base(-1, 1, piece, "effect_extremophile")
         {}
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {

@@ -5,10 +5,12 @@ using Game.Effects.Others;
 using Game.Piece;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
+
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackSwallowerPassive: Effect, IAfterPieceActionEffect
+    public class BlackSwallowerPassive: Effect, IAfterPieceActionTrigger
     {
         public BlackSwallowerPassive(PieceLogic piece) : base(-1, 1, piece, "effect_black_swallower_passive")
         {
@@ -17,6 +19,8 @@ namespace Game.Effects.Traits
         {
             return base.GetValueForAI() + 40;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Kill;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

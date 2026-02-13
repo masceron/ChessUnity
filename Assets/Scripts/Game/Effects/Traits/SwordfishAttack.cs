@@ -1,16 +1,19 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SwordfishAttack : Effect, IAfterPieceActionEffect
+    public class SwordfishAttack : Effect, IAfterPieceActionTrigger
     {
         public SwordfishAttack(PieceLogic piece) : base(-1, 1, piece, "effect_swordfish_capture")
         { }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {

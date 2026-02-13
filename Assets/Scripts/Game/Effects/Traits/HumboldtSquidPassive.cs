@@ -3,21 +3,24 @@ using Game.Action.Internal;
 using Game.Action.Captures;
 using static Game.Common.BoardUtils;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class HumboldtSquidPassive : Effect, IAfterPieceActionEffect
+    public class HumboldtSquidPassive : Effect, IAfterPieceActionTrigger
     {
-        private int count;
+        private int _count;
 
         public HumboldtSquidPassive(PieceLogic piece) : base(-1, 1, piece, "effect_humboldt_squid_passive")
         {
-            count = 0;
+            _count = 0;
 
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
@@ -39,13 +42,13 @@ namespace Game.Effects.Traits
                 if (piece == null) continue;
                 if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
                 {
-                    count++;
+                    _count++;
                 }
             }
-            if (count >= 5)
+            if (_count >= 5)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Frenzied(Piece), Piece));
-                count = 0;
+                _count = 0;
             }
         }
 

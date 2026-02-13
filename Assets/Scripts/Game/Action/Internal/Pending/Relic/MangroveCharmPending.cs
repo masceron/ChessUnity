@@ -34,7 +34,7 @@ namespace Game.Action.Internal.Pending.Relic
             }
             SecondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-            CommitResult(new MangroveCharmExcute(FirstTarget.Pos, SecondTarget.Pos));
+            CommitResult(new MangroveCharmExecute(FirstTarget.Pos, SecondTarget.Pos));
 
             _mangroveCharm.SetCooldown();
             BoardViewer.Selecting = -1;

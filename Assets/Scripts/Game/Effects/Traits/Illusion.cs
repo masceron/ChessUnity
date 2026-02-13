@@ -4,10 +4,11 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using Game.Action.Internal;
 using Game.Action;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Traits
 {
-    public class Illusion : Effect, IOnApply, IOnMoveGenEffect
+    public class Illusion : Effect, IOnApplyTrigger, IOnMoveGenTrigger
     {
         public Illusion(PieceLogic piece) : base(-1, 1, piece, "effect_illusion")
         {
@@ -38,7 +39,7 @@ namespace Game.Effects.Traits
                 if (effect.Category == EffectCategory.Augmentation && effect.Duration < 0)
                 {
                     RemoveObserver(effect);
-                    if (effect is IOnRemove onRemove)
+                    if (effect is IOnRemoveTrigger onRemove)
                         onRemove.OnRemove();
                     Piece.Effects.Remove(effect);
                 }

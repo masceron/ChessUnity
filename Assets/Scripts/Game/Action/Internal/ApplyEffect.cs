@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Common;
 using Game.Effects;
+using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -70,7 +71,7 @@ namespace Game.Action.Internal
                 // If the effect is applied as a result of an Action not from end turn trigger, increment the duration by 1.
                 if (Effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) Effect.Duration++;
                 
-                if (Effect is IOnApply onApply)
+                if (Effect is IOnApplyTrigger onApply)
                     onApply.OnApply();
                 Effect.Piece.Effects.Add(Effect);
                 BoardUtils.AddEffectObserver(Effect);

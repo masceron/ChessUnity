@@ -1,6 +1,5 @@
 using UnityEngine;
 using Game.Tile;
-using Game.Common;
 
 namespace Game.ScriptableObjects
 {
@@ -11,7 +10,6 @@ namespace Game.ScriptableObjects
         public FormationType type;
         public string key;
         public FormationCategory formationCategory;
-        public ObserverPriority priority;
         public GameObject prefab;
     }
 }

@@ -2,10 +2,11 @@ using Game.Piece.PieceLogic.Commons;
 using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 using Game.Action.Captures;
+using Game.Effects.Triggers;
 
 namespace Game.Effects.Augmentation
 {
-    public class StalkerInstinctEffect : Effect, IOnMoveGenEffect
+    public class StalkerInstinctEffect : Effect, IOnMoveGenTrigger
     {
         public StalkerInstinctEffect(PieceLogic piece) : base(-1, 1, piece, "effect_stalker_instinct")
         {

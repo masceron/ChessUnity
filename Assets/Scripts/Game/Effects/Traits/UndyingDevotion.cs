@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using UnityEngine;
@@ -8,11 +9,13 @@ using UnityEngine;
 namespace Game.Effects.Traits
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class UndyingDevotion : Effect, IAfterPieceActionEffect
+    public class UndyingDevotion : Effect, IAfterPieceActionTrigger
     {
         public UndyingDevotion(PieceLogic piece) : base(-1, 1, piece, "effect_undying_devotion")
         {
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         /// <summary>
         /// Khi đồng minh chết, sẽ apply OneMoreTurn effect để quân đồng minh sống sót thêm 1 turn nữa

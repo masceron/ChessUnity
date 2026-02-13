@@ -4,17 +4,21 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class DuskyButterflyfishPassive : Effect, IStartTurnEffect
+    public class DuskyButterflyfishPassive : Effect, IStartTurnTrigger
     {
         public DuskyButterflyfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_dusky_butterfly_passive")
         {
 
         }
+
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Debuff;
+
         public StartTurnEffectType StartTurnEffectType { get; }
         public void OnCallStart(Action.Action lastMainAction)
         {

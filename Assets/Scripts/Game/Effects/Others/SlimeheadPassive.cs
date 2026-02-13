@@ -3,12 +3,13 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Others
 {
     [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SlimeheadPassive : Effect, IAfterPieceActionEffect
+    public class SlimeheadPassive : Effect, IAfterPieceActionTrigger
     {
         public SlimeheadPassive(PieceLogic piece) : base(-1, 1, piece, "slimehead_passive")
         {
@@ -18,6 +19,8 @@ namespace Game.Effects.Others
         {
             return base.GetValueForAI() + 50;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Debuff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
