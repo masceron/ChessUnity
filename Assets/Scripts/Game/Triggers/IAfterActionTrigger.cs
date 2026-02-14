@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public enum AfterActionPriority
     {
+        Formation = 200,
         Move = 100,
         Kill = 90,
         Debuff = 80,

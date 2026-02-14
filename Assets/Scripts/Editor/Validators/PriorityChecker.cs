@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Game.Effects.Triggers;
+using Game.Triggers;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;

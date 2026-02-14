@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece;
+using Game.Triggers;
 using ZLinq;
 
 namespace Game.Effects.Others

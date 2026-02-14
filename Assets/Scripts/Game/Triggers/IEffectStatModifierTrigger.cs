@@ -1,6 +1,7 @@
 using System;
+using Game.Effects;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public interface IEffectStatModifierTrigger : IComparable<IEffectStatModifierTrigger>
     {

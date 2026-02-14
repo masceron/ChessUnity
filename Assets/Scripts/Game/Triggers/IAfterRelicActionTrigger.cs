@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.Action.Relics;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public interface IAfterRelicActionTrigger : IComparable<IAfterRelicActionTrigger>
     {

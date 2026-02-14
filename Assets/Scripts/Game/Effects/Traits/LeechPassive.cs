@@ -3,8 +3,8 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {

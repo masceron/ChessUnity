@@ -31,11 +31,6 @@ namespace Game.Tile
             }
         }
 
-        protected override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
-        }
-
         public override int GetValueForAI()
         {
             return -70;

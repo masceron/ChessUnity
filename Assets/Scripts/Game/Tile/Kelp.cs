@@ -9,7 +9,7 @@ namespace Game.Tile
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Kelp : Formation
     {
-        private bool pieceHaveCamouflage;
+        private bool _pieceHaveCamouflage;
 
         public Kelp(bool haveDuration, bool color) : base(color)
         {
@@ -25,14 +25,14 @@ namespace Game.Tile
         {
             base.OnPieceEnter(piece);
             if (piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
-                pieceHaveCamouflage = true;
+                _pieceHaveCamouflage = true;
             else
                 ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece), FormationType.Kelp));
         }
 
         protected override void OnPieceExit(PieceLogic piece)
         {
-            if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
+            if (!_pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
                 ActionManager.EnqueueAction(
                     new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == "effect_camouflage")));
 

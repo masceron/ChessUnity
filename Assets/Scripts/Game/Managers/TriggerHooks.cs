@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.Action.Relics;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using ZLinq;
 
 namespace Game.Managers

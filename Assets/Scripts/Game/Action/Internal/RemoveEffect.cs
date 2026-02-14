@@ -1,6 +1,6 @@
 ﻿using Game.Common;
 using Game.Effects;
-using Game.Effects.Triggers;
+using Game.Triggers;
 using UnityEngine;
 
 namespace Game.Action.Internal

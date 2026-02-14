@@ -1,7 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Augmentation
 {

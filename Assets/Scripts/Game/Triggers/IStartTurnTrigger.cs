@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public enum StartTurnEffectType : byte
     {
@@ -11,6 +11,11 @@ namespace Game.Effects.Triggers
 
     public enum StartTurnTriggerPriority
     {
+        FormationMove = 200,
+        FormationKill = 190,
+        FormationDebuff = 180,
+        FormationBuff = 170,
+        FormationOther = 160,
         Move = 100,
         Kill = 90,
         Debuff = 80,

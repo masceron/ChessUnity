@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public enum BeforeActionPriority
     {

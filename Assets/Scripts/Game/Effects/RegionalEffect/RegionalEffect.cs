@@ -1,5 +1,5 @@
-using Game.Effects.Triggers;
 using Game.Managers;
+using Game.Triggers;
 
 namespace Game.Effects.RegionalEffect
 {

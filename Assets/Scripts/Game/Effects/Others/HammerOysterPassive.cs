@@ -1,9 +1,9 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
+using Game.Triggers;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others

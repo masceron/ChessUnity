@@ -1,11 +1,11 @@
 ﻿using System;
 using Game.Common;
 using Game.Effects;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using Game.Tile;
+using Game.Triggers;
 using UnityEngine;
 
 namespace Game.Action.Internal

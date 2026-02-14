@@ -1,7 +1,7 @@
 ﻿using System;
 using Game.Action.Internal;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public enum BeforeApplyEffectTriggerPriority
     {

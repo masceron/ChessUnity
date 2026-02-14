@@ -2,12 +2,12 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using ZLinq;
 
-namespace Game.Effects.Others
+namespace Game.Effects.Augmentation
 {
     public class SpectreAugmentation : Effect, IBeforeApplyEffectTrigger
     {

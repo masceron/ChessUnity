@@ -1,8 +1,8 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Tile
 {
@@ -19,7 +19,7 @@ namespace Game.Tile
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
-        public new EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;
+        public new EndTurnTriggerPriority Priority => EndTurnTriggerPriority.FormationDebuff;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 
@@ -32,13 +32,11 @@ namespace Game.Tile
 
             _turnsOnTile++;
 
-            if (_turnsOnTile > 3)
-            {
-                var hasPacified = PieceOnFormation.Effects.Any(e => e.EffectName == "effect_pacified");
-                if (hasPacified) return;
-                ActionManager.EnqueueAction(
-                    new ApplyEffect(new Pacified(3, PieceOnFormation), FormationType.AnoxicPool));
-            }
+            if (_turnsOnTile <= 3) return;
+            var hasPacified = PieceOnFormation.Effects.Any(e => e.EffectName == "effect_pacified");
+            if (hasPacified) return;
+            ActionManager.EnqueueAction(
+                new ApplyEffect(new Pacified(3, PieceOnFormation), FormationType.AnoxicPool));
         }
 
         public override FormationType GetFormationType()

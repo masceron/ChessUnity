@@ -3,8 +3,8 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using UnityEngine;
 
 namespace Game.Effects.Augmentation

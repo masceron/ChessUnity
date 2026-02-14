@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Quiets;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.SpecialAbility
 {

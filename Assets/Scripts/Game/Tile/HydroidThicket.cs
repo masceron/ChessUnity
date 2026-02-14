@@ -1,7 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Tile
 {
@@ -14,7 +14,7 @@ namespace Game.Tile
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
-        public new EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
+        public new EndTurnTriggerPriority Priority => EndTurnTriggerPriority.FormationBuff;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 

@@ -1,4 +1,4 @@
-using Game.Effects.Triggers;
+using Game.Triggers;
 
 namespace Game.Tile.RealityDistortion
 {
@@ -17,7 +17,7 @@ namespace Game.Tile.RealityDistortion
             RealityDistortionManager.Ins.OnTurnStart();
         }
 
-        public new StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Other;
+        public new StartTurnTriggerPriority Priority => StartTurnTriggerPriority.FormationOther;
 
         public StartTurnEffectType StartTurnEffectType => StartTurnEffectType.StartOfAnyTurn;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Effects;
-using Game.Effects.Others;
+using Game.Effects.Augmentation;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation.Set

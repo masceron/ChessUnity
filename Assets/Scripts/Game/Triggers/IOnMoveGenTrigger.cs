@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Game.Piece.PieceLogic.Commons;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public interface IOnMoveGenTrigger : IComparable<IOnMoveGenTrigger>
     {

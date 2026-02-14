@@ -1,6 +1,6 @@
 using Game.Action.Skills;
 using Game.Common;
-using Game.Effects.Triggers;
+using Game.Triggers;
 
 namespace Game.Effects.Others
 {

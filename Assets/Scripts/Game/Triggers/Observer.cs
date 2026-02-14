@@ -1,4 +1,4 @@
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public abstract class Observer
     {

@@ -2,8 +2,8 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits

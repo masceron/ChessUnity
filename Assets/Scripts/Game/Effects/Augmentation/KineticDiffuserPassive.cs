@@ -1,8 +1,8 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using ZLinq;
 
 namespace Game.Effects.Augmentation

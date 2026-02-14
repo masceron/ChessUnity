@@ -1,7 +1,7 @@
 using Game.Common;
-using Game.Effects.Triggers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Others
 {

@@ -3,8 +3,8 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Condition
 {

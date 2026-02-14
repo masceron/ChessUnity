@@ -1,9 +1,9 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 

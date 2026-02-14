@@ -1,6 +1,6 @@
-﻿using Game.Effects.Triggers;
-using Game.Managers;
+﻿using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Others
 {

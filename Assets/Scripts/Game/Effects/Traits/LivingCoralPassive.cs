@@ -2,9 +2,9 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Effects.Triggers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;

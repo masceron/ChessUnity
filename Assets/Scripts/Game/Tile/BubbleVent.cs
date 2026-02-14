@@ -24,11 +24,6 @@ namespace Game.Tile
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece), FormationType.BubbleVent));
         }
 
-        protected override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
-        }
-
         public override FormationType GetFormationType()
         {
             return FormationType.BubbleVent;

@@ -3,9 +3,9 @@ using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Buffs;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {

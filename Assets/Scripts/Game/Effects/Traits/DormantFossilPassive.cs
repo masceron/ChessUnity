@@ -1,5 +1,5 @@
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using UX.UI.Ingame;
 using UX.UI.Ingame.DormantFossil;
 

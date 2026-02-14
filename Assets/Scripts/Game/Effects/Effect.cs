@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Game.Common;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using UX;
 
 namespace Game.Effects

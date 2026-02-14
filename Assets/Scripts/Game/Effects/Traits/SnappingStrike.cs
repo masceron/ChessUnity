@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Captures;
-using Game.Effects.Triggers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits

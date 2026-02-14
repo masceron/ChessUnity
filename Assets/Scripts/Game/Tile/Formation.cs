@@ -1,8 +1,8 @@
 using Game.Action.Quiets;
 using Game.Common;
-using Game.Effects.Triggers;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Tile
 {
@@ -53,7 +53,7 @@ namespace Game.Tile
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
 
-        public AfterActionPriority Priority => AfterActionPriority.Move;
+        public AfterActionPriority Priority => AfterActionPriority.Formation;
 
         public virtual void OnCallAfterPieceAction(Action.Action action)
         {

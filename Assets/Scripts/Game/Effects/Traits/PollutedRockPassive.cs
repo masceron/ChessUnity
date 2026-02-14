@@ -1,9 +1,9 @@
 using System;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.Triggers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using ZLinq;
 using static Game.Common.BoardUtils;
 

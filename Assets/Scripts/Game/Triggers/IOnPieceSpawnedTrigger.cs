@@ -1,7 +1,7 @@
 using System;
 using Game.Piece.PieceLogic.Commons;
 
-namespace Game.Effects.Triggers
+namespace Game.Triggers
 {
     public interface IOnPieceSpawnedTrigger : IComparable<IOnPieceSpawnedTrigger>
     {

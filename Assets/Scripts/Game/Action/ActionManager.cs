@@ -5,8 +5,8 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
-using Game.Effects.Triggers;
 using Game.Managers;
+using Game.Triggers;
 using ZLinq;
 
 namespace Game.Action
