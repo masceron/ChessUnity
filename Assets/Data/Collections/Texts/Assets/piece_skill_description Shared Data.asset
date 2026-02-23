@@ -239,6 +239,10 @@ MonoBehaviour:
     m_Key: piece_sloanes_viperfish_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 71112242727559168
+    m_Key: piece_blubber_jelly_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

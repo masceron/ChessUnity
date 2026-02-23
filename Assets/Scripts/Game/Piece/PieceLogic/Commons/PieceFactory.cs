@@ -16,6 +16,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_barracuda" => new Barracuda(cfg),
                 "piece_bioluminescent_beacon" => new BioluminescentBeacon(cfg),
                 "piece_black_swallower" => new BlackSwallower(cfg),
+                "piece_blubber_jelly" => new BlubberJelly(cfg),
                 "piece_blue_dragon" => new BlueDragon(cfg),
                 "piece_blue_ringed_octopus" => new BlueRingedOctopus(cfg),
                 "piece_bobtail_squid" => new BobtailSquid(cfg),

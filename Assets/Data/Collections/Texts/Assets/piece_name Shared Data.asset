@@ -431,6 +431,10 @@ MonoBehaviour:
     m_Key: piece_paletail_unicornfish
     m_Metadata:
       m_Items: []
+  - m_Id: 71138908669550592
+    m_Key: piece_blubber_jelly
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
