@@ -635,6 +635,10 @@ MonoBehaviour:
     m_Key: effect_paletail_unicornfish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 71406623191240704
+    m_Key: effect_cooperative
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

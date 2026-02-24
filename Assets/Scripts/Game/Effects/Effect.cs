@@ -20,7 +20,8 @@ namespace Game.Effects
         Condition,
         Augmentation,
         SpecialAbility,
-        Skill
+        Skill,
+        State
     }
 
     public enum EffectStack : byte

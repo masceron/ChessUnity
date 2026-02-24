@@ -10,11 +10,11 @@ namespace Game.Triggers
         Reaction = 70 //Triggers that fire when no mitigation is possible. (Relentless).
     }
 
-    public interface IBeforePieceActionTrigger : IComparable<IBeforeApplyEffectTrigger>
+    public interface IBeforePieceActionTrigger : IComparable<IBeforePieceActionTrigger>
     {
         public BeforeActionPriority Priority { get; }
 
-        int IComparable<IBeforeApplyEffectTrigger>.CompareTo(IBeforeApplyEffectTrigger other)
+        int IComparable<IBeforePieceActionTrigger>.CompareTo(IBeforePieceActionTrigger other)
         {
             return other.Priority.CompareTo(Priority);
         }

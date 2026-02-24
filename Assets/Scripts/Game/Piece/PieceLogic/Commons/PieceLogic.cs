@@ -285,6 +285,7 @@ namespace Game.Piece.PieceLogic.Commons
         {
             ClearState();
             Effects.Add(stateEffect);
+            BoardUtils.AddEffectObserver(stateEffect);
             CurrentState = stateEffect.StateType;
         }
 
@@ -292,7 +293,10 @@ namespace Game.Piece.PieceLogic.Commons
         public void ClearState()
         {
             var existing = Effects.Find(e => e is IStateful);
-            if (existing != null) Effects.Remove(existing);
+            if (existing != null) {
+                Effects.Remove(existing);
+                BoardUtils.RemoveObserver(existing);
+            }
             CurrentState = StateType.None;
         }
 

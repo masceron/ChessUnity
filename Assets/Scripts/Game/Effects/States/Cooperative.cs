@@ -19,7 +19,7 @@ namespace Game.Effects.States
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CooperativeState : StateEffect, IStartTurnTrigger
+    public class Cooperative : StateEffect, IStartTurnTrigger, IOnMoveGenTrigger
     {
         private readonly Random _random = new();
 
@@ -28,7 +28,7 @@ namespace Game.Effects.States
         public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Other;
         public StartTurnEffectType StartTurnEffectType => StartTurnEffectType.StartOfAllyTurn;
 
-        public CooperativeState(PieceLogic piece) : base(-1, 0, piece, "effect_cooperative")
+        public Cooperative(PieceLogic piece) : base(-1, 0, piece, "effect_cooperative")
         {
         }
 
@@ -57,8 +57,14 @@ namespace Game.Effects.States
                 ActionManager.EnqueueAction(new CaptureWithoutEndTurn(Piece.Pos, chosen.Target));
             else if (chosen is IQuiets)
                 ActionManager.EnqueueAction(new MoveWithoutEndturn(Piece.Pos, chosen.Target));
-            // else if (chosen is ISkills)
-            //     ActionManager.EnqueueAction(new SkillWithoutEndTurn(Piece.Pos, chosen.Target));
+            else if (chosen is ISkills)
+                ActionManager.EnqueueAction(chosen);
+        }
+
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
+        {
+            if (caller != Piece) return;
+            actions.Clear();
         }
     }
 }

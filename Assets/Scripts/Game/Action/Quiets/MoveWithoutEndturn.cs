@@ -33,7 +33,6 @@ namespace Game.Action.Quiets
         {
             Debug.Log("Complete CooperativeMove");
             BoardUtils.Move(Maker, Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
             Maker = Target;
         }
     }
