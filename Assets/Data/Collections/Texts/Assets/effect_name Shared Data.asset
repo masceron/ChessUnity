@@ -635,6 +635,22 @@ MonoBehaviour:
     m_Key: effect_paletail_unicornfish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 71792699748196352
+    m_Key: effect_bryozoan_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71793010021834752
+    m_Key: effect_bryozoan_true_bite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71793126640263168
+    m_Key: effect_bryozoan_rally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71793288313905152
+    m_Key: effect_bryozoan_long_reach
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -38,7 +38,7 @@ namespace Game.Effects.Traits
 
         public void OnApply()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(Target)));
+            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(-1, Target)));
             ActionManager.EnqueueAction(new ApplyEffect(new Piercing(-1, Target)));
             ActionManager.EnqueueAction(new ApplyEffect(new Momentum(-1, Target)));
         }

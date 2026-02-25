@@ -22,6 +22,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_bobtail_squid" => new BobtailSquid(cfg),
                 "piece_bottlenose_dolphin" => new BottlenoseDolphin(cfg),
                 "piece_brittle_star" => new BrittleStar(cfg),
+                "piece_bryozoan" => new Bryozoan(cfg),
                 "piece_cabezon" => new Cabezon(cfg),
                 "piece_chambered_nautilus" => new ChamberedNautilus(cfg),
                 "piece_chrysos" => new Chrysos(cfg),

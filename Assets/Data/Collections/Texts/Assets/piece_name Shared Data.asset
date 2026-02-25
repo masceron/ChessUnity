@@ -435,6 +435,10 @@ MonoBehaviour:
     m_Key: piece_blubber_jelly
     m_Metadata:
       m_Items: []
+  - m_Id: 71141509632958464
+    m_Key: piece_bryozoan
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
