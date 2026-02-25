@@ -12,12 +12,16 @@ namespace Game.Effects.Others
 {
     public class BryozoanPassive : Effect, IStartTurnTrigger
     {
-        private const int Interval = 1; // 1 for testing.
+        private const int Interval = 3; // 1 for testing.
         private const int SummonRange = 1;
+        private const int SummonUnit = 1;
         private int turnCounter = 0;
+        
         public BryozoanPassive(PieceLogic piece) : base(-1, 1, piece, "effect_bryozoan_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
+            SetStat(EffectStat.Unit, SummonUnit);
+            SetStat(EffectStat.Radius, SummonRange);
         }
 
         StartTurnTriggerPriority IStartTurnTrigger.Priority => StartTurnTriggerPriority.Buff;
@@ -37,7 +41,7 @@ namespace Game.Effects.Others
             var (rank, file) = RankFileOf(Piece.Pos);
             List<int> emptyTiles = new();
 
-            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, SummonRange))
+            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, GetStat(EffectStat.Radius)))
             {
                 var index = IndexOf(r, f);
                 if (PieceOn(index) == null)
