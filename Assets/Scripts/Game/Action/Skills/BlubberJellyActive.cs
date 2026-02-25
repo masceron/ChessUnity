@@ -21,12 +21,12 @@ namespace Game.Action.Skills
             var maker = PieceOn(Maker);
             
             var (rank, file) = RankFileOf(Maker);
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, maker.GetStat(SkillStat.Range, 2)))
             {
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn == null || pOn.Color == maker.Color) continue;
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(1, pOn), maker));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(maker.GetStat(SkillStat.Duration, 2), pOn), maker));
             }
         }
 
