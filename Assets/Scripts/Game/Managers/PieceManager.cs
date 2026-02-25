@@ -46,6 +46,27 @@ namespace Game.Managers
             pieces[b].Move(RankOf(b), FileOf(b));
         }
 
+        /// <summary>
+        ///     Animate <paramref name="parasitePos"/> nhảy lên đỉnh <paramref name="hostPos"/> và thu nhỏ về 0.3f.
+        ///     Không cập nhật array pieces (quân ký sinh vẫn giữ nguyên vị trí logic).
+        /// </summary>
+        public void MoveToParasitic(int parasitePos, int hostPos)
+        {
+            var hostPiece = pieces[hostPos];
+            pieces[parasitePos].MoveToParasitic(hostPiece);
+        }
+
+        /// <summary>
+        ///     Animate quân tại <paramref name="from"/> di chuyển về <paramref name="to"/> và phóng to về scale 1.
+        ///     Cập nhật array pieces giống như Move.
+        /// </summary>
+        public void MoveToDetach(int from, int to)
+        {
+            pieces[to] = pieces[from];
+            pieces[from] = null;
+            pieces[to].MoveToDetach(RankOf(to), FileOf(to));
+        }
+
         public Piece.Piece GetPieceGameObject(int pos)
         {
             return pieces[pos];

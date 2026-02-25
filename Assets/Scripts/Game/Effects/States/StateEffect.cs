@@ -1,4 +1,6 @@
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
+using UnityEngine;
 
 namespace Game.Effects.States
 {
@@ -12,13 +14,19 @@ namespace Game.Effects.States
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class StateEffect : Effect, IStateful
+    public abstract class StateEffect : Effect, IStateful, IOnApplyTrigger
     {
         public abstract StateType StateType { get; }
 
         protected StateEffect(int duration, int strength, PieceLogic piece, string name)
             : base(duration, strength, piece, name)
         {
+        }
+
+        public void OnApply()
+        {
+            Debug.Log("Apply state " + this.StateType);
+            Piece.SetState(this);
         }
     }
 }

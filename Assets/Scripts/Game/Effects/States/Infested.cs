@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Quiets;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -34,7 +36,22 @@ namespace Game.Effects.States
         /// </summary>
         public void OnCallDead(PieceLogic pieceToDie)
         {
-            
+            if (pieceToDie != ParasitePiece) return;
+
+            List<int> availablePos = new List<int>();
+
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(
+                BoardUtils.RankOf(pieceToDie.Pos), 
+                BoardUtils.FileOf(pieceToDie.Pos), 1))
+            {
+                if (!BoardUtils.VerifyIndex(BoardUtils.IndexOf(rank, file))) continue;
+                if (BoardUtils.PieceOn(BoardUtils.IndexOf(rank, file)) != null) continue;
+                if (BoardUtils.IsActive(BoardUtils.IndexOf(rank, file))) continue;
+                availablePos.Add(BoardUtils.IndexOf(rank, file));
+            }
+
+            var randomPos = availablePos[UnityEngine.Random.Range(0, availablePos.Count)];
+            ActionManager.EnqueueAction(new MoveToDetach(pieceToDie.Pos, randomPos, ParasitePiece));
         }
     }
 }

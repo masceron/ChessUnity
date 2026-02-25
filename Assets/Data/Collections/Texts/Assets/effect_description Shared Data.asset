@@ -639,6 +639,14 @@ MonoBehaviour:
     m_Key: effect_cooperative_description
     m_Metadata:
       m_Items: []
+  - m_Id: 71821895265980416
+    m_Key: effect_infested_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 71822060102127616
+    m_Key: effect_parasite_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

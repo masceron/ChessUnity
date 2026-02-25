@@ -49,6 +49,32 @@ namespace Game.Piece
 
             Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.2f);
         }
+
+        /// <summary>
+        ///     Di chuyển quân này lên đỉnh của <paramref name="targetPiece"/> rồi thu nhỏ về 0.3f.
+        ///     Dùng cho animation Parasite ký sinh.
+        /// </summary>
+        public void MoveToParasitic(Piece targetPiece)
+        {
+            var targetPos = targetPiece.transform.position;
+            Tween.Position(transform, targetPos, 0.3f, Ease.OutQuart)
+                 .OnComplete(this, static self =>
+                     Tween.Scale(self.transform, Vector3.one * 0.3f, 0.2f, Ease.InOutSine));
+        }
+
+        /// <summary>
+        ///     Di chuyển quân này về <paramref name="rankTo"/>, <paramref name="fileTo"/> rồi phóng to về scale 1.
+        ///     Dùng cho animation Parasite tách ra.
+        /// </summary>
+        public void MoveToDetach(int rankTo, int fileTo)
+        {
+            rank = rankTo;
+            file = fileTo;
+
+            Tween.Position(transform, new Vector3(rank, transform.position.y, file), 0.3f, Ease.OutQuart)
+                 .OnComplete(this, static self =>
+                     Tween.Scale(self.transform, Vector3.one, 0.2f, Ease.InOutSine));
+        }
     }
 
     public static class PieceMaker
