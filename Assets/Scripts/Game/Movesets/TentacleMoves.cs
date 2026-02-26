@@ -1,4 +1,8 @@
 ﻿using System.Collections.Generic;
+using Game.Action;
+using Game.Action.Captures;
+using Game.Action.Quiets;
+using Game.Common;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -6,66 +10,90 @@ namespace Game.Movesets
 {
     public class TentacleMoves : BaseMovePattern
     {
-        public override List<int> GenerateBaseMovePattern(int makerPos)
+        // ====== VECTOR CỐ ĐỊNH ======
+
+        // Pattern gốc (moveRange = 1)
+        static readonly (int dr, int df)[] CorePattern =
         {
-            return GenerateTentacleMovePattern(makerPos);
+            // trục chính
+            (1, 0), (-1, 0), (0, 1), (0, -1),
+
+            // trục chéo
+            (1, 1), (1, -1), (-1, 1), (-1, -1),
+
+            // nhánh lệch
+            (1, 2), (1, -2), (-1, 2), (-1, -2),
+            (2, 1), (-2, 1), (2, -1), (-2, -1),
+        };
+
+        private HashSet<int> GenerateTentacleMovePattern(int pos, int range)
+        {
+            var result = new HashSet<int>();
+            var (rank, file) = RankFileOf(pos);
+
+            // 1️⃣ Pattern gốc (luôn có)
+            foreach (var (dr, df) in CorePattern)
+            {
+                var r = rank + dr;
+                var f = file + df;
+                if (VerifyBounds(r) && VerifyBounds(f))
+                    result.Add(IndexOf(r, f));
+            }
+
+            // 2️⃣ Mở rộng phụ nếu range > 1
+            if (range > 1)
+            {
+                for (int i = 1; i <= range - 1; i++)
+                {
+                    result.Add(IndexOf(rank + 2 + i, file + 1));
+                    result.Add(IndexOf(rank + 1 + i, file));
+                    result.Add(IndexOf(rank + 2 + i, file - 1));
+                    
+                    result.Add(IndexOf(rank - 2 - i, file + 1));
+                    result.Add(IndexOf(rank - 1 - i, file));
+                    result.Add(IndexOf(rank - 2 - i, file - 1));
+                    
+                    result.Add(IndexOf(rank + 1, file + 2 + i));
+                    result.Add(IndexOf(rank, file + 1 + i));
+                    result.Add(IndexOf(rank - 1, file + 2 + i));
+
+                    result.Add(IndexOf(rank + 1, file - 2 - i));
+                    result.Add(IndexOf(rank, file - 1 - i));
+                    result.Add(IndexOf(rank - 1, file - 2 - i));
+                    
+                    result.Add(IndexOf(rank + 1 + i, file - 1 - i));
+                    result.Add(IndexOf(rank + 1 + i, file + 1 + i));
+                    result.Add(IndexOf(rank - 1 - i, file - 1 - i));
+                    result.Add(IndexOf(rank - 1 - i, file + 1 + i));
+                }
+            }
+
+            return result;
         }
         
-        private List<int> GenerateTentacleMovePattern(int makerPos)
-        {
-            //TODO: Implement the exact move pattern for TentacleMoves.
-            var positions = new List<int>();
-            var (rank, file) = RankFileOf(makerPos);
-            var piece = PieceOn(makerPos);
-            int range = piece.GetMoveRange();
-
-            // 1️⃣ ĐƯỜNG DỌC
-            for (int k = 1; k <= range; k++)
-            {
-                positions.Add(IndexOf(rank + k, file));
-                positions.Add(IndexOf(rank - k, file));
-            }
-
-            // 2️⃣ ĐƯỜNG CHÉO
-            for (int k = 1; k <= range; k++)
-            {
-                positions.Add(IndexOf(rank + k, file + k));
-                positions.Add(IndexOf(rank + k, file - k));
-                positions.Add(IndexOf(rank - k, file + k));
-                positions.Add(IndexOf(rank - k, file - k));
-            }
-
-            // 3️⃣ XÚC TU LỆCH (bám theo trục)
-            for (int k = 1; k <= range; k++)
-            {
-                positions.Add(IndexOf(rank + k, file + 1));
-                positions.Add(IndexOf(rank + k, file - 1));
-                positions.Add(IndexOf(rank - k, file + 1));
-                positions.Add(IndexOf(rank - k, file - 1));
-
-                positions.Add(IndexOf(rank + 1, file + k));
-                positions.Add(IndexOf(rank - 1, file + k));
-                positions.Add(IndexOf(rank + 1, file - k));
-                positions.Add(IndexOf(rank - 1, file - k));
-            }
-
-            return positions;
-        }
 
         public static int Quiets(List<Action.Action> list, int pos, bool excludeEmptyTile)
         {
-            var moveRange = PieceOn(pos).GetMoveRange();
-            var basePattern = new HashSet<int>(new TentacleMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
-            return 30 + 5 * moveRange;
+            var range = PieceOn(pos).GetMoveRange();
+            var pattern = new TentacleMoves().GenerateTentacleMovePattern(pos, range);
+
+            AddToPatternMoves(list, pattern, pos, 1, false, excludeEmptyTile);
+            return 30 + 5 * range;
         }
 
         public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile)
         {
-            var attackRange = PieceOn(pos).AttackRange();
-            var basePattern = new HashSet<int>(new TentacleMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
-            return 30 + 5 * attackRange;
+            var range = PieceOn(pos).AttackRange();
+            var pattern = new TentacleMoves().GenerateTentacleMovePattern(pos, range);
+
+            AddToPatternMoves(list, pattern, pos, 1, true, excludeEmptyTile);
+            return 30 + 5 * range;
+        }
+
+        // Không dùng nữa nhưng phải override
+        public override List<int> GenerateBaseMovePattern(int makerPos)
+        {
+            return new List<int>();
         }
     }
 }
