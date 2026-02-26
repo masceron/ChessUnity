@@ -6,7 +6,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KnightSurpass
     {
         public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
@@ -16,17 +17,15 @@ namespace Game.Movesets
             var maxRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
-            {
                 MakeMove(rankOff, fileOff);
-            }
-            
+
             return 15 + 3 * maxRange;
-            
+
             void MakeMove(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
                 if (!IsActive(index)) return;
-                
+
                 var piece = PieceOn(index);
                 if (piece != null ||
                     Distance(pos, index) != maxRange)
@@ -41,19 +40,17 @@ namespace Game.Movesets
             var caller = PieceOn(pos);
             var color = caller.Color;
             var maxRange = caller.GetAttackRange();
-            
+
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
-            {
                 MakeCapture(rankOff, fileOff);
-            }
 
             return 15 + 3 * maxRange;
-            
+
             void MakeCapture(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
                 var piece = PieceOn(index);
-                
+
                 if (piece == null && !isPlayer)
                 {
                     list.Add(new NormalCapture(pos, index));
@@ -61,7 +58,7 @@ namespace Game.Movesets
                 else if (piece != null)
                 {
                     if (piece.Color == color ||
-                    Distance(pos, index) != maxRange)
+                        Distance(pos, index) != maxRange)
                         return;
                     list.Add(new NormalCapture(pos, index));
                 }

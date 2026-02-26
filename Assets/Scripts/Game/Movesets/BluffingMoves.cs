@@ -3,7 +3,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BluffingMoves : BaseMovePattern
     {
         /*public static void Quiets(List<Action.Action> list, int pos)
@@ -32,7 +33,7 @@ namespace Game.Movesets
 
                 for (var rankOff = rank + push ;rankOff <= rank + push * moveRange; rankOff += push)
                 {
-                    for( var fileOff = file - (rankOff - rank); fileOff <= file + (rankOff - rank); fileOff++) 
+                    for( var fileOff = file - (rankOff - rank); fileOff <= file + (rankOff - rank); fileOff++)
                     {
                         MakeMove(rankOff, fileOff);
                     }
@@ -45,16 +46,16 @@ namespace Game.Movesets
                 {
                     MakeMove(rankOff, fileOff);
                 }
-                
+
                 for (var rankOff = rank + push ; rankOff >= rank + push * moveRange; rankOff += push)
                 {
-                    for( var fileOff = file - (rankOff - rank); fileOff >= file + (rankOff - rank); fileOff--) 
+                    for( var fileOff = file - (rankOff - rank); fileOff >= file + (rankOff - rank); fileOff--)
                     {
                         MakeMove(rankOff, fileOff);
                     }
                 }
             }
-            
+
             return;
 
             void MakeMove(int rankOff, int fileOff)
@@ -93,7 +94,7 @@ namespace Game.Movesets
 
                 for (var rankOff = rank + push ;rankOff <= rank + push * moveRange; rankOff += push)
                 {
-                    for( var fileOff = file - (rankOff - rank); fileOff <= file + (rankOff - rank); fileOff++) 
+                    for( var fileOff = file - (rankOff - rank); fileOff <= file + (rankOff - rank); fileOff++)
                     {
                         MakeCapture(rankOff, fileOff);
                     }
@@ -106,10 +107,10 @@ namespace Game.Movesets
                 {
                     MakeCapture(rankOff, fileOff);
                 }
-                
+
                 for (var rankOff = rank + push ; rankOff >= rank + push * moveRange; rankOff += push)
                 {
-                    for( var fileOff = file - (rankOff - rank); fileOff >= file + (rankOff - rank); fileOff--) 
+                    for( var fileOff = file - (rankOff - rank); fileOff >= file + (rankOff - rank); fileOff--)
                     {
                         MakeCapture(rankOff, fileOff);
                     }
@@ -164,7 +165,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new BluffingMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 15 + 5 * moveRange;
         }
@@ -173,8 +174,8 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new BluffingMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 15 + 5 * attackRange;
         }
-    }    
+    }
 }

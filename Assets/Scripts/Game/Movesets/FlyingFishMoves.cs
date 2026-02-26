@@ -3,13 +3,14 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FlyingFishMoves : BaseMovePattern // Jumping Move
     {
         /*public static void Quiets(List<Action.Action> list, int pos)
         {
             var (rank, file) = RankFileOf(pos);
-            
+
             var board = PieceBoard();
             var active = ActiveBoard();
             var effectiveMoveRange = PieceOn(pos).GetMoveRange(ref index);
@@ -30,14 +31,14 @@ namespace Game.Movesets
                 }
             }
         }
-        
+
         public static void Captures(List<Action.Action> list, int Pos)
         {
             var board = PieceBoard();
             var p = PieceOn(Pos);
             var color = p.Color;
             var attackRange = p.AttackRange;
-            
+
             var ver1 = PushWhite(Pos) * attackRange;
             var ver2 = PushBlack(Pos) * attackRange;
 
@@ -45,21 +46,21 @@ namespace Game.Movesets
             {
                 list.Add(new NormalCapture(Pos, ver1));
             }
-            
+
             if (ver2 > 0 && ver2 < board.Length && board[ver2] != null && board[ver2].Color != color)
             {
                 list.Add(new NormalCapture(Pos, ver2));
             }
 
             var (rank, file) = RankFileOf(Pos);
-                
+
             var fileOff1 = file - attackRange;
             var fileOff2 = file + attackRange;
 
             if (fileOff1 > 0)
             {
                 var hoz1 = IndexOf(rank, fileOff1);
-                
+
                 if (board[hoz1] != null && board[hoz1].Color != color)
                 {
                     list.Add(new NormalCapture(Pos, hoz1));
@@ -67,7 +68,7 @@ namespace Game.Movesets
             }
 
             if (!VerifyUpperBound(fileOff2)) return;
-            
+
             var hoz2 = IndexOf(rank, fileOff2);
             if (board[hoz2] != null && board[hoz2].Color != color)
             {
@@ -105,7 +106,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new FlyingFishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile, isSurpass: true);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile, true);
 
             return 15 + 5 * moveRange;
         }
@@ -114,7 +115,7 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new FlyingFishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile, isSurpass: true);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile, true);
             return 15 + 5 * attackRange;
         }
     }

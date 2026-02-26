@@ -5,14 +5,16 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class NerveCoolant : Augmentation
     {
-        public NerveCoolant() : base(AugmentationName.NerveCoolant, AugmentationRarity.Heroic, AugmentationSlot.Neural, null, null)
+        public NerveCoolant() : base(AugmentationName.NerveCoolant, AugmentationRarity.Heroic, AugmentationSlot.Neural,
+            null, null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
+
         public override void SetTarget(PieceLogic target)
         {
             Target = target;

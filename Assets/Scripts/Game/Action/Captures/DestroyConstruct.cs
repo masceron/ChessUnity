@@ -1,13 +1,21 @@
-﻿using Game.Managers;
+using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Captures
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DestroyConstruct: Action, ICaptures
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class DestroyConstruct : Action, ICaptures
     {
-        public DestroyConstruct(int maker, int to) : base(maker)
+        [MemoryPackConstructor]
+        private DestroyConstruct()
         {
-            Target = (ushort)to;
+        }
+
+        public DestroyConstruct(int maker, int target) : base(maker)
+        {
+            Target = target;
         }
 
         protected override void Animate()

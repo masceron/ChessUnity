@@ -6,22 +6,17 @@ using UnityEngine.UI;
 
 namespace UX.UI.Followers
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RelicLogo: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class RelicLogo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private RawImage image;
         [NonSerialized] public RelicInfo Relic;
         private bool selecting;
 
-        public void Load(RelicInfo info)
+        public void OnPointerClick(PointerEventData eventData)
         {
-            Relic = info;
-            image.texture = info.icon;
-        }
-        
-        public void Undisplay()
-        {
-            gameObject.SetActive(false);
+            if (eventData.button == PointerEventData.InputButton.Left) RelicList.Ins.Select(Relic);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -34,12 +29,15 @@ namespace UX.UI.Followers
             RelicList.Ins.Undisplay();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void Load(RelicInfo info)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                RelicList.Ins.Select(Relic);
-            }
+            Relic = info;
+            image.texture = info.icon;
+        }
+
+        public void Undisplay()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

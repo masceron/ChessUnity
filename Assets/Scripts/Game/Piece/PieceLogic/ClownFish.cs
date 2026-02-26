@@ -12,6 +12,5 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ClownFishPassive(this)));
         }
-        
     }
 }

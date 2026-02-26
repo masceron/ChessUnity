@@ -6,12 +6,13 @@ using Game.Common;
 using Game.Effects.Others;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
     public class BlueDragon : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
         public BlueDragon(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, SpinningMoves.Captures)
         {
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(this)));
@@ -30,10 +31,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this) continue;
-                        if (pOn.Color != Color)
-                        {
-                            list.Add(new BlueDragonActive(Pos, index));
-                        }
+                        if (pOn.Color != Color) list.Add(new BlueDragonActive(Pos, index));
                     }
                 }
                 else
@@ -44,33 +42,37 @@ namespace Game.Piece.PieceLogic
                         var bestPieces = new List<Commons.PieceLogic>();
                         Commons.PieceLogic bestPiece = null;
                         var maxStackPoison = int.MinValue;
-            
+
                         var (rank, file) = RankFileOf(Pos);
-            
+
                         // Find enemies with the highest stack of poison in a radius of 2.
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                         {
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);
                             if (pOn == null || pOn.Pos == Pos || pOn.Color == Color) continue;
-                
-                            int stackPoison = pOn.Effects.Find(effect => effect.EffectName == "effect_poison")?.Strength ?? 0;
+
+                            var stackPoison =
+                                pOn.Effects.Find(effect => effect.EffectName == "effect_poison")?.Strength ?? 0;
                             if (stackPoison > maxStackPoison && stackPoison > 0)
                             {
                                 bestPieces.Clear();
                                 bestPieces.Add(pOn);
                                 maxStackPoison = stackPoison;
                             }
-                            else if (stackPoison == maxStackPoison) bestPieces.Add(pOn);
+                            else if (stackPoison == maxStackPoison)
+                            {
+                                bestPieces.Add(pOn);
+                            }
                         }
-                    
+
                         if (bestPieces.Count == 1)
                         {
                             bestPiece = bestPieces[0];
                         }
                         else if (bestPieces.Count > 1)
                         {
-                            bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                            bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                         }
                         else if (bestPieces.Count == 0)
                         {
@@ -82,7 +84,7 @@ namespace Game.Piece.PieceLogic
                                 var pOn = PieceOn(index);
                                 if (pOn == null || pOn.Pos == Pos || pOn.Color == Color
                                     || pOn.Effects.Any(effect => effect.EffectName == "effect_extremophiles")) continue;
-                
+
                                 var aiValue = pOn.GetValueForAI();
                                 if (aiValue > maxAIValue)
                                 {
@@ -90,7 +92,10 @@ namespace Game.Piece.PieceLogic
                                     bestPieces.Add(pOn);
                                     maxAIValue = aiValue;
                                 }
-                                else if (aiValue == maxAIValue) bestPieces.Add(pOn);
+                                else if (aiValue == maxAIValue)
+                                {
+                                    bestPieces.Add(pOn);
+                                }
                             }
 
                             if (bestPieces.Count == 1)
@@ -99,19 +104,15 @@ namespace Game.Piece.PieceLogic
                             }
                             else if (bestPieces.Count > 1)
                             {
-                                bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                                bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                             }
-                            else if(bestPieces.Count == 0)
+                            else if (bestPieces.Count == 0)
                             {
                                 //
                             }
                         }
-                        
-                        if (bestPiece != null)
-                        {
-                            list.Add(new BlueDragonActive(Pos, bestPiece.Pos));
-                        }
-                        
+
+                        if (bestPiece != null) list.Add(new BlueDragonActive(Pos, bestPiece.Pos));
                     }
                     else
                     {
@@ -127,11 +128,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

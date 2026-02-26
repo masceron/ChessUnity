@@ -1,6 +1,6 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using Autotiles3D;
+using Third_Party.Autotiles3D.Scripts.Core;
 using UnityEditor;
 using UnityEngine;
 using ZLinq;
@@ -10,6 +10,11 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
     [InitializeOnLoad]
     public static class Autotiles3DUtility
     {
+        private static readonly Dictionary<int, Autotiles3D_Tile> _cache = new();
+        private static readonly Dictionary<string, Autotiles3D_Tile> _tagCache = new();
+        private static readonly Dictionary<string, Autotiles3D_TileGroup> _groupCache = new();
+
+        private static Autotiles3D_TileGroup[] _gCache;
 
         static Autotiles3DUtility()
         {
@@ -17,11 +22,6 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             if (Autotiles3DSettings.EditorInstance.UseUndoAPI)
                 ClearUndoStack();
         }
-        private static readonly Dictionary<int, Autotiles3D_Tile> _cache = new Dictionary<int, Autotiles3D_Tile>();
-        private static readonly Dictionary<string, Autotiles3D_Tile> _tagCache = new Dictionary<string, Autotiles3D_Tile>();
-        private static readonly Dictionary<string, Autotiles3D_TileGroup> _groupCache = new Dictionary<string, Autotiles3D_TileGroup>();
-
-        private static Autotiles3D_TileGroup[] _gCache;
 
         private static Autotiles3D_TileGroup[] Groups
         {
@@ -29,6 +29,24 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             {
                 _gCache ??= Resources.LoadAll<Autotiles3D_TileGroup>("");
                 return _gCache;
+            }
+        }
+
+        public static GUIStyle RichStyle
+        {
+            get
+            {
+                var style = new GUIStyle(GUI.skin.label)
+                {
+                    wordWrap = true,
+                    richText = true,
+                    normal =
+                    {
+                        textColor = Color.white
+                    },
+                    alignment = TextAnchor.MiddleLeft
+                };
+                return style;
             }
         }
 
@@ -51,8 +69,10 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                     return tile;
                 }
             }
+
             return null;
         }
+
         public static Autotiles3D_Tile GetTile(int tileID, string name, string group)
         {
             //try id cache
@@ -95,10 +115,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             }
 
             //try looking just via ID one more time
-            if (tileID != -1)
-            {
-                return GetTile(tileID);
-            }
+            if (tileID != -1) return GetTile(tileID);
 
             return null;
         }
@@ -125,15 +142,13 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                     return g;
                 }
             }
+
             return null;
         }
 
         public static void ClearCache(int tileID)
         {
-            if (_cache.Remove(tileID, out var tile))
-            {
-                _tagCache.Remove(tile.Tag);
-            }
+            if (_cache.Remove(tileID, out var tile)) _tagCache.Remove(tile.Tag);
             //clear group cache for good measure
             _gCache = null;
         }
@@ -141,10 +156,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
         private static void UpdateAllTileGroupNames()
         {
             var groups = Resources.LoadAll<Autotiles3D_TileGroup>("");
-            foreach (var group in groups)
-            {
-                group.UpdateTilesWithGroupName();
-            }
+            foreach (var group in groups) group.UpdateTilesWithGroupName();
         }
 
         private static void ClearUndoStack()
@@ -164,7 +176,8 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             return null;
         }
 
-        public static void RepairBlocks(Autotiles3D_BlockBehaviour block, List<Autotiles3D_BlockBehaviour> siblings, string tilegroup, string tilename, int tileID = -1)
+        public static void RepairBlocks(Autotiles3D_BlockBehaviour block, List<Autotiles3D_BlockBehaviour> siblings,
+            string tilegroup, string tilename, int tileID = -1)
         {
             if (!block || !block.Anchor)
                 return;
@@ -178,8 +191,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 //group name might be not set on the tile, so make sure to set again!
                 tile.SetGroupName(tilegroup);
                 //find all blocks with same old tile info with missing links in the scene and update them as well
-                var brokenBlocks = siblings.
-                    Where(b => b.TileID == missingTileId && b.GetTile() == null).ToList();
+                var brokenBlocks = siblings.Where(b => b.TileID == missingTileId && b.GetTile() == null).ToList();
 
                 int i;
                 var successes = 0;
@@ -209,34 +221,16 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 
         public static void EnsureFolders()
         {
-            if (!AssetDatabase.IsValidFolder($"Assets/Third Party/Autotiles3D"))
+            if (!AssetDatabase.IsValidFolder("Assets/Third Party/Autotiles3D"))
                 AssetDatabase.CreateFolder("Assets/Third Party", "Autotiles3D");
 
-            if (!AssetDatabase.IsValidFolder($"Assets/Third Party/Autotiles3D/Resources"))
+            if (!AssetDatabase.IsValidFolder("Assets/Third Party/Autotiles3D/Resources"))
                 AssetDatabase.CreateFolder("Assets/Third Party/Autotiles3D", "Resources");
         }
 
         public static bool DoesTileExist(int tileId, string name, string group)
         {
             return GetTile(tileId, name, group) != null;
-        }
-
-        public static GUIStyle RichStyle
-        {
-            get
-            {
-                var style = new GUIStyle(GUI.skin.label)
-                {
-                    wordWrap = true,
-                    richText = true,
-                    normal =
-                    {
-                        textColor = Color.white
-                    },
-                    alignment = TextAnchor.MiddleLeft
-                };
-                return style;
-            }
         }
     }
 }

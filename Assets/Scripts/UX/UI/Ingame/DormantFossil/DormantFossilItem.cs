@@ -5,16 +5,17 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.DormantFossil
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DormantFossilItem: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class DormantFossilItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text pieceName;
-        private string pieceType;
-        [SerializeField] private UIObject3D pieceModel; 
+        [SerializeField] private UIObject3D pieceModel;
+        private string _pieceType;
 
         public void Load(string type)
         {
-            pieceType = type;
+            _pieceType = type;
             var info = AssetManager.Ins.PieceData[type];
             pieceName.text = Localizer.GetText("piece_name", type, null);
             pieceModel.ObjectPrefab = info.prefab.transform;
@@ -22,7 +23,7 @@ namespace UX.UI.Ingame.DormantFossil
 
         public void OnClickSummon()
         {
-            transform.parent.parent.GetComponent<DormantFossilUI>().Choose(pieceType);
+            transform.parent.parent.GetComponent<DormantFossilUI>().Choose(_pieceType);
         }
     }
 }

@@ -10,7 +10,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Megalodon : Commons.PieceLogic, IPieceWithSkill
     {
         public Megalodon(PieceConfig cfg) : base(cfg, RookMoves.Quiets,
@@ -32,7 +33,6 @@ namespace Game.Piece.PieceLogic
                         if (pOn == null) continue;
 
                         list.Add(new MegalodonActivePending(Pos, idx));
-
                     }
                 }
                 else
@@ -40,17 +40,12 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        
-                    }
-                    else
-                    {
-                        
                     }
                 }
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
 
         private bool CanActive()
@@ -77,5 +72,4 @@ namespace Game.Piece.PieceLogic
             return false;
         }
     }
-
 }

@@ -2,16 +2,17 @@
 using Game.Action.Internal;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 using ZLinq;
 
 namespace Game.Effects.Augmentation
 {
-    public class KineticDiffuserPassive : Effect, IOnApply
+    public class KineticDiffuserPassive : Effect, IOnApplyTrigger
     {
-        private const int evasionProbability = 25;
+        private const int EvasionProbability = 25;
+
         public KineticDiffuserPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kinetic_diffuser_passive")
         {
-            
         }
 
 
@@ -20,16 +21,11 @@ namespace Game.Effects.Augmentation
             var evasion = Piece.Effects.OfType<Evasion>().FirstOrDefault();
 
             if (evasion != null)
-            {
-                evasion.Probability += evasionProbability;
-            }
+                evasion.Strength += EvasionProbability;
             else
-            {
                 ActionManager.EnqueueAction(
-                    new ApplyEffect(new Evasion(-1, evasionProbability, Piece))
+                    new ApplyEffect(new Evasion(-1, EvasionProbability, Piece))
                 );
-            }
-
         }
     }
 }

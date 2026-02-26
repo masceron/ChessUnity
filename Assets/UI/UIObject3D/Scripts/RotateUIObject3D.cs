@@ -10,7 +10,8 @@ namespace UI.UIObject3D.Scripts
 {
     [RequireComponent(typeof(UIObject3D))]
     [AddComponentMenu("UI/UIObject3D/Rotate UIObject3D")]
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RotateUIObject3D : MonoBehaviour
     {
         public enum eRotationMode
@@ -33,25 +34,27 @@ namespace UI.UIObject3D.Scripts
 
         public float snapbackTime = 0.25f;
 
-        private UIObject3D UIObject3D;
-
-        private bool mouseIsOver;
+        private EventTrigger _eventTrigger;
 
         private Vector3 initialRotation = Vector3.zero;
 
-        private EventTrigger _eventTrigger;
+        private bool mouseIsOver;
+
+        private float timeSinceLastUpdate;
+
+        private UIObject3D UIObject3D;
+
         private EventTrigger eventTrigger
         {
             get
             {
-                if (_eventTrigger == null) _eventTrigger = GetComponent<EventTrigger>() ?? gameObject.AddComponent<EventTrigger>();
+                if (_eventTrigger == null)
+                    _eventTrigger = GetComponent<EventTrigger>() ?? gameObject.AddComponent<EventTrigger>();
                 return _eventTrigger;
             }
         }
 
-        private float timeSinceLastUpdate;
-
-        void Awake()
+        private void Awake()
         {
             UIObject3D = GetComponent<UIObject3D>();
             initialRotation = UIObject3DUtilities.NormalizeRotation(UIObject3D.TargetRotation);
@@ -64,33 +67,37 @@ namespace UI.UIObject3D.Scripts
             timeSinceLastUpdate += Time.deltaTime;
 
             if (UIObject3D.LimitFrameRate)
-            {
-                if (timeSinceLastUpdate < UIObject3D.timeBetweenFrames) return;
-            }
+                if (timeSinceLastUpdate < UIObject3D.timeBetweenFrames)
+                    return;
 
             switch (RotationMode)
             {
                 case eRotationMode.Constant:
-                    {
-                        UpdateRotation();
-                    }
+                {
+                    UpdateRotation();
+                }
                     break;
                 case eRotationMode.WhenMouseIsOver:
                 case eRotationMode.WhenMouseIsOverThenSnapBack:
-                    {
-                        if (mouseIsOver) UpdateRotation();
-                    }
+                {
+                    if (mouseIsOver) UpdateRotation();
+                }
                     break;
             }
+        }
+
+        private void OnValidate()
+        {
+            eventTrigger.enabled = RotationMode != eRotationMode.Constant;
         }
 
         private void UpdateRotation()
         {
             UIObject3D.TargetRotation += new Vector3(
-                    RotateX ? RotateXSpeed * timeSinceLastUpdate : 0,
-                    RotateY ? RotateYSpeed * timeSinceLastUpdate : 0,
-                    RotateZ ? RotateZSpeed * timeSinceLastUpdate : 0
-                );
+                RotateX ? RotateXSpeed * timeSinceLastUpdate : 0,
+                RotateY ? RotateYSpeed * timeSinceLastUpdate : 0,
+                RotateZ ? RotateZSpeed * timeSinceLastUpdate : 0
+            );
 
             timeSinceLastUpdate = 0f;
         }
@@ -117,10 +124,7 @@ namespace UI.UIObject3D.Scripts
         {
             mouseIsOver = false;
 
-            if (RotationMode == eRotationMode.WhenMouseIsOverThenSnapBack)
-            {
-                StartCoroutine(SnapBack(snapbackTime));
-            }
+            if (RotationMode == eRotationMode.WhenMouseIsOverThenSnapBack) StartCoroutine(SnapBack(snapbackTime));
         }
 
         private IEnumerator SnapBack(float time)
@@ -132,18 +136,24 @@ namespace UI.UIObject3D.Scripts
 
 
             // This sort of works, but perhaps it would be best to simply go back the way we came?
-            var desiredX = (Mathf.Abs(snapStartRotation.x - initialRotation.x) >= 180f) ? (initialRotation.x - 180f) : initialRotation.x;
-            var desiredY = (Mathf.Abs(snapStartRotation.y - initialRotation.y) >= 180f) ? (initialRotation.y - 180f) : initialRotation.y;
-            var desiredZ = (Mathf.Abs(snapStartRotation.z - initialRotation.z) >= 180f) ? (initialRotation.z - 180f) : initialRotation.z;
+            var desiredX = Mathf.Abs(snapStartRotation.x - initialRotation.x) >= 180f
+                ? initialRotation.x - 180f
+                : initialRotation.x;
+            var desiredY = Mathf.Abs(snapStartRotation.y - initialRotation.y) >= 180f
+                ? initialRotation.y - 180f
+                : initialRotation.y;
+            var desiredZ = Mathf.Abs(snapStartRotation.z - initialRotation.z) >= 180f
+                ? initialRotation.z - 180f
+                : initialRotation.z;
 
             while (percentageComplete < 1f)
             {
                 //UIObject3D.TargetRotation = Vector3.Lerp(snapStartRotation, initialRotation, percentageComplete);
                 UIObject3D.TargetRotation = new Vector3(
-                    (RotateX ? Mathf.Lerp(snapStartRotation.x, desiredX, percentageComplete) : desiredX),
-                    (RotateY ? Mathf.Lerp(snapStartRotation.y, desiredY, percentageComplete) : desiredY),
-                    (RotateZ ? Mathf.Lerp(snapStartRotation.z, desiredZ, percentageComplete) : desiredZ)
-                    );
+                    RotateX ? Mathf.Lerp(snapStartRotation.x, desiredX, percentageComplete) : desiredX,
+                    RotateY ? Mathf.Lerp(snapStartRotation.y, desiredY, percentageComplete) : desiredY,
+                    RotateZ ? Mathf.Lerp(snapStartRotation.z, desiredZ, percentageComplete) : desiredZ
+                );
 
                 percentageComplete = (Time.time - timeStarted) / time;
 
@@ -151,11 +161,6 @@ namespace UI.UIObject3D.Scripts
             }
 
             UIObject3D.TargetRotation = initialRotation;
-        }
-
-        private void OnValidate()
-        {
-            eventTrigger.enabled = RotationMode != eRotationMode.Constant;
         }
     }
 }

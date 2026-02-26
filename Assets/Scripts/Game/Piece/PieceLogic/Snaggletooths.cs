@@ -1,20 +1,22 @@
+using System;
+using System.Collections.Generic;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
-using System.Collections.Generic;
 using ZLinq;
+using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Snaggletooths : Commons.PieceLogic, IPieceWithSkill
     {
         public Snaggletooths(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
-            {   
+            {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
@@ -24,9 +26,7 @@ namespace Game.Piece.PieceLogic
                         var piece = PieceOn(target);
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
-                        {
                             list.Add(new SnaggletoothsActive(Pos, target));
-                        }
                     }
                     // var (rank, file) = RankFileOf(Pos);
                     // foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
@@ -39,7 +39,6 @@ namespace Game.Piece.PieceLogic
                     //         list.Add(new SnaggletoothsActive(Pos, index));
                     //     }
                     // }
-
                 }
                 else
                 {
@@ -49,23 +48,21 @@ namespace Game.Piece.PieceLogic
                     {
                         var (rank, file) = RankFileOf(Pos);
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
-                        {
                             list.Add(new SnaggletoothsActive(Pos, IndexOf(rankOff, fileOff)));
-
-                        }
                     }
+
                     var maxValue = listPieces.Max(p => p.GetValueForAI());
                     var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
                     if (bestPieces.Count == 0) return;
 
-                    var random = new System.Random();
+                    var random = new Random();
                     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
                     list.Add(new SnaggletoothsActive(Pos, selectedPiece.Pos));
-                    
                 }
             };
         }
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

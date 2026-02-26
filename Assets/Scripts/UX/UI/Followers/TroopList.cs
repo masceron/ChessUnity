@@ -12,8 +12,9 @@ using ZLinq;
 
 namespace UX.UI.Followers
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TroopList: Singleton<TroopList>, IPointerClickHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class TroopList : Singleton<TroopList>, IPointerClickHandler
     {
         [SerializeField] private PiecesData piecesData;
         [SerializeField] private TMP_InputField searchBar;
@@ -22,16 +23,23 @@ namespace UX.UI.Followers
         [SerializeField] private UDictionary<PieceRank, Toggle> filterButtons;
         [SerializeField] private TroopDescriptions troopDescriptions;
 
-        private Dictionary<string, PieceInfo> data;
-        private List<PieceInfo> lastSearchResult;
-        private string lastKeyword;
-        private readonly List<TroopLogo> pool = new();
-        private bool selecting;
-        
-        private void OnDisable()
+        private readonly SortedSet<PieceRank> pieceFilters = new()
         {
-            Close();
-        }
+            PieceRank.Commander,
+            PieceRank.Champion,
+            PieceRank.Elite,
+            PieceRank.Common,
+            PieceRank.Swarm,
+            PieceRank.Summoned,
+            PieceRank.Construct
+        };
+
+        private readonly List<TroopLogo> pool = new();
+
+        private Dictionary<string, PieceInfo> data;
+        private string lastKeyword;
+        private List<PieceInfo> lastSearchResult;
+        private bool selecting;
 
 /*        protected override void Awake()
         {
@@ -46,27 +54,31 @@ namespace UX.UI.Followers
         private void OnEnable()
         {
             data = new Dictionary<string, PieceInfo>();
-            
-            if (PlayerSaveLoader.Player.CollectedUnits == null)
-            {
-                return;
-            }
+
+            if (PlayerSaveLoader.Player.CollectedUnits == null) return;
 
             var collectedSet = new HashSet<string>(PlayerSaveLoader.Player.CollectedUnits);
 
             foreach (var pieceInfo in piecesData.piecesData)
-            {
                 if (collectedSet.Contains(pieceInfo.key))
-                {
                     if (!data.ContainsKey(pieceInfo.key))
-                    {
                         data.Add(pieceInfo.key, pieceInfo);
-                    }
-                }
-            }
+
             lastKeyword = null;
             searchBar.text = "";
             SearchByKeyword("");
+        }
+
+        private void OnDisable()
+        {
+            Close();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Right || !selecting) return;
+            selecting = false;
+            Undisplay();
         }
 
         public void Close()
@@ -81,17 +93,6 @@ namespace UX.UI.Followers
             DisplayInfo(type);
             selecting = true;
         }
-        
-        private readonly SortedSet<PieceRank> pieceFilters = new()
-        {
-            PieceRank.Commander,
-            PieceRank.Champion,
-            PieceRank.Elite,
-            PieceRank.Common,
-            PieceRank.Swarm,
-            PieceRank.Summoned,
-            PieceRank.Construct
-        };
 
         public void ToggleFilter(int filter)
         {
@@ -101,7 +102,7 @@ namespace UX.UI.Followers
                 var color = filterButtons[filterEnum].GetComponent<Image>().color;
                 color.a = 1f;
                 filterButtons[filterEnum].GetComponent<Image>().color = color;
-                
+
                 AddToFilter(filterEnum);
             }
             else
@@ -109,24 +110,20 @@ namespace UX.UI.Followers
                 var color = filterButtons[filterEnum].GetComponent<Image>().color;
                 color.a = 0.3f;
                 filterButtons[filterEnum].GetComponent<Image>().color = color;
-                
+
                 RemoveFromFilter(filterEnum);
             }
-            
         }
 
         private void AddToFilter(PieceRank toFilter)
         {
             pieceFilters.Add(toFilter);
-            
-            var result = data.Values.Where(p => 
+
+            var result = data.Values.Where(p =>
                 pieceFilters.Contains(p.rank) &&
                 Localizer.GetText("piece_name", p.key, null).ToLower().Contains(lastKeyword)).ToList();
 
-            if (!result.SequenceEqual(lastSearchResult))
-            {
-                lastSearchResult = result;
-            }
+            if (!result.SequenceEqual(lastSearchResult)) lastSearchResult = result;
 
             DisplaySearchResult();
         }
@@ -134,27 +131,24 @@ namespace UX.UI.Followers
         private void RemoveFromFilter(PieceRank toRemove)
         {
             pieceFilters.Remove(toRemove);
-            
-            var result = lastSearchResult.Where(p => 
-                pieceFilters.Contains(p.rank) && 
+
+            var result = lastSearchResult.Where(p =>
+                pieceFilters.Contains(p.rank) &&
                 Localizer.GetText("piece_name", p.key, null).ToLower().Contains(lastKeyword)).ToList();
 
-            if (!result.SequenceEqual(lastSearchResult))
-            {
-                lastSearchResult = result;
-            }
+            if (!result.SequenceEqual(lastSearchResult)) lastSearchResult = result;
 
             DisplaySearchResult();
         }
-        
+
         public void SearchByKeyword(string start)
         {
             start = start.ToLower();
-            
+
             if (lastKeyword != null && start.StartsWith(lastKeyword))
             {
-                var result = lastSearchResult.Where(p => 
-                    pieceFilters.Contains(p.rank) && 
+                var result = lastSearchResult.Where(p =>
+                    pieceFilters.Contains(p.rank) &&
                     Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
 
                 if (result.SequenceEqual(lastSearchResult)) return;
@@ -162,15 +156,15 @@ namespace UX.UI.Followers
             }
             else
             {
-                lastSearchResult = data.Values.Where(p => 
-                    pieceFilters.Contains(p.rank) &&  
+                lastSearchResult = data.Values.Where(p =>
+                    pieceFilters.Contains(p.rank) &&
                     Localizer.GetText("piece_name", p.key, null).ToLower().Contains(start)).ToList();
             }
-            
+
             lastKeyword = start;
             DisplaySearchResult();
         }
-        
+
         private void DisplaySearchResult()
         {
             var needed = lastSearchResult.Count - pool.Count;
@@ -179,42 +173,33 @@ namespace UX.UI.Followers
                 case > 0:
                 {
                     for (var i = 1; i <= needed; i++)
-                    {
                         pool.Add(Instantiate(troopDisplay, list).GetComponent<TroopLogo>());
-                    }
 
                     break;
                 }
                 case < 0:
                 {
                     for (var i = pool.Count - 1; i > lastSearchResult.Count - 1; i--)
-                    {
                         pool[i].gameObject.SetActive(false);
-                    }
 
                     break;
                 }
             }
-            
+
             for (var i = 0; i < lastSearchResult.Count; i++)
             {
                 var obj = pool[i].gameObject;
-                if (!obj.activeSelf)
-                {
-                    obj.SetActive(true);
-                }
+                if (!obj.activeSelf) obj.SetActive(true);
 
                 if (pool[i].model.ObjectPrefab != lastSearchResult[i].prefab.transform)
-                {
                     pool[i].Load(lastSearchResult[i]);
-                }
             }
         }
 
         public void DisplayInfo(string type)
         {
             if (selecting) return;
-            
+
             troopDescriptions.Display(data[type]);
         }
 
@@ -223,14 +208,5 @@ namespace UX.UI.Followers
             if (selecting) return;
             troopDescriptions.Undisplay();
         }
-        
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button != PointerEventData.InputButton.Right || !selecting) return;
-            selecting = false;
-            Undisplay();
-        }
     }
-
-    
 }

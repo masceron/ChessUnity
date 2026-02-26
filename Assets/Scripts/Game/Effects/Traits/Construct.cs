@@ -1,10 +1,11 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using System.Collections.Generic;
 using Game.Action.Captures;
-using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {
-    public class Construct : Effect, IOnMoveGenEffect
+    public class Construct : Effect, IOnMoveGenTrigger
     {
         public Construct(PieceLogic piece) : base(-1, 1, piece, "effect_construct")
         {
@@ -16,12 +17,8 @@ namespace Game.Effects.Traits
             if (actions == null || actions.Count == 0) return;
 
             for (var i = actions.Count - 1; i >= 0; i--)
-            {
                 if (actions[i] is not DestroyConstruct && actions[i].Target == Piece.Pos)
-                {
                     actions.RemoveAt(i);
-                }
-            }
         }
     }
 }

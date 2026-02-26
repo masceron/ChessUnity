@@ -8,7 +8,8 @@ namespace Game.Tile
     /// <summary>
     ///     Placeholder for BubbleVentEffect implementation.
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BubbleVent : Formation
     {
         public BubbleVent(int d, bool hd, bool color) : base(color)
@@ -17,15 +18,10 @@ namespace Game.Tile
             HaveDuration = hd;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece), FormationType.BubbleVent));
-        }
-
-        public override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
         }
 
         public override FormationType GetFormationType()
@@ -38,7 +34,4 @@ namespace Game.Tile
             return -10;
         }
     }
-
-
 }
-

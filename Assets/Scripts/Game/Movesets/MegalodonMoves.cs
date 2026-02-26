@@ -13,9 +13,9 @@ namespace Game.Movesets
             var color = caller.Color;
             var range = caller.GetAttackRange();
             var (startRank, startFile) = RankFileOf(pos);
-            
+
             var push = !color ? -1 : 1;
-            
+
             for (var rank = RankOf(pos) - (range - 1) * push; rank != RankOf(pos) + (range + 1) * push; rank += push)
             {
                 if (!VerifyBounds(rank)) continue;
@@ -24,12 +24,12 @@ namespace Game.Movesets
                     if (!VerifyBounds(file)) continue;
                     var idx = IndexOf(rank, file);
                     if (!IsActive(idx)) continue;
-                    
+
                     var piece = PieceOn(idx);
 
                     if (piece == null || piece.Color == color) continue;
                     if (Pathfinder.LineBlocker(startRank, startFile, rank, file).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
@@ -37,6 +37,4 @@ namespace Game.Movesets
             return 10 + 10 * range;
         }
     }
-    
-    
 }

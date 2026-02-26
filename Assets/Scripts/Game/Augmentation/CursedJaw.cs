@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
 using Game.Augmentation.Set;
 using Game.Effects;
+using Game.Effects.Augmentation;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
     public class CursedJaw : Augmentation
     {
-        public CursedJaw() : base(AugmentationName.CursedJaw, AugmentationRarity.Cursed, AugmentationSlot.Chassis, null, null)
+        public CursedJaw() : base(AugmentationName.CursedJaw, AugmentationRarity.Cursed, AugmentationSlot.Chassis, null,
+            null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
-        public override void SetTarget(PieceLogic target) 
+
+        public override void SetTarget(PieceLogic target)
         {
             Target = target;
             Set = new AugmentationSet(AugmentationSetType.None, false);
-            PassiveEffects.Add(new Effects.Augmentation.CursedJawPassive(Target));
+            PassiveEffects.Add(new CursedJawPassive(Target));
         }
     }
 }

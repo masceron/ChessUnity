@@ -5,7 +5,8 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CoffinFish : Commons.PieceLogic
     {
         public CoffinFish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, None.Captures)

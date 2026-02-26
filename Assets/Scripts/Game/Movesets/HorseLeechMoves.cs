@@ -17,9 +17,8 @@ namespace Game.Movesets
             var attackRange = p.GetAttackRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, attackRange))
-            {
                 MakeCapture(rankOff, fileOff);
-            }
+
             void MakeCapture(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
@@ -35,10 +34,9 @@ namespace Game.Movesets
                         return;
                     list.Add(new HorseLeechAttack(pos, index));
                 }
-
             }
+
             return 10 + 10 * attackRange;
         }
     }
-
 }

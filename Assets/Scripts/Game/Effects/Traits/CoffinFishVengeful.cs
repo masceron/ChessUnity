@@ -4,29 +4,31 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CoffinFishVengeful : Effect, IAfterPieceActionEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class CoffinFishVengeful : Effect, IAfterPieceActionTrigger
     {
-        public readonly int Probability;
-        public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, 1, piece, "effect_coffin_fish_vengeful")
+        public CoffinFishVengeful(PieceLogic piece, int probability) : base(-1, probability, piece,
+            "effect_coffin_fish_vengeful")
         {
-            Probability = probability;
         }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success) return;
 
-            if (!MatchManager.Roll(Probability)) return;
+            if (!MatchManager.Roll(Strength)) return;
 
             if (action.Target == Piece.Pos)
-            {
                 ActionManager.EnqueueAction(new ApplyEffect(new Relentless(BoardUtils.PieceOn(action.Maker), 1)));
-            }
         }
+
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 50;

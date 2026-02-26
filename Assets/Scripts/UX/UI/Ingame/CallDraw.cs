@@ -14,7 +14,7 @@ namespace UX.UI.Ingame
         private Color defaultColor;
         private bool isToggled;
 
-        void Awake()
+        private void Awake()
         {
             if (button == null) button = GetComponent<Button>();
             if (targetGraphic == null) targetGraphic = button.targetGraphic as Image;
@@ -22,7 +22,7 @@ namespace UX.UI.Ingame
             button.onClick.AddListener(OnClick);
         }
 
-        void OnClick()
+        private void OnClick()
         {
             isToggled = !isToggled;
             targetGraphic.color = isToggled ? toggledColor : defaultColor;
@@ -32,11 +32,10 @@ namespace UX.UI.Ingame
                 EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Draw);
             }
         }
+
         public bool IsToggled()
         {
             return isToggled;
         }
     }
-
-
 }

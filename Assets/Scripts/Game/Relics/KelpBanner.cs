@@ -25,6 +25,7 @@ namespace Game.Relics
                     var pending = new KelpBannerPending(this, formation.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
+
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
             }

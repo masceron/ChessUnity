@@ -14,11 +14,12 @@ namespace UX.UI.Ingame
         CoralTomeUI,
         LedgerStoneUI,
         SeabedLevelerUI,
-        RustyParrotfishUI,
+        RustyParrotfishUI
     }
 
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class UIHolder: Singleton<UIHolder>
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class UIHolder : Singleton<UIHolder>
     {
         [SerializeField] private UDictionary<IngameSubmenus, GameObject> submenus;
 

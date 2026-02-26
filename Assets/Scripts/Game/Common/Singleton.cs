@@ -2,7 +2,8 @@
 
 namespace Game.Common
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T _instance;
@@ -12,7 +13,7 @@ namespace Game.Common
             get
             {
                 if (_instance) return _instance;
-                
+
                 // Find singleton
                 _instance = FindFirstObjectByType<T>();
 
@@ -30,14 +31,10 @@ namespace Game.Common
         protected virtual void Awake()
         {
             if (_instance == null)
-            {
                 _instance = this as T;
-                // Debug.Log($"New Singleton: {typeof(T)}");
-            }
+            // Debug.Log($"New Singleton: {typeof(T)}");
             else
-            {
                 Debug.LogError($"Found two instances of {typeof(T)}, second instance will be ignored");
-            }
         }
 
         protected virtual void OnDestroy()

@@ -7,7 +7,7 @@ namespace Game.AI
     {
         [SerializeField] private int score;
         [SerializeField] private TMP_Text scoreText;
-        
+
         public void SetScore(int s)
         {
             score = s;

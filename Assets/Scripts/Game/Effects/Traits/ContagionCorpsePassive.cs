@@ -6,10 +6,10 @@ using ZLinq;
 namespace Game.Effects.Traits
 {
     /// <summary>
-    /// Contagion Corpse Passive Effect
-    /// 
+    ///     Contagion Corpse Passive Effect
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ContagionCorpsePassive : Effect
     {
         private const int Radius = 2;
@@ -21,8 +21,8 @@ namespace Game.Effects.Traits
 
         private void HandlePassive()
         {
-
-            var inRadius = MoveEnumerators.AroundUntil(BoardUtils.RankOf(Piece.Pos), BoardUtils.FileOf(Piece.Pos), Radius);
+            var inRadius =
+                MoveEnumerators.AroundUntil(BoardUtils.RankOf(Piece.Pos), BoardUtils.FileOf(Piece.Pos), Radius);
             var posInRadius = inRadius
                 .Select(pos => BoardUtils.IndexOf(pos.Item1, pos.Item2))
                 .ToList();
@@ -37,4 +37,3 @@ namespace Game.Effects.Traits
         }
     }
 }
-

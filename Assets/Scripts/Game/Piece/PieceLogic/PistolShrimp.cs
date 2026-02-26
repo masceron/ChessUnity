@@ -3,11 +3,11 @@ using Game.Common;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
     public class PistolShrimp : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
         public PistolShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
@@ -30,6 +30,7 @@ namespace Game.Piece.PieceLogic
                                 if (pOn == null || pOn == this) continue;
                                 list.Add(new PistolShrimpActive(Pos, index));
                             }
+
                             break;
                         case true:
                             foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, 1))
@@ -39,22 +40,15 @@ namespace Game.Piece.PieceLogic
                                 if (pOn == null || pOn == this) continue;
                                 list.Add(new PistolShrimpActive(Pos, index));
                             }
+
                             break;
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
-
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

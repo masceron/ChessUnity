@@ -1,4 +1,5 @@
-﻿using Game.Action;
+﻿using System.Collections.Generic;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
@@ -6,12 +7,14 @@ using Game.Effects.Traits;
 using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Thalassos : Commons.PieceLogic, IPieceWithSkill
     {
         public Thalassos(PieceConfig cfg) : base(cfg, ThalassosMoves.Quiets, ThalassosMoves.Captures)
@@ -36,10 +39,7 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(file)) continue;
                             var posTo = IndexOf(rank, file);
 
-                            if (PieceOn(posTo) == null)
-                            {
-                                list.Add(new ThalassosResurrectCandidate(Pos, posTo));
-                            }
+                            if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(Pos, posTo));
                         }
                     }
                 }
@@ -58,15 +58,17 @@ namespace Game.Piece.PieceLogic
                                 var posTo = IndexOf(rank, file);
 
                                 if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
-                                {
                                     list.Add(new ThalassosResurrectCandidate(Pos, posTo));
-                                }
                             }
                         }
+
                         return;
                     }
+
                     // captured list for the maker's side
-                    var capturedList = Color ? MatchManager.Ins.GameState.BlackCaptured : MatchManager.Ins.GameState.WhiteCaptured;
+                    var capturedList = Color
+                        ? MatchManager.Ins.GameState.BlackCaptured
+                        : MatchManager.Ins.GameState.WhiteCaptured;
                     if (capturedList == null || capturedList.Count == 0) return;
 
                     // Filter candidates: only Common or Swarm rank
@@ -88,43 +90,40 @@ namespace Game.Piece.PieceLogic
 
                     // Find empty squares around Maker within radius 1
                     var (r0, f0) = RankFileOf(Pos);
-                    var emptySquares = new System.Collections.Generic.List<int>();
+                    var emptySquares = new List<int>();
                     for (var dr = -1; dr <= 1; dr++)
+                    for (var df = -1; df <= 1; df++)
                     {
-                        for (var df = -1; df <= 1; df++)
-                        {
-                            var rr = r0 + dr;
-                            var ff = f0 + df;
-                            if (!VerifyBounds(rr) || !VerifyBounds(ff)) continue;
-                            var idx = IndexOf(rr, ff);
-                            if (!IsActive(idx)) continue;
-                            if (PieceOn(idx) == null) emptySquares.Add(idx);
-                        }
+                        var rr = r0 + dr;
+                        var ff = f0 + df;
+                        if (!VerifyBounds(rr) || !VerifyBounds(ff)) continue;
+                        var idx = IndexOf(rr, ff);
+                        if (!IsActive(idx)) continue;
+                        if (PieceOn(idx) == null) emptySquares.Add(idx);
                     }
+
                     if (emptySquares.Count == 0) return;
 
                     // Pick best candidate
-                    var bestScore = candidates.Max((p) => PieceMaker.Get(p).GetValueForAI());
+                    var bestScore = candidates.Max(p => PieceMaker.Get(p).GetValueForAI());
                     var top = candidates.Where(c => PieceMaker.Get(c).GetValueForAI() == bestScore).ToList();
-                    var chosenPiece = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
+                    var chosenPiece = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
                     // Pick random empty square
-                    var chosenSquare = emptySquares[UnityEngine.Random.Range(0, emptySquares.Count)];
+                    var chosenSquare = emptySquares[Random.Range(0, emptySquares.Count)];
 
                     // Spawn piece immediately
                     list.Add(new ThalassosResurrect(Pos, chosenSquare, chosenPiece.Type));
 
                     // Remove the resurrected piece from captured list
-                    var toRemove = capturedList.FirstOrDefault(c => c.Type == chosenPiece.Type && c.Color == chosenPiece.Color);
-                    if (toRemove != null)
-                    {
-                        capturedList.Remove(toRemove);
-                    }
+                    var toRemove =
+                        capturedList.FirstOrDefault(c => c.Type == chosenPiece.Type && c.Color == chosenPiece.Color);
+                    if (toRemove != null) capturedList.Remove(toRemove);
                 }
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

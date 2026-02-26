@@ -17,10 +17,7 @@ namespace Game.Save.Money
 
         public static bool SpendMoney(int amount)
         {
-            if (PlayerSaveLoader.Player.Money < amount)
-            {
-                return false;
-            }
+            if (PlayerSaveLoader.Player.Money < amount) return false;
 
             PlayerSaveLoader.Player.Money -= amount;
             PlayerSaveLoader.Save();

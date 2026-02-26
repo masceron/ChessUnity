@@ -3,14 +3,16 @@ using UnityEngine;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class EffectBar: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class EffectBar : MonoBehaviour
     {
         [SerializeField] private GameObject pieceStatusEffect;
         [SerializeField] private GameObject effectUI;
-        
 
-        public void Disable() {
+
+        public void Disable()
+        {
             pieceStatusEffect.SetActive(false);
         }
 
@@ -21,10 +23,7 @@ namespace UX.UI.Ingame
             var needed = piece.Effects.Count;
             if (already < needed)
             {
-                for (var i = 1; i <= needed - already; i++)
-                {
-                    Instantiate(effectUI, pieceStatusEffect.transform, true);
-                }
+                for (var i = 1; i <= needed - already; i++) Instantiate(effectUI, pieceStatusEffect.transform, true);
             }
             else if (already > needed)
             {
@@ -37,9 +36,7 @@ namespace UX.UI.Ingame
             }
 
             for (var i = 0; i < needed; i++)
-            {
                 pieceStatusEffect.transform.GetChild(i).GetComponent<EffectUI>().Set(piece.Effects[i]);
-            }
         }
     }
 }

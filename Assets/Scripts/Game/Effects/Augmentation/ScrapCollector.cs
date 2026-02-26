@@ -1,12 +1,16 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ScrapCollector: Effect, IEndTurnEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ScrapCollector : Effect, IEndTurnTrigger
     {
+        private EndTurnTriggerPriority _priority;
+
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TimeLeft = 3;
 
@@ -20,12 +24,13 @@ namespace Game.Effects.Augmentation
             ActionManager.EnqueueAction(new Purge(Piece.Pos, Piece.Pos));
         }
 
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
+
         public EndTurnEffectType EndTurnEffectType { get; set; }
 
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 80 - Strength * 10;
         }
-    
     }
 }

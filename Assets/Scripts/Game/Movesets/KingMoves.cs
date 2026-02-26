@@ -6,7 +6,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KingMoves
     {
         public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
@@ -18,9 +19,7 @@ namespace Game.Movesets
             var effectiveMoveRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, effectiveMoveRange))
-            {
                 MakeMove(rankOff, fileOff);
-            }
 
             return 10 + 10 * effectiveMoveRange;
 
@@ -47,9 +46,7 @@ namespace Game.Movesets
             var attackRange = caller.GetAttackRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, attackRange))
-            {
                 MakeCapture(rankOff, fileOff);
-            }
 
             return 10 + 10 * attackRange;
 
@@ -60,16 +57,14 @@ namespace Game.Movesets
                 if (piece == null && !isPlayer)
                 {
                     list.Add(new NormalCapture(pos, index));
-                    return;
                 }
                 else if (piece != null)
                 {
                     if (piece.Color == color ||
-                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
+                        Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
                         return;
                     list.Add(new NormalCapture(pos, index));
                 }
-
             }
         }
     }

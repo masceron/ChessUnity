@@ -6,15 +6,15 @@ namespace Game.Augmentation
 {
     public class KineticDiffuser : Augmentation
     {
-        public KineticDiffuser() : base(AugmentationName.KineticDiffuser, AugmentationRarity.Heroic, AugmentationSlot.Chassis, null, null)
+        public KineticDiffuser() : base(AugmentationName.KineticDiffuser, AugmentationRarity.Heroic,
+            AugmentationSlot.Chassis, null, null)
         {
-            
         }
 
         public override void SetTarget(PieceLogic target)
         {
             Target = target;
-            Set = new AugmentationSet(AugmentationSetType.None,false);
+            Set = new AugmentationSet(AugmentationSetType.None, false);
             PassiveEffects.Add(new KineticDiffuserPassive(Target));
         }
     }

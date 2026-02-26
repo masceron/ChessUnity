@@ -1,17 +1,30 @@
-using static Game.Common.BoardUtils;
 using Game.Action.Internal;
-using Game.Piece.PieceLogic.Commons;
 using Game.Action.Quiets;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class FlowerhornCichlidActive : Action, ISkills
+    [MemoryPackable]
+    public partial class FlowerhornCichlidActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private FlowerhornCichlidActive()
+        {
+        }
+
         public FlowerhornCichlidActive(int maker, int target) : base(maker)
         {
             Target = target;
         }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            return 0;
+        }
+
         protected override void ModifyGameState()
         {
             var makerColor = PieceOn(Maker).Color;
@@ -38,7 +51,9 @@ namespace Game.Action.Skills
                         knockbackCount++;
                     }
                 }
-                var finalRankOfMaker = finalRankOfTarget == RankOf(Target) ? RankOf(Target) - direction : RankOf(Target);
+
+                var finalRankOfMaker =
+                    finalRankOfTarget == RankOf(Target) ? RankOf(Target) - direction : RankOf(Target);
                 ActionManager.EnqueueAction(new NormalMove(Target, IndexOf(finalRankOfTarget, FileOf(Target))));
                 ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), PieceOn(Maker)));
                 ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(finalRankOfMaker, FileOf(Target))));
@@ -47,11 +62,6 @@ namespace Game.Action.Skills
             {
                 ActionManager.EnqueueAction(new NormalMove(Maker, Target));
             }
-            
-        }
-        public int AIPenaltyValue(PieceLogic maker)
-        {
-            return 0;
         }
     }
 }

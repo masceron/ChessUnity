@@ -1,13 +1,12 @@
-
 namespace Game.Relics.Commons
 {
     public class RelicConfig
     {
-        public readonly string Type;
         public readonly bool Color;
-        public sbyte TimeCooldown;
+        public readonly string Type;
+        public int TimeCooldown;
 
-        public RelicConfig(string t, bool c, sbyte timeCooldown)
+        public RelicConfig(string t, bool c, int timeCooldown)
         {
             Type = t;
             Color = c;

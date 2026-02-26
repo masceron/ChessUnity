@@ -21,10 +21,7 @@ namespace Game.Save.Augmentation
 
         public static void RemoveAugmentation(string name)
         {
-            if (PlayerSaveLoader.Player.CollectedAugmentations.Remove(name))
-            {
-                PlayerSaveLoader.Save();
-            }
+            if (PlayerSaveLoader.Player.CollectedAugmentations.Remove(name)) PlayerSaveLoader.Save();
         }
 
         public static bool HasAugmentation(string name)

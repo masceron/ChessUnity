@@ -3,7 +3,8 @@ using UX.UI.Loader;
 
 namespace UX.UI.Menus
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MenuPanel : MonoBehaviour
     {
         public void OnClickPlay()
@@ -19,6 +20,11 @@ namespace UX.UI.Menus
         public void OnClickFreePlayTest()
         {
             SceneLoader.LoadSceneWithLoadingScreen(2);
+        }
+
+        public void OnClickMapMode()
+        {
+            SceneLoader.LoadSceneWithLoadingScreen(4);
         }
 
         public void OnClickExit()

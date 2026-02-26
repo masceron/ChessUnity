@@ -8,7 +8,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HermitCrab : Commons.PieceLogic, IPieceWithSkill
     {
         public HermitCrab(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
@@ -22,9 +23,7 @@ namespace Game.Piece.PieceLogic
                     var (rank, file) = RankFileOf(Pos);
 
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
-                    {
                         MakeSkill(list, IndexOf(rankOff, fileOff));
-                    }
                 }
                 else
                 {
@@ -34,31 +33,30 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            if (index != Pos)
-                            {
-                                list.Add(new HermitCrabSwap(Pos, index));
-                            }
-
+                            if (index != Pos) list.Add(new HermitCrabSwap(Pos, index));
                         }
+
                         return;
                     }
+
                     var rank = RankOf(Pos);
                     var file = FileOf(Pos);
                     List<int> candidates = new();
-                    for(var i = rank - 3; i < rank + 3; ++i)
+                    for (var i = rank - 3; i < rank + 3; ++i)
+                    for (var j = file - 3; j < file + 3; ++j)
                     {
-                        for(var j = file - 3; j < file + 3; ++j)
-                        {
-                            if (!VerifyBounds(file) || !VerifyBounds(rank)) { continue; }
-                            if (PieceOn(IndexOf(i, j)) != null){ candidates.Add(IndexOf(i, j)); }
-                        }
+                        if (!VerifyBounds(file) || !VerifyBounds(rank)) continue;
+                        if (PieceOn(IndexOf(i, j)) != null) candidates.Add(IndexOf(i, j));
                     }
+
                     var r = new Random();
                     list.Add(new HermitCrabSwap(Pos, candidates[r.Next(candidates.Count)]));
-                
                 }
             };
         }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
 
         private void MakeSkill(List<Action.Action> list, int index)
         {
@@ -66,8 +64,5 @@ namespace Game.Piece.PieceLogic
             if (piece == null || piece.Color != Color) return;
             list.Add(new HermitCrabSwap(Pos, index));
         }
-
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
-        public SkillsDelegate Skills { get; set; }
     }
 }

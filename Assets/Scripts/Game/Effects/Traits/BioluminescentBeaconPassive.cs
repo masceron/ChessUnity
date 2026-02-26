@@ -6,16 +6,17 @@ using Game.Tile;
 namespace Game.Effects.Traits
 {
     /// <summary>
-    /// Bioluminescent Beacon Passive Effect
-    /// 
+    ///     Bioluminescent Beacon Passive Effect
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BioluminescentBeaconPassive : Effect
     {
         private readonly int radius = 2;
         private bool isApplied;
-        public BioluminescentBeaconPassive(PieceLogic piece) : base(-1, 1, piece, "effect_bioluminescent_beacon_passive")
+
+        public BioluminescentBeaconPassive(PieceLogic piece) : base(-1, 1, piece,
+            "effect_bioluminescent_beacon_passive")
         {
             isApplied = false;
             HandlePassive();
@@ -26,18 +27,15 @@ namespace Game.Effects.Traits
             var positions = new List<int>();
             var (rank, file) = BoardUtils.RankFileOf(Piece.Pos);
             for (var i = rank - radius; i <= rank + radius; i++)
+            for (var j = file - radius; j <= file + radius; j++)
             {
-                for (var j = file - radius; j <= file + radius; j++)
-                {
-                    if (i == rank && j == file) continue;
-                    if (BoardUtils.VerifyBounds(i)
-                        && BoardUtils.VerifyBounds(j)
-                        && BoardUtils.IsActive(BoardUtils.IndexOf(i, j)))
-                    {
-                        positions.Add(BoardUtils.IndexOf(i, j));
-                    }
-                }
+                if (i == rank && j == file) continue;
+                if (BoardUtils.VerifyBounds(i)
+                    && BoardUtils.VerifyBounds(j)
+                    && BoardUtils.IsActive(BoardUtils.IndexOf(i, j)))
+                    positions.Add(BoardUtils.IndexOf(i, j));
             }
+
             return positions;
         }
 
@@ -59,8 +57,8 @@ namespace Game.Effects.Traits
                 //     BoardUtils.TriggerEnter(pos);
                 // }
             }
+
             isApplied = true;
         }
     }
 }
-

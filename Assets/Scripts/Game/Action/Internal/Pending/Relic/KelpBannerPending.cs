@@ -1,35 +1,36 @@
-﻿using Game.Action.Relics;
+﻿using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class KelpBannerPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class KelpBannerPending : PendingAction, IDisposable
     {
-        private KelpBanner kelpBanner;
-        public KelpBannerPending(KelpBanner kp, int maker, bool pos = false) : base(maker)
-        {
-            kelpBanner = kp;
-            Maker = (ushort)maker;
-        }
+        private KelpBanner _kelpBanner;
 
-        
+        public KelpBannerPending(KelpBanner kp, int maker) : base(maker)
+        {
+            _kelpBanner = kp;
+            Maker = maker;
+        }
 
         public void Dispose()
         {
-            kelpBanner = null;
+            _kelpBanner = null;
             BoardViewer.SelectingFunction = 0;
         }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            BoardViewer.Ins.ExecuteAction(new KelpBannerAction(Maker));
-            
+            CommitResult(new KelpBannerAction(Maker));
+
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-            kelpBanner.SetCooldown();
+            _kelpBanner.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();

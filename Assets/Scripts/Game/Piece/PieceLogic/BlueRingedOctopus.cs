@@ -6,8 +6,9 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlueRingedOctopus: Commons.PieceLogic
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class BlueRingedOctopus : Commons.PieceLogic
     {
         public BlueRingedOctopus(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, RookMoves.Captures)
         {
@@ -15,8 +16,6 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new BlueRingedOctopusPassive(this)));
-
         }
-
     }
 }

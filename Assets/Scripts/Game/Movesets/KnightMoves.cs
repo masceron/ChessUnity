@@ -6,7 +6,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KnightMoves
     {
         public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
@@ -16,9 +17,7 @@ namespace Game.Movesets
             var maxRange = caller.GetMoveRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
-            {
                 MakeMove(rankOff, fileOff);
-            }
 
             return 15 + 3 * maxRange;
 
@@ -44,9 +43,7 @@ namespace Game.Movesets
             var maxRange = caller.GetAttackRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
-            {
                 MakeCapture(rankOff, fileOff);
-            }
 
             return 15 + 3 * maxRange;
 
@@ -58,13 +55,12 @@ namespace Game.Movesets
                 if (piece == null && !isPlayer)
                 {
                     list.Add(new NormalCapture(pos, index));
-                    return;
                 }
                 else if (piece != null)
                 {
                     if (piece.Color == color ||
-                    Distance(pos, index) != maxRange ||
-                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
+                        Distance(pos, index) != maxRange ||
+                        Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
                         return;
                     list.Add(new NormalCapture(pos, index));
                 }

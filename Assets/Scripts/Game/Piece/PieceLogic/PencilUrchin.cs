@@ -9,11 +9,11 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
     public class PencilUrchin : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
         private const int SkillRange = 3;
 
         public PencilUrchin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
@@ -28,9 +28,7 @@ namespace Game.Piece.PieceLogic
                 {
                     var (rank, file) = RankFileOf(Pos);
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
-                    {
                         list.Add(new PencilUrchinActive(Pos, IndexOf(rankOff, fileOff)));
-                    }
                 }
                 else
                 {
@@ -40,7 +38,7 @@ namespace Game.Piece.PieceLogic
                         var bestPieces = new List<Commons.PieceLogic>();
                         Commons.PieceLogic bestPiece = null;
                         var maxPoint = int.MinValue;
-            
+
                         var (rank, file) = RankFileOf(Pos);
 
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
@@ -49,7 +47,7 @@ namespace Game.Piece.PieceLogic
                             var pOn = PieceOn(index);
                             if (pOn == null || pOn.Pos == Pos || pOn.Color == Color
                                 || pOn.Effects.Any(effect => effect.EffectName == "effect_extremophiles")) continue;
-                
+
                             var AIValue = pOn.GetValueForAI();
                             if (AIValue > maxPoint)
                             {
@@ -57,7 +55,10 @@ namespace Game.Piece.PieceLogic
                                 bestPieces.Add(pOn);
                                 maxPoint = AIValue;
                             }
-                            else if (AIValue == maxPoint) bestPieces.Add(pOn);
+                            else if (AIValue == maxPoint)
+                            {
+                                bestPieces.Add(pOn);
+                            }
                         }
 
                         if (bestPieces.Count == 0)
@@ -73,10 +74,7 @@ namespace Game.Piece.PieceLogic
                             bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                         }
 
-                        if (bestPiece != null)
-                        {
-                            list.Add(new PencilUrchinActive(Pos, bestPiece.Pos));
-                        }
+                        if (bestPiece != null) list.Add(new PencilUrchinActive(Pos, bestPiece.Pos));
                     }
                     else
                     {
@@ -92,11 +90,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

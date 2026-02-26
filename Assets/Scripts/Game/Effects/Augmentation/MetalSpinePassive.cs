@@ -1,19 +1,22 @@
+using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Augmentation
 {
-    public class MetalSpinePassive : Effect, IApplyEffect
+    public class MetalSpinePassive : Effect, IBeforeApplyEffectTrigger
     {
-        public MetalSpinePassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public MetalSpinePassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_metal_spine_passive")
-        { }
+        {
+        }
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
+
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.Effect.EffectName == "effect_broken")
-            {
-                applyEffect.Result = Action.ResultFlag.Untouchable;
-            }
+            if (applyEffect.Effect.EffectName == "effect_broken") applyEffect.Result = ResultFlag.Untouchable;
         }
     }
 }

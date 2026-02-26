@@ -2,10 +2,11 @@
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Augmentation
 {
-    public class ShadowFinPassive : Effect, IOnApply
+    public class ShadowFinPassive : Effect, IOnApplyTrigger
     {
         public ShadowFinPassive(PieceLogic piece) : base(-1, 1, piece, "effect_shadow_fin_passive")
         {

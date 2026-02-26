@@ -2,14 +2,16 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects.Traits;
+using Game.Triggers;
 
-namespace Game.Effects.Augmentation
+namespace Game.Effects.Traits
 {
-    public class PressureHullPassive : Effect, IOnApply
+    public class PressureHullPassive : Effect, IOnApplyTrigger
     {
-        public PressureHullPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece, "effect_pressure_hull_passive")
-        { }
+        public PressureHullPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
+            "effect_pressure_hull_passive")
+        {
+        }
 
         public void OnApply()
         {

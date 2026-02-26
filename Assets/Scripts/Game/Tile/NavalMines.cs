@@ -2,8 +2,8 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using static Game.Common.BoardUtils;
 using Game.Piece.PieceLogic.Commons;
+using static Game.Common.BoardUtils;
 
 namespace Game.Tile
 {
@@ -18,17 +18,15 @@ namespace Game.Tile
         {
             return FormationType.NavalMines;
         }
-        
-        public override void OnPieceEnter(PieceLogic piece)
+
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
 
             if (!PieceOnFormation.Effects.Any(effect => effect.EffectName == "effect_shield" &&
                                                         effect.EffectName == "effect_hardened_shield"
                                                         && effect.EffectName == "effect_carapace"))
-            {
                 ActionManager.EnqueueAction(new KillPiece(PieceOnFormation.Pos));
-            }
 
             var (rank, file) = RankFileOf(PieceOnFormation.Pos);
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 8))

@@ -5,8 +5,9 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Barracuda: Commons.PieceLogic
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Barracuda : Commons.PieceLogic
     {
         public Barracuda(PieceConfig cfg) : base(cfg, BarracudaMoves.Quiets, BarracudaMoves.Captures)
         {

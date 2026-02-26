@@ -5,7 +5,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Archerfish : Commons.PieceLogic, IPieceWithSkill
     {
         public Archerfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
@@ -33,16 +34,11 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
-
 }
-

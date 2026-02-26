@@ -1,12 +1,14 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
+using Game.Effects.SpecialAbility;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using Game.Effects.SpecialAbility;
+
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MarineFlatworm : Commons.PieceLogic, IPieceWithSkill
     {
         public MarineFlatworm(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
@@ -17,18 +19,11 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown > 0) return;
 
-                if (isPlayer)
-                {
-                    list.Add(new MarineFlatwormActive(Pos, Pos));
-                }
-                else
-                {
-
-                }
+                if (isPlayer) list.Add(new MarineFlatwormActive(Pos, Pos));
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

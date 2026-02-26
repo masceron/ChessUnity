@@ -1,46 +1,55 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Action.Relics;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class EyeOfMimicPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class EyeOfMimicPending : PendingAction, IDisposable
     {
-        public static PieceLogic FirstTarget;
-        public static PieceLogic SecondTarget;
-        private EyeOfMimic eyeOfMimic;
-        public EyeOfMimicPending(EyeOfMimic e, int maker, bool pos = false) : base(maker)
+        private static PieceLogic _firstTarget;
+        private static PieceLogic _secondTarget;
+        private EyeOfMimic _eyeOfMimic;
+
+        public EyeOfMimicPending(EyeOfMimic e, int maker) : base(maker)
         {
-            eyeOfMimic = e;
-            Maker = (ushort)maker;
+            _eyeOfMimic = e;
+            Maker = maker;
         }
 
-        public override void CompleteAction()
+        public void Dispose()
+        {
+            ResetTargets();
+            _eyeOfMimic = null;
+            BoardViewer.SelectingFunction = 0;
+        }
+
+        protected override void CompleteAction()
         {
             var hovering = BoardUtils.PieceOn(BoardViewer.HoveringPos);
 
-            if (FirstTarget == null || FirstTarget.Color == hovering.Color)
+            if (_firstTarget == null || _firstTarget.Color == hovering.Color)
             {
-                FirstTarget = hovering;
-                TileManager.Ins.MarkIfDifferntColor(FirstTarget.Color);
-                TileManager.Ins.Select(FirstTarget.Pos);
+                _firstTarget = hovering;
+                TileManager.Ins.MarkIfDifferntColor(_firstTarget.Color);
+                TileManager.Ins.Select(_firstTarget.Pos);
                 return;
             }
 
-            SecondTarget = hovering;
+            _secondTarget = hovering;
 
-            var ourSide = eyeOfMimic.Color;
-            var source = FirstTarget.Color == ourSide ? FirstTarget : SecondTarget;
-            var target = FirstTarget.Color == ourSide ? SecondTarget : FirstTarget;
+            var ourSide = _eyeOfMimic.Color;
+            var source = _firstTarget.Color == ourSide ? _firstTarget : _secondTarget;
+            var target = _firstTarget.Color == ourSide ? _secondTarget : _firstTarget;
 
-            var excute = new EyeOfMimicExcute(source.Pos, target.Pos);
-            eyeOfMimic.SetCooldown();
-            BoardViewer.Ins.ExecuteAction(excute);
+            var execute = new EyeOfMimicExecute(source.Pos, target.Pos);
+            _eyeOfMimic.SetCooldown();
+            CommitResult(execute);
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
@@ -49,16 +58,8 @@ namespace Game.Action.Internal.Pending.Relic
 
         private static void ResetTargets()
         {
-            FirstTarget = null;
-            SecondTarget = null;
-        }
-
-        public void Dispose()
-        {
-            ResetTargets();
-            eyeOfMimic = null;
-            BoardViewer.SelectingFunction = 0;
+            _firstTarget = null;
+            _secondTarget = null;
         }
     }
-
 }

@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
+using Game.Triggers;
 using ZLinq;
 
 namespace Game.Action
@@ -33,12 +34,16 @@ namespace Game.Action
     {
         private static GameState _state;
         private static Stack<StackAction> _actionStack;
+        private static List<StackAction> _buffer;
+        private static bool _buffering;
         public static Phase CurrentPhase;
 
         public static void Init(GameState state)
         {
             _state = state;
             _actionStack = new Stack<StackAction>();
+            _buffer = new List<StackAction>();
+            _buffering = false;
             CurrentPhase = Phase.BeforeEndTurn;
         }
 
@@ -49,32 +54,35 @@ namespace Game.Action
 
         private static void AfterActionResolve(Action mainAction)
         {
-            var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionEffect>();
-            var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionEffect>();
+            var afterPieceActionListeners = BoardUtils.GetEffectHookList<IAfterPieceActionTrigger>();
+            var afterRelicActionListeners = BoardUtils.GetEffectHookList<IAfterRelicActionTrigger>();
 
             if (mainAction is IRelicAction iRelicAction)
-            {
                 foreach (var listener in afterRelicActionListeners)
                 {
-                    // if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
+                    _buffering = true;
                     listener.OnCallAfterRelicAction(iRelicAction);
+                    _buffering = false;
+                    FlushBuffer();
+
                     ProcessStack();
                 }
-            }
             else if (mainAction is not IInternal)
-            {
-                foreach (var listener in afterPieceActionListeners)
+                foreach (var listener in afterPieceActionListeners.Where(listener =>
+                             BoardUtils.IsAlive(((Effect)listener).Piece)))
                 {
-                    // if (!BoardUtils.IsAlive(((Effect)listener).Piece)) continue;
+                    _buffering = true;
                     listener.OnCallAfterPieceAction(mainAction);
+                    _buffering = false;
+                    FlushBuffer();
+
                     ProcessStack();
                 }
-            }
         }
-        
-        private static void ProcessStack()
+
+        private static void ProcessStack(int targetDepth = 0)
         {
-            while (_actionStack.Count > 0)
+            while (_actionStack.Count > targetDepth)
             {
                 var currentActionStack = _actionStack.Peek();
                 var currentAction = currentActionStack.Action;
@@ -83,18 +91,16 @@ namespace Game.Action
                 {
                     currentActionStack.TriggerCalled = true;
 
+                    _buffering = true;
                     switch (currentAction)
                     {
-                        case IInternal action:
-                            BoardUtils.NotifyInternalAction(action);
-                            break;
-                        case IRelicAction relicAction:
-                            BoardUtils.NotifyBeforeRelicAction(relicAction);
-                            break;
-                        default:
-                            BoardUtils.NotifyBeforePieceAction(currentAction);
-                            break;
+                        case IInternal action: BoardUtils.NotifyInternalAction(action); break;
+                        case IRelicAction relicAction: BoardUtils.NotifyBeforeRelicAction(relicAction); break;
+                        default: BoardUtils.NotifyBeforePieceAction(currentAction); break;
                     }
+
+                    _buffering = false;
+                    FlushBuffer();
 
                     if (_actionStack.Peek() != currentActionStack) continue;
                 }
@@ -103,8 +109,11 @@ namespace Game.Action
 
                 if (currentAction.IsValid())
                 {
+                    _buffering = true;
                     currentAction.Execute();
-                    ProcessStack();
+                    _buffering = false;
+
+                    FlushBuffer();
                 }
 
                 AfterActionResolve(currentAction);
@@ -114,34 +123,36 @@ namespace Game.Action
         private static void StartTurnProcess(Action mainAction)
         {
             CurrentPhase = Phase.BeforeEndTurn;
+            var startTurnListeners = BoardUtils.GetEffectHookList<IStartTurnTrigger>();
 
-            var startTurnListeners = BoardUtils.GetEffectHookList<IStartTurnEffect>();
-            
-            startTurnListeners.ForEach(effect =>
+            foreach (var effect in startTurnListeners)
             {
-                // if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) continue;
+
+                var shouldTrigger = false;
+
                 if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAnyTurn)
                 {
-                    effect.OnCallStart(mainAction);
-                    ProcessStack();
+                    shouldTrigger = true;
                 }
-                //The next turn is ours.
                 else if (BoardUtils.SideToMove() == ((Observer)effect).Color)
                 {
-                    if (effect.StartTurnEffectType != StartTurnEffectType.StartOfAllyTurn) return;
-                    
-                    effect.OnCallStart(mainAction);
-                    ProcessStack();
+                    if (effect.StartTurnEffectType == StartTurnEffectType.StartOfAllyTurn) shouldTrigger = true;
                 }
-                //The next turn is of the opponent.
                 else
                 {
-                    if (effect.StartTurnEffectType != StartTurnEffectType.StartOfEnemyTurn) return;
-                    
-                    effect.OnCallStart(mainAction);
-                    ProcessStack();
+                    if (effect.StartTurnEffectType == StartTurnEffectType.StartOfEnemyTurn) shouldTrigger = true;
                 }
-            });
+
+                if (!shouldTrigger) continue;
+
+                _buffering = true;
+                effect.OnCallStart(mainAction);
+                _buffering = false;
+                FlushBuffer();
+
+                ProcessStack();
+            }
         }
 
         private static void EndTurnProcess(Action mainAction)
@@ -149,39 +160,46 @@ namespace Game.Action
             new EndTurn().Execute();
             CurrentPhase = Phase.AfterEndTurn;
 
-            var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnEffect>();
+            var endTurnListeners = BoardUtils.GetEffectHookList<IEndTurnTrigger>();
+
             endTurnListeners.ForEach(effect =>
             {
                 if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+
+                var shouldTrigger = false;
                 if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
                 {
-                    effect.OnCallEnd(mainAction);
-                    ProcessStack();
+                    shouldTrigger = true;
                 }
-                //The next turn is ours.
                 else if (BoardUtils.SideToMove() == ((Effect)effect).Piece.Color)
                 {
-                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn)
-                    {
-                        effect.OnCallEnd(mainAction);
-                        ProcessStack();
-                    }
+                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfEnemyTurn) shouldTrigger = true;
                 }
-                //The next turn is of the opponent.
                 else
                 {
-                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn)
-                    {
-                        effect.OnCallEnd(mainAction);
-                        ProcessStack();
-                    }
+                    if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAllyTurn) shouldTrigger = true;
                 }
+
+                if (!shouldTrigger) return;
+                var depthBefore = _actionStack.Count;
+
+                _buffering = true;
+                effect.OnCallEnd(mainAction);
+                _buffering = false;
+
+                FlushBuffer();
+
+                ProcessStack(depthBefore);
             });
-            
+
+            var countdownDepth = _actionStack.Count;
+            _buffering = true;
             _state.EffectCountdown();
-            ProcessStack();
+            _buffering = false;
+            FlushBuffer();
+            ProcessStack(countdownDepth);
         }
-        
+
         private static bool ShouldEndTurn(Action action)
         {
             switch (action)
@@ -208,7 +226,7 @@ namespace Game.Action
             ProcessStack();
 
             if (!ShouldEndTurn(action)) return false;
-            
+
             EndTurnProcess(action);
             StartTurnProcess(action);
             return true;
@@ -216,7 +234,19 @@ namespace Game.Action
 
         public static void EnqueueAction(Action queueAction)
         {
-            _actionStack.Push(new StackAction(queueAction));
+            if (_buffering)
+                _buffer.Add(new StackAction(queueAction));
+            else
+                _actionStack.Push(new StackAction(queueAction));
+        }
+
+        private static void FlushBuffer()
+        {
+            if (_buffer.Count == 0) return;
+
+            for (var i = _buffer.Count - 1; i >= 0; i--) _actionStack.Push(_buffer[i]);
+
+            _buffer.Clear();
         }
 
         public static void ExecuteImmediately(Action action)

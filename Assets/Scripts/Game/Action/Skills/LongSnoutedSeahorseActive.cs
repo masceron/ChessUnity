@@ -1,27 +1,23 @@
-﻿using System;
-using Game.AI;
+using System;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class LongSnoutedSeahorseActive : Action, ISkills, IAIAction
+    [MemoryPackable]
+    public partial class LongSnoutedSeahorseActive : Action, ISkills
     {
-        public LongSnoutedSeahorseActive(int maker, int target) : base(maker)
+        [MemoryPackConstructor]
+        private LongSnoutedSeahorseActive()
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
         }
 
-        protected override void Animate()
+        public LongSnoutedSeahorseActive(int maker, int target) : base(maker)
         {
-            PieceManager.Ins.Swap(Maker, Target);
-        }
-        protected override void ModifyGameState()
-        {
-            MatchManager.Ins.GameState.Swap(Maker, Target);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            Maker = maker;
+            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -29,9 +25,15 @@ namespace Game.Action.Skills
             throw new NotImplementedException();
         }
 
-        public void CompleteActionForAI()
+        protected override void Animate()
         {
-            throw new NotImplementedException();
+            PieceManager.Ins.Swap(Maker, Target);
+        }
+
+        protected override void ModifyGameState()
+        {
+            MatchManager.Ins.GameState.Swap(Maker, Target);
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }
 }

@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
 using System;
-using Third_Party.Autotiles3D.Scripts.Utility;
+using System.Collections.Generic;
+using Third_Party.Autotiles3D.Scripts.Core;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public static class Autotiles3D_EditorUtility
     {
-   
-        public static HashSet<Vector3Int> GetAllUnblockedContAdjacentNodesDepthFirst(Autotiles3D_TileLayer tileLayer, Vector3Int internalPosition, Vector3Int faceNormalLocal, HashSet<Vector3Int> results = null)
+        public static HashSet<Vector3Int> GetAllUnblockedContAdjacentNodesDepthFirst(Autotiles3D_TileLayer tileLayer,
+            Vector3Int internalPosition, Vector3Int faceNormalLocal, HashSet<Vector3Int> results = null)
         {
             if (results == null)
                 results = new HashSet<Vector3Int>();
@@ -45,7 +43,7 @@ namespace Autotiles3D
 
                 //gets rid of diagonal blocks
 
-                if (tileLayer.ContainsKey(n + faceNormalLocal))// || tileLayer.Nodes.ContainsKey(n - faceNormal))
+                if (tileLayer.ContainsKey(n + faceNormalLocal)) // || tileLayer.Nodes.ContainsKey(n - faceNormal))
                 {
                     neighbors.Remove(n);
                     continue;
@@ -57,16 +55,12 @@ namespace Autotiles3D
 
                     var depthFirst = GetAllUnblockedContAdjacentNodesDepthFirst(tileLayer, n, faceNormalLocal, results);
                     foreach (var node in depthFirst)
-                    {
                         if (!results.Contains(node))
                             results.Add(node);
-                    }
                 }
             }
 
             return results;
         }
-
-
     }
 }

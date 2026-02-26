@@ -1,17 +1,25 @@
-﻿using Game.Action.Relics;
+﻿using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    public class OvergrownSlugPending : PendingAction, System.IDisposable
+    public class OvergrownSlugPending : PendingAction, IDisposable
     {
-        private OvergrownSlug overgrownSlug;
-        public OvergrownSlugPending(OvergrownSlug ogs, int maker, bool pos = false) : base(maker)
+        private OvergrownSlug _overgrownSlug;
+
+        public OvergrownSlugPending(OvergrownSlug ogs, int maker) : base(maker)
         {
-            overgrownSlug = ogs;
-            Maker = (ushort)maker;
+            _overgrownSlug = ogs;
+            Maker = maker;
+        }
+
+        public void Dispose()
+        {
+            _overgrownSlug = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         // protected override void ModifyGameState()
@@ -47,22 +55,16 @@ namespace Game.Action.Internal.Pending.Relic
         //     Dispose();
         // }
 
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
-            BoardViewer.Ins.ExecuteAction(new OvergrownSlugAction(Maker));
+            CommitResult(new OvergrownSlugAction(Maker));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
-            
-            overgrownSlug.SetCooldown();
-            MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic(); 
-            Dispose();
-        }
 
-        public void Dispose()
-        {
-            overgrownSlug = null;
-            BoardViewer.SelectingFunction = 0;
+            _overgrownSlug.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
     }
 }

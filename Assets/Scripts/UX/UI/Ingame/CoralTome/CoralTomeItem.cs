@@ -8,8 +8,8 @@ namespace UX.UI.Ingame.CoralTome
     public class CoralTomeItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text pieceName;
+        [SerializeField] private UIObject3D pieceModel;
         private string pieceType;
-        [SerializeField] private UIObject3D pieceModel; 
 
         public void Load(string type)
         {

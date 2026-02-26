@@ -1,13 +1,27 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class AnomalocarisActive: Action, ISkills
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class AnomalocarisActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private AnomalocarisActive()
+        {
+        }
+
+        public AnomalocarisActive(int maker, int target) : base(maker)
+        {
+            Maker = maker;
+            Target = target;
+        }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             if (PieceOn(Maker) == null || pieceAI == null) return 0;
@@ -15,15 +29,8 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public AnomalocarisActive(int maker, int to) : base(maker)
-        {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
-        }
-
         protected override void Animate()
         {
-            
         }
 
         protected override void ModifyGameState()

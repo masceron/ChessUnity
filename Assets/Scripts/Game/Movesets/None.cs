@@ -2,7 +2,8 @@
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class None
     {
         public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
@@ -17,7 +18,6 @@ namespace Game.Movesets
 
         public static void Skills(List<Action.Action> list, bool isPlayer)
         {
-            return;
         }
     }
 }

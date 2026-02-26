@@ -11,9 +11,8 @@ namespace Game.Piece.PieceLogic
     {
         public Lizardfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new NativeGround(this, RegionalEffectType.Whirpool)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new NativeGround(this, RegionalEffectType.Whirlpool)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(this)));
         }
     }
 }
-

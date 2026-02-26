@@ -1,17 +1,20 @@
+using System;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {
-    public class KelpForestPassive : Effect, IEndTurnEffect 
+    public class KelpForestPassive : Effect, IEndTurnTrigger
     {
-
         public KelpForestPassive(PieceLogic piece) : base(-1, 1, piece, "effect_kelp_forest_passive")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 
@@ -20,20 +23,15 @@ namespace Game.Effects.Traits
             getRandomPos();
         }
 
-        private void getRandomPos() 
+        private void getRandomPos()
         {
-            
-            var pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
+            var pos = new Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
             while (!TileManager.Ins.IsTileEmpty(pos) && BoardUtils.GetFormation(pos) != null)
-            {
-                pos = new System.Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
-            }
+                pos = new Random().Next(1, MatchManager.Ins.StartingSize.x * MatchManager.Ins.StartingSize.y);
             var mappedPos = BoardUtils.PosMap(pos, MatchManager.Ins.StartingSize);
             var kelp = new Kelp(true, Piece.Color);
             kelp.SetDuration(6);
             BoardUtils.SetFormation(mappedPos, kelp);
-            
         }
-
     }
 }

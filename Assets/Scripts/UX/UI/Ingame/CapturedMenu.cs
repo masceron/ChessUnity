@@ -1,18 +1,19 @@
-﻿using static Game.Common.BoardUtils;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using Game.Piece;
 using UnityEngine;
+using static Game.Common.BoardUtils;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CapturedMenu: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class CapturedMenu : MonoBehaviour
     {
         [SerializeField] private RectTransform allyCaptured;
         [SerializeField] private RectTransform enemyCaptured;
         [SerializeField] private GameObject capturedUI;
-        
+
         private readonly List<GameObject> allyCapturedList = new();
         private readonly List<GameObject> enemyCapturedList = new();
 
@@ -25,8 +26,7 @@ namespace UX.UI.Ingame
         private void ReloadCaptureList(object o, NotifyCollectionChangedEventArgs e)
         {
             var color = OurSide();
-            var collection = o == WhiteCaptured() ? 
-                !color ? allyCapturedList : enemyCapturedList :
+            var collection = o == WhiteCaptured() ? !color ? allyCapturedList : enemyCapturedList :
                 color ? allyCapturedList : enemyCapturedList;
 
             var obj = collection == allyCapturedList ? allyCaptured : enemyCaptured;

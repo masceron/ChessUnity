@@ -1,25 +1,29 @@
-﻿using Game.Action.Internal;
+﻿using Game.Action;
+using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
-using Game.Action;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Others
 {
-
     /// <summary>
-    /// When this piece moves, destroy an enemy piece within a certain range.
+    ///     When this piece moves, destroy an enemy piece within a certain range.
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DestroyEnemyWhenMove : Effect, IAfterPieceActionEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class DestroyEnemyWhenMove : Effect, IAfterPieceActionTrigger
     {
         private readonly int radius;
+
         public DestroyEnemyWhenMove(PieceLogic piece, int radius) : base(-1, 1, piece, "effect_destroy_enemy_when_move")
         {
             this.radius = radius;
         }
 
-        public void OnCallAfterPieceAction(Game.Action.Action action)
+        public AfterActionPriority Priority => AfterActionPriority.Kill;
+
+        public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not NormalMove move || BoardUtils.PieceOn(move.Maker) != Piece) return;
             var targetPos = move.Target;
@@ -32,10 +36,7 @@ namespace Game.Effects.Others
                 p => p != null && p.Color != Piece.Color && p != Piece
             );
 
-            foreach (var target in enemyPieces)
-            {
-                ActionManager.EnqueueAction(new KillPiece(target.Pos));
-            }
+            foreach (var target in enemyPieces) ActionManager.EnqueueAction(new KillPiece(target.Pos));
         }
 
         public override int GetValueForAI()

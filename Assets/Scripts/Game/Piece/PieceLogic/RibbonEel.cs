@@ -19,23 +19,17 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
-                {
                     for (var i = 0; i < BoardUtils.BoardSize; ++i)
                     {
                         var p = BoardUtils.PieceOn(i);
                         if (p == null || p.Color == Color) continue;
                         list.Add(new DiurnalPending(Pos, p.Pos));
                     }
-                }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
-    
 }

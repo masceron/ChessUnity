@@ -2,13 +2,14 @@
 
 namespace Game.Action.Internal
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CarapaceKill: Action, IInternal
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class CarapaceKill : Action, IInternal
     {
         public CarapaceKill(int maker, int to) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Maker = maker;
+            Target = to;
         }
 
         protected override void Animate()

@@ -7,7 +7,7 @@ namespace Game.Common
         // --- Radius Methods ---
 
         /// <summary>
-        /// Gets a list of active cells containing Ally pieces within a specified radius around the maker.
+        ///     Gets a list of active cells containing Ally pieces within a specified radius around the maker.
         /// </summary>
         /// <param name="makerPos">The position index of the unit casting the skill.</param>
         /// <param name="radius">The radius range to search within.</param>
@@ -18,7 +18,7 @@ namespace Game.Common
         }
 
         /// <summary>
-        /// Gets a list of active cells containing Enemy pieces within a specified radius around the maker.
+        ///     Gets a list of active cells containing Enemy pieces within a specified radius around the maker.
         /// </summary>
         /// <param name="makerPos">The position index of the unit casting the skill.</param>
         /// <param name="radius">The radius range to search within.</param>
@@ -29,7 +29,7 @@ namespace Game.Common
         }
 
         /// <summary>
-        /// Gets a list of all active cells (occupied or empty) within a specified radius around the maker.
+        ///     Gets a list of all active cells (occupied or empty) within a specified radius around the maker.
         /// </summary>
         /// <param name="makerPos">The position index of the unit casting the skill.</param>
         /// <param name="radius">The radius range to search within.</param>
@@ -220,7 +220,7 @@ namespace Game.Common
         // --- Global Methods ---
 
         /// <summary>
-        /// Gets a list of all active cells on the entire board.
+        ///     Gets a list of all active cells on the entire board.
         /// </summary>
         /// <returns>A list of all active board indices.</returns>
         public static List<int> GetActiveCellGlobal()
@@ -229,7 +229,7 @@ namespace Game.Common
         }
 
         /// <summary>
-        /// Gets a list of all active cells containing Ally pieces on the entire board.
+        ///     Gets a list of all active cells containing Ally pieces on the entire board.
         /// </summary>
         /// <param name="makerPos">The position index of the unit casting the skill (used to determine side).</param>
         /// <returns>A list of board indices matching the criteria.</returns>
@@ -239,7 +239,7 @@ namespace Game.Common
         }
 
         /// <summary>
-        /// Gets a list of all active cells containing Enemy pieces on the entire board.
+        ///     Gets a list of all active cells containing Enemy pieces on the entire board.
         /// </summary>
         /// <param name="makerPos">The position index of the unit casting the skill (used to determine side).</param>
         /// <returns>A list of board indices matching the criteria.</returns>
@@ -247,13 +247,6 @@ namespace Game.Common
         {
             return GetTargetsGlobal(TargetType.Enemy, makerPos);
         }
-
-        // --- Helpers ---
-
-        private enum TargetType { Any, Ally, Enemy }
-        private enum Direction { Up, Down, Left, Right, UpLeft, UpRight, DownLeft, DownRight }
-
-        private delegate IEnumerable<(int, int)> DirectionEnumerator(int rank, int file, int range);
 
         private static List<int> GetTargetsInRadius(int makerPos, int radius, TargetType type)
         {
@@ -272,11 +265,9 @@ namespace Game.Common
             foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, radius))
             {
                 var index = BoardUtils.IndexOf(r, f);
-                if (CheckCondition(index, type, makerColor))
-                {
-                    results.Add(index);
-                }
+                if (CheckCondition(index, type, makerColor)) results.Add(index);
             }
+
             return results;
         }
 
@@ -302,10 +293,7 @@ namespace Game.Common
             foreach (var (r, f) in dirEnum(startRank, startFile, range))
             {
                 var index = BoardUtils.IndexOf(r, f);
-                if (CheckCondition(index, type, makerColor))
-                {
-                    results.Add(index);
-                }
+                if (CheckCondition(index, type, makerColor)) results.Add(index);
             }
 
             return results;
@@ -319,10 +307,7 @@ namespace Game.Common
 
             var makerPiece = BoardUtils.PieceOn(makerPos);
 
-            if (makerPiece == null)
-            {
-                return results;
-            }
+            if (makerPiece == null) return results;
 
             var finalDir = DetermineDirection(dir, makerPiece.Color);
             var (dRank, dFile) = GetDirectionOffsets(finalDir);
@@ -343,12 +328,9 @@ namespace Game.Common
             }
 
             for (var i = 0; i < BoardUtils.BoardSize; i++)
-            {
                 if (CheckCondition(i, type, makerColor))
-                {
                     results.Add(i);
-                }
-            }
+
             return results;
         }
 
@@ -379,10 +361,7 @@ namespace Game.Common
             if (!BoardUtils.VerifyBounds(tr) || !BoardUtils.VerifyBounds(tf)) return results;
 
             var index = BoardUtils.IndexOf(tr, tf);
-            if (BoardUtils.IsActive(index))
-            {
-                results.Add(index);
-            }
+            if (BoardUtils.IsActive(index)) results.Add(index);
 
             return results;
         }
@@ -445,5 +424,28 @@ namespace Game.Common
                 default: return (0, 0);
             }
         }
+
+        // --- Helpers ---
+
+        private enum TargetType
+        {
+            Any,
+            Ally,
+            Enemy
+        }
+
+        private enum Direction
+        {
+            Up,
+            Down,
+            Left,
+            Right,
+            UpLeft,
+            UpRight,
+            DownLeft,
+            DownRight
+        }
+
+        private delegate IEnumerable<(int, int)> DirectionEnumerator(int rank, int file, int range);
     }
 }

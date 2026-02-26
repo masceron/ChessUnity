@@ -6,10 +6,12 @@ using UX.UI.Loader;
 
 namespace UX.UI.Menus
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class StartGame : Singleton<StartGame>
     {
         [SerializeField] private RectTransform contents;
+
         private void OnEnable()
         {
             for (var i = 0; i < contents.childCount; i++)
@@ -20,7 +22,7 @@ namespace UX.UI.Menus
                 {
                     eulerAngles = new Vector3(0, 90, 0)
                 };
-                
+
                 Tween.Rotation(content.transform, Vector3.zero, 0.25f);
             }
         }
@@ -54,33 +56,32 @@ namespace UX.UI.Menus
         {
             UIManager.Ins.Load(CanvasID.Vault);
         }
-        
+
         public void OnClickCampaign()
         {
             SceneLoader.LoadSceneWithLoadingScreen(1);
         }
+
         public void OnClickFreePlayTest()
         {
             SceneLoader.LoadSceneWithLoadingScreen(2);
         }
+
         public void OnClickMultiplayer()
         {
-            
         }
-        
-        public void OnClickFollowers() 
+
+        public void OnClickFollowers()
         {
             UIManager.Ins.Load(CanvasID.Followers);
         }
-        
+
         public void OnClickTrial()
         {
-            
         }
 
         public void OnClickSanctuary()
         {
-            
         }
 
         public void OnClickBack(InputAction.CallbackContext context)
@@ -93,6 +94,5 @@ namespace UX.UI.Menus
         {
             UIManager.Ins.LoadPreviousCanvas();
         }
-        
     }
 }

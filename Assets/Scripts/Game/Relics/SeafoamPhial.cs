@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
-using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
+using UnityEngine;
 using UX.UI.Ingame;
 using ZLinq;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeafoamPhial : RelicLogic
     {
         public SeafoamPhial(RelicConfig cfg) : base(cfg)
@@ -27,9 +29,10 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeafoamPhialPending(this, piece.Pos, piece.Color);
+                    var pending = new SeafoamPhialPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
+
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
             }
@@ -43,7 +46,6 @@ namespace Game.Relics
 
             // Find allied pieces with the most debuffs
             foreach (var piece in allPieces)
-            {
                 if (piece != null && piece.Color == Color)
                 {
                     var debuffCount = BoardUtils.EffectWithEffectCategory(piece, EffectCategory.Debuff).Count;
@@ -58,41 +60,45 @@ namespace Game.Relics
                         bestPieces.Add(piece);
                     }
                 }
-            }
 
             PieceLogic targetPiece = null;
 
-            // If none found, default to caster (can be changed later)
-            if (bestPieces.Count == 0)
+            switch (bestPieces.Count)
             {
-                // targetPiece = PieceOn(Maker);
-            }
-            else if (bestPieces.Count == 1)
-            {
-                targetPiece = bestPieces[0];
-            }
-            else
-            {
-                // From bestPieces choose the one with lowest AI value; if tie pick random
-                var minScore = bestPieces.Min(p => p.GetValueForAI());
-                var lowestScorePieces = bestPieces.Where(p => p.GetValueForAI() == minScore).ToList();
-
-                if (lowestScorePieces.Count > 0)
+                // If none found, default to caster (can be changed later)
+                case 0:
+                    // targetPiece = PieceOn(Maker);
+                    break;
+                case 1:
+                    targetPiece = bestPieces[0];
+                    break;
+                default:
                 {
-                    var randomIndex = UnityEngine.Random.Range(0, lowestScorePieces.Count);
-                    targetPiece = lowestScorePieces[randomIndex];
+                    // From bestPieces choose the one with lowest AI value; if tie pick random
+                    var minScore = bestPieces.Min(p => p.GetValueForAI());
+                    var lowestScorePieces = bestPieces.Where(p => p.GetValueForAI() == minScore).ToList();
+
+                    if (lowestScorePieces.Count > 0)
+                    {
+                        var randomIndex = Random.Range(0, lowestScorePieces.Count);
+                        targetPiece = lowestScorePieces[randomIndex];
+                    }
+
+                    break;
                 }
             }
 
-            if (targetPiece != null)
+            if (targetPiece == null) return;
             {
-                var pending = new SeafoamPhialPending(this, targetPiece.Pos, targetPiece.Color);
-                if (pending is PendingAction p)
-                {
-                    p.CompleteAction();
-                }
-            }
+                var excute = new SeafoamPhialAction(targetPiece.Pos);
+                BoardViewer.Ins.ExecuteAction(excute);
 
+                // var pending = new SeafoamPhialPending(this, targetPiece.Pos);
+                // if (pending is PendingAction p)
+                // {
+                //     BoardViewer.Ins.ExecuteAction(await p.WaitForCompletion());
+                // }
+            }
         }
     }
 }

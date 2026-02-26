@@ -11,7 +11,8 @@ using SnappingStrike = Game.Effects.Traits.SnappingStrike;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Anomalocaris : Commons.PieceLogic, IPieceWithSkill
     {
         public Anomalocaris(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
@@ -27,16 +28,14 @@ namespace Game.Piece.PieceLogic
                     var (rank, file) = RankFileOf(Pos);
 
                     foreach (var (rankOff, fileOff) in MoveEnumerators.Around(rank, file, 5))
-                    {
                         MakeSkill(list, IndexOf(rankOff, fileOff));
-                    }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
 
         private void MakeSkill(List<Action.Action> list, int index)
         {
@@ -44,8 +43,5 @@ namespace Game.Piece.PieceLogic
             if (piece == null || piece.Color == Color) return;
             list.Add(new AnomalocarisActive(Pos, index));
         }
-
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
-        public SkillsDelegate Skills { get; set; }
     }
 }

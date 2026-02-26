@@ -1,13 +1,20 @@
-﻿using Game.Managers;
+using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Relics
 {
-    public class SeabedLevelerExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class SeabedLevelerExecute : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private SeabedLevelerExecute()
+        {
+        }
+
         public SeabedLevelerExecute(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
         }
 
         protected override void ModifyGameState()

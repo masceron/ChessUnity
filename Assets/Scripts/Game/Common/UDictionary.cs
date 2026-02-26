@@ -6,23 +6,25 @@ using UnityEngine;
 namespace Game.Common
 {
 #if UNITY_EDITOR
-using UnityEditor;
-using UnityEditorInternal;
+    using UnityEditor;
+    using UnityEditorInternal;
 #endif
-    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false), Serializable]
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Serializable]
     public class UDictionary
     {
         public class SplitAttribute : PropertyAttribute
         {
-            public float Key { get; protected set; }
-            public float Value { get; protected set; }
-
             public SplitAttribute(float key, float value)
             {
                 Key = key;
                 Value = value;
             }
+
+            public float Key { get; protected set; }
+            public float Value { get; protected set; }
         }
 
 #if UNITY_EDITOR
@@ -30,7 +32,22 @@ using UnityEditorInternal;
         [CustomPropertyDrawer(typeof(UDictionary), true)]
         public class Drawer : PropertyDrawer
         {
+            private const float ElementHeightPadding = 6f;
+            private const float ElementSpacing = 10f;
+            public const float ElementFoldoutPadding = 20f;
+
+            private const float TopPadding = 5f;
+            private const float BottomPadding = 5f;
+
+            private SerializedProperty keys;
+
+            private GUIContent label;
+
+            private ReorderableList list;
             private SerializedProperty property;
+
+            private SplitAttribute split;
+            private SerializedProperty values;
 
             private bool IsExpanded
             {
@@ -38,28 +55,12 @@ using UnityEditorInternal;
                 set => property.isExpanded = value;
             }
 
-            private SerializedProperty keys;
-            private SerializedProperty values;
-
             private bool IsAligned => keys.arraySize == values.arraySize;
-
-            private ReorderableList list;
-
-            private GUIContent label;
-
-            private SplitAttribute split;
 
             private float KeySplit => split?.Key ?? 30f;
             private float ValueSplit => split?.Value ?? 70f;
 
             private static float SingleLineHeight => EditorGUIUtility.singleLineHeight;
-
-            private const float ElementHeightPadding = 6f;
-            private const float ElementSpacing = 10f;
-            public const float ElementFoldoutPadding = 20f;
-
-            private const float TopPadding = 5f;
-            private const float BottomPadding = 5f;
 
             private void Init(SerializedProperty value)
             {
@@ -73,13 +74,13 @@ using UnityEditorInternal;
                 split = attribute as SplitAttribute;
 
                 list = new ReorderableList(property.serializedObject, keys, true, true, true, true)
-                    {
-                        drawHeaderCallback = DrawHeader,
-                        onAddCallback = Add,
-                        onRemoveCallback = Remove,
-                        elementHeightCallback = GetElementHeight,
-                        drawElementCallback = DrawElement
-                    };
+                {
+                    drawHeaderCallback = DrawHeader,
+                    onAddCallback = Add,
+                    onRemoveCallback = Remove,
+                    elementHeightCallback = GetElementHeight,
+                    drawElementCallback = DrawElement
+                };
 
                 list.onReorderCallbackWithDetails += Reorder;
             }
@@ -162,26 +163,6 @@ using UnityEditorInternal;
                 }
             }
 
-            #region Draw Header
-
-            private void DrawHeader(Rect rect)
-            {
-                rect.x += 10f;
-
-                IsExpanded = EditorGUI.Foldout(rect, IsExpanded, label, true);
-            }
-
-            private void DrawCompleteHeader(ref Rect rect)
-            {
-                ReorderableList.defaultBehaviours.DrawHeaderBackground(rect);
-
-                rect.x += 6;
-                rect.y += 0;
-
-                DrawHeader(rect);
-            }
-            #endregion
-
             private float GetElementHeight(int index)
             {
                 var key = keys.GetArrayElementAtIndex(index);
@@ -196,62 +177,6 @@ using UnityEditorInternal;
 
                 return max + ElementHeightPadding;
             }
-
-            #region Draw Element
-
-            private void DrawElement(Rect rect, int index, bool isActive, bool isFocused)
-            {
-                rect.height -= ElementHeightPadding;
-                rect.y += ElementHeightPadding / 2;
-
-                var areas = Split(rect, KeySplit, ValueSplit);
-
-                DrawKey(areas[0], index);
-                DrawValue(areas[1], index);
-            }
-
-            private void DrawKey(Rect rect, int index)
-            {
-                var property = keys.GetArrayElementAtIndex(index);
-
-                rect.x += ElementSpacing / 2f;
-                rect.width -= ElementSpacing;
-
-                DrawField(rect, property);
-            }
-
-            private void DrawValue(Rect rect, int index)
-            {
-                var property = values.GetArrayElementAtIndex(index);
-
-                rect.x += ElementSpacing / 2f;
-                rect.width -= ElementSpacing;
-
-                DrawField(rect, property);
-            }
-
-            private static void DrawField(Rect rect, SerializedProperty property)
-            {
-                rect.height = SingleLineHeight;
-
-                if (IsInline(property))
-                {
-                    EditorGUI.PropertyField(rect, property, GUIContent.none);
-                }
-                else
-                {
-                    rect.x += ElementSpacing / 2f;
-                    rect.width -= ElementSpacing;
-
-                    foreach (var child in IterateChildren(property))
-                    {
-                        EditorGUI.PropertyField(rect, child, false);
-
-                        rect.y += SingleLineHeight + +2f;
-                    }
-                }
-            }
-            #endregion
 
             private void Reorder(ReorderableList list, int oldIndex, int newIndex)
             {
@@ -320,8 +245,88 @@ using UnityEditorInternal;
 
             private static float GetChildrenSingleHeight(SerializedProperty property)
             {
-                return IsInline(property) ? SingleLineHeight : IterateChildren(property).Sum(_ => SingleLineHeight + 2f);
+                return IsInline(property)
+                    ? SingleLineHeight
+                    : IterateChildren(property).Sum(_ => SingleLineHeight + 2f);
             }
+
+            #region Draw Header
+
+            private void DrawHeader(Rect rect)
+            {
+                rect.x += 10f;
+
+                IsExpanded = EditorGUI.Foldout(rect, IsExpanded, label, true);
+            }
+
+            private void DrawCompleteHeader(ref Rect rect)
+            {
+                ReorderableList.defaultBehaviours.DrawHeaderBackground(rect);
+
+                rect.x += 6;
+                rect.y += 0;
+
+                DrawHeader(rect);
+            }
+
+            #endregion
+
+            #region Draw Element
+
+            private void DrawElement(Rect rect, int index, bool isActive, bool isFocused)
+            {
+                rect.height -= ElementHeightPadding;
+                rect.y += ElementHeightPadding / 2;
+
+                var areas = Split(rect, KeySplit, ValueSplit);
+
+                DrawKey(areas[0], index);
+                DrawValue(areas[1], index);
+            }
+
+            private void DrawKey(Rect rect, int index)
+            {
+                var property = keys.GetArrayElementAtIndex(index);
+
+                rect.x += ElementSpacing / 2f;
+                rect.width -= ElementSpacing;
+
+                DrawField(rect, property);
+            }
+
+            private void DrawValue(Rect rect, int index)
+            {
+                var property = values.GetArrayElementAtIndex(index);
+
+                rect.x += ElementSpacing / 2f;
+                rect.width -= ElementSpacing;
+
+                DrawField(rect, property);
+            }
+
+            private static void DrawField(Rect rect, SerializedProperty property)
+            {
+                rect.height = SingleLineHeight;
+
+                if (IsInline(property))
+                {
+                    EditorGUI.PropertyField(rect, property, GUIContent.none);
+                }
+                else
+                {
+                    rect.x += ElementSpacing / 2f;
+                    rect.width -= ElementSpacing;
+
+                    foreach (var child in IterateChildren(property))
+                    {
+                        EditorGUI.PropertyField(rect, child, false);
+
+                        rect.y += SingleLineHeight + +2f;
+                    }
+                }
+            }
+
+            #endregion
         }
 #endif
     }
@@ -330,18 +335,12 @@ using UnityEditorInternal;
     public class UDictionary<TKey, TValue> : UDictionary, IDictionary<TKey, TValue>
     {
         [SerializeField] private List<TKey> keys = new();
-        public List<TKey> Keys => keys;
-        ICollection<TKey> IDictionary<TKey, TValue>.Keys => keys;
 
         [SerializeField] private List<TValue> values = new();
-        public List<TValue> Values => values;
-        ICollection<TValue> IDictionary<TKey, TValue>.Values => values;
-
-        public int Count => keys.Count;
-
-        public bool IsReadOnly => false;
 
         private Dictionary<TKey, TValue> cache;
+        public List<TKey> Keys => keys;
+        public List<TValue> Values => values;
 
         public bool Cached => cache != null;
 
@@ -366,6 +365,13 @@ using UnityEditorInternal;
             }
         }
 
+        ICollection<TKey> IDictionary<TKey, TValue>.Keys => keys;
+        ICollection<TValue> IDictionary<TKey, TValue>.Values => values;
+
+        public int Count => keys.Count;
+
+        public bool IsReadOnly => false;
+
         public TValue this[TKey key]
         {
             get => Dictionary[key];
@@ -385,10 +391,20 @@ using UnityEditorInternal;
             }
         }
 
-        public bool TryGetValue(TKey key, out TValue value) => Dictionary.TryGetValue(key, out value);
+        public bool TryGetValue(TKey key, out TValue value)
+        {
+            return Dictionary.TryGetValue(key, out value);
+        }
 
-        public bool ContainsKey(TKey key) => Dictionary.ContainsKey(key);
-        public bool Contains(KeyValuePair<TKey, TValue> item) => ContainsKey(item.Key);
+        public bool ContainsKey(TKey key)
+        {
+            return Dictionary.ContainsKey(key);
+        }
+
+        public bool Contains(KeyValuePair<TKey, TValue> item)
+        {
+            return ContainsKey(item.Key);
+        }
 
         public void Add(TKey key, TValue value)
         {
@@ -397,7 +413,11 @@ using UnityEditorInternal;
 
             if (Cached) Dictionary.Add(key, value);
         }
-        public void Add(KeyValuePair<TKey, TValue> item) => Add(item.Key, item.Value);
+
+        public void Add(KeyValuePair<TKey, TValue> item)
+        {
+            Add(item.Key, item.Value);
+        }
 
         public bool Remove(TKey key)
         {
@@ -412,7 +432,11 @@ using UnityEditorInternal;
 
             return true;
         }
-        public bool Remove(KeyValuePair<TKey, TValue> item) => Remove(item.Key);
+
+        public bool Remove(KeyValuePair<TKey, TValue> item)
+        {
+            return Remove(item.Key);
+        }
 
         public void Clear()
         {
@@ -422,9 +446,19 @@ using UnityEditorInternal;
             if (Cached) Dictionary.Clear();
         }
 
-        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex) => (Dictionary as IDictionary).CopyTo(array, arrayIndex);
+        public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+        {
+            (Dictionary as IDictionary).CopyTo(array, arrayIndex);
+        }
 
-        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => Dictionary.GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => Dictionary.GetEnumerator();
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            return Dictionary.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Dictionary.GetEnumerator();
+        }
     }
 }

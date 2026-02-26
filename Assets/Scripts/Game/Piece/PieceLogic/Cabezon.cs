@@ -13,6 +13,5 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new CabezonPassive(this)));
         }
-        
     }
 }

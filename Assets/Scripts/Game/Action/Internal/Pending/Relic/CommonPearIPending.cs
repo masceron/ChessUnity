@@ -1,39 +1,41 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CommonPearlPending : PendingAction, System.IDisposable, IRelicAction, IInternal
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class CommonPearlPending : PendingAction, IDisposable, IRelicAction
     {
-        private CommonPearl commonPearl;
-        
-        public CommonPearlPending(CommonPearl cp, int maker, bool pos = false) : base(maker)
+        private CommonPearl _commonPearl;
+
+        public CommonPearlPending(CommonPearl cp, int maker) : base(maker)
         {
-            commonPearl = cp;
-            Target = (ushort)maker;
-            Maker = (ushort)maker;
+            _commonPearl = cp;
+            Target = maker;
+            Maker = maker;
         }
 
-        public override void CompleteAction()
+        public void Dispose()
         {
-            commonPearl.SetCooldown();
-            var excute = new CommonPearlExecute(Target);
-            BoardViewer.Ins.ExecuteAction(excute);
+            _commonPearl = null;
+            BoardViewer.SelectingFunction = 0;
+        }
+
+        protected override void CompleteAction()
+        {
+            _commonPearl.SetCooldown();
+            var execute = new CommonPearlExecute(Target);
+            CommitResult(execute);
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-        }
-
-        public void Dispose()
-        {
-            commonPearl = null;
-            BoardViewer.SelectingFunction = 0;
         }
 
         // protected override void ModifyGameState()
@@ -47,7 +49,6 @@ namespace Game.Action.Internal.Pending.Relic
         //     MatchManager.Ins.InputProcessor.UpdateRelic();
         //     Dispose();
         // }
-
 
 
         // public void CompleteActionForAI()

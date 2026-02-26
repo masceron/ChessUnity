@@ -1,20 +1,27 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
-
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackPearlPending : PendingAction, System.IDisposable, IRelicAction
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class BlackPearlPending : PendingAction, IDisposable, IRelicAction
     {
-        private BlackPearl blackPearl;
-        
-        public BlackPearlPending(BlackPearl cp, int maker, bool pos = false) : base(maker)
+        private BlackPearl _blackPearl;
+
+        public BlackPearlPending(BlackPearl cp, int maker) : base(maker)
         {
-            blackPearl = cp;
-            Target = (ushort)maker;
+            _blackPearl = cp;
+            Target = maker;
+        }
+
+        public void Dispose()
+        {
+            _blackPearl = null;
+            BoardViewer.SelectingFunction = 0;
         }
 
         // private Effect GetRandomBuffEffect()
@@ -23,7 +30,7 @@ namespace Game.Action.Internal.Pending.Relic
         //         .Where(kvp => kvp.Value.category == EffectCategory.Buff)
         //         .Select(kvp => kvp.Key)
         //         .ToArray();
-            
+
         //     var random = new System.Random();
         //     var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
         //     Debug.Log("Selected Effect Name: " + selectedEffectName);
@@ -36,7 +43,7 @@ namespace Game.Action.Internal.Pending.Relic
         //         .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
         //         .Select(kvp => kvp.Key)
         //         .ToArray();
-            
+
         //     var random = new System.Random();
         //     var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
         //     return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
@@ -44,7 +51,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         // private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         // {
-        //     var randomDuration = (sbyte)new System.Random().Next(6, 8);
+        //     var randomDuration = (int)new System.Random().Next(6, 8);
         //     return effectName switch
         //     {
         //         "effect_shield" => new Effects.Buffs.Shield(piece),
@@ -67,28 +74,20 @@ namespace Game.Action.Internal.Pending.Relic
         //         _ => null
         //     };
         // }
-        public override void CompleteAction()
+        protected override void CompleteAction()
         {
             // ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == blackPearl.Color
             //     ? new ApplyEffect(GetRandomBuffEffect())
             //     : new ApplyEffect(GetRandomDebuffEffect()));
 
-            BoardViewer.Ins.ExecuteAction(new BlackPearlExecute(Target, blackPearl.Color));
+            CommitResult(new BlackPearlExecute(Target, _blackPearl.Color));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
-            blackPearl.SetCooldown();
+            _blackPearl.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
             Dispose();
-
         }
-
-        public void Dispose()
-        {
-            blackPearl = null;
-            BoardViewer.SelectingFunction = 0;
-        }
-
     }
 }

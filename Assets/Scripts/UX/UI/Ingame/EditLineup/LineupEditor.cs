@@ -4,15 +4,15 @@ using UX.UI.Army.DesignArmy;
 
 namespace UX.UI.Ingame.EditLineup
 {
-    public class LineupEditor: MonoBehaviour
+    public class LineupEditor : MonoBehaviour
     {
         [SerializeField] private LineupInfo info;
         [SerializeField] private ArmyDesignBoard board;
         [SerializeField] private ArmySearcher searcher;
         [SerializeField] private ArmyRelicSearcher relicSearcher;
-        private int size;
         private Game.Save.Army.Army army;
-        
+        private int size;
+
         public void Load(int s)
         {
             size = s;

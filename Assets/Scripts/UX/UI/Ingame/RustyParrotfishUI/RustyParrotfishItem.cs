@@ -3,12 +3,13 @@ using UnityEngine;
 
 namespace UX.UI.Ingame.RustyParrotfishUI
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RustyParrotfishItem : MonoBehaviour
     {
         [SerializeField] private TMP_Text formationName;
         [SerializeField] private Sprite formationImage;
-        private string formationType;
+        private string _formationType;
 
         public void Load(string type)
         {

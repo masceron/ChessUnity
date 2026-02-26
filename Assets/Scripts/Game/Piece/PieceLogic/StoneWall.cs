@@ -4,7 +4,6 @@ namespace Game.Piece.PieceLogic
     {
         public StoneWall(PieceConfig cfg) : base(cfg)
         {
-
         }
     }
 }

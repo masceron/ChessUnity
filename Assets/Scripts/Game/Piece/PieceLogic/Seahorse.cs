@@ -5,8 +5,9 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Seahorse: Commons.PieceLogic
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Seahorse : Commons.PieceLogic
     {
         public Seahorse(PieceConfig cfg) : base(cfg, KnightSurpass.Quiets, KnightSurpass.Captures)
         {

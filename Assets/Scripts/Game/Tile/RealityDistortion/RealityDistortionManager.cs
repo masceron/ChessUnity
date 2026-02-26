@@ -4,105 +4,82 @@ using Game.Action.Quiets;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
+using ZLinq;
 
 namespace Game.Tile.RealityDistortion
 {
     public class RealityDistortionManager : Singleton<RealityDistortionManager>
     {
-        private int lastProcessedTurn = -1;
-        
-        public void OnTurnStart(bool color)
+        private int _lastProcessedTurn = -1;
+
+        public void OnTurnStart()
         {
             var gameState = MatchManager.Ins.GameState;
             var currentTurn = gameState.CurrentTurn;
-            
-            if (lastProcessedTurn == currentTurn) return;
-            lastProcessedTurn = currentTurn;
-            
+
+            if (_lastProcessedTurn == currentTurn) return;
+            _lastProcessedTurn = currentTurn;
+
             var allDistortions = new List<RealityDistortion>();
-            for (var pos = 0; pos < gameState.formations.Length; pos++)
-            {
-                var formation = gameState.formations[pos];
-                if (formation != null && formation is RealityDistortion distortion)
-                {
+            foreach (var formation in gameState.formations)
+                if (formation is RealityDistortion distortion)
                     allDistortions.Add(distortion);
-                }
-            }
-            
+
             if (allDistortions.Count < 2) return;
-            
+
             var piecesOnDistortions = new List<(PieceLogic piece, int currentPos)>();
             var distortionPositions = new List<int>();
-            
+
             foreach (var distortion in allDistortions)
             {
                 distortionPositions.Add(distortion.Pos);
                 var piece = gameState.PieceBoard[distortion.Pos];
-                if (piece != null)
-                {
-                    piecesOnDistortions.Add((piece, distortion.Pos));
-                }
+                if (piece != null) piecesOnDistortions.Add((piece, distortion.Pos));
             }
-            
+
             if (piecesOnDistortions.Count < 2) return;
-            
+
             var availablePositions = new List<int>(distortionPositions);
-            
+
             for (var i = availablePositions.Count - 1; i > 0; i--)
             {
-                var j = UnityEngine.Random.Range(0, i + 1);
-                var temp = availablePositions[i];
-                availablePositions[i] = availablePositions[j];
-                availablePositions[j] = temp;
+                var j = Random.Range(0, i + 1);
+                (availablePositions[i], availablePositions[j]) = (availablePositions[j], availablePositions[i]);
             }
-            
+
             // Gán mỗi quân đến một vị trí ngẫu nhiên
             // 2 quân k cùng đến 1 vị trí
             var usedPositions = new HashSet<int>();
-            
-            for (var i = 0; i < piecesOnDistortions.Count; i++)
+
+            foreach (var (_, currentPos) in piecesOnDistortions)
             {
-                var (piece, currentPos) = piecesOnDistortions[i];
-                
                 var targetPos = -1;
-                
-                foreach (var pos in availablePositions)
+
+                foreach (var pos in availablePositions.Where(pos => !usedPositions.Contains(pos) && pos != currentPos))
                 {
-                    if (!usedPositions.Contains(pos) && pos != currentPos)
-                    {
-                        targetPos = pos;
-                        break;
-                    }
+                    targetPos = pos;
+                    break;
                 }
-                
+
                 if (targetPos == -1)
-                {
                     foreach (var pos in availablePositions)
-                    {
                         if (!usedPositions.Contains(pos))
                         {
                             targetPos = pos;
                             break;
                         }
-                    }
-                }
-                
+
                 if (targetPos == -1) continue;
-                
+
                 usedPositions.Add(targetPos);
-                
-                if (targetPos != currentPos)
-                {
-                    var pieceAtTarget = gameState.PieceBoard[targetPos];
-                    if (pieceAtTarget == null)
-                    {
-                        ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
-                    }
-                    else
-                    {
-                        ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
-                    }
-                }
+
+                if (targetPos == currentPos) continue;
+                var pieceAtTarget = gameState.PieceBoard[targetPos];
+                if (pieceAtTarget == null)
+                    ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
+                else
+                    ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
             }
         }
     }

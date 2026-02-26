@@ -1,15 +1,16 @@
 using Game.Action;
 using Game.Common;
 using Game.Managers;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-using TMPro;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class GameActions: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class GameActions : MonoBehaviour
     {
         [SerializeField] private CanvasGroup gameAction;
         [SerializeField] private Button relic;
@@ -20,6 +21,7 @@ namespace UX.UI.Ingame
         {
             relic.onClick.AddListener(PressRelic);
         }
+
         private void OnDisable()
         {
             relic.onClick.RemoveListener(PressRelic);
@@ -40,12 +42,13 @@ namespace UX.UI.Ingame
         public void UpdateRelic()
         {
             var relicLogic = BoardUtils.GetRelicOf(MatchManager.Ins.GameState.OurSide);
-            if (relicLogic == null) 
+            if (relicLogic == null)
             {
                 relicCooldownText.gameObject.SetActive(false);
                 relic.interactable = false;
                 return;
             }
+
             relicCooldownText.gameObject.SetActive(relicLogic.CurrentCooldown != 0);
             relic.interactable = relicLogic.CurrentCooldown == 0;
             relicCooldownText.text = relicLogic.CurrentCooldown.ToString();
@@ -55,7 +58,7 @@ namespace UX.UI.Ingame
         {
             BoardViewer.Ins.ExecuteAction(new SkipTurn());
         }
-        
+
         public void PressEndTurn(InputAction.CallbackContext context)
         {
             if (!context.performed || !skip.interactable) return;

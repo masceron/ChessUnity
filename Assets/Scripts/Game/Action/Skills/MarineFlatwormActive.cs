@@ -1,14 +1,28 @@
 using Game.Action.Internal;
 using Game.Effects.Traits;
 using Game.Piece;
-using static Game.Common.BoardUtils;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MarineFlatwormActive : Action, ISkills
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class MarineFlatwormActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private MarineFlatwormActive()
+        {
+        }
+
+        public MarineFlatwormActive(int maker, int target) : base(maker)
+        {
+            Maker = maker;
+            Target = target;
+        }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
@@ -17,17 +31,11 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        public MarineFlatwormActive(int maker, int target) : base(maker)
-        {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
-        }
         protected override void ModifyGameState()
         {
-            var config = new PieceConfig(PieceOn(Maker).Type, PieceOn(Maker).Color, (ushort)Target);
+            var config = new PieceConfig(PieceOn(Maker).Type, PieceOn(Maker).Color, Target);
             ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(PieceOn(Target))));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-
     }
 }

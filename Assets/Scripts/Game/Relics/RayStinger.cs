@@ -6,7 +6,8 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class RayStinger : RelicLogic
     {
         public RayStinger(RelicConfig cfg) : base(cfg)
@@ -25,6 +26,7 @@ namespace Game.Relics
                     var pending = new RayStingerPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
+
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
             }
@@ -32,7 +34,6 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            
         }
     }
 }

@@ -4,7 +4,7 @@ using UX.UI.Army.DesignArmy;
 
 namespace UX.UI.Army.NewArmy
 {
-    public class NewArmy: MonoBehaviour
+    public class NewArmy : MonoBehaviour
     {
         public void Create(int size)
         {

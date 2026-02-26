@@ -5,16 +5,16 @@ using UnityEngine.EventSystems;
 
 namespace UX.UI.Followers
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TroopLogo: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class TroopLogo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] public UIObject3D model;
         private PieceInfo obj;
 
-        public void Load(PieceInfo piece)
+        public void OnPointerClick(PointerEventData eventData)
         {
-            obj = piece;
-            model.ObjectPrefab = piece.prefab.transform;
+            if (eventData.button == PointerEventData.InputButton.Left) TroopList.Ins.Select(obj.key);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -27,12 +27,10 @@ namespace UX.UI.Followers
             TroopList.Ins.Undisplay();
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void Load(PieceInfo piece)
         {
-            if (eventData.button == PointerEventData.InputButton.Left)
-            {
-                TroopList.Ins.Select(obj.key);
-            }
+            obj = piece;
+            model.ObjectPrefab = piece.prefab.transform;
         }
     }
 }

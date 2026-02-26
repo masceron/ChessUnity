@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -8,7 +9,8 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EyeOfMimic : RelicLogic
     {
         public EyeOfMimic(RelicConfig config) : base(config)
@@ -18,17 +20,17 @@ namespace Game.Relics
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
             CurrentCooldown = 0;
         }
+
         public override void Activate()
         {
             if (CurrentCooldown == 0)
             {
-                
                 foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
                 {
                     if (piece == null) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new EyeOfMimicPending(this, piece.Pos, piece.Color);
+                    var pending = new EyeOfMimicPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -48,10 +50,10 @@ namespace Game.Relics
 
             PieceLogic ourPiece = null;
             PieceLogic enemyPiece = null;
-            
+
             var minMoveset = int.MaxValue;
             var maxMoveset = int.MinValue;
-            
+
             foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
             {
                 if (piece == null) continue;
@@ -85,39 +87,38 @@ namespace Game.Relics
                 }
             }
 
-            if (ourPieces.Count == 0)
+            switch (ourPieces.Count)
             {
-                //
-            }
-            else if (ourPieces.Count == 1)
-            {
-                ourPiece = ourPieces[0];
-            }
-            else
-            {
-                ourPiece = ourPieces[Random.Range(0, ourPieces.Count)];
-            }
-
-            if (enemyPieces.Count == 0)
-            {
-                //
-            }
-            else if (enemyPieces.Count == 1)
-            {
-                enemyPiece = enemyPieces[0];
-            }
-            else
-            {
-                enemyPiece = enemyPieces[Random.Range(0, enemyPieces.Count)];
+                case 0:
+                    break;
+                case 1:
+                    ourPiece = ourPieces[0];
+                    break;
+                default:
+                    ourPiece = ourPieces[Random.Range(0, ourPieces.Count)];
+                    break;
             }
 
-            if (ourPiece != null && enemyPiece != null)
+            switch (enemyPieces.Count)
             {
-                var ourPending = new EyeOfMimicPending(this, ourPiece.Pos, ourPiece.Color);
-                ourPending.CompleteAction();
-                var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos, enemyPiece.Color);
-                enemyPending.CompleteAction();
+                case 0:
+                    break;
+                case 1:
+                    enemyPiece = enemyPieces[0];
+                    break;
+                default:
+                    enemyPiece = enemyPieces[Random.Range(0, enemyPieces.Count)];
+                    break;
             }
+
+            if (ourPiece == null || enemyPiece == null) return;
+            var excute = new EyeOfMimicExecute(ourPiece.Pos, enemyPiece.Pos);
+            BoardViewer.Ins.ExecuteAction(excute);
+
+            // var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);
+            // BoardViewer.Ins.ExecuteAction(await ourPending.WaitForCompletion());
+            // var enemyPending = new EyeOfMimicPending(this, enemyPiece.Pos);
+            // BoardViewer.Ins.ExecuteAction(await enemyPending.WaitForCompletion());
         }
     }
 }

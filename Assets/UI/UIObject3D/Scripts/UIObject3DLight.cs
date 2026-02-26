@@ -7,13 +7,23 @@ using UnityEngine;
 
 namespace UI.UIObject3D.Scripts
 {
-    [RequireComponent(typeof(UIObject3D)), ExecuteInEditMode]
+    [RequireComponent(typeof(UIObject3D))]
+    [ExecuteInEditMode]
     [AddComponentMenu("UI/UIObject3D/UIObject3D Light")]
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3DLight : MonoBehaviour
     {
-        [SerializeField]
-        private Vector3 _LightPosition = new(0, 0, -2.5f);
+        [SerializeField] private Vector3 _LightPosition = new(0, 0, -2.5f);
+
+        [SerializeField] private Color _LightColor = Color.white;
+
+        [SerializeField] [Range(0, 8)] private float _LightIntensity = 1f;
+
+        [NonSerialized] private Light _lightObject;
+
+        [NonSerialized] private UIObject3D UIObject3D;
+
         public Vector3 LightPosition
         {
             get => _LightPosition;
@@ -24,8 +34,6 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField]
-        private Color _LightColor = Color.white;
         public Color LightColor
         {
             get => _LightColor;
@@ -36,8 +44,6 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Range(0, 8)]
-        private float _LightIntensity = 1f;
         public float LightIntensity
         {
             get => _LightIntensity;
@@ -48,11 +54,6 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [NonSerialized]
-        private UIObject3D UIObject3D;
-
-        [NonSerialized]
-        private Light _lightObject;
         private Light lightObject
         {
             get
@@ -92,10 +93,7 @@ namespace UI.UIObject3D.Scripts
         {
             if (!enabled) return;
 
-            if (!lightObject)
-            {
-                SpawnLight();
-            }
+            if (!lightObject) SpawnLight();
 
             SetLightPosition(false);
             SetLightProperties(false);
@@ -137,18 +135,14 @@ namespace UI.UIObject3D.Scripts
             if (!UIObject3D || !enabled) return;
 
             if (!Application.isPlaying)
-            {
                 UIObject3DTimer.AtEndOfFrame(() =>
                 {
                     UIObject3D.OnUpdateTarget.RemoveListener(UpdateLightEvent);
                     UIObject3D.UpdateDisplay();
                     UIObject3D.OnUpdateTarget.AddListener(UpdateLightEvent);
                 }, this);
-            }
             else
-            {
                 UIObject3D.Render();
-            }
         }
     }
 }

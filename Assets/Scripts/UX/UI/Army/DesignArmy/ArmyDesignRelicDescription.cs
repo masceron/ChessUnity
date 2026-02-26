@@ -4,21 +4,21 @@ using UnityEngine;
 
 namespace UX.UI.Army.DesignArmy
 {
-    public class ArmyDesignRelicDescription: MonoBehaviour
+    public class ArmyDesignRelicDescription : MonoBehaviour
     {
         [SerializeField] private RectTransform list;
         [SerializeField] public TMP_Text nameText;
         [SerializeField] private TMP_Text description;
 
-        private void OnDisable()
-        {
-            list.sizeDelta = ((RectTransform)transform.parent.transform).rect.size;
-        }
-
         private void OnEnable()
         {
             list.sizeDelta = ((RectTransform)transform.parent.transform).sizeDelta -
                              ((RectTransform)transform).sizeDelta;
+        }
+
+        private void OnDisable()
+        {
+            list.sizeDelta = ((RectTransform)transform.parent.transform).rect.size;
         }
 
         public void Display(RelicInfo relic)

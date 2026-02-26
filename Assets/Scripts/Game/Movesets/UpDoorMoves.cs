@@ -3,7 +3,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     /// <summary>
     /// *****x*****
     /// ****xxx****
@@ -12,7 +13,7 @@ namespace Game.Movesets
     /// O = position of the piece
     /// x = possible move and capture
     /// </summary>
-    public class UpDoorMoves: BaseMovePattern
+    public class UpDoorMoves : BaseMovePattern
     {
         private List<int> GenerateUpDoorPattern(int makerPos)
         {
@@ -37,7 +38,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new UpDoorMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 20 + 5 * moveRange;
         }
@@ -46,7 +47,7 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new UpDoorMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 20 + 5 * attackRange;
         }
 

@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal.Pending.Piece;
+﻿using Game.Action.Internal.Pending;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece;
@@ -11,16 +12,18 @@ using ZLinq;
 
 namespace UX.UI.Ingame.ChrysosShop
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosShop: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ChrysosShop : IngamePendingMenu
     {
         [SerializeField] private GameObject shopItem;
         [SerializeField] private TMP_Text balanceField;
         [SerializeField] private TMP_Text costField;
         [SerializeField] private GameObject itemLine;
-        private PieceLogic chrysos;
-        private ChrysosUpgradeCandidate candidate;
-        private byte cost;
+        private PieceLogic _chrysos;
+        private byte _cost;
+
+        protected override PendingAction PendingAction { get; set; }
 
         private void OnEnable()
         {
@@ -39,21 +42,20 @@ namespace UX.UI.Ingame.ChrysosShop
         {
             balanceField.text = "Balance: " + c.Coin;
             costField.text = "Cost: " + cd.Cost;
-            chrysos = c;
-            candidate = cd;
-            cost = cd.Cost;
-            
-            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values where piece.rank == candidate.UpgradableTo select piece.key).ToList();
+            _chrysos = c;
+            PendingAction = cd;
+            _cost = cd.Cost;
+
+            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values
+                where piece.rank == cd.UpgradableTo
+                select piece.key).ToList();
             if (cd.UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(cd.CurrentPiece);
             var already = itemLine.transform.childCount;
             var needed = upgradableTo.Count;
-            
+
             if (already < needed)
             {
-                for (var i = 1; i <= needed - already; i++)
-                {
-                    Instantiate(shopItem, itemLine.transform, true);
-                }
+                for (var i = 1; i <= needed - already; i++) Instantiate(shopItem, itemLine.transform, true);
             }
             else if (already > needed)
             {
@@ -66,14 +68,13 @@ namespace UX.UI.Ingame.ChrysosShop
             }
 
             for (var i = 0; i < needed; i++)
-            {
                 itemLine.transform.GetChild(i).GetComponent<ChrysosShopItem>().Load(upgradableTo[i]);
-            }
         }
 
         public void Buy(string type)
         {
-            MatchManager.Ins.InputProcessor.ExecuteAction(new ChrysosUpgrade(chrysos.Pos, new PieceConfig(type, chrysos.Color, (ushort)candidate.Target), cost));
+            PendingAction.CommitResult(new ChrysosUpgrade(_chrysos.Pos,
+                new PieceConfig(type, _chrysos.Color, PendingAction.Target), _cost));
             Disable();
         }
     }

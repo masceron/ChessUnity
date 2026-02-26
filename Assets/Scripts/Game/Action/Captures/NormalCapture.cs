@@ -1,18 +1,25 @@
-﻿using Game.Managers;
+using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Captures
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class NormalCapture: Action, ICaptures
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class NormalCapture : Action, ICaptures
     {
-        public NormalCapture(int f, int t) : base(f)
+        [MemoryPackConstructor]
+        private NormalCapture()
         {
-            Maker = f;
-            Target = t;
         }
+
+        public NormalCapture(int maker, int target) : base(maker)
+        {
+            Target = target;
+        }
+
         protected override void Animate()
         {
-            
         }
 
         protected override void ModifyGameState()

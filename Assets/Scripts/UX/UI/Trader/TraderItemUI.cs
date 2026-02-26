@@ -1,22 +1,29 @@
 using System;
 using Game.ScriptableObjects;
 using TMPro;
+using UI.UIObject3D.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UI.UIObject3D.Scripts;
 
 namespace UX.UI.Trader
 {
     public class TraderItemUI : MonoBehaviour, IPointerClickHandler
     {
-        [Header("UI Components")]
-        [SerializeField] private Image itemIcon;
+        [Header("UI Components")] [SerializeField]
+        private Image itemIcon;
+
         [SerializeField] private TextMeshProUGUI itemNameText;
+        private bool _isSellMode;
 
         private object _itemData;
-        private bool _isSellMode;
         private TraderItemUIType _type;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            OnItemClicked?.Invoke(_itemData, _isSellMode);
+            Debug.Log("Item clicked");
+        }
 
         public event Action<object, bool> OnItemClicked;
 
@@ -48,6 +55,7 @@ namespace UX.UI.Trader
                         table = "relic_name";
                         icon = relic.icon;
                     }
+
                     break;
                 case TraderItemUIType.Creature:
                     if (_itemData is PieceInfo piece)
@@ -67,6 +75,7 @@ namespace UX.UI.Trader
                             itemIcon.enabled = false;
                         }
                     }
+
                     break;
                 case TraderItemUIType.Augmentation:
                     if (_itemData is AugmentationInfo augmentation)
@@ -75,25 +84,16 @@ namespace UX.UI.Trader
                         table = "augmentation_name";
                         icon = augmentation.Icon;
                     }
+
                     break;
             }
 
             if (!string.IsNullOrEmpty(key)) itemNameText.text = Localizer.GetText(table, key, null);
-            if (icon != null) 
-            {
+            if (icon != null)
                 itemIcon.sprite = Sprite.Create(icon, new Rect(0, 0, icon.width, icon.height), Vector2.one * 0.5f);
-            }
             else
-            {
                 itemIcon.sprite = null;
-            }
             itemNameText.enabled = true;
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            OnItemClicked?.Invoke(_itemData, _isSellMode);
-            Debug.Log("Item clicked");
         }
     }
 
@@ -101,7 +101,6 @@ namespace UX.UI.Trader
     {
         Relic,
         Creature,
-        Augmentation,
-    
+        Augmentation
     }
 }

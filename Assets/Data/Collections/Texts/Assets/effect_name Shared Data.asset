@@ -603,10 +603,6 @@ MonoBehaviour:
     m_Key: effect_corrupted_wisper_charge
     m_Metadata:
       m_Items: []
-  - m_Id: 60606686301048832
-    m_Key: effect_masked_puffer_passive
-    m_Metadata:
-      m_Items: []
   - m_Id: 61955622575050752
     m_Key: effect_broken
     m_Metadata:
@@ -633,10 +629,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 66035942379823104
     m_Key: effect_cursed_fin_passive
-    m_Metadata:
-      m_Items: []
-  - m_Id: 66457060158988288
-    m_Key: effect_paletail_passive
     m_Metadata:
       m_Items: []
   - m_Id: 66457448874500096

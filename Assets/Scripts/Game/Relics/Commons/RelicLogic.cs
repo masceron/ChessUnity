@@ -5,18 +5,9 @@ namespace Game.Relics.Commons
 {
     public abstract class RelicLogic
     {
-        public string type;
-        protected sbyte TimeCooldown;
-        public sbyte CurrentCooldown { get; protected set; }
         public bool Color; // false for white, true for black
-
-        public PieceLogic CommanderPiece
-        {
-            get
-            {
-                return BoardUtils.GetCommanderOf(Color);
-            }
-        }
+        protected int TimeCooldown;
+        public string type;
 
         protected RelicLogic(RelicConfig cfg)
         {
@@ -24,6 +15,10 @@ namespace Game.Relics.Commons
             TimeCooldown = cfg.TimeCooldown;
             CurrentCooldown = 0;
         }
+
+        public int CurrentCooldown { get; protected set; }
+
+        public PieceLogic CommanderPiece => BoardUtils.GetCommanderOf(Color);
 
         public abstract void Activate();
 
@@ -39,7 +34,6 @@ namespace Game.Relics.Commons
 
         public virtual void ActiveForAI()
         {
-            
         }
     }
 

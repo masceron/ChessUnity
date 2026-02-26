@@ -1,37 +1,33 @@
-﻿using Game.Action;
+﻿using System;
+using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {
-    public class MaskedPufferPassive : Effect, IAfterPieceActionEffect
+    public class MaskedPufferPassive : Effect, IAfterPieceActionTrigger
     {
         public MaskedPufferPassive(PieceLogic piece) : base(-1, -1, piece, "effect_masked_puffer_passive")
-        { }
-
-        public override int GetValueForAI()
         {
-            throw new System.NotImplementedException();
         }
 
-        public int ModifyAttackRange(int baseRange)
-        {
-            return baseRange + Strength;
-        }
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
-        void IAfterPieceActionEffect.OnCallAfterPieceAction(Action.Action action)
+        void IAfterPieceActionTrigger.OnCallAfterPieceAction(Action.Action action)
         {
-            if (action == null || action is not ICaptures) return;
+            if (action is not ICaptures) return;
 
             if (action.Maker == Piece.Pos) return;
             if (action.Target != Piece.Pos) return;
 
-            if (action.Result != Action.ResultFlag.Success)
-            {
-                ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
-            }
+            if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
+        }
+
+        public override int GetValueForAI()
+        {
+            throw new NotImplementedException();
         }
     }
 }
-

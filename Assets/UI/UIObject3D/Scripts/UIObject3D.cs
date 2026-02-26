@@ -12,16 +12,106 @@ using Object = UnityEngine.Object;
 
 namespace UI.UIObject3D.Scripts
 {
-    [RequireComponent(typeof(RectTransform)), DisallowMultipleComponent, ExecuteInEditMode]
+    [RequireComponent(typeof(RectTransform))]
+    [DisallowMultipleComponent]
+    [ExecuteInEditMode]
     [AddComponentMenu("UI/UIObject3D/UIObject3D")]
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class UIObject3D : MonoBehaviour
     {
-        [Header("Target"), SerializeField]
-        private Transform _ObjectPrefab;
+        private static bool copyTextureSupportedPopulated;
+        private static bool _copyTextureSupported;
+
+        [Header("Target")] [SerializeField] private Transform _ObjectPrefab;
+
+        public bool UseTargetRotation = true;
+
+        [SerializeField] private Vector3 _TargetRotation = Vector3.zero;
+
+        [SerializeField] [Range(-10, 10)] private float _TargetOffsetX;
+
+        [SerializeField] [Range(-10, 10)] private float _TargetOffsetY;
+
+        [SerializeField]
+        [Tooltip(
+            "By default, the target object will be scaled automatically by UIObject3D to fit within the viewable area. This option allows you to override that behaviour and set the scaling value manually.")]
+        private bool _OverrideCalculatedTargetScale;
+
+        [SerializeField] private float _CalculatedTargetScaleOverride = 1f;
+
+        [Header("Camera Settings")] [SerializeField] [Range(20, 100)]
+        private float _CameraFOV = 35f;
+
+        [SerializeField] [Range(-10, -1)] private float _CameraDistance = -3.5f;
+
+        [SerializeField]
+        [Tooltip("If this property is set, and the target has an offset, then the camera will turn to face it.")]
+        private bool _AlwaysLookAtTarget;
+
+        [SerializeField] [HideInInspector] private Vector2 _textureSize;
+
+        [SerializeField] private Color _BackgroundColor = Color.clear;
+
+        [SerializeField]
+        [Tooltip(
+            "Enabling this option may help prevent ghosting issues - although it may cause flickering on some rendering devices, such as Metal on iOS.")]
+        public bool ClearGLBufferBeforeRendering;
+
         /// <summary>
-        /// Reference to the prefab / model / etc. that this instance of UIObject3D will render
-        /// Note: setting this property will call HardUpdateDisplay(), even if the value has not changed.
+        ///     If set to true, then UIObject3D will only render at up to 'FrameRateLimit' times per second.
+        /// </summary>
+        [Header("Performance")]
+        [SerializeField]
+        [Tooltip("Should this UIObject3D limit itself to a particular framerate?")]
+        public bool LimitFrameRate;
+
+        /// <summary>
+        ///     The maximum number of frames per second to render at, if 'LimitFrameRate' is true.
+        /// </summary>
+        [SerializeField] [Tooltip("Maximum number of frames to render per second.")]
+        public float FrameRateLimit = 30f;
+
+        /// <summary>
+        ///     If this is enabled, then this UIObject3D will render every frame (optionally limited by FrameRateLimit) even if
+        ///     none of the UIObject3D properties change.
+        ///     This should only be enabled if your target has animations of its own which are not controlled by UIObject3D.
+        /// </summary>
+        [Tooltip(
+            "If this is enabled, then this UIObject3D will render every frame (optionally limited by FrameRateLimit) even if none of the UIObject3D properties change. This should only be enabled if your target has animations of its own which are not controlled by UIObject3D.")]
+        public bool RenderConstantly;
+
+        [SerializeField]
+        [Tooltip(
+            "Set this to a lower value to have UIObject3D render at a lower resolution, or higher to have UIObject3D render at a higher resolution.")]
+        private float _RenderScale = 1.0f;
+
+
+        [Header("Lighting")] [SerializeField] private bool _EnableCameraLight;
+
+        [SerializeField] private Color _LightColor = Color.white;
+
+        [SerializeField] [Range(0, 8)] private float _LightIntensity = 1f;
+
+        /// <summary>
+        ///     Event to be called whenever the target has been updated.
+        ///     (Used internally, but you can add your own listeners if necessary)
+        /// </summary>
+        [SerializeField] public UnityEvent OnUpdateTarget = new();
+
+        [NonSerialized] private bool hardUpdateQueued;
+
+        [NonSerialized] private bool renderQueued;
+
+        [NonSerialized] private bool started;
+
+        [NonSerialized] private Bounds targetBounds;
+
+        private float timeSinceLastRender;
+
+        /// <summary>
+        ///     Reference to the prefab / model / etc. that this instance of UIObject3D will render
+        ///     Note: setting this property will call HardUpdateDisplay(), even if the value has not changed.
         /// </summary>
         public Transform ObjectPrefab
         {
@@ -33,12 +123,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        public bool UseTargetRotation = true;
-
-        [SerializeField]
-        private Vector3 _TargetRotation = Vector3.zero;
         /// <summary>
-        /// A rotation value to apply to the model rendered by UIObject3D
+        ///     A rotation value to apply to the model rendered by UIObject3D
         /// </summary>
         public Vector3 TargetRotation
         {
@@ -51,13 +137,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Range(-10, 10)]
-        private float _TargetOffsetX;
-        [SerializeField, Range(-10, 10)]
-        private float _TargetOffsetY;
-
         /// <summary>
-        /// An offset (X/Y) to apply to the target (relative to its default location of 0,0)
+        ///     An offset (X/Y) to apply to the target (relative to its default location of 0,0)
         /// </summary>
         public Vector2 TargetOffset
         {
@@ -70,11 +151,9 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Tooltip("By default, the target object will be scaled automatically by UIObject3D to fit within the viewable area. This option allows you to override that behaviour and set the scaling value manually.")]
-        private bool _OverrideCalculatedTargetScale;
         /// <summary>
-        /// By default, the target object will be scaled automatically by UIObject3D to fit within the viewable area.
-        /// This option allows you to override that behaviour and set the scaling value manually.
+        ///     By default, the target object will be scaled automatically by UIObject3D to fit within the viewable area.
+        ///     This option allows you to override that behaviour and set the scaling value manually.
         /// </summary>
         public bool OverrideCalculatedTargetScale
         {
@@ -86,11 +165,10 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField]
-        private float _CalculatedTargetScaleOverride = 1f;
         /// <summary>
-        /// By default, this value is calculated automatically by UIObject3D.
-        /// However, if 'OverrideCalculatedTargetScale' is set to true, then UIObject3D will no longer change this value and will use whatever value you have provided.
+        ///     By default, this value is calculated automatically by UIObject3D.
+        ///     However, if 'OverrideCalculatedTargetScale' is set to true, then UIObject3D will no longer change this value and
+        ///     will use whatever value you have provided.
         /// </summary>
         public float CalculatedTargetScaleOverride
         {
@@ -102,10 +180,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [Header("Camera Settings"), SerializeField, Range(20, 100)]
-        private float _CameraFOV = 35f;
         /// <summary>
-        /// This property allows you to increase or decrease the FOV (Field of View) of the camera used to render the target.
+        ///     This property allows you to increase or decrease the FOV (Field of View) of the camera used to render the target.
         /// </summary>
         public float CameraFOV
         {
@@ -117,10 +193,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Range(-10, -1)]
-        private float _CameraDistance = -3.5f;
         /// <summary>
-        /// This property allows you to move the camera closer or further away from the target.
+        ///     This property allows you to move the camera closer or further away from the target.
         /// </summary>
         public float CameraDistance
         {
@@ -132,10 +206,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Tooltip("If this property is set, and the target has an offset, then the camera will turn to face it.")]
-        private bool _AlwaysLookAtTarget;
         /// <summary>
-        /// If this property is set to true, and the target has an offset, then the camera will turn to face it.
+        ///     If this property is set to true, and the target has an offset, then the camera will turn to face it.
         /// </summary>
         public bool AlwaysLookAtTarget
         {
@@ -148,21 +220,20 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, HideInInspector]
-        private Vector2 _textureSize;
         /// <summary>
-        /// Readonly property that is used to determine the size of the texture rendered by UIObject3D
-        /// (Affected by 'RenderScale')
+        ///     Readonly property that is used to determine the size of the texture rendered by UIObject3D
+        ///     (Affected by 'RenderScale')
         /// </summary>
         private Vector2 TextureSize
         {
             get
             {
-                if (_textureSize != default(Vector2)) return _textureSize;
+                if (_textureSize != default) return _textureSize;
 
                 if (target)
                 {
-                    var size = new Vector2(Mathf.Abs(Mathf.Floor(rectTransform.rect.width)), Mathf.Abs(Mathf.Floor(rectTransform.rect.height))) * RenderScale;
+                    var size = new Vector2(Mathf.Abs(Mathf.Floor(rectTransform.rect.width)),
+                        Mathf.Abs(Mathf.Floor(rectTransform.rect.height))) * RenderScale;
 
                     if (size.x == 0 || size.y == 0) size = new Vector2(256, 256);
 
@@ -175,11 +246,9 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField]
-        private Color _BackgroundColor = Color.clear;
         /// <summary>
-        /// A background color to render behind the model.
-        /// By default, this is fully transparent.
+        ///     A background color to render behind the model.
+        ///     By default, this is fully transparent.
         /// </summary>
         public Color BackgroundColor
         {
@@ -192,33 +261,10 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Tooltip("Enabling this option may help prevent ghosting issues - although it may cause flickering on some rendering devices, such as Metal on iOS.")]
-        public bool ClearGLBufferBeforeRendering;
-
         /// <summary>
-        /// If set to true, then UIObject3D will only render at up to 'FrameRateLimit' times per second.
-        /// </summary>
-        [Header("Performance"), SerializeField, Tooltip("Should this UIObject3D limit itself to a particular framerate?")]
-        public bool LimitFrameRate;
-
-        /// <summary>
-        /// The maximum number of frames per second to render at, if 'LimitFrameRate' is true.
-        /// </summary>
-        [SerializeField, Tooltip("Maximum number of frames to render per second.")]
-        public float FrameRateLimit = 30f;
-
-        /// <summary>
-        /// If this is enabled, then this UIObject3D will render every frame (optionally limited by FrameRateLimit) even if none of the UIObject3D properties change.
-        /// This should only be enabled if your target has animations of its own which are not controlled by UIObject3D.
-        /// </summary>
-        [Tooltip("If this is enabled, then this UIObject3D will render every frame (optionally limited by FrameRateLimit) even if none of the UIObject3D properties change. This should only be enabled if your target has animations of its own which are not controlled by UIObject3D.")]
-        public bool RenderConstantly;
-
-        [SerializeField, Tooltip("Set this to a lower value to have UIObject3D render at a lower resolution, or higher to have UIObject3D render at a higher resolution.")]
-        private float _RenderScale = 1.0f;
-        /// <summary>
-        /// Set this to a lower value to have UIObject3D render at a lower resolution, or higher to have UIObject3D render at a higher resolution.
-        /// (Default value == 1)
+        ///     Set this to a lower value to have UIObject3D render at a lower resolution, or higher to have UIObject3D render at a
+        ///     higher resolution.
+        ///     (Default value == 1)
         /// </summary>
         public float RenderScale
         {
@@ -232,14 +278,8 @@ namespace UI.UIObject3D.Scripts
 
         internal float timeBetweenFrames => 1f / FrameRateLimit;
 
-        private float timeSinceLastRender;
-
-
-
-        [Header("Lighting"), SerializeField]
-        private bool _EnableCameraLight;
         /// <summary>
-        /// If this is set to true, then a light will be added on the camera object.
+        ///     If this is set to true, then a light will be added on the camera object.
         /// </summary>
         public bool EnableCameraLight
         {
@@ -252,10 +292,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField]
-        private Color _LightColor = Color.white;
         /// <summary>
-        /// Specifies the color to use for the camera light.
+        ///     Specifies the color to use for the camera light.
         /// </summary>
         public Color LightColor
         {
@@ -267,10 +305,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, Range(0, 8)]
-        private float _LightIntensity = 1f;
         /// <summary>
-        /// Specifies the intensity for the camera light.
+        ///     Specifies the intensity for the camera light.
         /// </summary>
         public float LightIntensity
         {
@@ -282,31 +318,14 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        /// <summary>
-        /// Event to be called whenever the target has been updated.
-        /// (Used internally, but you can add your own listeners if necessary)
-        /// </summary>
-        [SerializeField]
-        public UnityEvent OnUpdateTarget = new UnityEvent();
-
-        [NonSerialized]
-        private bool started;
-        [NonSerialized]
-        private bool hardUpdateQueued;
-        [NonSerialized]
-        private bool renderQueued;
-        [NonSerialized]
-        private Bounds targetBounds;
-
-        private static bool copyTextureSupportedPopulated;
-        private static bool _copyTextureSupported;
         private static bool copyTextureSupported
         {
             get
             {
                 if (!copyTextureSupportedPopulated)
                 {
-                    _copyTextureSupported = (SystemInfo.copyTextureSupport & CopyTextureSupport.RTToTexture) == CopyTextureSupport.RTToTexture;
+                    _copyTextureSupported = (SystemInfo.copyTextureSupport & CopyTextureSupport.RTToTexture) ==
+                                            CopyTextureSupport.RTToTexture;
                     copyTextureSupportedPopulated = true;
                 }
 
@@ -314,54 +333,12 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        //private bool _enabled = false;
-
-        void DestroyResources()
-        {
-            if (_targetCamera) _targetCamera.targetTexture = null;
-            if (_texture2D) _Destroy(_texture2D);
-            if (_sprite) _Destroy(_sprite);
-            if (_renderTexture) _Destroy(_renderTexture);
-        }
-
         /// <summary>
-        /// Clear all textures/etc. destroy the current target objects, and then start from scratch.
-        /// Necessary, if, for example, the RectTransform size has changed.
-        /// Fairly performance-intensive - only call this if strictly necessary.
-        /// </summary>
-        public void HardUpdateDisplay()
-        {
-            if (Application.isPlaying)
-            {
-                imageComponent.color = Color.clear;
-            }
-
-            DestroyResources();
-
-            Cleanup();
-            
-            UIObject3DTimer.AtEndOfFrame(() => UpdateDisplay(), this);
-            UIObject3DTimer.DelayedCall(0.05f, () => { imageComponent.color = Color.white;}, this, true);
-        }
-
-        private static void _Destroy(Object o)
-        {
-            if (Application.isPlaying)
-            {
-                Destroy(o);
-            }
-            else DestroyImmediate(o);
-        }
-
-        /// <summary>
-        /// Unity's Start() method. Used for initialization.
+        ///     Unity's Start() method. Used for initialization.
         /// </summary>
         private void Start()
         {
-            if (Application.isPlaying)
-            {
-                imageComponent.color = Color.clear;
-            }
+            if (Application.isPlaying) imageComponent.color = Color.clear;
 
             UIObject3DTimer.AtEndOfFrame(SetStarted, this, true);
             UIObject3DTimer.AtEndOfFrame(OnEnable, this);
@@ -377,43 +354,50 @@ namespace UI.UIObject3D.Scripts
             }, this, true);
         }
 
-        /// <summary>
-        /// For internal use only. Public to be accessible within Editor-only code.
-        /// </summary>
-        public void SetStarted()
+        /*
+         * As of Unity 2017.2, there seems to be a bug which calls this method
+         * repeatedly when UIObject3D is nested within a layout group, which causes all sorts of problems.
+         * As such, I have decided to remove this method for now; the primary downside is that
+         * resizing a UIObject3D instance will no longer resize the texture. In most scenarios,
+         * this will not be noticeable. Leaving the method out increases performance markedly,
+         * as resizing the texture/etc. is very expensive.
+        void OnRectTransformDimensionsChange()
         {
-            started = true;
         }
+        */
 
         /// <summary>
-        /// Update the target / camera / etc. to match  the configuration values,
-        /// then queue a render at the end of the frame (or, optionally, render instantly)
+        ///     Unity's Update() method. Called every frame.
         /// </summary>
-        /// <param name="instantRender"></param>
-        public void UpdateDisplay(bool instantRender = false)
+        private void Update()
         {
-            if (!Application.isPlaying && !started)
-            {
-                Start();
-                SetStarted();
-            }
-
+            if (!Application.isPlaying) return;
             if (!started) return;
 
-            Prepare();
+            timeSinceLastRender += Time.unscaledDeltaTime;
 
-            UpdateTargetPositioningAndScale();
-            UpdateTargetCameraPositioningEtc();
+            if (hardUpdateQueued)
+            {
+                hardUpdateQueued = false;
 
-            OnUpdateTarget?.Invoke();
+                HardUpdateDisplay();
+                return;
+            }
 
-            Render(instantRender);
+            if (LimitFrameRate)
+                if (timeSinceLastRender < timeBetweenFrames)
+                    return;
+
+            if (!renderQueued && !RenderConstantly) return;
+
+            Render(true);
+            timeSinceLastRender = 0f;
         }
 
         /// <summary>
-        /// Unity's 'OnEnable' method. Handles some initialization.
+        ///     Unity's 'OnEnable' method. Handles some initialization.
         /// </summary>
-        void OnEnable()
+        private void OnEnable()
         {
             // If Start hasn't been called yet, then this has been called too early.
             // Start() will call this when it is time
@@ -436,6 +420,97 @@ namespace UI.UIObject3D.Scripts
             EditorApplication.playmodeStateChanged += InEditorCleanup;
 #endif
 #endif
+        }
+
+        /// <summary>
+        ///     Unity's 'OnDisable' method. Used to clean up scene objects that are not needed when UIObject3D is disabled.
+        /// </summary>
+        private void OnDisable()
+        {
+            //_enabled = false;
+
+            Cleanup();
+
+
+#if UNITY_EDITOR
+#if UNITY_2017_2_OR_NEWER
+            EditorApplication.playModeStateChanged -= InEditorCleanup;
+#else
+            EditorApplication.playmodeStateChanged -= InEditorCleanup;
+#endif
+#endif
+        }
+
+        private void OnDestroy()
+        {
+            UIObject3DUtilities.UnRegisterTargetContainer(this);
+        }
+
+        //private bool _enabled = false;
+
+        private void DestroyResources()
+        {
+            if (_targetCamera) _targetCamera.targetTexture = null;
+            if (_texture2D) _Destroy(_texture2D);
+            if (_sprite) _Destroy(_sprite);
+            if (_renderTexture) _Destroy(_renderTexture);
+        }
+
+        /// <summary>
+        ///     Clear all textures/etc. destroy the current target objects, and then start from scratch.
+        ///     Necessary, if, for example, the RectTransform size has changed.
+        ///     Fairly performance-intensive - only call this if strictly necessary.
+        /// </summary>
+        public void HardUpdateDisplay()
+        {
+            if (Application.isPlaying) imageComponent.color = Color.clear;
+
+            DestroyResources();
+
+            Cleanup();
+
+            UIObject3DTimer.AtEndOfFrame(() => UpdateDisplay(), this);
+            UIObject3DTimer.DelayedCall(0.05f, () => { imageComponent.color = Color.white; }, this, true);
+        }
+
+        private static void _Destroy(Object o)
+        {
+            if (Application.isPlaying)
+                Destroy(o);
+            else DestroyImmediate(o);
+        }
+
+        /// <summary>
+        ///     For internal use only. Public to be accessible within Editor-only code.
+        /// </summary>
+        public void SetStarted()
+        {
+            started = true;
+        }
+
+        /// <summary>
+        ///     Update the target / camera / etc. to match  the configuration values,
+        ///     then queue a render at the end of the frame (or, optionally, render instantly)
+        /// </summary>
+        /// <param name="instantRender"></param>
+        public void UpdateDisplay(bool instantRender = false)
+        {
+            if (!Application.isPlaying && !started)
+            {
+                Start();
+                SetStarted();
+            }
+
+            if (!started) return;
+
+            Prepare();
+
+            UpdateTargetPositioningAndScale();
+            UpdateTargetCameraPositioningEtc();
+
+            OnUpdateTarget?.Invoke();
+
+            Render(instantRender);
         }
 
 #if UNITY_EDITOR && UNITY_2017_2_OR_NEWER
@@ -476,27 +551,8 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        /// <summary>
-        /// Unity's 'OnDisable' method. Used to clean up scene objects that are not needed when UIObject3D is disabled.
-        /// </summary>
-        void OnDisable()
-        {
-            //_enabled = false;
-
-            Cleanup();
-
-
 #if UNITY_EDITOR
-#if UNITY_2017_2_OR_NEWER
-            EditorApplication.playModeStateChanged -= InEditorCleanup;
-#else
-            EditorApplication.playmodeStateChanged -= InEditorCleanup;
-#endif
-#endif
-        }
-
-#if UNITY_EDITOR
-        void InEditorCleanup()
+        private void InEditorCleanup()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isPlaying)
             {
@@ -507,12 +563,7 @@ namespace UI.UIObject3D.Scripts
         }
 #endif
 
-        void OnDestroy()
-        {
-            UIObject3DUtilities.UnRegisterTargetContainer(this);
-        }
-
-        void Prepare()
+        private void Prepare()
         {
             if (imageComponent.sprite != sprite) imageComponent.sprite = sprite;
 
@@ -520,7 +571,7 @@ namespace UI.UIObject3D.Scripts
         }
 
         /// <summary>
-        /// Clear references to textures and delete the target objects.
+        ///     Clear references to textures and delete the target objects.
         /// </summary>
         public void Cleanup()
         {
@@ -531,31 +582,28 @@ namespace UI.UIObject3D.Scripts
             _target = null;
             _targetContainer = null;
 
-            targetBounds = default(Bounds);
-            _textureSize = default(Vector2);
+            targetBounds = default;
+            _textureSize = default;
 
             if (_container)
             {
                 UIObject3DUtilities.UnRegisterTargetContainer(this);
 
                 if (Application.isPlaying)
-                {
                     Destroy(_container.gameObject);
-                }
                 else
-                {
                     DestroyImmediate(_container.gameObject);
-                }
 
                 _container = null;
             }
         }
 
         /// <summary>
-        /// Get a reference to the current target used by this UIObject3D
-        /// You can use this, for example, to access components on your prefab instance
-        /// and call methods to trigger animations/etc.
-        /// Please note, if you do use animations on the target object, you will need to set 'RenderConstantly' to true (at least, for the duration of the animation)
+        ///     Get a reference to the current target used by this UIObject3D
+        ///     You can use this, for example, to access components on your prefab instance
+        ///     and call methods to trigger animations/etc.
+        ///     Please note, if you do use animations on the target object, you will need to set 'RenderConstantly' to true (at
+        ///     least, for the duration of the animation)
         /// </summary>
         /// <returns></returns>
         public Transform GetTargetInstance()
@@ -577,10 +625,7 @@ namespace UI.UIObject3D.Scripts
             if (!copyTextureSupported) RenderTexture.active = renderTexture;
 
             // If we don't manually clear the buffer, we end up with a copy of the target in the background
-            if (ClearGLBufferBeforeRendering)
-            {
-                GL.Clear(true, true, BackgroundColor);
-            }
+            if (ClearGLBufferBeforeRendering) GL.Clear(true, true, BackgroundColor);
 
             if (targetCamera.targetTexture != renderTexture) targetCamera.targetTexture = renderTexture;
             targetCamera.Render();
@@ -602,48 +647,8 @@ namespace UI.UIObject3D.Scripts
             renderQueued = false;
         }
 
-        /*
-         * As of Unity 2017.2, there seems to be a bug which calls this method
-         * repeatedly when UIObject3D is nested within a layout group, which causes all sorts of problems.
-         * As such, I have decided to remove this method for now; the primary downside is that
-         * resizing a UIObject3D instance will no longer resize the texture. In most scenarios,
-         * this will not be noticeable. Leaving the method out increases performance markedly,
-         * as resizing the texture/etc. is very expensive.
-        void OnRectTransformDimensionsChange()
-        {
-        }
-        */
-
-        /// <summary>
-        /// Unity's Update() method. Called every frame.
-        /// </summary>
-        void Update()
-        {
-            if (!Application.isPlaying) return;
-            if (!started) return;
-
-            timeSinceLastRender += Time.unscaledDeltaTime;
-
-            if (hardUpdateQueued)
-            {
-                hardUpdateQueued = false;
-
-                HardUpdateDisplay();
-                return;
-            }
-
-            if (LimitFrameRate)
-            {
-                if (timeSinceLastRender < timeBetweenFrames) return;
-            }
-
-            if (!renderQueued && !RenderConstantly) return;
-            
-            Render(true);
-            timeSinceLastRender = 0f;
-        }
-
         #region Internal Components
+
         private RectTransform _rectTransform;
 
         private RectTransform rectTransform
@@ -655,10 +660,10 @@ namespace UI.UIObject3D.Scripts
             }
         }
 
-        [SerializeField, HideInInspector]
-        private UIObject3DImage _imageComponent;
+        [SerializeField] [HideInInspector] private UIObject3DImage _imageComponent;
+
         /// <summary>
-        /// An image component which renders the sprite created by UIObject3D
+        ///     An image component which renders the sprite created by UIObject3D
         /// </summary>
         private UIObject3DImage imageComponent
         {
@@ -691,7 +696,9 @@ namespace UI.UIObject3D.Scripts
         {
             get
             {
-                if (!_texture2D) _texture2D = new Texture2D((int)TextureSize.x, (int)TextureSize.y, TextureFormat.ARGB32, false, false);
+                if (!_texture2D)
+                    _texture2D = new Texture2D((int)TextureSize.x, (int)TextureSize.y, TextureFormat.ARGB32, false,
+                        false);
 
                 return _texture2D;
             }
@@ -704,9 +711,8 @@ namespace UI.UIObject3D.Scripts
             get
             {
                 if (!_sprite)
-                {
-                    _sprite = Sprite.Create(texture2D, new Rect(0, 0, (int)TextureSize.x, (int)TextureSize.y), new Vector2(0.5f, 0.5f));
-                }
+                    _sprite = Sprite.Create(texture2D, new Rect(0, 0, (int)TextureSize.x, (int)TextureSize.y),
+                        new Vector2(0.5f, 0.5f));
 
                 return _sprite;
             }
@@ -721,16 +727,19 @@ namespace UI.UIObject3D.Scripts
                 if (!_renderTexture)
                 {
 #if UNITY_2019_OR_NEWER
-                    _renderTexture = new RenderTexture((int)TextureSize.x, (int)TextureSize.y, 16, RenderTextureFormat.Default);
+                    _renderTexture =
+ new RenderTexture((int)TextureSize.x, (int)TextureSize.y, 16, RenderTextureFormat.Default);
 #else
-                    _renderTexture = new RenderTexture((int)TextureSize.x, (int)TextureSize.y, 16, RenderTextureFormat.ARGB32);
+                    _renderTexture = new RenderTexture((int)TextureSize.x, (int)TextureSize.y, 16,
+                        RenderTextureFormat.ARGB32);
 #endif
 
 #if !UNITY_2020_2_OR_NEWER // there appears to be a bug in Unity 2020.2 which breaks things when using antialiasing
                     // Use antialiasing as per quality settings
                     if (QualitySettings.antiAliasing > 0) _renderTexture.antiAliasing = QualitySettings.antiAliasing;
 #endif
-                    if (QualitySettings.anisotropicFiltering > 0) _renderTexture.anisoLevel = (int)QualitySettings.anisotropicFiltering;
+                    if (QualitySettings.anisotropicFiltering > 0)
+                        _renderTexture.anisoLevel = (int)QualitySettings.anisotropicFiltering;
 
                     _renderTexture.filterMode = FilterMode.Trilinear;
                     _renderTexture.useMipMap = false;
@@ -741,12 +750,13 @@ namespace UI.UIObject3D.Scripts
         }
 
         private static Transform _parentContainer;
+
         private static Transform parentContainer
         {
             get
             {
                 if (_parentContainer) return _parentContainer;
-                
+
                 var go = GameObject.Find("UIObject3D Scenes");
 
                 if (go)
@@ -760,15 +770,14 @@ namespace UI.UIObject3D.Scripts
                 }
 
                 if (!_parentContainer.GetComponent<UIObject3DSceneManager>())
-                {
                     _parentContainer.gameObject.AddComponent<UIObject3DSceneManager>();
-                }
 
                 return _parentContainer;
             }
         }
 
         private Transform _container;
+
         internal Transform container
         {
             get
@@ -795,6 +804,7 @@ namespace UI.UIObject3D.Scripts
         }
 
         private Transform _targetContainer;
+
         internal Transform targetContainer
         {
             get
@@ -844,10 +854,10 @@ namespace UI.UIObject3D.Scripts
         }
 
         /// <summary>
-        /// Call this method if you've updated your target object (e.g. a model in your scene)
-        /// and you want UIObject3D's copy to be updated to match.
-        /// Performs a small cleanup and then updates and schedules a render.
-        /// (Has less of a performance hit than HardUpdateDisplay())
+        ///     Call this method if you've updated your target object (e.g. a model in your scene)
+        ///     and you want UIObject3D's copy to be updated to match.
+        ///     Performs a small cleanup and then updates and schedules a render.
+        ///     (Has less of a performance hit than HardUpdateDisplay())
         /// </summary>
         public void RefreshTarget()
         {
@@ -922,13 +932,8 @@ namespace UI.UIObject3D.Scripts
                     var tallObject = targetBounds.size.y > targetBounds.size.x;
 
                     if (wideObject)
-                    {
                         scale = frustumWidth / targetBounds.size.x;
-                    }
-                    else if (tallObject)
-                    {
-                        scale = frustumHeight / targetBounds.size.y;
-                    }
+                    else if (tallObject) scale = frustumHeight / targetBounds.size.y;
 
                     // now check to see if the new size exceeds the camera frustum
                     var newHeight = targetBounds.size.y * scale;
@@ -937,15 +942,9 @@ namespace UI.UIObject3D.Scripts
                     var newWidthIsHigher = newWidth > frustumWidth;
                     var newHeightIsHigher = newHeight > frustumHeight;
 
-                    if (newWidthIsHigher)
-                    {
-                        scale = frustumWidth / targetBounds.size.x;
-                    }
+                    if (newWidthIsHigher) scale = frustumWidth / targetBounds.size.x;
 
-                    if (newHeightIsHigher)
-                    {
-                        scale = frustumHeight / targetBounds.size.y;
-                    }
+                    if (newHeightIsHigher) scale = frustumHeight / targetBounds.size.y;
 
 
                     targetContainer.transform.localScale = Vector3.one * (float)scale;
@@ -965,10 +964,7 @@ namespace UI.UIObject3D.Scripts
         {
             _transform.gameObject.layer = layer;
 
-            foreach (Transform t in _transform)
-            {
-                SetLayerRecursively(t, layer);
-            }
+            foreach (Transform t in _transform) SetLayerRecursively(t, layer);
         }
 
         private Camera _targetCamera;
@@ -1002,6 +998,7 @@ namespace UI.UIObject3D.Scripts
         }
 
         private Light _cameraLight;
+
         protected Light cameraLight
         {
             get
@@ -1038,13 +1035,9 @@ namespace UI.UIObject3D.Scripts
             _targetCamera.transform.localPosition = Vector3.zero + new Vector3(0, 0, CameraDistance);
 
             if (AlwaysLookAtTarget)
-            {
                 _targetCamera.transform.LookAt(_target);
-            }
             else
-            {
                 _targetCamera.transform.rotation = Quaternion.identity;
-            }
 
             _targetCamera.name = "Camera";
 
@@ -1065,6 +1058,7 @@ namespace UI.UIObject3D.Scripts
         }
 
         private static int _objectLayer = -1;
+
         internal static int objectLayer
         {
             get
@@ -1080,6 +1074,7 @@ namespace UI.UIObject3D.Scripts
                 return _objectLayer;
             }
         }
-#endregion
+
+        #endregion
     }
 }

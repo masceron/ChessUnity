@@ -17,7 +17,6 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
-                {
                     for (var i = 0; i < BoardUtils.BoardSize; ++i)
                     {
                         var piece = BoardUtils.PieceOn(i);
@@ -26,16 +25,11 @@ namespace Game.Piece.PieceLogic
 
                         list.Add(new RustyParrotfishActive(Pos, piece.Pos));
                     }
-
-                }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; set; }
     }

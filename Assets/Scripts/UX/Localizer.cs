@@ -6,7 +6,7 @@ namespace UX
     public static class Localizer
     {
         private static readonly LocalizedString Localized = new();
-        
+
         public static void SetText(TMP_Text text, string table, string key)
         {
             Localized.SetReference(table, key);

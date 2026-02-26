@@ -6,7 +6,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class PawnPushMoves
     {
         public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
@@ -20,15 +21,13 @@ namespace Game.Movesets
             {
                 case false:
                     foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, moveRange))
-                    {
-                        if (!MakeMove(IndexOf(rankOff, fileOff))) break;
-                    }
+                        if (!MakeMove(IndexOf(rankOff, fileOff)))
+                            break;
                     break;
                 case true:
                     foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, moveRange))
-                    {
-                        if (!MakeMove(IndexOf(rankOff, fileOff))) break;
-                    }
+                        if (!MakeMove(IndexOf(rankOff, fileOff)))
+                            break;
                     break;
             }
 
@@ -38,10 +37,7 @@ namespace Game.Movesets
             {
                 if (!IsActive(index)) return false;
                 var p = PieceOn(index);
-                if (p != null)
-                {
-                    return false;
-                }
+                if (p != null) return false;
                 list.Add(new NormalMove(pos, index));
                 return true;
             }
@@ -58,15 +54,13 @@ namespace Game.Movesets
             {
                 case false:
                     foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, moveRange))
-                    {
-                        if (!MakeCapture(IndexOf(rankOff, fileOff))) break;
-                    }
+                        if (!MakeCapture(IndexOf(rankOff, fileOff)))
+                            break;
                     break;
                 case true:
                     foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, moveRange))
-                    {
-                        if (!MakeCapture(IndexOf(rankOff, fileOff))) break;
-                    }
+                        if (!MakeCapture(IndexOf(rankOff, fileOff)))
+                            break;
                     break;
             }
 
@@ -82,13 +76,12 @@ namespace Game.Movesets
                         list.Add(new NormalCapture(pos, index));
                         return false;
                     }
+
                     return true;
                 }
+
                 if (!IsActive(index)) return false;
-                if (p.Color != color)
-                {
-                    list.Add(new NormalCapture(pos, index));
-                }
+                if (p.Color != color) list.Add(new NormalCapture(pos, index));
 
                 return false;
             }

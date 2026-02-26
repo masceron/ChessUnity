@@ -16,27 +16,21 @@ using static UX.UI.Ingame.BoardViewer;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PieceActions: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class PieceActions : MonoBehaviour
     {
+        private static ColorBlock _normalColors;
+        private static ColorBlock _activeColors;
         [SerializeField] private CanvasGroup pieceAction;
         [SerializeField] private Toggle move;
         [SerializeField] private Toggle capture;
         [SerializeField] private Toggle skill;
         [SerializeField] private TooltipTrigger skillTooltip;
         [SerializeField] private TMP_Text skillCoolDown;
-        
-        private static ColorBlock _normalColors;
-        private static ColorBlock _activeColors;
 
-        private List<Action> listOf;
-        private List<Action> moveList;
-
-        public void Load(List<Action> l, List<Action> ml)
-        {
-            listOf = l;
-            moveList = ml;
-        }
+        private List<Action> _listOf;
+        private List<Action> _moveList;
 
         private void Start()
         {
@@ -47,30 +41,27 @@ namespace UX.UI.Ingame
             _activeColors.selectedColor = Color.white;
             _activeColors.highlightedColor = Color.white;
             _activeColors.pressedColor = Color.white;
-            
-            move.onValueChanged.AddListener(delegate
-            {
-                SetToggle(move);
-            });
-            
-            capture.onValueChanged.AddListener(delegate
-            {
-                SetToggle(capture);
-            });
-            
-            skill.onValueChanged.AddListener(delegate
-            {
-                SetToggle(skill);
-            });
-            
+
+            move.onValueChanged.AddListener(delegate { SetToggle(move); });
+
+            capture.onValueChanged.AddListener(delegate { SetToggle(capture); });
+
+            skill.onValueChanged.AddListener(delegate { SetToggle(skill); });
+
             DisablePieceInteractions();
         }
-        
+
+        public void Load(List<Action> l, List<Action> ml)
+        {
+            _listOf = l;
+            _moveList = ml;
+        }
+
         private static void SetToggle(Toggle toggle)
         {
             toggle.colors = !toggle.isOn ? _normalColors : _activeColors;
         }
-        
+
         private static void Disable(Toggle toggle)
         {
             toggle.colors = _normalColors;
@@ -91,7 +82,7 @@ namespace UX.UI.Ingame
             pieceAction.interactable = true;
             skill.interactable = PieceOn(Selecting).SkillCooldown == 0;
         }
-        
+
         public void PressMove(InputAction.CallbackContext context)
         {
             if (!context.performed || !pieceAction.interactable) return;
@@ -118,7 +109,7 @@ namespace UX.UI.Ingame
                 SelectingFunction = 0;
                 return;
             }
-            
+
             SelectingFunction = 1;
             if (MarkMove()) return;
             SelectingFunction = 0;
@@ -133,7 +124,7 @@ namespace UX.UI.Ingame
                 SelectingFunction = 0;
                 return;
             }
-            
+
             SelectingFunction = 2;
             if (MarkCapture()) return;
             SelectingFunction = 0;
@@ -144,19 +135,17 @@ namespace UX.UI.Ingame
         {
             if (SelectingFunction == 3)
             {
-                // thêm dispose vào đây được dể cleardata của chọn 2 quân được không 
-                //TileManager.Ins.UnmarkAll();
-                BoardViewer.Ins.Unmark();
+                TileManager.Ins.UnmarkAll();
                 SelectingFunction = 0;
                 return;
             }
-            
+
             SelectingFunction = 3;
             if (MarkSkill()) return;
             SelectingFunction = 0;
             skill.isOn = false;
         }
-        
+
         private void LoadSkillInfo()
         {
             var info = AssetManager.Ins.PieceData[PieceOn(Selecting).Type];
@@ -177,59 +166,55 @@ namespace UX.UI.Ingame
             var cooldown = PieceOn(Selecting).SkillCooldown;
             LoadSkillInfo();
             if (cooldown != 0)
-            {
                 skillCoolDown.text = cooldown > 0 ? cooldown.ToString() : "";
-            }
             else
-            {
                 skillCoolDown.text = "";
-            }
         }
-        
+
         private bool MarkMove()
         {
             TileManager.Ins.UnmarkAll();
-            listOf.Clear();
-            
-            foreach (var _move in moveList.OfType<IQuiets>())
+            _listOf.Clear();
+
+            foreach (var quiets in _moveList.OfType<IQuiets>())
             {
-                listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
+                _listOf.Add((Action)quiets);
+                TileManager.Ins.MarkAsMoveable(((Action)quiets).Target);
             }
-            
-            return listOf.Count > 0;
+
+            return _listOf.Count > 0;
         }
 
         private bool MarkCapture()
         {
             TileManager.Ins.UnmarkAll();
-            listOf.Clear();
-            
-            foreach (var _move in moveList.OfType<ICaptures>())
+            _listOf.Clear();
+
+            foreach (var captures in _moveList.OfType<ICaptures>())
             {
-                var targetPos = ((Action)_move).Target;
-                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
-                listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
+                var targetPos = ((Action)captures).Target;
+                if (FormationManager.IsHideByFog(targetPos, SideToMove())) continue;
+                _listOf.Add((Action)captures);
+                TileManager.Ins.MarkAsMoveable(((Action)captures).Target);
             }
 
-            return listOf.Count > 0;
+            return _listOf.Count > 0;
         }
 
-        public bool MarkSkill()
+        private bool MarkSkill()
         {
             TileManager.Ins.UnmarkAll();
-            listOf.Clear();
-            
-            foreach (var _move in moveList.OfType<ISkills>())
+            _listOf.Clear();
+
+            foreach (var skills in _moveList.OfType<ISkills>())
             {
-                var targetPos = ((Action)_move).Target;
-                if (FormationManager.Ins.IsHideByFog(targetPos, SideToMove())){ continue; }
-                listOf.Add((Action)_move);
-                TileManager.Ins.MarkAsMoveable(((Action)_move).Target);
+                var targetPos = ((Action)skills).Target;
+                if (FormationManager.IsHideByFog(targetPos, SideToMove())) continue;
+                _listOf.Add((Action)skills);
+                TileManager.Ins.MarkAsMoveable(((Action)skills).Target);
             }
-            
-            return listOf.Count > 0;
+
+            return _listOf.Count > 0;
         }
     }
 }

@@ -1,19 +1,22 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
+using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using static Game.Common.BoardUtils;
-using Game.Common;
-using Game.Action.Internal.Pending.Piece;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MarineIguana : Commons.PieceLogic, IPieceWithSkill
     {
-        private int skillRadius = 4;
+        private readonly int skillRadius = 4;
+
         public MarineIguana(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
@@ -24,27 +27,17 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, skillRadius);
-                    foreach (var target in targets)
-                    {
-                        list.Add(new MarineIguanaPending(Pos, target));
-                    }
+                    foreach (var target in targets) list.Add(new MarineIguanaPending(Pos, target));
                 }
                 else
                 {
                     var captureTargets = new List<int>();
                     if (excludeEmptyTile)
-                    {
                         captureTargets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, skillRadius);
-                    }
                     else
-                    {
                         captureTargets = SkillRangeHelper.GetActiveCellInRadius(Pos, skillRadius);
-                    }
 
-                    if (captureTargets.Contains(Pos))
-                    {
-                        captureTargets.Remove(Pos);
-                    }
+                    if (captureTargets.Contains(Pos)) captureTargets.Remove(Pos);
 
                     if (captureTargets.Count == 0) return;
                     var firstTarget = captureTargets[0];
@@ -54,20 +47,23 @@ namespace Game.Piece.PieceLogic
                     {
                         var maxSubValue = int.MinValue;
                         var secondSubTarget = -1;
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(target), FileOf(target), 2))
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(target), FileOf(target),
+                                     2))
                         {
                             var index = IndexOf(rankOff, fileOff);
                             var piece = PieceOn(index);
-                            if (piece == null || piece.Color != PieceOn(target).Color || piece == PieceOn(target)) continue;
+                            if (piece == null || piece.Color != PieceOn(target).Color || piece == PieceOn(target))
+                                continue;
                             var value = piece.GetValueForAI();
                             if (value > maxSubValue)
                             {
                                 maxSubValue = value;
                                 secondSubTarget = index;
-                                UnityEngine.Debug.Log("maxSubValue: " + maxSubValue + " secondSubTarget: " + secondSubTarget);
-                                UnityEngine.Debug.Log("piece: " + piece.Type);
+                                Debug.Log("maxSubValue: " + maxSubValue + " secondSubTarget: " + secondSubTarget);
+                                Debug.Log("piece: " + piece.Type);
                             }
                         }
+
                         if (secondSubTarget == -1) continue;
                         if (PieceOn(target).GetValueForAI() + maxSubValue > MaxValue)
                         {
@@ -76,16 +72,16 @@ namespace Game.Piece.PieceLogic
                             secondTarget = secondSubTarget;
                         }
                     }
+
                     if (secondTarget == -1) return;
                     var action = new MarineIguanaPending(Pos, firstTarget);
                     MarineIguanaPending.SecondTarget = PieceOn(secondTarget);
                     list.Add(action);
                 }
-
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

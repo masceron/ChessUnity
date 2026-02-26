@@ -31,15 +31,11 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }
-

@@ -1,20 +1,27 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using MemoryPack;
 using static Game.Common.BoardUtils;
+
 namespace Game.Action.Captures
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class IllusionCapture: Action, ICaptures
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class IllusionCapture : Action, ICaptures
     {
-        public IllusionCapture(int maker, int to) : base(maker)
+        [MemoryPackConstructor]
+        private IllusionCapture()
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+        }
+
+        public IllusionCapture(int maker, int target) : base(maker)
+        {
+            Target = target;
         }
 
         protected override void Animate()
         {
-            
         }
 
         protected override void ModifyGameState()

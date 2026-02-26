@@ -11,8 +11,9 @@ using Color = UnityEngine.Color;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class PieceInfoMenu: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class PieceInfoMenu : MonoBehaviour
     {
         [SerializeField] private GameObject pieceInfo;
         [SerializeField] private UIObject3D pieceImage;
@@ -43,14 +44,15 @@ namespace UX.UI.Ingame
             LoadPieceModel(pieceInformation);
             LoadPieceDemonstrations(pieceInformation);
             pieceName.text = AssetManager.Ins.PieceData[piece.Type].name;
-            posText.text = $"Rank: {BoardUtils.RankOf(piece.Pos)}, File: {BoardUtils.FileOf(piece.Pos)}, Index: {piece.Pos}";
+            posText.text =
+                $"Rank: {BoardUtils.RankOf(piece.Pos)}, File: {BoardUtils.FileOf(piece.Pos)}, Index: {piece.Pos}";
         }
-        
+
         private void LoadPieceModel(PieceInfo info)
         {
             pieceImage.ObjectPrefab = info.prefab.transform;
         }
-        
+
         private void LoadPieceDemonstrations(PieceInfo info)
         {
             if (!seeingCapture)
@@ -71,15 +73,15 @@ namespace UX.UI.Ingame
                     return;
                 }
             }
-            
+
             pieceDemonstration.texture = null;
             pieceDemonstration.color = new Color(0, 0, 0, 0);
         }
-        
+
         public void ToggleDemonstrations(InputAction.CallbackContext context)
         {
             if (!context.performed || !pieceInfo.activeSelf) return;
-            
+
             seeingCapture = !seeingCapture;
             LoadPieceDemonstrations(AssetManager.Ins.PieceData[BoardViewer.Hovering.Type]);
         }

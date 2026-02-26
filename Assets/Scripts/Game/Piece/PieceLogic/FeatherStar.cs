@@ -5,7 +5,7 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    public class FeatherStar  : Commons.PieceLogic
+    public class FeatherStar : Commons.PieceLogic
     {
         public FeatherStar(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {

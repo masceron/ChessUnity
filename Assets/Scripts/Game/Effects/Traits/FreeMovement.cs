@@ -1,20 +1,24 @@
-using Game.Action.Internal;
 using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {
-    public class FreeMovement : Effect, IApplyEffect
+    public class FreeMovement : Effect, IBeforeApplyEffectTrigger
     {
-        private readonly List<string> blockedEffects = new()
+        private readonly List<string> _blockedEffects = new()
         {
             "effect_slow",
             "effect_haste"
         };
 
         public FreeMovement(PieceLogic piece) : base(-1, 1, piece, "effect_free_movement")
-        { }
+        {
+        }
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
@@ -22,10 +26,7 @@ namespace Game.Effects.Traits
 
             var effect = applyEffect.Effect;
 
-            if (blockedEffects.Contains(effect.EffectName))
-            {
-                applyEffect.Result = ResultFlag.Unshaken;
-            }
+            if (_blockedEffects.Contains(effect.EffectName)) applyEffect.Result = ResultFlag.Unshaken;
         }
 
         public override int GetValueForAI()

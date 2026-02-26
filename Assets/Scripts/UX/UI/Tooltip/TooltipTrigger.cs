@@ -5,13 +5,19 @@ using UnityEngine.EventSystems;
 namespace UX.UI.Tooltip
 {
     //Gắn vào các ArmyTroop để hiển thị Tooltip khi hover vào quân cờ
-    public class TooltipTrigger: MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class TooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        private string headerLeft;
-        private string headerRight;
         private string content;
         private Tween delay;
+        private string headerLeft;
+        private string headerRight;
         private bool showing;
+
+        private void OnDisable()
+        {
+            delay.Stop();
+            if (showing) TooltipManager.Ins.Hide();
+        }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
@@ -20,15 +26,6 @@ namespace UX.UI.Tooltip
                 TooltipManager.Ins.Show(headerLeft, headerRight, content);
                 showing = true;
             });
-        }
-
-        private void OnDisable()
-        {
-            delay.Stop();
-            if (showing)
-            {
-                TooltipManager.Ins.Hide();
-            }
         }
 
         public void OnPointerExit(PointerEventData eventData)

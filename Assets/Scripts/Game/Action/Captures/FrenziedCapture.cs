@@ -1,19 +1,26 @@
 using Game.Managers;
+using MemoryPack;
 using UnityEngine;
 
 namespace Game.Action.Captures
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FrenziedCapture: Action, IDontEndTurn, ICaptures
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class FrenziedCapture : Action, IDontEndTurn, ICaptures
     {
-        public FrenziedCapture(int f, int t) : base(f)
+        [MemoryPackConstructor]
+        private FrenziedCapture()
         {
-            Maker = f;
-            Target = t;
         }
+
+        public FrenziedCapture(int maker, int target) : base(maker)
+        {
+            Target = target;
+        }
+
         protected override void Animate()
         {
-            
         }
 
         protected override void ModifyGameState()

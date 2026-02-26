@@ -1,24 +1,32 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LionfishActive: Action, ISkills
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class LionfishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private LionfishActive()
+        {
+        }
+
+        public LionfishActive(int maker) : base(maker)
+        {
+            Maker = maker;
+            Target = maker;
+        }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             var maker = PieceOn(Maker);
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -20 : 0;
-        }
-
-        public LionfishActive(int maker) : base(maker)
-        {
-            Maker = (ushort)maker;
-            Target = (ushort)maker;
         }
 
         protected override void ModifyGameState()
@@ -29,7 +37,7 @@ namespace Game.Action.Skills
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
                 if (!VerifyBounds(rankOff)) continue;
-                
+
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;

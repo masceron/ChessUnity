@@ -1,19 +1,22 @@
 using Game.Action.Skills;
 using Game.Common;
-
+using Game.Triggers;
 
 namespace Game.Effects.Others
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Charge : Effect, IEndTurnEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Charge : Effect, IEndTurnTrigger
     {
         private readonly bool color;
 
-        public Charge(sbyte strength, bool color) : base(-1, strength, null, "effect_charge")
+        public Charge(int strength, bool color) : base(-1, strength, null, "effect_charge")
         {
             this.color = color;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 

@@ -1,19 +1,22 @@
+using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Augmentation
 {
-    public class MetalMindPassive : Effect, IApplyEffect
+    public class MetalMindPassive : Effect, IBeforeApplyEffectTrigger
     {
-        public MetalMindPassive(sbyte duration, sbyte strength, PieceLogic piece) : base(duration, strength, piece,
+        public MetalMindPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
             "effect_metal_mind_passive")
-        { }
+        {
+        }
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Prevention;
+
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.Effect.EffectName == "effect_frenzied")
-            {
-                applyEffect.Result = Action.ResultFlag.Incorruptible;
-            }
+            if (applyEffect.Effect.EffectName == "effect_frenzied") applyEffect.Result = ResultFlag.Incorruptible;
         }
     }
 }

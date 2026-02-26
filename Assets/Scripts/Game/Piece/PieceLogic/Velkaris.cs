@@ -7,7 +7,8 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Velkaris : Commons.PieceLogic, IPieceWithSkill
     {
         public Commons.PieceLogic Marked;
@@ -21,21 +22,13 @@ namespace Game.Piece.PieceLogic
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (isPlayer)
-                {
                     if (SkillCooldown == 0 && Marked != null)
-                    {
                         list.Add(new VelkarisKill(Pos, Pos, Marked.Pos));
-                    }
-                }
-                else
-                {
-                    //query for AI in here
-                }
-
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

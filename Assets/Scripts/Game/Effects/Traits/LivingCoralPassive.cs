@@ -4,22 +4,23 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
+using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LivingCoralPassive : Effect, IStartTurnEffect, IOnApply, IAfterPieceActionEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class LivingCoralPassive : Effect, IStartTurnTrigger, IOnApplyTrigger, IAfterPieceActionTrigger
     {
         private const int Interval = 3;
         private const int EvasionValue = 25;
 
-        private int turnCounter;
-        
         private readonly HashSet<PieceLogic> alliesInRange = new();
 
-        public StartTurnEffectType StartTurnEffectType { get; }
+        private int turnCounter;
 
         public LivingCoralPassive(PieceLogic piece)
             : base(-1, 1, piece, "effect_living_coral_passive")
@@ -27,23 +28,26 @@ namespace Game.Effects.Traits
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
         }
 
-        public void OnApply()
-        {
-            UpdateAura();
-        }
-        
+        AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Buff;
+
         public void OnCallAfterPieceAction(Action.Action action)
         {
             UpdateAura();
         }
 
+        public void OnApply()
+        {
+            UpdateAura();
+        }
+
+        StartTurnTriggerPriority IStartTurnTrigger.Priority => StartTurnTriggerPriority.Buff;
+
+        public StartTurnEffectType StartTurnEffectType { get; }
+
         public void OnCallStart(Action.Action lastMainAction)
         {
             turnCounter++;
-            if (turnCounter % Interval == 0)
-            {
-                SummonClownFish();
-            }
+            if (turnCounter % Interval == 0) SummonClownFish();
         }
 
         private void UpdateAura()
@@ -59,16 +63,10 @@ namespace Game.Effects.Traits
 
                 newInRange.Add(p);
             }
-            
-            foreach (var entered in newInRange.Except(alliesInRange))
-            {
-                ApplyEvasion(entered);
-            }
-            
-            foreach (var exited in alliesInRange.Except(newInRange))
-            {
-                RemoveOrReduceEvasion(exited);
-            }
+
+            foreach (var entered in newInRange.Except(alliesInRange)) ApplyEvasion(entered);
+
+            foreach (var exited in alliesInRange.Except(newInRange)) RemoveOrReduceEvasion(exited);
 
             alliesInRange.Clear();
             foreach (var p in newInRange)
@@ -78,29 +76,21 @@ namespace Game.Effects.Traits
         private void ApplyEvasion(PieceLogic piece)
         {
             if (piece.Effects.FirstOrDefault(e => e is Evasion) is Evasion evasion)
-            {
-                evasion.Probability += EvasionValue;
-            }
+                evasion.Strength += EvasionValue;
             else
-            {
                 ActionManager.EnqueueAction(
                     new ApplyEffect(new Evasion(-1, EvasionValue, piece))
                 );
-            }
         }
 
         private void RemoveOrReduceEvasion(PieceLogic piece)
         {
             if (piece.Effects.FirstOrDefault(e => e is Evasion) is not Evasion evasion) return;
 
-            if (evasion.Probability <= EvasionValue)
-            {
+            if (evasion.Strength <= EvasionValue)
                 ActionManager.EnqueueAction(new RemoveEffect(evasion));
-            }
             else
-            {
-                evasion.Probability -= EvasionValue;
-            }
+                evasion.Strength -= EvasionValue;
         }
 
         private void SummonClownFish()
@@ -111,22 +101,18 @@ namespace Game.Effects.Traits
             foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, 1))
             {
                 var index = IndexOf(r, f);
-                if (PieceOn(index) == null)
-                {
-                    emptyTiles.Add(index);
-                }
+                if (PieceOn(index) == null) emptyTiles.Add(index);
             }
 
             if (emptyTiles.Count == 0) return;
 
-            var rand = UnityEngine.Random.Range(0, emptyTiles.Count);
+            var rand = Random.Range(0, emptyTiles.Count);
             ActionManager.EnqueueAction(
                 new SpawnPiece(new PieceConfig(
                     "piece_clown_fish",
                     Piece.Color,
-                    (ushort)emptyTiles[rand]))
+                    emptyTiles[rand]))
             );
         }
-        
     }
 }

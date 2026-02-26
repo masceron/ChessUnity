@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Game.Managers;
+using Game.Piece;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.SceneManagement.SceneManager;
@@ -7,16 +9,18 @@ using GameConfig = Game.Save.Stage.GameConfig;
 
 namespace UX.UI.Loader
 {
-
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class SceneLoader
     {
-        private static bool _isRegistered = false;
+        private static bool _isRegistered;
         private static GameMode chosenGameMode = GameMode.PlayerVsAI;
+        private static List<PieceConfig> statuePieceConfigs;
+
         public static void Start()
         {
-            if (_isRegistered) { return; }
-            
+            if (_isRegistered) return;
+
             sceneLoaded += (scene, _) =>
             {
                 _isRegistered = true;
@@ -26,7 +30,15 @@ namespace UX.UI.Loader
                         UIManager.Ins.Load(CanvasID.MainMenu);
                         break;
                     case 1:
-                        MatchManager.Ins.Init(new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)), chosenGameMode);
+                        if (statuePieceConfigs != null)
+                        {
+                            Config.SetBlackPieceConfig(statuePieceConfigs);
+                            statuePieceConfigs = null;
+                        }
+
+                        MatchManager.Ins.Init(
+                            new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)),
+                            chosenGameMode);
                         break;
                     case 2:
                         UIManager.Ins.Load(CanvasID.FreePlayMenu);
@@ -34,29 +46,38 @@ namespace UX.UI.Loader
                     case 3:
                         UIManager.Ins.Load(CanvasID.StartGame);
                         break;
+                    case 4:
+                        break;
                 }
             };
         }
-        
+
         public static void LoadSceneWithLoadingScreen(int id)
         {
             UIManager.Ins.Load(CanvasID.Loading);
             UIManager.Ins.StartCoroutine(Load(id));
         }
+
         public static void LoadFreePlay(GameMode gameMode)
         {
             LoadSceneWithLoadingScreen(1);
             chosenGameMode = gameMode;
         }
+
+        public static void LoadStatueBattle(List<PieceConfig> blackPieceConfigs)
+        {
+            statuePieceConfigs = blackPieceConfigs;
+            chosenGameMode = GameMode.PlayerVsPlayer;
+            LoadSceneWithLoadingScreen(1);
+        }
+
         private static IEnumerator Load(int id)
         {
+            yield return new WaitForSeconds(0.2f);
             var op = LoadSceneAsync(id, LoadSceneMode.Single);
             while (!op.isDone)
             {
-                if (op.progress >= 0.9f)
-                {
-                    op.allowSceneActivation = true;
-                }
+                if (op.progress >= 0.9f) op.allowSceneActivation = true;
                 yield return null;
             }
         }

@@ -1,32 +1,34 @@
+using System;
 using Game.Action.Internal;
-using static Game.Common.BoardUtils;
-using Game.AI;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class ThreadPipefishActive : Action, ISkills, IAIAction
+    [MemoryPackable]
+    public partial class ThreadPipefishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ThreadPipefishActive()
+        {
+        }
+
         public ThreadPipefishActive(int maker, int target) : base(maker)
         {
-            Maker = (ushort)maker;
-            Target = (ushort)target;
+            Maker = maker;
+            Target = target;
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            throw new NotImplementedException();
         }
 
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(PieceOn(Maker), PieceOn(Target))));
-        }
-
-        public void CompleteActionForAI()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int AIPenaltyValue(PieceLogic maker)
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,16 +1,17 @@
-using Game.Common;
 using Game.Managers;
+using Game.Triggers;
 
 namespace Game.Effects.RegionalEffect
 {
     public abstract class RegionalEffect : Observer
     {
-        public RegionalEffectType Type { get; set; }
-        public RegionalEffect(RegionalEffectType type)
+        protected RegionalEffect(RegionalEffectType type)
         {
             Type = type;
             MatchManager.Ins.GameState.OnIncreaseTurn += ApplyEffect;
         }
+
+        public RegionalEffectType Type { get; }
         protected abstract void ApplyEffect(int currentTurn);
 
         public override bool Equals(object obj)
@@ -40,12 +41,12 @@ namespace Game.Effects.RegionalEffect
 
     public enum RegionalEffectType
     {
-        Whirpool,
+        Whirlpool,
         PsionicShock,
         BloodMoon,
         DjinnBlessing,
         RedTide,
         BenthicStorm,
-        None,
+        None
     }
 }

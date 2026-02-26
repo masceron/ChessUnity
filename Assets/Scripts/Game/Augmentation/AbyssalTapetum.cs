@@ -6,10 +6,12 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AbyssalTapetum : Augmentation
     {
-        public AbyssalTapetum() : base(AugmentationName.AbyssalTapetum, AugmentationRarity.Cursed, AugmentationSlot.Optic, null, null)
+        public AbyssalTapetum() : base(AugmentationName.AbyssalTapetum, AugmentationRarity.Cursed,
+            AugmentationSlot.Optic, null, null)
         {
             PassiveEffects = new List<Effect>();
         }

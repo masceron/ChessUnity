@@ -1,26 +1,36 @@
 using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 // <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaSwap : Action, ISkills
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class TemperantiaSwap : Action, ISkills
     {
+        public int allyIndex = -1;
+        public int enemyIndex = -1; // -1 nếu chưa chọn enemy
+
+        [MemoryPackConstructor]
+        private TemperantiaSwap()
+        {
+        }
+
+        public TemperantiaSwap(int maker, int allyIndex, int enemyIndex) : base(maker)
+        {
+            Maker = maker;
+            this.allyIndex = allyIndex;
+            this.enemyIndex = enemyIndex;
+        }
+
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;
-        }
-        public int allyIndex = -1;
-        public int enemyIndex = -1; // -1 nếu chưa chọn enemy
-        public TemperantiaSwap(int maker, int allyIndex, int enemyIndex) : base(maker)
-        {
-            Maker = (ushort)maker;
-            this.allyIndex = allyIndex;
-            this.enemyIndex = enemyIndex;
         }
 
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
@@ -30,28 +40,22 @@ namespace Game.Action.Skills
             var ally = PieceOn(allyIndex);
             var enemy = PieceOn(enemyIndex);
             if (ally == null || enemy == null) return;
-        
+
             // Copy danh sách buff và debuff trước khi bị xóa
             var allyDebuffs = ally.Effects.FindAll(e => e.Category == EffectCategory.Debuff);
             var enemyBuffs = enemy.Effects.FindAll(e => e.Category == EffectCategory.Buff);
-        
+
             // Xóa debuff khỏi Ally và buff khỏi Enemy
-            foreach (var effect in allyDebuffs)
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
-            foreach (var effect in enemyBuffs)
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(effect));
-            }
-        
+            foreach (var effect in allyDebuffs) ActionManager.EnqueueAction(new RemoveEffect(effect));
+            foreach (var effect in enemyBuffs) ActionManager.EnqueueAction(new RemoveEffect(effect));
+
             // Thêm debuff vào Enemy (resolve Piece before applying)
             foreach (var effect in allyDebuffs)
             {
                 effect.Piece = enemy;
                 ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
             }
-        
+
             // Thêm buff vào Ally
             foreach (var effect in enemyBuffs)
             {

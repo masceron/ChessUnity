@@ -5,11 +5,12 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
-    
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Kelp : Formation
     {
-        private bool pieceHaveCamouflage;
+        private bool _pieceHaveCamouflage;
+
         public Kelp(bool haveDuration, bool color) : base(color)
         {
             HaveDuration = haveDuration;
@@ -20,24 +21,21 @@ namespace Game.Tile
             return FormationType.Kelp;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
             if (piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
-            {
-                pieceHaveCamouflage = true;
-            } else {
+                _pieceHaveCamouflage = true;
+            else
                 ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece), FormationType.Kelp));
-            }
         }
 
-        public override void OnPieceExit(PieceLogic piece)
+        protected override void OnPieceExit(PieceLogic piece)
         {
-            if (!pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
-            {
-                ActionManager.EnqueueAction(new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == "effect_camouflage")));
-            }
-            
+            if (!_pieceHaveCamouflage && piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
+                ActionManager.EnqueueAction(
+                    new RemoveEffect(piece.Effects.Find(effect => effect.EffectName == "effect_camouflage")));
+
             base.OnPieceExit(piece);
         }
 
@@ -47,4 +45,3 @@ namespace Game.Tile
         }
     }
 }
-

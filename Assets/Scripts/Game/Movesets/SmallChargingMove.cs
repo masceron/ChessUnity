@@ -3,7 +3,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SmallChargingMoves : BaseMovePattern
     {
         /*public static void Quiets(List<Action.Action> list, int pos)
@@ -12,7 +13,7 @@ namespace Game.Movesets
             var color = piece.Color;
             var (rank, file) = RankFileOf(pos);
             var moveRange = piece.GetMoveRange(ref index);
-            
+
             // Đi 3 ô phía trước và 2 ô phía sau
             const int forwardRange = 2;
             const int backwardRange = 1;
@@ -65,7 +66,7 @@ namespace Game.Movesets
             var color = piece.Color;
             var (rank, file) = RankFileOf(pos);
             var attackRange = piece.AttackRange;
-            
+
             const int forwardRange = 3;
             const int backwardRange = 2;
 
@@ -137,7 +138,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new SmallChargingMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 10 + 5 * moveRange;
         }
@@ -146,7 +147,7 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new SmallChargingMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 10 + 5 * attackRange;
         }
     }

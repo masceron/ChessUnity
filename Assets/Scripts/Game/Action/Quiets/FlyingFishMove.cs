@@ -1,16 +1,24 @@
-﻿using Game.Managers;
+using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Quiets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class FlyingFishMove: Action, IQuiets
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class FlyingFishMove : Action, IQuiets
     {
         public int From;
-        public FlyingFishMove(int maker, int to) : base(maker)
+
+        [MemoryPackConstructor]
+        private FlyingFishMove()
+        {
+        }
+
+        public FlyingFishMove(int maker, int target) : base(maker)
         {
             From = maker;
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+            Target = target;
         }
 
         protected override void Animate()

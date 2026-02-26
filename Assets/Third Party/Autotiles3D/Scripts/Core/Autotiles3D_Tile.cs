@@ -1,13 +1,12 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Serialization;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using Object = UnityEngine.Object;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core
 {
     public enum Neighbor
     {
@@ -31,19 +30,35 @@ namespace Autotiles3D
     {
         public bool IsActive = true;
         public GameObject Object;
-        public bool Random = false;
+        public bool Random;
 
         //this list is exluding the original "Object" Gameobject. 
         //The reason for this is simply because the Randomized Objects list was added in a later Autotiles3D update.
         //For backwards compatability "Object" is therefore kept.
-        public List<GameObject> Randoms = new List<GameObject>();
-        public Relation[] Relations = new Relation[27];//0 nothing, 1 arrow 2 edge , order left right back front down up
+        public List<GameObject> Randoms = new();
+
+        public Relation[]
+            Relations = new Relation[27]; //0 nothing, 1 arrow 2 edge , order left right back front down up
+
         public bool[] AllowRotation = new bool[3];
         [SerializeField] private int _ruleID = -1;
+
         public Autotiles3D_Rule()
         {
             _ruleID = Guid.NewGuid().GetHashCode();
         }
+
+        public Autotiles3D_Rule(Autotiles3D_Rule copy)
+        {
+            _ruleID = Guid.NewGuid().GetHashCode();
+            IsActive = copy.IsActive;
+            Object = copy.Object;
+            Randoms = new List<GameObject>();
+            foreach (var o in copy.Randoms) Randoms.Add(o);
+            Relations = Array.ConvertAll(copy.Relations, r => r);
+            AllowRotation = Array.ConvertAll(copy.AllowRotation, r => r);
+        }
+
         public int RuleID
         {
             get
@@ -53,19 +68,7 @@ namespace Autotiles3D
                 return _ruleID;
             }
         }
-        public Autotiles3D_Rule(Autotiles3D_Rule copy)
-        {
-            _ruleID = Guid.NewGuid().GetHashCode();
-            IsActive = copy.IsActive;
-            Object = copy.Object;
-            Randoms = new List<GameObject>();
-            foreach (var o in copy.Randoms)
-            {
-                Randoms.Add(o);
-            }
-            Relations = Array.ConvertAll(copy.Relations, r => r);
-            AllowRotation = Array.ConvertAll(copy.AllowRotation, r => r);
-        }
+
         public GameObject GetRandomObject()
         {
             var index = UnityEngine.Random.Range(0, Randoms.Count + 1); //last index is the default "Object"
@@ -75,29 +78,23 @@ namespace Autotiles3D
         }
 #if UNITY_EDITOR
         /// <summary>
-        /// Returns a random object, but will exclude "instance". Can return null if no applicable object left.
+        ///     Returns a random object, but will exclude "instance". Can return null if no applicable object left.
         /// </summary>
         /// <param name="instance"></param>
         /// <returns></returns>
         public GameObject GetRandomObjectExclude(GameObject instance)
         {
-            var objectList = new List<GameObject>() { Object };
+            var objectList = new List<GameObject> { Object };
             objectList.AddRange(Randoms);
 
             if (objectList.Count == 0)
                 return null;
 
             if (instance != null)
-            {
                 //remove if instance's source object is the same
                 for (var i = objectList.Count - 1; i >= 0; i--)
-                {
                     if (PrefabUtility.GetCorrespondingObjectFromSource(instance) == objectList[i])
-                    {
                         objectList.RemoveAt(i);
-                    }
-                }
-            }
 
             //return null if no other object is available
             if (objectList.Count == 0)
@@ -105,7 +102,6 @@ namespace Autotiles3D
 
             var index = UnityEngine.Random.Range(0, objectList.Count);
             return objectList[index];
-
         }
 #endif
     }
@@ -117,18 +113,34 @@ namespace Autotiles3D
         [SerializeField] private int _tileID = -1;
 
         public GameObject Default;
-        public List<GameObject> Randoms = new List<GameObject>();
-        public string Tag => _group + _name;
-        public bool Random = false;
+        public List<GameObject> Randoms = new();
+        public bool Random;
 
-        [SerializeField]
-        [FormerlySerializedAs("DisplayName")]
+        [SerializeField] [FormerlySerializedAs("DisplayName")]
         private string _name;
 
-        public string Name => _name;
+        public List<Autotiles3D_Rule> Rules = new();
+        [NonSerialized] private Autotiles3D_TileGroup cachedGroup;
 
-        public List<Autotiles3D_Rule> Rules = new List<Autotiles3D_Rule>();
+        public Autotiles3D_Tile(string displayName)
+        {
+            _name = displayName;
+        }
+
+        public Autotiles3D_Tile(Autotiles3D_Tile copy)
+        {
+            Default = copy.Default;
+            Randoms = new List<GameObject>();
+            foreach (var random in Randoms) Randoms.Add(random);
+            _name = copy.Name + "(Copy)";
+            foreach (var rule in copy.Rules) Rules.Add(new Autotiles3D_Rule(rule));
+        }
+
+        public string Tag => _group + _name;
+
+        public string Name => _name;
         public bool HasRules => Rules.Count > 0;
+
         public int TileID
         {
             get
@@ -138,20 +150,24 @@ namespace Autotiles3D
                 return _tileID;
             }
         }
+
+        public string Group => _group;
+
         public void ResetID()
         {
             _tileID = 0;
         }
+
         public void SetGroupName(string group)
         {
             _group = group;
         }
+
         public bool HasAnyRandomizeEnabled()
         {
             return Random || Rules.Any(r => r.Random);
         }
-        public string Group => _group;
-        [NonSerialized] private Autotiles3D_TileGroup cachedGroup;
+
         public Autotiles3D_TileGroup GetGroup()
         {
             if (cachedGroup != null)
@@ -167,33 +183,13 @@ namespace Autotiles3D
 
             var groups = Autotiles3DUtility.LoadTileGroups();
             foreach (var group in groups)
-            {
                 if (group.name == _group)
                 {
                     cachedGroup = group;
                     break;
                 }
-            }
 #endif
             return cachedGroup;
-        }
-        public Autotiles3D_Tile(string displayName)
-        {
-            _name = displayName;
-        }
-        public Autotiles3D_Tile(Autotiles3D_Tile copy)
-        {
-            Default = copy.Default;
-            Randoms = new List<GameObject>();
-            foreach (var random in Randoms)
-            {
-                Randoms.Add(random);
-            }
-            _name = copy.Name + "(Copy)";
-            foreach (var rule in copy.Rules)
-            {
-                Rules.Add(new Autotiles3D_Rule(rule));
-            }
         }
 
         public GameObject GetRandomDefault()
@@ -206,27 +202,22 @@ namespace Autotiles3D
 
 #if UNITY_EDITOR
         /// <summary>
-        /// same method as in Autotiles3D_Rule, but for the Default Object
+        ///     same method as in Autotiles3D_Rule, but for the Default Object
         /// </summary>
         public GameObject GetRandomDefaultExclude(GameObject instance)
         {
-            var objectList = new List<GameObject>() { Default };
+            var objectList = new List<GameObject> { Default };
             objectList.AddRange(Randoms);
 
             if (objectList.Count == 0)
                 return null;
 
             if (instance != null)
-            {
                 //remove if instance's source object is the same
                 for (var i = objectList.Count - 1; i >= 0; i--)
-                {
                     if (PrefabUtility.GetCorrespondingObjectFromSource(instance) == objectList[i])
-                    {
                         objectList.RemoveAt(i);
-                    }
-                }
-            }
+
             //return null if no other object is available
             if (objectList.Count == 0)
                 return null;
@@ -234,9 +225,10 @@ namespace Autotiles3D
             var index = UnityEngine.Random.Range(0, objectList.Count);
             return objectList[index];
         }
+
         public Autotiles3D_Rule GetRule(bool[] neighbors, out int[] addedRotation)
         {
-            addedRotation = new int[] { -1, 0 };
+            addedRotation = new[] { -1, 0 };
 
             if (!HasRules)
                 return null;
@@ -255,9 +247,10 @@ namespace Autotiles3D
 
             return null;
         }
+
         private bool DoesRulePass(Autotiles3D_Rule rule, bool[] neighbors, out int[] rotation)
         {
-            rotation = new int[] { 0, 0 }; //index of rotation axis , angle axis ratation in degrees
+            rotation = new[] { 0, 0 }; //index of rotation axis , angle axis ratation in degrees
 
             if (rule == null)
                 return false;
@@ -275,7 +268,6 @@ namespace Autotiles3D
                 rotation[1] = 0;
 
                 if (rule.AllowRotation[h])
-                {
                     for (var i = 0; i < 3; i++)
                     {
                         rotation[1] += 90;
@@ -287,28 +279,27 @@ namespace Autotiles3D
                             rotation[0] = h;
                             return true;
                         }
+
                         checkedRotation = rotated;
                     }
-                }
             }
+
             return false;
         }
+
         private bool DoEdgesMatch(Relation[] relations, bool[] neighbors)
         {
             for (var i = 0; i < relations.Length; i++)
-            {
                 if (relations[i] == Relation.Edge && neighbors[i])
                     return false;
-            }
             return true;
         }
+
         private bool DoArrowsMatch(Relation[] relations, bool[] neighbors)
         {
             for (var i = 0; i < relations.Length; i++)
-            {
                 if (relations[i] == Relation.Arrow && !neighbors[i])
                     return false;
-            }
             return true;
         }
 
@@ -407,10 +398,13 @@ namespace Autotiles3D
                     rotated[26] = relations[8];
                     break;
             }
+
             return rotated;
         }
+
         private const float _width = 80;
-        public void RenderTileGUI(out bool dirty, UnityEngine.Object context)
+
+        public void RenderTileGUI(out bool dirty, Object context)
         {
             dirty = false;
             EditorGUI.BeginChangeCheck();
@@ -425,10 +419,7 @@ namespace Autotiles3D
             {
                 //check for duplicate names
                 var increase = 1;
-                while (Autotiles3DUtility.DoesTileExist(-1, newName, _group))
-                {
-                    newName += $"({increase++})";
-                }
+                while (Autotiles3DUtility.DoesTileExist(-1, newName, _group)) newName += $"({increase++})";
                 Undo.RegisterCompleteObjectUndo(context, "Name Change");
                 _name = newName;
             }
@@ -442,7 +433,7 @@ namespace Autotiles3D
 
             var defaultLabel = Random ? "Random Default 1" : "Default";
 
-            var defaultGO = EditorGUILayout.ObjectField(defaultLabel, Default, typeof(GameObject), allowSceneObjects: false) as GameObject;
+            var defaultGO = EditorGUILayout.ObjectField(defaultLabel, Default, typeof(GameObject), false) as GameObject;
             if (defaultGO != Default)
             {
                 Undo.RegisterCompleteObjectUndo(context, "Default GO Change");
@@ -457,31 +448,36 @@ namespace Autotiles3D
                     EditorGUILayout.BeginHorizontal();
                     if (i < Randoms.Count)
                     {
-                        var updatedObject = EditorGUILayout.ObjectField($"Random Default {i + 2}", Randoms[i], typeof(GameObject), allowSceneObjects: false) as GameObject;
+                        var updatedObject =
+                            EditorGUILayout.ObjectField($"Random Default {i + 2}", Randoms[i], typeof(GameObject),
+                                false) as GameObject;
                         if (Randoms[i] != updatedObject)
                         {
                             Undo.RegisterCompleteObjectUndo(context, "Random Tile Object Change");
                             Randoms[i] = updatedObject;
                         }
+
                         if (updatedObject == null)
                             remove = i;
                     }
                     else
                     {
-                        var newAdd = EditorGUILayout.ObjectField("New random option", null, typeof(GameObject), allowSceneObjects: false) as GameObject;
+                        var newAdd =
+                            EditorGUILayout.ObjectField("New random option", null, typeof(GameObject), false) as
+                                GameObject;
                         if (newAdd != null)
                         {
                             Undo.RegisterCompleteObjectUndo(context, "Add Default Tile Object");
                             Randoms.Add(newAdd);
                         }
                     }
+
                     EditorGUILayout.EndHorizontal();
                 }
-                if (remove > -1)
-                {
-                    Randoms.RemoveAt(remove);
-                }
+
+                if (remove > -1) Randoms.RemoveAt(remove);
             }
+
             EditorGUIUtility.labelWidth = 0;
             EditorGUILayout.EndVertical();
 
@@ -489,9 +485,9 @@ namespace Autotiles3D
             {
                 var texture = AssetPreview.GetAssetPreview(Default);
                 var content = new GUIContent(texture);
-                EditorGUILayout.LabelField(content, GUILayout.Height(100/*EditorGUIUtility.singleLineHeight * 2*/));
-
+                EditorGUILayout.LabelField(content, GUILayout.Height(100 /*EditorGUIUtility.singleLineHeight * 2*/));
             }
+
             EditorGUILayout.EndHorizontal();
 
             var upArrow = '\u25B2';
@@ -509,7 +505,9 @@ namespace Autotiles3D
                 GUILayout.FlexibleSpace();
                 if (!rule.Random)
                 {
-                    var ruleObject = EditorGUILayout.ObjectField(rule.Object, typeof(GameObject), allowSceneObjects: false, GUILayout.Width(_width * 2)) as GameObject;
+                    var ruleObject =
+                        EditorGUILayout.ObjectField(rule.Object, typeof(GameObject), false,
+                            GUILayout.Width(_width * 2)) as GameObject;
                     if (rule.Object != ruleObject)
                     {
                         Undo.RegisterCompleteObjectUndo(context, "Rule Object Change");
@@ -522,6 +520,7 @@ namespace Autotiles3D
                     Undo.RegisterCompleteObjectUndo(context, "Rule Remove");
                     Rules.Remove(rule);
                 }
+
                 if (rule.IsActive)
                 {
                     var cache = GUI.color;
@@ -531,6 +530,7 @@ namespace Autotiles3D
                         Undo.RegisterCompleteObjectUndo(context, "Rule Disable");
                         rule.IsActive = false;
                     }
+
                     GUI.color = cache;
                 }
                 else
@@ -541,11 +541,11 @@ namespace Autotiles3D
                     {
                         Undo.RegisterCompleteObjectUndo(context, "Rule Enable");
                         rule.IsActive = true;
-
                     }
-                    GUI.color = cache;
 
+                    GUI.color = cache;
                 }
+
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginVertical();
@@ -559,7 +559,9 @@ namespace Autotiles3D
 
                 if (rule.Random)
                 {
-                    var ruleObject = EditorGUILayout.ObjectField("Random Option 1", rule.Object, typeof(GameObject), allowSceneObjects: false) as GameObject;
+                    var ruleObject =
+                        EditorGUILayout.ObjectField("Random Option 1", rule.Object, typeof(GameObject), false) as
+                            GameObject;
                     if (rule.Object != ruleObject)
                     {
                         Undo.RegisterCompleteObjectUndo(context, "Rule Object Change");
@@ -573,32 +575,35 @@ namespace Autotiles3D
                         EditorGUILayout.BeginHorizontal();
                         if (i < rule.Randoms.Count)
                         {
-                            var updatedObject = EditorGUILayout.ObjectField($"Random Option {i + 2}", rule.Randoms[i], typeof(GameObject), allowSceneObjects: false) as GameObject;
+                            var updatedObject = EditorGUILayout.ObjectField($"Random Option {i + 2}", rule.Randoms[i],
+                                typeof(GameObject), false) as GameObject;
                             if (rule.Randoms[i] != updatedObject)
                             {
                                 Undo.RegisterCompleteObjectUndo(context, "Rule Object Change");
                                 rule.Randoms[i] = updatedObject;
                             }
+
                             if (updatedObject == null)
                                 remove = i;
                         }
                         else
                         {
-                            var newAdd = EditorGUILayout.ObjectField("Add new random option", null, typeof(GameObject), allowSceneObjects: false) as GameObject;
+                            var newAdd =
+                                EditorGUILayout.ObjectField("Add new random option", null, typeof(GameObject), false) as
+                                    GameObject;
                             if (newAdd != null)
                             {
                                 Undo.RegisterCompleteObjectUndo(context, "Add Rule Object");
                                 rule.Randoms.Add(newAdd);
                             }
                         }
+
                         EditorGUILayout.EndHorizontal();
                     }
 
-                    if (remove > -1)
-                    {
-                        rule.Randoms.RemoveAt(remove);
-                    }
+                    if (remove > -1) rule.Randoms.RemoveAt(remove);
                 }
+
                 EditorGUILayout.EndVertical();
 
                 EditorGUILayout.LabelField("Free Axis Rotation");
@@ -611,18 +616,21 @@ namespace Autotiles3D
                     Undo.RegisterCompleteObjectUndo(context, "Rule rotation");
                     rule.AllowRotation[0] = ruleRot0;
                 }
+
                 var ruleRot1 = EditorGUILayout.Toggle("Y", rule.AllowRotation[1], GUILayout.Width(30));
                 if (ruleRot1 != rule.AllowRotation[1])
                 {
                     Undo.RegisterCompleteObjectUndo(context, "Rule rotation");
                     rule.AllowRotation[1] = ruleRot1;
                 }
+
                 var ruleRot2 = EditorGUILayout.Toggle("Z", rule.AllowRotation[2], GUILayout.Width(30));
                 if (ruleRot2 != rule.AllowRotation[2])
                 {
                     Undo.RegisterCompleteObjectUndo(context, "Rule rotation");
                     rule.AllowRotation[2] = ruleRot2;
                 }
+
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
@@ -631,7 +639,6 @@ namespace Autotiles3D
                     EditorGUILayout.BeginVertical();
                     var content = new GUIContent[9];
                     for (var j = 0; j < content.Length; j++)
-                    {
                         if (i == 1 && j == 4)
                         {
                             if (rule.Object != null)
@@ -643,15 +650,16 @@ namespace Autotiles3D
                         {
                             content[j] = GetContent(rule.Relations[i * 9 + j], 0);
                         }
-                    }
+
                     GUILayout.Space((3 - (i + 1)) * 15);
-                    var selection = GUILayout.SelectionGrid(-1, content, 3, GUILayout.Width(100), GUILayout.Height(100));
+                    var selection =
+                        GUILayout.SelectionGrid(-1, content, 3, GUILayout.Width(100), GUILayout.Height(100));
                     if (selection > -1)
                     {
                         selection = i * 9 + selection; //from 0 to 26
                         if (selection != 13)
                         {
-                            var tempSelection = Autotiles3DEnumUtility.Next(rule.Relations[selection]);
+                            var tempSelection = rule.Relations[selection].Next();
                             if (rule.Relations[selection] != tempSelection)
                             {
                                 Undo.RegisterCompleteObjectUndo(context, "Rule change");
@@ -659,6 +667,7 @@ namespace Autotiles3D
                             }
                         }
                     }
+
                     EditorGUILayout.EndVertical();
                 }
 
@@ -682,6 +691,7 @@ namespace Autotiles3D
                         Rules.Insert(index - 1, rule);
                     }
                 }
+
                 if (GUILayout.Button(downArrow.ToString(), GUILayout.Width(24)))
                 {
                     var index = Rules.IndexOf(rule);
@@ -692,6 +702,7 @@ namespace Autotiles3D
                         Rules.Insert(index + 1, rule);
                     }
                 }
+
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.EndVertical();
@@ -706,14 +717,14 @@ namespace Autotiles3D
                 Undo.RegisterCompleteObjectUndo(context, "Rule Add");
                 Rules.Add(new Autotiles3D_Rule());
             }
+
             if (GUILayout.Button("-"))
-            {
                 if (Rules.Count > 0)
                 {
                     Undo.RegisterCompleteObjectUndo(context, "Rule Remove");
                     Rules.RemoveAt(Rules.Count - 1);
                 }
-            }
+
             EditorGUILayout.EndHorizontal();
 
             if (EditorGUI.EndChangeCheck() || GUI.changed)
@@ -722,6 +733,7 @@ namespace Autotiles3D
                 Autotiles3DUtility.ClearCache(TileID);
             }
         }
+
         private GUIContent GetContent(Relation relation, int direction)
         {
             switch (relation)
@@ -733,13 +745,9 @@ namespace Autotiles3D
                 case Relation.Edge:
                     return new GUIContent(Resources.Load("Icons/cross") as Texture);
             }
+
             return new GUIContent();
         }
 #endif
     }
 }
-
-
-
-
-

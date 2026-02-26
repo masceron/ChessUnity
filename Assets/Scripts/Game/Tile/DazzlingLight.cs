@@ -1,16 +1,16 @@
-﻿using Game.Effects.Debuffs;
-using Game.Piece.PieceLogic.Commons;
-using Game.Action;
+﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
     /// <summary>
-    /// Dazzling Light Tile
-    /// Gây hiệu ứng Blinded lên quân cờ trong 1 turn
+    ///     Dazzling Light Tile
+    ///     Gây hiệu ứng Blinded lên quân cờ trong 1 turn
     /// </summary>
-
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DazzlingLight : Formation
     {
         public DazzlingLight(bool haveDuration, bool color) : base(color)
@@ -23,15 +23,10 @@ namespace Game.Tile
             return FormationType.DazzlingLight;
         }
 
-        public override void OnPieceEnter(PieceLogic piece)
+        protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(1, 100, piece), FormationType.DazzlingLight));
-        }
-
-        public override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece), FormationType.DazzlingLight));
         }
 
         public override int GetValueForAI()
@@ -40,4 +35,3 @@ namespace Game.Tile
         }
     }
 }
-

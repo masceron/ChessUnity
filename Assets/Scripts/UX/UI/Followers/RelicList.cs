@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Game.Save.Player;
 using Game.Common;
+using Game.Save.Player;
 using Game.ScriptableObjects;
 using Game.ScriptableObjects.Collections;
 using TMPro;
@@ -10,8 +10,9 @@ using ZLinq;
 
 namespace UX.UI.Followers
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RelicList: Singleton<RelicList>, IPointerClickHandler
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class RelicList : Singleton<RelicList>, IPointerClickHandler
     {
         [SerializeField] private RelicsData relicsData;
         [SerializeField] private GameObject relicDisplay;
@@ -22,37 +23,38 @@ namespace UX.UI.Followers
 
         private readonly List<RelicLogo> pool = new();
         private Dictionary<string, RelicInfo> data;
-        private List<RelicInfo> searchResult;
         private string lastKeyword;
-        
+        private List<RelicInfo> searchResult;
+
         private bool selecting;
 
         protected void OnEnable()
         {
             data = new Dictionary<string, RelicInfo>();
-            
+
             if (PlayerSaveLoader.Player.CollectedRelics != null)
             {
                 var collectedSet = new HashSet<string>(PlayerSaveLoader.Player.CollectedRelics);
 
                 foreach (var relicInfo in relicsData.relicsData)
-                {
                     if (collectedSet.Contains(relicInfo.key))
-                    {
                         if (!data.ContainsKey(relicInfo.key))
-                        {
                             data.Add(relicInfo.key, relicInfo);
-                        }
-                    }
-                }
             }
-            
+
             SearchByKeyword("");
         }
 
         private void OnDisable()
         {
             Close();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (eventData.button != PointerEventData.InputButton.Right || !selecting) return;
+            selecting = false;
+            Undisplay();
         }
 
         public void Close()
@@ -72,7 +74,7 @@ namespace UX.UI.Followers
             if (selecting) return;
             descriptions.Undisplay();
         }
-        
+
         public void Select(RelicInfo relic)
         {
             selecting = false;
@@ -83,10 +85,10 @@ namespace UX.UI.Followers
         public void SearchByKeyword(string start)
         {
             start = start.ToLower();
-            
+
             if (lastKeyword != null && start.StartsWith(lastKeyword))
             {
-                var result = searchResult.Where(r => 
+                var result = searchResult.Where(r =>
                     r.key.Contains(start)).ToList();
 
                 if (result.SequenceEqual(searchResult)) return;
@@ -94,10 +96,10 @@ namespace UX.UI.Followers
             }
             else
             {
-                searchResult = data.Values.Where(r => 
+                searchResult = data.Values.Where(r =>
                     r.key.Contains(start)).ToList();
             }
-            
+
             lastKeyword = start;
             DisplaySearchResult();
         }
@@ -110,43 +112,25 @@ namespace UX.UI.Followers
                 case > 0:
                 {
                     for (var i = 1; i <= needed; i++)
-                    {
                         pool.Add(Instantiate(relicDisplay, list).GetComponent<RelicLogo>());
-                    }
 
                     break;
                 }
                 case < 0:
                 {
-                    for (var i = pool.Count - 1; i > searchResult.Count - 1; i--)
-                    {
-                        pool[i].gameObject.SetActive(false);
-                    }
+                    for (var i = pool.Count - 1; i > searchResult.Count - 1; i--) pool[i].gameObject.SetActive(false);
 
                     break;
                 }
             }
-            
+
             for (var i = 0; i < searchResult.Count; i++)
             {
                 var obj = pool[i].gameObject;
-                if (!obj.activeSelf)
-                {
-                    obj.SetActive(true);
-                }
+                if (!obj.activeSelf) obj.SetActive(true);
 
-                if (pool[i].Relic != searchResult[i])
-                {
-                    pool[i].Load(searchResult[i]);
-                }
+                if (pool[i].Relic != searchResult[i]) pool[i].Load(searchResult[i]);
             }
-        }
-        
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            if (eventData.button != PointerEventData.InputButton.Right || !selecting) return;
-            selecting = false;
-            Undisplay();
         }
     }
 }

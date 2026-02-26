@@ -6,15 +6,20 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 {
     public class Autotiles3DSettings : ScriptableObject
     {
-        private static Autotiles3DSettings _settings;
         private const string SettingsPath = "Assets/Third Party/Autotiles3D/Content/Autotiles3D_Settings.asset";
 
-        [FormerlySerializedAs("_useUndoAPI")]
-        [FormerlySerializedAs("UseUndoAPI")]
-        [SerializeField]
+        private static Autotiles3DSettings _settings;
+
+        //for editor use
+        public static bool IsLocked;
+
+        [FormerlySerializedAs("_useUndoAPI")] [FormerlySerializedAs("UseUndoAPI")] [SerializeField]
         private bool useUndoAPI; //recommend off, because Unitys Undo API is incredible slow and inefficient.
+
+        [FormerlySerializedAs("SuppressTileAmountWarning")]
+        public bool suppressTileAmountWarning;
+
         public bool UseUndoAPI => useUndoAPI;
-        [FormerlySerializedAs("SuppressTileAmountWarning")] public bool suppressTileAmountWarning;
 
         public void SetUndoAPI(bool value)
         {
@@ -23,8 +28,6 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             EditorUtility.SetDirty(this);
 #endif
         }
-        //for editor use
-        public static bool IsLocked;
 
 #if UNITY_EDITOR
 
@@ -41,17 +44,16 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                     AssetDatabase.CreateAsset(settings, SettingsPath);
                     AssetDatabase.SaveAssets();
                 }
+
                 _settings = settings;
                 return _settings;
             }
         }
+
         internal static SerializedObject GetSerializedSettings()
         {
             return new SerializedObject(EditorInstance);
         }
 #endif
     }
-
-
-
 }

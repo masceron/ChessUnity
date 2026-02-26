@@ -1,27 +1,35 @@
+using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
-using Game.Action.Relics;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
-    public class FrostSigilPending : PendingAction, System.IDisposable
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class FrostSigilPending : PendingAction, IDisposable
     {
-        private FrostSigil frostSigil;
+        private FrostSigil _frostSigil;
+
         public FrostSigilPending(int maker, FrostSigil fs) : base(maker)
         {
-            Maker = (ushort)maker;
-            frostSigil = fs;
+            Maker = maker;
+            _frostSigil = fs;
         }
 
-        public override void CompleteAction()
+        public void Dispose()
         {
-            frostSigil.SetCooldown();
+            _frostSigil = null;
+            Tile.Tile.OnPointEnterHandle = null;
+        }
 
-            var excute = new FrostSigilExcute(Maker, frostSigil.Color);
-            BoardViewer.Ins.ExecuteAction(excute);
+        protected override void CompleteAction()
+        {
+            _frostSigil.SetCooldown();
+
+            var execute = new FrostSigilExecute(Maker, _frostSigil.Color);
+            CommitResult(execute);
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             TileManager.Ins.UnmarkAll();
@@ -29,12 +37,5 @@ namespace Game.Action.Internal.Pending.Relic
 
             Dispose();
         }
-
-        public void Dispose()
-        {
-            frostSigil = null;
-            Tile.Tile.OnPointEnterHandle = null;
-        }
     }
 }
-

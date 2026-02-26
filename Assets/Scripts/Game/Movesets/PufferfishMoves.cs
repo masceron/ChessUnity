@@ -3,7 +3,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PufferfishMoves : BaseMovePattern // Front assault move
     {
         /*public static void Quiets(List<Action.Action> list, int pos)
@@ -23,12 +24,12 @@ namespace Game.Movesets
                     if (!VerifyBounds(file)) continue;
                     var idx = IndexOf(rank, file);
                     if (!IsActive(idx)) continue;
-                    
+
                     var piece = PieceOn(idx);
 
                     if (piece != null) continue;
                     if (Pathfinder.LineBlocker(startRank, startFile, rank, file).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalMove(pos, idx));
                 }
             }
@@ -40,7 +41,7 @@ namespace Game.Movesets
             var color = caller.Color;
             var range = caller.AttackRange;
             var (startRank, startFile) = RankFileOf(pos);
-            
+
             var push = !color ? -1 : 1;
 
             for (var rank = RankOf(pos) - (range - 1) * push; rank != RankOf(pos) + (range + 1) * push; rank += push)
@@ -51,12 +52,12 @@ namespace Game.Movesets
                     if (!VerifyBounds(file)) continue;
                     var idx = IndexOf(rank, file);
                     if (!IsActive(idx)) continue;
-                    
+
                     var piece = PieceOn(idx);
 
                     if (piece == null || piece.Color == color) continue;
                     if (Pathfinder.LineBlocker(startRank, startFile, rank, file).Item1 != -1) continue;
-                    
+
                     list.Add(new NormalCapture(pos, idx));
                 }
             }
@@ -96,7 +97,7 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, forCapture: false, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 20 + 5 * moveRange;
         }
@@ -105,7 +106,7 @@ namespace Game.Movesets
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, forCapture: true, excludeEmptyTile: excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 20 + 5 * attackRange;
         }
     }

@@ -1,14 +1,21 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Buffs;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Relics
 {
-    public class SeafoamPhialAction : Action, IRelicAction
+    [MemoryPackable]
+    public partial class SeafoamPhialAction : Action, IRelicAction
     {
+        [MemoryPackConstructor]
+        private SeafoamPhialAction()
+        {
+        }
+
         public SeafoamPhialAction(int maker) : base(maker)
         {
-            Maker = (ushort)maker;
+            Maker = maker;
         }
 
         protected override void ModifyGameState()

@@ -7,39 +7,37 @@ using UnityEngine.InputSystem;
 
 namespace UX.UI.Army.DesignArmy
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArmyDesign: Singleton<ArmyDesign>
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ArmyDesign : Singleton<ArmyDesign>
     {
-
         [SerializeField] private DesignArmyInfo info;
         public ArmyDesignBoard board;
         public ArmyDesignTroop troopDisplay;
         [SerializeField] private ArmySearcher searcher;
         [SerializeField] private DesignNotification notification;
         [SerializeField] private ArmyRelicSearcher relicSearcher;
-        [NonSerialized] public int size;
         public Game.Save.Army.Army army;
+        [NonSerialized] public int size;
+
+        private void OnDisable()
+        {
+            notification.Close();
+        }
 
         public void Back(InputAction.CallbackContext context)
         {
             if (!context.performed) return;
-            
+
             if (relicSearcher.container.gameObject.activeSelf)
             {
                 relicSearcher.Toggle();
                 return;
             }
-            
-            if (!notification.gameObject.activeSelf)
-            {
-                notification.Open(DesignNotifications.Quit);
-            }
-            else notification.Close();     
-        }
 
-        private void OnDisable()
-        {
-            notification.Close();
+            if (!notification.gameObject.activeSelf)
+                notification.Open(DesignNotifications.Quit);
+            else notification.Close();
         }
 
         public void Load(int s, Game.Save.Army.Army? armyToLoad)
@@ -49,14 +47,11 @@ namespace UX.UI.Army.DesignArmy
             board.Load(size);
             searcher.Load();
             if (armyToLoad != null)
-            {
                 LoadSave(armyToLoad.Value);
-            }
             else
-            {
                 relicSearcher.Load(null);
-            }
         }
+
         private void LoadSave(Game.Save.Army.Army armyToLoad)
         {
             army = armyToLoad;
@@ -73,20 +68,24 @@ namespace UX.UI.Army.DesignArmy
                 notification.Open(DesignNotifications.EmptyName);
                 return;
             }
+
             if (ArmySaveLoader.Exists(army.Name) && UIManager.Ins.GetCanvasID() == CanvasID.DesignArmy)
             {
                 notification.Open(DesignNotifications.Overwrite);
                 return;
             }
+
             Save();
         }
+
         public void Save()
         {
-            army.BoardSize = (ushort) size;
+            army.BoardSize = size;
             SetTroops();
             ArmySaveLoader.Save(army);
             UIManager.Ins.Load(CanvasID.Followers);
         }
+
         private void SetTroops()
         {
             board.Troops.Sort();

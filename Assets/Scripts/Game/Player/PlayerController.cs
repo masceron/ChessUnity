@@ -1,115 +1,101 @@
+using System;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.InputSystem;
 
 namespace Game.Player
 {
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(NavMeshAgent))]
     public class PlayerController : MonoBehaviour
     {
-        [Header("Movement Settings")]
-        [SerializeField] private float moveSpeed = 5f;
-        [SerializeField] private float rotationSpeed = 10f;
-        [SerializeField] private LayerMask groundLayer;
+        public enum InputMouseButton
+        {
+            Left,
+            Right
+        }
 
-        private Vector3 targetPosition;
-        private bool isMoving;
-        [SerializeField] private float minMoveDistance = 0.2f;
-        [SerializeField] private float gravity = -9.81f;
-        [SerializeField] private float gravityMultiplier = 2.0f;
-        private Vector3 verticalVelocity;
+        [Header("Movement Settings")] [SerializeField]
+        private LayerMask groundLayer;
 
-        private CharacterController characterController;
+        [SerializeField] private float stoppingDistance = 0.2f;
+
+        [Header("Input Settings")] [SerializeField]
+        private InputMouseButton moveButton = InputMouseButton.Right; // Default to Right
+
+        private Camera mainCamera; // Cache camera reference
+
+        private NavMeshAgent navMeshAgent;
+
+        public bool IsMoving { get; private set; }
 
         private void Awake()
         {
-            characterController = GetComponent<CharacterController>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
+            mainCamera = Camera.main; // Cache once instead of calling every frame
         }
 
         private void Start()
         {
-            targetPosition = transform.position;
-            isMoving = false;
+            IsMoving = false;
+
+            // Configure NavMeshAgent
+            if (navMeshAgent != null) navMeshAgent.stoppingDistance = stoppingDistance;
         }
 
         private void Update()
         {
             HandleInput();
-            Move();
+            UpdateMovementState();
         }
 
-        public event System.Action<Vector3> OnMoveTargetSet; 
-
-        public enum InputMouseButton { Left, Right }
-
-        [Header("Input Settings")]
-        [SerializeField] private InputMouseButton moveButton = InputMouseButton.Right; // Default to Right
+        public event Action<Vector3> OnMoveTargetSet;
 
         private void HandleInput()
         {
-            if (UnityEngine.InputSystem.Mouse.current == null) return;
+            if (Mouse.current == null || mainCamera == null) return;
 
             var wasPressed = false;
             if (moveButton == InputMouseButton.Left)
-            {
-                wasPressed = UnityEngine.InputSystem.Mouse.current.leftButton.wasPressedThisFrame;
-            }
+                wasPressed = Mouse.current.leftButton.wasPressedThisFrame;
             else
-            {
-                wasPressed = UnityEngine.InputSystem.Mouse.current.rightButton.wasPressedThisFrame;
-            }
+                wasPressed = Mouse.current.rightButton.wasPressedThisFrame;
 
             if (wasPressed)
             {
-                var mousePos = UnityEngine.InputSystem.Mouse.current.position.ReadValue();
-                var ray = Camera.main.ScreenPointToRay(mousePos);
+                var mousePos = Mouse.current.position.ReadValue();
+                var ray = mainCamera.ScreenPointToRay(mousePos);
                 RaycastHit hit;
 
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
                 {
-                    targetPosition = hit.point;
-                    isMoving = true;
-                    
+                    SetDestination(hit.point);
                     OnMoveTargetSet?.Invoke(hit.point);
                 }
             }
         }
 
-        private void Move()
+        private void SetDestination(Vector3 destination)
         {
-            var currentPos = transform.position;
-            var targetPos = targetPosition;
-            var currentPosFlat = new Vector3(currentPos.x, 0, currentPos.z);
-            var targetPosFlat = new Vector3(targetPos.x, 0, targetPos.z);
-            
-            var distance = Vector3.Distance(currentPosFlat, targetPosFlat);
-            var horizontalMove = Vector3.zero;
-
-            if (isMoving && distance > minMoveDistance)
+            if (navMeshAgent != null && navMeshAgent.isOnNavMesh)
             {
-                var direction = (targetPosFlat - currentPosFlat).normalized;
-                horizontalMove = direction * moveSpeed;
+                navMeshAgent.SetDestination(destination);
+                IsMoving = true;
+            }
+        }
 
-                if (direction != Vector3.zero)
-                {
-                    var lookRotation = Quaternion.LookRotation(direction);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
-                }
-            }
-            else
-            {
-                isMoving = false;
-            }
+        private void UpdateMovementState()
+        {
+            if (navMeshAgent != null && IsMoving)
+                // Check if agent has reached destination
+                if (!navMeshAgent.pathPending)
+                    if (navMeshAgent.remainingDistance <= navMeshAgent.stoppingDistance)
+                        if (!navMeshAgent.hasPath || navMeshAgent.velocity.sqrMagnitude == 0f)
+                            IsMoving = false;
+        }
 
-            if (characterController.isGrounded)
-            {
-                verticalVelocity.y = -2f; 
-            }
-            else
-            {
-                verticalVelocity.y += gravity * gravityMultiplier * Time.deltaTime;
-            }
-
-            var finalMove = (horizontalMove + verticalVelocity) * Time.deltaTime;
-            characterController.Move(finalMove);
+        public Vector3 GetDestination()
+        {
+            return navMeshAgent != null ? navMeshAgent.destination : transform.position;
         }
     }
 }

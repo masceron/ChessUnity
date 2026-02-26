@@ -5,8 +5,9 @@ using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MorayEel: Commons.PieceLogic
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class MorayEel : Commons.PieceLogic
     {
         public MorayEel(PieceConfig cfg) : base(cfg, AmbushPredatorMoves.Quiets, QueenMoves.Captures)
         {

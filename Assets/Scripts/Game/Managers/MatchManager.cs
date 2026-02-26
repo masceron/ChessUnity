@@ -21,20 +21,20 @@ namespace Game.Managers
     {
         AIvsAI,
         PlayerVsAI,
-        PlayerVsPlayer,
+        PlayerVsPlayer
     }
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class MatchManager: Singleton<MatchManager>
+
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class MatchManager : Singleton<MatchManager>
     {
-        [NonSerialized]
-        public GameState GameState;
-        
-        [NonSerialized]
-        public BoardViewer InputProcessor;
+        [NonSerialized] public GameState GameState;
 
-        public Vector2Int StartingSize {get; private set;}
+        [NonSerialized] public BoardViewer InputProcessor;
 
-        private void MakeBoard(GameConfig cfg)
+        public Vector2Int StartingSize { get; private set; }
+
+        private static void MakeBoard()
         {
             TileManager.Ins.Spawn();
             FormationManager.Ins.Initialize();
@@ -44,17 +44,16 @@ namespace Game.Managers
         {
             var config = new List<PieceConfig>(lineup.WhiteConfig);
             config.AddRange(lineup.BlackConfig);
-            
-            foreach (var pieceConfig in config.Select(cfg => new PieceConfig(cfg.Type, cfg.Color, (ushort) PosMap(cfg.Index, StartingSize), cfg.AugmentationNames)))
-            {
+
+            foreach (var pieceConfig in config.Select(cfg =>
+                         new PieceConfig(cfg.Type, cfg.Color, PosMap(cfg.Index, StartingSize), cfg.AugmentationNames)))
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
-            }
         }
 
         private void MakeGame(GameConfig cfg)
         {
             GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
-            GameState.OnIncreaseTurn += (ct) => { Debug.Log("current turn : " + ct); };
+            GameState.OnIncreaseTurn += ct => { Debug.Log("current turn : " + ct); };
             ActionManager.Init(GameState);
         }
 
@@ -62,20 +61,18 @@ namespace Game.Managers
         {
             StartingSize = cfg.StartingSize;
             MakeGame(cfg);
-            MakeBoard(cfg);
+            MakeBoard();
 
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()),
                 Config.relicWhiteConfig,
                 Config.relicBlackConfig,
                 Config.regionalEffectType
             );
-            if (gameMode == GameMode.AIvsAI)
-            {
-                gameObject.AddComponent<AIvsAIController>();
-            }
+            if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
             //UIManager.Ins.Load(CanvasID.LineupEdit);
             //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
+
         // public void InitForFreePlay(GameConfig cfg, GameMode gameMode)
         // {
         //     Init(cfg);
@@ -110,10 +107,10 @@ namespace Game.Managers
         {
             var a = Random.Range(1, 101);
             return a <= chance;
-        } 
+        }
+
         public void CallDraw(bool side)
         {
-            
         }
     }
 }

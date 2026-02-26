@@ -21,10 +21,7 @@ namespace Game.Save.Relics
 
         public static void RemoveRelic(string name)
         {
-            if (PlayerSaveLoader.Player.CollectedRelics.Remove(name))
-            {
-                PlayerSaveLoader.Save();
-            }
+            if (PlayerSaveLoader.Player.CollectedRelics.Remove(name)) PlayerSaveLoader.Save();
         }
 
         public static bool HasRelic(string name)

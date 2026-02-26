@@ -1,27 +1,25 @@
 ﻿using Game.Managers;
-
+using Game.Triggers;
 
 namespace Game.Effects.Others
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class CorruptedWisperCharge : Effect, IEndTurnEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class CorruptedWisperCharge : Effect, IEndTurnTrigger
     {
-        private readonly bool color;
-
-        public CorruptedWisperCharge(sbyte strength, bool color) : base(-1, strength, null, "effect_corrupted_wisper_charge")
+        public CorruptedWisperCharge(int strength, bool color) : base(-1, strength, null,
+            "effect_corrupted_wisper_charge")
         {
-            this.color = color;
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Other;
 
         public EndTurnEffectType EndTurnEffectType { get; }
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (MatchManager.Ins.GameState.CurrentTurn % 10 == 0)
-            {
-                Strength++;
-            }
+            if (MatchManager.Ins.GameState.CurrentTurn % 10 == 0) Strength++;
         }
     }
 }

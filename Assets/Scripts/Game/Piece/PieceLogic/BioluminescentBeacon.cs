@@ -5,10 +5,10 @@ using Game.Effects.Traits;
 namespace Game.Piece.PieceLogic
 {
     /// <summary>
-    /// Bioluminescent Beacon Construct
+    ///     Bioluminescent Beacon Construct
     /// </summary>
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BioluminescentBeacon : Commons.PieceLogic
     {
         public BioluminescentBeacon(PieceConfig cfg) : base(cfg)
@@ -16,5 +16,4 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new BioluminescentBeaconPassive(this)));
         }
     }
-
 }

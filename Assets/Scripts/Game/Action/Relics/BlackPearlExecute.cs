@@ -1,17 +1,27 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects;
+using Game.Effects.Buffs;
+using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 using UnityEngine;
 using ZLinq;
+using Random = System.Random;
 
 namespace Game.Action.Relics
 {
-
-    public class BlackPearlExecute : Action, IRelicAction
+    [MemoryPackable]
+    public partial class BlackPearlExecute : Action, IRelicAction
     {
-        private readonly bool _color;
+        [MemoryPackInclude] private bool _color;
+
+        [MemoryPackConstructor]
+        private BlackPearlExecute()
+        {
+        }
+
         public BlackPearlExecute(int target, bool color) : base(-1)
         {
             Target = target;
@@ -24,14 +34,15 @@ namespace Game.Action.Relics
                 ? new ApplyEffect(GetRandomBuffEffect())
                 : new ApplyEffect(GetRandomDebuffEffect()));
         }
-                private Effect GetRandomBuffEffect()
+
+        private Effect GetRandomBuffEffect()
         {
             var buffEffects = AssetManager.Ins.EffectData
                 .Where(kvp => kvp.Value.category == EffectCategory.Buff)
                 .Select(kvp => kvp.Key)
                 .ToArray();
-            
-            var random = new System.Random();
+
+            var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
             Debug.Log("Selected Effect Name: " + selectedEffectName);
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
@@ -43,37 +54,36 @@ namespace Game.Action.Relics
                 .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
                 .Select(kvp => kvp.Key)
                 .ToArray();
-            
-            var random = new System.Random();
+
+            var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
             return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
         }
 
         private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
         {
-            var randomDuration = (sbyte)new System.Random().Next(6, 8);
+            var randomDuration = new Random().Next(6, 8);
             return effectName switch
             {
-                "effect_shield" => new Effects.Buffs.Shield(piece),
-                "effect_carapace" => new Effects.Buffs.Carapace(randomDuration, piece),
-                "effect_haste" => new Effects.Buffs.Haste(randomDuration, 1, piece),
-                "effect_piercing" => new Effects.Buffs.Piercing(randomDuration, piece),
-                "effect_hardened_shield" => new Effects.Buffs.HardenedShield(piece),
-                "effect_true_bite" => new Effects.Buffs.TrueBite(piece),
-                "effect_camouflage" => new Effects.Buffs.Camouflage(piece),
+                "effect_shield" => new Shield(piece),
+                "effect_carapace" => new Carapace(randomDuration, piece),
+                "effect_haste" => new Haste(randomDuration, 1, piece),
+                "effect_piercing" => new Piercing(randomDuration, piece),
+                "effect_hardened_shield" => new HardenedShield(piece),
+                "effect_true_bite" => new TrueBite(piece),
+                "effect_camouflage" => new Camouflage(piece),
 
 
                 // Debuffs
-                "effect_slow" => new Effects.Debuffs.Slow(randomDuration, 1, piece),
-                "effect_blinded" => new Effects.Debuffs.Blinded(randomDuration, 50, piece),
-                "effect_stunned" => new Effects.Debuffs.Stunned(randomDuration, piece),
-                "effect_poison" => new Effects.Debuffs.Poison(randomDuration, piece),
-                "effect_bleeding" => new Effects.Debuffs.Bleeding(5, piece),
-                "effect_bound" => new Effects.Debuffs.Bound(randomDuration, piece),
-                "effect_taunted" => new Effects.Debuffs.Taunted(randomDuration, piece),
+                "effect_slow" => new Slow(randomDuration, 1, piece),
+                "effect_blinded" => new Blinded(randomDuration, 50, piece),
+                "effect_stunned" => new Stunned(randomDuration, piece),
+                "effect_poison" => new Poison(randomDuration, piece),
+                "effect_bleeding" => new Bleeding(5, piece),
+                "effect_bound" => new Bound(randomDuration, piece),
+                "effect_taunted" => new Taunted(randomDuration, piece),
                 _ => null
             };
         }
-
     }
 }

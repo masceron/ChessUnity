@@ -7,8 +7,6 @@ namespace Game.Piece.PieceLogic
 {
     public class SloaneSViperfish : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
-
         public SloaneSViperfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
@@ -33,22 +31,15 @@ namespace Game.Piece.PieceLogic
 
                             var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
 
-                            list.Add(new SloaneSViperfishActive(idx, bleeding));
+                            list.Add(new SloaneViperfishActive(idx, bleeding));
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

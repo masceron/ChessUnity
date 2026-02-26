@@ -1,127 +1,108 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System;
+using Game.Managers;
 using Game.Save.Army;
 using UnityEngine;
 using UnityEngine.UI;
-using Game.Managers;
 
 namespace UX.UI.Army.DesignArmy
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ArmyDesignBoard: MonoBehaviour
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ArmyDesignBoard : MonoBehaviour
     {
         [SerializeField] private RectTransform mainTransform;
         [SerializeField] private GridLayoutGroup grid;
         [SerializeField] private ArmyDesignSquare square;
-        protected int size;
         protected BitArray allowed;
         protected List<ArmyDesignSquare> childSquares;
-        public List<Troop> Troops;
         public Action<Troop> OnAddTroop, OnRemoveTroop;
+        protected int size;
+        public List<Troop> Troops;
+
         public virtual void Load(int boardSize)
         {
             Troops = new List<Troop>();
             size = boardSize;
             if (childSquares != null)
             {
-                foreach (var sq in childSquares)
-                {
-                    Destroy(sq.gameObject);
-                }
+                foreach (var sq in childSquares) Destroy(sq.gameObject);
                 childSquares.Clear();
             }
             else
             {
                 childSquares = new List<ArmyDesignSquare>();
             }
-            
+
             allowed = new BitArray(boardSize * boardSize);
-            
+
             var gridSize = mainTransform.rect.width / boardSize;
             grid.cellSize = new Vector3(gridSize, gridSize);
-            
+
             for (var i = 0; i < boardSize; i++)
-            {
-                for (var j = 0; j < boardSize; j++)
+            for (var j = 0; j < boardSize; j++)
+                if ((i + j) % 2 == 0)
                 {
-                    if ((i + j) % 2 == 0)
-                    {
-                        var ws = Instantiate(square.gameObject, transform).GetComponent<ArmyDesignSquare>();
-                        ws.name = $"White({i},{j})";
-                        ws.SetSquare(i, j, gridSize, false);
-                        childSquares.Add(ws);
-                    }
-                    else
-                    {
-                        var bs = Instantiate(square.gameObject, transform).GetComponent<ArmyDesignSquare>();
-                        bs.name = $"Black({i},{j}";
-                        bs.SetSquare(i, j, gridSize, true);
-                        childSquares.Add(bs);
-                    }
+                    var ws = Instantiate(square.gameObject, transform).GetComponent<ArmyDesignSquare>();
+                    ws.name = $"White({i},{j})";
+                    ws.SetSquare(i, j, gridSize, false);
+                    childSquares.Add(ws);
                 }
-            }
+                else
+                {
+                    var bs = Instantiate(square.gameObject, transform).GetComponent<ArmyDesignSquare>();
+                    bs.name = $"Black({i},{j}";
+                    bs.SetSquare(i, j, gridSize, true);
+                    childSquares.Add(bs);
+                }
         }
-        
+
         public bool IsAllowed(int rank, int file)
         {
             return allowed[rank * size + file];
         }
 
         public void SetAllowed(bool isContruct)
-        { 
+        {
             var rankStart = size / 2;
-            
+
             for (var i = 0; i < rankStart; i++)
-            {
-                for (var j = 0; j < size; j++)
+            for (var j = 0; j < size; j++)
+                childSquares[i * size + j].MarkAsNotAllowed();
+
+            for (var i = rankStart; i < size; i++)
+            for (var j = 0; j < size; j++)
+                if (i < size - 2 && !isContruct)
                 {
                     childSquares[i * size + j].MarkAsNotAllowed();
                 }
-            }
-            
-            for (var i = rankStart; i < size; i++)
-            {
-                for (var j = 0; j < size; j++)
+                else
                 {
-                    if (i < size - 2 && !isContruct)
-                    {
-                        childSquares[i * size + j].MarkAsNotAllowed();
-                    }
+                    var idx = i * size + j;
+                    var sq = childSquares[idx];
+                    //không được phép đặt 2 quân chồng lên nhau
+                    if (sq.transform.childCount > 0) sq.MarkAsNotAllowed();
                     else
-                    {
-                        var idx = i * size + j;
-                        var sq = childSquares[idx];
-                        //không được phép đặt 2 quân chồng lên nhau
-                        if (sq.transform.childCount > 0) sq.MarkAsNotAllowed(); 
-                        else
-                        {
-                            allowed[idx] = true;
-                        }
-                    }
+                        allowed[idx] = true;
                 }
-            }
         }
 
         public void UnSet()
         {
             allowed.SetAll(false);
             for (var i = 0; i < size; i++)
-            {
-                for (var j = 0; j < size; j++)
-                {
-                    childSquares[i * size + j].UnMark();
-                }
-            }
+            for (var j = 0; j < size; j++)
+                childSquares[i * size + j].UnMark();
         }
 
         public virtual void LoadSave(Troop[] troops)
         {
-
             foreach (var troop in troops)
             {
                 Add(troop.Rank, troop.File, troop.PieceType);
-                var piece = Instantiate(ArmyDesign.Ins.troopDisplay, childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
+                var piece = Instantiate(ArmyDesign.Ins.troopDisplay,
+                    childSquares[troop.Rank * size + troop.File].transform).GetComponent<ArmyDesignTroop>();
 
                 piece.Load(AssetManager.Ins.PieceData[troop.PieceType]);
                 piece.Set(troop.Rank, troop.File);
@@ -131,7 +112,7 @@ namespace UX.UI.Army.DesignArmy
 
         public void Add(int rank, int file, string type)
         {
-            var newTroop = new Troop(type, rank, file); 
+            var newTroop = new Troop(type, rank, file);
             Troops.Add(newTroop);
             OnAddTroop?.Invoke(newTroop);
         }

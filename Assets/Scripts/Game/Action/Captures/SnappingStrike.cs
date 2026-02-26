@@ -1,19 +1,25 @@
-﻿using Game.Managers;
+using Game.Managers;
+using MemoryPack;
 
 namespace Game.Action.Captures
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SnappingStrike: Action, ICaptures
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class SnappingStrike : Action, ICaptures
     {
-        public SnappingStrike(int maker, int to) : base(maker)
+        [MemoryPackConstructor]
+        private SnappingStrike()
         {
-            Maker = (ushort)maker;
-            Target = (ushort)to;
+        }
+
+        public SnappingStrike(int maker, int target) : base(maker)
+        {
+            Target = target;
         }
 
         protected override void Animate()
         {
-            
         }
 
         protected override void ModifyGameState()

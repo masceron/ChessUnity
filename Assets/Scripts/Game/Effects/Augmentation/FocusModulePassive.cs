@@ -1,23 +1,24 @@
-using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
+using Game.Triggers;
+
 namespace Game.Effects.Augmentation
 {
-    public class FocusModulePassive : Effect, IApplyEffect
+    public class FocusModulePassive : Effect, IOnApplyTrigger
     {
         public FocusModulePassive(PieceLogic piece) : base(-1, 1, piece, "effect_focus_module_passive")
         {
         }
 
-        public void OnCallApplyEffect(ApplyEffect applyEffect)
+        public void OnApply()
         {
-            if (applyEffect.Maker != Piece.Pos) return;
-            if (PieceOn(applyEffect.Maker).SkillCooldown > 1)
+            switch (Piece.SkillCooldown)
             {
-                PieceOn(applyEffect.Maker).SkillCooldown -= 2;
-            } else if (PieceOn(applyEffect.Maker).SkillCooldown == 1)
-            {
-                PieceOn(applyEffect.Maker).SkillCooldown -= 1;
+                case > 1:
+                    Piece.SkillCooldown -= 2;
+                    break;
+                case 1:
+                    Piece.SkillCooldown -= 1;
+                    break;
             }
         }
     }

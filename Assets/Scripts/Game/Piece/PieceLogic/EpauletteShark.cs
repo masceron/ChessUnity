@@ -7,12 +7,13 @@ using Game.Effects.Condition;
 using Game.Effects.Others;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
     public class EpauletteShark : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
         public EpauletteShark(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new EpauletteSharkPurify(this)));
@@ -29,10 +30,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
-                        if (pOn.Color != Color)
-                        {
-                            list.Add(new EpauletteSharkActive(Pos, index));
-                        }
+                        if (pOn.Color != Color) list.Add(new EpauletteSharkActive(Pos, index));
                     }
                 }
                 else
@@ -43,16 +41,16 @@ namespace Game.Piece.PieceLogic
                         var bestPieces = new List<Commons.PieceLogic>();
                         Commons.PieceLogic bestPiece = null;
                         var maxPoint = int.MinValue;
-            
+
                         var (rank, file) = RankFileOf(Pos);
 
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                         {
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);
-                            if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm 
+                            if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm
                                 || pOn.Color == Color) continue;
-                
+
                             var AIValue = pOn.GetValueForAI();
                             if (AIValue > maxPoint)
                             {
@@ -60,7 +58,10 @@ namespace Game.Piece.PieceLogic
                                 bestPieces.Add(pOn);
                                 maxPoint = AIValue;
                             }
-                            else if (AIValue == maxPoint) bestPieces.Add(pOn);
+                            else if (AIValue == maxPoint)
+                            {
+                                bestPieces.Add(pOn);
+                            }
                         }
 
                         if (bestPieces.Count == 0)
@@ -73,18 +74,15 @@ namespace Game.Piece.PieceLogic
                         }
                         else
                         {
-                            bestPiece = bestPieces[UnityEngine.Random.Range(0, bestPieces.Count)];
+                            bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                         }
 
-                        if (bestPiece != null)
-                        {
-                            list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
-                        }
+                        if (bestPiece != null) list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
                     }
                     else
                     {
                         var (rank, file) = RankFileOf(Pos);
-                        
+
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                         {
                             var index = IndexOf(rankOff, fileOff);
@@ -96,11 +94,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

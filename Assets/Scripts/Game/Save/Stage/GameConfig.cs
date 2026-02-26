@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Game.Save.Stage
 {
     [MemoryPackable]
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public partial struct GameConfig
     {
         public readonly bool FirstSideToMove;

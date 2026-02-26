@@ -1,27 +1,29 @@
 using Game.Action.Internal.Pending.Relic;
-using Game.Relics.Commons;
 using Game.Common;
+using Game.Relics.Commons;
 using LedgerStoneRelic = Game.Relics.LedgerStone;
 
-namespace UX.UI.Ingame.LedgerStone
+namespace UX.UI.Ingame.LedgerStoneUI
 {
     public class LedgerStoneUI : Singleton<LedgerStoneUI>
     {
-        private RelicLogic relic; 
+        private RelicLogic _relic;
+
         public void Load(RelicLogic relicLogic)
         {
-            relic = relicLogic;
+            _relic = relicLogic;
         }
+
         public void FirstOption()
         {
             gameObject.SetActive(false);
-            BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)relic, true));
-            
+            BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)_relic, true));
         }
+
         public void SecondOption()
         {
             gameObject.SetActive(false);
-            BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)relic, false));
+            BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)_relic, false));
         }
     }
 }

@@ -5,11 +5,11 @@ using UX.UI.Army.DesignArmy;
 
 namespace UX.UI.Followers
 {
-    public class SavedArmy: MonoBehaviour
+    public class SavedArmy : MonoBehaviour
     {
-        private Game.Save.Army.Army army;
         [SerializeField] protected TMP_Text armyName;
         [SerializeField] protected TMP_Text boardSize;
+        private Game.Save.Army.Army army;
 
         public void Load(Game.Save.Army.Army load)
         {
@@ -23,6 +23,7 @@ namespace UX.UI.Followers
             UIManager.Ins.Load(CanvasID.DesignArmy);
             ArmyDesign.Ins.Load(army.BoardSize, army);
         }
+
         public void Delete()
         {
             ArmySaveLoader.Remove(army.Name);

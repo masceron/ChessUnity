@@ -1,12 +1,15 @@
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Debuffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Controlled: Effect, IOnApply, IOnRemove
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Controlled : Effect, IOnApplyTrigger, IOnRemoveTrigger
     {
         private readonly bool initSide;
-        public Controlled(sbyte duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
+
+        public Controlled(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
         {
             initSide = piece.Color;
         }

@@ -1,20 +1,29 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Others;
+using MemoryPack;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Captures
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class RemoraMark: Action, ICaptures
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class RemoraMark : Action, ICaptures
     {
-        public RemoraMark(int maker, int to) : base(maker)
+        [MemoryPackConstructor]
+        private RemoraMark()
         {
-            Target = (ushort)to;
+        }
+
+        public RemoraMark(int maker, int target) : base(maker)
+        {
+            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(PieceOn(Maker), PieceOn(Target)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(PieceOn(Maker), PieceOn(Target)),
+                PieceOn(Maker)));
         }
     }
 }

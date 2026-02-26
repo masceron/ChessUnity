@@ -1,18 +1,27 @@
 ﻿using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Condition
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DiurnalAmbush: Effect, IEndTurnEffect, IAttackRangeModifier
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class DiurnalAmbush : Effect, IEndTurnTrigger, IAttackRangeModifier
     {
-        private byte lastUsed;
-        private bool active;
         private const byte RangeOffset = 2;
+        private bool _active;
+        private byte _lastUsed;
 
         public DiurnalAmbush(PieceLogic piece) : base(-1, -1, piece, "effect_diurnal_ambush")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+        }
+
+        public int ModifyAttackRange(int baseRange)
+        {
+            if (_active) return baseRange + RangeOffset;
+
+            return baseRange;
         }
 
         public void OnCallEnd(Action.Action action)
@@ -20,29 +29,24 @@ namespace Game.Effects.Condition
             if (!MatchManager.Ins.GameState.IsDay) return;
             if (action.Maker != Piece.Pos)
             {
-                lastUsed++;
-                if (lastUsed < 6 || active) return;
-                active = true;
+                _lastUsed++;
+                if (_lastUsed < 6 || _active) return;
+                _active = true;
             }
-            else if (active)
+            else if (_active)
             {
-                active = false;
-                lastUsed = 0;
+                _active = false;
+                _lastUsed = 0;
             }
         }
+
+        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
 
         public EndTurnEffectType EndTurnEffectType { get; set; }
 
         public override int GetValueForAI()
         {
-            return base.GetValueForAI() - 20;    
-        }
-
-        public int ModifyAttackRange(int baseRange)
-        {
-            if (active) return baseRange + RangeOffset;
-
-            return baseRange;
+            return base.GetValueForAI() - 20;
         }
     }
 }

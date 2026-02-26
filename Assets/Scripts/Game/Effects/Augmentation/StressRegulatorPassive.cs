@@ -1,21 +1,17 @@
-using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Augmentation
 {
-    public class StressRegulatorPassive : Effect, IApplyEffect
+    public class StressRegulatorPassive : Effect, IOnApplyTrigger
     {
         public StressRegulatorPassive(PieceLogic piece) : base(-1, 1, piece, "effect_stress_regulator_passive")
         {
         }
 
-        public void OnCallApplyEffect(ApplyEffect applyEffect)
+        public void OnApply()
         {
-            if (applyEffect.Effect.Piece != Piece) return;
-            if (applyEffect.Effect.Piece.SkillCooldown > 0)
-            {
-                applyEffect.Effect.Piece.SkillCooldown--;
-            } 
+            if (Piece.SkillCooldown > 0) Piece.SkillCooldown--;
         }
     }
 }

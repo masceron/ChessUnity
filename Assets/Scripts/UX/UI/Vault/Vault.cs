@@ -1,7 +1,7 @@
 using System.Collections.Generic;
+using Game.Save.Augmentation;
 using Game.Save.Relics;
 using UnityEngine;
-using Game.Save.Augmentation;
 
 namespace UX.UI.Vault
 {
@@ -11,11 +11,11 @@ namespace UX.UI.Vault
         [SerializeField] private GameObject relicContainer;
         [SerializeField] private GameObject augmentationItem;
         [SerializeField] private GameObject augmentationContainer;
-        
-        private readonly List<string> relicsInVault = new List<string>();
-        private readonly List<string> augmentationsInVault = new List<string>();
+        private readonly List<string> augmentationsInVault = new();
 
-        
+        private readonly List<string> relicsInVault = new();
+
+
         //private readonly List<string> relicsInVault2 = new()
 
         private void OnEnable()
@@ -53,25 +53,21 @@ namespace UX.UI.Vault
         private void ClearRelicItem()
         {
             for (var i = 0; i < relicContainer.transform.childCount; i++)
-            {
                 Destroy(relicContainer.transform.GetChild(i).gameObject);
-            }
             relicsInVault.Clear();
         }
 
         private void ClearAugmentationItem()
         {
             for (var i = 0; i < augmentationContainer.transform.childCount; i++)
-            {
                 Destroy(augmentationContainer.transform.GetChild(i).gameObject);
-            }
 
             augmentationsInVault.Clear();
         }
 
         public void OnClickPrevious()
         {
-            UIManager.Ins.LoadPreviousCanvas(); 
+            UIManager.Ins.LoadPreviousCanvas();
         }
     }
 }

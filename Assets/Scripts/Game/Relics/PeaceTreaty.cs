@@ -1,11 +1,12 @@
+using Game.Action.Relics;
+using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
-using Game.Managers;
-using Game.Action.Relics;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PeaceTreaty : RelicLogic
     {
         public PeaceTreaty(RelicConfig cfg) : base(cfg)
@@ -27,10 +28,10 @@ namespace Game.Relics
                 // }
                 // BoardViewer.Selecting = -2;
                 // BoardViewer.SelectingFunction = 4;
-                var excute = new PeaceTreatyExcute(Color);
+                var excute = new PeaceTreatyExecute(Color);
                 BoardViewer.Ins.ExecuteAction(excute);
-                MatchManager.Ins.InputProcessor.UpdateRelic();
                 SetCooldown();
+                MatchManager.Ins.InputProcessor.UpdateRelic();
             }
         }
 

@@ -9,7 +9,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GuidingSiren : Commons.PieceLogic, IPieceWithSkill
     {
         public GuidingSiren(PieceConfig cfg) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
@@ -43,23 +44,18 @@ namespace Game.Piece.PieceLogic
                                    VerifyBounds(rankForce) &&
                                    PieceOn(IndexOf(rankForce, fileOff)) == null &&
                                    IsActive(IndexOf(rankForce, fileOff)))
-                            {
                                 rankForce += push;
-                            }
                             rankForce -= push;
                             if (rankForce == rankOff) continue;
                             list.Add(new SirenActive(Pos, tpos, IndexOf(rankForce, fileOff)));
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
     }
 }

@@ -7,10 +7,12 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SeabedLeveler : RelicLogic
     {
-        private Charge charge;
+        private readonly Charge charge;
+
         public SeabedLeveler(RelicConfig cfg) : base(cfg)
         {
             CurrentCooldown = 0;
@@ -22,7 +24,6 @@ namespace Game.Relics
         {
             if (charge.Strength >= 3)
             {
-
                 for (var i = 0; i < BoardUtils.BoardSize; ++i)
                 {
                     var piece = BoardUtils.PieceOn(i);
@@ -30,7 +31,7 @@ namespace Game.Relics
                     if (!BoardUtils.HasFormation(i)) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeabedLevelerPending(this, charge, piece.Pos);
+                    var pending = new SeabedLevelerPending(charge, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -38,12 +39,7 @@ namespace Game.Relics
                 BoardViewer.SelectingFunction = 4;
             }
 
-            if (CurrentCooldown > 0)
-            {
-                charge.Strength = 0;
-            }
+            if (CurrentCooldown > 0) charge.Strength = 0;
         }
-        
-
     }
 }

@@ -10,8 +10,9 @@ using ZLinq;
 
 namespace UX.UI.FreePlayTest.AugmentationScene
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class AugmentationFilter: Singleton<AugmentationFilter>
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class AugmentationFilter : Singleton<AugmentationFilter>
     {
         [SerializeField] private PiecesData piecesData;
         [SerializeField] private TMP_InputField searchBar;
@@ -19,9 +20,19 @@ namespace UX.UI.FreePlayTest.AugmentationScene
         [SerializeField] public GameObject augDisplay;
         [SerializeField] private UDictionary<AugmentationSlot, AugCategoryButton> filterButtons;
 
+        private readonly SortedSet<AugmentationSlot> pieceFilters = new()
+        {
+            AugmentationSlot.Optic,
+            AugmentationSlot.Neural,
+            AugmentationSlot.Blood,
+            AugmentationSlot.Fin,
+            AugmentationSlot.Chassis
+        };
+
+        private readonly List<AugmentationIcon> pool = new();
+
         private Dictionary<AugmentationName, AugmentationInfo> data;
         private List<AugmentationInfo> lastSearchResult;
-        private readonly List<AugmentationIcon> pool = new();
 
         protected override void Awake()
         {
@@ -30,29 +41,19 @@ namespace UX.UI.FreePlayTest.AugmentationScene
             ToggleFilter(0);
         }
 
-        private readonly SortedSet<AugmentationSlot> pieceFilters = new()
+        public void ToggleFilter(AugmentationSlot slot)
         {
-                    AugmentationSlot.Optic,
-                    AugmentationSlot.Neural,
-                    AugmentationSlot.Blood,
-                    AugmentationSlot.Fin,
-                    AugmentationSlot.Chassis
-        };
-        public void ToggleFilter(AugmentationSlot slot){
             ToggleFilter((int)slot);
         }
+
         //Bật tắt một filter, ví dụ lọc hoặc không lọc Commander
         public void ToggleFilter(int filter)
         {
             var filterEnum = (AugmentationSlot)filter;
-            foreach(var button in filterButtons)
-            {
-                button.Value.GreyOut();
-            }
+            foreach (var button in filterButtons) button.Value.GreyOut();
             filterButtons[filterEnum].GreyOut();
             lastSearchResult = data.Values.Where(p => p.Slot == filterEnum).ToList();
             DisplaySearchResult();
-            
         }
 
         public void SearchByKeyword(string start)
@@ -85,32 +86,25 @@ namespace UX.UI.FreePlayTest.AugmentationScene
             switch (needed)
             {
                 case > 0:
-                    {
-                        for (var i = 1; i <= needed; i++)
-                        {
-                            pool.Add(Instantiate(augDisplay, list).GetComponent<AugmentationIcon>());
-                        }
+                {
+                    for (var i = 1; i <= needed; i++)
+                        pool.Add(Instantiate(augDisplay, list).GetComponent<AugmentationIcon>());
 
-                        break;
-                    }
+                    break;
+                }
                 case < 0:
-                    {
-                        for (var i = pool.Count - 1; i > lastSearchResult.Count - 1; i--)
-                        {
-                            pool[i].gameObject.SetActive(false);
-                        }
+                {
+                    for (var i = pool.Count - 1; i > lastSearchResult.Count - 1; i--)
+                        pool[i].gameObject.SetActive(false);
 
-                        break;
-                    }
+                    break;
+                }
             }
 
             for (var i = 0; i < lastSearchResult.Count; i++)
             {
                 var obj = pool[i].gameObject;
-                if (!obj.activeSelf)
-                {
-                    obj.SetActive(true);
-                }
+                if (!obj.activeSelf) obj.SetActive(true);
 
                 // if (Pool[i].model.ObjectPrefab != lastSearchResult[i].prefab.transform)
                 // {
@@ -118,6 +112,5 @@ namespace UX.UI.FreePlayTest.AugmentationScene
                 // }
             }
         }
-        
     }
 }

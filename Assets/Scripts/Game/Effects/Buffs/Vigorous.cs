@@ -2,7 +2,8 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Effects.Buffs
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Vigorous : Effect
     {
         public Vigorous(PieceLogic piece) : base(-1, 1, piece, "effect_vigorous")
@@ -17,8 +18,8 @@ namespace Game.Effects.Buffs
         //         capturer.ImmuneEffect("effect_consume");
         //     }
         // }
-        
-        
+
+
         public override int GetValueForAI()
         {
             return base.GetValueForAI() - 80;

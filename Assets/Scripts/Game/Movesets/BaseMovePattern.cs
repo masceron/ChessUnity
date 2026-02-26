@@ -1,7 +1,7 @@
+using System.Collections.Generic;
 using Game.Action.Captures;
 using Game.Action.Quiets;
 using Game.Common;
-using System.Collections.Generic;
 using UnityEngine;
 using static Game.Common.BoardUtils;
 
@@ -11,14 +11,14 @@ namespace Game.Movesets
     {
         public abstract List<int> GenerateBaseMovePattern(int makerPos);
 
-        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range, bool forCapture, bool excludeEmptyTile, bool isSurpass = false)
+        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range,
+            bool forCapture, bool excludeEmptyTile, bool isSurpass = false)
         {
             if (range <= 0) return;
 
             var caller = PieceOn(pos);
             var color = caller.Color;
             var (rank, file) = RankFileOf(pos);
-            var push = color ? +1 : -1;
 
             if (range > 1)
             {
@@ -64,6 +64,7 @@ namespace Game.Movesets
                     var blocker = Pathfinder.LineBlocker(rank, file, tRank, tFile);
                     isClear = blocker.Item1 == -1 && blocker.Item2 == -1;
                 }
+
                 var target = PieceOn(targetPos);
 
                 if (target == null)
@@ -80,6 +81,5 @@ namespace Game.Movesets
                 }
             }
         }
-
     }
 }

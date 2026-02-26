@@ -1,74 +1,56 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using System.Linq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Third_Party.Autotiles3D.Scripts.Utility;
+using Third_Party.Autotiles3D.Scripts.Utility.Editor;
+using UnityEditor;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Core.Editor
 {
     [CustomEditor(typeof(Autotiles3D_TileLayer))]
     public class Autotiles3D_TileLayerInspector : UnityEditor.Editor
     {
-        Autotiles3D_TileLayer _tileLayer;
-        Autotiles3D_Grid Grid => _tileLayer.Grid;
-        public float Unit => Grid.Unit;
-        private int _LayerIndex => Grid.LayerIndex;
-        private int _TileRotation;
-        private bool _WasPreviousShift;
-        private int _ControlID = 0;
-        private Vector3 _MousePositionGUI;
-        private Ray _MouseRay;
         private const int _sp1 = 120;
         private const int _sp2 = 150;
         private const int _sp3Controls = 150;
         private const int _sp4 = 170;
         private const int fatHeightThin = 30;
         private const int fatHeight = 40;
-        private bool _ResetHover;
-        private bool _HasRenderedHover;
-        private bool _showControls;
-        enum PullMode
-        {
-            Face,
-            Plane
-        }
-        private PullMode _PullMode;
-        private bool _OutOfBounds;
-        private Dictionary<int, TileData> _TileData = new Dictionary<int, TileData>();
-        public class TileData
-        {
-            public int TileId;
-            public Texture2D Thumbnail;
-            public bool HasAnyRandomize;
-            public TileData(int tileID)
-            {
-                TileId = tileID;
-            }
-        }
-
-        //broken blocks
-        List<string> _broken = new List<string>(); //missing tile
-        int _totalBrokenAmt = 0;
-        List<Autotiles3D_BlockBehaviour> _brokenBlocks = new List<Autotiles3D_BlockBehaviour>();
-        List<RepairBlock> _repair = new List<RepairBlock>(); //missing tile
-        class RepairBlock
-        {
-            public int Group;
-            public int TileName;
-        }
-
-        //Push Pull
-        private List<InternalNode> _ppNodes = new List<InternalNode>();
-        private List<InternalNode> _selectedNodes = new List<InternalNode>();
-        private Vector3Int _faceNormalInternal;
-        private Vector3 _faceNormalWorld, _ppOffset;
-        private Plane _ppPlane;
-        private bool _isPulling, _isPushing;
-        private int _pIndex;
 
         //gridraycast 
-        public List<Vector3> visits = new List<Vector3>(); //(used only for debugging)
+        public List<Vector3> visits = new(); //(used only for debugging)
+
+        //broken blocks
+        private readonly List<string> _broken = new(); //missing tile
+        private readonly List<Autotiles3D_BlockBehaviour> _brokenBlocks = new();
+
+        //Push Pull
+        private readonly List<InternalNode> _ppNodes = new();
+        private readonly List<RepairBlock> _repair = new(); //missing tile
+        private readonly List<InternalNode> _selectedNodes = new();
+        private readonly Dictionary<int, TileData> _TileData = new();
+        private int _ControlID;
+        private Vector3Int _faceNormalInternal;
+        private Vector3 _faceNormalWorld, _ppOffset;
+        private bool _HasRenderedHover;
+        private bool _isPulling, _isPushing;
+        private Vector3 _MousePositionGUI;
+        private Ray _MouseRay;
+        private bool _OutOfBounds;
+        private int _pIndex;
+        private Plane _ppPlane;
+        private PullMode _PullMode;
+        private bool _ResetHover;
+        private bool _showControls;
+        private Autotiles3D_TileLayer _tileLayer;
+        private int _TileRotation;
+        private int _totalBrokenAmt;
+        private bool _WasPreviousShift;
+        private Autotiles3D_Grid Grid => _tileLayer.Grid;
+        public float Unit => Grid.Unit;
+        private int _LayerIndex => Grid.LayerIndex;
 
         private void OnEnable()
         {
@@ -77,13 +59,9 @@ namespace Autotiles3D
             Autotiles3D_TileLayer.IS_EDITING = true;
 
             if (!Application.isPlaying)
-            {
                 foreach (Transform t in _tileLayer.transform)
-                {
                     if (t.gameObject.name == "HoverInstance")
                         DestroyImmediate(t.gameObject);
-                }
-            }
 
             _tileLayer.LoadedGroups = Autotiles3DUtility.LoadTileGroups();
 
@@ -104,79 +82,16 @@ namespace Autotiles3D
 
             Tools.hidden = true;
         }
+
         private void OnDisable()
         {
             _tileLayer.DestroyHoverInstance();
             Tools.hidden = false;
         }
-        public void OnMouseEnterSceneWindow()
-        {
-        }
-        public void OnMouseExitSceneWindow()
-        {
-            _tileLayer.DestroyHoverInstance();
-        }
-        public void DrawPlane(Vector3 position, Vector3 normal)
-        {
-
-            Vector3 v3;
-
-            if (normal.normalized != Vector3.forward)
-                v3 = Vector3.Cross(normal, Vector3.forward).normalized * normal.magnitude;
-            else
-                v3 = Vector3.Cross(normal, Vector3.up).normalized * normal.magnitude; ;
-
-            var corner0 = position + v3;
-            var corner2 = position - v3;
-            var q = Quaternion.AngleAxis(90.0f, normal);
-            v3 = q * v3;
-            var corner1 = position + v3;
-            var corner3 = position - v3;
-
-            Debug.DrawLine(corner0, corner2, Color.green, 0.01f);
-            Debug.DrawLine(corner1, corner3, Color.green, 0.01f);
-            Debug.DrawLine(corner0, corner1, Color.green, 0.01f);
-            Debug.DrawLine(corner1, corner2, Color.green, 0.01f);
-            Debug.DrawLine(corner2, corner3, Color.green, 0.01f);
-            Debug.DrawLine(corner3, corner0, Color.green, 0.01f);
-            Debug.DrawRay(position, normal, Color.red);
-        }
-
-        void CheckForBrokenBlocks()
-        {
-            _broken.Clear();
-            _brokenBlocks.Clear();
-            _repair.Clear();
-            _totalBrokenAmt = 0;
-            var nodes = _tileLayer.GetAllInternalNodes();
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                if (nodes[i].Instance == null)
-                {
-                    Debug.LogError("Internal node with missing Instance");
-                    continue;
-                }
-                if (nodes[i].GetTile() == null || nodes[i].Block.GetTile() == null)
-                {
-                    _totalBrokenAmt++;
-                    if (!_broken.Contains(nodes[i].Instance.name))
-                    {
-                        _broken.Add(nodes[i].Instance.name);
-                        _brokenBlocks.Add(nodes[i].Block);
-                        _repair.Add(new RepairBlock());
-                    }
-                }
-            }
-        }
-
-        void TryRepairBrokenBlocksViaOnAnchor()
-        {
-            _tileLayer.Anchors.Values.ToList().ForEach(a => a.TryAutoRepairBrokenBlocks());
-        }
 
         private void OnSceneGUI()
         {
-            Matrix4x4 rotationMatrix = Matrix4x4.TRS(Grid.transform.position, Grid.transform.rotation, Vector3.one * Unit);
+            var rotationMatrix = Matrix4x4.TRS(Grid.transform.position, Grid.transform.rotation, Vector3.one * Unit);
             Handles.matrix = rotationMatrix;
 
             _ResetHover = false;
@@ -189,10 +104,7 @@ namespace Autotiles3D
             if (Autotiles3D_TileLayer.SHOW_LAYER_OUTLINE)
             {
                 var positions = _tileLayer.GetAllInternalPositions();
-                foreach (var internalPosition in positions)
-                {
-                    Handles.DrawWireCube(internalPosition, Vector3.one);
-                }
+                foreach (var internalPosition in positions) Handles.DrawWireCube(internalPosition, Vector3.one);
             }
 
             if (!Autotiles3D_TileLayer.IS_EDITING)
@@ -201,7 +113,7 @@ namespace Autotiles3D
             _ControlID = GUIUtility.GetControlID(GetHashCode(), FocusType.Passive);
             _MousePositionGUI = Event.current.mousePosition;
             _MouseRay = HandleUtility.GUIPointToWorldRay(_MousePositionGUI);
-            Event e = Event.current;
+            var e = Event.current;
 
 
             if (e.type == EventType.MouseLeaveWindow)
@@ -210,13 +122,10 @@ namespace Autotiles3D
             if (Tools.hidden)
                 Tools.hidden = true;
 
-            if (e.type == EventType.Layout)
-            {
-                HandleUtility.AddDefaultControl(_ControlID);
-            }
+            if (e.type == EventType.Layout) HandleUtility.AddDefaultControl(_ControlID);
             if (e.type == EventType.ScrollWheel)
             {
-                int scroll = (e.delta.y > 0) ? -1 : 1;
+                var scroll = e.delta.y > 0 ? -1 : 1;
                 if (e.alt)
                 {
                     Grid.SetLayerIndex(_LayerIndex + scroll);
@@ -224,7 +133,7 @@ namespace Autotiles3D
                 }
                 else if (e.control)
                 {
-                    int delta = (scroll > 0) ? 90 : -90;
+                    var delta = scroll > 0 ? 90 : -90;
                     _TileRotation += delta;
                     _ResetHover = true;
                     Event.current.Use();
@@ -244,29 +153,30 @@ namespace Autotiles3D
             //Grid Selection Calculation
             var normal = Grid.transform.TransformDirection(Vector3Int.up).normalized;
             var planeposition = Grid.transform.TransformPoint(new Vector3(0, (_LayerIndex - 0.0f) * Unit, 0));
-            Plane plane = new Plane(normal, planeposition);
+            var plane = new Plane(normal, planeposition);
             //DrawPlane(planeposition, normal);
 
-            plane.Raycast(_MouseRay, out float distance);
-            Vector3 worldHit = _MouseRay.GetPoint(distance);
+            plane.Raycast(_MouseRay, out var distance);
+            var worldHit = _MouseRay.GetPoint(distance);
 
-            _tileLayer.LocalHoverPosition = Vector3Int.RoundToInt(Grid.transform.InverseTransformPoint(worldHit) / Unit);
+            _tileLayer.LocalHoverPosition =
+                Vector3Int.RoundToInt(Grid.transform.InverseTransformPoint(worldHit) / Unit);
 
-            bool shiftLiftedUp = !e.shift && _WasPreviousShift;
+            var shiftLiftedUp = !e.shift && _WasPreviousShift;
             if (shiftLiftedUp)
                 _ResetHover = true;
 
 
-            if (e.shift && (!_isPulling && !_isPushing))
+            if (e.shift && !_isPulling && !_isPushing)
             {
-                bool succesfullHit = false;
+                var succesfullHit = false;
                 if (!_tileLayer.IsLayerEmpty)
-                {
-                    if (Autotiles3D_GridRaycast.GridRayCast(_tileLayer, _MouseRay.origin, _MouseRay.GetPoint(50), out Vector3Int internalHit, out Vector3Int internalHitNormal, out visits))
+                    if (Autotiles3D_GridRaycast.GridRayCast(_tileLayer, _MouseRay.origin, _MouseRay.GetPoint(50),
+                            out var internalHit, out var internalHitNormal, out visits))
                     {
                         if (_tileLayer.ContainsKey(internalHit))
                         {
-                            Autotiles3D_BlockBehaviour block = _tileLayer.GetInternalNode(internalHit).Block;
+                            var block = _tileLayer.GetInternalNode(internalHit).Block;
 
                             if (block == null)
                                 return;
@@ -279,10 +189,11 @@ namespace Autotiles3D
                             _faceNormalInternal = internalHitNormal;
                             _faceNormalWorld = Grid.ToWorldDirection(_faceNormalInternal);
 
-                            if (_faceNormalInternal != Vector3.up && _faceNormalInternal != Vector3.down && _faceNormalInternal != Vector3.right && _faceNormalInternal != Vector3.left && _faceNormalInternal != Vector3.forward && _faceNormalInternal != Vector3.back)
-                            {
+                            if (_faceNormalInternal != Vector3.up && _faceNormalInternal != Vector3.down &&
+                                _faceNormalInternal != Vector3.right && _faceNormalInternal != Vector3.left &&
+                                _faceNormalInternal != Vector3.forward &&
+                                _faceNormalInternal != Vector3.back)
                                 Debug.LogError("not aligned facenormal : " + _faceNormalInternal);
-                            }
 
                             //toggle extrusion mode
                             if (e.type == EventType.ScrollWheel)
@@ -292,41 +203,41 @@ namespace Autotiles3D
                             }
 
                             //layer to block height
-                            if (e.isMouse && e.button == 2)
-                            {
-                                Grid.SetLayerIndex(internalHit.y);
-                            }
+                            if (e.isMouse && e.button == 2) Grid.SetLayerIndex(internalHit.y);
 
                             if (_PullMode == PullMode.Face)
                             {
                                 if (_tileLayer.ContainsKey(internalHit))
                                 {
-                                    Autotiles3D_Tile tile = _tileLayer.GetInternalNode(internalHit).GetTile();
+                                    var tile = _tileLayer.GetInternalNode(internalHit).GetTile();
                                     if (tile != null)
                                     {
                                         _ppNodes.Add(_tileLayer.GetInternalNode(internalHit));
                                         _selectedNodes.Add(_tileLayer.GetInternalNode(internalHit));
-                                        Handles.DrawWireDisc(_selectedNodes[0].InternalPosition + (Vector3)_faceNormalInternal * 0.5f, _faceNormalInternal, 0.5f);
+                                        Handles.DrawWireDisc(
+                                            _selectedNodes[0].InternalPosition + (Vector3)_faceNormalInternal * 0.5f,
+                                            _faceNormalInternal, 0.5f);
                                     }
                                 }
                             }
                             else if (_PullMode == PullMode.Plane)
                             {
                                 //getall neighbors in plane
-                                var nodes = Autotiles3D_EditorUtility.GetAllUnblockedContAdjacentNodesDepthFirst(_tileLayer, internalHit, _faceNormalInternal).ToList();
+                                var nodes = Autotiles3D_EditorUtility
+                                    .GetAllUnblockedContAdjacentNodesDepthFirst(_tileLayer, internalHit,
+                                        _faceNormalInternal).ToList();
                                 foreach (var node in nodes)
-                                {
                                     if (_tileLayer.ContainsKey(node))
                                     {
-                                        Autotiles3D_Tile tile = _tileLayer.GetInternalNode(node).GetTile();
+                                        var tile = _tileLayer.GetInternalNode(node).GetTile();
                                         if (tile != null)
                                         {
                                             _ppNodes.Add(_tileLayer.GetInternalNode(node));
                                             _selectedNodes.Add(_tileLayer.GetInternalNode(node));
-                                            Handles.DrawWireDisc(node + (Vector3)_faceNormalInternal * 0.5f, _faceNormalInternal, 0.5f);
+                                            Handles.DrawWireDisc(node + (Vector3)_faceNormalInternal * 0.5f,
+                                                _faceNormalInternal, 0.5f);
                                         }
                                     }
-                                }
                             }
                         }
                         else
@@ -334,56 +245,47 @@ namespace Autotiles3D
                             Debug.LogError("Autotiles: InternalNode GridRaycast went wrong.");
                         }
                     }
-                }
-
 
 
                 if (e.type == EventType.MouseDown)
-                {
-                    if (e.button == 0 || e.button == 1 && _selectedNodes.Count > 0)
-                    {
+                    if (e.button == 0 || (e.button == 1 && _selectedNodes.Count > 0))
                         //_ShiftLock = true;
                         //test
                         if (succesfullHit)
                         {
                             Vector3 zeroInternalPosition = _selectedNodes[0].InternalPosition;
-                            Vector3 perpendicular = Vector3.Cross(_faceNormalWorld, _MouseRay.origin - Grid.transform.TransformPoint(zeroInternalPosition));
-                            _ppPlane = new Plane(Grid.transform.TransformPoint(zeroInternalPosition), Grid.transform.TransformPoint(zeroInternalPosition + _faceNormalInternal), Grid.transform.TransformPoint(zeroInternalPosition) + perpendicular);
-                            _ppPlane.Raycast(_MouseRay, out float enter);
+                            var perpendicular = Vector3.Cross(_faceNormalWorld,
+                                _MouseRay.origin - Grid.transform.TransformPoint(zeroInternalPosition));
+                            _ppPlane = new Plane(Grid.transform.TransformPoint(zeroInternalPosition),
+                                Grid.transform.TransformPoint(zeroInternalPosition + _faceNormalInternal),
+                                Grid.transform.TransformPoint(zeroInternalPosition) + perpendicular);
+                            _ppPlane.Raycast(_MouseRay, out var enter);
                             var pullHit = _MouseRay.GetPoint(enter);
                             _ppOffset = Vector3.Project(pullHit, _faceNormalWorld);
 
                             if (e.button == 0)
-                            {
                                 _isPulling = true;
-                            }
-                            else if (e.button == 1)
-                            {
-                                _isPushing = true;
-                            }
+                            else if (e.button == 1) _isPushing = true;
                             _pIndex = 0;
                             Autotiles3DSettings.IsLocked = true;
                             e.Use();
                         }
-                    }
-
-                }
             }
 
             if (_isPulling || _isPushing)
             {
-                _ppPlane.Raycast(_MouseRay, out float enter);
+                _ppPlane.Raycast(_MouseRay, out var enter);
                 var ppWorldHit = _MouseRay.GetPoint(enter);
                 //make sure user can only pull "positive" face for pull, "negative" face for push
                 var ppDelta = Vector3.Project(ppWorldHit, _faceNormalWorld);
 
-                int index = 0;
+                var index = 0;
                 if (_isPulling)
                 {
                     if (Vector3.Dot(Vector3.Project(ppWorldHit, _faceNormalWorld) - _ppOffset, _faceNormalWorld) >= 0)
                     {
                         ppDelta -= _ppOffset;
-                        index = (int)((ppDelta.magnitude / Unit) + 0.5f);
+                        index = (int)(ppDelta.magnitude / Unit + 0.5f);
                     }
                 }
                 else if (_isPushing)
@@ -391,14 +293,11 @@ namespace Autotiles3D
                     if (Vector3.Dot(Vector3.Project(ppWorldHit, _faceNormalWorld) - _ppOffset, _faceNormalWorld) <= 0)
                     {
                         ppDelta -= _ppOffset;
-                        index = (int)((ppDelta.magnitude / Unit) + 0.5f);
+                        index = (int)(ppDelta.magnitude / Unit + 0.5f);
                     }
                 }
 
-                if (_pIndex != index)
-                {
-                    EditorUtility.SetDirty(_tileLayer);
-                }
+                if (_pIndex != index) EditorUtility.SetDirty(_tileLayer);
 
                 //calculte all extrusion points
                 var extrusionData = CalculateExtrusionPositions(_selectedNodes, index, _faceNormalInternal, _isPulling);
@@ -412,23 +311,20 @@ namespace Autotiles3D
                     if (_isPulling && e.button == 0)
                     {
                         //pos, rot and tile
-                        List<Vector3Int> positions = new List<Vector3Int>();
-                        List<Quaternion> rotations = new List<Quaternion>();
-                        List<int> tileIDs = new List<int>();
-                        List<string> tileNames = new List<string>();
-                        List<string> groupNames = new List<string>();
+                        var positions = new List<Vector3Int>();
+                        var rotations = new List<Quaternion>();
+                        var tileIDs = new List<int>();
+                        var tileNames = new List<string>();
+                        var groupNames = new List<string>();
 
                         foreach (var data in extrusionData)
                         {
                             var list = data.Value;
                             var node = data.Key;
-                            for (int i = 0; i < list.Count; i++)
+                            for (var i = 0; i < list.Count; i++)
                             {
-                                Quaternion localRot = node.LocalRotation;
-                                if (e.control)
-                                {
-                                    localRot *= Quaternion.AngleAxis(AddRandomRotation(), Vector3.up);
-                                }
+                                var localRot = node.LocalRotation;
+                                if (e.control) localRot *= Quaternion.AngleAxis(AddRandomRotation(), Vector3.up);
                                 positions.Add(list[i]);
                                 rotations.Add(localRot);
                                 tileIDs.Add(node.TileID);
@@ -442,7 +338,7 @@ namespace Autotiles3D
                     else if (_isPushing && e.button == 1)
                     {
                         var positions = extrusionData.Values.SelectMany(pos => pos);
-                        _tileLayer.TryUnplacingMany(positions/*, waitForDestroy: false *//*true*/);
+                        _tileLayer.TryUnplacingMany(positions /*, waitForDestroy: false */ /*true*/);
                     }
                 }
 
@@ -454,13 +350,11 @@ namespace Autotiles3D
                     _isPushing = false;
                     _selectedNodes.Clear();
                 }
-                _pIndex = index;
 
+                _pIndex = index;
             }
             else
             {
-
-
                 if (e.isKey)
                 {
                     if (_tileLayer.HotKeySelection(e.keyCode))
@@ -468,35 +362,28 @@ namespace Autotiles3D
                         _ResetHover = true;
                         e.Use();
                     }
+
                     if (e.keyCode == KeyCode.Escape)
                         ExitEditingMode();
                 }
 
 
-
                 if (!e.shift)
-                {
                     RenderHoverInstance(_tileLayer.LocalHoverPosition, Quaternion.AngleAxis(_TileRotation, Vector3.up));
-                }
 
                 if (e.type == EventType.MouseDown || e.type == EventType.MouseDrag || e.type == EventType.MouseUp)
                 {
                     GridSelection(e.type, e, _tileLayer.LocalHoverPosition);
                     Grid.OnGridSelection?.Invoke(e.type, e, _tileLayer.LocalHoverPosition);
                 }
+
                 Autotiles3DSettings.IsLocked = false;
             }
 
 
-
             if (e.type == EventType.MouseEnterWindow)
-            {
                 OnMouseEnterSceneWindow();
-            }
-            else if (e.type == EventType.MouseLeaveWindow)
-            {
-                OnMouseExitSceneWindow();
-            }
+            else if (e.type == EventType.MouseLeaveWindow) OnMouseExitSceneWindow();
 
             if (!_HasRenderedHover)
                 _tileLayer.DestroyHoverInstance();
@@ -509,37 +396,109 @@ namespace Autotiles3D
             _WasPreviousShift = e.shift;
             _tileLayer.PrevLocalHoverPosition = _tileLayer.LocalHoverPosition;
 
-            _tileLayer.HideGridOutlineRenderer = (e.shift || (!_isPulling && !_isPushing)) ? true : false;
+            _tileLayer.HideGridOutlineRenderer = e.shift || (!_isPulling && !_isPushing) ? true : false;
 
 
             if (Autotiles3D_TileLayer.SHOW_HOVER_GIZMO)
-            {
                 if (_tileLayer.HoverInstance.instance != null)
                 {
                     //revert handle matrix
                     Handles.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, Vector3.one);
                     var position = _tileLayer.HoverInstance.instance.transform.position;
-                    float size = 0.5f * Unit;
-                    Color cache = Handles.color;
+                    var size = 0.5f * Unit;
+                    var cache = Handles.color;
                     Handles.color = Color.red;
-                    Handles.ArrowHandleCap(_ControlID, position, Quaternion.LookRotation(_tileLayer.HoverInstance.instance.transform.right), size, EventType.Repaint);
+                    Handles.ArrowHandleCap(_ControlID, position,
+                        Quaternion.LookRotation(_tileLayer.HoverInstance.instance.transform.right), size,
+                        EventType.Repaint);
                     Handles.color = Color.green;
-                    Handles.ArrowHandleCap(_ControlID, position, Quaternion.LookRotation(_tileLayer.HoverInstance.instance.transform.up), size, EventType.Repaint);
+                    Handles.ArrowHandleCap(_ControlID, position,
+                        Quaternion.LookRotation(_tileLayer.HoverInstance.instance.transform.up), size,
+                        EventType.Repaint);
                     Handles.color = Color.blue;
-                    Handles.ArrowHandleCap(_ControlID, position, Quaternion.LookRotation(_tileLayer.HoverInstance.instance.transform.forward), size, EventType.Repaint);
+                    Handles.ArrowHandleCap(_ControlID, position,
+                        Quaternion.LookRotation(_tileLayer.HoverInstance.instance.transform.forward), size,
+                        EventType.Repaint);
                     Handles.color = cache;
                 }
+        }
+
+        public void OnMouseEnterSceneWindow()
+        {
+        }
+
+        public void OnMouseExitSceneWindow()
+        {
+            _tileLayer.DestroyHoverInstance();
+        }
+
+        public void DrawPlane(Vector3 position, Vector3 normal)
+        {
+            Vector3 v3;
+
+            if (normal.normalized != Vector3.forward)
+                v3 = Vector3.Cross(normal, Vector3.forward).normalized * normal.magnitude;
+            else
+                v3 = Vector3.Cross(normal, Vector3.up).normalized * normal.magnitude;
+            ;
+
+            var corner0 = position + v3;
+            var corner2 = position - v3;
+            var q = Quaternion.AngleAxis(90.0f, normal);
+            v3 = q * v3;
+            var corner1 = position + v3;
+            var corner3 = position - v3;
+
+            Debug.DrawLine(corner0, corner2, Color.green, 0.01f);
+            Debug.DrawLine(corner1, corner3, Color.green, 0.01f);
+            Debug.DrawLine(corner0, corner1, Color.green, 0.01f);
+            Debug.DrawLine(corner1, corner2, Color.green, 0.01f);
+            Debug.DrawLine(corner2, corner3, Color.green, 0.01f);
+            Debug.DrawLine(corner3, corner0, Color.green, 0.01f);
+            Debug.DrawRay(position, normal, Color.red);
+        }
+
+        private void CheckForBrokenBlocks()
+        {
+            _broken.Clear();
+            _brokenBlocks.Clear();
+            _repair.Clear();
+            _totalBrokenAmt = 0;
+            var nodes = _tileLayer.GetAllInternalNodes();
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                if (nodes[i].Instance == null)
+                {
+                    Debug.LogError("Internal node with missing Instance");
+                    continue;
+                }
+
+                if (nodes[i].GetTile() == null || nodes[i].Block.GetTile() == null)
+                {
+                    _totalBrokenAmt++;
+                    if (!_broken.Contains(nodes[i].Instance.name))
+                    {
+                        _broken.Add(nodes[i].Instance.name);
+                        _brokenBlocks.Add(nodes[i].Block);
+                        _repair.Add(new RepairBlock());
+                    }
+                }
             }
+        }
+
+        private void TryRepairBrokenBlocksViaOnAnchor()
+        {
+            _tileLayer.Anchors.Values.ToList().ForEach(a => a.TryAutoRepairBrokenBlocks());
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            GUIStyle centerButton = new GUIStyle(GUI.skin.button);
+            var centerButton = new GUIStyle(GUI.skin.button);
             centerButton.alignment = TextAnchor.MiddleCenter;
 
-            GUIStyle centerLabel = new GUIStyle(GUI.skin.label);
+            var centerLabel = new GUIStyle(GUI.skin.label);
             centerButton.alignment = TextAnchor.MiddleCenter;
 
             var richButton = new GUIStyle(GUI.skin.button);
@@ -548,7 +507,7 @@ namespace Autotiles3D
             richButton.normal.textColor = Color.white;
             richButton.alignment = TextAnchor.MiddleCenter;
 
-            List<InternalNode> allInternalNodes = _tileLayer.GetAllInternalNodes();
+            var allInternalNodes = _tileLayer.GetAllInternalNodes();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             EditorGUILayout.BeginHorizontal();
@@ -556,8 +515,8 @@ namespace Autotiles3D
 
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Layer Name:"/* , GUILayout.Width(_sp1) */);
-            string displayName = EditorGUILayout.DelayedTextField(_tileLayer.LayerName/* , GUILayout.Width(_sp1) */);
+            EditorGUILayout.LabelField("Layer Name:" /* , GUILayout.Width(_sp1) */);
+            var displayName = EditorGUILayout.DelayedTextField(_tileLayer.LayerName /* , GUILayout.Width(_sp1) */);
             EditorGUIUtility.labelWidth = 0;
             if (displayName != _tileLayer.LayerName)
             {
@@ -565,16 +524,14 @@ namespace Autotiles3D
                 _tileLayer.LayerName = displayName;
                 CreateTileData();
             }
+
             EditorGUILayout.EndHorizontal();
             //layer index and manual setting
 
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Current layer height:"/* , GUILayout.Width(_sp1) */);
-            int newLayerHeight = EditorGUILayout.DelayedIntField(_LayerIndex/* , GUILayout.Width(_sp1) */);
-            if (newLayerHeight != _LayerIndex)
-            {
-                Grid.SetLayerIndex(newLayerHeight);
-            }
+            EditorGUILayout.LabelField("Current layer height:" /* , GUILayout.Width(_sp1) */);
+            var newLayerHeight = EditorGUILayout.DelayedIntField(_LayerIndex /* , GUILayout.Width(_sp1) */);
+            if (newLayerHeight != _LayerIndex) Grid.SetLayerIndex(newLayerHeight);
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
@@ -585,25 +542,16 @@ namespace Autotiles3D
 
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Refresh All", richButton, GUILayout.Height(fatHeightThin)))
-            {
                 foreach (var anchor in _tileLayer.Anchors)
-                {
                     _tileLayer.VerifyAllImmediate(anchor.Value);
-                }
-            }
+
             if (GUILayout.Button("Randomize All", richButton, GUILayout.Height(fatHeightThin)))
-            {
                 foreach (var anchor in _tileLayer.Anchors)
-                {
                     _tileLayer.UpdateAllImmediate(anchor.Value);
-                }
-            }
+
             if (GUILayout.Button("Clear All", richButton, GUILayout.Height(fatHeightThin)))
             {
-                foreach (var anchor in _tileLayer.Anchors)
-                {
-                    _tileLayer.RemoveAllBlocks(anchor.Value);
-                }
+                foreach (var anchor in _tileLayer.Anchors) _tileLayer.RemoveAllBlocks(anchor.Value);
                 //verify layer  (removes anchors)
                 _tileLayer.VerifyLayer();
             }
@@ -615,31 +563,25 @@ namespace Autotiles3D
             if (Autotiles3D_TileLayer.SHOW_HOVER_GIZMO)
             {
                 if (GUILayout.Button("Gizmo <color=lime>on</color>", richButton, GUILayout.Height(fatHeightThin)))
-                {
                     Autotiles3D_TileLayer.SHOW_HOVER_GIZMO = false;
-                }
             }
             else
             {
                 if (GUILayout.Button("Gizmo <color=red>off</color>", richButton, GUILayout.Height(fatHeightThin)))
-                {
                     Autotiles3D_TileLayer.SHOW_HOVER_GIZMO = true;
-                }
             }
+
             if (Autotiles3D_TileLayer.SHOW_LAYER_OUTLINE)
             {
-                if (GUILayout.Button("  Outline <color=lime>on   </color>", richButton, GUILayout.Height(fatHeightThin)))
-                {
-                    Autotiles3D_TileLayer.SHOW_LAYER_OUTLINE = false;
-                }
+                if (GUILayout.Button("  Outline <color=lime>on   </color>", richButton,
+                        GUILayout.Height(fatHeightThin))) Autotiles3D_TileLayer.SHOW_LAYER_OUTLINE = false;
             }
             else
             {
                 if (GUILayout.Button("  Outline <color=red>off  </color>", richButton, GUILayout.Height(fatHeightThin)))
-                {
                     Autotiles3D_TileLayer.SHOW_LAYER_OUTLINE = true;
-                }
             }
+
             if (!Autotiles3D_TileLayer.IS_EDITING)
             {
                 if (GUILayout.Button("<color=red>Not Editing</color>", richButton, GUILayout.Height(fatHeightThin)))
@@ -650,23 +592,23 @@ namespace Autotiles3D
                 if (GUILayout.Button("<color=lime>Editing</color>", richButton, GUILayout.Height(fatHeightThin)))
                     ExitEditingMode();
             }
+
             EditorGUILayout.EndHorizontal();
 
             if (GUILayout.Button("Settings", centerButton, GUILayout.Height(fatHeightThin)))
-            {
                 EditorWindow.GetWindow<Autotiles3D_SettingsWindow>("Autotiles 3D Settings", typeof(SceneView));
-            }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
             {
                 var groupNames = _tileLayer.LoadedGroups.Select(g => g.name).ToList();
                 var activeGroupName = _tileLayer.Group != null ? _tileLayer.Group.name : "";
-                int index = Math.Max(groupNames.IndexOf(activeGroupName), 0);
+                var index = Math.Max(groupNames.IndexOf(activeGroupName), 0);
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.ExpandWidth(false);
                 EditorStyles.popup.fixedHeight = fatHeight;
-                int newIndex = EditorGUILayout.Popup(index, groupNames.ToArray(), GUILayout.Width(_sp1 * 2), GUILayout.Height(fatHeight));
+                var newIndex = EditorGUILayout.Popup(index, groupNames.ToArray(), GUILayout.Width(_sp1 * 2),
+                    GUILayout.Height(fatHeight));
                 EditorStyles.popup.fontSize = 0;
                 EditorStyles.popup.fixedHeight = 0;
                 if (index != newIndex)
@@ -675,10 +617,9 @@ namespace Autotiles3D
                     CreateTileData();
                     _tileLayer.ResetActiveTileID();
                 }
+
                 if (GUILayout.Button("Show", GUILayout.Width(_sp1), GUILayout.Height(fatHeight)))
-                {
                     Selection.activeObject = _tileLayer.Group;
-                }
 
                 EditorGUILayout.EndHorizontal();
 
@@ -713,7 +654,7 @@ namespace Autotiles3D
 
                 #endregion
 
-                GUIStyle offsetLabel = new GUIStyle(GUI.skin.label);
+                var offsetLabel = new GUIStyle(GUI.skin.label);
                 offsetLabel.alignment = TextAnchor.MiddleCenter;
                 offsetLabel.padding = new RectOffset(0, 0, 13, 13);
                 offsetLabel.richText = true;
@@ -723,7 +664,7 @@ namespace Autotiles3D
 
                 foreach (var tile in _tileLayer.Tiles)
                 {
-                    int tileID = tile.TileID;
+                    var tileID = tile.TileID;
                     var anchor = _tileLayer.GetAnchor(tileID);
 
                     //ALL START
@@ -752,11 +693,9 @@ namespace Autotiles3D
 
                     if (_TileData[tileID].Thumbnail != null)
                     {
-                        GUIContent previewContent = new GUIContent(_TileData[tileID].Thumbnail);
+                        var previewContent = new GUIContent(_TileData[tileID].Thumbnail);
                         if (GUILayout.Button(previewContent, GUILayout.Width(fatHeight), GUILayout.Height(fatHeight)))
-                        {
                             _tileLayer.SetActiveTileID(tileID);
-                        }
                     }
 
                     EditorGUILayout.EndHorizontal();
@@ -765,9 +704,9 @@ namespace Autotiles3D
                     EditorGUILayout.BeginVertical();
                     EditorGUILayout.BeginHorizontal();
 
-                    bool guiEnabled = false;
-                    int amount = 0;
-                    int bakedAmount = 0;
+                    var guiEnabled = false;
+                    var amount = 0;
+                    var bakedAmount = 0;
 
                     if (anchor != null)
                     {
@@ -776,41 +715,33 @@ namespace Autotiles3D
                         bakedAmount = anchor.BakeCount;
                     }
 
-                    int nonBake = amount - bakedAmount;
+                    var nonBake = amount - bakedAmount;
                     GUI.enabled = guiEnabled;
 
 
-                    string bakePostfix = "";
-                    if (bakedAmount > 0)
-                    {
-                        bakePostfix = $"(Baked:{bakedAmount})";
-                    }
+                    var bakePostfix = "";
+                    if (bakedAmount > 0) bakePostfix = $"(Baked:{bakedAmount})";
                     if (nonBake < 500)
-                        EditorGUILayout.LabelField($" {amount}  <color=yellow> {tile.Name} </color> {bakePostfix}", offsetLabel);
+                        EditorGUILayout.LabelField($" {amount}  <color=yellow> {tile.Name} </color> {bakePostfix}",
+                            offsetLabel);
                     else
-                        EditorGUILayout.LabelField($" {amount}  <color=yellow> {tile.Name} </color> <color=red>(high) </color> {bakePostfix}", offsetLabel);
+                        EditorGUILayout.LabelField(
+                            $" {amount}  <color=yellow> {tile.Name} </color> <color=red>(high) </color> {bakePostfix}",
+                            offsetLabel);
 
                     GUILayout.FlexibleSpace();
 
                     guiEnabled = GUI.enabled;
-                    if (!_tileLayer.Anchors.ContainsKey(tileID))
-                    {
-                        GUI.enabled = false;
-                    }
+                    if (!_tileLayer.Anchors.ContainsKey(tileID)) GUI.enabled = false;
                     if (GUILayout.Button("Hide", centerButton, GUILayout.Height(fatHeight)))
-                    {
                         _tileLayer.Anchors[tileID].ToggleViews(false);
-                    }
                     if (GUILayout.Button("Show", centerButton, GUILayout.Height(fatHeight)))
-                    {
                         _tileLayer.Anchors[tileID].ToggleViews(true);
-                    }
                     GUI.enabled = guiEnabled;
 
 
-                    string msg = "Bake";
+                    var msg = "Bake";
                     if (anchor != null)
-                    {
                         if (anchor.BakedParent != null)
                         {
                             msg = "Rebake";
@@ -827,7 +758,7 @@ namespace Autotiles3D
 
                                     // anchor.FetchAllBlocks();
                                     var blocks = anchor.GetBlocks();
-                                    blocks.ForEach((b) => b.IsBaked = false);
+                                    blocks.ForEach(b => b.IsBaked = false);
 
                                     //refresh all nodes
                                     _tileLayer.VerifyAllImmediate(anchor);
@@ -840,7 +771,7 @@ namespace Autotiles3D
                                 }
                             }
                         }
-                    }
+
                     if (GUILayout.Button(msg, centerButton, GUILayout.Height(fatHeight)))
                     {
                         if (Application.isPlaying)
@@ -849,13 +780,12 @@ namespace Autotiles3D
                         }
                         else
                         {
-                            if (EditorUtility.DisplayDialog($"Bake all {tile.Name} meshes?", $"Do you want to bake all {tile.Name} meshes into a single one? \nAll baked meshes will be disabled, but not deleted. You can always re-enable them later or even rebake your meshes after more changes to the layer have been made.", "Yes", "No"))
+                            if (EditorUtility.DisplayDialog($"Bake all {tile.Name} meshes?",
+                                    $"Do you want to bake all {tile.Name} meshes into a single one? \nAll baked meshes will be disabled, but not deleted. You can always re-enable them later or even rebake your meshes after more changes to the layer have been made.",
+                                    "Yes", "No"))
                             {
                                 Undo.RegisterCompleteObjectUndo(_tileLayer, "Bake");
-                                if (anchor.BakedParent != null)
-                                {
-                                    Undo.DestroyObjectImmediate(anchor.BakedParent);
-                                }
+                                if (anchor.BakedParent != null) Undo.DestroyObjectImmediate(anchor.BakedParent);
 
                                 _tileLayer.VerifyAllImmediate(anchor);
 
@@ -865,32 +795,31 @@ namespace Autotiles3D
                                     anchor.BakedParent.transform.SetParent(anchor.transform);
                                     anchor.BakedParent.transform.SetSiblingIndex(0);
 
-                                    string path = "Assets/Third Party/Autotiles3D/Content/CombinedMeshes";
+                                    var path = "Assets/Third Party/Autotiles3D/Content/CombinedMeshes";
                                     var blocks = anchor.GetBlocks();
-                                    Autotiles3D_MeshCombiner.CombineMeshes(blocks.Select(c => c.gameObject).ToList(), ref anchor.BakedParent, path);
+                                    Autotiles3D_MeshCombiner.CombineMeshes(blocks.Select(c => c.gameObject).ToList(),
+                                        ref anchor.BakedParent, path);
 
                                     //disable view of backed blocks
                                     foreach (var block in blocks)
-                                    {
                                         if (block != null)
                                         {
                                             block.View.SetActive(false);
                                             block.IsBaked = true;
                                         }
-                                    }
 
                                     anchor.SetBakeCount(anchor.Childcount);
                                 }
                             }
                         }
+
                         GUIUtility.ExitGUI();
                     }
-                    bool wasEnabled = GUI.enabled;
+
+                    var wasEnabled = GUI.enabled;
                     GUI.enabled = _TileData[tileID].HasAnyRandomize;
                     if (GUILayout.Button("Randomize", centerButton, GUILayout.Height(fatHeight)))
-                    {
                         _tileLayer.UpdateAllImmediate(anchor);
-                    }
                     GUI.enabled = wasEnabled;
                     if (GUILayout.Button("Clear", centerButton, GUILayout.Height(fatHeight)))
                     {
@@ -904,9 +833,15 @@ namespace Autotiles3D
 
                     if (amount >= 500 && !Autotiles3DSettings.EditorInstance.suppressTileAmountWarning)
                     {
-                        EditorGUILayout.LabelField($"<color=red> {amount} </color> <color=yellow> {tile.Name} </color> Tiles. This amount is very high! Consider", Autotiles3DUtility.RichStyle, GUILayout.Width(_sp2));
-                        EditorGUILayout.LabelField($"a) <color=red>reducing </color> amount of tiles, \nb)<color=red> baking </color> meshes or \nc) working with <color=red> multiple layers </color> to improve perfomance.", Autotiles3DUtility.RichStyle, GUILayout.Width(_sp2));
-                        Autotiles3DSettings.EditorInstance.suppressTileAmountWarning = EditorGUILayout.Toggle("Suppress warning", Autotiles3DSettings.EditorInstance.suppressTileAmountWarning);
+                        EditorGUILayout.LabelField(
+                            $"<color=red> {amount} </color> <color=yellow> {tile.Name} </color> Tiles. This amount is very high! Consider",
+                            Autotiles3DUtility.RichStyle, GUILayout.Width(_sp2));
+                        EditorGUILayout.LabelField(
+                            "a) <color=red>reducing </color> amount of tiles, \nb)<color=red> baking </color> meshes or \nc) working with <color=red> multiple layers </color> to improve perfomance.",
+                            Autotiles3DUtility.RichStyle, GUILayout.Width(_sp2));
+                        Autotiles3DSettings.EditorInstance.suppressTileAmountWarning =
+                            EditorGUILayout.Toggle("Suppress warning",
+                                Autotiles3DSettings.EditorInstance.suppressTileAmountWarning);
                         GUILayout.Space(EditorGUIUtility.singleLineHeight);
                     }
 
@@ -925,20 +860,21 @@ namespace Autotiles3D
             _showControls = EditorGUILayout.Toggle(_showControls, GUILayout.Width(_sp1));
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();
-            if (_showControls)
-            {
-                RenderControls();
-            }
+            if (_showControls) RenderControls();
             EditorGUILayout.EndVertical();
 
             if (_totalBrokenAmt > 0)
             {
                 EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-                EditorGUILayout.LabelField($"<color=red>{_totalBrokenAmt} Broken tiles found! </color>", Autotiles3DUtility.RichStyle);
+                EditorGUILayout.LabelField($"<color=red>{_totalBrokenAmt} Broken tiles found! </color>",
+                    Autotiles3DUtility.RichStyle);
 
-                EditorGUILayout.LabelField("Blocks in this layer are missing (or can't find) their respective tile data!");
-                EditorGUILayout.LabelField("This might have happened because you deleted tiles from your TileGroups or due to version a version upgrade from before version 1.3.");
-                EditorGUILayout.LabelField("Don't worry, this is <color=cyan>easy to fix </color>!", Autotiles3DUtility.RichStyle);
+                EditorGUILayout.LabelField(
+                    "Blocks in this layer are missing (or can't find) their respective tile data!");
+                EditorGUILayout.LabelField(
+                    "This might have happened because you deleted tiles from your TileGroups or due to version a version upgrade from before version 1.3.");
+                EditorGUILayout.LabelField("Don't worry, this is <color=cyan>easy to fix </color>!",
+                    Autotiles3DUtility.RichStyle);
                 EditorGUILayout.LabelField("Just specify the TileGroup and TileName once for the blocks below!");
                 GUILayout.Space(20);
 
@@ -952,12 +888,12 @@ namespace Autotiles3D
                 var groups = _tileLayer.LoadedGroups;
                 var groupNames = groups.Select(g => g.name).ToList();
                 var groupNamesArray = groupNames.ToArray();
-                for (int i = 0; i < _broken.Count; i++)
+                for (var i = 0; i < _broken.Count; i++)
                 {
                     EditorGUILayout.BeginHorizontal();
 
                     EditorGUILayout.LabelField(_broken[i], GUILayout.Width(_sp4));
-                    int groupIndex = EditorGUILayout.Popup(_repair[i].Group, groupNamesArray, GUILayout.Width(_sp4));
+                    var groupIndex = EditorGUILayout.Popup(_repair[i].Group, groupNamesArray, GUILayout.Width(_sp4));
                     _repair[i].Group = groupIndex;
 
                     string[] tileNames = { };
@@ -967,7 +903,8 @@ namespace Autotiles3D
                         tileNames = groups[groupIndex].Tiles.Select(t => t.Name).ToArray();
                         group = groups[groupIndex];
                     }
-                    int tileIndex = EditorGUILayout.Popup(_repair[i].TileName, tileNames, GUILayout.Width(_sp4));
+
+                    var tileIndex = EditorGUILayout.Popup(_repair[i].TileName, tileNames, GUILayout.Width(_sp4));
                     _repair[i].TileName = tileIndex;
 
                     if (group == null)
@@ -979,15 +916,17 @@ namespace Autotiles3D
                             var tile = group.GetTileByIndex(tileIndex);
                             if (tile != null)
                             {
-                                Autotiles3D_BlockBehaviour block = _brokenBlocks[i];
+                                var block = _brokenBlocks[i];
                                 if (block != null)
-                                    Autotiles3DUtility.RepairBlocks(block, block.Anchor.GetBlocks(), group.name, tile.Name);
+                                    Autotiles3DUtility.RepairBlocks(block, block.Anchor.GetBlocks(), group.name,
+                                        tile.Name);
                             }
                         }
 
                         //recalculate broken blocks
                         CheckForBrokenBlocks();
                     }
+
                     GUI.enabled = true;
                     EditorGUILayout.EndHorizontal();
                 }
@@ -1028,7 +967,6 @@ namespace Autotiles3D
 
         public void RenderHoverInstance(Vector3Int internalPosition, Quaternion localRotation)
         {
-
             var activeTile = Autotiles3DUtility.GetTile(_tileLayer.ActiveTileID);
             if (_tileLayer.ActiveTileID == -1 || activeTile == null)
             {
@@ -1047,8 +985,9 @@ namespace Autotiles3D
 
             if (_tileLayer.PrevLocalHoverPosition != internalPosition || _ResetHover)
             {
-                GameObject prefab = activeTile.Default;
-                var rule = activeTile.GetRule(_tileLayer.GetNeighborsBoolSelfSpace(internalPosition, localRotation), out int[] addedRotation);
+                var prefab = activeTile.Default;
+                var rule = activeTile.GetRule(_tileLayer.GetNeighborsBoolSelfSpace(internalPosition, localRotation),
+                    out var addedRotation);
                 if (rule != null)
                     prefab = rule.Object;
 
@@ -1059,24 +998,25 @@ namespace Autotiles3D
                 }
                 else if (prefab != null)
                 {
-
                     var hoverInstance = _tileLayer.HoverInstance.instance;
 
                     if (_tileLayer.HoverPrefabObject != prefab || hoverInstance == null)
                     {
                         _tileLayer.DestroyHoverInstance();
-                        hoverInstance = PrefabUtility.InstantiatePrefab(prefab, _tileLayer.transform) as UnityEngine.GameObject;
+                        hoverInstance = PrefabUtility.InstantiatePrefab(prefab, _tileLayer.transform) as GameObject;
                         hoverInstance.name = "HoverInstance";
                         hoverInstance.layer = 1 << 0;
                         _tileLayer.HoverInstance = (_tileLayer.ActiveTileID, hoverInstance);
                         _tileLayer.HoverPrefabObject = prefab;
                     }
-                    _tileLayer.HoverInstance.instance.transform.position = Grid.ToWorldPoint((Vector3)internalPosition * Grid.Unit);
+
+                    _tileLayer.HoverInstance.instance.transform.position =
+                        Grid.ToWorldPoint((Vector3)internalPosition * Grid.Unit);
 
 
                     if (addedRotation[0] > -1)
                     {
-                        Vector3 axis = Vector3.right;
+                        var axis = Vector3.right;
                         if (addedRotation[0] == 1)
                             axis = Vector3.up;
                         else if (addedRotation[0] == 2)
@@ -1085,90 +1025,39 @@ namespace Autotiles3D
                     }
 
                     _tileLayer.HoverInstance.instance.transform.rotation = Grid.transform.rotation * localRotation;
-
                 }
             }
+
             _HasRenderedHover = true;
         }
-
-        #region render extrusion
-
-        Color _extrudingColor;
-
-        Dictionary<InternalNode, List<Vector3Int>> CalculateExtrusionPositions(List<InternalNode> selectedNodes, int index, Vector3Int faceNormalInternal, bool pulling)
-        {
-            Dictionary<InternalNode, List<Vector3Int>> extrusions = new Dictionary<InternalNode, List<Vector3Int>>();
-
-            for (int i = 0; i < selectedNodes.Count; i++)
-            {
-                extrusions.Add(selectedNodes[i], new List<Vector3Int>());
-                var list = extrusions[selectedNodes[i]];
-
-                Vector3Int position = selectedNodes[i].InternalPosition;
-                if (pulling)
-                {
-                    for (int j = 1; j <= index; j++)
-                    {
-                        Vector3Int extrudePos = position + j * faceNormalInternal;
-                        if (!_tileLayer.ContainsKey(extrudePos))
-                            list.Add(extrudePos);
-                    }
-                }
-                else
-                {
-                    for (int j = 0; j < index; j++)
-                    {
-                        Vector3Int extrudePos = position - j * faceNormalInternal;
-                        if (_tileLayer.ContainsKey(extrudePos))
-                            list.Add(extrudePos);
-                    }
-                }
-            }
-
-            return extrusions;
-        }
-        public void RenderExtrusion(Dictionary<InternalNode, List<Vector3Int>> extrusions, bool pulling)
-        {
-            Handles.color = pulling ? Color.white : Color.red;
-
-            foreach (var group in extrusions)
-            {
-                var positions = group.Value;
-                for (int i = 0; i < positions.Count; i++)
-                {
-                    Handles.DrawWireCube(positions[i], Vector3.one * 1.07f);
-                }
-            }
-        }
-
-        #endregion
 
         public int AddRandomRotation()
         {
             int[] possibleAdditions = { -90, 0, 90, 180 };
-            int index = UnityEngine.Random.Range(0, possibleAdditions.Length - 1);
+            var index = Random.Range(0, possibleAdditions.Length - 1);
             return possibleAdditions[index];
         }
+
         public void GridSelection(EventType eventType, Event e, Vector3Int internalPosition)
         {
             if (_OutOfBounds)
                 return;
 
             if (!e.alt) //!e.control
-            {
                 if (!e.shift)
-                {
                     if (eventType == EventType.MouseDown || eventType == EventType.MouseDrag)
                     {
                         if (e.button == 0)
                         {
                             if (!_tileLayer.ContainsKey(internalPosition))
                             {
-                                int rotation = _TileRotation;
+                                var rotation = _TileRotation;
                                 if (e.control)
                                     rotation += AddRandomRotation();
-                                _tileLayer.TryPlacementSingle(internalPosition, Quaternion.AngleAxis(rotation, Vector3.up), _tileLayer.ActiveTileID);
+                                _tileLayer.TryPlacementSingle(internalPosition,
+                                    Quaternion.AngleAxis(rotation, Vector3.up), _tileLayer.ActiveTileID);
                             }
+
                             e.Use();
                         }
                         else if (e.button == 1)
@@ -1178,37 +1067,32 @@ namespace Autotiles3D
                             e.Use();
                         }
                     }
-                }
-                else
-                {
-
-                }
-            }
         }
-        void CreateTileData()
+
+        private void CreateTileData()
         {
             _TileData.Clear();
             foreach (var tile in _tileLayer.Tiles)
             {
-                TileData data = new TileData(tile.TileID);
+                var data = new TileData(tile.TileID);
                 data.HasAnyRandomize = tile.HasAnyRandomizeEnabled();
 
                 _TileData.Add(tile.TileID, data);
 
 
-                Texture2D tex = null;//Resources.Load("Icons/square") as Texture2D;
+                Texture2D tex = null; //Resources.Load("Icons/square") as Texture2D;
                 if (tile.Default != null)
                 {
-
                     var dtex = AssetPreview.GetAssetPreview(tile.Default);
                     if (dtex != null)
                         tex = dtex;
                 }
+
                 data.Thumbnail = tex;
             }
         }
 
-        void RenderControls()
+        private void RenderControls()
         {
             //add tile
             EditorGUILayout.BeginHorizontal();
@@ -1279,5 +1163,76 @@ namespace Autotiles3D
             EditorGUILayout.LabelField("Escape");
             EditorGUILayout.EndHorizontal();
         }
+
+        private enum PullMode
+        {
+            Face,
+            Plane
+        }
+
+        public class TileData
+        {
+            public bool HasAnyRandomize;
+            public Texture2D Thumbnail;
+            public int TileId;
+
+            public TileData(int tileID)
+            {
+                TileId = tileID;
+            }
+        }
+
+        private class RepairBlock
+        {
+            public int Group;
+            public int TileName;
+        }
+
+        #region render extrusion
+
+        private Color _extrudingColor;
+
+        private Dictionary<InternalNode, List<Vector3Int>> CalculateExtrusionPositions(List<InternalNode> selectedNodes,
+            int index, Vector3Int faceNormalInternal, bool pulling)
+        {
+            var extrusions = new Dictionary<InternalNode, List<Vector3Int>>();
+
+            for (var i = 0; i < selectedNodes.Count; i++)
+            {
+                extrusions.Add(selectedNodes[i], new List<Vector3Int>());
+                var list = extrusions[selectedNodes[i]];
+
+                var position = selectedNodes[i].InternalPosition;
+                if (pulling)
+                    for (var j = 1; j <= index; j++)
+                    {
+                        var extrudePos = position + j * faceNormalInternal;
+                        if (!_tileLayer.ContainsKey(extrudePos))
+                            list.Add(extrudePos);
+                    }
+                else
+                    for (var j = 0; j < index; j++)
+                    {
+                        var extrudePos = position - j * faceNormalInternal;
+                        if (_tileLayer.ContainsKey(extrudePos))
+                            list.Add(extrudePos);
+                    }
+            }
+
+            return extrusions;
+        }
+
+        public void RenderExtrusion(Dictionary<InternalNode, List<Vector3Int>> extrusions, bool pulling)
+        {
+            Handles.color = pulling ? Color.white : Color.red;
+
+            foreach (var group in extrusions)
+            {
+                var positions = group.Value;
+                for (var i = 0; i < positions.Count; i++) Handles.DrawWireCube(positions[i], Vector3.one * 1.07f);
+            }
+        }
+
+        #endregion
     }
 }

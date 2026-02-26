@@ -12,23 +12,21 @@ namespace Game.AI.Consider
     public class ControlConsiderationSO : ConsiderationSO
     {
         private const int threatenedTilePenalty = 10;
-        public override float Score(Action.Action action, List<Action.Action> allyActions, List<Action.Action> enemyActions, int weight, PieceLogic maker)
+
+        public override float Score(Action.Action action, List<Action.Action> allyActions,
+            List<Action.Action> enemyActions, int weight, PieceLogic maker)
         {
-            if (action == null || action is not IQuiets) return 0f;
+            if (action is not IQuiets) return 0f;
 
             var value = weight + TileManager.Ins.GetTileValue(action.Target);
             foreach (var ea in enemyActions)
             {
                 //if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;
                 if (ea.Target == action.Target && ea is ICaptures)
-                {
                     value = PenaltyAction.PenaltyMoveToCapture(maker, value);
-                }
 
                 if (ea.Target == action.Target && ea is ISkills skills)
-                {
                     value = PenaltyAction.PenaltyMoveToSkill(skills, maker, value);
-                }
             }
 
             return value;

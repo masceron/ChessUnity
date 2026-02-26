@@ -6,8 +6,6 @@ namespace Game.Effects.Augmentation
     {
         public AbyssalTapetumPassive(PieceLogic piece) : base(-1, 1, piece, "effect_abyssal_tapetum_passive")
         {
-            
         }
-
     }
 }

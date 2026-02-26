@@ -1,32 +1,40 @@
 using Game.Action.Internal;
-using static Game.Common.BoardUtils;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
+using static Game.Common.BoardUtils;
 
 
 namespace Game.Action.Skills
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class SeaTurtleActive: Action, ISkills
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [MemoryPackable]
+    public partial class SeaTurtleActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SeaTurtleActive()
+        {
+        }
+
+        public SeaTurtleActive(int maker) : base(maker)
+        {
+            Target = maker;
+        }
+
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
             return 0;
         }
-        public SeaTurtleActive(int maker) : base(maker)
-        {
-            Target = (ushort)maker;
-        }
+
         protected override void Animate()
         {
-            
         }
+
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, PieceOn(Maker))));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
-
     }
-
 }

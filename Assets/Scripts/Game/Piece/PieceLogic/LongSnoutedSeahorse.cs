@@ -3,12 +3,11 @@ using Game.Common;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
+
 namespace Game.Piece.PieceLogic
 {
     public class LongSnoutedSeahorse : Commons.PieceLogic, IPieceWithSkill
     {
-        private sbyte timeToCooldown;
-
         public LongSnoutedSeahorse(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             //TODO: Change quite and capture movesets
@@ -24,7 +23,8 @@ namespace Game.Piece.PieceLogic
                     {
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
-                        if (pOn == null || pOn == this || pOn.Effects.All(effect => effect.EffectName != "effect_bound")) continue;
+                        if (pOn == null || pOn == this ||
+                            pOn.Effects.All(effect => effect.EffectName != "effect_bound")) continue;
                         list.Add(new LongSnoutedSeahorseActive(Pos, index));
                     }
                 }
@@ -33,7 +33,6 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        
                     }
                     else
                     {
@@ -51,11 +50,7 @@ namespace Game.Piece.PieceLogic
             };
         }
 
-        sbyte IPieceWithSkill.TimeToCooldown
-        {
-            get => timeToCooldown;
-            set => timeToCooldown = value;
-        }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
 
         public SkillsDelegate Skills { get; }
     }

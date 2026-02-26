@@ -2,7 +2,7 @@
 
 namespace UX.UI.Tooltip
 {
-    public class TooltipManager: Singleton<TooltipManager>
+    public class TooltipManager : Singleton<TooltipManager>
     {
         public Tooltip tooltip;
 
@@ -20,7 +20,7 @@ namespace UX.UI.Tooltip
         public void Show(string hleft, string hright, string cnt)
         {
             if (!enabled) return;
-            
+
             tooltip.gameObject.SetActive(true);
             tooltip.SetText(hleft, hright, cnt);
         }

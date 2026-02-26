@@ -8,12 +8,13 @@ namespace Game.Managers
 {
     public class AIvsAIController : MonoBehaviour
     {
-        void Start()
+        private void Start()
         {
             StartCoroutine(DoAIAction());
             PauseButton.Ins.Enable();
         }
-        IEnumerator DoAIAction()
+
+        private IEnumerator DoAIAction()
         {
             while (true)
             {
@@ -22,11 +23,10 @@ namespace Game.Managers
                     yield return new WaitForSeconds(SettingPanel.AIvsAIplayspeed);
                     continue;
                 }
+
                 AIManager.Ins.AIPlayAndExecuteBestAction(MatchManager.Ins.GameState.SideToMove);
                 yield return new WaitForSeconds(SettingPanel.AIvsAIplayspeed);
             }
-            
         }
-
     }
 }

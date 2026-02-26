@@ -1,14 +1,14 @@
-using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Third_Party.Autotiles3D.Scripts.Core;
+using UnityEngine;
 
-namespace Autotiles3D
+namespace Third_Party.Autotiles3D.Scripts.Utility.Editor
 {
     public static class Autotiles3D_GridRaycast
     {
-
         /// <summary>
-        /// Raycasts without using Colliders/Physics and return the first node it finds in the given layer of a Grid
+        ///     Raycasts without using Colliders/Physics and return the first node it finds in the given layer of a Grid
         /// </summary>
         /// <param name="layer"></param>
         /// <param name="start"></param>
@@ -16,26 +16,28 @@ namespace Autotiles3D
         /// <param name="internalHit"></param>
         /// <param name="hitNormal"></param>
         /// <returns></returns>
-
-        public static bool GridRayCast(Autotiles3D_TileLayer layer, Vector3 start, Vector3 end, out Vector3Int internalHit, out Vector3Int hitNormal, out List<Vector3> visits)
+        public static bool GridRayCast(Autotiles3D_TileLayer layer, Vector3 start, Vector3 end,
+            out Vector3Int internalHit, out Vector3Int hitNormal, out List<Vector3> visits)
         {
             internalHit = new Vector3Int();
             hitNormal = new Vector3Int();
             visits = new List<Vector3>();
 
-            Transform transform = layer.Grid.transform;
+            var transform = layer.Grid.transform;
 
-            float unit = layer.Grid.Unit;
+            var unit = layer.Grid.Unit;
 
 
-            start = transform.InverseTransformPoint(start); // convert world start points (can be float vector3s) into local space
+            start = transform
+                .InverseTransformPoint(start); // convert world start points (can be float vector3s) into local space
             end = transform.InverseTransformPoint(end);
 
             start = start / unit;
             end = end / unit;
 
 
-            start += Vector3.one * 0.5f; //add 0.5f to each point in order for .Floot to work correctly. important to add the 0.5 in the LOCAL space, after inverseTransformPoint
+            start += Vector3.one *
+                     0.5f; //add 0.5f to each point in order for .Floot to work correctly. important to add the 0.5 in the LOCAL space, after inverseTransformPoint
             end += Vector3.one * 0.5f;
 
             var gx0 = start.x;
@@ -87,11 +89,11 @@ namespace Autotiles3D
 
             var testEscape = 100;
 
-            Vector3Int prevVistor = new Vector3Int(Mathf.RoundToInt(gx), Mathf.RoundToInt(gy), Mathf.RoundToInt(gz));
+            var prevVistor = new Vector3Int(Mathf.RoundToInt(gx), Mathf.RoundToInt(gy), Mathf.RoundToInt(gz));
 
             do
             {
-                Vector3Int visitor = new Vector3Int(Mathf.RoundToInt(gx), Mathf.RoundToInt(gy), Mathf.RoundToInt(gz));
+                var visitor = new Vector3Int(Mathf.RoundToInt(gx), Mathf.RoundToInt(gy), Mathf.RoundToInt(gz));
                 visits.Add(visitor);
 
                 if (layer.ContainsKey(visitor))
@@ -125,13 +127,9 @@ namespace Autotiles3D
                 }
 
                 prevVistor = visitor;
-
-
             } while (testEscape-- > 0);
 
             return false;
-
         }
     }
-
 }

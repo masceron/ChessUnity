@@ -7,7 +7,7 @@ namespace Game.Save.Stage.Campaigns
     {
         public readonly GameConfig GameConfig;
         public readonly Army.Army[] EnemyConfig;
-        
+
         public CampaignStage(GameConfig gameConfig, Army.Army[] enemyConfig)
         {
             GameConfig = gameConfig;

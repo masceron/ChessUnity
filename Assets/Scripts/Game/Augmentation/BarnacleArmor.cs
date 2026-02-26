@@ -5,14 +5,16 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Augmentation
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BarnacleArmor : Augmentation
     {
-        public BarnacleArmor() : base(AugmentationName.BarnacleArmor, AugmentationRarity.Epic, AugmentationSlot.Chassis, null, null)
+        public BarnacleArmor() : base(AugmentationName.BarnacleArmor, AugmentationRarity.Epic, AugmentationSlot.Chassis,
+            null, null)
         {
             PassiveEffects = new List<Effect>();
         }
-        
+
         public override void SetTarget(PieceLogic target)
         {
             Target = target;

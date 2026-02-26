@@ -1,11 +1,18 @@
-﻿using Game.Action.Quiets;
-using Game.Action.Skills;
+using System;
+using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
+using MemoryPack;
 
-namespace Game.Action.Relics
+namespace Game.Action.Skills
 {
-    public class DiurnalActive : Action, ISkills
+    [MemoryPackable]
+    public partial class DiurnalActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private DiurnalActive()
+        {
+        }
+
         public DiurnalActive(int maker, int target) : base(maker)
         {
             Target = target;
@@ -13,12 +20,11 @@ namespace Game.Action.Relics
 
         public int AIPenaltyValue(PieceLogic maker)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         protected override void ModifyGameState()
         {
-            
             ActionManager.EnqueueAction(new NormalMove(Maker, Target));
         }
     }

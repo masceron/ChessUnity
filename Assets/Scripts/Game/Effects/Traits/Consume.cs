@@ -2,14 +2,19 @@
 using Game.Action.Captures;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
 
 namespace Game.Effects.Traits
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Consume: Effect, IAfterPieceActionEffect
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Consume : Effect, IAfterPieceActionTrigger
     {
         public Consume(PieceLogic piece) : base(-1, 1, piece, "effect_consume")
-        {}
+        {
+        }
+
+        public AfterActionPriority Priority => AfterActionPriority.Buff;
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
@@ -17,7 +22,7 @@ namespace Game.Effects.Traits
             var captured = BoardUtils.PieceOn(action.Target);
 
             if (captured.Effects.Any(e => e.EffectName is "effect_surpass" or "effect_vigorous")) return;
-                
+
             Piece.Quiets = captured.Quiets;
         }
 

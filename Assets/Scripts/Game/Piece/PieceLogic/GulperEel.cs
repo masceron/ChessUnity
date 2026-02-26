@@ -5,7 +5,8 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GulperEel : Commons.PieceLogic, IPieceWithSkill
     {
         public GulperEel(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
@@ -32,17 +33,13 @@ namespace Game.Piece.PieceLogic
                         }
                     }
                 }
-                else
-                {
-                    //query for AI in here
-                }
+                //query for AI in here
             };
 
             //ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
         }
 
         public SkillsDelegate Skills { get; set; }
-        sbyte IPieceWithSkill.TimeToCooldown { get; set; }
+        int IPieceWithSkill.TimeToCooldown { get; set; }
     }
-
 }

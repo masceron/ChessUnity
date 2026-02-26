@@ -6,9 +6,10 @@ using UnityEngine.UI;
 namespace UX.UI.Tooltip
 {
     //Hiển thị Description cửa Piece
-    [ExecuteInEditMode]   
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Tooltip: MonoBehaviour
+    [ExecuteInEditMode]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class Tooltip : MonoBehaviour
     {
         [SerializeField] private RectTransform whole;
         [SerializeField] private RectTransform header;
@@ -28,7 +29,7 @@ namespace UX.UI.Tooltip
             var pivotX = mousePos.x.ReadValue() + whole.rect.width > Screen.width ? 1 : 0;
             var pivotY = mousePos.y.ReadValue() + whole.rect.height > Screen.height ? 1 : 0;
             whole.pivot = new Vector2(pivotX, pivotY);
-            
+
             transform.position = mousePos.value;
         }
     }

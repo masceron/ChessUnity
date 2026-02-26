@@ -1,35 +1,37 @@
-﻿using Game.Action.Relics;
+﻿using System;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics;
 using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
 {
-    public class PrecisionMonoclePending : PendingAction, System.IDisposable
+    public class PrecisionMonoclePending : PendingAction, IDisposable
     {
-        private PrecisionMonocle precisionMonocle;
-        public PrecisionMonoclePending(PrecisionMonocle pm, int maker, bool pos = false) : base(maker)
-        {
-            precisionMonocle = pm;
-            Maker = (ushort)maker;
-        }
+        private PrecisionMonocle _precisionMonocle;
 
-        public override void CompleteAction()
+        public PrecisionMonoclePending(PrecisionMonocle pm, int maker) : base(maker)
         {
-            BoardViewer.Ins.ExecuteAction(new PrecisionMonocleAction(Maker));
-            BoardViewer.Selecting = -1;
-            BoardViewer.SelectingFunction = 0;
-
-            precisionMonocle.SetCooldown();
-            MatchManager.Ins.InputProcessor.Unmark();
-            MatchManager.Ins.InputProcessor.UpdateRelic(); 
-            Dispose();
+            _precisionMonocle = pm;
+            Maker = maker;
         }
 
         public void Dispose()
         {
-            precisionMonocle = null;
+            _precisionMonocle = null;
             BoardViewer.SelectingFunction = 0;
+        }
+
+        protected override void CompleteAction()
+        {
+            CommitResult(new PrecisionMonocleAction(Maker));
+            BoardViewer.Selecting = -1;
+            BoardViewer.SelectingFunction = 0;
+
+            _precisionMonocle.SetCooldown();
+            MatchManager.Ins.InputProcessor.Unmark();
+            MatchManager.Ins.InputProcessor.UpdateRelic();
+            Dispose();
         }
     }
 }

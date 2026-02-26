@@ -1,5 +1,19 @@
 {
   "dependencies": {
+    "com.cysharp.memorypack": {
+      "version": "https://github.com/Cysharp/MemoryPack.git?path=src/MemoryPack.Unity/Assets/MemoryPack.Unity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "e807380631237f73848dbad6c4465bb88618f512"
+    },
+    "com.cysharp.unitask": {
+      "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "73a63b7f672b88f7e9992f6917eb458a8cbb6fa9"
+    },
     "com.github-glitchenzo.nugetforunity": {
       "version": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
       "depth": 0,
@@ -78,38 +92,12 @@
       },
       "url": "https://packages.unity.com"
     },
-    "com.unity.ai.generators": {
-      "version": "1.5.0-pre.2",
+    "com.unity.ai.navigation": {
+      "version": "2.0.10",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.2d.sprite": "1.0.0",
-        "com.unity.ai.toolkit": "1.5.0-pre.2",
-        "com.unity.mathematics": "1.3.2",
-        "com.unity.cloud.gltfast": "6.14.1",
-        "com.unity.nuget.newtonsoft-json": "3.2.1"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ai.inference": {
-      "version": "2.5.0",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.burst": "1.8.17",
-        "com.unity.dt.app-ui": "1.3.3",
-        "com.unity.collections": "2.4.3",
-        "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.modules.imageconversion": "1.0.0"
-      },
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.ai.toolkit": {
-      "version": "1.5.0-pre.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "3.2.1"
+        "com.unity.modules.ai": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -187,7 +175,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.26",
+      "version": "2.0.27",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -379,14 +367,6 @@
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
-    },
-    "com.unity.modules.adaptiveperformance": {
-      "version": "1.0.0",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.modules.subsystems": "1.0.0"
-      }
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
@@ -593,16 +573,6 @@
         "com.unity.modules.audio": "1.0.0",
         "com.unity.modules.assetbundle": "1.0.0",
         "com.unity.modules.imageconversion": "1.0.0"
-      }
-    },
-    "com.unity.modules.vectorgraphics": {
-      "version": "1.0.0",
-      "depth": 0,
-      "source": "builtin",
-      "dependencies": {
-        "com.unity.modules.uielements": "1.0.0",
-        "com.unity.modules.imageconversion": "1.0.0",
-        "com.unity.modules.imgui": "1.0.0"
       }
     },
     "com.unity.modules.vehicles": {

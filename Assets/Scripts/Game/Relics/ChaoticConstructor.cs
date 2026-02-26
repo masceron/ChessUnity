@@ -4,7 +4,8 @@ using UX.UI.Ingame;
 
 namespace Game.Relics
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ChaoticConstructor : RelicLogic
     {
         public ChaoticConstructor(RelicConfig config) : base(config)
@@ -14,20 +15,18 @@ namespace Game.Relics
             TimeCooldown = 2;
             CurrentCooldown = 0;
         }
+
         public override void Activate()
         {
-            if (CurrentCooldown == 0)
-            {
-                var action = new ChaoticConstructorAction(-1);
-                BoardViewer.Ins.ExecuteAction(action);
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            if (CurrentCooldown != 0) return;
+            var action = new ChaoticConstructorAction(-1);
+            BoardViewer.Ins.ExecuteAction(action);
+            BoardViewer.Selecting = -2;
+            BoardViewer.SelectingFunction = 4;
         }
 
         public override void ActiveForAI()
         {
-
         }
     }
 }

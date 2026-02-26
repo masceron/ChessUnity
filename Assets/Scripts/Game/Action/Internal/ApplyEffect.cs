@@ -5,11 +5,14 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using Game.Tile;
+using Game.Triggers;
+using UnityEngine;
 
 namespace Game.Action.Internal
 {
-    [Il2CppSetOption(Option.NullChecks, false), Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ApplyEffect: Action, IInternal
+    [Il2CppSetOption(Option.NullChecks, false)]
+    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    public class ApplyEffect : Action, IInternal
     {
         public readonly Effect Effect;
         public readonly FormationType SourceFormationType;
@@ -17,7 +20,7 @@ namespace Game.Action.Internal
         public readonly RelicLogic SourceRelic;
 
         /// <summary>
-        /// Sử dụng apply chung chung, tự apply cho mình
+        ///     Sử dụng apply chung chung, tự apply cho mình
         /// </summary>
         /// <param name="e">Effect is applied</param>
         public ApplyEffect(Effect e) : base(-1)
@@ -26,7 +29,7 @@ namespace Game.Action.Internal
         }
 
         /// <summary>
-        /// Sử dụng khi formation apply effect.
+        ///     Sử dụng khi formation apply effect.
         /// </summary>
         /// <param name="e">Effect is applied</param>
         /// <param name="formationType">Formation that apply this effect</param>
@@ -37,7 +40,7 @@ namespace Game.Action.Internal
         }
 
         /// <summary>
-        /// Sử dụng khi Piece apply effect.
+        ///     Sử dụng khi Piece apply effect.
         /// </summary>
         /// <param name="e">Effect is applied</param>
         /// <param name="source">Piece that apply this effect</param>
@@ -48,15 +51,16 @@ namespace Game.Action.Internal
         }
 
         /// <summary>
-        /// Sử dụng khi Relic apply effect. Bên trắng side = false, bên đen side = true
+        ///     Sử dụng khi Relic apply effect. Bên trắng side = false, bên đen side = true
         /// </summary>
         /// <param name="e">Effect is applied</param>
         /// <param name="source">Relic that apply this effect</param>
-        public ApplyEffect(Effect e, RelicLogic source): base(-1)
+        public ApplyEffect(Effect e, RelicLogic source) : base(-1)
         {
             Effect = e;
             SourceRelic = source;
         }
+
         protected override void Animate()
         {
         }
@@ -69,8 +73,8 @@ namespace Game.Action.Internal
             {
                 // If the effect is applied as a result of an Action not from end turn trigger, increment the duration by 1.
                 if (Effect.Duration != -1 && ActionManager.CurrentPhase == Phase.BeforeEndTurn) Effect.Duration++;
-                
-                if (Effect is IOnApply onApply)
+
+                if (Effect is IOnApplyTrigger onApply)
                     onApply.OnApply();
                 Effect.Piece.Effects.Add(Effect);
                 BoardUtils.AddEffectObserver(Effect);
@@ -83,18 +87,19 @@ namespace Game.Action.Internal
                         if (already.Strength < Effect.Strength) already.Strength = Effect.Strength;
                         var weakerEffect = already.Strength < Effect.Strength ? already : Effect;
                         var strongerEffect = weakerEffect == already ? Effect : already;
-                        var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration * (float)weakerEffect.Duration / strongerEffect.Duration);
-                        already.Duration = (sbyte)newDuration;
-                        UnityEngine.Debug.Log(already.Duration);
+                        var newDuration = strongerEffect.Duration + Math.Floor(weakerEffect.Duration *
+                            (float)weakerEffect.Duration / strongerEffect.Duration);
+                        already.Duration = (int)newDuration;
+                        Debug.Log(already.Duration);
                         break;
-                    case EffectStack.NonStackable: default:
+                    case EffectStack.NonStackable:
+                    default:
                         break;
                     case EffectStack.Additive:
                         already.Strength += Effect.Strength;
                         break;
                 }
             }
-            
         }
     }
 }
