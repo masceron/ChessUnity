@@ -1,18 +1,21 @@
-using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
-    public class MoveToDetach : Action, IDontEndTurn, IInternal
+    public class MoveToDetach : Action, IInternal
     {
-        /// <summary>Reference đến quân ký sinh cần được tách ra và khôi phục vị trí.</summary>
+        /// <summary>Logic của quân bị ký sinh (host), dùng để tra cứu parasite Piece trong PieceManager.</summary>
+        private readonly PieceLogic _hostLogic;
+
+        /// <summary>Reference đến quân ký sinh, dùng để cập nhật PieceBoard sau khi tách.</summary>
         private readonly PieceLogic _parasite;
 
-        public MoveToDetach(int maker, int target, PieceLogic parasite) : base(maker)
+        public MoveToDetach(int maker, int target, PieceLogic parasite, PieceLogic hostLogic) : base(maker)
         {
-            Target = target;
+            Target    = target;
             _parasite = parasite;
+            _hostLogic = hostLogic;
         }
 
         protected override void Animate()
@@ -21,8 +24,10 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.MoveToDetach(Maker, Target);
+            // Tra cứu parasite Piece qua hostLogic rồi animate về Target
+            PieceManager.Ins.MoveToDetach(_hostLogic, Target);
 
+            // Cập nhật PieceBoard logic
             var board = MatchManager.Ins.GameState.PieceBoard;
             board[Target] = _parasite;
             _parasite.Pos = Target;

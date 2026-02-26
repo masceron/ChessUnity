@@ -284,8 +284,6 @@ namespace Game.Piece.PieceLogic.Commons
         public void SetState(StateEffect stateEffect)
         {
             ClearState();
-            Effects.Add(stateEffect);
-            BoardUtils.AddEffectObserver(stateEffect);
             CurrentState = stateEffect.StateType;
         }
 

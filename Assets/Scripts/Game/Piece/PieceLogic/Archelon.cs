@@ -22,7 +22,7 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this, 3)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ArchelonDraw(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Parasite(this)));
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new Parasite(this)));
         
 
             Skills = (list, isPlayer, excludeEmptyTile) =>

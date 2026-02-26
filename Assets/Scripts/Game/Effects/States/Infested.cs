@@ -21,7 +21,6 @@ namespace Game.Effects.States
     {
         /// <summary>Tham chiếu đến quân Parasite đang ký sinh.</summary>
         public PieceLogic ParasitePiece;
-
         public override StateType StateType => StateType.Infested;
 
         public Infested(PieceLogic piece, PieceLogic parasitePiece)
@@ -36,7 +35,7 @@ namespace Game.Effects.States
         /// </summary>
         public void OnCallDead(PieceLogic pieceToDie)
         {
-            if (pieceToDie != ParasitePiece) return;
+            if (pieceToDie != Piece) return;
 
             List<int> availablePos = new List<int>();
 
@@ -46,12 +45,14 @@ namespace Game.Effects.States
             {
                 if (!BoardUtils.VerifyIndex(BoardUtils.IndexOf(rank, file))) continue;
                 if (BoardUtils.PieceOn(BoardUtils.IndexOf(rank, file)) != null) continue;
-                if (BoardUtils.IsActive(BoardUtils.IndexOf(rank, file))) continue;
+                if (!BoardUtils.IsActive(BoardUtils.IndexOf(rank, file))) continue;
                 availablePos.Add(BoardUtils.IndexOf(rank, file));
             }
+            
+            if (availablePos.Count == 0) return;
 
             var randomPos = availablePos[UnityEngine.Random.Range(0, availablePos.Count)];
-            ActionManager.EnqueueAction(new MoveToDetach(pieceToDie.Pos, randomPos, ParasitePiece));
+            ActionManager.EnqueueAction(new MoveToDetach(pieceToDie.Pos, randomPos, ParasitePiece, Piece));
         }
     }
 }

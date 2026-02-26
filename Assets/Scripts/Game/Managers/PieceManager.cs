@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Game.Common;
 using Game.Piece;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Managers
@@ -9,6 +11,12 @@ namespace Game.Managers
     public class PieceManager : Singleton<PieceManager>
     {
         private readonly Piece.Piece[] pieces = new Piece.Piece[BoardSize];
+
+        /// <summary>
+        ///     Lưu cặp (host PieceLogic → parasite Piece) để quản lý animation ký sinh.
+        /// </summary>
+        private readonly Dictionary<PieceLogic, Piece.Piece> _parasiteMap =
+            new Dictionary<PieceLogic, Piece.Piece>();
 
         public void SpawnPiece(PieceConfig config)
         {
@@ -47,24 +55,32 @@ namespace Game.Managers
         }
 
         /// <summary>
-        ///     Animate <paramref name="parasitePos"/> nhảy lên đỉnh <paramref name="hostPos"/> và thu nhỏ về 0.3f.
-        ///     Không cập nhật array pieces (quân ký sinh vẫn giữ nguyên vị trí logic).
+        ///     Animate quân ký sinh tại <paramref name="parasitePos"/> nhảy lên đỉnh host
+        ///     tại <paramref name="hostPos"/> và thu nhỏ về 0.3f.
+        ///     Lưu cặp (hostLogic → parasitePiece) vào <see cref="_parasiteMap"/>.
         /// </summary>
-        public void MoveToParasitic(int parasitePos, int hostPos)
+        public void MoveToParasitic(int parasitePos, int hostPos, PieceLogic hostLogic)
         {
-            var hostPiece = pieces[hostPos];
-            pieces[parasitePos].MoveToParasitic(hostPiece);
+            var parasitePiece = pieces[parasitePos];
+            var hostPiece     = pieces[hostPos];
+
+            // Lưu vào map để MoveToDetach có thể tìm đúng parasite Piece
+            _parasiteMap[hostLogic] = parasitePiece;
+
+            parasitePiece.MoveToParasitic(hostPiece);
         }
 
         /// <summary>
-        ///     Animate quân tại <paramref name="from"/> di chuyển về <paramref name="to"/> và phóng to về scale 1.
-        ///     Cập nhật array pieces giống như Move.
+        ///     Tìm parasite Piece theo <paramref name="hostLogic"/>, animate về <paramref name="to"/>
+        ///     và phóng to về scale 1. Xóa entry khỏi map sau khi detach.
         /// </summary>
-        public void MoveToDetach(int from, int to)
+        public void MoveToDetach(PieceLogic hostLogic, int to)
         {
-            pieces[to] = pieces[from];
-            pieces[from] = null;
-            pieces[to].MoveToDetach(RankOf(to), FileOf(to));
+            if (!_parasiteMap.TryGetValue(hostLogic, out var parasitePiece)) return;
+
+            pieces[to] = _parasiteMap[hostLogic];
+            _parasiteMap.Remove(hostLogic);
+            parasitePiece.MoveToDetach(RankOf(to), FileOf(to));
         }
 
         public Piece.Piece GetPieceGameObject(int pos)
