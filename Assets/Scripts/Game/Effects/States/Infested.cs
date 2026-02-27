@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Quiets;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+
 
 namespace Game.Effects.States
 {
@@ -49,10 +49,17 @@ namespace Game.Effects.States
                 availablePos.Add(BoardUtils.IndexOf(rank, file));
             }
             
-            if (availablePos.Count == 0) return;
-
-            var randomPos = availablePos[UnityEngine.Random.Range(0, availablePos.Count)];
-            ActionManager.EnqueueAction(new MoveToDetach(pieceToDie.Pos, randomPos, ParasitePiece, Piece));
+            if (availablePos.Count == 0)
+            {
+                // Không có ô nào trống— destroy quân ký sinh (cả data lẫn visual)
+                ActionManager.EnqueueAction(new DestroyParasitePiece(ParasitePiece, Piece));
+                return;
+            }
+            else
+            {
+                var randomPos = availablePos[UnityEngine.Random.Range(0, availablePos.Count)];
+                ActionManager.EnqueueAction(new MoveToDetach(pieceToDie.Pos, randomPos, ParasitePiece, Piece));
+            }
         }
     }
 }

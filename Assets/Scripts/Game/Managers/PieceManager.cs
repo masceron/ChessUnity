@@ -83,6 +83,20 @@ namespace Game.Managers
             parasitePiece.MoveToDetach(RankOf(to), FileOf(to));
         }
 
+        /// <summary>
+        ///     Destroy cả data lẫn visual của quân ký sinh gắn với <paramref name="hostLogic"/>.
+        ///     Dùng khi không có vị trí nào để Detach.
+        /// </summary>
+        public void DestroyParasite(PieceLogic hostLogic)
+        {
+            if (!_parasiteMap.TryGetValue(hostLogic, out var parasitePiece)) return;
+
+            _parasiteMap.Remove(hostLogic);
+
+            // Destroy gameObject (visual)
+            Destroy(parasitePiece.gameObject);
+        }
+
         public Piece.Piece GetPieceGameObject(int pos)
         {
             return pieces[pos];
