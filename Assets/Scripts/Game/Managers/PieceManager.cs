@@ -56,7 +56,7 @@ namespace Game.Managers
 
         /// <summary>
         ///     Animate quân ký sinh tại <paramref name="parasitePos"/> nhảy lên đỉnh host
-        ///     tại <paramref name="hostPos"/> và thu nhỏ về 0.3f.
+        ///     tại <paramref name="hostPos"/> và thu nhỏ về 40%.
         ///     Lưu cặp (hostLogic → parasitePiece) vào <see cref="_parasiteMap"/>.
         /// </summary>
         public void MoveToParasitic(int parasitePos, int hostPos, PieceLogic hostLogic)

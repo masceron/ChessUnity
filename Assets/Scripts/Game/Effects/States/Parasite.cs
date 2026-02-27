@@ -39,7 +39,7 @@ namespace Game.Effects.States
                 || action.Maker != Piece.Pos 
                 || BoardUtils.PieceOn(action.Target).CurrentState != StateType.None) return;
 
-           action.Result = ResultFlag.Miss; // cần định nghĩa lại flag cho chuẩn
+           action.Result = ResultFlag.Infest;
 
            ApplySkill(action);    
 
