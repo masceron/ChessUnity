@@ -460,5 +460,6 @@ namespace Game.Common
             RemoveFormation(index);
             if (PieceOn(index) != null) ActionManager.EnqueueAction(new KillPiece(index));
         }
+        public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
     }
 }
