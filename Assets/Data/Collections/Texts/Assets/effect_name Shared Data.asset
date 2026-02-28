@@ -635,6 +635,14 @@ MonoBehaviour:
     m_Key: effect_paletail_unicornfish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 73054780956307456
+    m_Key: effect_bone_eating_worm_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73054994765148160
+    m_Key: effect_giant_larvacean_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

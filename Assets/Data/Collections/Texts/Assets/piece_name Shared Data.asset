@@ -431,6 +431,14 @@ MonoBehaviour:
     m_Key: piece_paletail_unicornfish
     m_Metadata:
       m_Items: []
+  - m_Id: 73064794567700480
+    m_Key: piece_bone_eating_worm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73065138374799360
+    m_Key: piece_giant_larvacean
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
