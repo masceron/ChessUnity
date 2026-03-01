@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ExperimentPiecesData
   m_EditorClassIdentifier: 
   piecesData:
+  - {fileID: 11400000, guid: 04e7cb8ca9a1e4947b6b1e87ac09643b, type: 2}
   - {fileID: 11400000, guid: 29e169c84a2b8ea49b521a0ef5d75b20, type: 2}
   - {fileID: 11400000, guid: 5fcdfbcefc900d748a3256bf41f1b9b6, type: 2}
   - {fileID: 11400000, guid: 84dcf6794c978ba40bf6c70bc0def259, type: 2}
@@ -93,6 +94,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5d120d9987a0b82418db9187f3746dde, type: 2}
   - {fileID: 11400000, guid: a60846d0142708243a8ee8d6a5025d9f, type: 2}
   - {fileID: 11400000, guid: 00a53031e7ff58c4491b54e71fd474a7, type: 2}
+  - {fileID: 11400000, guid: f90702e1c745bab48b7922acdf32df0a, type: 2}
   - {fileID: 11400000, guid: b814b01079ab41f45814d87e2f98b995, type: 2}
   - {fileID: 11400000, guid: 950c37fbcdee4c446860fc2fcc1402c5, type: 2}
   - {fileID: 11400000, guid: 814e08e529862ac45babcb5abef89fe4, type: 2}
@@ -113,6 +115,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a4c4c5d1beb8d96409f6b788df16619a, type: 2}
   - {fileID: 11400000, guid: f5eb660ae52a8ec4fb73fe550e331ff8, type: 2}
   - {fileID: 11400000, guid: a0f5ea7408be5054595c9486553468a6, type: 2}
+  - {fileID: 11400000, guid: a3eeae4ddb8b0b746925840f7920f063, type: 2}
   - {fileID: 11400000, guid: 8486c593ebcb2984792cdfad2f191291, type: 2}
   - {fileID: 11400000, guid: 79ab16f67e1e74242874c9c9aac55e3d, type: 2}
   - {fileID: 11400000, guid: ad08fa6e1d4e81646821deb86270abe9, type: 2}
