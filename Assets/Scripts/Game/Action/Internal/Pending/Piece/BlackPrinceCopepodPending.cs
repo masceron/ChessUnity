@@ -50,9 +50,9 @@ namespace Game.Action.Internal.Pending.Piece
                         _thirdPos = Target;
                     }
 
-                    foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                     PieceOn(pending.Target) == null))
-                        TileManager.Ins.UnMark(pending.Target);
+                    //foreach (var pending in BoardViewer.ListOf.Where(pending =>
+                    //                 PieceOn(pending.Target) == null))
+                    //    TileManager.Ins.UnMark(pending.Target);
                 }
             }
             else

@@ -635,6 +635,10 @@ MonoBehaviour:
     m_Key: effect_paletail_unicornfish_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 73203759432019968
+    m_Key: effect_black_prince_copepod_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

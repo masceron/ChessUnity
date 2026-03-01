@@ -431,6 +431,14 @@ MonoBehaviour:
     m_Key: piece_paletail_unicornfish
     m_Metadata:
       m_Items: []
+  - m_Id: 73188960384004096
+    m_Key: piece_red_copepod
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73202940615798784
+    m_Key: piece_black_prince_copepod
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

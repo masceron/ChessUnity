@@ -1,13 +1,15 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
+using Game.Action.Skills;
 using Game.Effects.Buffs;
 using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using ZLinq;
+using System;
 using static Game.Common.BoardUtils;
+using UnityEngine;
 
 namespace Game.Piece.PieceLogic
 {
@@ -22,13 +24,20 @@ namespace Game.Piece.PieceLogic
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown != 0 || FindPiece<Commons.PieceLogic>(!Color).Count == 0) return;
+                if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var pendingActions = from piece in PieceBoard()
-                        where piece != null && !piece.Equals(this)
-                        select new BlackPrinceCopepodPending(Pos, piece.Pos);
-                    foreach (var action in pendingActions) list.Add(action);
+                    var (rank, file) = RankFileOf(Pos);
+                    for (var x = rank - 4; x <= rank + 4; ++x)
+                        for (var y = file - 4; y <= file + 4; ++y)
+                        {
+                            if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
+                            var targetPiece = PieceOn(IndexOf(x, y));
+                            if (targetPiece != null) continue;
+
+                            Debug.Log($"Adding skill from {Pos} to {IndexOf(x, y)}");
+                            list.Add(new BlackPrinceCopepodPending(Pos, IndexOf(x, y)));
+                        }
                 }
             };
         }
