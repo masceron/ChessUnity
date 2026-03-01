@@ -70,7 +70,7 @@ namespace Game.Effects.SpecialAbility
         {
             if (isPreviousTurnNight && IsDay())
             {
-                ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(Piece, 1, GetStat(EffectStat.Duration, 2))));
+                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece, 1, GetStat(EffectStat.Duration, 2))));
             }
             isPreviousTurnNight = IsDay() == false;
         }

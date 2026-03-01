@@ -643,6 +643,46 @@ MonoBehaviour:
     m_Key: effect_basket_star_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 73315498103066624
+    m_Key: effect_parasite_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498132426752
+    m_Key: effect_cooperative_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498136621056
+    m_Key: effect_black_prince_copepod_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498145009664
+    m_Key: effect_bryozoan_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498149203968
+    m_Key: effect_bryozoan_rally_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498157592576
+    m_Key: effect_giant_larvacean_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498161786880
+    m_Key: effect_bryozoan_long_reach_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498165981184
+    m_Key: effect_bone_eating_worm_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498174369792
+    m_Key: effect_bryozoan_true_bite_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315498182758400
+    m_Key: effect_infested_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

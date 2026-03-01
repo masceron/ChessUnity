@@ -243,6 +243,14 @@ MonoBehaviour:
     m_Key: piece_blubber_jelly_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 73288822744862720
+    m_Key: piece_red_copepod_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73288822795194368
+    m_Key: piece_black_prince_copepod_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

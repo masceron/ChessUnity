@@ -39,7 +39,8 @@ namespace Game.Effects
         Strength,
         Chance,
         Duration, // Đây là biến động, cần phân biệt với Duration - thời gian tồn tại của Effect
-        Counter
+        Counter,
+        Range
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
