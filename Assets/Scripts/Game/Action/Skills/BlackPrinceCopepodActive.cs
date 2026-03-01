@@ -40,8 +40,20 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(Maker, firstIndex));
-            //ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(secondIndex))));
-            //ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(thirdIndex))));
+
+            if (PieceOn(secondIndex) != null)
+                ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(secondIndex))));
+            else
+            {
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", PieceOn(Maker).Color, secondIndex)));
+            }
+
+            if (PieceOn(thirdIndex) != null)
+                ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(thirdIndex))));
+            else
+            {
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", PieceOn(Maker).Color, thirdIndex)));
+            }
         }
     }
 }

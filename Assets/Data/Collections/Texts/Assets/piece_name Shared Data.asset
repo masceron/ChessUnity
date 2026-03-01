@@ -439,6 +439,10 @@ MonoBehaviour:
     m_Key: piece_black_prince_copepod
     m_Metadata:
       m_Items: []
+  - m_Id: 73311284726804480
+    m_Key: piece_illusion_piece
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

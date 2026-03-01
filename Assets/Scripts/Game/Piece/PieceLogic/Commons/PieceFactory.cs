@@ -57,6 +57,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_humboldt_squid" => new HumboldtSquid(cfg),
                 "piece_humbug_damsel_fish" => new HumbugDamselFish(cfg),
                 "piece_humilitas" => new Humilitas(cfg),
+                "piece_illusion_piece" => new IllusionPiece(cfg),
                 "piece_kelp_bass" => new KelpBass(cfg),
                 "piece_kelp_forest" => new KelpForest(cfg),
                 "piece_lionfish" => new Lionfish(cfg),
