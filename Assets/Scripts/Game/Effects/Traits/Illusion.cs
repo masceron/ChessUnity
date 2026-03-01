@@ -13,18 +13,10 @@ namespace Game.Effects.Traits
 {
     public class Illusion : Effect, IOnApplyTrigger, IOnMoveGenTrigger
     {
-        private bool color;
-        private int PieceIdx;
         public Illusion(PieceLogic piece) : base(-1, 1, piece, "effect_illusion")
         {
 
         }
-
-        public Illusion(int idx, bool color) : base(-1, 1, null, "effect_illusion")
-        {
-            this.PieceIdx = idx;
-            this.color = color;
-        }   
 
         public void OnApply()
         {
