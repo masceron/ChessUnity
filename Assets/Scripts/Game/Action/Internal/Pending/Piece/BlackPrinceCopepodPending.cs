@@ -2,6 +2,7 @@ using System;
 using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using UX.UI.Ingame;
 using ZLinq;
 using static Game.Common.BoardUtils;
@@ -10,7 +11,7 @@ namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BlackPrinceCopepodPending : PendingAction, IDisposable
+    public class BlackPrinceCopepodPending : PendingAction, IDisposable, ISkills
     {
         private static int _firstPos = -1;
         private static int _secondPos = -1;
@@ -40,22 +41,25 @@ namespace Game.Action.Internal.Pending.Piece
                 {
                     if (_firstPos == -1) {
                         _firstPos = Target;
+                        TileManager.Ins.UnMark(_firstPos);
+                        Debug.Log("selected first target");
                     }
                     else if (_secondPos == -1)
                     {
                         _secondPos = Target;
+                        TileManager.Ins.UnMark(_secondPos);
+                        Debug.Log("selected second target");
                     }
                     else if (_thirdPos == -1)
                     {
                         _thirdPos = Target;
+                        TileManager.Ins.UnMark(_thirdPos);
+                        Debug.Log("selected third target");
                     }
-
-                    //foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                    //                 PieceOn(pending.Target) == null))
-                    //    TileManager.Ins.UnMark(pending.Target);
                 }
             }
-            else
+            
+            if (_firstPos != -1 && _secondPos != -1 && _thirdPos != -1)
             {
                 CommitResult(new BlackPrinceCopepodActive(Maker, _firstPos, _secondPos, _thirdPos));
                 _firstPos = -1;

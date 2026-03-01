@@ -40,7 +40,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(Maker, firstIndex));
-            //ActionManager.EnqueueAction(new ApplyEffect(new Illusion()))
+            //ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(secondIndex))));
+            //ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(thirdIndex))));
         }
     }
 }

@@ -10,6 +10,7 @@ using Game.Piece.PieceLogic.Commons;
 using System;
 using static Game.Common.BoardUtils;
 using UnityEngine;
+using Game.Managers;
 
 namespace Game.Piece.PieceLogic
 {
