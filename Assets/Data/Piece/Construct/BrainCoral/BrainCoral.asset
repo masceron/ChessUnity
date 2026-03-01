@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: PaletailUnicornfish
+  m_Name: BrainCoral
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  key: piece_paletail_unicornfish
-  prefab: {fileID: 919132149155446097, guid: 4be53cebe51372e47901d262e9f3ab62, type: 3}
-  rank: 4
-  moveRange: 3
-  attackRange: 3
+  key: piece_brain_coral
+  prefab: {fileID: 5598166101255696859, guid: b5743e98285446748982a08ad7d79d7a, type: 3}
+  rank: 1
+  moveRange: 0
+  attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 0
   normalSkillCooldown: 0
-  availableSlots: -1
-  logicClassName: PaletailUnicornfish
+  availableSlots: 0
+  logicClassName: BrainCoral
   baseValue: 0
   considerations: []

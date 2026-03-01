@@ -635,16 +635,12 @@ MonoBehaviour:
     m_Key: effect_paletail_unicornfish_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 71406623191240704
-    m_Key: effect_cooperative
+  - m_Id: 72421206338453504
+    m_Key: effect_brain_coral_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 71798026454994944
-    m_Key: effect_infested
-    m_Metadata:
-      m_Items: []
-  - m_Id: 71798191333085184
-    m_Key: effect_parasite
+  - m_Id: 72421206455894016
+    m_Key: effect_basket_star_passive
     m_Metadata:
       m_Items: []
   m_Metadata:

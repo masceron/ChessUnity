@@ -342,7 +342,7 @@ namespace Game.Piece.PieceLogic.Commons
         }
 
         /// <summary>
-        ///     Trả về chỉ
+        /// Trả về stat vĩnh viễn, chưa qua Effect 
         /// </summary>
         /// <param name="stat"></param>
         /// <param name="num"></param>

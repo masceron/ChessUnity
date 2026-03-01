@@ -431,6 +431,14 @@ MonoBehaviour:
     m_Key: piece_paletail_unicornfish
     m_Metadata:
       m_Items: []
+  - m_Id: 72440767666339840
+    m_Key: piece_brain_coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72441075066880000
+    m_Key: piece_basket_star
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

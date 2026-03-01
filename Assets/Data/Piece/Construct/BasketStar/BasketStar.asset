@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
-  m_Name: PaletailUnicornfish
+  m_Name: BasketStar
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
-  key: piece_paletail_unicornfish
-  prefab: {fileID: 919132149155446097, guid: 4be53cebe51372e47901d262e9f3ab62, type: 3}
-  rank: 4
-  moveRange: 3
-  attackRange: 3
+  key: piece_basket_star
+  prefab: {fileID: 919132149155446097, guid: 2a3948bb065b5e2498571d4e81364a7a, type: 3}
+  rank: 5
+  moveRange: 2
+  attackRange: 2
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 0
   normalSkillCooldown: 0
-  availableSlots: -1
-  logicClassName: PaletailUnicornfish
+  availableSlots: 4
+  logicClassName: BasketStar
   baseValue: 0
   considerations: []
