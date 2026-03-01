@@ -57,7 +57,7 @@ namespace Game.Effects.Condition
                 "effect_haste" => new Haste(duration, strength, piece),
                 "effect_piercing" => new Piercing(duration, piece),
                 "effect_hardened_shield" => new HardenedShield(piece),
-                "effect_true_bite" => new TrueBite(piece),
+                "effect_true_bite" => new TrueBite(-1 ,piece),
                 "effect_camouflage" => new Camouflage(piece),
                 _ => new Shield(piece)
             };

@@ -13,7 +13,7 @@ namespace Game.Piece.PieceLogic
         public RibbonEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(-1,this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

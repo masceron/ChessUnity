@@ -15,11 +15,13 @@ MonoBehaviour:
   key: piece_epaulette_shark
   prefab: {fileID: 919132149155446097, guid: 217b1cff3a42c64478ffc1ef5b756f71, type: 3}
   rank: 5
-  moveRange: 4
-  attackRange: 4
+  moveRange: 1
+  attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 1
   normalSkillCooldown: 7
   availableSlots: 0
   logicClassName: EpauletteShark
+  baseValue: 0
+  considerations: []
