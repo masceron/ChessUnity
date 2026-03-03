@@ -431,16 +431,40 @@ MonoBehaviour:
     m_Key: piece_paletail_unicornfish
     m_Metadata:
       m_Items: []
-  - m_Id: 73188960384004096
+  - m_Id: 72440767666339840
+    m_Key: piece_brain_coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72441075066880000
+    m_Key: piece_basket_star
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315381140705280
+    m_Key: piece_blubber_jelly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315381165871104
+    m_Key: piece_illusion_piece
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315381170065408
+    m_Key: piece_bone_eating_worm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315381182648320
+    m_Key: piece_bryozoan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73315381182648321
     m_Key: piece_red_copepod
     m_Metadata:
       m_Items: []
-  - m_Id: 73202940615798784
+  - m_Id: 73315381232979968
     m_Key: piece_black_prince_copepod
     m_Metadata:
       m_Items: []
-  - m_Id: 73311284726804480
-    m_Key: piece_illusion_piece
+  - m_Id: 73315381241368576
+    m_Key: piece_giant_larvacean
     m_Metadata:
       m_Items: []
   m_Metadata:

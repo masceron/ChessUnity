@@ -13,7 +13,7 @@ namespace Game.Piece.PieceLogic
         public HumboldtSquid(PieceConfig cfg) : base(cfg, AmbushPredatorMoves.Quiets, AmbushPredatorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(-1,this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new HumboldtSquidPassive(this)));
         }
     }

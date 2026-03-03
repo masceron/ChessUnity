@@ -31,7 +31,7 @@ namespace Game.Effects.Augmentation
         public void OnApply()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(Piece)));
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(Piece)));
+            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(-1, Piece)));
         }
     }
 }

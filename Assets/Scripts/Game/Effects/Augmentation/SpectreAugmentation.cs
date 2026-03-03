@@ -62,7 +62,7 @@ namespace Game.Effects.Augmentation
                 "effect_haste" => new Haste(randomDuration, 1, piece),
                 "effect_piercing" => new Piercing(randomDuration, piece),
                 "effect_hardened_shield" => new HardenedShield(piece),
-                "effect_true_bite" => new TrueBite(piece),
+                "effect_true_bite" => new TrueBite(-1 ,piece),
                 "effect_camouflage" => new Camouflage(piece),
                 _ => null
             };

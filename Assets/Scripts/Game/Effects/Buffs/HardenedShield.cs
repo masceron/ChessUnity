@@ -12,7 +12,7 @@ namespace Game.Effects.Buffs
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HardenedShield : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
-        public HardenedShield(PieceLogic piece, int stack = 1) : base(-1, stack, piece, "effect_hardened_shield")
+        public HardenedShield(PieceLogic piece, int stack = 1, int duration = -1) : base(duration, stack, piece, "effect_hardened_shield")
         {
         }
 

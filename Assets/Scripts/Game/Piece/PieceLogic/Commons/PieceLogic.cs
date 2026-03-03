@@ -4,6 +4,7 @@ using Game.Augmentation;
 using Game.Augmentation.Set;
 using Game.Common;
 using Game.Effects;
+using Game.Effects.States;
 using Game.Managers;
 using Game.Movesets;
 using Game.ScriptableObjects;
@@ -55,6 +56,9 @@ namespace Game.Piece.PieceLogic.Commons
 
         public QuietsDelegate Quiets;
         public int SkillCooldown;
+
+        /// <summary>State hiện tại của quân cờ. Mặc định là <see cref="StateType.None"/>.</summary>
+        public StateType CurrentState { get; private set; } = StateType.None;
 
         protected PieceLogic(PieceConfig cfg, QuietsDelegate quiets = null, CapturesDelegate captures = null)
         {
@@ -271,6 +275,32 @@ namespace Game.Piece.PieceLogic.Commons
             SpecificFormations.Remove(formationType);
         }
 
+        // ── State Management ──────────────────────────────────────────────────────
+
+        /// <summary>
+        ///     Gán State Effect mới cho quân cờ này. Nếu đang có State cũ, sẽ tự xóa trước.
+        ///     Đảm bảo <b>chỉ có 1 State</b> tại 1 thời điểm.
+        /// </summary>
+        public void SetState(StateEffect stateEffect)
+        {
+            ClearState();
+            CurrentState = stateEffect.StateType;
+        }
+
+        /// <summary>Xóa State hiện tại, trả về <see cref="StateType.None"/>.</summary>
+        public void ClearState()
+        {
+            var existing = Effects.Find(e => e is IStateful);
+            if (existing != null) {
+                Effects.Remove(existing);
+                BoardUtils.RemoveObserver(existing);
+            }
+            CurrentState = StateType.None;
+        }
+
+        /// <summary>Kiểm tra quân cờ có đang ở State chỉ định không.</summary>
+        public bool HasState(StateType type) => CurrentState == type;
+
         public int GetValueForAI()
         {
             var value = RankToValue(PieceRank);
@@ -312,7 +342,7 @@ namespace Game.Piece.PieceLogic.Commons
         }
 
         /// <summary>
-        ///     Trả về chỉ
+        /// Trả về stat vĩnh viễn, chưa qua Effect 
         /// </summary>
         /// <param name="stat"></param>
         /// <param name="num"></param>

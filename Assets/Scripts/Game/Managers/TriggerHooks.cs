@@ -145,7 +145,6 @@ namespace Game.Managers
                 e.OnPieceSpawn(piece);
             });
         }
-
         private class HookBinding
         {
             public Action<Observer> Add;

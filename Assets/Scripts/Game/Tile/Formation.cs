@@ -1,5 +1,6 @@
 using Game.Action.Quiets;
 using Game.Common;
+using Game.Effects.States;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -52,6 +53,18 @@ namespace Game.Tile
         protected PieceLogic PieceOnFormation { get; set; }
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
+
+        /// <summary>State hiện tại của Formation. Mặc định là <see cref="StateType.None"/>.</summary>
+        public StateType CurrentState { get; private set; } = StateType.None;
+
+        /// <summary>Gán State cho Formation. Ghi đè state cũ (Formation chỉ có 1 state).</summary>
+        public void SetState(StateType state) => CurrentState = state;
+
+        /// <summary>Xóa State, trả về <see cref="StateType.None"/>.</summary>
+        public void ClearState() => CurrentState = StateType.None;
+
+        /// <summary>Kiểm tra Formation có đang ở State chỉ định không.</summary>
+        public bool HasState(StateType type) => CurrentState == type;
 
         public AfterActionPriority Priority => AfterActionPriority.Formation;
 

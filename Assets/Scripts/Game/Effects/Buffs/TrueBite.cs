@@ -9,7 +9,7 @@ namespace Game.Effects.Buffs
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class TrueBite : Effect, IBeforePieceActionTrigger
     {
-        public TrueBite(PieceLogic piece) : base(-1, -1, piece, "effect_true_bite")
+        public TrueBite(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_true_bite")
         {
         }
 

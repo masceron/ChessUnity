@@ -239,11 +239,15 @@ MonoBehaviour:
     m_Key: piece_sloanes_viperfish_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 73163016868933632
+  - m_Id: 71112350294679552
+    m_Key: piece_blubber_jelly_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73288822744862720
     m_Key: piece_red_copepod_skill
     m_Metadata:
       m_Items: []
-  - m_Id: 73176528433393664
+  - m_Id: 73288822795194368
     m_Key: piece_black_prince_copepod_skill
     m_Metadata:
       m_Items: []

@@ -20,7 +20,8 @@ namespace Game.Effects
         Condition,
         Augmentation,
         SpecialAbility,
-        Skill
+        Skill,
+        State
     }
 
     public enum EffectStack : byte
@@ -38,6 +39,7 @@ namespace Game.Effects
         Strength,
         Chance,
         Duration, // Đây là biến động, cần phân biệt với Duration - thời gian tồn tại của Effect
+        Counter,
         Range
     }
 

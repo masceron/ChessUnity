@@ -635,8 +635,52 @@ MonoBehaviour:
     m_Key: effect_paletail_unicornfish_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 73179890646200320
+  - m_Id: 72421206338453504
+    m_Key: effect_brain_coral_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 72421206455894016
+    m_Key: effect_basket_star_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629296275456
+    m_Key: effect_parasite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629375967232
+    m_Key: effect_cooperative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629380161536
     m_Key: effect_black_prince_copepod_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629384355840
+    m_Key: effect_bryozoan_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629392744448
+    m_Key: effect_bryozoan_rally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629401133056
+    m_Key: effect_giant_larvacean_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629405327360
+    m_Key: effect_bryozoan_long_reach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629409521664
+    m_Key: effect_bone_eating_worm_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629417910272
+    m_Key: effect_bryozoan_true_bite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 73291629426298880
+    m_Key: effect_infested
     m_Metadata:
       m_Items: []
   m_Metadata:

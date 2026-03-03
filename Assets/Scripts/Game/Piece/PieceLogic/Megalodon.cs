@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
             MegalodonMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new FrenziedVeteran(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(-1 ,this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

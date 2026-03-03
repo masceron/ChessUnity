@@ -349,7 +349,7 @@ namespace Game.Common
         public static bool IsAlive(PieceLogic piece)
         {
             if (piece == null) return true;
-
+            if (piece.Pos == -9999) return true;
             return PieceOn(piece.Pos) == piece;
         }
 
@@ -460,5 +460,6 @@ namespace Game.Common
             RemoveFormation(index);
             if (PieceOn(index) != null) ActionManager.EnqueueAction(new KillPiece(index));
         }
+        public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
     }
 }
