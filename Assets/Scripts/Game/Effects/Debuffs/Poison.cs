@@ -11,6 +11,7 @@ namespace Game.Effects.Debuffs
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public byte TimeLeft = 3;
+        public byte Stack = 5;
 
         public Poison(int strength, PieceLogic piece) : base(-1, strength, piece, "effect_poison")
         {
@@ -19,7 +20,7 @@ namespace Game.Effects.Debuffs
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (Strength >= 5) TimeLeft--;
+            if (Strength >= Stack) TimeLeft--;
             if (TimeLeft <= 0) ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
         }
 

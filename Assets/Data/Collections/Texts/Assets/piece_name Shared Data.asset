@@ -467,6 +467,10 @@ MonoBehaviour:
     m_Key: piece_giant_larvacean
     m_Metadata:
       m_Items: []
+  - m_Id: 73974207573467136
+    m_Key: piece_porcupine_crab
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

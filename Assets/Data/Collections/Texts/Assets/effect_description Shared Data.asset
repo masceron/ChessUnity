@@ -683,6 +683,10 @@ MonoBehaviour:
     m_Key: effect_infested_description
     m_Metadata:
       m_Items: []
+  - m_Id: 73980059520933888
+    m_Key: effect_slime_coat_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -88,6 +88,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_pistol_shrimp" => new PistolShrimp(cfg),
                 "piece_polluted_rock" => new PollutedRock(cfg),
                 "piece_porcelain_crab" => new PorcelainCrab(cfg),
+                "piece_porcupine_crab" => new PorcupineCrab(cfg),
                 "piece_powderbluetang" => new Powderbluetang(cfg),
                 "piece_pufferfish" => new Pufferfish(cfg),
                 "piece_red_copepod" => new RedCopepod(cfg),
