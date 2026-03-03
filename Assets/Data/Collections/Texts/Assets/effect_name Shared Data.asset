@@ -687,6 +687,10 @@ MonoBehaviour:
     m_Key: effect_slime_coat
     m_Metadata:
       m_Items: []
+  - m_Id: 73981496988606464
+    m_Key: effect_ethereal
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

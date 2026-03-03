@@ -1,4 +1,6 @@
+
 using Game.Action;
+using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
@@ -20,16 +22,23 @@ namespace Game.Effects.States
         public BeforeActionPriority Priority => BeforeActionPriority.Mitigation;
 
         public Ethereal(int duration, PieceLogic piece)
-            : base(duration, 0, piece, "state_ethereal")
+            : base(duration, 0, piece, "effect_ethereal")
         {
         }
-
+    
         /// <summary>
         ///     Chặn mọi Capture action liên quan đến quân này (cả maker lẫn target).
         /// </summary>
         public void OnCallBeforePieceAction(Action.Action action)
         {
-
+            if (action is ICaptures captures)
+            {
+                if (action.Maker == Piece.Pos || action.Target == Piece.Pos)
+                {
+                    action.Result = ResultFlag.Blocked;
+                }   
+            }
+            
         }
     }
 }
