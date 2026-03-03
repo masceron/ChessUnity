@@ -251,6 +251,10 @@ MonoBehaviour:
     m_Key: piece_black_prince_copepod_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 73968610811650048
+    m_Key: piece_hagfish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

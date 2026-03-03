@@ -471,6 +471,10 @@ MonoBehaviour:
     m_Key: piece_porcupine_crab
     m_Metadata:
       m_Items: []
+  - m_Id: 73995169203298304
+    m_Key: piece_hagfish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
