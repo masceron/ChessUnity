@@ -16,6 +16,7 @@ namespace Game.Piece.PieceLogic
 {
     public class BlackPrinceCopepod : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range2 = 4;
         public BlackPrinceCopepod(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Sanity(-1, this)));
@@ -23,14 +24,16 @@ namespace Game.Piece.PieceLogic
             ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.EnqueueAction(new ApplyEffect(new BlackPrinceCopepodPassive(this)));
 
+            SetStat(SkillStat.Range, Range2, 2);
+
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
-                    for (var x = rank - 4; x <= rank + 4; ++x)
-                        for (var y = file - 4; y <= file + 4; ++y)
+                    for (var x = rank - GetStat(SkillStat.Range, 2); x <= rank + GetStat(SkillStat.Range, 2); ++x)
+                        for (var y = file - GetStat(SkillStat.Range, 2); y <= file + GetStat(SkillStat.Range, 2); ++y)
                         {
                             if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
                             var targetPiece = PieceOn(IndexOf(x, y));

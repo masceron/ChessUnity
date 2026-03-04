@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
         public Coelacanth(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, None.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new FreeMovement(this)));
-            //ActionManager.EnqueueAction(new Regenera
+            ActionManager.EnqueueAction(new ApplyEffect(new Regenarative(this)));
             SetStat(SkillStat.Target, Target);
             SetStat(SkillStat.Range, Range);
             SetStat(SkillStat.Duration, Duration);
@@ -35,7 +35,9 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
                             var targetPiece = PieceOn(IndexOf(x, y));
                             if (targetPiece == null) continue;
-                            list.Add(new WhiteMonkfishActive(Pos, IndexOf(x, y), GetStat(SkillStat.Duration)));
+
+                            if (Effects.Any(e => e.EffectName == "effect_slow")) continue;
+                            list.Add(new CoelacanthActive(Pos, IndexOf(x, y), GetStat(SkillStat.Duration)));
                         }
                 }
             };
