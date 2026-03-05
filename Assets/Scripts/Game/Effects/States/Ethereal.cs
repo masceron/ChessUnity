@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
@@ -15,7 +16,7 @@ namespace Game.Effects.States
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Ethereal : StateEffect, IBeforePieceActionTrigger
+    public class Ethereal : StateEffect, IOnMoveGenTrigger
     {
         public override StateType StateType => StateType.Ethereal;
 
@@ -29,16 +30,12 @@ namespace Game.Effects.States
         /// <summary>
         ///     Chặn mọi Capture action liên quan đến quân này (cả maker lẫn target).
         /// </summary>
-        public void OnCallBeforePieceAction(Action.Action action)
+
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            if (action is ICaptures captures)
-            {
-                if (action.Maker == Piece.Pos || action.Target == Piece.Pos)
-                {
-                    action.Result = ResultFlag.Blocked;
-                }   
-            }
-            
+            if (caller != Piece) return;    
+
+            actions.RemoveAll(a => a is ICaptures);
         }
     }
 }
