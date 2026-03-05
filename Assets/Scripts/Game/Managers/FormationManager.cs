@@ -54,7 +54,7 @@ namespace Game.Managers
         public void RemoveFormation(int pos)
         {
             if (_formations[pos] == null) return;
-            if (PieceOn(pos) != null) _formations[pos].OnRemove(PieceOn(pos));
+            _formations[pos].OnRemove(PieceOn(pos)); // luôn gọi, dù ô không có Piece (truyền null)
             RemoveObserver(_formations[pos]);
             _formations[pos] = null;
             Destroy(_formationObjects[pos]);

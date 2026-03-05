@@ -88,6 +88,20 @@ namespace Game.Piece
         }
 
         /// <summary>
+        ///     Di chuyển quân Adhesive lên đỉnh của ô Formation tại (<paramref name="rankTo"/>, <paramref name="fileTo"/>)
+        ///     rồi thu nhỏ về 0.4f. Không parent vào ai vì Formation không phải MonoBehaviour.
+        ///     Dùng cho animation Adhesive bám vào Formation.
+        /// </summary>
+        public void MoveToAdhesiveFormation(int rankTo, int fileTo)
+        {
+            var targetPos = new Vector3(rankTo, YCoordinate, fileTo);
+
+            Tween.Position(transform, targetPos + Vector3.up * 0.5f, 0.3f, Ease.OutQuart)
+                 .OnComplete(this, static self =>
+                     Tween.Scale(self.transform, self.rootScale * 0.4f, 0.2f, Ease.InOutSine));
+        }
+
+        /// <summary>
         ///     Tách khỏi host, di chuyển về <paramref name="rankTo"/>, <paramref name="fileTo"/>
         ///     rồi phóng to về scale gốc.
         ///     Dùng cho animation Parasite tách ra.

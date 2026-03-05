@@ -127,12 +127,14 @@ namespace UX.UI.Ingame
                     case 4:
                     {
                         var action = ListOf.Find(a => a.Maker == pos);
+                        if (action == null) return;
                         ExecuteAction(action);
                         break;
                     }
                     default:
                     {
                         var action = ListOf.Find(a => a.Target == pos);
+                        if (action == null) return;
                         ExecuteAction(action);
                         break;
                     }

@@ -37,7 +37,7 @@ namespace Game.Tile
     public abstract class Formation : Observer, IAfterPieceActionTrigger, IOnPieceSpawnedTrigger
     {
         public readonly FormationCategory category;
-
+        public System.Action<Formation> OnRemoveFormation;
         protected Formation()
         {
         }
@@ -50,7 +50,7 @@ namespace Game.Tile
         }
 
         public int Pos { get; private set; }
-        protected PieceLogic PieceOnFormation { get; set; }
+        public PieceLogic PieceOnFormation { get; set; }
         public bool HaveDuration { get; protected set; }
         public int Duration { get; protected set; }
 
@@ -119,7 +119,8 @@ namespace Game.Tile
 
         public void OnRemove(PieceLogic piece)
         {
-            OnPieceExit(piece);
+            OnRemoveFormation?.Invoke(this);
+            if (piece != null) OnPieceExit(piece);
         }
 
         /// <summary>

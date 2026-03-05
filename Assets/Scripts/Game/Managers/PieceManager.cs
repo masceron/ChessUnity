@@ -18,6 +18,12 @@ namespace Game.Managers
         private readonly Dictionary<PieceLogic, Piece.Piece> _parasiteMap =
             new Dictionary<PieceLogic, Piece.Piece>();
 
+        /// <summary>
+        ///     Map (formation position → adhesive Piece) cho trường hợp Adhesive bám vào Formation.
+        /// </summary>
+        private readonly Dictionary<int, Piece.Piece> _adhesiveFormationMap =
+            new Dictionary<int, Piece.Piece>();
+
         public void SpawnPiece(PieceConfig config)
         {
             var pos = config.Index;
@@ -95,6 +101,48 @@ namespace Game.Managers
 
             // Destroy gameObject (visual)
             Destroy(parasitePiece.gameObject);
+        }
+
+        // -----------------------------------------------------------------------
+        // Adhesive → Formation API
+        // -----------------------------------------------------------------------
+
+        /// <summary>
+        ///     Animate quân Adhesive tại <paramref name="parasitePos"/> bay lên đỉnh ô Formation
+        ///     tại <paramref name="formationPos"/> rồi thu nhỏ về 0.4f. Không parent vào ai.
+        ///     Lưu cặp (formationPos → adhesivePiece) vào <see cref="_adhesiveFormationMap"/>.
+        /// </summary>
+        public void MoveToAdhesiveFormation(int parasitePos, int formationPos)
+        {
+            var parasitePiece = pieces[parasitePos];
+
+            _adhesiveFormationMap[formationPos] = parasitePiece;
+
+            parasitePiece.MoveToAdhesiveFormation(RankOf(formationPos), FileOf(formationPos));
+        }
+
+        /// <summary>
+        ///     Tìm adhesive Piece theo <paramref name="formationPos"/>, animate về <paramref name="to"/>
+        ///     và phóng to về scale 1. Xóa entry khỏi map sau khi detach.
+        /// </summary>
+        public void MoveToDetachFromFormation(int formationPos, int to)
+        {
+            if (!_adhesiveFormationMap.TryGetValue(formationPos, out var adhesivePiece)) return;
+
+            pieces[to] = adhesivePiece;
+            _adhesiveFormationMap.Remove(formationPos);
+            adhesivePiece.MoveToDetach(RankOf(to), FileOf(to));
+        }
+
+        /// <summary>
+        ///     Destroy cả data lẫn visual của quân Adhesive gắn với Formation tại <paramref name="formationPos"/>.
+        /// </summary>
+        public void DestroyAdhesiveOnFormation(int formationPos)
+        {
+            if (!_adhesiveFormationMap.TryGetValue(formationPos, out var adhesivePiece)) return;
+
+            _adhesiveFormationMap.Remove(formationPos);
+            Destroy(adhesivePiece.gameObject);
         }
 
         public Piece.Piece GetPieceGameObject(int pos)

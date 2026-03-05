@@ -683,6 +683,14 @@ MonoBehaviour:
     m_Key: effect_infested_description
     m_Metadata:
       m_Items: []
+  - m_Id: 74606862576422912
+    m_Key: effect_adhesive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74607102595469312
+    m_Key: effect_attached_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
