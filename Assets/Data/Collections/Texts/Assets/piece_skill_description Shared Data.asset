@@ -255,6 +255,10 @@ MonoBehaviour:
     m_Key: piece_hagfish_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 74022186334363648
+    m_Key: piece_porcupine_crab_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

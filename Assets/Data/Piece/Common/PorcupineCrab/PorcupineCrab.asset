@@ -19,7 +19,7 @@ MonoBehaviour:
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  hasSkill: 0
+  hasSkill: 1
   normalSkillCooldown: 6
   availableSlots: 0
   logicClassName: PorcupineCrab
