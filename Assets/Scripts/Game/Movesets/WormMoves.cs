@@ -16,16 +16,14 @@ namespace Game.Movesets
             int range = caller.GetMoveRange();
 
             // đã có sẵn 2 tầng khi range = 1
-            int totalForwardRows = range + 1;
+            int totalForwardRows = 2;
     
             for (int i = 1; i <= totalForwardRows; i++)
             {
                 int forwardRank = rank + push * i;
-
-                // ô thẳng
+                
                 positions.Add(IndexOf(forwardRank, file));
-
-                // mở ngang theo đúng tầng
+                
                 for (int j = 1; j <= i; j++)
                 {
                     positions.Add(IndexOf(forwardRank, file - j));
@@ -33,11 +31,7 @@ namespace Game.Movesets
                 }
             }
 
-            // lùi thẳng scale theo range
-            for (int i = 1; i <= range; i++)
-            {
-                positions.Add(IndexOf(rank - push * i, file));
-            }
+            positions.Add(IndexOf(rank - push * 1, file));
 
             return positions;
         }
@@ -47,16 +41,16 @@ namespace Game.Movesets
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new WormMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, 1, false, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
 
             return 10 + 5 * moveRange;
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile) 
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new WormMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, 1, true, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
             return 10 + 5 * attackRange;
         }
 

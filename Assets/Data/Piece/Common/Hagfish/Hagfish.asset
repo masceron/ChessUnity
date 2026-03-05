@@ -15,7 +15,7 @@ MonoBehaviour:
   key: piece_hagfish
   prefab: {fileID: 1595995625458198561, guid: d186433dfe0c3f84eaa12ece907353a6, type: 3}
   rank: 4
-  moveRange: 2
+  moveRange: 1
   attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
