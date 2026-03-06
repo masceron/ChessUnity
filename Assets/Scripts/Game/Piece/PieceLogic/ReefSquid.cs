@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic
         public ReefSquid(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, PawnPushMoves.Captures)
         {
             SetStat(SkillStat.Chance, 20);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, GetStat(SkillStat.Chance), this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 20, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ReefSquidPassive(this)));
         }
     }

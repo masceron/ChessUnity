@@ -23,7 +23,7 @@ namespace Game.Effects.States
         {
         }
 
-        public void OnApply()
+        public virtual void OnApply()
         {
             Debug.Log("Apply state " + this.StateType);
             Piece.SetState(this);
