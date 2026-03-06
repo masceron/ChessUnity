@@ -31,7 +31,8 @@ namespace Game.Piece.PieceLogic.Commons
         Target,
         Unit,
         Range,
-        Cooldown
+        Cooldown,
+        Chance,
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
