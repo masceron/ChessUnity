@@ -40,7 +40,7 @@ namespace Game.Effects.Traits
             var counter = GetStat(EffectStat.Counter);
             var stack = GetStat(EffectStat.Unit);
             
-            var removeShieldChance = 100 + counter;
+            var removeShieldChance = 5 + counter;
             if (MatchManager.Roll(removeShieldChance))
             {
                 RemoveShieldEffects(movingPiece);
