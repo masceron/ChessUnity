@@ -251,6 +251,10 @@ MonoBehaviour:
     m_Key: piece_black_prince_copepod_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 75044041148542976
+    m_Key: piece_coelacanth_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

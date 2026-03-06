@@ -683,6 +683,14 @@ MonoBehaviour:
     m_Key: effect_infested_description
     m_Metadata:
       m_Items: []
+  - m_Id: 75071046145486848
+    m_Key: effect_regenarative_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75158297676296192
+    m_Key: effect_petrified_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

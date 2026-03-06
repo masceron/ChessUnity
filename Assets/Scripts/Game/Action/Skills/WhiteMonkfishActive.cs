@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic p)
         {
-            return 0;
+            return -15;
         }
 
         protected override void Animate()

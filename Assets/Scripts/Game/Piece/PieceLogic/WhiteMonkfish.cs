@@ -2,6 +2,7 @@
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -28,14 +29,11 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
-                    for (var x = rank - Range; x <= rank + Range; ++x)
-                        for (var y = file - Range; y <= file + Range; ++y)
-                        {
-                            if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
-                            var targetPiece = PieceOn(IndexOf(x, y));
-                            if (targetPiece == null) continue;
-                            list.Add(new WhiteMonkfishActive(Pos, IndexOf(x, y), GetStat(SkillStat.Duration)));
-                        }
+                    var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, GetStat(SkillStat.Range));
+                    foreach (var targetPiece in listPieces)
+                    {
+                        list.Add(new WhiteMonkfishActive(Pos, targetPiece, GetStat(SkillStat.Duration)));
+                    }
                 }
             };
         }

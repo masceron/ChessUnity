@@ -2,6 +2,7 @@
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -13,8 +14,8 @@ namespace Game.Piece.PieceLogic
     public class Coelacanth : Commons.PieceLogic, IPieceWithSkill
     {
         private const int Target = 1;
-        private const int Range = 4;
-        private const int Duration = 1;
+        private const int Range = 3;
+        private const int Duration = 2;
         public Coelacanth(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, None.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new FreeMovement(this)));
@@ -29,16 +30,11 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
-                    for (var x = rank - Range; x <= rank + Range; ++x)
-                        for (var y = file - Range; y <= file + Range; ++y)
-                        {
-                            if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
-                            var targetPiece = PieceOn(IndexOf(x, y));
-                            if (targetPiece == null) continue;
-
-                            if (Effects.Any(e => e.EffectName == "effect_slow")) continue;
-                            list.Add(new CoelacanthActive(Pos, IndexOf(x, y), GetStat(SkillStat.Duration)));
-                        }
+                    var piecesInRange = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, GetStat(SkillStat.Range));
+                    foreach (var targetPiece in piecesInRange) { 
+                        if (PieceOn(targetPiece).Effects.Any(e => e.EffectName == "effect_slow")) continue;
+                        list.Add(new CoelacanthActive(Pos, targetPiece, GetStat(SkillStat.Duration)));
+                    }
                 }
             };
         }

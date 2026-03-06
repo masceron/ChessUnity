@@ -22,8 +22,11 @@ namespace Game.Effects.Traits
             if (action.Maker != action.Target) return;
             var piece = PieceOn(Piece.Pos);
 
-
-            var bleeding = piece.Effects.First(e => e.EffectName == "effect_bleeding");
+            var bleeding = (Effect)null;
+            if (piece.Effects.Any(Effects => Effects.EffectName == "effect_bleeding"))
+            {
+                bleeding = piece.Effects.First(e => e.EffectName == "effect_bleeding");
+            }
             if (bleeding == null) return;
 
             CurrentTurn++;
