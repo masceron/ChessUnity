@@ -92,6 +92,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_pufferfish" => new Pufferfish(cfg),
                 "piece_red_copepod" => new RedCopepod(cfg),
                 "piece_redtail_parrotfish" => new RedtailParrotfish(cfg),
+                "piece_reef_squid" => new ReefSquid(cfg),
                 "piece_remora" => new Remora(cfg),
                 "piece_ribbon_eel" => new RibbonEel(cfg),
                 "piece_rusty_parrotfish" => new RustyParrotfish(cfg),
@@ -117,6 +118,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_thalassos" => new Thalassos(cfg),
                 "piece_thread_pipefish" => new ThreadPipefish(cfg),
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
+                "piece_turban_snail" => new TurbanSnail(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
                 _ => null

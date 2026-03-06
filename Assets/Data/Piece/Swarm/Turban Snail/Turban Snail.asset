@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Turban Snail
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_turban_snail
-  prefab: {fileID: 0}
-  rank: 0
-  moveRange: 0
-  attackRange: 0
+  prefab: {fileID: 919132149155446097, guid: b48132e8432c94a4da34e54415100fd6, type: 3}
+  rank: 3
+  moveRange: 1
+  attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  hasSkill: 0
-  normalSkillCooldown: 0
-  availableSlots: 0
-  logicClassName: 
+  hasSkill: 1
+  normalSkillCooldown: 6
+  availableSlots: -1
+  logicClassName: TurbanSnail
   baseValue: 0
   considerations: []

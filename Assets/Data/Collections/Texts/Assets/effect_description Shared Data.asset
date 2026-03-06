@@ -683,6 +683,10 @@ MonoBehaviour:
     m_Key: effect_infested_description
     m_Metadata:
       m_Items: []
+  - m_Id: 75166473440559104
+    m_Key: effect_reef_squid_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -251,6 +251,10 @@ MonoBehaviour:
     m_Key: piece_black_prince_copepod_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 75139690565566464
+    m_Key: piece_turban_snail_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
