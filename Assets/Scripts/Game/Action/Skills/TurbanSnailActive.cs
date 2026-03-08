@@ -20,7 +20,6 @@ namespace Game.Action.Skills
 
         public TurbanSnailActive(int maker) : base(maker)
         {
-            Maker = maker;
             Target = maker;
         }
 

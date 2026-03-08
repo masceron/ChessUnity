@@ -20,7 +20,7 @@ namespace Game.Effects.SpecialAbility
         }
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.Maker == Piece.Pos && action.Result == ResultFlag.Evade)
+            if (action is ICaptures && action.Target == Piece.Pos && action.Result == ResultFlag.Evade)
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Piercing(-1, Piece)));
                 ActionManager.EnqueueAction(new ApplyEffect(new Traits.SnappingStrike(Piece)));

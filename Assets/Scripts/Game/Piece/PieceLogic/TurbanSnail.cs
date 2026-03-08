@@ -29,7 +29,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) { return; }
                 if (isPlayer)
                 {
-                    list.Add(new TurbanSnailPending(this.Pos));
+                    list.Add(new TurbanSnailActive(this.Pos));
                 }
             };
         }
