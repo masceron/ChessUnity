@@ -1,4 +1,8 @@
+using System.Collections.Generic;
 using Game.Action;
+using Game.Action.Captures;
+using Game.Action.Quiets;
+using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
@@ -15,7 +19,7 @@ namespace Game.Effects.States
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Burrowed : StateEffect
+    public class Burrowed : StateEffect, IBeforePieceActionTrigger, IOnMoveGenTrigger
     {
         public override StateType StateType => StateType.Burrowed;
 
@@ -26,6 +30,38 @@ namespace Game.Effects.States
         {
         }
 
+        public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
+        {
+            if (caller == Piece)
+            {
+                for (var i = actions.Count - 1; i >= 0; i--)
+                    if (actions[i] is IQuiets || actions[i] is ICaptures)
+                        actions.RemoveAt(i);
+            } else {
+                for (var i = actions.Count - 1; i >= 0; i--)
+                {
+                    var act = actions[i];
+                    if (act is ISkills && act.Target == Piece.Pos)
+                        actions.RemoveAt(i);
+                }
+            }
+        }
 
+        public void OnCallBeforePieceAction(Action.Action action)
+        {
+            if (action == null || action.Result != ResultFlag.Success) return;
+
+            if ((action is IQuiets || action is ICaptures) && action.Maker == Piece.Pos)
+            {
+                action.Result = ResultFlag.Blocked;
+                return;
+            }
+
+            if (action is ICaptures && action.Target == Piece.Pos)
+            {
+                action.Result = ResultFlag.Blocked;
+                return;
+            }
+        }
     }
 }
