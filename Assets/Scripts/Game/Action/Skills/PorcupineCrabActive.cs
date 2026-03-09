@@ -40,6 +40,7 @@ namespace Game.Action.Skills
                     ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(BleedingStack, pOn), PieceOn(Maker)));
                 }
             }
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
         
         List<(int rank, int file)> GetPath(int rank1, int file1, int rank2, int file2)    
