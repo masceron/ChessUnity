@@ -691,6 +691,14 @@ MonoBehaviour:
     m_Key: effect_attached
     m_Metadata:
       m_Items: []
+  - m_Id: 76031421734395904
+    m_Key: effect_symbiotic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76031604849319936
+    m_Key: effect_tethered
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

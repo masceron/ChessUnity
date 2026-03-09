@@ -27,20 +27,41 @@ namespace Game.Effects.States
             if (caller != Piece) return;
             if (IsTethered) return;
 
-            for (int i = 0; i < actions.Count; i++)
+            var allies = BoardUtils.FindAllies(caller.Color);
+            var flippedAllies = new List<PieceLogic>();
+
+            // 1. Đổi màu tạm thời các đồng minh để hàm Captures nhận diện là mục tiêu hợp lệ
+            foreach (var ally in allies)
             {
-                var action = actions[i];
+                if (ally != caller)
+                {
+                    ally.Color = !ally.Color;
+                    flippedAllies.Add(ally);
+                }
+            }
+
+            // 2. Lấy danh sách nước đi ăn quân giả lập, lúc này đồng minh sẽ bị tính là địch
+            var extraCaptures = new List<Action.Action>();
+            caller.Captures(extraCaptures, caller.Pos, true);
+
+            // 3. Trả lại màu ngay lập tức
+            foreach (var ally in flippedAllies)
+            {
+                ally.Color = !ally.Color;
+            }
+
+            // 4. Lọc những action hướng vào đồng minh để thêm SymbioticCapture
+            foreach (var action in extraCaptures)
+            {
                 if (action is ICaptures)
                 {
                     var targetPiece = BoardUtils.PieceOn(action.Target);
-                    // Nếu là quân đồng minh
-                    if (targetPiece != null && targetPiece.Color == caller.Color)
+                    // Kiểm tra chắc chắn là đồng minh thật sự (vì trong extraCaptures có thể lẫn cả kẻ địch)
+                    if (targetPiece != null && targetPiece.Color == caller.Color && targetPiece != caller)
                     {
-                        // Chỉ nối được những quân ở State: None
                         if (targetPiece.CurrentState == StateType.None)
                         {
-                            // Thay đổi capture thành kiểu ăn cộng sinh
-                            actions[i] = new SymbioticCapture(caller.Pos, action.Target);
+                            actions.Add(new SymbioticCapture(caller.Pos, action.Target));
                         }
                     }
                 }
