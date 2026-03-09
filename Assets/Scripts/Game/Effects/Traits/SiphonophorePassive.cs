@@ -19,13 +19,11 @@ namespace Game.Effects.Traits
         {
             if (pieceToDie == null || pieceToDie.Type != "piece_mini_siphonophore" || pieceToDie.Color != Piece.Color)
                 return;
-            UnityEngine.Debug.Log("SiphonophorePassive: OnCallDead");
-            bonusCount+=3;
+            bonusCount++;
         }
 
         public int ModifyMoveRange(int baseRange)
         {
-            UnityEngine.Debug.Log("SiphonophorePassive: ModifyMoveRange");
             return baseRange + bonusCount;
         }
 
