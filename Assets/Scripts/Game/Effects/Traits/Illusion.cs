@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
@@ -52,6 +53,7 @@ namespace Game.Effects.Traits
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
             if (caller != Piece) return;
+            actions.RemoveAll(e => e is ISkills);
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is NormalCapture capture && capture.Maker == Piece.Pos)
                     actions[i] = new IllusionCapture(capture.Maker, capture.Target);
