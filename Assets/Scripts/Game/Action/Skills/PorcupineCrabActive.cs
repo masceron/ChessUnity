@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -26,21 +27,28 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
+            var makerPiece = PieceOn(Maker);
+
             ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+
             var (rank1, file1) = RankFileOf(Maker);
             var (rank2, file2) = RankFileOf(Target);
-            
-            var path = GetPath(rank1, file1, rank2, file2);
-            
-            foreach (var (rank, file) in path)
-            {   
-                var pOn = PieceOn(IndexOf(rank, file));
-                if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+
+            var tiles = Pathfinder.AllLineBlockers(rank1, file1, rank2, file2);
+
+            foreach (var (rank, file) in tiles)
+            {
+                var piece = PieceOn(IndexOf(rank, file));
+
+                if (piece != null && piece.Color != makerPiece.Color)
                 {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(BleedingStack, pOn), PieceOn(Maker)));
+                    ActionManager.EnqueueAction(
+                        new ApplyEffect(new Bleeding(BleedingStack, piece), makerPiece)
+                    );
                 }
             }
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+
+            SetCooldown(Maker, ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
         
         List<(int rank, int file)> GetPath(int rank1, int file1, int rank2, int file2)    
