@@ -30,12 +30,10 @@ namespace Game.Effects.States
         /// <summary>
         ///     Chặn mọi Capture action liên quan đến quân này (cả maker lẫn target).
         /// </summary>
-
+            
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            if (caller != Piece) return;    
-
-            actions.RemoveAll(a => a is ICaptures);
+            actions.RemoveAll(a => a is ICaptures && a.Maker == caller.Pos || a.Target == caller.Pos);
         }
     }
 }
