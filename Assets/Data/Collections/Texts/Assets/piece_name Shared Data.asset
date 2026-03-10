@@ -467,6 +467,14 @@ MonoBehaviour:
     m_Key: piece_giant_larvacean
     m_Metadata:
       m_Items: []
+  - m_Id: 74981445532221440
+    m_Key: piece_reef_squid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 75165361190830080
+    m_Key: piece_turban_snail
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

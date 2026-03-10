@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
-  m_Name: Illusion
+  m_Name: ReefSquidPassive
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_illusion
-  category: 7
+  key: effect_reef_squid_passive
+  category: 5
   stack: 1
-  icon: {fileID: 2800000, guid: e36990fcc2a8e204bbf46c14726a236a, type: 3}
+  icon: {fileID: 2800000, guid: ded780e85739f3a4bb390d2c0c1f514c, type: 3}

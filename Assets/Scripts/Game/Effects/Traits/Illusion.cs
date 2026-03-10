@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using UnityEngine;
@@ -11,8 +13,9 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    public class Illusion : Effect, IOnApplyTrigger, IOnMoveGenTrigger
+    public class Illusion : StateEffect, IOnApplyTrigger, IOnMoveGenTrigger
     {
+        public override StateType StateType => StateType.Illusion;
         private bool color;
         private int PieceIdx;
         public Illusion(PieceLogic piece) : base(-1, 1, piece, "effect_illusion")
@@ -26,8 +29,9 @@ namespace Game.Effects.Traits
             this.color = color;
         }   
 
-        public void OnApply()
+        public override void OnApply()
         {
+            base.OnApply();
             foreach (var effect in Piece.Effects.ToList())
             {
                 Debug.Log("Illusion OnApply RemoveEffect: " + effect.EffectName);
@@ -49,6 +53,7 @@ namespace Game.Effects.Traits
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
             if (caller != Piece) return;
+            actions.RemoveAll(e => e is ISkills);
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is NormalCapture capture && capture.Maker == Piece.Pos)
                     actions[i] = new IllusionCapture(capture.Maker, capture.Target);

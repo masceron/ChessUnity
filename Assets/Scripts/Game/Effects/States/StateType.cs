@@ -17,6 +17,7 @@ namespace Game.Effects.States
         Ethereal = 79,
         Petrified = 80,
         Adhesive = 81,
-        Attached = 82
+        Attached = 82,
+        Illusion = 83,
     }
 }
