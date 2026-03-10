@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Unity.Burst;
 using static Game.Common.BoardUtils;
 
@@ -69,6 +70,64 @@ namespace Game.Common
 
             if (!(firstBlockerX == second1 && firstBlockerY == second2)) return (firstBlockerX, firstBlockerY);
             return (-1, -1);
+        }
+        
+        public static List<(int, int)> AllLineBlockers(int first1, int first2, int second1, int second2)
+        {
+            var board = PieceBoard();
+            var activeBoard = ActiveBoard();
+
+            var blockers = new List<(int, int)>();
+
+            var x1 = first1 + 0.5f;
+            var y1 = first2 + 0.5f;
+            var x2 = second1 + 0.5f;
+            var y2 = second2 + 0.5f;
+
+            float xDirection = x2 > x1 ? 1 : -1;
+            var xCurrent = (float)Math.Floor(x1);
+            var xNext = x2 > x1 ? xCurrent + 1 : xCurrent;
+            var xProgress = Crawl(x1, x2, xNext);
+
+            float yDirection = y2 > y1 ? 1 : -1;
+            var yCurrent = (float)Math.Floor(y1);
+            var yNext = y2 > y1 ? yCurrent + 1 : yCurrent;
+            var yProgress = Crawl(y1, y2, yNext);
+
+            while (xProgress < 1 || yProgress < 1)
+            {
+                var shouldMoveX = xProgress <= yProgress;
+                var shouldMoveY = yProgress <= xProgress;
+
+                if (shouldMoveX)
+                {
+                    xCurrent += xDirection;
+                    xNext += xDirection;
+                    xProgress = Crawl(x1, x2, xNext);
+                }
+
+                if (shouldMoveY)
+                {
+                    yCurrent += yDirection;
+                    yNext += yDirection;
+                    yProgress = Crawl(y1, y2, yNext);
+                }
+
+                int x = (int)xCurrent;
+                int y = (int)yCurrent;
+
+                if (x == second1 && y == second2)
+                    break;
+
+                var idx = IndexOf(x, y);
+
+                if (board[idx] != null || !activeBoard[idx])
+                {
+                    blockers.Add((x, y));
+                }
+            }
+
+            return blockers;
         }
     }
 }
