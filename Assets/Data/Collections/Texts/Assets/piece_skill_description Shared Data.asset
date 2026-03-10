@@ -255,6 +255,22 @@ MonoBehaviour:
     m_Key: piece_turban_snail_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 76493085679734784
+    m_Key: piece_mini_siphonophore_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76493085696512000
+    m_Key: piece_coelacanth_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76493085700706304
+    m_Key: piece_porcupine_crab_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76493085704900608
+    m_Key: piece_siphonophore_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

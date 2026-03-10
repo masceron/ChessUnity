@@ -699,6 +699,38 @@ MonoBehaviour:
     m_Key: effect_tethered
     m_Metadata:
       m_Items: []
+  - m_Id: 76496000058314752
+    m_Key: effect_ethereal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000125423616
+    m_Key: effect_regenarative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000125423617
+    m_Key: effect_reef_squid_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000129617920
+    m_Key: effect_burrowed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000129617921
+    m_Key: effect_petrified
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000133812224
+    m_Key: effect_slime_coat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000133812225
+    m_Key: effect_siphonophore_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76496000133812226
+    m_Key: effect_turban_snail_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
