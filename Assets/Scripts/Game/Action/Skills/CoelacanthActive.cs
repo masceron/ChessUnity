@@ -1,0 +1,36 @@
+﻿using Game.Action.Internal;
+using Game.Action.Quiets;
+using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
+using MemoryPack;
+using static Game.Common.BoardUtils;
+
+namespace Game.Action.Skills
+{
+    [MemoryPackable]
+    public partial class CoelacanthActive : Action, ISkills
+    {
+        private int Duration;
+        [MemoryPackConstructor]
+        private CoelacanthActive()
+        {
+        }
+
+        public CoelacanthActive(int maker, int target, int duration) : base(maker)
+        {
+            Target = target; // Target is enemy
+            Duration = duration;
+        }
+
+        public int AIPenaltyValue(PieceLogic p)
+        {
+            return 0;
+        }
+
+        protected override void ModifyGameState()
+        {
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(Duration, PieceOn(Target))));
+        }
+    }
+}

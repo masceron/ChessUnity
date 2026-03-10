@@ -31,6 +31,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_chambered_nautilus" => new ChamberedNautilus(cfg),
                 "piece_chrysos" => new Chrysos(cfg),
                 "piece_clown_fish" => new ClownFish(cfg),
+                "piece_coelacanth" => new Coelacanth(cfg),
                 "piece_coffin_fish" => new CoffinFish(cfg),
                 "piece_contagion_corpse" => new ContagionCorpse(cfg),
                 "piece_cutthroat_eel" => new CutthroatEel(cfg),

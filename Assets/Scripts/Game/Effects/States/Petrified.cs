@@ -1,6 +1,11 @@
 using Game.Action;
+using Game.Action.Captures;
+using Game.Action.Quiets;
+using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using System.Collections.Generic;
+using static Game.Common.BoardUtils;
 
 namespace Game.Effects.States
 {
@@ -14,16 +19,31 @@ namespace Game.Effects.States
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Petrified : StateEffect
+    public class Petrified : StateEffect, IOnMoveGenTrigger
     {
         public override StateType StateType => StateType.Petrified;
-
-        public BeforeActionPriority Priority => BeforeActionPriority.Mitigation;
 
         public Petrified(int duration, PieceLogic piece)
             : base(duration, 0, piece, "effect_petrified")
         {
         }
 
+        void IOnMoveGenTrigger.OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
+        {
+            foreach (var action in actions)
+            {
+                if (action is ISkills && PieceOn(action.Target) == Piece)
+                {
+                    actions.Remove(action);
+                }
+
+                if (PieceOn(action.Maker) == Piece) {
+                    if (action is IQuiets || action is ICaptures)
+                    {
+                        actions.Remove(action);
+                    }
+                }
+            }
+        }
     }
 }
