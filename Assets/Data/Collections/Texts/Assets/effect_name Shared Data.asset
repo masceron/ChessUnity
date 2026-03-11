@@ -731,6 +731,14 @@ MonoBehaviour:
     m_Key: effect_turban_snail_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 76949911176425472
+    m_Key: effect_olive_ridley_hatchling_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76973775734386688
+    m_Key: effect_chain_pickerel_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

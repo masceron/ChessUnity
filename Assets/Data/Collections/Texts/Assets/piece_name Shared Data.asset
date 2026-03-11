@@ -495,6 +495,14 @@ MonoBehaviour:
     m_Key: piece_siphonophore
     m_Metadata:
       m_Items: []
+  - m_Id: 76973035502645248
+    m_Key: piece_olive_ridley_hatchling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76996281925054464
+    m_Key: piece_chain_pickerel
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

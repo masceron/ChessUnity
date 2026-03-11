@@ -1,21 +1,30 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using Game.Action;
+using Game.Action.Internal;
+using Game.Common;
+using Game.Effects.Buffs;
+using Game.Effects.SpecialAbility;
+using Game.Movesets;
+using Game.Piece.PieceLogic.Commons;
 
-namespace Assets.Scripts.Game.Piece.PieceLogic
+namespace Game.Piece.PieceLogic
 {
-    public class OliveRidleyHatchling : MonoBehaviour
+    public class OliveRidleyHatchling : Commons.PieceLogic, IPieceWithSkill
     {
-
-        // Use this for initialization
-        void Start()
+        private const int Counter = 10;
+        public OliveRidleyHatchling(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, None.Captures)
         {
+            SetStat(SkillStat.Counter, Counter);
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(this, -1)));
+            ActionManager.EnqueueAction(new ApplyEffect(new OliveRidleyHatchlingPassive(this, GetStat(SkillStat.Counter))));
 
         }
 
-        // Update is called once per frame
-        void Update()
+        public void SetSkillHandler(SkillsDelegate skillHandler)
         {
-
+            Skills = skillHandler;
         }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
     }
 }
