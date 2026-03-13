@@ -11,7 +11,7 @@ namespace Game.Effects.States
         Infested = 73,
         Parasite = 74,
         Tethered = 75,
-        Securing = 76,
+        Symbiotic = 76,
         Cooperative = 77,
         Burrowed = 78,
         Ethereal = 79,

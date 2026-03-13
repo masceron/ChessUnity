@@ -475,6 +475,26 @@ MonoBehaviour:
     m_Key: piece_turban_snail
     m_Metadata:
       m_Items: []
+  - m_Id: 76519751663669248
+    m_Key: piece_mini_siphonophore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519751722389504
+    m_Key: piece_coelacanth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519751726583808
+    m_Key: piece_hagfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519751726583809
+    m_Key: piece_porcupine_crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519751726583810
+    m_Key: piece_siphonophore
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

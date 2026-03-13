@@ -1,4 +1,5 @@
 ﻿using Game.Action.Captures;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using static Game.Common.BoardUtils;
@@ -17,7 +18,7 @@ namespace Game.Effects.Traits
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || Distance(action.Target, Piece.Pos) > 2 ||
+            if (action is not ICaptures || BoardUtils.PieceOn(action.Target) == null || Distance(action.Target, Piece.Pos) > 2 ||
                 ColorOfPiece(action.Target) != Piece.Color ||
                 action.Target == Piece.Pos)
                 return;

@@ -683,11 +683,51 @@ MonoBehaviour:
     m_Key: effect_infested_description
     m_Metadata:
       m_Items: []
-  - m_Id: 75166473440559104
+  - m_Id: 74606862576422912
+    m_Key: effect_adhesive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 74607102595469312
+    m_Key: effect_attached_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76055290536992768
+    m_Key: effect_symbiotic_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76055473609973760
+    m_Key: effect_tethered_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868856717312
+    m_Key: effect_ethereal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868881883136
+    m_Key: effect_regenarative_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868881883137
     m_Key: effect_reef_squid_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 75166941105455104
+  - m_Id: 76519868886077440
+    m_Key: effect_burrowed_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868886077441
+    m_Key: effect_petrified_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868890271744
+    m_Key: effect_slime_coat_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868890271745
+    m_Key: effect_siphonophore_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 76519868890271746
     m_Key: effect_turban_snail_passive_description
     m_Metadata:
       m_Items: []

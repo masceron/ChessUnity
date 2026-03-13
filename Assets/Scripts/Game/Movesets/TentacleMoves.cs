@@ -30,42 +30,13 @@ namespace Game.Movesets
         {
             var result = new HashSet<int>();
             var (rank, file) = RankFileOf(pos);
-
-            // 1️⃣ Pattern gốc (luôn có)
+            
             foreach (var (dr, df) in CorePattern)
             {
                 var r = rank + dr;
                 var f = file + df;
                 if (VerifyBounds(r) && VerifyBounds(f))
                     result.Add(IndexOf(r, f));
-            }
-
-            // 2️⃣ Mở rộng phụ nếu range > 1
-            if (range > 1)
-            {
-                for (int i = 1; i <= range - 1; i++)
-                {
-                    result.Add(IndexOf(rank + 2 + i, file + 1));
-                    result.Add(IndexOf(rank + 1 + i, file));
-                    result.Add(IndexOf(rank + 2 + i, file - 1));
-                    
-                    result.Add(IndexOf(rank - 2 - i, file + 1));
-                    result.Add(IndexOf(rank - 1 - i, file));
-                    result.Add(IndexOf(rank - 2 - i, file - 1));
-                    
-                    result.Add(IndexOf(rank + 1, file + 2 + i));
-                    result.Add(IndexOf(rank, file + 1 + i));
-                    result.Add(IndexOf(rank - 1, file + 2 + i));
-
-                    result.Add(IndexOf(rank + 1, file - 2 - i));
-                    result.Add(IndexOf(rank, file - 1 - i));
-                    result.Add(IndexOf(rank - 1, file - 2 - i));
-                    
-                    result.Add(IndexOf(rank + 1 + i, file - 1 - i));
-                    result.Add(IndexOf(rank + 1 + i, file + 1 + i));
-                    result.Add(IndexOf(rank - 1 - i, file - 1 - i));
-                    result.Add(IndexOf(rank - 1 - i, file + 1 + i));
-                }
             }
 
             return result;
@@ -77,7 +48,7 @@ namespace Game.Movesets
             var range = PieceOn(pos).GetMoveRange();
             var pattern = new TentacleMoves().GenerateTentacleMovePattern(pos, range);
 
-            AddToPatternMoves(list, pattern, pos, 1, false, excludeEmptyTile);
+            AddToPatternMoves(list, pattern, pos, range, false, excludeEmptyTile);
             return 30 + 5 * range;
         }
 
@@ -86,7 +57,7 @@ namespace Game.Movesets
             var range = PieceOn(pos).AttackRange();
             var pattern = new TentacleMoves().GenerateTentacleMovePattern(pos, range);
 
-            AddToPatternMoves(list, pattern, pos, 1, true, excludeEmptyTile);
+            AddToPatternMoves(list, pattern, pos, range, true, excludeEmptyTile);
             return 30 + 5 * range;
         }
 

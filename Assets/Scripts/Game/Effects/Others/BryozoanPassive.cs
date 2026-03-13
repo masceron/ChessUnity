@@ -21,7 +21,6 @@ namespace Game.Effects.Others
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
             SetStat(EffectStat.Unit, SummonUnit);
-            SetStat(EffectStat.Radius, SummonRange);
         }
 
         StartTurnTriggerPriority IStartTurnTrigger.Priority => StartTurnTriggerPriority.Buff;
@@ -41,7 +40,7 @@ namespace Game.Effects.Others
             var (rank, file) = RankFileOf(Piece.Pos);
             List<int> emptyTiles = new();
 
-            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, GetStat(EffectStat.Radius)))
+            foreach (var (r, f) in MoveEnumerators.AroundUntil(rank, file, SummonRange))
             {
                 var index = IndexOf(r, f);
                 if (PieceOn(index) == null)

@@ -116,10 +116,10 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 10669455839232
-    m_Localized: 'If Poison is at 5 stack or more, this piece will die in 3 turns.
+    m_Localized: 'If Poison is at {Stack} stack or more, this piece will die in 3
+      turns.
 
-      Time
-      left: {TimeLeft}.'
+      Time left: {TimeLeft}.'
     m_Metadata:
       m_Items:
       - rid: 1405300356192928012
