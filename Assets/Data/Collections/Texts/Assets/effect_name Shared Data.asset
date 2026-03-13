@@ -731,6 +731,10 @@ MonoBehaviour:
     m_Key: effect_turban_snail_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 77483586994118656
+    m_Key: effect_chinook_salmon_before_dead
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

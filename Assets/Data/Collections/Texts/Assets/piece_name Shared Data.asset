@@ -499,6 +499,10 @@ MonoBehaviour:
     m_Key: piece_leatherback_turtle
     m_Metadata:
       m_Items: []
+  - m_Id: 77507594955333632
+    m_Key: piece_chinook_salmon
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

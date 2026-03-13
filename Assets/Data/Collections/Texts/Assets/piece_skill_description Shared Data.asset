@@ -271,6 +271,10 @@ MonoBehaviour:
     m_Key: piece_siphonophore_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 77480928971399168
+    m_Key: piece_chinook_salmon_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -29,6 +29,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_bryozoan" => new Bryozoan(cfg),
                 "piece_cabezon" => new Cabezon(cfg),
                 "piece_chambered_nautilus" => new ChamberedNautilus(cfg),
+                "piece_chinook_salmon" => new ChinookSalmon(cfg),
                 "piece_chrysos" => new Chrysos(cfg),
                 "piece_clown_fish" => new ClownFish(cfg),
                 "piece_coelacanth" => new Coelacanth(cfg),
