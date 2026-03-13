@@ -1,6 +1,9 @@
 ﻿using System.Collections.Generic;
+using Game.Action;
+using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.Debuffs;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -13,6 +16,7 @@ namespace Game.Piece.PieceLogic
 
         public ChinookSalmon(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, ElectricEelMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(2, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -27,7 +31,7 @@ namespace Game.Piece.PieceLogic
                         if (pOn != null) continue;
                         list.Add(new ChinookSalmonActive(Pos, index));
                     }
-                    //TODO: Logic above for testing, remove later
+                    // TODO: Logic above for testing, remove later
                 }
                 else
                 {

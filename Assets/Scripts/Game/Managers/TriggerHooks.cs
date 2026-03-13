@@ -26,6 +26,7 @@ namespace Game.Managers
         private readonly List<IOnRemoveTrigger> _onRemoves = new();
         private readonly List<IOnPieceSpawnedTrigger> _onSpawns = new();
         private readonly List<IStartTurnTrigger> _onStartTurns = new();
+        private readonly List<IBeforeDestroyOrKill> _onBeforeDestroyOrKill = new();
 
         public TriggerHooks()
         {
@@ -42,6 +43,7 @@ namespace Game.Managers
             Register(_onEffectApplies);
             Register(_onMoveRanges);
             Register(_onSpawns);
+            Register(_onBeforeDestroyOrKill);
         }
 
         private void Register<T>(List<T> list)
@@ -97,6 +99,15 @@ namespace Game.Managers
             {
                 if (((Observer)effect).disabled) return;
                 effect.OnCallDead(pieceToDie);
+            });
+        }
+
+        public void NotifyBeforeDestroyOrKill(IInternal action)
+        {
+            _onBeforeDestroyOrKill.ForEach(effect =>
+            {
+                if (((Observer)effect).disabled) return;
+                effect.OnCallBeforeDestroyOrKill(action);
             });
         }
 

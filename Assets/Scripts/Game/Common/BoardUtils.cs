@@ -344,6 +344,12 @@ namespace Game.Common
         public static void NotifyInternalAction(IInternal action)
         {
             if (action is ApplyEffect apply) MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
+            else if (action is KillPiece || action is DestroyPiece || action is CarapaceKill
+                     || action is MarinelKill || action is DestroyAdhesivePiece
+                     || action is DestroyParasitePiece)
+            {
+                MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
+            }
         }
 
         public static bool IsAlive(PieceLogic piece)
