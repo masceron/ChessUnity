@@ -687,6 +687,10 @@ MonoBehaviour:
     m_Key: effect_reef_squid_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 75143072348995584
+    m_Key: effect_turban_snail_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
