@@ -413,6 +413,23 @@ namespace Game.Common
 
             return list;
         }
+        
+        public static List<(int rank, int file)> GetEmptySquaresRankFile()
+        {
+            var result = new List<(int, int)>();
+            var board = PieceBoard();
+
+            for (int i = 0; i < board.Length; i++)
+            {
+                if (board[i] == null)
+                {
+                    result.Add((RankOf(i), FileOf(i)));
+                }
+            }
+
+            return result;
+        }
+        
 
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
         {
@@ -469,3 +486,4 @@ namespace Game.Common
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
     }
 }
+

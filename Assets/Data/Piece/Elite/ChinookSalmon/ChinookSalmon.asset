@@ -20,7 +20,7 @@ MonoBehaviour:
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 1
-  normalSkillCooldown: 1
+  normalSkillCooldown: -1
   availableSlots: 1
   logicClassName: ChinookSalmon
   baseValue: 0

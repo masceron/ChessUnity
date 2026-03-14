@@ -16,7 +16,6 @@ namespace Game.Piece.PieceLogic
 
         public ChinookSalmon(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, ElectricEelMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Bleeding(2, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -24,14 +23,11 @@ namespace Game.Piece.PieceLogic
                 {
                     var (rank, file) = RankFileOf(Pos);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    foreach (var (rankOff, fileOff) in GetEmptySquaresRankFile())
                     {
                         var index = IndexOf(rankOff, fileOff);
-                        var pOn = PieceOn(index);
-                        if (pOn != null) continue;
                         list.Add(new ChinookSalmonActive(Pos, index));
                     }
-                    // TODO: Logic above for testing, remove later
                 }
                 else
                 {
