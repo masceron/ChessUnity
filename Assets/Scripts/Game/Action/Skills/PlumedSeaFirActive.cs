@@ -43,8 +43,11 @@ namespace Game.Action.Skills
             if (maker.Color == target.Color)
             {
                 var debuffs = maker.Effects.Where(kvp => kvp.Category == EffectCategory.Debuff).ToArray();
-                var random = new System.Random();
-                ActionManager.EnqueueAction(new RemoveEffect(debuffs[random.Next(debuffs.Length)]));
+                if (debuffs.Length > 0)
+                {
+                    var random = new System.Random();
+                    ActionManager.EnqueueAction(new RemoveEffect(debuffs[random.Next(debuffs.Length)]));
+                }
                 maker.SetStat(SkillStat.Counter, maker.GetStat(SkillStat.Counter) + 1);
             }
             else
@@ -53,7 +56,7 @@ namespace Game.Action.Skills
                     .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
                     .Select(kvp => kvp.Key)
                     .ToArray();
-
+                    
                 var random = new System.Random();
                 var selectedEffectName = debuffs[random.Next(debuffs.Length)];
                 EffectFactory.CreateEffect(selectedEffectName, 5, 1, PieceOn(Target));

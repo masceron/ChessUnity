@@ -731,6 +731,18 @@ MonoBehaviour:
     m_Key: effect_turban_snail_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 77514455765213184
+    m_Key: effect_plumed_sea_fir_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78046867167371264
+    m_Key: effect_sea_loch_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78046993780826112
+    m_Key: effect_sealoch_anemone_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1,0 +1,39 @@
+using System.Collections.Generic;
+using Game.Action;
+using Game.Action.Captures;
+using Game.Action.Internal;
+using Game.Action.Quiets;
+using Game.Common;
+using Game.Effects.Buffs;
+using Game.Effects.Debuffs;
+using Game.Effects.States;
+using Game.Piece.PieceLogic.Commons;
+using Game.Triggers;
+using static Game.Common.BoardUtils;
+
+namespace Game.Effects.SpecialAbility
+{
+    public class SealochAnemonePassive : Effect, IBeforeApplyEffectTrigger
+    {
+        public SealochAnemonePassive(PieceLogic piece) : base(-1, 1, piece, "effect_sealoch_anemone_passive")
+        {
+            SetStat(EffectStat.Radius, 1);
+        }
+
+        public BeforeApplyEffectTriggerPriority Priority => BeforeApplyEffectTriggerPriority.Reaction;
+
+        public void OnCallApplyEffect(ApplyEffect applyEffect)
+        {
+            if (applyEffect.SourcePiece != Piece) return;
+            if (applyEffect.Effect is not Tethered tethered) return;
+
+            var tetheredPiece = tethered.Piece;
+            if (tetheredPiece == null || tetheredPiece == Piece) return;
+            if (tetheredPiece.Color != Piece.Color) return;
+
+            var amplify = new Amplify(-1, GetStat(EffectStat.Radius), tetheredPiece);
+            tethered.GrantedEffect = amplify;
+            ActionManager.EnqueueAction(new ApplyEffect(amplify, Piece));
+        }
+    }
+}

@@ -495,6 +495,14 @@ MonoBehaviour:
     m_Key: piece_siphonophore
     m_Metadata:
       m_Items: []
+  - m_Id: 77514337435508736
+    m_Key: piece_plumed_sea_fir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78047337814417408
+    m_Key: piece_sealoch_anemone
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -271,6 +271,10 @@ MonoBehaviour:
     m_Key: piece_siphonophore_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 77488525617389568
+    m_Key: piece_plumed_sea_fir_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
