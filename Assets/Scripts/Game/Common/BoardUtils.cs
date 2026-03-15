@@ -344,6 +344,12 @@ namespace Game.Common
         public static void NotifyInternalAction(IInternal action)
         {
             if (action is ApplyEffect apply) MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
+            else if (action is KillPiece || action is DestroyPiece || action is CarapaceKill
+                     || action is MarinelKill || action is DestroyAdhesivePiece
+                     || action is DestroyParasitePiece)
+            {
+                MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
+            }
         }
 
         public static bool IsAlive(PieceLogic piece)
@@ -407,6 +413,23 @@ namespace Game.Common
 
             return list;
         }
+        
+        public static List<(int rank, int file)> GetEmptySquaresRankFile()
+        {
+            var result = new List<(int, int)>();
+            var board = PieceBoard();
+
+            for (int i = 0; i < board.Length; i++)
+            {
+                if (board[i] == null)
+                {
+                    result.Add((RankOf(i), FileOf(i)));
+                }
+            }
+
+            return result;
+        }
+        
 
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
         {
@@ -463,3 +486,4 @@ namespace Game.Common
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
     }
 }
+
