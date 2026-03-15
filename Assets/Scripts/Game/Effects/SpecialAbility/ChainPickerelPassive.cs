@@ -13,7 +13,7 @@ namespace Game.Effects.SpecialAbility
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChainPickerelPassive : Effect, IOnMoveGenTrigger
+    public class ChainPickerelPassive : Effect, IAfterPieceActionTrigger
     {
         private int Radius;
         public ChainPickerelPassive(PieceLogic piece, int radius) : base(-1, 1, piece, "effect_chain_pickerel_passive")
@@ -31,14 +31,14 @@ namespace Game.Effects.SpecialAbility
 
             return true;
         }
-        void IOnMoveGenTrigger.OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
-        {
-            foreach (var action in actions)
+
+        public AfterActionPriority Priority => AfterActionPriority.Other;
+
+        public void OnCallAfterPieceAction(Action.Action action) 
+        { 
+            if (CheckPieceInRange(action.Target))
             {
-                if (CheckPieceInRange(action.Target))
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(action.Maker), action.Maker, -1)));
-                }
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(action.Maker), action.Maker, -1)));
             }
         }
     }
