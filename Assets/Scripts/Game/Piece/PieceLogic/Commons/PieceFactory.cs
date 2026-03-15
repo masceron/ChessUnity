@@ -128,6 +128,9 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_turban_snail" => new TurbanSnail(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
+                "piece_olive_ridley_eggs" => new OliveRidleyEggs(cfg),
+                "piece_olive_ridley_turtle" => new OliveRidleyTurtle(cfg),
+
                 _ => null
             };
         }
