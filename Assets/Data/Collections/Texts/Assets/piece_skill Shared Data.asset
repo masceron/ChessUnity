@@ -275,6 +275,14 @@ MonoBehaviour:
     m_Key: piece_plumed_sea_fir_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 78369368487415808
+    m_Key: piece_olive_ridley_turtle_skill
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78369368516775936
+    m_Key: piece_chinook_salmon_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

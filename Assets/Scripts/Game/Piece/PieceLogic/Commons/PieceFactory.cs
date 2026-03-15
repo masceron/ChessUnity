@@ -81,10 +81,13 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_medicinal_leech" => new MedicinalLeech(cfg),
                 "piece_megalodon" => new Megalodon(cfg),
                 "piece_melibe" => new Melibe(cfg),
+                "piece_mini_siphonophore" => new MiniSiphonophore(cfg),
                 "piece_mirror_butterfly_fish" => new MirrorButterflyFish(cfg),
                 "piece_moorish_idols" => new MoorishIdols(cfg),
                 "piece_moray_eel" => new MorayEel(cfg),
+                "piece_olive_ridley_eggs" => new OliveRidleyEggs(cfg),
                 "piece_olive_ridley_hatchling" => new OliveRidleyHatchling(cfg),
+                "piece_olive_ridley_turtle" => new OliveRidleyTurtle(cfg),
                 "piece_paletail_unicornfish" => new PaletailUnicornfish(cfg),
                 "piece_pegasus_seamoth" => new PegasusSeamoth(cfg),
                 "piece_pencil_urchin" => new PencilUrchin(cfg),
@@ -110,6 +113,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_sea_urchin" => new SeaUrchin(cfg),
                 "piece_seahorse" => new Seahorse(cfg),
                 "piece_sealoch_anemone" => new SealochAnemone(cfg),
+                "piece_siphonophore" => new Siphonophore(cfg),
                 "piece_slimehead" => new Slimehead(cfg),
                 "piece_sloanes_viperfish" => new SloaneSViperfish(cfg),
                 "piece_snaggletooths" => new Snaggletooths(cfg),
@@ -130,9 +134,6 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_turban_snail" => new TurbanSnail(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
-                "piece_olive_ridley_eggs" => new OliveRidleyEggs(cfg),
-                "piece_olive_ridley_turtle" => new OliveRidleyTurtle(cfg),
-
                 _ => null
             };
         }

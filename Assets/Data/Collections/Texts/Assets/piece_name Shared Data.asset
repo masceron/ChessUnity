@@ -503,6 +503,30 @@ MonoBehaviour:
     m_Key: piece_sealoch_anemone
     m_Metadata:
       m_Items: []
+  - m_Id: 78395926904229888
+    m_Key: piece_leatherback_turtle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78395926925201408
+    m_Key: piece_olive_ridley_eggs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78395926925201409
+    m_Key: piece_olive_ridley_turtle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78395926954561536
+    m_Key: piece_chain_pickerel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78395926954561537
+    m_Key: piece_chinook_salmon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78395926958755840
+    m_Key: piece_olive_ridley_hatchling
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
