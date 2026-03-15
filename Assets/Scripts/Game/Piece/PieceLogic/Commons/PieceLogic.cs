@@ -34,13 +34,14 @@ namespace Game.Piece.PieceLogic.Commons
         Chance,
         Counter,
         Cooldown,
+        Radius
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
-        private readonly bool _hasSkill;
+        private bool _hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
         public readonly List<Effect> Effects;
         public readonly List<ImmunityType> Immunities;
@@ -118,6 +119,11 @@ namespace Game.Piece.PieceLogic.Commons
         public void SetAttackRange(int newRange)
         {
             _attackRange = newRange;
+        }
+
+        public void SetHasSkill(bool hasSkill)
+        {
+            _hasSkill = hasSkill;
         }
 
         private bool ValidAugmentation(List<Augmentation.Augmentation> augmentations)
