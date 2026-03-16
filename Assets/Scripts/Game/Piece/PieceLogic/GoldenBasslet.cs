@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                                 var targetPos = IndexOf(rankOff, fileOff);
                                 if (!IsActive(targetPos)) continue;
                                 var targetPiece = PieceOn(targetPos);
-                                // if (targetPiece == null || targetPiece.Color == Color) continue;
+                                if (targetPiece == null || targetPiece.Color == Color) continue;
                                 list.Add(new GoldenBassletActive(Pos, targetPos));
                             }
                             break;
@@ -42,7 +42,7 @@ namespace Game.Piece.PieceLogic
                                 var targetPos = IndexOf(rankOff, fileOff);
                                 if (!IsActive(targetPos)) continue;
                                 var targetPiece = PieceOn(targetPos);
-                                // if (targetPiece == null || targetPiece.Color == Color) continue;
+                                if (targetPiece == null || targetPiece.Color == Color) continue;
                                 list.Add(new GoldenBassletActive(Pos, targetPos));
                             }
                             break;
