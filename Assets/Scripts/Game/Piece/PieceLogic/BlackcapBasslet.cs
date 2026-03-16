@@ -16,7 +16,6 @@ namespace Game.Piece.PieceLogic
 
         public BlackcapBasslet(PieceConfig cfg) : base(cfg, PawnPushMoves.Quiets, KingMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(10, 100, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

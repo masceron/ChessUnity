@@ -287,6 +287,10 @@ MonoBehaviour:
     m_Key: piece_blackcap_basslet_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 78615732320280576
+    m_Key: piece_golden_basslet_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

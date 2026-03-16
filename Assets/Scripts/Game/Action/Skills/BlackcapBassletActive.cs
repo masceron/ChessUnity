@@ -1,5 +1,6 @@
 ﻿using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
+using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
@@ -14,6 +15,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

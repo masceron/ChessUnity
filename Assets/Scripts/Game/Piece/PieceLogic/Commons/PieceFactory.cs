@@ -55,6 +55,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_frilled_shark" => new FrilledShark(cfg),
                 "piece_frog_fish" => new GulperEel(cfg),
                 "piece_giant_larvacean" => new GiantLarvacean(cfg),
+                "piece_golden_basslet" => new GoldenBasslet(cfg),
                 "piece_grenadiers" => new Grenadiers(cfg),
                 "piece_guiding_siren" => new GuidingSiren(cfg),
                 "piece_gulper_eel" => new GulperEel(cfg),
