@@ -535,6 +535,10 @@ MonoBehaviour:
     m_Key: piece_golden_basslet
     m_Metadata:
       m_Items: []
+  - m_Id: 78648336616595456
+    m_Key: piece_yellowlined_basslet
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
