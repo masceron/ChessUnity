@@ -283,6 +283,10 @@ MonoBehaviour:
     m_Key: piece_chinook_salmon_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 78611301675638784
+    m_Key: piece_blackcap_basslet_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
