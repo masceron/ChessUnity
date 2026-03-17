@@ -53,7 +53,7 @@ namespace Game.Effects.SpecialAbility
                 int spawnPos = candidateTiles[randIdx];
                 candidateTiles.RemoveAt(randIdx);
 
-                ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_barracuda", Piece.Color, spawnPos)));
+                ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_olive_ridley_hatchling", Piece.Color, spawnPos)));
             }
         }
 
