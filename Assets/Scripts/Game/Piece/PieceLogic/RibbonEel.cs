@@ -3,6 +3,7 @@ using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Buffs;
+using Game.Effects.Condition;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 
@@ -12,8 +13,9 @@ namespace Game.Piece.PieceLogic
     {
         public RibbonEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, KingMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new TrueBite(-1,this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Camouflage(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(-1,this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Diurnal(-1, 1, this, "effect_diurnal")));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

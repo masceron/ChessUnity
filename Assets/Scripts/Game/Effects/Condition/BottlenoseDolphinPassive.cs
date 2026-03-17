@@ -11,14 +11,16 @@ namespace Game.Effects.Condition
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class BottlenoseDolphinPassive : Effect, IStartTurnTrigger
+    public class BottlenoseDolphinPassive : Diurnal, IStartTurnTrigger
     {
         private const int EvasionProbability = 25;
-        private bool _surpassed;
+        // Biến này để lưu state ván trước để biết lúc nào chuyển đoạn Ngày <-> Đêm
+        private bool _wasActive;
 
         public BottlenoseDolphinPassive(PieceLogic piece) : base(-1, 1, piece, "effect_bottlenose_dolphin_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
+            _wasActive = IsActive; // Gắn giá trị khởi tạo
         }
 
         public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
@@ -27,22 +29,31 @@ namespace Game.Effects.Condition
 
         public void OnCallStart(Action.Action lastMainAction)
         {
-            switch (MatchManager.Ins.GameState.IsDay)
+            // Nếu trạng thái IsActive thay đổi (Đêm -> Ngày hoặc Ngày -> Đêm)
+            if (IsActive != _wasActive)
             {
-                case true:
+                if (IsActive) 
                 {
+                    // Chuyển sang Ngày (Active):
+                    // + Evasion 25%
                     var existingEvasion = Piece.Effects.OfType<Evasion>().FirstOrDefault();
                     if (existingEvasion != null)
-                        existingEvasion.Strength = Math.Max(existingEvasion.Strength, EvasionProbability);
+                        existingEvasion.Strength += EvasionProbability;
                     else
                         ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, EvasionProbability, Piece)));
-
-                    break;
+                        
+                    // + QuickReflex
+                    if (!Piece.Effects.OfType<QuickReflex>().Any())
+                        ActionManager.EnqueueAction(new ApplyEffect(new QuickReflex(Piece)));
                 }
-                case false:
+                else 
                 {
-                    var surpassEffect = Piece.Effects.OfType<Surpass>().FirstOrDefault();
-                    if (surpassEffect != null) ActionManager.EnqueueAction(new RemoveEffect(surpassEffect));
+                    // Chuyển sang Đêm (Inactive): 
+                    // - Bỏ QuickReflex
+                    var quickReflex = Piece.Effects.OfType<QuickReflex>().FirstOrDefault();
+                    if (quickReflex != null) ActionManager.EnqueueAction(new RemoveEffect(quickReflex));
+
+                    // - Giảm/Bỏ Evasion
                     var evasionEffect = Piece.Effects.OfType<Evasion>().FirstOrDefault();
                     if (evasionEffect != null)
                     {
@@ -51,9 +62,9 @@ namespace Game.Effects.Condition
                         else
                             evasionEffect.Strength -= EvasionProbability;
                     }
-
-                    break;
                 }
+                
+                _wasActive = IsActive;
             }
         }
 

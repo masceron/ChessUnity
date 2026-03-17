@@ -1,24 +1,26 @@
-﻿using Game.Managers;
+using System.Collections.Generic;
+using Game.Action.Skills;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
 namespace Game.Effects.Others
 {
-    public class NocturnalRangeBuff : Effect, IMoveRangeModifierTrigger, IAttackRangeModifier
+    public class TigerPrawnPassive : Condition.Nocturnal, IMoveRangeModifierTrigger, IAttackRangeModifier
     {
-        public NocturnalRangeBuff(PieceLogic piece) : base(-1, 1, piece, "effect_nocturnal_range_buff")
+        public TigerPrawnPassive(PieceLogic piece) : base(-1, 1, piece, "effect_tiger_prawn_passive")
         {
         }
 
         public int ModifyAttackRange(int baseRange)
         {
-            if (!MatchManager.Ins.GameState.IsDay) baseRange += Strength;
+            if (IsActive) baseRange += Strength;
             return baseRange;
         }
 
         public int ModifyMoveRange(int baseRange)
         {
-            if (!MatchManager.Ins.GameState.IsDay) baseRange += Strength;
+            if (IsActive) baseRange += Strength;
             return baseRange;
         }
 

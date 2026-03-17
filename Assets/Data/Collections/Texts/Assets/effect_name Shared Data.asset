@@ -759,6 +759,18 @@ MonoBehaviour:
     m_Key: effect_amplify
     m_Metadata:
       m_Items: []
+  - m_Id: 78999760902328320
+    m_Key: effect_tiger_prawn_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78999868360396800
+    m_Key: effect_nocturnal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79006256243445760
+    m_Key: effect_diurnal
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
