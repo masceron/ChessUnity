@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
+  m_Name: OliveRidleyTurtle
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
+  key: piece_olive_ridley_turtle
+  prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
+  rank: 6
+  moveRange: 2
+  attackRange: 2
+  movePattern: {fileID: 0}
+  capturePattern: {fileID: 0}
+  hasSkill: 1
+  normalSkillCooldown: 5
+  availableSlots: 20
+  logicClassName: OliveRidleyTurtle
+  baseValue: 0
+  considerations: []

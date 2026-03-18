@@ -735,12 +735,24 @@ MonoBehaviour:
     m_Key: effect_plumed_sea_fir_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 78046867167371264
-    m_Key: effect_sea_loch_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 78046993780826112
     m_Key: effect_sealoch_anemone_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78396044210524160
+    m_Key: effect_olive_ridley_eggs_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78396044231495680
+    m_Key: effect_chain_pickerel_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78396044235689984
+    m_Key: effect_olive_ridley_hatchling_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78396044239884288
+    m_Key: effect_chinook_salmon_before_dead_description
     m_Metadata:
       m_Items: []
   m_Metadata:

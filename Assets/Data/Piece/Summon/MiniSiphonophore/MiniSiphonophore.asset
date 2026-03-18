@@ -22,6 +22,6 @@ MonoBehaviour:
   hasSkill: 1
   normalSkillCooldown: 3
   availableSlots: 0
-  logicClassName: 
+  logicClassName: MiniSiphonophore
   baseValue: 0
   considerations: []
