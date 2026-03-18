@@ -18,6 +18,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_bioluminescent_beacon" => new BioluminescentBeacon(cfg),
                 "piece_black_prince_copepod" => new BlackPrinceCopepod(cfg),
                 "piece_black_swallower" => new BlackSwallower(cfg),
+                "piece_blackcap_basslet" => new BlackcapBasslet(cfg),
                 "piece_blubber_jelly" => new BlubberJelly(cfg),
                 "piece_blue_dragon" => new BlueDragon(cfg),
                 "piece_blue_ringed_octopus" => new BlueRingedOctopus(cfg),
@@ -54,6 +55,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_frilled_shark" => new FrilledShark(cfg),
                 "piece_frog_fish" => new GulperEel(cfg),
                 "piece_giant_larvacean" => new GiantLarvacean(cfg),
+                "piece_golden_basslet" => new GoldenBasslet(cfg),
                 "piece_grenadiers" => new Grenadiers(cfg),
                 "piece_guiding_siren" => new GuidingSiren(cfg),
                 "piece_gulper_eel" => new GulperEel(cfg),
@@ -134,6 +136,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_turban_snail" => new TurbanSnail(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
+                "piece_yellowlined_basslet" => new YellowlinedBasslet(cfg),
                 _ => null
             };
         }
