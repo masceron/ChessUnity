@@ -40,7 +40,7 @@ namespace Game.Action.Captures
                 if (symbioticEffect != null) symbioticEffect.IsTethered = true;
 
                 // Khi nối sẽ chuyển State: None của quân được nối sang State: Tethered
-                ActionManager.EnqueueAction(new ApplyEffect(new Tethered(targetPiece, makerPiece, maxRange)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Tethered(targetPiece, makerPiece, maxRange), makerPiece));
             }
         }
     }
