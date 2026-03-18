@@ -527,6 +527,14 @@ MonoBehaviour:
     m_Key: piece_olive_ridley_hatchling
     m_Metadata:
       m_Items: []
+  - m_Id: 79514682891382784
+    m_Key: piece_orrnate_ghostpipefish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79523557178814464
+    m_Key: piece_pennant_coralfish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

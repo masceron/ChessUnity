@@ -88,6 +88,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_olive_ridley_eggs" => new OliveRidleyEggs(cfg),
                 "piece_olive_ridley_hatchling" => new OliveRidleyHatchling(cfg),
                 "piece_olive_ridley_turtle" => new OliveRidleyTurtle(cfg),
+                "piece_orrnate_ghostpipefish" => new OrrnateGhostpipefish(cfg),
                 "piece_paletail_unicornfish" => new PaletailUnicornfish(cfg),
                 "piece_pegasus_seamoth" => new PegasusSeamoth(cfg),
                 "piece_pencil_urchin" => new PencilUrchin(cfg),

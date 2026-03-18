@@ -283,6 +283,10 @@ MonoBehaviour:
     m_Key: piece_chinook_salmon_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 79488378884272128
+    m_Key: piece_orrnate_ghostpipefish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
