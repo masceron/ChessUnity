@@ -17,15 +17,15 @@ namespace Game.Piece.PieceLogic
     public class PaintedGreenling : Commons.PieceLogic
     {
         private const int Number = 1;
-        private const int Duration = 2;
+        private const int Duration = 3;
         private const int Radius = 1;
-        public PaintedGreenling(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, None.Captures)
+        public PaintedGreenling(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, None.Captures)
         {
             SetStat(SkillStat.Radius, Radius);
             SetStat(SkillStat.Duration, Duration);
             SetStat(SkillStat.Number, Number);
 
-            ActionManager.EnqueueAction(new ApplyEffect(new PaintedGreenlingPassive(this, GetStat(SkillStat.Strength), GetStat(SkillStat.Duration))));
+            ActionManager.EnqueueAction(new ApplyEffect(new PaintedGreenlingPassive(this)));
         }
     }
 }

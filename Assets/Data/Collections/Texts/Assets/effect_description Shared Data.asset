@@ -755,6 +755,10 @@ MonoBehaviour:
     m_Key: effect_chinook_salmon_before_dead_description
     m_Metadata:
       m_Items: []
+  - m_Id: 79782420206637056
+    m_Key: effect_multicast_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

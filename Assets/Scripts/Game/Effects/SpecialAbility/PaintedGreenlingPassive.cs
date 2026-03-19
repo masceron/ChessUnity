@@ -1,7 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Net;
+using Game.Action;
+using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
+using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
@@ -17,6 +23,21 @@ namespace Game.Effects.SpecialAbility
         {
             if (action is not IQuiets) return;
             if (action.Maker != Piece.Pos) return;
+
+            if (HasFormation(action.Target)) 
+            {
+                var formation = GetFormation(action.Target);
+                if (formation.Color != PieceOn(action.Maker).Color) return;
+
+                var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(action.Target, 1);
+                foreach (var pos in listPieces)
+                {
+                    var p = PieceOn(pos);
+                    if (p == null) continue;
+
+                    ActionManager.EnqueueAction(new ApplyEffect(new Multicast(p, Piece.GetStat(SkillStat.Number), Piece.GetStat(SkillStat.Duration))));
+                }
+            }
         }
     }
 }
