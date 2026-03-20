@@ -20,6 +20,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_black_swallower" => new BlackSwallower(cfg),
                 "piece_blackcap_basslet" => new BlackcapBasslet(cfg),
                 "piece_blubber_jelly" => new BlubberJelly(cfg),
+                "piece_blue_chromis" => new BlueChromis(cfg),
                 "piece_blue_dragon" => new BlueDragon(cfg),
                 "piece_blue_ringed_octopus" => new BlueRingedOctopus(cfg),
                 "piece_bobtail_squid" => new BobtailSquid(cfg),
@@ -108,6 +109,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_reef_squid" => new ReefSquid(cfg),
                 "piece_remora" => new Remora(cfg),
                 "piece_ribbon_eel" => new RibbonEel(cfg),
+                "piece_royal_gramma" => new RoyalGramma(cfg),
                 "piece_rusty_parrotfish" => new RustyParrotfish(cfg),
                 "piece_scalyhead_sculpin" => new ScalyheadSculpin(cfg),
                 "piece_sea_star" => new SeaStar(cfg),
@@ -136,6 +138,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_turban_snail" => new TurbanSnail(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
+                "piece_weeping_toadfish" => new WeepingToadfish(cfg),
                 "piece_yellowlined_basslet" => new YellowlinedBasslet(cfg),
                 _ => null
             };

@@ -12,9 +12,8 @@ namespace Game.Tile
     {
         private int _turnsOnTile;
 
-        public AnoxicPool(bool haveDuration, bool color) : base(color)
+        public AnoxicPool(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
             _turnsOnTile = 0;
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }

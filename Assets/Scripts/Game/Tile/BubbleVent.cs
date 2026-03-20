@@ -12,10 +12,8 @@ namespace Game.Tile
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class BubbleVent : Formation
     {
-        public BubbleVent(int d, bool hd, bool color) : base(color)
+        public BubbleVent(bool color) : base(color)
         {
-            Duration = d;
-            HaveDuration = hd;
         }
 
         protected override void OnPieceEnter(PieceLogic piece)

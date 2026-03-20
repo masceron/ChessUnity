@@ -41,7 +41,8 @@ namespace Game.Effects
         Duration, // Đây là biến động, cần phân biệt với Duration - thời gian tồn tại của Effect
         Counter,
         Range,
-        Number
+        Number,
+        Stack
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -86,7 +87,7 @@ namespace Game.Effects
             return !Stats.TryGetValue(stat, out var stat1) ? 0 : stat1[num - 1];
         }
 
-        protected int GetStat(EffectStat stat, int num = 1)
+        public int GetStat(EffectStat stat, int num = 1)
         {
             if (!Stats.TryGetValue(stat, out var statin)) return 0;
             var finalStat = statin[num - 1];
@@ -97,12 +98,14 @@ namespace Game.Effects
             return finalStat;
         }
 
-        protected void SetStat(EffectStat stat, int value, int num = 1)
+        public void SetStat(EffectStat stat, int value, int num = 1)
         {
+            if (value < 0) value = 0;
             if (!Stats.ContainsKey(stat)) Stats.Add(stat, new List<int>());
             var lst = Stats[stat];
             while (lst.Count < num) lst.Add(0);
             Stats[stat][num - 1] = value;
         }
+        public virtual int GetNumeral() => Strength;
     }
 }

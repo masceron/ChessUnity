@@ -42,11 +42,16 @@ namespace Game.Tile
         {
         }
 
-        protected Formation(bool color)
+        protected Formation(bool color, int duration = -1)
         {
             Color = color;
             var info = AssetManager.Ins.FormationData[GetFormationType()];
             category = info.formationCategory;
+            if (duration != -1)
+            {
+                HaveDuration = true;
+                Duration = duration;
+            }
         }
 
         public int Pos { get; private set; }
@@ -78,12 +83,13 @@ namespace Game.Tile
             else if (action.Maker == Pos) OnPieceExit(pieceOn);
         }
 
-        public void OnPieceSpawn(PieceLogic piece)
+        public virtual void OnPieceSpawn(PieceLogic piece)
         {
             if (BoardUtils.IsAlive(piece) && piece.Pos == Pos) OnPieceEnter(piece);
         }
 
         /// <summary>
+        ///     Hàm đã lỗi thời, để cài đặt Duration, bây giờ chỉ cần qua constructor
         ///     Hiện hàm này được gọi chủ động bởi FormationManager::SetFormation() nên mọi người không cần phải động tới
         /// </summary>
         /// <param name="index"></param>

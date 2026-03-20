@@ -9,6 +9,7 @@ namespace Game.Tile
     {
         public FogOfWar(bool color) : base(color)
         {
+            
         }
 
         public override void OnCreated(PieceLogic piece)

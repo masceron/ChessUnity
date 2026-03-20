@@ -759,6 +759,18 @@ MonoBehaviour:
     m_Key: effect_yellowlined_basslet_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 79312443047141376
+    m_Key: effect_blue_chromis_vengeful_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79312518943072256
+    m_Key: effect_blue_chromis_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79313094921674752
+    m_Key: effect_royal_gramma_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

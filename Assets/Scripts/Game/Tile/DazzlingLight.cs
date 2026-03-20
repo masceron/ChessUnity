@@ -13,9 +13,9 @@ namespace Game.Tile
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DazzlingLight : Formation
     {
-        public DazzlingLight(bool haveDuration, bool color) : base(color)
+        public DazzlingLight(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
+
         }
 
         public override FormationType GetFormationType()
