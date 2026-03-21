@@ -17,7 +17,7 @@ namespace Game.Effects.Traits
     public class BoneEatingWormPassive : Effect, IAfterPieceActionTrigger, IDeadTrigger
     {
         public BoneEatingWormPassive(int radius, int counter, int stack, PieceLogic piece) 
-            : base(-1, 1, piece, "effect_giant_larvacean_passive")
+            : base(-1, 1, piece, "effect_bone_eating_worm_passive")
         {
             SetStat(EffectStat.Radius, radius);
             SetStat(EffectStat.Counter, counter);
@@ -28,28 +28,49 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not IQuiets || action.Result != ResultFlag.Success) return;
-            
-            var movingPiece = PieceOn(action.Maker);
-            if (movingPiece == null || movingPiece.Color == Piece.Color) return;
-            
-            var radius = GetStat(EffectStat.Radius);
-            var distance = Distance(Piece.Pos, action.Target);
-            if (distance > radius) return;
-            
-            var counter = GetStat(EffectStat.Counter);
-            var stack = GetStat(EffectStat.Unit);
-            
-            var removeShieldChance = 5 + counter;
-            if (MatchManager.Roll(removeShieldChance))
+            if (Piece == null) return;
+            if (action == null || action.Result != ResultFlag.Success) return;
+            if (action is not IQuiets) return;
+
+            int radius = GetStat(EffectStat.Radius);
+
+
+            var movedPiece = PieceOn(action.Maker);
+            if (movedPiece != null && movedPiece != Piece && movedPiece.Color != Piece.Color)
             {
-                RemoveShieldEffects(movingPiece);
+                int prevPos = movedPiece.PreviousMoves.Count > 0
+                    ? movedPiece.PreviousMoves[movedPiece.PreviousMoves.Count - 1]
+                    : -1;
+
+                int distToNewPos = Distance(movedPiece.Pos, Piece.Pos);
+                int distToOldPos = prevPos == -1 ? int.MaxValue : Distance(prevPos, Piece.Pos);
+
+                if (distToNewPos <= radius && distToOldPos > radius)
+                {
+                    UnityEngine.Debug.Log("Apply Passive Effects to " );
+                    TryApplyPassiveEffects(movedPiece);
+                }
             }
-            
-            var poisonChance = 3 + counter;
-            if (MatchManager.Roll(poisonChance))
+
+
+            if (action.Maker != Piece.Pos || Piece.PreviousMoves.Count <= 0) return;
+
+            int oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
+            for (int i = 0; i < BoardSize; i++)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(stack, movingPiece), Piece));
+                if (!IsActive(i)) continue;
+
+                var enemy = PieceOn(i);
+                if (enemy == null || enemy.Color == Piece.Color) continue;
+
+                int distToNewPos = Distance(enemy.Pos, Piece.Pos);
+                int distToOldPos = Distance(enemy.Pos, oldPos);
+
+                if (distToNewPos <= radius && distToOldPos > radius)
+                {
+                    UnityEngine.Debug.Log("Apply Passive Effects to " );
+                    TryApplyPassiveEffects(enemy);
+                }
             }
         }
 
@@ -58,8 +79,24 @@ namespace Game.Effects.Traits
             if (pieceToDie == null || pieceToDie.Color == Piece.Color) return;
             
             var currentCounter = GetRawStat(EffectStat.Counter);
-            UnityEngine.Debug.Log($"GiantLarvaceanPassive: currentCounter = {currentCounter}");
             SetStat(EffectStat.Counter, currentCounter + 2);
+        }
+
+        private void TryApplyPassiveEffects(PieceLogic target)
+        {
+            if (target == null) return;
+
+            int counter = GetStat(EffectStat.Counter);
+            int stack = GetStat(EffectStat.Unit);
+
+            int removeShieldChance = 5 + counter;
+            if (MatchManager.Roll(removeShieldChance)) RemoveShieldEffects(target);
+
+            int poisonChance = 3 + counter;
+            if (MatchManager.Roll(poisonChance))
+            {
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(stack, target), Piece));
+            }
         }
 
         private void RemoveShieldEffects(PieceLogic targetPiece)
