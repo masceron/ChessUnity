@@ -136,6 +136,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_velkaris" => new Velkaris(cfg),
                 "piece_quillback_rockfish" => new QuillbackRockfish(cfg),
                 "piece_abbotts_moray" => new AbbottsMoray(cfg),
+                "piece_wire_coral_goby" => new WireCoralGoby(cfg),
                 _ => null
             };
         }
