@@ -16,10 +16,10 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class QuillbackRockfish : Commons.PieceLogic, IPieceWithSkill
     {
-        public QuillbackRockfish(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
+        public QuillbackRockfish(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {
             SetStat(SkillStat.Stack, 4);
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

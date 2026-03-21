@@ -14,8 +14,10 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AbbottsMoray : Commons.PieceLogic
     {
-        public AbbottsMoray(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
+        public AbbottsMoray(PieceConfig cfg) : base(cfg, EmptyDiamondMove.Quiets, EmptyDiamondMove.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Ambush(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 10, this)));   
             ActionManager.ExecuteImmediately(new ApplyEffect(new AbbottsMorayPassive(this)));
         }
     }

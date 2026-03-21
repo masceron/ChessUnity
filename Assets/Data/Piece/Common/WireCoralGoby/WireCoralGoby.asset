@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WireCoralGoby
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_wire_coral_goby
-  prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
+  prefab: {fileID: 919132149155446097, guid: 9d0ca05ecf336804294c519dad75fed7, type: 3}
   rank: 4
   moveRange: 2
   attackRange: 2
