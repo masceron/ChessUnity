@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaPending : PendingAction, IDisposable
+    public class TemperantiaPending : PendingAction, IDisposable, ISkills
     {
         private static int _ally = -1;
         private static int _enemy = -1; // -1 nếu chưa chọn enemy
@@ -34,24 +34,21 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            if (_ally == -1 || _enemy == -1)
+            if (PieceOn(Target).Color == _temperantia.Color)
             {
-                if (PieceOn(Target).Color == _temperantia.Color)
-                {
-                    _ally = Target;
-                    foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                 PieceOn(pending.Target).Color == _temperantia.Color))
-                        TileManager.Ins.UnMark(pending.Target);
-                }
-                else
-                {
-                    _enemy = Target;
-                    foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                 PieceOn(pending.Target).Color != _temperantia.Color))
-                        TileManager.Ins.UnMark(pending.Target);
-                }
+                _ally = Target;
+                foreach (var pending in BoardViewer.ListOf.Where(pending =>
+                                PieceOn(pending.Target).Color == _temperantia.Color))
+                    TileManager.Ins.UnMark(pending.Target);
             }
             else
+            {
+                _enemy = Target;
+                foreach (var pending in BoardViewer.ListOf.Where(pending =>
+                                PieceOn(pending.Target).Color != _temperantia.Color))
+                    TileManager.Ins.UnMark(pending.Target);
+            }
+            if (_ally != -1 && _enemy != -1 )
             {
                 CommitResult(new TemperantiaSwap(Maker, _ally, _enemy));
                 _ally = -1;

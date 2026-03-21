@@ -23,6 +23,8 @@ namespace Game.Action.Skills
         public RoyalGrammaActive(int maker, List<int> positions, string type) : base(maker)
         {
             Maker = maker;
+            this.positions = positions;
+            chosenType = type;
         }
 
         public int AIPenaltyValue(PieceLogic maker)

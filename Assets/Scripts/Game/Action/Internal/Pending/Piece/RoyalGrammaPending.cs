@@ -10,7 +10,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
-    public class RoyalGrammaPending : PendingAction, ISkills
+    public class RoyalGrammaPending : PendingAction, IDisposable, ISkills
     {
         public static List<int> positions = new();
         public RoyalGrammaPending(int maker, int target) : base(maker)
@@ -27,16 +27,19 @@ namespace Game.Action.Internal.Pending.Piece
             CommitResult(new RoyalGrammaActive(Maker, new List<int>(positions), chosenType));
             positions.Clear();
         }
+        public void Dispose()
+        {
+            positions.Clear();
+            BoardViewer.SelectingFunction = 0;
+        }
         protected override void CompleteAction()
         {
+            positions.Add(Target);
+            TileManager.Ins.UnMark(Target);
             if (positions.Count == PieceOn(Maker).GetStat(SkillStat.Target))
             {
                 var ui = BoardViewer.Ins.GetOrInstantiateUI<RoyalGrammaUI>(IngameSubmenus.RoyalGrammaUI);
-            }
-            else
-            {
-                positions.Add(Target);
-                TileManager.Ins.UnMark(Target);
+                ui.Load(this);
             }
         }
     }

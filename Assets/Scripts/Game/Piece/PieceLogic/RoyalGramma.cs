@@ -28,7 +28,10 @@ namespace Game.Piece.PieceLogic
                     var allies = FindPiece<Commons.PieceLogic>(this.Color);
                     foreach(var ally in allies)
                     {
-                        list.Add(new RoyalGrammaPending(Pos, ally.Pos));
+                        if (ally != this)
+                        {
+                            list.Add(new RoyalGrammaPending(Pos, ally.Pos));
+                        }
                     }
                 }
             };

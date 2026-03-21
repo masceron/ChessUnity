@@ -15,7 +15,6 @@ namespace Game.Piece.PieceLogic
     {
         public WeepingToadfish(PieceConfig cfg) : base(cfg, PawnPushMoves.Quiets, PawnPushMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Ambush(this)));
             SetStat(SkillStat.Range, 4);
             SetStat(SkillStat.Duration, 2);
 
