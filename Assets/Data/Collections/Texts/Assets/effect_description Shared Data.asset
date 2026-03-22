@@ -755,6 +755,10 @@ MonoBehaviour:
     m_Key: effect_chinook_salmon_before_dead_description
     m_Metadata:
       m_Items: []
+  - m_Id: 80868497457336320
+    m_Key: effect_flying_fish_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
