@@ -34,13 +34,40 @@ namespace Game.Managers
         private void Load()
         {
             PieceData = new Dictionary<string, PieceInfo>();
-            foreach (var piece in pieceData.piecesData) PieceData.Add(piece.key, piece);
+            foreach (var piece in pieceData.piecesData)
+            {
+                if (piece == null)
+                {
+                    Debug.LogError("[AssetManager] Null PieceInfo found in PiecesData. Please remove missing entries from the asset list.");
+                    continue;
+                }
+
+                PieceData.Add(piece.key, piece);
+            }
 
             EffectData = new Dictionary<string, EffectInfo>();
-            foreach (var effect in effectsData.effectsData) EffectData.Add(effect.key, effect);
+            foreach (var effect in effectsData.effectsData)
+            {
+                if (effect == null)
+                {
+                    Debug.LogError("[AssetManager] Null EffectInfo found in EffectsData. Please remove missing entries from the asset list.");
+                    continue;
+                }
+
+                EffectData.Add(effect.key, effect);
+            }
 
             RelicData = new Dictionary<string, RelicInfo>();
-            foreach (var relic in relicsData.relicsData) RelicData.Add(relic.key, relic);
+            foreach (var relic in relicsData.relicsData)
+            {
+                if (relic == null)
+                {
+                    Debug.LogError("[AssetManager] Null RelicInfo found in RelicsData. Please remove missing entries from the asset list.");
+                    continue;
+                }
+
+                RelicData.Add(relic.key, relic);
+            }
 
             FormationData = new Dictionary<FormationType, FormationInfo>(formationDataSo.formationsData);
             AugmentationData = new Dictionary<AugmentationName, AugmentationInfo>(augmentationData.augmentationsData);

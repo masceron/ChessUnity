@@ -35,7 +35,9 @@ namespace Game.Piece.PieceLogic.Commons
         Counter,
         Cooldown,
         Radius,
-        Stack
+        Stack,
+        Strength,
+        Number
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
