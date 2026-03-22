@@ -7,6 +7,7 @@ using Game.Common;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
@@ -27,6 +28,8 @@ namespace Game.Effects.SpecialAbility
             if (action is not IQuiets) return;
             if (action.Maker != Piece.Pos) return;
 
+            Debug.Log(PieceOn(action.Maker).Type + " made a quiet action, check for painted greenling passive");
+
             if (HasFormation(action.Target)) 
             {
                 var formation = GetFormation(action.Target);
@@ -37,6 +40,8 @@ namespace Game.Effects.SpecialAbility
                 {
                     var p = PieceOn(pos);
                     if (p == null) continue;
+
+                    Debug.Log("add multicast to " + p.Type);
 
                     ActionManager.EnqueueAction(new ApplyEffect(new Multicast(p, GetStat(EffectStat.Number), GetStat(EffectStat.Duration))));
                 }

@@ -13,12 +13,11 @@ namespace Game.Effects.SpecialAbility
 {
     public class PennantCoralfishPassive : Effect, IAfterPieceActionTrigger
     {
-        private readonly int strength;
-        private readonly int duration;
-        public PennantCoralfishPassive(PieceLogic piece, int strength, int duration) : base(-1, 1, piece, "effect_pennant_coralfish_passive")
+        public PennantCoralfishPassive(PieceLogic piece, int strength, int duration, int radius) : base(-1, 1, piece, "effect_pennant_coralfish_passive")
         {
             SetStat(EffectStat.Strength, strength);
             SetStat(EffectStat.Duration, duration);
+            SetStat(EffectStat.Radius, radius);
         }
 
         AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Other;
@@ -26,11 +25,19 @@ namespace Game.Effects.SpecialAbility
         void IAfterPieceActionTrigger.OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) return;
+            if (action.Maker != Piece.Pos) return;
 
             var piece = PieceOn(action.Maker);
             if (piece == null || piece.Type != "piece_pennant_coralfish") return;
+            Debug.Log(piece.Type + " made a quiet action, check for pennant coralfish passive");
 
-            foreach (var pos in SkillRangeHelper.GetActiveCellInRadius(action.Maker, 1))
+            var longReach = piece.Effects.Find(e => e is LongReach) as LongReach;
+            if (longReach != null)
+            {
+                Debug.Log("Longreach Strength: " + longReach.Strength);
+            }
+
+            foreach (var pos in SkillRangeHelper.GetActiveCellInRadius(action.Maker, GetStat(EffectStat.Radius)))
             {
                 var p = PieceOn(pos);
                 if (pos == action.Maker) continue;
@@ -39,6 +46,7 @@ namespace Game.Effects.SpecialAbility
                 // nếu đi cạnh quân đấy nhiều lần thì có stack lên không hay chỉ được 1 lần ?
                 ActionManager.EnqueueAction(new ApplyEffect(new LongReach(piece, GetStat(EffectStat.Duration), GetStat(EffectStat.Strength))));
                 ActionManager.EnqueueAction(new ApplyEffect(new LongReach(p, GetStat(EffectStat.Duration), GetStat(EffectStat.Strength))));
+
             }
         }
     }
