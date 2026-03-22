@@ -21,14 +21,28 @@ namespace Game.Effects.Buffs
 
         void IOnApplyTrigger.OnApply()
         {
-            Piece.SetStat(SkillStat.Target, Piece.GetStat(SkillStat.Target) + Number);
-            Piece.SetStat(SkillStat.Unit, Piece.GetStat(SkillStat.Unit) + Number);
+            if (Piece.GetStat(SkillStat.Target) != 0)
+            {
+                Piece.SetStat(SkillStat.Target, Piece.GetStat(SkillStat.Target) + Number);
+            }
+
+            if (Piece.GetStat(SkillStat.Unit) != 0)
+            {
+                Piece.SetStat(SkillStat.Unit, Piece.GetStat(SkillStat.Unit) + Number);
+            }
         }
 
         void IOnRemoveTrigger.OnRemove()
         {
-            Piece.SetStat(SkillStat.Target, Piece.GetStat(SkillStat.Target) - Number);
-            Piece.SetStat(SkillStat.Unit, Piece.GetStat(SkillStat.Unit) - Number);
+            if (Piece.GetStat(SkillStat.Target) != 0)
+            {
+                Piece.SetStat(SkillStat.Target, Piece.GetStat(SkillStat.Target) - Number);
+            }
+
+            if (Piece.GetStat(SkillStat.Unit) != 0)
+            {
+                Piece.SetStat(SkillStat.Unit, Piece.GetStat(SkillStat.Unit) - Number);
+            }
         }
     }
 }
