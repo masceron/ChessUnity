@@ -759,6 +759,14 @@ MonoBehaviour:
     m_Key: effect_multicast_description
     m_Metadata:
       m_Items: []
+  - m_Id: 80871831584321536
+    m_Key: effect_pennant_coralfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80890200488357888
+    m_Key: effect_painted_greenling_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

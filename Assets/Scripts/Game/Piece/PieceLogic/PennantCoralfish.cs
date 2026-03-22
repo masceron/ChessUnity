@@ -20,10 +20,7 @@ namespace Game.Piece.PieceLogic
         private const int Duration = 2;
         public PennantCoralfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, None.Captures)
         {
-            SetStat(SkillStat.Strength, Strength);
-            SetStat(SkillStat.Duration, Duration);
-
-            ActionManager.EnqueueAction(new ApplyEffect(new PennantCoralfishPassive(this, GetStat(SkillStat.Strength), GetStat(SkillStat.Duration))));
+            ActionManager.EnqueueAction(new ApplyEffect(new PennantCoralfishPassive(this, Strength, Duration)));
         }
     }
 }

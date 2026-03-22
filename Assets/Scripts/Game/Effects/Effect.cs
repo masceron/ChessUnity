@@ -3,6 +3,7 @@ using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using UnityEngine;
 using UX;
 
 namespace Game.Effects
@@ -62,7 +63,25 @@ namespace Game.Effects
             Color = Piece.Color;
             Duration = duration;
 
-            var info = AssetManager.Ins.EffectData[name];
+            if (AssetManager.Ins == null)
+            {
+                Debug.LogError($"[Effect] AssetManager.Ins is null while creating effect '{name}'.");
+                throw new System.NullReferenceException($"AssetManager.Ins is null while creating effect '{name}'.");
+            }
+
+            if (AssetManager.Ins.EffectData == null)
+            {
+                Debug.LogError($"[Effect] EffectData is null while creating effect '{name}'.");
+                throw new System.NullReferenceException($"EffectData is null while creating effect '{name}'.");
+            }
+
+            if (!AssetManager.Ins.EffectData.TryGetValue(name, out var info) || info == null)
+            {
+                var pieceType = piece != null ? piece.Type : "<null-piece>";
+                Debug.LogError($"[Effect] Missing EffectData for key '{name}' (piece: '{pieceType}'). Please add this key to EffectsData.");
+                throw new System.Collections.Generic.KeyNotFoundException($"Missing EffectData key '{name}' for piece '{pieceType}'.");
+            }
+
             Category = info.category;
 
             Stats = new UDictionary<EffectStat, List<int>>();

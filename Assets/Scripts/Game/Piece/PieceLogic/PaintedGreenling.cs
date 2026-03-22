@@ -21,11 +21,7 @@ namespace Game.Piece.PieceLogic
         private const int Radius = 1;
         public PaintedGreenling(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, None.Captures)
         {
-            SetStat(SkillStat.Radius, Radius);
-            SetStat(SkillStat.Duration, Duration);
-            SetStat(SkillStat.Number, Number);
-
-            ActionManager.EnqueueAction(new ApplyEffect(new PaintedGreenlingPassive(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new PaintedGreenlingPassive(this, Number, Duration, Radius)));
         }
     }
 }

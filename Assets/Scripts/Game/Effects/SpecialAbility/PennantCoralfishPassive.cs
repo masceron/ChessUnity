@@ -15,10 +15,10 @@ namespace Game.Effects.SpecialAbility
     {
         private readonly int strength;
         private readonly int duration;
-        public PennantCoralfishPassive(PieceLogic piece, int strength, int duration) : base(-1, 1, piece, "effect_pegasus_seamoth_passive")
+        public PennantCoralfishPassive(PieceLogic piece, int strength, int duration) : base(-1, 1, piece, "effect_pennant_coralfish_passive")
         {
-            this.strength = strength;
-            this.duration = duration;
+            SetStat(EffectStat.Strength, strength);
+            SetStat(EffectStat.Duration, duration);
         }
 
         AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Other;
@@ -37,8 +37,8 @@ namespace Game.Effects.SpecialAbility
                 if (p == null || p.Type != "piece_pennant_coralfish") continue;
 
                 // nếu đi cạnh quân đấy nhiều lần thì có stack lên không hay chỉ được 1 lần ?
-                ActionManager.EnqueueAction(new ApplyEffect(new LongReach(piece, Duration, Strength)));
-                ActionManager.EnqueueAction(new ApplyEffect(new LongReach(p, Duration, Strength)));
+                ActionManager.EnqueueAction(new ApplyEffect(new LongReach(piece, GetStat(EffectStat.Duration), GetStat(EffectStat.Strength))));
+                ActionManager.EnqueueAction(new ApplyEffect(new LongReach(p, GetStat(EffectStat.Duration), GetStat(EffectStat.Strength))));
             }
         }
     }
