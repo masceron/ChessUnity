@@ -279,10 +279,6 @@ MonoBehaviour:
     m_Key: effect_frenzied_veteran
     m_Metadata:
       m_Items: []
-  - m_Id: 35116694483505152
-    m_Key: effect_nocturnal_range_buff
-    m_Metadata:
-      m_Items: []
   - m_Id: 35116694928101376
     m_Key: effect_true_bite
     m_Metadata:
@@ -575,10 +571,6 @@ MonoBehaviour:
     m_Key: effect_marine_flatworm_special_ability
     m_Metadata:
       m_Items: []
-  - m_Id: 60980579720941568
-    m_Key: effect_flyingfish_passive
-    m_Metadata:
-      m_Items: []
   - m_Id: 60980579725135872
     m_Key: effect_puppeteer_spirit
     m_Metadata:
@@ -757,6 +749,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 80844628671516672
     m_Key: effect_flying_fish_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506747256832
+    m_Key: effect_pennant_coralfish_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506864697344
+    m_Key: effect_wire_coral_goby_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506864697345
+    m_Key: effect_blue_chromis_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506873085952
+    m_Key: effect_nocturnal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506877280256
+    m_Key: effect_tiger_prawn_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506877280257
+    m_Key: effect_diurnal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506881474560
+    m_Key: effect_multicast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506881474561
+    m_Key: effect_yellowlined_basslet_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506885668864
+    m_Key: effect_royal_gramma_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506894057472
+    m_Key: effect_amplify
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506894057473
+    m_Key: effect_abbotts_moray_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80901506898251776
+    m_Key: effect_painted_greenling_passive
     m_Metadata:
       m_Items: []
   m_Metadata:

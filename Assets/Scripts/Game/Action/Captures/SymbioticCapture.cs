@@ -1,9 +1,7 @@
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.States;
-using Game.Managers;
 using MemoryPack;
-using UnityEngine;
 
 namespace Game.Action.Captures
 {

@@ -22,6 +22,6 @@ MonoBehaviour:
   hasSkill: 1
   normalSkillCooldown: 5
   availableSlots: 0
-  logicClassName: 
+  logicClassName: QuillbackRockfish
   baseValue: 0
   considerations: []

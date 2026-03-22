@@ -1,8 +1,5 @@
 using Game.Action.Internal.Pending.Piece;
-using Game.Action.Relics;
 using Game.Common;
-using Game.Piece.PieceLogic;
-using Game.Relics.Commons;
 
 namespace UX.UI.Ingame.RoyalGrammaUI
 {

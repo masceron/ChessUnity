@@ -1,7 +1,3 @@
-using Game.Action;
-using Game.Action.Captures;
-using Game.Action.Internal;
-using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using static Game.Common.BoardUtils;

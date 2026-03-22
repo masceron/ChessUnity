@@ -2,11 +2,8 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
 using Game.Triggers;
 using System;
-using System.Collections.Generic;
-using UnityEngine.EventSystems;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility

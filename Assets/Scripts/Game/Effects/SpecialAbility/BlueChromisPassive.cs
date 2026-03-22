@@ -1,11 +1,9 @@
 ﻿using System;
-using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using Game.Triggers;
 // using UnityEngine;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {

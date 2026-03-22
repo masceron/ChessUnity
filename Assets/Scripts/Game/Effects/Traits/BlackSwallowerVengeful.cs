@@ -4,8 +4,6 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Condition;
 using Game.Piece.PieceLogic.Commons;
-using Game.Triggers;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 using Random = System.Random;
 

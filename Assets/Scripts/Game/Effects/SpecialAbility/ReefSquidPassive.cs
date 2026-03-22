@@ -1,13 +1,9 @@
-using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Action.Quiets;
-using Game.Effects.Traits;
 using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {

@@ -1,14 +1,9 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.SpecialAbility;
-using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
 using Game.Action.Skills;
-using Game.Effects.Others;
 using Game.Movesets;
 using Game.Effects.Buffs;
-using Game.Effects.Traits;
-using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
@@ -20,7 +15,7 @@ namespace Game.Piece.PieceLogic
         {
             SetStat(SkillStat.Stack, 4);
             ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1, this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (!isPlayer) return;

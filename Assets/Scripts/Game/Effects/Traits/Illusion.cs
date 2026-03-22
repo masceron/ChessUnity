@@ -3,12 +3,10 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Skills;
-using Game.Common;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using UnityEngine;
-using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits

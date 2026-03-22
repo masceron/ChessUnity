@@ -551,8 +551,28 @@ MonoBehaviour:
     m_Key: piece_blue_chromis
     m_Metadata:
       m_Items: []
-  - m_Id: 79312613763702784
-    m_Key: piece_royal_gramma_passive
+  - m_Id: 80925258453274624
+    m_Key: piece_wire_coral_goby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925258470051840
+    m_Key: piece_quillback_rockfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925258503606272
+    m_Key: piece_painted_greenling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925258507800576
+    m_Key: piece_abbotts_moray
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925258507800577
+    m_Key: piece_orrnate_ghostpipefish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925258511994880
+    m_Key: piece_pennant_coralfish
     m_Metadata:
       m_Items: []
   m_Metadata:

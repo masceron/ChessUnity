@@ -6,6 +6,7 @@ namespace Game.Piece.PieceLogic.Commons
         {
             return key switch
             {
+                "piece_abbotts_moray" => new AbbottsMoray(cfg),
                 "piece_anglerfish" => new Anglerfish(cfg),
                 "piece_anomalocaris" => new Anomalocaris(cfg),
                 "piece_archelon" => new Archelon(cfg),
@@ -107,6 +108,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_porcupine_crab" => new PorcupineCrab(cfg),
                 "piece_powderbluetang" => new Powderbluetang(cfg),
                 "piece_pufferfish" => new Pufferfish(cfg),
+                "piece_quillback_rockfish" => new QuillbackRockfish(cfg),
                 "piece_red_copepod" => new RedCopepod(cfg),
                 "piece_redtail_parrotfish" => new RedtailParrotfish(cfg),
                 "piece_reef_squid" => new ReefSquid(cfg),
@@ -142,6 +144,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
                 "piece_weeping_toadfish" => new WeepingToadfish(cfg),
+                "piece_wire_coral_goby" => new WireCoralGoby(cfg),
                 "piece_yellowlined_basslet" => new YellowlinedBasslet(cfg),
                 _ => null
             };

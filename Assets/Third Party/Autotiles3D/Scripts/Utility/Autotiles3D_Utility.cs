@@ -10,9 +10,9 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
     [InitializeOnLoad]
     public static class Autotiles3DUtility
     {
-        private static readonly Dictionary<int, Autotiles3D_Tile> _cache = new();
-        private static readonly Dictionary<string, Autotiles3D_Tile> _tagCache = new();
-        private static readonly Dictionary<string, Autotiles3D_TileGroup> _groupCache = new();
+        private static readonly Dictionary<int, Autotiles3D_Tile> Cache = new();
+        private static readonly Dictionary<string, Autotiles3D_Tile> TagCache = new();
+        private static readonly Dictionary<string, Autotiles3D_TileGroup> GroupCache = new();
 
         private static Autotiles3D_TileGroup[] _gCache;
 
@@ -53,11 +53,11 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
         public static Autotiles3D_Tile GetTile(int tileID)
         {
             //try id cache
-            if (_cache.TryGetValue(tileID, out var tile))
+            if (Cache.TryGetValue(tileID, out var tile))
             {
                 if (tile != null)
                     return tile;
-                _cache.Remove(tileID);
+                Cache.Remove(tileID);
             }
 
             foreach (var g in Groups)
@@ -65,7 +65,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 tile = g.GetTile(tileID);
                 if (tile != null)
                 {
-                    _cache.Add(tileID, tile);
+                    Cache.Add(tileID, tile);
                     return tile;
                 }
             }
@@ -76,20 +76,20 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
         public static Autotiles3D_Tile GetTile(int tileID, string name, string group)
         {
             //try id cache
-            if (_cache.TryGetValue(tileID, out var tile))
+            if (Cache.TryGetValue(tileID, out var tile))
             {
                 if (tile != null)
                     return tile;
-                _cache.Remove(tileID);
+                Cache.Remove(tileID);
             }
 
             var tag = group + name;
             //try tag cache
-            if (_tagCache.TryGetValue(tag, out tile))
+            if (TagCache.TryGetValue(tag, out tile))
             {
                 if (tile != null)
                     return tile;
-                _tagCache.Remove(tag);
+                TagCache.Remove(tag);
             }
 
             //get group
@@ -101,7 +101,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 tile = tileGroup.GetTile(tileID);
                 if (tile != null)
                 {
-                    _cache.Add(tileID, tile);
+                    Cache.Add(tileID, tile);
                     return tile;
                 }
 
@@ -109,7 +109,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                 tile = tileGroup.GetTile(name);
                 if (tile != null)
                 {
-                    _tagCache.Add(tag, tile);
+                    TagCache.Add(tag, tile);
                     return tile;
                 }
             }
@@ -125,11 +125,11 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
             if (string.IsNullOrEmpty(name))
                 return null;
 
-            if (_groupCache.TryGetValue(name, out var group))
+            if (GroupCache.TryGetValue(name, out var group))
             {
                 if (group != null)
                     return group;
-                _groupCache.Remove(name);
+                GroupCache.Remove(name);
             }
 
             foreach (var g in Groups)
@@ -138,7 +138,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
                     continue;
                 if (g.name == name)
                 {
-                    _groupCache.Add(g.name, g);
+                    GroupCache.Add(g.name, g);
                     return g;
                 }
             }
@@ -148,7 +148,7 @@ namespace Third_Party.Autotiles3D.Scripts.Utility
 
         public static void ClearCache(int tileID)
         {
-            if (_cache.Remove(tileID, out var tile)) _tagCache.Remove(tile.Tag);
+            if (Cache.Remove(tileID, out var tile)) TagCache.Remove(tile.Tag);
             //clear group cache for good measure
             _gCache = null;
         }

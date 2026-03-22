@@ -7,7 +7,6 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using ZLinq;
 
 namespace Game.Effects.States
 {

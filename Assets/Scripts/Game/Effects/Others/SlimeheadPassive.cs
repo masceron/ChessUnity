@@ -1,11 +1,8 @@
 ﻿using Game.Action;
-using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Condition;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
-using Game.Triggers;
 
 namespace Game.Effects.Others
 {

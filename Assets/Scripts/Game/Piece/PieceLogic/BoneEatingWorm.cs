@@ -1,9 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
-using Game.Effects.Buffs;
 
 namespace Game.Piece.PieceLogic
 {

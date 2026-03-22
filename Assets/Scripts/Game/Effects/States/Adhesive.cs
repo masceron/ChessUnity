@@ -6,9 +6,7 @@ using Game.Action.Internal.Pending.Piece;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
-using Game.Tile;
 using Game.Triggers;
-using UX.UI.Ingame;
 
 namespace Game.Effects.States
 {

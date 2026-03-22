@@ -4,7 +4,6 @@ using Game.Effects.Buffs;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others
 {

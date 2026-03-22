@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using UnityEngine;
 
 namespace Game.Effects.Condition
 {

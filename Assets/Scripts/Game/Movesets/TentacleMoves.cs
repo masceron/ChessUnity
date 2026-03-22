@@ -1,9 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Action;
-using Game.Action.Captures;
-using Game.Action.Quiets;
-using Game.Common;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets

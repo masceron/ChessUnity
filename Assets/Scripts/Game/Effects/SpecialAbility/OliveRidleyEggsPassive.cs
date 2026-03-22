@@ -6,7 +6,6 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using UnityEngine;
 using static Game.Common.BoardUtils;
-using ZLinq;
 using Game.Common;
 
 namespace Game.Effects.SpecialAbility

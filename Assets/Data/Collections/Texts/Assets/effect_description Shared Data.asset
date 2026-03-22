@@ -279,10 +279,6 @@ MonoBehaviour:
     m_Key: effect_frenzied_veteran_description
     m_Metadata:
       m_Items: []
-  - m_Id: 35140563239964672
-    m_Key: effect_nocturnal_range_buff_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 35140563688755200
     m_Key: effect_true_bite_description
     m_Metadata:
@@ -575,10 +571,6 @@ MonoBehaviour:
     m_Key: effect_marine_flatworm_special_ability_description
     m_Metadata:
       m_Items: []
-  - m_Id: 61004448477401088
-    m_Key: effect_flyingfish_passive_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 61004448481595392
     m_Key: effect_puppeteer_spirit_description
     m_Metadata:
@@ -757,6 +749,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 80868497457336320
     m_Key: effect_flying_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375583408128
+    m_Key: effect_pennant_coralfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375621156864
+    m_Key: effect_wire_coral_goby_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375629545472
+    m_Key: effect_blue_chromis_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375629545473
+    m_Key: effect_nocturnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375633739776
+    m_Key: effect_tiger_prawn_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375637934080
+    m_Key: effect_diurnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375637934081
+    m_Key: effect_multicast_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375642128384
+    m_Key: effect_yellowlined_basslet_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375646322688
+    m_Key: effect_royal_gramma_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375650516992
+    m_Key: effect_amplify_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375654711296
+    m_Key: effect_abbotts_moray_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80925375654711297
+    m_Key: effect_painted_greenling_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

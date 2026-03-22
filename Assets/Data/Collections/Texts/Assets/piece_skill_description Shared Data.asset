@@ -291,8 +291,20 @@ MonoBehaviour:
     m_Key: piece_golden_basslet_skill_description
     m_Metadata:
       m_Items: []
-  - m_Id: 78621670657826816
-    m_Key: piece_yellowlined_basslet_skill_description
+  - m_Id: 80898592460951552
+    m_Key: piece_quillback_rockfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80898592481923072
+    m_Key: piece_orrnate_ghostpipefish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80898592486117376
+    m_Key: piece_weeping_toadfish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 80898592490311680
+    m_Key: piece_royal_gramma_skill_description
     m_Metadata:
       m_Items: []
   m_Metadata:

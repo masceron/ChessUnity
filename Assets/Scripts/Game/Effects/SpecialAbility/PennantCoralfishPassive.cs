@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Game.Action;
+﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility

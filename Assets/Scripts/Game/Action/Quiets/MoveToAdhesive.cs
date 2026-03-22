@@ -1,6 +1,5 @@
 using Game.Common;
 using Game.Managers;
-using Game.Tile;
 
 namespace Game.Action.Quiets
 {

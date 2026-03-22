@@ -1,6 +1,5 @@
 using Game.Action.Internal.Pending;
 using Game.Action.Internal.Pending.Piece;
-using UnityEngine;
 
 namespace UX.UI.Ingame.AdhesiveChoice
 {

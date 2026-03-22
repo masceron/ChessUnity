@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Game.Action.Skills;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
