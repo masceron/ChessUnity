@@ -22,8 +22,8 @@ namespace Game.Piece.PieceLogic
             SetStat(SkillStat.Range, Range);
             SetStat(SkillStat.Duration, Duration);
 
-            ActionManager.EnqueueAction(new ApplyEffect(new QuickReflex(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Rally(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new QuickReflex(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Rally(-1, this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
