@@ -29,13 +29,13 @@ namespace Game.Effects.SpecialAbility
 
             var piece = PieceOn(action.Maker);
             if (piece == null || piece.Type != "piece_pennant_coralfish") return;
-            Debug.Log(piece.Type + " made a quiet action, check for pennant coralfish passive");
+            //Debug.Log(piece.Type + " made a quiet action, check for pennant coralfish passive");
 
-            var longReach = piece.Effects.Find(e => e is LongReach) as LongReach;
-            if (longReach != null)
-            {
-                Debug.Log("Longreach Strength: " + longReach.Strength);
-            }
+            //var longReach = piece.Effects.Find(e => e is LongReach) as LongReach;
+            //if (longReach != null)
+            //{
+            //    Debug.Log("Longreach Strength: " + longReach.Strength);
+            //}
 
             foreach (var pos in SkillRangeHelper.GetActiveCellInRadius(action.Maker, GetStat(EffectStat.Radius)))
             {
