@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
         private const int Radius = 1;
         public PaintedGreenling(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, None.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new PaintedGreenlingPassive(this, Number, Duration, Radius)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new PaintedGreenlingPassive(this, Number, Duration, Radius)));
         }
     }
 }
