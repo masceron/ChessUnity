@@ -1,5 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -16,6 +17,7 @@ namespace Game.Piece.PieceLogic
 
         public BlackcapBasslet(PieceConfig cfg) : base(cfg, PawnPushMoves.Quiets, KingMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(10, 100, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -25,12 +27,8 @@ namespace Game.Piece.PieceLogic
                     foreach (var enemy in blindEnemies)
                     {
                         var (rank, file) = RankFileOf(enemy.Pos);
-                        foreach (var (rankOf, fileOf) in MoveEnumerators.AroundUntil(rank, file, 1))
-                        {
-                            var index = IndexOf(rankOf, fileOf);
-                            if (!IsActive(index)) continue;
-                            list.Add(new BlackcapBassletActive(Pos, index));
-                        }
+                        var index = IndexOf(rank, file);
+                        list.Add(new BlackcapBassletPending(Pos, index));
                     }
                 }
                 else
