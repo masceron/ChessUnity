@@ -13,7 +13,7 @@ namespace Game.Effects.Traits
     public class GiantLarvaceanPassive : Effect, IStartTurnTrigger
     {
         public GiantLarvaceanPassive(int strength, int duration, int radius, PieceLogic piece) 
-            : base(-1, strength, piece, "effect_bone_eating_worm_passive")
+            : base(-1, strength, piece, "effect_giant_larvacean_passive")
         {
             StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
             
