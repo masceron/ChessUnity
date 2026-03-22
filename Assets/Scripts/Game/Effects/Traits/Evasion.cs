@@ -15,7 +15,7 @@ namespace Game.Effects.Traits
         public Evasion(int duration, int probability, PieceLogic piece) : base(duration, probability, piece,
             "effect_evasion")
         {
-            SetStat(EffectStat.Chance, probability);
+            
         }
 
         public BeforeActionPriority Priority => BeforeActionPriority.Mitigation;
@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success) return;
             if (Distance(action.Maker, action.Target) < 3) return;
-            if (!MatchManager.Roll(GetStat(EffectStat.Chance))) return;
+            if (!MatchManager.Roll(Strength)) return;
 
             if (PieceOn(action.Target).Effects.Any(e => e.EffectName == "effect_bound"))
             {

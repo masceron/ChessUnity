@@ -55,7 +55,8 @@ namespace Game.Effects.Traits
             var (randRank, randFile) = GetRandomPos();
             if (randRank == null || randFile == null) return;
 
-            Formation bubbleVent = new BubbleVent(aliveTime, true, Piece.Color);
+            Formation bubbleVent = new BubbleVent(Piece.Color);
+            bubbleVent.SetDuration(aliveTime);
             BoardUtils.SetFormation(BoardUtils.IndexOf(randRank.Value, randFile.Value), bubbleVent);
 
             var pieceOn = BoardUtils.PieceOn(BoardUtils.IndexOf(randRank.Value, randFile.Value));

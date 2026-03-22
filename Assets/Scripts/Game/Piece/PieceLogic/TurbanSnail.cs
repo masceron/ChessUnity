@@ -20,7 +20,10 @@ namespace Game.Piece.PieceLogic
         public SkillsDelegate Skills { get; set; }
         public TurbanSnail(PieceConfig cfg) : base(cfg, KingMoves.Quiets, PawnPushMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new PlumedSeaFirPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new FreeMovement(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TurbanSnailPassive(this)));
+            SetStat(SkillStat.Duration, 3, 1);
+            SetStat(SkillStat.Duration, 3, 2);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) { return; }

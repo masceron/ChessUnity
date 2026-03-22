@@ -45,7 +45,7 @@ namespace Game.Effects.Traits
 
             var posInRadius = GetPosInRadius();
 
-            var dazzlingLight = new DazzlingLight(false, Piece.Color);
+            var dazzlingLight = new DazzlingLight(Piece.Color);
 
             foreach (var pos in posInRadius)
             {

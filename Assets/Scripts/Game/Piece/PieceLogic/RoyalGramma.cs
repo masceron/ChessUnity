@@ -1,0 +1,43 @@
+﻿using Game.Action;
+using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
+using Game.Action.Skills;
+using Game.Common;
+using Game.Effects.SpecialAbility;
+using Game.Effects.Traits;
+using Game.Movesets;
+using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
+using static Game.Common.BoardUtils;
+
+namespace Game.Piece.PieceLogic
+{
+    public class RoyalGramma : Commons.PieceLogic, IPieceWithSkill
+    {
+        public RoyalGramma(PieceConfig cfg) : base(cfg, ShellfishMoves.Quiets, ShellfishMoves.Captures)
+        {
+            SetStat(SkillStat.Target, 1);
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 5, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Relentless(this, 1)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new RoyalGrammaPassive(this)));
+            Skills = (list, isPlayer, excludeEmptyTile) =>
+            {
+                if (SkillCooldown != 0) { return; }
+                if (isPlayer)
+                {
+                    var allies = FindPiece<Commons.PieceLogic>(this.Color);
+                    foreach(var ally in allies)
+                    {
+                        if (ally != this)
+                        {
+                            list.Add(new RoyalGrammaPending(Pos, ally.Pos));
+                        }
+                    }
+                }
+            };
+        }
+
+        int IPieceWithSkill.TimeToCooldown { get; set; }
+        public SkillsDelegate Skills { get; set; }
+    }
+}

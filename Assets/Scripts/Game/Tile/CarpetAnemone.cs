@@ -9,10 +9,6 @@ namespace Game.Tile
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CarpetAnemone : Formation
     {
-        public CarpetAnemone(bool haveDuration, bool color) : base(color)
-        {
-            HaveDuration = haveDuration;
-        }
 
         public override FormationType GetFormationType()
         {

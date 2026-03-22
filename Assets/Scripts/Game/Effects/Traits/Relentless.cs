@@ -11,11 +11,9 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Relentless : Effect, IBeforePieceActionTrigger, IAfterPieceActionTrigger
     {
-        private int _deathDefianceCount;
-
         public Relentless(PieceLogic piece, int deathDefianceCount) : base(-1, 1, piece, "effect_relentless")
         {
-            _deathDefianceCount = deathDefianceCount;
+            SetStat(EffectStat.Stack, deathDefianceCount);
         }
 
         AfterActionPriority IAfterPieceActionTrigger.Priority => AfterActionPriority.Other;
@@ -30,7 +28,7 @@ namespace Game.Effects.Traits
             if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
                 ActionManager.EnqueueAction(new KillPiece(action.Maker));
 
-            if (_deathDefianceCount <= 0) ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
+            if (GetStat(EffectStat.Stack) <= 0) ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
@@ -42,9 +40,10 @@ namespace Game.Effects.Traits
                 || Piece.Effects.Any(e => e.EffectName == "effect_carapace")
                 || Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
             if (action.Target != Piece.Pos || action.Maker == action.Target) return;
+            if (GetStat(EffectStat.Stack) <= 0) return;
 
             action.Result = ResultFlag.SurvivedHit;
-            _deathDefianceCount--;
+            SetStat(EffectStat.Stack, GetStat(EffectStat.Stack) - 1);
         }
 
         public override int GetValueForAI()

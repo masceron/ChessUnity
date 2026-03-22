@@ -527,6 +527,34 @@ MonoBehaviour:
     m_Key: piece_olive_ridley_hatchling
     m_Metadata:
       m_Items: []
+  - m_Id: 78637834133905408
+    m_Key: piece_blackcap_basslet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78642290716123136
+    m_Key: piece_golden_basslet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 78648336616595456
+    m_Key: piece_yellowlined_basslet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79310850839011328
+    m_Key: piece_royal_gramma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79311422161936384
+    m_Key: piece_weeping_toadfish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79311914992656384
+    m_Key: piece_blue_chromis
+    m_Metadata:
+      m_Items: []
+  - m_Id: 79312613763702784
+    m_Key: piece_royal_gramma_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

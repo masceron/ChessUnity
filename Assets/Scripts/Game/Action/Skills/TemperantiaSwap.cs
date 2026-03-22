@@ -27,7 +27,7 @@ namespace Game.Action.Skills
             this.allyIndex = allyIndex;
             this.enemyIndex = enemyIndex;
         }
-
+        
         public int AIPenaltyValue(PieceLogic p)
         {
             return 0;

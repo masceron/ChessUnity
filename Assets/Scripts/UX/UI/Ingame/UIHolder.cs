@@ -15,7 +15,8 @@ namespace UX.UI.Ingame
         LedgerStoneUI,
         SeabedLevelerUI,
         RustyParrotfishUI,
-        AdhesiveChoiceUI
+        AdhesiveChoiceUI,
+        RoyalGrammaUI,
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]

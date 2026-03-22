@@ -17,7 +17,7 @@ namespace Game.Piece.PieceLogic
 
         public SealochAnemone(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(-1, this)));
+            // ActionManager.ExecuteImmediately(new ApplyEffect(new Pacified(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Symbiotic(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SealochAnemonePassive(this)));
         }

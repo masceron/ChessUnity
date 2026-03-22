@@ -3,11 +3,25 @@ using UnityEngine;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;
+using Game.Managers;
+using ZLinq;
 
 namespace Game.Effects
 {
     public static class EffectFactory
     {
+        public static Effect CreateRandomEffect(PieceLogic pieceLogic)
+        {
+            var debuffs = AssetManager.Ins.EffectData
+                    .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
+                    .Select(kvp => kvp.Key)
+                    .ToArray();
+                    
+                var random = new System.Random();
+            var selectedEffectName = debuffs[random.Next(debuffs.Length)];
+            
+            return EffectFactory.CreateEffect(selectedEffectName, 5, 1, pieceLogic);
+        }
         public static Effect CreateEffect(string effectName, int duration, int strength, PieceLogic piece)
         {
             return effectName switch

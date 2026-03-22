@@ -52,14 +52,7 @@ namespace Game.Action.Skills
             }
             else
             {
-                var debuffs = AssetManager.Ins.EffectData
-                    .Where(kvp => kvp.Value.category == EffectCategory.Debuff)
-                    .Select(kvp => kvp.Key)
-                    .ToArray();
-                    
-                var random = new System.Random();
-                var selectedEffectName = debuffs[random.Next(debuffs.Length)];
-                EffectFactory.CreateEffect(selectedEffectName, 5, 1, PieceOn(Target));
+                EffectFactory.CreateRandomEffect(PieceOn(Target));
                 maker.SetStat(SkillStat.Counter, maker.GetStat(SkillStat.Counter) - 1);
             }
             
