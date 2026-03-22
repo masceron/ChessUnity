@@ -1,6 +1,9 @@
 using System.Collections.Generic;
+using Game.Action;
+using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.Condition;
 using Game.Effects.Debuffs;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -14,6 +17,7 @@ namespace Game.Piece.PieceLogic
     {
         public CutthroatEel(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Nocturnal(-1, 1, this, "effect_nocturnal")));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

@@ -14,13 +14,12 @@ namespace Game.Effects.States
 {
     /// <summary>
     ///     State: <b>Adhesive</b><br/>
-    ///     Khi quân này Capture vào quân địch hoặc Formation có State <see cref="StateType.None"/>:<br/>
-    ///     - Quân này biến mất tạm thời (di chuyển sang bên cạnh bàn cờ).<br/>
-    ///     - State của target (quân hoặc formation) chuyển sang <see cref="StateType.Attached"/>.<br/>
-    ///     - Khi target bị ăn/phá hủy: quân Adhesive xuất hiện lại ở vị trí ngẫu nhiên trống xung quanh.<br/>
-    ///     Quân Adhesive chỉ thực hiện hành động này lên các quân có State là <see cref="StateType.None"/>.<br/><br/>
-    ///     Khác với <see cref="Parasite"/>: Adhesive có thể bám vào cả Piece lẫn Formation.<br/>
-    ///     Nếu ô target vừa có Piece vừa có Formation (cả 2 đều State None), sẽ hiện popup 2 nút để người chơi chọn.
+    ///     Quân này có thể:<br/>
+    ///     - Ăn quân <b>địch</b> bình thường (NormalCapture).<br/>
+    ///     - Ăn quân <b>đồng minh</b> có State <see cref="StateType.None"/> để <b>attach</b> (ký sinh).<br/>
+    ///     - Ăn vào <b>Formation bất kỳ</b> để attach lên formation.<br/>
+    ///     - Nếu ô target có cả ally StateNone lẫn Formation: popup <see cref="AdhesiveCapturePending"/> để người chơi chọn.<br/><br/>
+    ///     Khi host bị ăn/phá hủy: quân Adhesive xuất hiện lại ở ô trống xung quanh.<br/>
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -35,97 +34,139 @@ namespace Game.Effects.States
         }
 
         /// <summary>
-        ///     1. Guard: caller != Piece → return.<br/>
-        ///     2. Xóa hết <see cref="ICaptures"/> khỏi <paramref name="actions"/>.<br/>
-        ///     3. Tạo list capture mới gọi <see cref="PieceLogic.Captures"/> với excludeEmptyTile=false (lấy cả ô trống).<br/>
-        ///     4. Lọc lại: ô không có Piece lẫn Formation → xóa; có cả 2 (đều StateNone) → đổi thành <see cref="AdhesiveCapturePending"/>; chỉ 1 trong 2 → để nguyên.<br/>
-        ///     5. Merge kết quả vào <paramref name="actions"/>.
+        ///     Sinh thêm move:
+        ///     <list type="bullet">
+        ///         <item>Giữ nguyên ICaptures lên quân địch (không có formation trên ô đó).</item>
+        ///         <item>Thêm SymbioticCapture lên quân đồng minh StateNone (dùng flip-color).</item>
+        ///         <item>Thêm capture lên ô có formation (bất kỳ):</item>
+        ///         <item>  - Ally StateNone + Formation → <see cref="AdhesiveCapturePending"/> (thay thế action ally).</item>
+        ///         <item>  - Không có ally (hoặc chỉ có địch) + Formation → giữ nguyên action capture lên ô đó.</item>
+        ///     </list>
         /// </summary>
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            // 1. Guard
             if (caller != Piece) return;
 
-            // 2. Xóa hết ICaptures khỏi danh sách gốc
-            actions.RemoveAll(a => a is ICaptures);
+            // ─── Bước A: Lấy captures lên đồng minh (flip-color như Symbiotic) ───
+            var allies = BoardUtils.FindAllies(caller.Color);
+            var flippedAllies = new List<PieceLogic>();
 
-            // 3. Tạo list capture mới — gọi Piece.Captures với excludeEmptyTile = false
-            //    để lấy TẤT CẢ ô trong tầm ăn kể cả ô trống
-            var captureList = new List<Action.Action>();
-            Piece.Captures(captureList, Piece.Pos, false);
-
-            // 4. Lọc và biến đổi từng action trong captureList
-            for (var i = captureList.Count - 1; i >= 0; i--)
+            foreach (var ally in allies)
             {
-                var action    = captureList[i];
-                var target    = action.Target;
-                var piece     = BoardUtils.PieceOn(target);
-                var formation = BoardUtils.HasFormation(target) ? BoardUtils.GetFormation(target) : null;
-
-                var hasPiece             = piece != null;                                              // có quân bất kể state
-                var canAttachPiece       = hasPiece     && piece.CurrentState     == StateType.None;  // có thể attach vào piece
-                var canAttachFormation   = formation    != null && formation.CurrentState == StateType.None; // có thể attach vào formation
-
-                if (!hasPiece && !canAttachFormation)
+                if (ally != caller)
                 {
-                    // Ô trống hoàn toàn (hoặc formation có state khác None) → loại
-                    captureList.RemoveAt(i);
-                } else if (!hasPiece && canAttachFormation)
-                {
-                    continue;
-                } else if (hasPiece && !canAttachFormation)
-                {
-                    continue;
-                } else if (canAttachPiece && canAttachFormation)
-                {
-                    captureList[i] = new AdhesiveCapturePending(Piece.Pos, target, Piece, piece, formation);
+                    ally.Color = !ally.Color;
+                    flippedAllies.Add(ally);
                 }
-                
             }
 
-            actions.AddRange(captureList);
+            var allyCaptures = new List<Action.Action>();
+            caller.Captures(allyCaptures, caller.Pos, true); // excludeEmptyTile = true
+
+            foreach (var ally in flippedAllies)
+                ally.Color = !ally.Color;
+
+            // Lọc: chỉ giữ target là đồng minh thực sự ở StateNone
+            allyCaptures.RemoveAll(a =>
+            {
+                var p = BoardUtils.PieceOn(a.Target);
+                return p == null || p.Color != caller.Color || p.CurrentState != StateType.None;
+            });
+
+            // ─── Bước B: Lấy captures lên ô có formation (excludeEmptyTile = false) ───
+            var withFormationCaptures = new List<Action.Action>();
+            caller.Captures(withFormationCaptures, caller.Pos, false);
+
+            var formationActions = new List<Action.Action>();
+            var formationTargets = new HashSet<int>(); // để tránh add trùng
+
+            foreach (var action in withFormationCaptures)
+            {
+                var target = action.Target;
+                if (!BoardUtils.HasFormation(target)) continue;
+
+                var formation = BoardUtils.GetFormation(target);
+                var targetPiece = BoardUtils.PieceOn(target);
+                var isAllyStateNone = targetPiece != null
+                                      && targetPiece.Color == caller.Color
+                                      && targetPiece.CurrentState == StateType.None;
+
+                formationTargets.Add(target);
+
+                if (isAllyStateNone)
+                {
+                    // Ô có ally StateNone + Formation → pending popup
+                    formationActions.Add(new AdhesiveCapturePending(Piece.Pos, target, Piece, targetPiece, formation));
+                    // Xóa ally-capture riêng lẻ (pending đã gộp cả 2)
+                    allyCaptures.RemoveAll(a => a.Target == target);
+                }
+                else
+                {
+                    // Ô có formation nhưng không có ally StateNone (trống, có địch, hoặc ally ở state khác) 
+                    // → thêm action attach formation (OnCallBeforePieceAction sẽ intercept để attach)
+                    formationActions.Add(action);
+                }
+            }
+
+            // Xóa các captures địch bình thường trên những ô có formation
+            // (vì formation action đã đại diện cho ô đó)
+            actions.RemoveAll(a => a is ICaptures && formationTargets.Contains(a.Target));
+
+            actions.AddRange(allyCaptures);
+            actions.AddRange(formationActions);
         }
 
         /// <summary>
-        ///     Chỉ xử lý trường hợp Piece-only (ô target có Piece StateNone nhưng không có Formation StateNone).
-        ///     Hoặc trường hợp chỉ có Formation (StateNone).
+        ///     Intercept ICaptures khi:<br/>
+        ///     - <b>Ally target StateNone</b> → attach lên ally.<br/>
+        ///     - <b>Formation trên ô (không có ally)</b> → attach lên formation.<br/>
+        ///     - <b>Quân địch thuần (không có formation)</b> → không intercept, NormalCapture chạy bình thường.<br/>
         /// </summary>
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
             if (action.Maker != Piece.Pos) return;
 
-            var target      = action.Target;
+            var target = action.Target;
             var targetPiece = BoardUtils.PieceOn(target);
-
-            var hasTargetPiece = targetPiece != null;
             var hasFormation = BoardUtils.HasFormation(target);
-            if (!hasTargetPiece && !hasFormation) return;
-            ApplySkill(action);
+            var hasTargetPiece = targetPiece != null;
 
-            if (hasTargetPiece && !hasFormation)
+            var isAlly = hasTargetPiece && targetPiece.Color == Piece.Color;
+            var isEnemy = hasTargetPiece && targetPiece.Color != Piece.Color;
+
+            // Ô chỉ có quân địch, không có formation → để NormalCapture chạy bình thường
+            if (isEnemy && !hasFormation) return;
+
+            // Ô không có gì cả → không xử lý
+            if (!hasTargetPiece && !hasFormation) return;
+
+            if (isAlly && !hasFormation)
             {
-                // Chỉ attach khi piece đang ở StateType.None
+                // Attach lên ally StateNone
                 if (targetPiece.CurrentState != StateType.None) return;
+
+                ApplySkill(action);
                 action.Result = ResultFlag.Infest;
                 ActionManager.EnqueueAction(new ApplyEffect(new Attached(targetPiece, Piece)));
                 ActionManager.EnqueueAction(new MoveToAdhesive(Piece.Pos, target, attachToFormation: false));
-            } 
-            else if (hasFormation && !hasTargetPiece)
+            }
+            else if (hasFormation && !isAlly)
             {
+                // Attach lên formation (không kill địch nếu có, action gốc bị Infest skip)
+                ApplySkill(action);
                 action.Result = ResultFlag.Infest;
                 var formation = BoardUtils.GetFormation(target);
-                if (formation.CurrentState != StateType.None) return;
                 formation.SetState(StateType.Attached);
-                var adhesive = Piece; // capture cho lambda
-                formation.OnRemoveFormation += (formation) =>
+                var adhesive = Piece;
+                formation.OnRemoveFormation += (f) =>
                 {
-                    formation.ClearState();
-                    Attached.SpawnAdhesiveAround(formation.Pos, null, adhesive);
+                    f.ClearState();
+                    Attached.SpawnAdhesiveAround(f.Pos, null, adhesive);
                 };
                 ActionManager.EnqueueAction(new MoveToAdhesive(Piece.Pos, target, attachToFormation: true));
             }
-            
+            // Case isAlly + hasFormation được xử lý qua AdhesiveCapturePending → không rơi vào đây
         }
 
         protected virtual void ApplySkill(Action.Action action)

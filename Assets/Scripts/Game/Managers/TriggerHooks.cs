@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Game.Action.Internal;
@@ -95,11 +95,12 @@ namespace Game.Managers
 
         public void NotifyDead(PieceLogic pieceToDie)
         {
-            _onDies.ForEach(effect =>
+            var snapshot = _onDies.ToArray();
+            foreach (var effect in snapshot)
             {
-                if (((Observer)effect).disabled) return;
+                if (((Observer)effect).disabled) continue;
                 effect.OnCallDead(pieceToDie);
-            });
+            }
         }
 
         public void NotifyBeforeDestroyOrKill(IInternal action)

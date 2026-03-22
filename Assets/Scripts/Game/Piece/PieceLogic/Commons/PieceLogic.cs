@@ -237,7 +237,7 @@ namespace Game.Piece.PieceLogic.Commons
         public int GetAttackRange()
         {
             var range = _attackRange;
-            if (Effects.Any(e => e.EffectName == "effect_pacified")) return 0;
+            //if (Effects.Any(e => e.EffectName == "effect_pacified")) return 0;
 
             if (range > MaxLength) return range;
 

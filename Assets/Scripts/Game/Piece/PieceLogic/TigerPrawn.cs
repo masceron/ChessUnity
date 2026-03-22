@@ -11,7 +11,7 @@ namespace Game.Piece.PieceLogic
         public TigerPrawn(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new NocturnalRangeBuff(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new TigerPrawnPassive(this)));
         }
     }
 }

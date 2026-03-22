@@ -1,4 +1,4 @@
-﻿using Game.Action;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -6,24 +6,31 @@ using Game.Triggers;
 
 namespace Game.Effects.Others
 {
-    public class EpauletteSharkPurify : Effect, IEndTurnTrigger
+    public class EpauletteSharkPurify : Effect, IStartTurnTrigger
     {
-        private bool yesterdayIsDay;
+        private bool _yesterdayIsDay;
 
         public EpauletteSharkPurify(PieceLogic piece) : base(-1, 1, piece, "effect_epaulette_shark_purify")
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
+            StartTurnEffectType = StartTurnEffectType.StartOfAnyTurn;
+            _yesterdayIsDay = MatchManager.Ins != null && MatchManager.Ins.GameState.IsDay;
         }
 
-        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
 
-        public EndTurnEffectType EndTurnEffectType { get; }
+        public StartTurnEffectType StartTurnEffectType { get; }
 
-        public void OnCallEnd(Action.Action lastMainAction)
+        public void OnCallStart(Action.Action lastMainAction)
         {
-            if (!MatchManager.Ins.GameState.IsDay && yesterdayIsDay)
+            var isDayNow = MatchManager.Ins.GameState.IsDay;
+
+            // Day to Night transition
+            if (!isDayNow && _yesterdayIsDay)
+            {
                 ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
-            yesterdayIsDay = MatchManager.Ins.GameState.IsDay;
+            }
+
+            _yesterdayIsDay = isDayNow;
         }
 
         public override int GetValueForAI()

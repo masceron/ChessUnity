@@ -1,48 +1,55 @@
-﻿using Game.Managers;
+using System.Linq;
+using Game.Action;
+using Game.Action.Internal;
+using Game.Effects.Traits;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using ZLinq;
 
 namespace Game.Effects.Condition
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class DiurnalAmbush : Effect, IEndTurnTrigger, IAttackRangeModifier
+    public class DiurnalAmbush : Diurnal, IStartTurnTrigger
     {
-        private const byte RangeOffset = 2;
-        private bool _active;
-        private byte _lastUsed;
+        private bool _wasActive;
 
-        public DiurnalAmbush(PieceLogic piece) : base(-1, -1, piece, "effect_diurnal_ambush")
+        public DiurnalAmbush(PieceLogic piece) : base(-1, 1, piece, "effect_diurnal_ambush")
         {
-            EndTurnEffectType = EndTurnEffectType.EndOfEnemyTurn;
+            StartTurnEffectType = StartTurnEffectType.StartOfAllyTurn;
+            _wasActive = IsActive; // Khởi tạo trạng thái ban đầu
         }
 
-        public int ModifyAttackRange(int baseRange)
-        {
-            if (_active) return baseRange + RangeOffset;
+        public StartTurnTriggerPriority Priority => StartTurnTriggerPriority.Buff;
 
-            return baseRange;
-        }
+        public StartTurnEffectType StartTurnEffectType { get; }
 
-        public void OnCallEnd(Action.Action action)
+        public void OnCallStart(Action.Action lastMainAction)
         {
-            if (!MatchManager.Ins.GameState.IsDay) return;
-            if (action.Maker != Piece.Pos)
+            if (IsActive != _wasActive)
             {
-                _lastUsed++;
-                if (_lastUsed < 6 || _active) return;
-                _active = true;
-            }
-            else if (_active)
-            {
-                _active = false;
-                _lastUsed = 0;
+                if (IsActive)
+                {
+                    // Chuyển sang Ngày (Active) -> Nhận trait Ambush
+                    if (!Piece.Effects.OfType<Ambush>().Any())
+                    {
+                        ActionManager.EnqueueAction(new ApplyEffect(new Ambush(Piece)));
+                    }
+                }
+                else
+                {
+                    // Chuyển sang Đêm (Inactive) -> Mất trait Ambush
+                    var ambushEffect = Piece.Effects.OfType<Ambush>().FirstOrDefault();
+                    if (ambushEffect != null)
+                    {
+                        ActionManager.EnqueueAction(new RemoveEffect(ambushEffect));
+                    }
+                }
+
+                _wasActive = IsActive;
             }
         }
-
-        public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;
-
-        public EndTurnEffectType EndTurnEffectType { get; set; }
 
         public override int GetValueForAI()
         {

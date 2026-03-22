@@ -7,7 +7,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
-    public class DiurnalPending : PendingAction
+    public class DiurnalPending : PendingAction, ISkills
     {
         private static PieceLogic _selectedPiece;
         private static int _movePosTo;
