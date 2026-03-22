@@ -44,12 +44,12 @@ namespace Game.Action.Skills
                 }
                 else
                 {
-                    pOnTarget.SetState(new Ethereal(Duration * 2, pOnTarget));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration * 2, pOnTarget)));
                 }
             }
             else
             {
-                 pOnTarget.SetState(new Ethereal(Duration, pOnTarget));
+                ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration, pOnTarget)));
             }
 
             SetCooldown(Maker, ((IPieceWithSkill)caller).TimeToCooldown);
