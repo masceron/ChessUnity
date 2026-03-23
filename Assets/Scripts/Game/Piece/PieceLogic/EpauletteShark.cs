@@ -4,6 +4,7 @@ using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Condition;
+using Game.Effects.Debuffs;
 using Game.Effects.Others;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -18,6 +19,7 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new EpauletteSharkPurify(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new DiurnalAmbush(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(10, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

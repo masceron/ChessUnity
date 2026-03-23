@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd3a7a62dd96e6e43ac23cb68636ada5, type: 3}
   m_Name: DwarfCuttlefish
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EffectInfo
-  key: effect_dwarf_cuttlefish
+  key: effect_dwarf_cuttlefish_passive
   category: 5
   stack: 1
   icon: {fileID: 2800000, guid: e2b13abbb14356e45a44e11aeebc9865, type: 3}

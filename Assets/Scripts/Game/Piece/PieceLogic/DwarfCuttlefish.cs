@@ -3,6 +3,8 @@ using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects;
+using Game.Effects.Debuffs;
+using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -16,10 +18,11 @@ namespace Game.Piece.PieceLogic
         private const int EvasionChance = 10;
         private const string Stunned = "effect_stunned";
         
-        public DwarfCuttlefish(PieceConfig cfg) : base(cfg, null, null)
+        public DwarfCuttlefish(PieceConfig cfg) : base(cfg, SquidMoves.Quiets, SquidMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new QuickReflex(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, EvasionChance, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new DwarfCuttlefishPassive(this)));
             
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

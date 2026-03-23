@@ -807,6 +807,10 @@ MonoBehaviour:
     m_Key: effect_dwarf_cuttlefish_description
     m_Metadata:
       m_Items: []
+  - m_Id: 81271893498601472
+    m_Key: effect_dwarf_cuttlefish_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
