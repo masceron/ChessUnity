@@ -579,6 +579,10 @@ MonoBehaviour:
     m_Key: piece_largehead_hairtail
     m_Metadata:
       m_Items: []
+  - m_Id: 81259747280756736
+    m_Key: piece_dwarf_cuttlefish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

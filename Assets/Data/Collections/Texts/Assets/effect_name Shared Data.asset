@@ -803,6 +803,10 @@ MonoBehaviour:
     m_Key: effect_largehead_hairtail_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 81237356408283136
+    m_Key: effect_dwarf_cuttlefish
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

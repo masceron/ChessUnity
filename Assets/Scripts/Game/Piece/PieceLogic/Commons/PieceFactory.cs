@@ -43,6 +43,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_damsel_fish" => new DamselFish(cfg),
                 "piece_dormant_fossil" => new DormantFossil(cfg),
                 "piece_dusky_butterflyfish" => new DuskyButterflyfish(cfg),
+                "piece_dwarf_cuttlefish" => new DwarfCuttlefish(cfg),
                 "piece_dwarf_lionfish" => new DwarfLionfish(cfg),
                 "piece_electric_eel" => new ElectricEel(cfg),
                 "piece_epaulette_shark" => new EpauletteShark(cfg),

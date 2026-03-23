@@ -311,6 +311,10 @@ MonoBehaviour:
     m_Key: piece_largehead_hairtail_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 81233188893302784
+    m_Key: piece_dwarf_cuttlefish_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
