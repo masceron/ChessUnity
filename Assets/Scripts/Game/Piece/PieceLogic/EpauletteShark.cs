@@ -19,7 +19,6 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new EpauletteSharkPurify(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new DiurnalAmbush(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Stunned(10, this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
