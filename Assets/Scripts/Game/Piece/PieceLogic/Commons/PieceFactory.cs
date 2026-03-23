@@ -74,6 +74,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_illusion_piece" => new IllusionPiece(cfg),
                 "piece_kelp_bass" => new KelpBass(cfg),
                 "piece_kelp_forest" => new KelpForest(cfg),
+                "piece_largehead_hairtail" => new LargeheadHairtail(cfg),
                 "piece_leatherback_turtle" => new LeatherbackTurtle(cfg),
                 "piece_lionfish" => new Lionfish(cfg),
                 "piece_living_coral" => new LivingCoral(cfg),

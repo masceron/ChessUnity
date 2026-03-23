@@ -307,6 +307,10 @@ MonoBehaviour:
     m_Key: piece_royal_gramma_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 81124649982042112
+    m_Key: piece_largehead_hairtail_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

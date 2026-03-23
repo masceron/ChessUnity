@@ -799,6 +799,10 @@ MonoBehaviour:
     m_Key: effect_painted_greenling_passive_description
     m_Metadata:
       m_Items: []
+  - m_Id: 81152509010583552
+    m_Key: effect_largehead_hairtail_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

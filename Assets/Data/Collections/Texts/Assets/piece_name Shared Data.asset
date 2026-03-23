@@ -575,6 +575,10 @@ MonoBehaviour:
     m_Key: piece_pennant_coralfish
     m_Metadata:
       m_Items: []
+  - m_Id: 81151315928227840
+    m_Key: piece_largehead_hairtail
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
