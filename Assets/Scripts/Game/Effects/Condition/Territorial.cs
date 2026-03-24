@@ -36,10 +36,6 @@ namespace Game.Effects.Condition
 
         /// <summary>
         /// Đếm số quân địch đang ở phần sân của quân this.Piece.
-        /// Phần sân mình = enemy half của đối phương, tức FindAllAlliesInEnemyHalf(!Piece.Color) 
-        ///   sẽ trả về quân cùng màu !Piece.Color ở nửa sân đối diện.
-        /// Nhưng ta cần quân ĐỊCH ở nửa sân MÌNH, tức là quân cùng màu !Piece.Color ở nửa sân của Piece.Color.
-        /// => Duyệt nửa sân mình, đếm quân có color != Piece.Color.
         /// </summary>
         private int CountEnemiesOnMySide()
         {
