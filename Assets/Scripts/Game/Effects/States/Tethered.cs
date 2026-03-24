@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -22,8 +23,8 @@ namespace Game.Effects.States
         /// <summary>Range tối đa (×2 = ngưỡng đứt dây). Lấy từ Skill của caster.</summary>
         public int MaxRange;
 
-        /// <summary>Hiệu ứng được cấp trong lúc nối dây (nếu có). Mục đích duy nhất là để xóa nó đi nếu đứt dây</summary>
-        public Effect GrantedEffect;
+        /// <summary>Danh sách hiệu ứng được cấp trong lúc nối dây. Sẽ bị xóa đi nếu đứt dây</summary>
+        public List<Effect> GrantedEffects = new List<Effect>();
 
         public override StateType StateType => StateType.Tethered;
 
@@ -42,12 +43,15 @@ namespace Game.Effects.States
             var symbioticEffect = TetheredPeer.Effects.Find(e => e is Symbiotic) as Symbiotic;
             if (symbioticEffect != null) symbioticEffect.IsTethered = false;
 
-            if (GrantedEffect != null)
+            foreach (var effect in GrantedEffects)
             {
-                Piece.Effects.Remove(GrantedEffect);
-                BoardUtils.RemoveObserver(GrantedEffect);
-                GrantedEffect = null;
+                if (effect != null)
+                {
+                    Piece.Effects.Remove(effect);
+                    BoardUtils.RemoveObserver(effect);
+                }
             }
+            GrantedEffects.Clear();
 
             Piece.ClearState();
         }
