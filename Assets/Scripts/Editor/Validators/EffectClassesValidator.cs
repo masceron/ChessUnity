@@ -41,30 +41,32 @@ namespace Editor.Validators
 
             var ok = true;
 
-            var effectTypes = TypeCache.GetTypesDerivedFrom<Effect>()
+            var effectTypesByAssembly = TypeCache.GetTypesDerivedFrom<Effect>()
                 .Where(t => !t.IsAbstract)
-                .ToList();
+                .GroupBy(t => t.Assembly.Location);
 
-            foreach (var type in effectTypes)
+            foreach (var assemblyGroup in effectTypesByAssembly)
             {
-                var assembly = AssemblyDefinition.ReadAssembly(type.Assembly.Location);
-                var typeDef = assembly.MainModule.GetType(type.FullName);
-
-                var ctor = typeDef.Methods.FirstOrDefault(m => m.IsConstructor && !m.IsStatic);
-
-                if (ctor is not { HasBody: true }) continue;
-
-                foreach (var loadedString in from instruction in ctor.Body.Instructions
-                         where instruction.OpCode == OpCodes.Ldstr
-                         select (string)instruction.Operand
-                         into loadedString
-                         where loadedString.StartsWith("effect_")
-                         select loadedString)
+                using var assembly = AssemblyDefinition.ReadAssembly(assemblyGroup.Key);
+                foreach (var type in assemblyGroup)
                 {
-                    if (idList.ContainsKey(loadedString)) continue;
-                    ok = false;
-                    LogViolation(
-                        $"The ID {loadedString} in {type.Name} does not exist in EffectsData. Either re-check the ID or rebuild the list.");
+                    var typeDef = assembly.MainModule.GetType(type.FullName);
+
+                    var ctor = typeDef?.Methods.FirstOrDefault(m => m.IsConstructor && !m.IsStatic);
+                    if (ctor is not { HasBody: true }) continue;
+
+                    foreach (var loadedString in from instruction in ctor.Body.Instructions
+                             where instruction.OpCode == OpCodes.Ldstr
+                             select (string)instruction.Operand
+                             into loadedString
+                             where loadedString.StartsWith("effect_")
+                             select loadedString)
+                    {
+                        if (idList.ContainsKey(loadedString)) continue;
+                        ok = false;
+                        LogViolation(
+                            $"The ID {loadedString} in {type.Name} does not exist in EffectsData. Either re-check the ID or rebuild the list.");
+                    }
                 }
             }
 
