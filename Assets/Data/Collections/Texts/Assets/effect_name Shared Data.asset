@@ -799,6 +799,14 @@ MonoBehaviour:
     m_Key: effect_painted_greenling_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 81562588444135424
+    m_Key: effect_invasive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81562671625572352
+    m_Key: effect_territorial
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
