@@ -28,9 +28,8 @@ namespace Editor.Validators
         {
             var baseType = typeof(IngamePendingMenu);
 
-            var childTypes = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(type => type.IsClass && !type.IsAbstract && type.IsSubclassOf(baseType));
+            var childTypes = TypeCache.GetTypesDerivedFrom(baseType)
+                .Where(type => type.IsClass && !type.IsAbstract);
 
             var foundErrors = false;
 
