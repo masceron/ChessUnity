@@ -807,6 +807,22 @@ MonoBehaviour:
     m_Key: effect_territorial_description
     m_Metadata:
       m_Items: []
+  - m_Id: 81846275823841280
+    m_Key: effect_temporal_warp_return_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81846772039364608
+    m_Key: effect_frogfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81847524149374976
+    m_Key: effect_masked_pufferfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81848551284092928
+    m_Key: effect_frog_fish_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

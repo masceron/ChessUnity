@@ -9,7 +9,7 @@ namespace Game.Effects.Traits
 {
     public class MaskedPufferPassive : Effect, IAfterPieceActionTrigger
     {
-        public MaskedPufferPassive(PieceLogic piece) : base(-1, -1, piece, "effect_masked_puffer_passive")
+        public MaskedPufferPassive(PieceLogic piece) : base(-1, -1, piece, "effect_masked_pufferfish_passive")
         {
         }
 
