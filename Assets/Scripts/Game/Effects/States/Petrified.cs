@@ -18,30 +18,50 @@ namespace Game.Effects.States
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class Petrified : StateEffect, IOnMoveGenTrigger
+    public class Petrified : StateEffect, IOnMoveGenTrigger, IBeforePieceActionTrigger
     {
         public override StateType StateType => StateType.Petrified;
+
+        public BeforeActionPriority Priority => BeforeActionPriority.Reaction;
 
         public Petrified(int duration, PieceLogic piece)
             : base(duration, 0, piece, "effect_petrified")
         {
         }
 
+        /// <summary>
+        /// 1. Xóa hành động di chuyển và ăn quân của chính nó
+        /// 2. Xóa các Skill tác dụng lên nó (không chặn ILocaltionTarget và sẽ chặn IAOE ở Before Action)
+        /// </summary>
+        /// <param name="caller"></param>
+        /// <param name="actions"></param>
         void IOnMoveGenTrigger.OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
+            if (caller != Piece)
+            {
+                actions.RemoveAll(a => 
+                        a is IQuiets 
+                        || a is ICaptures);
+            }
+
             foreach (var action in actions)
             {
-                if (action is ISkills && PieceOn(action.Target) == Piece)
+                if (action is ISkills && PieceOn(action.Target) == Piece && action is not ILocaltionTarget)
                 {
                     actions.Remove(action);
                 }
+            }
+        }
 
-                if (PieceOn(action.Maker) == Piece) {
-                    if (action is IQuiets || action is ICaptures)
-                    {
-                        actions.Remove(action);
-                    }
-                }
+        /// <summary>
+        /// Chặn tác dụng của ILocaltionTarget sinh ra
+        /// </summary>
+        /// <param name="action"></param>
+        public void OnCallBeforePieceAction(Action.Action action)
+        {
+            if (action is IAOE && action.Target == Piece.Pos) 
+            {
+                action.Result = Action.ResultFlag.Failed;
             }
         }
     }

@@ -33,11 +33,12 @@ namespace Game.Action.Relics
             foreach (var piece in pieces)
             {
                 if (piece == null || piece.Color == _ourSide) continue;
+                ActionManager.EnqueueAction(new FrostSigilExecuteImpact(Maker, piece.Pos, ProbabilityBound));
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece)));
+                // ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece)));
 
-                if (MatchManager.Roll(ProbabilityBound))
-                    ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, piece)));
+                // if (MatchManager.Roll(ProbabilityBound))
+                //     ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, piece)));
             }
         }
     }
