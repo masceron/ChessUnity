@@ -57,33 +57,17 @@ namespace Game.Action.Skills
 
                 if (BoardViewer.SelectingFunction != 3)
                 {
-                    BoardViewer.Selecting         = -2;
                     BoardViewer.SelectingFunction = 3;
                 }
-
-                // Tính startRank/startFile giống TileManager.MarkTileInRange để execute khớp preview
-                int startRank, startFile;
-                if (_gridSize % 2 == 0)
+                if (BoardViewer.Selecting != -2)
                 {
-                    startRank = thisTile.rank;
-                    startFile = thisTile.file;
-                    if      (thisTile.corner == Corner.BottomRight) { startRank = startRank - _gridSize / 2 + 1; startFile = startFile - _gridSize / 2 + 1; }
-                    else if (thisTile.corner == Corner.TopLeft)     { startFile = startFile - _gridSize / 2 + 1; startRank = startRank - _gridSize / 2; }
-                    else if (thisTile.corner == Corner.TopRight)    { startRank = startRank - _gridSize / 2;     startFile = startFile - _gridSize / 2; }
-                    else                                             { startRank = startRank - _gridSize / 2 + 1; startFile = startFile - _gridSize / 2; } // BottomLeft
-                }
-                else
-                {
-                    var radius = _gridSize / 2;
-                    startRank = thisTile.rank - radius;
-                    startFile = thisTile.file - radius;
+                    BoardViewer.Selecting = -2;
                 }
 
-                var pending = new ArcticBrittleStarSkillPending(
-                    _hoveringPos, (ArcticBrittleStar)PieceOn(Maker), startRank, startFile, _gridSize);
+                var pending = new ArcticBrittleStarSkillPending(_hoveringPos, PieceOn(Maker), _gridSize);
 
-                if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
-                    BoardViewer.ListOf.Add(pending);
+                if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
+            
             };
         }
     }

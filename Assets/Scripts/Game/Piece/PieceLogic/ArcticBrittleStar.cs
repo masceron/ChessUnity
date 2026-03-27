@@ -19,7 +19,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ArcticBrittleStar : Commons.PieceLogic, IPieceWithSkill
     {
-        private int _gridSize = 2;
+        private int _gridSize = 1;
         private int castRange = 3;
         public int GridSize => _gridSize;
 

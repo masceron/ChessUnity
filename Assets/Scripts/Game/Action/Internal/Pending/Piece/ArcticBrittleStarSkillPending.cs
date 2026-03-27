@@ -6,6 +6,7 @@ using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 
+
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -19,19 +20,14 @@ namespace Game.Action.Internal.Pending.Piece
     /// </summary>
     public class ArcticBrittleStarSkillPending : PendingAction, IDisposable, ISkills, ILocaltionTarget
     {
-        private ArcticBrittleStar _piece;
-        private readonly int _startRank; // top-left ô của NxN grid (giống TileManager)
-        private readonly int _startFile;
+        private PieceLogic _piece;
         private readonly int _gridSize;
 
-        public ArcticBrittleStarSkillPending(int tilePos, ArcticBrittleStar piece,
-            int startRank, int startFile, int gridSize) : base(tilePos)
+        public ArcticBrittleStarSkillPending(int tilePos, PieceLogic piece, int gridSize) : base(tilePos)
         {
             Maker      = tilePos;
             Target     = tilePos;
             _piece     = piece;
-            _startRank = startRank;
-            _startFile = startFile;
             _gridSize  = gridSize;
         }
 
@@ -45,8 +41,29 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
+            // Lấy Tile object của ô đang hover/click để đọc corner
+            var clickedTile = TileManager.Ins.GetTile(Maker);
+            if (clickedTile == null) return;
+
+            int startRank, startFile;
+            if (_gridSize % 2 == 0)
+            {
+                startRank = clickedTile.rank;
+                startFile = clickedTile.file;
+                if      (clickedTile.corner == Corner.BottomRight) { startRank = startRank - _gridSize / 2 + 1; startFile = startFile - _gridSize / 2 + 1; }
+                else if (clickedTile.corner == Corner.TopLeft)     { startFile = startFile - _gridSize / 2 + 1; startRank = startRank - _gridSize / 2; }
+                else if (clickedTile.corner == Corner.TopRight)    { startRank = startRank - _gridSize / 2;     startFile = startFile - _gridSize / 2; }
+                else                                                { startRank = startRank - _gridSize / 2 + 1; startFile = startFile - _gridSize / 2; } // BottomLeft
+            }
+            else
+            {
+                var radius = _gridSize / 2;
+                startRank  = clickedTile.rank - radius;
+                startFile  = clickedTile.file - radius;
+            }
+
             BoardUtils.SetCooldown(_piece.Pos, ((IPieceWithSkill)_piece).TimeToCooldown);
-            CommitResult(new ArcticBrittleStarSkillExecute(_piece.Pos, _startRank, _startFile, _gridSize));
+            CommitResult(new ArcticBrittleStarSkillExecute(_piece.Pos, startRank, startFile, _gridSize));
         }
     }
 }

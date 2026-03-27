@@ -92,6 +92,7 @@ namespace UX.UI.Ingame
         public void Unmark()
         {
             Selecting = -1;
+            SelectingFunction = 0;
             TileManager.Ins.UnmarkAll();
             _aiManager.ClearTileScores();
             pieceActions.DisablePieceInteractions();

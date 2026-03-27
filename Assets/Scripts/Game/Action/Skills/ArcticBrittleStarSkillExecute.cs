@@ -35,9 +35,6 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
-            if (maker == null) return;
-
             // Lặp từ startRank/startFile (top-left), khớp với TileManager preview
             for (var r = _startRank; r < _startRank + _gridSize; r++)
             for (var f = _startFile; f < _startFile + _gridSize; f++)
@@ -46,7 +43,7 @@ namespace Game.Action.Skills
                 var idx = IndexOf(r, f);
                 if (!IsActive(idx) || HasFormation(idx)) continue;
 
-                Formation anchorIce = new AnchorIce(maker.Color);
+                Formation anchorIce = new AnchorIce(PieceOn(Maker).Color);
                 anchorIce.SetDuration(3);
                 FormationManager.Ins.SetFormation(idx, anchorIce);
             }
