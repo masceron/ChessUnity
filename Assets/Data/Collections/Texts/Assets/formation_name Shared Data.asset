@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: formation_carpet_anemone
     m_Metadata:
       m_Items: []
+  - m_Id: 16159572535054336
+    m_Key: formation_anchor_ice
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
