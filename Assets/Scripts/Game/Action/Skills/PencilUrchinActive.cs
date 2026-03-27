@@ -1,34 +1,65 @@
-using System;
+using Game.Action.Internal.Pending.Piece;
+using Game.Common;
+using Game.Managers;
+using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using MemoryPack;
+using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     [MemoryPackable]
-    public partial class PencilUrchinActive : Action, ISkills
+    public partial class PencilUrchinActive : Action, ISkills, IDontEndTurn
     {
         [MemoryPackConstructor]
-        private PencilUrchinActive()
+        private PencilUrchinActive() { }
+
+        private int _hoveringPos = -1;
+        private int _gridSize    = 1;
+        private int _castRange   = 3;
+
+        public PencilUrchinActive(int maker, int target, int gridSize, int castRange) : base(maker)
         {
+            Target     = target;
+            _gridSize  = gridSize;
+            _castRange = castRange;
         }
 
-        public PencilUrchinActive(int maker, int target) : base(maker)
+        public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            Maker = maker;
-            Target = target;
-        }
-
-        public int AIPenaltyValue(PieceLogic maker)
-        {
-            throw new NotImplementedException();
+            var maker = PieceOn(Maker);
+            if (maker == null || pieceAI == null) return 0;
+            return pieceAI.Color != maker.Color ? -5 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            SetFormation(Target, new UrchinField(false, PieceOn(Maker).Color));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            Tile.Tile.OnPointEnterHandle = thisTile =>
+            {
+                if (Distance(IndexOf(thisTile.rank, thisTile.file), Maker) > _castRange)
+                {
+                    TileManager.Ins.UnmarkAll();
+                    return;
+                }
+
+                var hoveringTile = TileManager.Ins.GetTile(_hoveringPos);
+                if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, false);
+
+                hoveringTile = thisTile;
+                _hoveringPos = IndexOf(hoveringTile.rank, hoveringTile.file);
+                TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, true);
+
+                if (BoardViewer.SelectingFunction != 3)
+                    BoardViewer.SelectingFunction = 3;
+                if (BoardViewer.Selecting != -2)
+                    BoardViewer.Selecting = -2;
+
+                var pending = new PencilUrchinSkillPending(_hoveringPos, PieceOn(Maker), _gridSize);
+                if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
+                    BoardViewer.ListOf.Add(pending);
+            };
         }
     }
 }

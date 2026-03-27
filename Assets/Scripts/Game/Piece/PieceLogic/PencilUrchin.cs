@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -8,13 +8,18 @@ using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
 {
     public class PencilUrchin : Commons.PieceLogic, IPieceWithSkill
     {
-        private const int SkillRange = 3;
+        private int _gridSize  = 1; // kích thước NxN mặc định 1x1
+        private int _castRange = 3; // bán kính cast range M
+
+        public int GridSize  => _gridSize;
+        public int CastRange => _castRange;
 
         public PencilUrchin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
@@ -24,74 +29,38 @@ namespace Game.Piece.PieceLogic
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
+
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
-                        list.Add(new PencilUrchinActive(Pos, IndexOf(rankOff, fileOff)));
+                    // PencilUrchinActive (ISkills + IDontEndTurn): đăng ký hover preview
+                    list.Add(new PencilUrchinActive(Pos, Pos, _gridSize, _castRange));
                 }
                 else
                 {
-                    //query for AI in here
-                    if (excludeEmptyTile)
+                    // AI: chọn enemy có value cao nhất trong cast range
+                    var listPieces = new List<Commons.PieceLogic>();
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, _castRange);
+                    foreach (var target in targets)
                     {
-                        var bestPieces = new List<Commons.PieceLogic>();
-                        Commons.PieceLogic bestPiece = null;
-                        var maxPoint = int.MinValue;
-
-                        var (rank, file) = RankFileOf(Pos);
-
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
-                        {
-                            var index = IndexOf(rankOff, fileOff);
-                            var pOn = PieceOn(index);
-                            if (pOn == null || pOn.Pos == Pos || pOn.Color == Color
-                                || pOn.Effects.Any(effect => effect.EffectName == "effect_extremophiles")) continue;
-
-                            var AIValue = pOn.GetValueForAI();
-                            if (AIValue > maxPoint)
-                            {
-                                bestPieces.Clear();
-                                bestPieces.Add(pOn);
-                                maxPoint = AIValue;
-                            }
-                            else if (AIValue == maxPoint)
-                            {
-                                bestPieces.Add(pOn);
-                            }
-                        }
-
-                        if (bestPieces.Count == 0)
-                        {
-                            //
-                        }
-                        else if (bestPieces.Count == 1)
-                        {
-                            bestPiece = bestPieces[0];
-                        }
-                        else
-                        {
-                            bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
-                        }
-
-                        if (bestPiece != null) list.Add(new PencilUrchinActive(Pos, bestPiece.Pos));
+                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophiles")) continue;
+                        listPieces.Add(PieceOn(target));
                     }
-                    else
-                    {
-                        var (rank, file) = RankFileOf(Pos);
 
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
-                        {
-                            var index = IndexOf(rankOff, fileOff);
-                            list.Add(new PencilUrchinActive(Pos, index));
-                        }
-                    }
+                    if (listPieces.Count == 0) return;
+                    var maxValue  = listPieces.Max(p => p.GetValueForAI());
+                    var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+                    if (bestPieces.Count == 0) return;
+
+                    var selected  = bestPieces[Random.Range(0, bestPieces.Count)];
+                    var aiRank    = RankOf(selected.Pos);
+                    var aiFile    = FileOf(selected.Pos);
+                    var aiStart   = _gridSize / 2;
+                    list.Add(new PencilUrchinSkillExecute(Pos, aiRank - aiStart, aiFile - aiStart, _gridSize));
                 }
             };
         }
 
-        int IPieceWithSkill.TimeToCooldown { get; set; }
-
-        public SkillsDelegate Skills { get; }
+        int IPieceWithSkill.TimeToCooldown { get; set; } = 8;
+        public SkillsDelegate Skills { get; set; }
     }
 }
