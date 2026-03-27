@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Action.Skills;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
@@ -15,7 +14,7 @@ namespace Game.AI.Consider
             if (action is not ISkills) return 0f;
 
             float score = weight;
-            var targetPiece = BoardUtils.PieceOn(action.Target);
+            var targetPiece = action.GetTarget();
 
             if (targetPiece != null) score += targetPiece.GetValueForAI();
 

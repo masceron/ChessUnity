@@ -12,19 +12,17 @@ namespace Game.Action.Quiets
         {
         }
 
-        public RemoraMove(int maker, int target) : base(maker)
-        {
-            Target = target;
-        }
+        public RemoraMove(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        {}
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            Move(Maker, Target);
+            Move(GetMaker(), GetTargetPos());
         }
     }
 }

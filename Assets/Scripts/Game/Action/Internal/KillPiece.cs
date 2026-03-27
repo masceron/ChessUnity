@@ -14,8 +14,8 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Maker);
-            MatchManager.Ins.GameState.Kill(Maker);
+            PieceManager.Ins.Destroy(GetFrom());
+            MatchManager.Ins.GameState.Kill(GetMaker());
         }
     }
 }

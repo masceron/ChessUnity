@@ -31,10 +31,10 @@ namespace Assets.Scripts.Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
+            var makerPiece = GetMaker();
             if (makerPiece == null) return;
             var bleedingStack = makerPiece.GetStat(SkillStat.Stack);
-            var (rank, file) = RankFileOf(Maker);
+            var (rank, file) = RankFileOf(GetMakerPos());
             var push = makerPiece.Color ? 1 : -1;
 
 
@@ -64,7 +64,7 @@ namespace Assets.Scripts.Game.Action.Skills
 
             ActionManager.EnqueueAction(new ApplyEffect(new Petrified(-1, makerPiece), makerPiece));
 
-            SetCooldown(Maker, ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(makerPiece, ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
     }
 }

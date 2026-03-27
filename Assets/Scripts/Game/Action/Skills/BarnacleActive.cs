@@ -20,10 +20,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public BarnacleActive(int maker, int target) : base(maker)
+        public BarnacleActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void CompleteActionForAI()

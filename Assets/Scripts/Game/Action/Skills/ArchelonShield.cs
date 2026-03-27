@@ -16,10 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArchelonShield(int maker, int target) : base(maker)
+        public ArchelonShield(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

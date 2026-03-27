@@ -10,23 +10,21 @@ namespace Game.Action.Internal.Pending.Piece
     public class BlackcapBassletPending : PendingAction, ISkills
     {
         
-        public BlackcapBassletPending(int maker, int target) : base(maker)
+        public BlackcapBassletPending(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         protected override void CompleteAction()
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Target),
-                         FileOf(Target), 1))
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetTargetPos()),
+                         FileOf(GetTargetPos()), 1))
             {
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn != null) continue;
-                var newAction = new BlackcapBassletActive(Maker, index);
+                var newAction = new BlackcapBassletActive(GetMakerPos(), index);
                 BoardViewer.ListOf.Add(newAction);
                 TileManager.Ins.MarkAsMoveable(index);
             }

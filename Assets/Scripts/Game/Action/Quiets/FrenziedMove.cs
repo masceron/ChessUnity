@@ -1,6 +1,5 @@
 using Game.Managers;
 using MemoryPack;
-using UnityEngine;
 
 namespace Game.Action.Quiets
 {
@@ -14,19 +13,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public FrenziedMove(int maker, int target) : base(maker)
+        public FrenziedMove(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(Maker, Target);
+            MatchManager.Ins.GameState.Move(GetMaker(), GetTargetPos());
         }
 
         public void CompleteActionForAI()

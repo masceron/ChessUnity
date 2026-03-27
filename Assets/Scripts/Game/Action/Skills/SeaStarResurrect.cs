@@ -16,9 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SeaStarResurrect(int maker, int to) : base(maker)
+        public SeaStarResurrect(int maker, int to) : base(maker, to, TargetingType.LocationTargeting)
         {
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -28,13 +27,17 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = PieceOn(Maker);
+            var caller = GetMaker();
             var collection = !caller.Color ? WhiteCaptured() : BlackCaptured();
 
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, GetTargetPos()),
+                logic =>
+                {
+                    SetCooldown(logic, -1);
+                }));
+            
             collection.Remove(collection.First(p => p.Type == "piece_sea_star"));
-            SetCooldown(Target, -1);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

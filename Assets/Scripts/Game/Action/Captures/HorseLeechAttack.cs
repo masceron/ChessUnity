@@ -15,15 +15,14 @@ namespace Game.Action.Captures
         {
         }
 
-        public HorseLeechAttack(int maker, int target) : base(maker)
+        public HorseLeechAttack(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, PieceOn(Target)), PieceOn(Maker)));
-            ActionManager.EnqueueAction(new KillPiece(Maker));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, GetTarget()), GetMaker()));
+            ActionManager.EnqueueAction(new KillPiece(GetFrom()));
         }
     }
 }

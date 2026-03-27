@@ -168,19 +168,17 @@ namespace Game.Managers
             OnIncreaseTurn?.Invoke(CurrentTurn);
         }
 
-        public void Destroy(int pos)
+        public void Destroy(PieceLogic pieceAffected)
         {
-            var pieceAffected = PieceBoard[pos];
-            PieceBoard[pos] = null;
+            PieceBoard[pieceAffected.Pos] = null;
             TriggerHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
         }
 
-        public void Kill(int pos)
+        public void Kill(PieceLogic pieceAffected)
         {
-            var pieceAffected = PieceBoard[pos];
-            PieceBoard[pos] = null;
+            PieceBoard[pieceAffected.Pos] = null;
             TriggerHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
@@ -191,21 +189,21 @@ namespace Game.Managers
             _piecesDictionary.Remove(pieceAffected.ID);
         }
 
-        public void Move(int f, int t)
+        public void Move(PieceLogic piece, int t)
         {
-            PieceBoard[t] = PieceBoard[f];
-            PieceBoard[t].Pos = t;
-            PieceBoard[t].PreviousMoves.Add(f);
-            PieceBoard[f] = null;
+            PieceBoard[t] = piece;
+            PieceBoard[t].PreviousMoves.Add(piece.Pos);
+            PieceBoard[piece.Pos] = null;
+            piece.Pos = t;
         }
 
-        public void Swap(int a, int b)
+        public void Swap(PieceLogic a, PieceLogic b)
         {
-            var pieceB = PieceBoard[b];
-            PieceBoard[b] = PieceBoard[a];
-            PieceBoard[b].Pos = b;
-            PieceBoard[a] = pieceB;
-            PieceBoard[a].Pos = a;
+            var oldPosA = a.Pos;
+            a.Pos = b.Pos;
+            PieceBoard[a.Pos] = a;
+            b.Pos = oldPosA;
+            PieceBoard[b.Pos] = b;
         }
 
         public void FlipSideToMove()

@@ -14,10 +14,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public BlueDragonActive(int maker, int target) : base(maker)
+        public BlueDragonActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

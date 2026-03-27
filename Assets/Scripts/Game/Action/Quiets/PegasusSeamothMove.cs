@@ -18,22 +18,21 @@ namespace Game.Action.Quiets
         {
         }
 
-        public PegasusSeamothMove(int maker, int target) : base(maker)
+        public PegasusSeamothMove(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            var (rankFrom, fileFrom) = RankFileOf(Maker);
-            var (rankTo, fileTo) = RankFileOf(Target);
+            var (rankFrom, fileFrom) = RankFileOf(GetFrom());
+            var (rankTo, fileTo) = RankFileOf(GetTargetPos());
             var board = PieceBoard();
-            var caller = board[Maker];
+            var caller = GetMaker();
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;
@@ -50,7 +49,7 @@ namespace Game.Action.Quiets
                 break;
             }
 
-            MatchManager.Ins.GameState.Move(Maker, Target);
+            MatchManager.Ins.GameState.Move(caller, GetTargetPos());
         }
     }
 }

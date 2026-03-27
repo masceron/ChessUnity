@@ -13,19 +13,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalSwap(int maker, int target) : base(maker)
+        public NormalSwap(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Swap(Maker, Target);
+            PieceManager.Ins.Swap(GetMakerPos(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Swap(Maker, Target);
+            MatchManager.Ins.GameState.Swap(GetMaker(), GetTarget());
         }
     }
 }

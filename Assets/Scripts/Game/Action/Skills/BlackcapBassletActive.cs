@@ -6,10 +6,8 @@ namespace Game.Action.Skills
 {
     public class BlackcapBassletActive : Action, ISkills
     {
-        public BlackcapBassletActive(int maker, int target) : base(maker)
+        public BlackcapBassletActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()

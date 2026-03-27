@@ -15,20 +15,19 @@ namespace Game.Action.Quiets
         {
         }
 
-        public FlyingFishMove(int maker, int target) : base(maker)
+        public FlyingFishMove(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
             From = maker;
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(Maker, Target);
+            MatchManager.Ins.GameState.Move(GetMaker(), GetTargetPos());
         }
     }
 }

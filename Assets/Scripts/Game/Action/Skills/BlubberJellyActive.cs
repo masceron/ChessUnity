@@ -9,10 +9,8 @@ namespace Game.Action.Skills
 {
     public class BlubberJellyActive : Action, ISkills
     {
-        public BlubberJellyActive(int maker, int target) : base(maker)
+        public BlubberJellyActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         protected override void ModifyGameState()
         {

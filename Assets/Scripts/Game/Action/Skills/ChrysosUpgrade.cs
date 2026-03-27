@@ -34,11 +34,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieceOn = PieceOn(Maker);
+            var pieceOn = GetMaker();
             ActionManager.EnqueueAction(new DestroyPiece(_target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
             ((Chrysos)pieceOn).Coin -= _cost;
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(pieceOn, ((IPieceWithSkill)pieceOn).TimeToCooldown);
         }
     }
 }

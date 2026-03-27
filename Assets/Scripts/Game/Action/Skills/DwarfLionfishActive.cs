@@ -19,8 +19,6 @@ namespace Game.Action.Skills
 
         public DwarfLionfishActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -33,7 +31,7 @@ namespace Game.Action.Skills
             var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 1);
             foreach (var target in targets)
                 ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(target))));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

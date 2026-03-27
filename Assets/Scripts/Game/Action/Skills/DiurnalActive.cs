@@ -13,9 +13,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public DiurnalActive(int maker, int target) : base(maker)
+        public DiurnalActive(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)

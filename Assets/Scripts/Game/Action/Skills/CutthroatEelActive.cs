@@ -16,9 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public CutthroatEelActive(int maker, int target) : base(maker)
+        public CutthroatEelActive(int maker, int target) : base(maker, target)
         {
-            Target = target; // Target is enemy
         }
 
         public int AIPenaltyValue(PieceLogic p)

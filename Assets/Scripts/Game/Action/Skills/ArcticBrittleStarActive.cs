@@ -14,9 +14,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArcticBrittleStarActive(int maker, int target) : base(maker)
+        public ArcticBrittleStarActive(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

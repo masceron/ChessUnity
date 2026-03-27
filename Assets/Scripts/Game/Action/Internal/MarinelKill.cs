@@ -6,20 +6,21 @@ namespace Game.Action.Internal
 {
     public class MarinelKill : Action, IInternal
     {
+        private readonly int firstTarget;
         private readonly int secondTarget;
 
         public MarinelKill(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Target = firstTarget;
+            this.firstTarget = firstTarget;
             this.secondTarget = secondTarget;
         }
 
         protected override void ModifyGameState()
         {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
 
             ActionManager.EnqueueAction(
-                new ApplyEffect(new MarineIguanaKillEffect(0, PieceOn(Target), Maker, secondTarget), PieceOn(Maker)));
+                new ApplyEffect(new MarineIguanaKillEffect(0, GetTarget(), GetFrom(), secondTarget), GetMaker()));
         }
     }
 }

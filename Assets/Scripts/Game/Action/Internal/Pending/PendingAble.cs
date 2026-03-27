@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using UnityEngine.InputSystem;
 
 namespace Game.Action.Internal.Pending
 {
@@ -10,6 +11,11 @@ namespace Game.Action.Internal.Pending
 
         protected PendingAction(int maker) : base(maker)
         {
+        }
+
+        protected PendingAction(int maker, int target) : base(maker, target)
+        {
+            
         }
 
         protected sealed override void ModifyGameState()

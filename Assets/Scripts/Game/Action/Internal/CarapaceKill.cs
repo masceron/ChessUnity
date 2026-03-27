@@ -6,20 +6,18 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CarapaceKill : Action, IInternal
     {
-        public CarapaceKill(int maker, int to) : base(maker)
+        public CarapaceKill(int maker, int to) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(Target);
+            MatchManager.Ins.GameState.Kill(GetTarget());
         }
     }
 }

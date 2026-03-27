@@ -15,9 +15,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public IllusionCapture(int maker, int target) : base(maker)
+        public IllusionCapture(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -26,7 +25,7 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOn(Target)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, GetTarget()), GetMaker()));
         }
     }
 }

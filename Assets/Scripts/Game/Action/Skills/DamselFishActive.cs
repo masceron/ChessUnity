@@ -18,8 +18,6 @@ namespace Game.Action.Skills
 
         public DamselFishActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -29,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieces = FindPiece<PieceLogic>(PieceOn(Maker).Color);
+            var pieces = FindPiece<PieceLogic>(GetMaker().Color);
             var picked = pieces
                 .OrderBy(_ => Random.value)
                 .Take(Mathf.Min(3, pieces.Count))

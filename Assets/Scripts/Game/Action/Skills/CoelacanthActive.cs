@@ -15,9 +15,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public CoelacanthActive(int maker, int target, int duration) : base(maker)
+        public CoelacanthActive(int maker, int target, int duration) : base(maker, target)
         {
-            Target = target; // Target is enemy
             Duration = duration;
         }
 

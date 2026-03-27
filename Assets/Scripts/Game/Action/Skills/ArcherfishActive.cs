@@ -16,10 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArcherfishActive(int maker, int target) : base(maker)
+        public ArcherfishActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

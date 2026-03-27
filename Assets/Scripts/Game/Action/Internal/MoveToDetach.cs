@@ -11,9 +11,8 @@ namespace Game.Action.Internal
         /// <summary>Reference đến quân ký sinh, dùng để cập nhật PieceBoard sau khi tách.</summary>
         private readonly PieceLogic _parasite;
 
-        public MoveToDetach(int maker, int target, PieceLogic parasite, PieceLogic hostLogic) : base(maker)
+        public MoveToDetach(int maker, int target, PieceLogic parasite, PieceLogic hostLogic) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Target    = target;
             _parasite = parasite;
             _hostLogic = hostLogic;
         }
@@ -25,12 +24,12 @@ namespace Game.Action.Internal
         protected override void ModifyGameState()
         {
             // Tra cứu parasite Piece qua hostLogic rồi animate về Target
-            PieceManager.Ins.MoveToDetach(_hostLogic, Target);
+            PieceManager.Ins.MoveToDetach(_hostLogic, GetTargetPos());
 
             // Cập nhật PieceBoard logic
             var board = MatchManager.Ins.GameState.PieceBoard;
-            board[Target] = _parasite;
-            _parasite.Pos = Target;
+            board[GetTargetPos()] = _parasite;
+            _parasite.Pos = GetTargetPos();
         }
     }
 }

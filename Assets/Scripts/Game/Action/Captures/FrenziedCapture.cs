@@ -14,9 +14,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public FrenziedCapture(int maker, int target) : base(maker)
+        public FrenziedCapture(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -26,10 +25,10 @@ namespace Game.Action.Captures
         protected override void ModifyGameState()
         {
             Debug.Log("Complete FrenziedCapture");
-            PieceManager.Ins.Destroy(Target);
-            PieceManager.Ins.Move(Maker, Target);
-            MatchManager.Ins.GameState.Kill(Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
+            MatchManager.Ins.GameState.Kill(GetTarget());
+            MatchManager.Ins.GameState.Move(GetMaker(), GetTargetPos());
         }
 
         public void CompleteActionForAI()

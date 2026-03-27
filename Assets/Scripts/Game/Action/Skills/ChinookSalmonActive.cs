@@ -7,10 +7,8 @@ namespace Game.Action.Skills
 {
     public class ChinookSalmonActive : Action, ISkills
     {
-        public ChinookSalmonActive(int maker, int target) : base(maker)
+        public ChinookSalmonActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()

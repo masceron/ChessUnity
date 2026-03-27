@@ -6,22 +6,21 @@ namespace Game.Action.Internal
 {
     public class SpinsterWrasseBuff : Action, IInternal
     {
-        private readonly int firstTarget;
-        private readonly int secondTarget;
+        private readonly int _firstTarget;
+        private readonly int _secondTarget;
 
         public SpinsterWrasseBuff(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Maker = maker;
-            this.secondTarget = secondTarget;
-            this.firstTarget = firstTarget;
+            _secondTarget = secondTarget;
+            _firstTarget = firstTarget;
         }
 
         protected override void ModifyGameState()
         {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
 
-            ActionManager.EnqueueAction(new Purify(Maker, firstTarget));
-            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(secondTarget)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new Purify(GetMakerPos(), _firstTarget));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(_secondTarget)), GetMaker()));
         }
     }
 }

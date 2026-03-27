@@ -13,20 +13,19 @@ namespace Game.Action.Captures
         {
         }
 
-        public DestroyConstruct(int maker, int target) : base(maker)
+        public DestroyConstruct(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(Maker);
-            MatchManager.Ins.GameState.Kill(Target);
+            MatchManager.Ins.GameState.Kill(GetMaker());
+            MatchManager.Ins.GameState.Kill(GetTarget());
         }
     }
 }

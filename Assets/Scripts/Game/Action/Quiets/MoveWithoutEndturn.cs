@@ -1,7 +1,6 @@
 using Game.Common;
 using Game.Managers;
 using MemoryPack;
-using UnityEngine;
 
 namespace Game.Action.Quiets
 {
@@ -19,20 +18,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public MoveWithoutEndturn(int maker, int target) : base(maker)
+        public MoveWithoutEndturn(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            Debug.Log("Complete CooperativeMove");
-            BoardUtils.Move(Maker, Target);
+            BoardUtils.Move(GetMaker(), GetTargetPos());
         }
     }
 }

@@ -15,15 +15,14 @@ namespace Game.Action.Captures
         {
         }
 
-        public RemoraMark(int maker, int target) : base(maker)
+        public RemoraMark(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(PieceOn(Maker), PieceOn(Target)),
-                PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(GetMaker(), GetTarget()),
+                GetMaker()));
         }
     }
 }

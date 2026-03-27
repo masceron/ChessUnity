@@ -25,7 +25,6 @@ namespace Game.Action.Skills
 
         public BlackPrinceCopepodActive(int maker, int firstIndex, int secondIndex, int thirdIndex) : base(maker)
         {
-            Maker = maker;
             this.firstIndex = firstIndex;
             this.secondIndex = secondIndex;
             this.thirdIndex = thirdIndex;

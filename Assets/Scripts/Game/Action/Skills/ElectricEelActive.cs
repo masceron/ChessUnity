@@ -18,7 +18,6 @@ namespace Game.Action.Skills
 
         public ElectricEelActive(int maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -47,7 +46,7 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

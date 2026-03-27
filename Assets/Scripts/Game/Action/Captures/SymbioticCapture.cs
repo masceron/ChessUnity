@@ -15,15 +15,14 @@ namespace Game.Action.Captures
         {
         }
 
-        public SymbioticCapture(int maker, int target) : base(maker)
+        public SymbioticCapture(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            var makerPiece = BoardUtils.PieceOn(Maker);
-            var targetPiece = BoardUtils.PieceOn(Target);
+            var makerPiece = GetMaker();
+            var targetPiece = GetTarget();
 
             if (makerPiece == null || targetPiece == null) return;
 

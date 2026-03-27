@@ -14,9 +14,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public AnglerfishTaunt(int maker, int target) : base(maker)
+        public AnglerfishTaunt(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

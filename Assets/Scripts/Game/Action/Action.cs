@@ -47,18 +47,20 @@ namespace Game.Action
     {
         public ActionFlag Flag = ActionFlag.None;
         public ResultFlag Result = ResultFlag.Success;
-        protected readonly int Maker;
-        protected readonly int Target = -1;
+        private readonly int _maker;
+        private readonly int _from;
+        private readonly int _target = -1;
         // ReSharper disable once FieldCanBeMadeReadOnly.Local
         public TargetingType TargetingType;
 
-        protected Action(int maker = 0, int target = -1, TargetingType targetingType = TargetingType.UnitTargeting)
+        protected Action(int maker = -1, int target = -1, TargetingType targetingType = TargetingType.UnitTargeting)
         {
-            Maker = BoardUtils.GetIDAt(maker);
+            _maker = BoardUtils.GetIDAt(maker);
+            _from = maker;
             TargetingType = targetingType;
             
             if (targetingType == TargetingType.None) return;
-            Target = targetingType == TargetingType.UnitTargeting ? BoardUtils.GetIDAt(target) : target;
+            _target = targetingType == TargetingType.UnitTargeting ? BoardUtils.GetIDAt(target) : target;
         }
 
         [MemoryPackConstructor]
@@ -85,22 +87,27 @@ namespace Game.Action
 
         public PieceLogic GetMaker()
         {
-            return BoardUtils.GetPieceByID(Maker);
+            return BoardUtils.GetPieceByID(_maker);
         }
 
         public PieceLogic GetTarget()
         {
-            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(Target) : null;
+            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(_target) : null;
         }
 
         public int GetMakerPos()
         {
-            return BoardUtils.GetPieceByID(Maker).Pos;
+            return BoardUtils.GetPieceByID(_maker).Pos;
         }
 
         public int GetTargetPos()
         {
-            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(Target).Pos : Target;
+            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(_target).Pos : _target;
+        }
+
+        public int GetFrom()
+        {
+            return _from;
         }
     }
 

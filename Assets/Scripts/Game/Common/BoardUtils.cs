@@ -132,20 +132,19 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SquareColor[pos];
         }
 
-        public static bool ColorOfPiece(int pos)
+        public static bool ColorOfPiece(PieceLogic piece)
         {
-            return PieceOn(pos).Color;
+            return piece.Color;
         }
 
-        public static void FlipPieceColor(int pos)
+        public static void FlipPieceColor(PieceLogic piece)
         {
-            var gameState = MatchManager.Ins.GameState;
-            gameState.PieceBoard[pos].Color = !gameState.PieceBoard[pos].Color;
+            piece.Color = !piece.Color;
         }
 
-        public static void SetCooldown(int pos, int cd)
+        public static void SetCooldown(PieceLogic piece, int cd)
         {
-            MatchManager.Ins.GameState.PieceBoard[pos].SkillCooldown = cd;
+            piece.SkillCooldown = cd;
         }
 
         public static PieceLogic[] PieceBoard()
@@ -178,9 +177,9 @@ namespace Game.Common
             return MatchManager.Ins.GameState.BlackCaptured;
         }
 
-        public static void Move(int from, int to)
+        public static void Move(PieceLogic pieceLogic, int to)
         {
-            MatchManager.Ins.GameState.Move(from, to);
+            MatchManager.Ins.GameState.Move(pieceLogic, to);
         }
 
         public static void FlipSideToMove()

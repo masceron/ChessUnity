@@ -5,9 +5,8 @@ namespace Game.Action.Quiets
 {
     public class MoveToParasitic : Action
     {
-        public MoveToParasitic(int maker, int target) : base(maker)
+        public MoveToParasitic(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -16,16 +15,14 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            var hostLogic = BoardUtils.PieceOn(Target);
-            PieceManager.Ins.MoveToParasitic(Maker, Target, hostLogic);
+            var hostLogic = GetTarget();
+            PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic);
 
-            var parasite = BoardUtils.PieceOn(Maker);
-            if (parasite != null)
-            {
-                BoardUtils.PieceBoard()[Maker] = null;
-                parasite.Pos = -9999;
-            }
+            var parasite = GetMaker();
+            if (parasite == null) return;
+
+            BoardUtils.PieceBoard()[GetFrom()] = null;
+            parasite.Pos = -9999;
         }
     }
-
 }

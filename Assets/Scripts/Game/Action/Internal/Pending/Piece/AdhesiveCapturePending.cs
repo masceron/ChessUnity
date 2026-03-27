@@ -22,8 +22,8 @@ namespace Game.Action.Internal.Pending.Piece
     public class AdhesiveCapturePending : PendingAction, ICaptures
     {
         private readonly PieceLogic _adhesivePiece;
-        private readonly PieceLogic _targetPiece;     // null nếu ô không có Piece
-        private readonly Formation  _targetFormation; // không null (luôn có Formation)
+        private readonly PieceLogic _targetPiece; // null nếu ô không có Piece
+        private readonly Formation _targetFormation; // không null (luôn có Formation)
 
         /// <param name="maker">Vị trí quân Adhesive.</param>
         /// <param name="target">Vị trí ô target.</param>
@@ -31,16 +31,14 @@ namespace Game.Action.Internal.Pending.Piece
         /// <param name="targetPiece">Logic Piece trên ô (null nếu không có).</param>
         /// <param name="targetFormation">Formation trên ô (không được null).</param>
         public AdhesiveCapturePending(
-            int        maker,
-            int        target,
+            int maker,
             PieceLogic adhesivePiece,
             PieceLogic targetPiece,
-            Formation  targetFormation)
+            Formation targetFormation)
             : base(maker)
         {
-            Target           = target;
-            _adhesivePiece   = adhesivePiece;
-            _targetPiece     = targetPiece;
+            _adhesivePiece = adhesivePiece;
+            _targetPiece = targetPiece;
             _targetFormation = targetFormation;
         }
 
@@ -53,23 +51,22 @@ namespace Game.Action.Internal.Pending.Piece
         /// <summary>Người chơi chọn bám vào Piece.</summary>
         public void ChoosePiece()
         {
-            if (_targetPiece == null || _targetPiece.CurrentState != StateType.None) return;
+            if (_targetPiece is not { CurrentState: StateType.None }) return;
             ActionManager.EnqueueAction(new ApplyEffect(new Attached(_targetPiece, _adhesivePiece)));
-            CommitResult(new MoveToAdhesive(Maker, Target, attachToFormation: false));
+            CommitResult(new MoveToAdhesive(GetFrom(), _targetPiece.Pos, attachToFormation: false));
         }
 
         /// <summary>Người chơi chọn bám vào Formation.</summary>
         public void ChooseFormation()
         {
             _targetFormation.SetState(StateType.Attached);
-            var adhesive   = _adhesivePiece;
-            var formation  = _targetFormation;
-            formation.OnRemoveFormation += (formation) =>
+            var adhesive = _adhesivePiece;
+            _targetFormation.OnRemoveFormation += formation =>
             {
                 formation.ClearState();
                 Attached.SpawnAdhesiveAround(formation.Pos, null, adhesive);
             };
-            CommitResult(new MoveToAdhesive(Maker, Target, attachToFormation: true));
+            CommitResult(new MoveToAdhesive(GetFrom(), _targetFormation.Pos, attachToFormation: true));
         }
     }
 }

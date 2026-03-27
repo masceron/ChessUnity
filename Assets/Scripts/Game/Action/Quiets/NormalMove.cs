@@ -14,19 +14,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalMove(int maker, int target) : base(maker)
+        public NormalMove(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            BoardUtils.Move(Maker, Target);
+            BoardUtils.Move(GetMaker(), GetTargetPos());
         }
     }
 }

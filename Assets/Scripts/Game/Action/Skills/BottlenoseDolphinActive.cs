@@ -19,10 +19,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public BottlenoseDolphinActive(int maker, int target) : base(maker)
+        public BottlenoseDolphinActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void CompleteActionForAI()
