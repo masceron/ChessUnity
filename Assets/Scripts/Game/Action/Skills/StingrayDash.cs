@@ -52,7 +52,6 @@ namespace Game.Action.Skills
             }
 
             Move(Maker, Target);
-            Maker = Target;
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
     }

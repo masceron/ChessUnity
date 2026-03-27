@@ -29,7 +29,6 @@ namespace Game.Action.Quiets
         protected override void ModifyGameState()
         {
             MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
         }
     }
 }

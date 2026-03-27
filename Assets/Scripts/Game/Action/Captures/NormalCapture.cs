@@ -28,7 +28,6 @@ namespace Game.Action.Captures
             PieceManager.Ins.Move(Maker, Target);
             MatchManager.Ins.GameState.Kill(Target);
             MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
         }
     }
 }

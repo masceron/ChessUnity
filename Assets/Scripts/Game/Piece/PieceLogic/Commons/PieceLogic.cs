@@ -44,6 +44,7 @@ namespace Game.Piece.PieceLogic.Commons
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public abstract class PieceLogic
     {
+        public readonly int ID;
         private bool _hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
         public readonly List<Effect> Effects;
@@ -73,6 +74,7 @@ namespace Game.Piece.PieceLogic.Commons
             Effects = new List<Effect>();
             PreviousMoves = new List<int>();
             Type = cfg.Type;
+            ID = NextPieceID();
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
             _moveRange = info.moveRange;

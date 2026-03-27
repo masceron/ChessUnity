@@ -27,7 +27,6 @@ namespace Game.Action.Quiets
         protected override void ModifyGameState()
         {
             BoardUtils.Move(Maker, Target);
-            Maker = Target;
         }
     }
 }

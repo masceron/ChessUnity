@@ -484,6 +484,26 @@ namespace Game.Common
             if (PieceOn(index) != null) ActionManager.EnqueueAction(new KillPiece(index));
         }
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
+
+        public static PieceLogic SpawnPiece(PieceConfig pieceConfig)
+        {
+            return MatchManager.Ins.GameState.SpawnPiece(pieceConfig);
+        }
+
+        public static int NextPieceID()
+        {
+            return MatchManager.Ins.GameState.NextPieceID();
+        }
+
+        public static PieceLogic GetPieceByID(int id)
+        {
+            return MatchManager.Ins.GameState.GetPieceByID(id);
+        }
+
+        public static int GetIDAt(int index)
+        {
+            return PieceOn(index)?.ID ?? 0;
+        }
     }
 }
 

@@ -20,7 +20,6 @@ namespace Game.Action.Quiets
 
         public PegasusSeamothMove(int maker, int target) : base(maker)
         {
-            Maker = maker;
             Target = target;
         }
 
@@ -52,8 +51,6 @@ namespace Game.Action.Quiets
             }
 
             MatchManager.Ins.GameState.Move(Maker, Target);
-
-            Maker = Target;
         }
     }
 }

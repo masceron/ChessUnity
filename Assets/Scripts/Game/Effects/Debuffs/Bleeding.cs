@@ -31,7 +31,7 @@ namespace Game.Effects.Debuffs
         public void OnCallEnd(Action.Action lastMainAction)
         {
             if (lastMainAction is not IQuiets) return;
-            if (lastMainAction.Maker != Piece.Pos)
+            if (lastMainAction.GetMaker() != Piece)
             {
                 TurnSinceLastMove++;
                 if (TurnSinceLastMove <= TurnToRemoveEffect) return;
@@ -41,7 +41,7 @@ namespace Game.Effects.Debuffs
             {
                 TurnSinceLastMove = 0;
                 TurnLeftToDie--;
-                if (TurnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.Maker));
+                if (TurnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.GetMakerPos()));
             }
         }
 

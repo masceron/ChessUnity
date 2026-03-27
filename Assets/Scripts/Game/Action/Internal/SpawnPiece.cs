@@ -9,31 +9,30 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SpawnPiece : Action, IInternal
     {
-        public readonly PieceConfig pieceToSpawn;
-        public readonly System.Action<PieceLogic> onSpawned;
+        private readonly PieceConfig _pieceToSpawn;
+        private readonly System.Action<PieceLogic> _onSpawned;
 
         public SpawnPiece(PieceConfig p) : base(-1)
         {
-            pieceToSpawn = p;
+            _pieceToSpawn = p;
         }
         
         public SpawnPiece(PieceConfig p, System.Action<PieceLogic> onSpawned = null) 
             : base(-1)
         {
-            pieceToSpawn = p;
-            this.onSpawned = onSpawned;
+            _pieceToSpawn = p;
+            _onSpawned = onSpawned;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.SpawnPiece(pieceToSpawn);
+            PieceManager.Ins.SpawnPiece(_pieceToSpawn);
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.SpawnPiece(pieceToSpawn);
-            var spawnedPiece = PieceOn(pieceToSpawn.Index);
-            onSpawned?.Invoke(spawnedPiece);
+            var spawnedPiece = SpawnPiece(_pieceToSpawn);
+            _onSpawned?.Invoke(spawnedPiece);
         }
     }
 }

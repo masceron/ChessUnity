@@ -26,9 +26,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            Debug.Log("Complete FrenziedMove");
             MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
         }
 
         public void CompleteActionForAI()

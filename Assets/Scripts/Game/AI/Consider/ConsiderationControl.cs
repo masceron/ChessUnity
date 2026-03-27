@@ -11,7 +11,7 @@ namespace Game.AI.Consider
     [CreateAssetMenu(menuName = "AI/Considerations/Control")]
     public class ControlConsiderationSO : ConsiderationSO
     {
-        private const int threatenedTilePenalty = 10;
+        private const int ThreatenedTilePenalty = 10;
 
         public override float Score(Action.Action action, List<Action.Action> allyActions,
             List<Action.Action> enemyActions, int weight, PieceLogic maker)

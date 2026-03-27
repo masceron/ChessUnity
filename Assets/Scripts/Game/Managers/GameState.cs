@@ -18,12 +18,6 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    public interface ISubscriber
-    {
-        public void OnCall(Action.Action action);
-        public void OnCallEnd(bool color);
-    }
-
     public enum Color : byte
     {
         White,
@@ -36,6 +30,7 @@ namespace Game.Managers
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GameState
     {
+        private int _pieceID = 1;
         private const int NumberOfTurnToChange = 10;
         public readonly BitArray ActiveBoard;
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
@@ -43,7 +38,6 @@ namespace Game.Managers
         public readonly bool OurSide;
         public readonly PieceLogic[] PieceBoard;
         public readonly BitArray SquareColor;
-        public readonly List<ISubscriber> Subscribers = new();
         public readonly TriggerHooks TriggerHooks = new();
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         private int _countTurn;
@@ -56,6 +50,8 @@ namespace Game.Managers
         public bool SideToMove;
         public PieceLogic WhiteCommander, BlackCommander;
         public RelicLogic WhiteRelic;
+        
+        private Dictionary<int, PieceLogic> _piecesDictionary;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -91,7 +87,7 @@ namespace Game.Managers
         public bool IsDay { get; private set; }
         public int CurrentTurn { get; private set; }
 
-        public void SpawnPiece(PieceConfig piece)
+        public PieceLogic SpawnPiece(PieceConfig piece)
         {
             var pieceLogic = PieceMaker.Get(piece);
             PieceBoard[piece.Index] = pieceLogic;
@@ -108,6 +104,14 @@ namespace Game.Managers
 
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];
+            
+            _piecesDictionary.Add(pieceLogic.ID, pieceLogic);
+            return pieceLogic;
+        }
+
+        public int NextPieceID()
+        {
+            return _pieceID++;
         }
 
         public void MakeRegionalEffect(RegionalEffectType ret)
@@ -183,6 +187,8 @@ namespace Game.Managers
 
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
                 pieceAffected.Color, pieceAffected.Pos));
+
+            _piecesDictionary.Remove(pieceAffected.ID);
         }
 
         public void Move(int f, int t)
@@ -257,6 +263,11 @@ namespace Game.Managers
             }
 
             SideToMove = !SideToMove;
+        }
+
+        public PieceLogic GetPieceByID(int id)
+        {
+            return _piecesDictionary.GetValueOrDefault(id);
         }
 
         public void SetRegionalEffect(RegionalEffect e)

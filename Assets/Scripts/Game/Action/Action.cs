@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Game.Common;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action
@@ -31,19 +33,32 @@ namespace Game.Action
         Infest = 14, // Ký sinh thay vì ăn quân
     }
 
+    public enum TargetingType
+    {
+        None = 0,
+        UnitTargeting = 1,
+        LocationTargeting = 2,
+    }
+
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
     public abstract partial class Action
     {
         public ActionFlag Flag = ActionFlag.None;
-        public int Maker;
         public ResultFlag Result = ResultFlag.Success;
-        public int Target = -1;
+        protected readonly int Maker;
+        protected readonly int Target = -1;
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        public TargetingType TargetingType;
 
-        protected Action(int maker)
+        protected Action(int maker = 0, int target = -1, TargetingType targetingType = TargetingType.UnitTargeting)
         {
-            Maker = maker;
+            Maker = BoardUtils.GetIDAt(maker);
+            TargetingType = targetingType;
+            
+            if (targetingType == TargetingType.None) return;
+            Target = targetingType == TargetingType.UnitTargeting ? BoardUtils.GetIDAt(target) : target;
         }
 
         [MemoryPackConstructor]
@@ -67,6 +82,26 @@ namespace Game.Action
         }
 
         protected abstract void ModifyGameState();
+
+        public PieceLogic GetMaker()
+        {
+            return BoardUtils.GetPieceByID(Maker);
+        }
+
+        public PieceLogic GetTarget()
+        {
+            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(Target) : null;
+        }
+
+        public int GetMakerPos()
+        {
+            return BoardUtils.GetPieceByID(Maker).Pos;
+        }
+
+        public int GetTargetPos()
+        {
+            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(Target).Pos : Target;
+        }
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -76,12 +111,12 @@ namespace Game.Action
         public bool Equals(Action x, Action y)
         {
             if (x!.GetType() != y!.GetType()) return false;
-            return x.Target == y.Target && x.Maker == y.Maker;
+            return x.GetMaker() == y.GetMaker() && x.GetTarget() == y.GetTarget();
         }
 
         public int GetHashCode(Action obj)
         {
-            return HashCode.Combine(obj.Target, obj.Maker);
+            return HashCode.Combine(obj.GetTarget(), obj.GetMaker());
         }
     }
 }
