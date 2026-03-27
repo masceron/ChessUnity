@@ -315,6 +315,10 @@ MonoBehaviour:
     m_Key: piece_dwarf_cuttlefish_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 81557595561992192
+    m_Key: piece_sand_conch_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

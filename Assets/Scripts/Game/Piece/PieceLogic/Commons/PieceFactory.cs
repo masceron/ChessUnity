@@ -118,6 +118,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_ribbon_eel" => new RibbonEel(cfg),
                 "piece_royal_gramma" => new RoyalGramma(cfg),
                 "piece_rusty_parrotfish" => new RustyParrotfish(cfg),
+                "piece_sand_conch" => new SandConch(cfg),
                 "piece_scalyhead_sculpin" => new ScalyheadSculpin(cfg),
                 "piece_sea_star" => new SeaStar(cfg),
                 "piece_sea_turtle" => new SeaTurtle(cfg),

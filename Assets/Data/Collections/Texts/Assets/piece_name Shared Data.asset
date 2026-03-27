@@ -583,6 +583,10 @@ MonoBehaviour:
     m_Key: piece_dwarf_cuttlefish
     m_Metadata:
       m_Items: []
+  - m_Id: 81583831185170432
+    m_Key: piece_sand_conch
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -39,6 +39,10 @@ MonoBehaviour:
     m_Key: formation_carpet_anemone_description
     m_Metadata:
       m_Items: []
+  - m_Id: 15238328990638080
+    m_Key: formation_silt_cloud_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
