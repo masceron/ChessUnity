@@ -10,6 +10,7 @@ using Game.Movesets;
 using Game.ScriptableObjects;
 using Game.Tile;
 using Game.Triggers;
+using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;
 using static Game.ScriptableObjects.PieceInfo;
@@ -373,7 +374,12 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat)) return 0;
+            if (!SkillStats.TryGetValue(stat, out var skillStat))
+            {
+                Debug.LogError("[PieceLogic] You call GetStat of a SkillStat that doesn't exist");
+                return 0;
+            }
+            
 
             var finalStat = skillStat[num - 1];
             foreach (var effect in Effects)

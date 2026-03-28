@@ -108,7 +108,11 @@ namespace Game.Effects
 
         public int GetStat(EffectStat stat, int num = 1)
         {
-            if (!Stats.TryGetValue(stat, out var statin)) return 0;
+            if (!Stats.TryGetValue(stat, out var statin))
+            {
+                Debug.LogError("[Effect] You call GetStat of a EffectStat that doesn't exist");
+                return 0;
+            }
             var finalStat = statin[num - 1];
             foreach (var effect in Piece.Effects)
                 if (effect is IEffectStatModifierTrigger modifier)

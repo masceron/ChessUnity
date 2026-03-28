@@ -807,6 +807,22 @@ MonoBehaviour:
     m_Key: effect_territorial_description
     m_Metadata:
       m_Items: []
+  - m_Id: 82692976535920640
+    m_Key: effect_pulse_coral_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82764756353015808
+    m_Key: effect_arrow_crab_diurnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82764809759088640
+    m_Key: effect_arrow_crab_territorial_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83152764541591552
+    m_Key: effect_arrow_crab_nocturnal_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
