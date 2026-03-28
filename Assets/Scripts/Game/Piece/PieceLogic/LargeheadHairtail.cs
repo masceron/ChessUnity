@@ -15,7 +15,6 @@ namespace Game.Piece.PieceLogic
         { 
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, EvasionChance, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new LargeheadHairtailPassive(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Blinded(-1, 100, this)));
         }
     }
 }

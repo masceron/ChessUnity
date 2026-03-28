@@ -40,6 +40,5 @@ namespace Game.Effects.SpecialAbility
         {
             return baseRange + bonus;
         }
-        
     }
 }
