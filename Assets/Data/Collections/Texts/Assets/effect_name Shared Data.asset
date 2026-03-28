@@ -831,6 +831,14 @@ MonoBehaviour:
     m_Key: effect_pressure_membrane_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 82927075345113088
+    m_Key: effect_invasive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82927075458359296
+    m_Key: effect_territorial
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var maker = PieceOn(Maker);
-            ActionManager.EnqueueAction(new ApplyEffect(new Burrowed(4, maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Burrowed(4, maker), maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

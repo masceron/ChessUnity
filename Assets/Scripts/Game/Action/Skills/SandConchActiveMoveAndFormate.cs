@@ -26,7 +26,7 @@ namespace Game.Action.Skills
             //TODO: Fix Burrowed to work with SandConch
             
             FormationManager.Ins.SetFormation(Target, new SiltCloud(false));
-            if (burrowed != null) ActionManager.EnqueueAction(new RemoveEffect(burrowed));
+            if (burrowed != null) ActionManager.EnqueueAction(new ApplyEffect(new NoneState(maker)));
             SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
         }
 
