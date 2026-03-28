@@ -20,7 +20,6 @@ namespace Game.Action.Skills
 
         public RedtailParrotfishActive(int maker, int formationPos, int moveTo) : base(maker)
         {
-            Maker = maker;
             this.formationPos = formationPos;
             this.moveTo = moveTo;
         }

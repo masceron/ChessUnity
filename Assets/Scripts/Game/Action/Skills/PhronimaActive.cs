@@ -2,6 +2,7 @@ using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using UnityEngine;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
@@ -16,9 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public PhronimaActive(int from, int to) : base(from)
+        public PhronimaActive(int from, int to) : base(from, to)
         {
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -33,18 +33,13 @@ namespace Game.Action.Skills
         {
             var targetPiece = GetTarget();
 
-            foreach (var effect in targetPiece.Effects)
-                //áp dụng cho debuff và chỉ tăng duration nếu nó là hữu hạn
-                if (effect.Category == EffectCategory.Debuff && effect.Duration > 0)
-                    effect.Duration += increaseDuration;
-                else if (effect.Category == EffectCategory.Debuff)
-                    Debug.Log(
-                        $"[PhronimaActive] Effect {effect.EffectName} on piece {targetPiece.Type} at position {Target} has infinite duration, skipping duration increase.");
+            foreach (var effect in targetPiece.Effects.Where(effect => effect.Category == EffectCategory.Debuff && effect.Duration > 0))
+                effect.Duration += increaseDuration;
         }
 
         protected override void ModifyGameState()
         {
-            ApplyEffect(Target);
+            ApplyEffect(GetTargetPos());
         }
     }
 }

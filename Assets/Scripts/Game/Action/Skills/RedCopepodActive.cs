@@ -16,7 +16,6 @@ namespace Game.Action.Skills
 
         public RedCopepodActive(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -30,7 +29,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
         }
     }
 }

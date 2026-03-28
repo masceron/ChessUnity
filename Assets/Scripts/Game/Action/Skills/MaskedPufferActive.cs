@@ -20,8 +20,6 @@ namespace Game.Action.Skills
 
         public MaskedPufferActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

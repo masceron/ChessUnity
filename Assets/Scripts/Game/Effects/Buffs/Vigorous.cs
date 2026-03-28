@@ -14,7 +14,7 @@ namespace Game.Effects.Buffs
         // {
         //     if (action != null && action is NormalCapture && action.Target == Piece.Pos)
         //     {
-        //         var capturer = BoardUtils.PieceOn(action.Maker);
+        //         var capturer = BoardUtils.action.GetMaker();
         //         capturer.ImmuneEffect("effect_consume");
         //     }
         // }

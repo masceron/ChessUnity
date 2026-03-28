@@ -18,8 +18,6 @@ namespace Game.Action.Skills
 
         public LionfishActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -31,7 +29,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
             var caller = GetMaker();
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)

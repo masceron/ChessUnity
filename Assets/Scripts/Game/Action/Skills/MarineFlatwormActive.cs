@@ -19,8 +19,6 @@ namespace Game.Action.Skills
 
         public MarineFlatwormActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -33,7 +31,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var config = new PieceConfig(GetMaker().Type, GetMaker().Color, Target);
+            var config = new PieceConfig(GetMaker().Type, GetMaker().Color, GetTargetPos());
             ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(GetTarget())));
             SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }

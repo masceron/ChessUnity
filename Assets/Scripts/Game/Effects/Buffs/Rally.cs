@@ -18,8 +18,8 @@ namespace Game.Effects.Buffs
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success ||
                 (action.Flag & ActionFlag.Unblockable) != 0) return;
-            if (PieceOn(action.Maker).Color != Piece.Color) return;
-            if (Distance(action.Maker, Piece.Pos) > 4) return;
+            if (action.GetMaker().Color != Piece.Color) return;
+            if (Distance(action.GetMakerPos(), Piece.Pos) > 4) return;
             if (Piece.SkillCooldown > 0) Piece.SkillCooldown--;
         }
     }

@@ -23,7 +23,7 @@ namespace Game.Effects.Others
         {
             if (action is not NormalMove move || action.GetMaker() != Piece ||
                 action.Result != ResultFlag.Success) return;
-            var (rank, file) = BoardUtils.RankFileOf(move.Target);
+            var (rank, file) = BoardUtils.RankFileOf(move.GetTargetPos());
 
             foreach (var (rankof, fileof) in MoveEnumerators.AroundUntil(rank, file, 1))
             {

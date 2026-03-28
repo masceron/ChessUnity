@@ -27,10 +27,10 @@ namespace Game.Effects.Augmentation
             var piece2 = PieceOn(IndexOf(rank, file + 1));
 
             if (piece1 != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece1), PieceOn(action.Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece1), action.GetMaker()));
 
             if (piece2 != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece2), PieceOn(action.Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece2), action.GetMaker()));
         }
     }
 }

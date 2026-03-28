@@ -16,7 +16,6 @@ namespace Game.Action.Skills
 
         public MiniSiphonophoreActive(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

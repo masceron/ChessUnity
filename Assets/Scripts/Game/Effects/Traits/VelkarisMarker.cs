@@ -32,7 +32,7 @@ namespace Game.Effects.Traits
 
             var rowMovedTo = RankOf(lastMainAction.GetTargetPos());
 
-            if (!_rows.Contains(rowMovedTo) || ColorOfPiece(lastMainAction.GetMaker()) == Piece.Color) return;
+            if (!_rows.Contains(rowMovedTo) || lastMainAction.GetMaker().Color == Piece.Color) return;
 
             ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, lastMainAction.GetMakerPos()));
             ActionManager.EnqueueAction(new RemoveEffect(this));

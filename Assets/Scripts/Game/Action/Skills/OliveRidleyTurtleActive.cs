@@ -16,9 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public OliveRidleyTurtleActive(int maker, int to) : base(maker)
+        public OliveRidleyTurtleActive(int maker, int to) : base(maker, to)
         {
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -31,11 +30,11 @@ namespace Game.Action.Skills
             var caller = GetMaker();
             if (caller == null) return;
 
-            if (!VerifyIndex(Target) || !IsActive(Target)) return;
+            if (!VerifyIndex(GetTargetPos()) || !IsActive(GetTargetPos())) return;
             if (GetTarget() != null) return;
 
             ActionManager.EnqueueAction(new SpawnPiece(
-                new PieceConfig("piece_olive_ridley_eggs", caller.Color, Target)
+                new PieceConfig("piece_olive_ridley_eggs", caller.Color, GetTargetPos())
             ));
 
             SetCooldown(GetMaker(), ((IPieceWithSkill)caller).TimeToCooldown);

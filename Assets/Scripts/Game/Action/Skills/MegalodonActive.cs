@@ -20,7 +20,6 @@ namespace Game.Action.Skills
 
         public MegalodonActive(int maker, int firstTargetPos, int secondTargetPos) : base(maker)
         {
-            Maker = maker;
             _firstTargetPos = firstTargetPos;
             _secondTargetPos = secondTargetPos;
         }

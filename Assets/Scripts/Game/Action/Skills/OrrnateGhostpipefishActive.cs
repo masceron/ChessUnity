@@ -18,9 +18,8 @@ namespace Game.Action.Skills
         }
         private readonly int Duration;
 
-        public OrrnateGhostpipefishActive(int maker, int to, int duration) : base(maker)
+        public OrrnateGhostpipefishActive(int maker, int to, int duration) : base(maker, to)
         {
-            Target = to;
             Duration = duration;
         }
 
@@ -35,9 +34,9 @@ namespace Game.Action.Skills
             var pOnTarget = GetTarget();
             if (caller == null) return;
 
-            if (Maker == Target)
+            if (GetMakerPos() == GetTargetPos())
             {
-                if (caller.HasState(Effects.States.StateType.None))
+                if (caller.HasState(StateType.None))
                 {
                     ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration * 2, caller)));
                 }

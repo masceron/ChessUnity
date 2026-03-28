@@ -132,11 +132,6 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SquareColor[pos];
         }
 
-        public static bool ColorOfPiece(PieceLogic piece)
-        {
-            return piece.Color;
-        }
-
         public static void FlipPieceColor(PieceLogic piece)
         {
             piece.Color = !piece.Color;

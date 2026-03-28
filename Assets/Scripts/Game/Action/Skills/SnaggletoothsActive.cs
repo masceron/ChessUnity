@@ -18,10 +18,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SnaggletoothsActive(int maker, int to) : base(maker)
+        public SnaggletoothsActive(int maker, int to) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

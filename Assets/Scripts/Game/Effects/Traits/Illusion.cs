@@ -11,7 +11,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
-    public class Illusion : StateEffect, IOnApplyTrigger, IOnMoveGenTrigger
+    public class Illusion : StateEffect, IOnMoveGenTrigger
     {
         public override StateType StateType => StateType.Illusion;
         private bool color;
@@ -53,8 +53,8 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             actions.RemoveAll(e => e is ISkills);
             for (var i = 0; i < actions.Count; i++)
-                if (actions[i] is NormalCapture capture && capture.Maker == Piece.Pos)
-                    actions[i] = new IllusionCapture(capture.Maker, capture.Target);
+                if (actions[i] is NormalCapture capture && capture.GetMaker() == Piece)
+                    actions[i] = new IllusionCapture(capture.GetMakerPos(), capture.GetTargetPos());
         }
     }
 }

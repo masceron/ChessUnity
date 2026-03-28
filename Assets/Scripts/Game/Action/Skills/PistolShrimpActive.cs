@@ -15,8 +15,6 @@ namespace Game.Action.Skills
 
         public PistolShrimpActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -29,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Target));
+            ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
             SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

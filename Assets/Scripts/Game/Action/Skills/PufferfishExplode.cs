@@ -18,7 +18,6 @@ namespace Game.Action.Skills
 
         public PufferfishExplode(int maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -32,8 +31,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Maker));
-            var (rank, file) = RankFileOf(Maker);
+            ActionManager.EnqueueAction(new KillPiece(GetFrom()));
+            var (rank, file) = RankFileOf(GetFrom());
             var caller = GetMaker();
 
             for (var i = -1; i <= 1; i++)

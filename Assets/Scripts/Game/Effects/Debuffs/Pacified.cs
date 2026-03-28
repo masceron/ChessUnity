@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Action.Captures;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
@@ -23,8 +22,8 @@ namespace Game.Effects.Debuffs
             if (caller != Piece) return;
 
             actions.RemoveAll(action =>
-                action is ICaptures capture &&
-                BoardUtils.PieceOn(action.Target)?.Color != Piece.Color);
+                action is ICaptures &&
+                action.GetTarget()?.Color != Piece.Color);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Game.Effects.Traits
         {
             if (caller != Piece) return;
             actions.RemoveAll(action =>
-                action is ICaptures && PieceOn(action.Maker).PieceRank <= PieceOn(action.Target).PieceRank);
+                action is ICaptures && action.GetMaker().PieceRank <= PieceOn(action.Target).PieceRank);
         }
 
         public override int GetValueForAI()

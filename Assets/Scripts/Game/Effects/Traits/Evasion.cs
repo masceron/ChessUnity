@@ -28,7 +28,7 @@ namespace Game.Effects.Traits
 
             if (PieceOn(action.Target).Effects.Any(e => e.EffectName == "effect_bound"))
             {
-                var effect = PieceOn(action.Maker).Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
+                var effect = action.GetMaker().Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)
                 {
                     action.Result = ResultFlag.Evade;
@@ -36,7 +36,7 @@ namespace Game.Effects.Traits
                 }
             }
 
-            var pieceTarget = PieceOn(action.Maker);
+            var pieceTarget = action.GetMaker();
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy))
             {
                 if (!MatchManager.Roll(Strength - 15)) return;

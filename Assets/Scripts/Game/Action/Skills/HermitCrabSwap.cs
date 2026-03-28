@@ -15,9 +15,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public HermitCrabSwap(int maker, int to) : base(maker)
+        public HermitCrabSwap(int maker, int to) : base(maker, to)
         {
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -27,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void Animate()
         {
-            PieceManager.Ins.Swap(Maker, Target);
+            PieceManager.Ins.Swap(GetMakerPos(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
@@ -45,8 +44,8 @@ namespace Game.Action.Skills
             // if (pieceA != null) pieceA.Pos = b;
             // SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
 
-            MatchManager.Ins.GameState.Swap(Maker, Target);
-            SetCooldown(Target, ((IPieceWithSkill)GetTarget()).TimeToCooldown);
+            MatchManager.Ins.GameState.Swap(GetMaker(), GetTarget());
+            SetCooldown(GetTarget(), ((IPieceWithSkill)GetTarget()).TimeToCooldown);
         }
     }
 }

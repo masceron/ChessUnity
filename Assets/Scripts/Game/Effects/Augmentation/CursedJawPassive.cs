@@ -23,7 +23,7 @@ namespace Game.Effects.Augmentation
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (BoardUtils.PieceOn(action.Maker) != Piece) return;
+            if (action.GetMaker() != Piece) return;
 
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(stunDuration, Piece)));
         }

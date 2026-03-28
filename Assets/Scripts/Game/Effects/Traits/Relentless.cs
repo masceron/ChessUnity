@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
             if (action.GetTarget() != Piece) return;
             if (action.Result != ResultFlag.SurvivedHit) return;
 
-            var target = PieceOn(action.Maker);
+            var target = action.GetMaker();
             if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
                 ActionManager.EnqueueAction(new KillPiece(action.Maker));
 

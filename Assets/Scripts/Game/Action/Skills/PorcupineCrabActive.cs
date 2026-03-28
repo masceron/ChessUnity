@@ -20,18 +20,16 @@ namespace Game.Action.Skills
         
         public PorcupineCrabActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }   
         
         protected override void ModifyGameState()
         {
             var makerPiece = GetMaker();
 
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
 
-            var (rank1, file1) = RankFileOf(Maker);
-            var (rank2, file2) = RankFileOf(Target);
+            var (rank1, file1) = RankFileOf(GetFrom());
+            var (rank2, file2) = RankFileOf(GetTargetPos());
 
             var tiles = Pathfinder.AllLineBlockers(rank1, file1, rank2, file2);
 

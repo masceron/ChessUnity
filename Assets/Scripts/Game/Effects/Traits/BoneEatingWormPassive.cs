@@ -33,7 +33,7 @@ namespace Game.Effects.Traits
             int radius = GetStat(EffectStat.Radius);
 
 
-            var movedPiece = PieceOn(action.Maker);
+            var movedPiece = action.GetMaker();
             if (movedPiece != null && movedPiece != Piece && movedPiece.Color != Piece.Color)
             {
                 int prevPos = movedPiece.PreviousMoves.Count > 0

@@ -22,8 +22,6 @@ namespace Game.Action.Skills
 
         public RibbonEelActive(int maker, int sourcePiece, int targetPiece) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
             _sourcePiecePos = sourcePiece;
             _targetPiecePos = targetPiece;
         }
@@ -34,7 +32,7 @@ namespace Game.Action.Skills
             var targetPiece = PieceOn(_targetPiecePos);
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(BoundDuration, sourcePiece), sourcePiece));
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(BoundDuration, targetPiece), sourcePiece));
-            ActionManager.EnqueueAction(new NormalMove(_sourcePiecePos, Maker));
+            ActionManager.EnqueueAction(new NormalMove(_sourcePiecePos, GetFrom()));
         }
     }
 }

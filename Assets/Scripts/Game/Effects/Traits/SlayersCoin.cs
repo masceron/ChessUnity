@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success) return;
 
-            var caller = BoardUtils.PieceOn(action.Maker);
+            var caller = BoardUtils.action.GetMaker();
             var captured = BoardUtils.PieceOn(action.Target);
 
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;

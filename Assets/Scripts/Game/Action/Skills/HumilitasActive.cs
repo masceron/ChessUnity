@@ -22,7 +22,6 @@ namespace Game.Action.Skills
 
         public HumilitasActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Maker = maker;
             FirstTarget = firstTarget;
             SecondTarget = secondTarget;
         }

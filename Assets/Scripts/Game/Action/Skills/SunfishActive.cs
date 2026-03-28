@@ -19,8 +19,6 @@ namespace Game.Action.Skills
 
         public SunfishActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -32,7 +30,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 4))
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()), 4))
             {
                 var index = IndexOf(rankOff, fileOff);
                 if (!VerifyIndex(index) || !IsActive(index)) continue;

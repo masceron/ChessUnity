@@ -36,7 +36,7 @@ namespace Game.Effects.States
                     actions.Remove(action);
                 }
 
-                if (PieceOn(action.Maker) == Piece) {
+                if (action.GetMaker() == Piece) {
                     if (action is IQuiets || action is ICaptures)
                     {
                         actions.Remove(action);

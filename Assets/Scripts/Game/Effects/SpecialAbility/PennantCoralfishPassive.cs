@@ -25,7 +25,7 @@ namespace Game.Effects.SpecialAbility
             if (action is not IQuiets) return;
             if (action.GetMaker() != Piece) return;
 
-            var piece = PieceOn(action.Maker);
+            var piece = action.GetMaker();
             if (piece == null || piece.Type != "piece_pennant_coralfish") return;
             //Debug.Log(piece.Type + " made a quiet action, check for pennant coralfish passive");
 

@@ -18,8 +18,6 @@ namespace Game.Action.Skills
 
         public PhantomJellyActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -36,7 +34,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
+            var (rank, file) = RankFileOf(GetMakerPos());
             var caller = GetMaker();
 
             for (var i = -3; i <= 3; i++)

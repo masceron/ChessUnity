@@ -22,7 +22,7 @@ namespace Game.Effects.Others
             if (action is not ISkills)
                 return;
 
-            var maker = BoardUtils.PieceOn(action.Maker);
+            var maker = BoardUtils.action.GetMaker();
             var target = BoardUtils.PieceOn(action.Target);
 
             if (target != Piece)

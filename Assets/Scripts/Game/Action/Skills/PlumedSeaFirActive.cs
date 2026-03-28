@@ -19,7 +19,6 @@ namespace Game.Action.Skills
 
         public PlumedSeaFirActive(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic p)
