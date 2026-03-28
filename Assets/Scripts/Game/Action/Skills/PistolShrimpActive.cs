@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PistolShrimpActive(int maker, int target) : base(maker)
+        public PistolShrimpActive(int maker, int target) : base(maker, target)
         {
             Maker = maker;
             Target = target;
@@ -21,7 +21,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMaker();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -80;
             return 0;
@@ -30,7 +30,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new KillPiece(Target));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

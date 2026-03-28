@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SnipeEelActive(int maker, int target) : base(maker)
+        public SnipeEelActive(int maker, int target) : base(maker, target)
         {
             Target = target;
         }
@@ -28,8 +28,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, BoardUtils.PieceOn(Target)),
-                BoardUtils.PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, BoardUtils.GetTarget()),
+                BoardUtils.GetMaker()));
         }
     }
 }

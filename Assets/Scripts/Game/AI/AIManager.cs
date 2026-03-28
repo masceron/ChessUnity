@@ -229,7 +229,7 @@ namespace Game.AI
         private void ShowScoreForAction(Action.Action action, float score)
         {
             if (action == null) return;
-            ShowScoreAtPosition(action.Target, score);
+            ShowScoreAtPosition(action.GetTargetPos(), score);
         }
 
 
@@ -276,7 +276,7 @@ namespace Game.AI
             foreach (var action in actions)
             {
                 var score = targetBrain.Evaluate(action, actions, enemySnapshot);
-                var targetPos = action.Target;
+                var targetPos = action.GetTargetPos();
 
                 if (targetScores.TryGetValue(targetPos, out var existingScore))
                 {

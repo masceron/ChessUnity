@@ -23,7 +23,7 @@ namespace Game.Piece.PieceLogic
                     var targets = SkillRangeHelper.GetActiveCellInRadius(Pos, 2);
                     foreach (var target in targets)
                     {
-                        var piece = PieceOn(target);
+                        var piece = GetTarget();
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
                             list.Add(new SnaggletoothsActive(Pos, target));

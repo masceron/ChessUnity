@@ -43,7 +43,7 @@ namespace Game.Piece.PieceLogic
                     var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 3);
                     foreach (var target in targets)
                     {
-                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        if (GetTarget().Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
                         listPieces.Add(PieceOn(target));
                     }
 

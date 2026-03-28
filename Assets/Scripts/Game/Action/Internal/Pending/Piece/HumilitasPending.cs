@@ -32,7 +32,7 @@ namespace Game.Action.Internal.Pending.Piece
             // {
             //     var idx = IndexOf(rank, file);
             //     var pOn = PieceOn(idx);
-            //     if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+            //     if (pOn != null && pOn.Color != GetMaker().Color)
             //     {
             //         if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
             //         listPieces.Add(pOn);
@@ -44,7 +44,7 @@ namespace Game.Action.Internal.Pending.Piece
             // if (listPieces.Count == 1)
             // {
             //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, listPieces[0])));
-            //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            //     SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
             //     return;
             // }
             // // neu co nhieu quan           
@@ -89,7 +89,7 @@ namespace Game.Action.Internal.Pending.Piece
             //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
             // }
 
-            // SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            // SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         public void Dispose()

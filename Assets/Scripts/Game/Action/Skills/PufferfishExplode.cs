@@ -34,7 +34,7 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new KillPiece(Maker));
             var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            var caller = GetMaker();
 
             for (var i = -1; i <= 1; i++)
             {
@@ -48,7 +48,7 @@ namespace Game.Action.Skills
                     var p = PieceOn(idx);
 
                     if (p != null && p.Color != caller.Color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), PieceOn(Maker)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), GetMaker()));
                 }
             }
         }

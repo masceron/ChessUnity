@@ -33,8 +33,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, PieceOn(Maker))));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, GetMaker())));
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

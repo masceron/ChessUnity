@@ -19,7 +19,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMaker() != Piece) return;
             if (action is not FlyingFishMove flyingFishMove) return;
 
             var (rankFrom, fileFrom) = RankFileOf(flyingFishMove.From);

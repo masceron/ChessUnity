@@ -28,17 +28,17 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = PieceOn(Maker);
+            var caller = GetMaker();
             if (caller == null) return;
 
             if (!VerifyIndex(Target) || !IsActive(Target)) return;
-            if (PieceOn(Target) != null) return;
+            if (GetTarget() != null) return;
 
             ActionManager.EnqueueAction(new SpawnPiece(
                 new PieceConfig("piece_olive_ridley_eggs", caller.Color, Target)
             ));
 
-            SetCooldown(Maker, ((IPieceWithSkill)caller).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)caller).TimeToCooldown);
         }
     }
 }

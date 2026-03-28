@@ -15,13 +15,12 @@ namespace Game.Action.Relics
 
         public SeafoamPhialAction(int maker) : base(maker)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker))));
+            ActionManager.EnqueueAction(new Purify(GetMakerPos(), GetMakerPos()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetMaker())));
         }
     }
 }

@@ -52,7 +52,7 @@ namespace Game.Piece.PieceLogic
                         {
                             var index = IndexOf(rankOff, fileOff);
                             var piece = PieceOn(index);
-                            if (piece == null || piece.Color != PieceOn(target).Color || piece == PieceOn(target))
+                            if (piece == null || piece.Color != GetTarget().Color || piece == PieceOn(target))
                                 continue;
                             var value = piece.GetValueForAI();
                             if (value > maxSubValue)
@@ -65,9 +65,9 @@ namespace Game.Piece.PieceLogic
                         }
 
                         if (secondSubTarget == -1) continue;
-                        if (PieceOn(target).GetValueForAI() + maxSubValue > MaxValue)
+                        if (GetTarget().GetValueForAI() + maxSubValue > MaxValue)
                         {
-                            MaxValue = PieceOn(target).GetValueForAI() + maxSubValue;
+                            MaxValue = GetTarget().GetValueForAI() + maxSubValue;
                             firstTarget = target;
                             secondTarget = secondSubTarget;
                         }

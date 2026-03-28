@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SunfishActive(int maker, int target) : base(maker)
+        public SunfishActive(int maker, int target) : base(maker, target)
         {
             Maker = maker;
             Target = target;
@@ -25,7 +25,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMaker();
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -10 : 0;
         }
@@ -37,11 +37,11 @@ namespace Game.Action.Skills
                 var index = IndexOf(rankOff, fileOff);
                 if (!VerifyIndex(index) || !IsActive(index)) continue;
                 var targetPiece = PieceOn(index);
-                if (targetPiece != null && ColorOfSquare(index) && targetPiece.Color != PieceOn(Maker).Color)
-                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), PieceOn(Maker)));
+                if (targetPiece != null && ColorOfSquare(index) && targetPiece.Color != GetMaker().Color)
+                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMaker()));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

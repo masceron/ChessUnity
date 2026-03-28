@@ -36,7 +36,7 @@ namespace Game.Action.Skills
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
         protected override void ModifyGameState()
         {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
             var ally = PieceOn(allyIndex);
             var enemy = PieceOn(enemyIndex);
             if (ally == null || enemy == null) return;
@@ -53,14 +53,14 @@ namespace Game.Action.Skills
             foreach (var effect in allyDebuffs)
             {
                 effect.Piece = enemy;
-                ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(effect, GetMaker()));
             }
 
             // Thêm buff vào Ally
             foreach (var effect in enemyBuffs)
             {
                 effect.Piece = ally;
-                ActionManager.EnqueueAction(new ApplyEffect(effect, PieceOn(Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(effect, GetMaker()));
             }
         }
     }

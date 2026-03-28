@@ -24,7 +24,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMaker();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -30;
             return 0;
@@ -37,7 +37,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            var caller = GetMaker();
 
             for (var i = -3; i <= 3; i++)
             {
@@ -51,7 +51,7 @@ namespace Game.Action.Skills
                     var p = PieceOn(idx);
 
                     if (p != null && p.Color != caller.Color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p), PieceOn(Maker)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p), GetMaker()));
                 }
             }
         }

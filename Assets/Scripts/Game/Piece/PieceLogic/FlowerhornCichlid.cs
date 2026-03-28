@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     {
         public FlowerhornCichlid(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)

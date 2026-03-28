@@ -36,7 +36,7 @@ namespace Game.Effects.States
         public void OnCallBeforePieceAction(Action.Action action)
         {
            if (action is not ICaptures 
-                || action.Maker != Piece.Pos 
+                || action.GetMaker() != Piece 
                 || BoardUtils.PieceOn(action.Target).CurrentState != StateType.None) return;
 
            action.Result = ResultFlag.Infest;

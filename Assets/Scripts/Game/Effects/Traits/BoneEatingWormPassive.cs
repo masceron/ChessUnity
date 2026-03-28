@@ -51,7 +51,7 @@ namespace Game.Effects.Traits
             }
 
 
-            if (action.Maker != Piece.Pos || Piece.PreviousMoves.Count <= 0) return;
+            if (action.GetMaker() != Piece || Piece.PreviousMoves.Count <= 0) return;
 
             int oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
             for (int i = 0; i < BoardSize; i++)

@@ -13,8 +13,8 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
-            ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, Target), maker));
+            var maker = GetMaker();
+            ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, GetTargetPos()), maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

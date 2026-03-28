@@ -16,15 +16,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public TemporalWarpExecute(int maker, int target) : base(maker)
+        public TemporalWarpExecute(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
-            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(BoardUtils.PieceOn(Maker), Target)));
+            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
+            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(GetMaker(), GetTargetPos())));
         }
     }
 }

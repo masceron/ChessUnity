@@ -33,7 +33,7 @@ namespace Game.Action.Internal.Pending.Relic
         //     var random = new System.Random();
         //     var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
         //     Debug.Log("Selected Effect Name: " + selectedEffectName);
-        //     return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
+        //     return CreateEffectFromName(selectedEffectName, BoardUtils.GetTarget());
         // }
 
         // private Effect GetRandomDebuffEffect()
@@ -45,7 +45,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         //     var random = new System.Random();
         //     var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-        //     return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
+        //     return CreateEffectFromName(selectedEffectName, BoardUtils.GetTarget());
         // }
 
         // private static Effect CreateEffectFromName(string effectName, PieceLogic piece)
@@ -75,7 +75,7 @@ namespace Game.Action.Internal.Pending.Relic
         // }
         protected override void CompleteAction()
         {
-            // ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == blackPearl.Color
+            // ActionManager.EnqueueAction(BoardUtils.GetTarget().Color == blackPearl.Color
             //     ? new ApplyEffect(GetRandomBuffEffect())
             //     : new ApplyEffect(GetRandomDebuffEffect()));
 

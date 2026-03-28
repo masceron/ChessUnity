@@ -24,7 +24,7 @@ namespace Game.Effects.SpecialAbility
         void IAfterPieceActionTrigger.OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) return;
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMaker() != Piece) return;
 
             Debug.Log(PieceOn(action.Maker).Type + " made a quiet action, check for painted greenling passive");
 

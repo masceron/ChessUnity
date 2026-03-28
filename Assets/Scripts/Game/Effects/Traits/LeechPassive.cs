@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Result != ResultFlag.Success || action.Maker != Piece.Pos) return;
+            if (action is not ICaptures || action.Result != ResultFlag.Success || action.GetMaker() != Piece) return;
 
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, BoardUtils.PieceOn(action.Target)), Piece));
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));

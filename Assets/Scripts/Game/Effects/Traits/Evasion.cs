@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success) return;
+            if (action is not ICaptures || action.GetTarget() != Piece || action.Result != ResultFlag.Success) return;
             if (Distance(action.Maker, action.Target) < 3) return;
             if (!MatchManager.Roll(Strength)) return;
 

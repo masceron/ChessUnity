@@ -32,11 +32,11 @@ namespace Game.Action.Skills
             foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 1))
             {
                 var pieceOn = PieceOn(IndexOf(rank, file));
-                if (pieceOn != null && pieceOn.Color == PieceOn(Maker).Color)
+                if (pieceOn != null && pieceOn.Color == GetMaker().Color)
                     ActionManager.EnqueueAction(new ApplyEffect(new LongReach(pieceOn, 2, 2)));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

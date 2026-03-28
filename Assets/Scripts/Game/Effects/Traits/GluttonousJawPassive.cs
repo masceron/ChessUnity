@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMaker() != Piece) return;
 
             var maker = PieceOn(action.Maker);
             if (maker.Effects.Any(e => e.EffectName == "effect_consume"))

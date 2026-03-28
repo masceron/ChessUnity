@@ -18,7 +18,7 @@ namespace Game.Effects.Buffs
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success ||
+            if (action is not ICaptures || action.GetTarget() != Piece || action.Result != ResultFlag.Success ||
                 (action.Flag & ActionFlag.Unblockable) != 0) return;
 
             action.Result = ResultFlag.Blocked;

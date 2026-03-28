@@ -18,14 +18,14 @@ namespace Game.AI.Consider
         {
             if (action is not IQuiets) return 0f;
 
-            var value = weight + TileManager.Ins.GetTileValue(action.Target);
+            var value = weight + TileManager.Ins.GetTileValue(action.GetTargetPos());
             foreach (var ea in enemyActions)
             {
                 //if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;
-                if (ea.Target == action.Target && ea is ICaptures)
+                if (ea.GetTargetPos() == action.GetTargetPos() && ea is ICaptures)
                     value = PenaltyAction.PenaltyMoveToCapture(maker, value);
 
-                if (ea.Target == action.Target && ea is ISkills skills)
+                if (ea.GetTargetPos() == action.GetTargetPos() && ea is ISkills skills)
                     value = PenaltyAction.PenaltyMoveToSkill(skills, maker, value);
             }
 

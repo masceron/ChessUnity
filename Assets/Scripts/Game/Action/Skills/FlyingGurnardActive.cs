@@ -19,8 +19,6 @@ namespace Game.Action.Skills
 
         public FlyingGurnardActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -34,8 +32,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var push = PieceOn(Maker).Color ? 1 : -1;
+            var (rank, file) = RankFileOf(GetFrom());
+            var push = GetMaker().Color ? 1 : -1;
 
             var frontRank = rank + push;
             if (VerifyBounds(frontRank))
@@ -44,9 +42,9 @@ namespace Game.Action.Skills
                 if (VerifyIndex(frontIndex))
                 {
                     var pOn = PieceOn(frontIndex);
-                    if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                    if (pOn != null && pOn.Color != GetMaker().Color)
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
-                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(GetMaker().Color);
                     siltCloud.SetDuration(3);
                     SetFormation(frontIndex, siltCloud);
                 }
@@ -59,9 +57,9 @@ namespace Game.Action.Skills
                 if (VerifyIndex(backIndex))
                 {
                     var pOn = PieceOn(backIndex);
-                    if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                    if (pOn != null && pOn.Color != GetMaker().Color)
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
-                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(GetMaker().Color);
                     siltCloud.SetDuration(3);
                     SetFormation(backIndex, siltCloud);
                 }
@@ -74,9 +72,9 @@ namespace Game.Action.Skills
                 if (VerifyIndex(leftIndex))
                 {
                     var pOn = PieceOn(leftIndex);
-                    if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                    if (pOn != null && pOn.Color != GetMaker().Color)
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
-                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(GetMaker().Color);
                     siltCloud.SetDuration(3);
                     SetFormation(leftIndex, siltCloud);
                 }
@@ -89,15 +87,15 @@ namespace Game.Action.Skills
                 if (VerifyIndex(rightIndex))
                 {
                     var pOn = PieceOn(rightIndex);
-                    if (pOn != null && pOn.Color != PieceOn(Maker).Color)
+                    if (pOn != null && pOn.Color != GetMaker().Color)
                         ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
-                    var siltCloud = new SiltCloud(PieceOn(Maker).Color);
+                    var siltCloud = new SiltCloud(GetMaker().Color);
                     siltCloud.SetDuration(3);
                     SetFormation(rightIndex, siltCloud);
                 }
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

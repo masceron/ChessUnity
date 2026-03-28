@@ -29,10 +29,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            PieceLogic p = PieceOn(Maker);
+            PieceLogic p = GetMaker();
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(p, p.GetStat(SkillStat.Duration, 1))));
             ActionManager.EnqueueAction(new ApplyEffect(new Pacified(p.GetStat(SkillStat.Duration, 2), p)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

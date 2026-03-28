@@ -13,15 +13,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public SirenHarpoonExecute(int maker, int target) : base(maker)
+        public SirenHarpoonExecute(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, BoardUtils.PieceOn(Target))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, GetTarget())));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Game.Effects.Traits
 
             if (action.Result != ResultFlag.Success) return;
 
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMaker() != Piece) return;
 
             var targetPiece = PieceOn(action.Target);
             if (targetPiece is { PieceRank: PieceRank.Elite or PieceRank.Champion or PieceRank.Commander })

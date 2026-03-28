@@ -30,7 +30,7 @@ namespace Game.Action.Internal.Pending.Piece
         // protected override void ModifyGameState()
         // {
         //     ApplyEffect(FirstTarget, SecondTarget);
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        //     SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         //     
         //     ResetTargets();
         // }

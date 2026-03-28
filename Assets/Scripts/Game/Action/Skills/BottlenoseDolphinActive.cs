@@ -33,7 +33,7 @@ namespace Game.Action.Skills
                 if (piece is not IPieceWithSkill) continue;
 
                 var deltaCooldown = ((IPieceWithSkill)PieceOn(i)).TimeToCooldown - piece.SkillCooldown;
-                if (piece.Color == PieceOn(Maker).Color)
+                if (piece.Color == GetMaker().Color)
                     a.Add((i, deltaCooldown));
                 else
                     b.Add((i, deltaCooldown));
@@ -45,26 +45,26 @@ namespace Game.Action.Skills
                 if (type == 0)
                 {
                     var idx = Random.Range(0, a.Count - 1);
-                    SetCooldown(PieceOn(a[idx].pos).Pos, 0);
+                    SetCooldown(PieceOn(a[idx].pos), 0);
                 }
                 else
                 {
                     var idx = Random.Range(0, b.Count - 1);
-                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), PieceOn(Maker)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker()));
                 }
             }
             else if (a.Count > 0)
             {
                 var idx = Random.Range(0, a.Count - 1);
-                SetCooldown(PieceOn(a[idx].pos).Pos, 0);
+                SetCooldown(PieceOn(a[idx].pos), 0);
             }
             else if (b.Count > 0)
             {
                 var idx = Random.Range(0, b.Count - 1);
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), PieceOn(Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker()));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -74,11 +74,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            if (PieceOn(Target).Color != PieceOn(Maker).Color)
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(Target)), PieceOn(Maker)));
+            if (GetTarget().Color != GetMaker().Color)
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTarget()), GetMaker()));
             else
-                SetCooldown(Target, 0);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+                SetCooldown(GetTarget(), 0);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

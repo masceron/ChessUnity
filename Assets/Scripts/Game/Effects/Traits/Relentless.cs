@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.Target != Piece.Pos) return;
+            if (action.GetTarget() != Piece) return;
             if (action.Result != ResultFlag.SurvivedHit) return;
 
             var target = PieceOn(action.Maker);
@@ -39,7 +39,7 @@ namespace Game.Effects.Traits
             if (Piece.Effects.Any(e => e.EffectName == "effect_shield")
                 || Piece.Effects.Any(e => e.EffectName == "effect_carapace")
                 || Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
-            if (action.Target != Piece.Pos || action.Maker == action.Target) return;
+            if (action.GetTarget() != Piece || action.Maker == action.Target) return;
             if (GetStat(EffectStat.Stack) <= 0) return;
 
             action.Result = ResultFlag.SurvivedHit;

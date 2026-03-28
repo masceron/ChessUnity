@@ -28,8 +28,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new KillPiece(Maker));
-            ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_archelon", PieceOn(Maker).Color, Maker)));
-            SetCooldown(Maker, -1);
+            ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMaker().Color, Maker)));
+            SetCooldown(GetMaker(), -1);
         }
     }
 }

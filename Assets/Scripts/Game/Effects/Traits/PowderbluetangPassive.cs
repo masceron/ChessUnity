@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos &&
+            if (action.GetMaker() == Piece &&
                 action is NormalMove &&
                 action.Result == ResultFlag.Success &&
                 _count > 0 &&

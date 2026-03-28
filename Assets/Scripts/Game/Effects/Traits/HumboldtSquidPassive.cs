@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos
+            if (action.GetMaker() == Piece
                 && action is ICaptures
                 && (action.Result == ResultFlag.Blocked
                     || action.Result == ResultFlag.HardenedBlock

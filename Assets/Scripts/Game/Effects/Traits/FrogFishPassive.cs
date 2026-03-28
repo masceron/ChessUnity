@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMaker() != Piece) return;
             if (action.Maker == action.Target) return;
             var targetFormation = GetFormation(action.Target);
             if (targetFormation is not PredatorLair) return;

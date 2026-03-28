@@ -35,9 +35,9 @@ namespace Game.Effects.Condition
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (type == VengefulType.OnDeath) return;
-            if (action.Target == Piece.Pos && action is ICaptures)
+            if (action.GetTarget() == Piece && action is ICaptures)
             {
-                Killer = Game.Common.BoardUtils.PieceOn(action.Maker);
+                Killer = action.GetMaker();
             }
         }
 
@@ -48,7 +48,7 @@ namespace Game.Effects.Condition
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (type == VengefulType.OnDeath) return;
-            if (action.Target == Piece.Pos && action is ICaptures)
+            if (action.GetTarget() == Piece && action is ICaptures)
             {
                 Killer = null; 
             }

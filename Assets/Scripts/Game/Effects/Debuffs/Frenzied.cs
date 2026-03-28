@@ -37,10 +37,10 @@ namespace Game.Effects.Debuffs
             if (_list.Count > 1) _list = _list.Distinct(new ActionComparer()).ToList();
 
             var captureTargets = _list.OfType<ICaptures>()
-                .Select(c => ((Action.Action)c).Target)
+                .Select(c => ((Action.Action)c).GetTargetPos())
                 .ToList();
             var moveTargets = _list.OfType<IQuiets>()
-                .Select(c => ((Action.Action)c).Target)
+                .Select(c => ((Action.Action)c).GetTargetPos())
                 .ToList();
 
             if (captureTargets.Count > 0)

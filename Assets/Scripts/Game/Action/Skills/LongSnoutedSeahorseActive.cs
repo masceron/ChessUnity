@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public LongSnoutedSeahorseActive(int maker, int target) : base(maker)
+        public LongSnoutedSeahorseActive(int maker, int target) : base(maker, target)
         {
             Maker = maker;
             Target = target;
@@ -33,7 +33,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             MatchManager.Ins.GameState.Swap(Maker, Target);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

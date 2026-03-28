@@ -22,8 +22,8 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            if (PieceOn(Maker) == null || pieceAI == null) return 0;
-            if (pieceAI.Color != PieceOn(Maker).Color) return -10;
+            if (GetMaker() == null || pieceAI == null) return 0;
+            if (pieceAI.Color != GetMaker().Color) return -10;
             return 0;
         }
 
@@ -33,8 +33,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, PieceOn(Target)), PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, GetTarget()), GetMaker()));
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

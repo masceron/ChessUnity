@@ -84,7 +84,7 @@ namespace Game.Effects.States
                 if (!BoardUtils.HasFormation(target)) continue;
 
                 var formation = BoardUtils.GetFormation(target);
-                var targetPiece = BoardUtils.PieceOn(target);
+                var targetPiece = BoardUtils.GetTarget();
                 var isAllyStateNone = targetPiece != null
                                       && targetPiece.Color == caller.Color
                                       && targetPiece.CurrentState == StateType.None;

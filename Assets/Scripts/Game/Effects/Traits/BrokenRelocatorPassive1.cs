@@ -27,7 +27,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures) return;
 
-            if (action.Target != Piece.Pos) return;
+            if (action.GetTarget() != Piece) return;
 
             var (nRank, nFile) = BoardUtils.RankFileOf(action.Maker);
 

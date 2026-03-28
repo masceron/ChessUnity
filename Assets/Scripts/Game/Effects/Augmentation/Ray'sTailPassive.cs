@@ -18,7 +18,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Maker != Piece.Pos) return;
+            if (action is not ICaptures || action.GetMaker() != Piece) return;
             var targetIndex = action.Target;
             var targetPiece = PieceOn(targetIndex);
             var hasShield = false;

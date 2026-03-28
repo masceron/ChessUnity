@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(Duration, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(Duration, GetTarget())));
         }
     }
 }

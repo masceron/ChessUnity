@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         {
         }
         
-        public PorcupineCrabActive(int maker, int target) : base(maker)
+        public PorcupineCrabActive(int maker, int target) : base(maker, target)
         {
             Maker = maker;
             Target = target;
@@ -26,7 +26,7 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
+            var makerPiece = GetMaker();
 
             ActionManager.EnqueueAction(new NormalMove(Maker, Target));
 
@@ -47,7 +47,7 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
         
         List<(int rank, int file)> GetPath(int rank1, int file1, int rank2, int file2)    

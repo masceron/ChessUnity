@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PlumedSeaFirActive(int maker, int target) : base(maker)
+        public PlumedSeaFirActive(int maker, int target) : base(maker, target)
         {
             Target = target;
         }
@@ -33,9 +33,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            PieceLogic maker = PieceOn(Maker);
-            PieceLogic target = PieceOn(Target);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            PieceLogic maker = GetMaker();
+            PieceLogic target = GetTarget();
             if (maker.Color == target.Color)
             {
                 var debuffs = maker.Effects.Where(kvp => kvp.Category == EffectCategory.Debuff).ToArray();
@@ -48,7 +48,7 @@ namespace Game.Action.Skills
             }
             else
             {
-                EffectFactory.CreateRandomEffect(PieceOn(Target));
+                EffectFactory.CreateRandomEffect(GetTarget());
                 maker.SetStat(SkillStat.Counter, maker.GetStat(SkillStat.Counter) - 1);
             }
             

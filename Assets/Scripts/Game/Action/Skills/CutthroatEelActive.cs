@@ -27,17 +27,18 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
-            var direction = PieceOn(Maker).Color ? 1 : -1;
-            ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(RankOf(Target) + direction, FileOf(Target))));
-            var bleeding = PieceOn(Target).Effects.First(e => e is Bleeding);
+            var makerPiece = GetMaker();
+            var direction = GetMaker().Color ? 1 : -1;
+            ActionManager.EnqueueAction(new NormalMove(GetFrom(),
+                IndexOf(RankOf(GetTargetPos()) + direction, FileOf(GetTargetPos()))));
+            var bleeding = GetTarget().Effects.First(e => e is Bleeding);
             if (bleeding.Strength >= 4)
             {
                 bleeding.Strength -= 1;
             }
             else
             {
-                ActionManager.EnqueueAction(new KillPiece(Target));
+                ActionManager.EnqueueAction(new KillPiece(GetFrom()));
                 SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
         }

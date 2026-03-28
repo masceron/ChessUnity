@@ -21,7 +21,6 @@ namespace Game.Action.Skills
 
         public EyeshadeSculpinActive(int maker, int firstTarget, int secondTarget) : base(maker)
         {
-            Maker = maker;
             firstTargetPos = firstTarget;
             secondTargetPos = secondTarget;
         }
@@ -33,10 +32,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(firstTargetPos)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(firstTargetPos)), GetMaker()));
             ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(secondTargetPos)),
-                PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+                GetMaker()));
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

@@ -38,10 +38,10 @@ namespace Game.Action.Skills
             var first = PieceOn(FirstTarget);
             var second = PieceOn(SecondTarget);
             if (first != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), PieceOn(Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), GetMaker()));
             if (second != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), GetMaker()));
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

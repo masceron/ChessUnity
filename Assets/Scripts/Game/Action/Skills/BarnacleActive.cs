@@ -27,10 +27,9 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color != PieceOn(Maker).Color &&
+            var listPieces = allPieces.Where(p => p != null && p.Color != GetMaker().Color &&
                                                   p.Effects.Any(e =>
-                                                      e.EffectName == "effect_shield" ||
-                                                      e.EffectName == "effect_hardened_shield")).ToList();
+                                                      e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();
 
             if (listPieces.Count == 0) return;
             var maxValue = listPieces.Max(p => p.GetValueForAI());
@@ -39,7 +38,7 @@ namespace Game.Action.Skills
             var random = new Random();
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
-            SetCooldown(Maker, -1);
+            SetCooldown(GetMaker(), -1);
             foreach (var effect in selectedPiece.Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
                 if (effect.Duration > 0)
@@ -59,15 +58,15 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in PieceOn(Target).Effects
+            foreach (var effect in GetTarget().Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
                 if (effect.Duration > 0)
                     effect.Duration -= 1;
                 else
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
 
-            SetCooldown(Maker, -1);
-            //SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), -1);
+            //SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

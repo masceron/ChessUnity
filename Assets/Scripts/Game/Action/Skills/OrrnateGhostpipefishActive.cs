@@ -31,8 +31,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = PieceOn(Maker);
-            var pOnTarget = PieceOn(Target);
+            var caller = GetMaker();
+            var pOnTarget = GetTarget();
             if (caller == null) return;
 
             if (Maker == Target)
@@ -51,7 +51,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration, pOnTarget)));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)caller).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)caller).TimeToCooldown);
         }
     }
 }

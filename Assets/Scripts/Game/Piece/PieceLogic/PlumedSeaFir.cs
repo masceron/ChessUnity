@@ -28,7 +28,7 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                     {
                         int target = IndexOf(rankOff, fileOff);
-                        Commons.PieceLogic pieceOn = PieceOn(target);
+                        Commons.PieceLogic pieceOn = GetTarget();
                         if (pieceOn != null)
                         {
                             if (pieceOn.Color == this.Color)

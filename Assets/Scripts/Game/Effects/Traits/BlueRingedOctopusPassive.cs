@@ -25,7 +25,7 @@ namespace Game.Effects.Traits
         {
             if (action is not IQuiets || action.Result != ResultFlag.Success) return;
             var activeBoard = ActiveBoard();
-            if (action.Maker == Piece.Pos)
+            if (action.GetMaker() == Piece)
             {
                 var pos1 = action.Maker;
                 var pos2 = action.Target;

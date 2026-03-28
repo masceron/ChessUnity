@@ -19,8 +19,8 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures) return;
 
-            if (action.Maker == Piece.Pos) return;
-            if (action.Target != Piece.Pos) return;
+            if (action.GetMaker() == Piece) return;
+            if (action.GetTarget() != Piece) return;
 
             if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
         }

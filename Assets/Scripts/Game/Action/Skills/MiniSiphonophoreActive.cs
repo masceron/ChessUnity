@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public MiniSiphonophoreActive(int maker, int target) : base(maker)
+        public MiniSiphonophoreActive(int maker, int target) : base(maker, target)
         {
             Target = target;
         }
@@ -26,8 +26,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(1, PieceOn(Target)), PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(1, GetTarget()), GetMaker()));
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

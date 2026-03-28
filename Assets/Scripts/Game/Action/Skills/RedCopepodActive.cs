@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public RedCopepodActive(int maker, int target) : base(maker)
+        public RedCopepodActive(int maker, int target) : base(maker, target)
         {
             Target = target;
         }

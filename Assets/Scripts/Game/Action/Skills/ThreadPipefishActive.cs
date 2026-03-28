@@ -15,7 +15,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public ThreadPipefishActive(int maker, int target) : base(maker)
+        public ThreadPipefishActive(int maker, int target) : base(maker, target)
         {
             Maker = maker;
             Target = target;
@@ -28,7 +28,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(PieceOn(Maker), PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(GetMaker(), GetTarget())));
         }
     }
 }

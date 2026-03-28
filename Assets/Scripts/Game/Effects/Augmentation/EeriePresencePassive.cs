@@ -19,7 +19,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker != Piece.Pos || action is not ICaptures || action.Result != ResultFlag.Success) return;
+            if (action.GetMaker() != Piece || action is not ICaptures || action.Result != ResultFlag.Success) return;
 
             var (rank, file) = RankFileOf(action.Target);
 

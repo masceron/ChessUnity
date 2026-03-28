@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PencilUrchinActive(int maker, int target) : base(maker)
+        public PencilUrchinActive(int maker, int target) : base(maker, target)
         {
             Maker = maker;
             Target = target;
@@ -27,8 +27,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetFormation(Target, new UrchinField(false, PieceOn(Maker).Color));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetFormation(Target, new UrchinField(false, GetMaker().Color));
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Game.Effects.SpecialAbility
         void IAfterPieceActionTrigger.OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) return;
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMaker() != Piece) return;
 
             var piece = PieceOn(action.Maker);
             if (piece == null || piece.Type != "piece_pennant_coralfish") return;

@@ -34,7 +34,7 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new KillPiece(_firstTargetPos));
             ActionManager.EnqueueAction(new KillPiece(_secondTargetPos));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }
