@@ -17,6 +17,7 @@ namespace Game.Action.Internal.Pending.Piece
         private static List<int> selectedTarget;
         private EmeraldCrab emeraldCrab;
         private int Duration;
+        private int NumTarget;
 
         public EmeraldCrabPending(int maker, int target, int duration) : base(maker)
         {
@@ -35,7 +36,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            var NumTarget = emeraldCrab.GetStat(SkillStat.Target);
+            NumTarget = emeraldCrab.GetStat(SkillStat.Target);
             if (selectedTarget.Count < NumTarget)
             {
                 if (PieceOn(Target) != null)
