@@ -146,6 +146,9 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_weeping_toadfish" => new WeepingToadfish(cfg),
                 "piece_wire_coral_goby" => new WireCoralGoby(cfg),
                 "piece_yellowlined_basslet" => new YellowlinedBasslet(cfg),
+                "piece_sunray_zoanthid" => new SunrayZoanthid(cfg),
+                "piece_tuxedo_urchin" => new TuxedoUrchin(cfg),
+                
                 _ => null
             };
         }
