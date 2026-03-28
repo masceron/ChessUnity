@@ -15,8 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public ReliquaryPending(Reliquary cp, int maker) : base(maker)
         {
             _reliquary = cp;
-            Target = maker;
-            Maker = maker;
         }
 
         public void Dispose()

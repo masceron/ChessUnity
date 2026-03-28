@@ -19,10 +19,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         private bool _isExecuting;
 
-        public HumilitasPending(int maker, int to) : base(maker)
+        public HumilitasPending(int maker, int to) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
             _isExecuting = false;
         }
 
@@ -104,7 +102,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMaker();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -20;
             return 0;
@@ -118,11 +116,11 @@ namespace Game.Action.Internal.Pending.Piece
                 _firstTarget = BoardViewer.HoveringPos;
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
-                var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 5);
+                var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 5);
                 foreach (var piece in listPieces)
                 {
                     if (piece == _firstTarget) continue;
-                    var newAction = new HumilitasPending(Maker, piece);
+                    var newAction = new HumilitasPending(GetFrom(), piece);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(piece);
                 }
@@ -131,7 +129,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
 
             SecondTarget = BoardViewer.HoveringPos;
-            CommitResult(new HumilitasActive(Maker, _firstTarget, SecondTarget));
+            CommitResult(new HumilitasActive(GetFrom(), _firstTarget, SecondTarget));
             _isExecuting = true;
         }
     }

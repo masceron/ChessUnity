@@ -50,15 +50,14 @@ namespace Game.Action
         private readonly int _maker;
         private readonly int _from;
         private readonly int _target = -1;
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        public TargetingType TargetingType;
+        protected TargetingType TargetingType;
 
         protected Action(int maker = -1, int target = -1, TargetingType targetingType = TargetingType.UnitTargeting)
         {
             _maker = BoardUtils.GetIDAt(maker);
             _from = maker;
             TargetingType = targetingType;
-            
+
             if (targetingType == TargetingType.None) return;
             _target = targetingType == TargetingType.UnitTargeting ? BoardUtils.GetIDAt(target) : target;
         }

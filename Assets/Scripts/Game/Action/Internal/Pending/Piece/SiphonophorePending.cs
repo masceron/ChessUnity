@@ -12,22 +12,18 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SiphonophorePending : PendingAction, IDisposable, ISkills
     {
-        private static List<int> selectedTiles = new List<int>();
-        private static int unitCount = 0;
-        private static bool isInitialized = false;
+        private static List<int> selectedTiles = new();
+        private static int unitCount;
+        private static bool isInitialized;
 
-        public SiphonophorePending(int maker, int target) : base(maker)
+        public SiphonophorePending(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
         {
-            Maker = maker;
-            Target = target;
-            
             var makerPiece = PieceOn(maker);
-            if (makerPiece != null && !isInitialized)
-            {
-                unitCount = makerPiece.GetStat(SkillStat.Unit);
-                selectedTiles.Clear();
-                isInitialized = true;
-            }
+            if (makerPiece == null || isInitialized) return;
+            
+            unitCount = makerPiece.GetStat(SkillStat.Unit);
+            selectedTiles.Clear();
+            isInitialized = true;
         }
 
         public void Dispose()
@@ -43,19 +39,19 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            var makerPiece = PieceOn(Maker);
+            var makerPiece = GetMaker();
             if (makerPiece == null) return;
 
 
             if (selectedTiles.Count < unitCount)
             {
-                selectedTiles.Add(Target);
-                TileManager.Ins.UnMark(Target);
+                selectedTiles.Add(GetTargetPos());
+                TileManager.Ins.UnMark(GetTargetPos());
             }
 
             if (selectedTiles.Count == unitCount)
             {
-                CommitResult(new SiphonophoreActive(Maker, new List<int>(selectedTiles)));
+                CommitResult(new SiphonophoreActive(GetFrom(), new List<int>(selectedTiles)));
                 Reset();
             }
         }

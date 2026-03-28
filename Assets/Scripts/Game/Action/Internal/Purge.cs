@@ -6,15 +6,14 @@ namespace Game.Action.Internal
 {
     public class Purge : Action, IInternal
     {
-        public Purge(int maker, int to) : base(maker)
+        public Purge(int maker, int to) : base(maker, to)
         {
-            Target = to;
         }
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in BoardUtils.PieceOn(Target).Effects.Where
-                         (effect => effect.Category == EffectCategory.Debuff || effect.Category == EffectCategory.Buff))
+            foreach (var effect in GetTarget().Effects.Where
+                         (effect => effect.Category is EffectCategory.Debuff or EffectCategory.Buff))
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
         }
     }

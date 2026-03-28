@@ -12,15 +12,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public EyeOfMimicExecute(int maker, int target) : base(maker)
+        public EyeOfMimicExecute(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
             // apply 1 turn nhưng vì ApplyEffect tự động ++duration nên ở đây để là 0
-            ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(Maker, Target, 0)));
+            ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(GetFrom(), GetTargetPos(), 0)));
         }
     }
 }

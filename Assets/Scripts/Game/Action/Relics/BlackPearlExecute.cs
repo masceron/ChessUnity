@@ -22,15 +22,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public BlackPearlExecute(int target, bool color) : base(-1)
+        public BlackPearlExecute(int target, bool color) : base(-1, target)
         {
-            Target = target;
             _color = color;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(BoardUtils.PieceOn(Target).Color == _color
+            ActionManager.EnqueueAction(GetTarget().Color == _color
                 ? new ApplyEffect(GetRandomBuffEffect())
                 : new ApplyEffect(GetRandomDebuffEffect()));
         }
@@ -45,7 +44,7 @@ namespace Game.Action.Relics
             var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
             Debug.Log("Selected Effect Name: " + selectedEffectName);
-            return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
+            return CreateEffectFromName(selectedEffectName, GetTarget());
         }
 
         private Effect GetRandomDebuffEffect()
@@ -57,7 +56,7 @@ namespace Game.Action.Relics
 
             var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            return CreateEffectFromName(selectedEffectName, BoardUtils.PieceOn(Target));
+            return CreateEffectFromName(selectedEffectName, GetTarget());
         }
 
         private static Effect CreateEffectFromName(string effectName, PieceLogic piece)

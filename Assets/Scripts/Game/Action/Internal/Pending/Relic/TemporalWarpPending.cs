@@ -16,7 +16,6 @@ namespace Game.Action.Internal.Pending.Relic
 
         public TemporalWarpPending(int maker) : base(maker)
         {
-            Maker = maker;
         }
 
         public void Dispose()

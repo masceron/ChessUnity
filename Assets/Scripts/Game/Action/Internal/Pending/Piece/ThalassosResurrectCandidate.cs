@@ -9,10 +9,8 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrectCandidate : PendingAction, ISkills
     {
-        public ThalassosResurrectCandidate(int maker, int pos) : base(maker)
+        public ThalassosResurrectCandidate(int maker, int pos) : base(maker, pos)
         {
-            Maker = maker;
-            Target = pos;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -24,7 +22,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             var selector =
                 BoardViewer.Ins.GetOrInstantiateUI<ThalassosResurrector>(IngameSubmenus.ThalassosResurrector);
-            selector.Load(Maker, Target, this);
+            selector.Load(GetFrom(), GetTargetPos(), this);
         }
     }
 }

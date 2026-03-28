@@ -24,7 +24,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor, Maker)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor, GetFrom())));
         }
     }
 }

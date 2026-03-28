@@ -6,14 +6,13 @@ namespace Game.Action.Internal
 {
     public class Purify : Action, IInternal
     {
-        public Purify(int maker, int target) : base(maker)
+        public Purify(int maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in BoardUtils.PieceOn(Target).Effects
+            foreach (var effect in GetTarget().Effects
                          .Where(effect => effect.Category == EffectCategory.Debuff))
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
         }

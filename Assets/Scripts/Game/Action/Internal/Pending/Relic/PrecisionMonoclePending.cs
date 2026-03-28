@@ -13,7 +13,6 @@ namespace Game.Action.Internal.Pending.Relic
         public PrecisionMonoclePending(PrecisionMonocle pm, int maker) : base(maker)
         {
             _precisionMonocle = pm;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -24,7 +23,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            CommitResult(new PrecisionMonocleAction(Maker));
+            CommitResult(new PrecisionMonocleAction(GetFrom()));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 

@@ -11,10 +11,8 @@ namespace Game.Action.Internal.Pending.Piece
         private readonly int sourcePiecePos;
         private readonly int targetPiecePos;
 
-        public RibbonEelPendingForChooseMove(int maker, int sourcePiece, int targetPiece) : base(maker)
+        public RibbonEelPendingForChooseMove(int maker, int sourcePiece, int targetPiece) : base(maker, targetPiece)
         {
-            Maker = maker;
-            Target = maker;
             sourcePiecePos = sourcePiece;
             targetPiecePos = targetPiece;
         }
@@ -28,7 +26,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
-            var newAction = new RibbonEelActive(Maker, sourcePiecePos, targetPiecePos);
+            var newAction = new RibbonEelActive(GetFrom(), sourcePiecePos, targetPiecePos);
             CommitResult(newAction);
         }
     }

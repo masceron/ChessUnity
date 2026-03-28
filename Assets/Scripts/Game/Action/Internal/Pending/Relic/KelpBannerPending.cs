@@ -15,7 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public KelpBannerPending(KelpBanner kp, int maker) : base(maker)
         {
             _kelpBanner = kp;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -26,7 +25,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            CommitResult(new KelpBannerAction(Maker));
+            CommitResult(new KelpBannerAction(GetFrom()));
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

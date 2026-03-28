@@ -13,7 +13,6 @@ namespace Game.Action.Internal.Pending.Relic
         public OvergrownSlugPending(OvergrownSlug ogs, int maker) : base(maker)
         {
             _overgrownSlug = ogs;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -57,7 +56,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            CommitResult(new OvergrownSlugAction(Maker));
+            CommitResult(new OvergrownSlugAction(GetFrom()));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 

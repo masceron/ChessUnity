@@ -14,10 +14,9 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private RayStinger _rayStinger;
 
-        public RayStingerPending(RayStinger seafoamPhial, int target) : base(target)
+        public RayStingerPending(RayStinger seafoamPhial, int target) : base(-1, target)
         {
             _rayStinger = seafoamPhial;
-            Target = target;
         }
 
         public void Dispose()
@@ -30,7 +29,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _rayStinger.SetCooldown();
 
-            var execute = new RayStingerExecute(Target);
+            var execute = new RayStingerExecute(GetTargetPos());
             CommitResult(execute);
             TileManager.Ins.UnmarkAll();
             BoardViewer.Selecting = -1;

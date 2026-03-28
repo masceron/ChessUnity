@@ -16,20 +16,19 @@ namespace Game.Action.Relics
         {
         }
 
-        public OrnetesEdictExecute(int target) : base(target)
+        public OrnetesEdictExecute(int target) : base(-1, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            var piece = BoardUtils.PieceOn(Target);
+            var piece = GetTarget();
             if (piece == null) return;
 
             var numberOfDebuffedPieces = piece.Effects.Count(e => e.Category == EffectCategory.Debuff);
             var rate = 7 * numberOfDebuffedPieces;
 
-            if (MatchManager.Roll(rate)) ActionManager.EnqueueAction(new KillPiece(Target));
+            if (MatchManager.Roll(rate)) ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
         }
     }
 }

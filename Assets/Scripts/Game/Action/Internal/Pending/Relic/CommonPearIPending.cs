@@ -15,8 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public CommonPearlPending(CommonPearl cp, int maker) : base(maker)
         {
             _commonPearl = cp;
-            Target = maker;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -28,7 +26,7 @@ namespace Game.Action.Internal.Pending.Relic
         protected override void CompleteAction()
         {
             _commonPearl.SetCooldown();
-            var execute = new CommonPearlExecute(Target);
+            var execute = new CommonPearlExecute(GetFrom());
             CommitResult(execute);
 
             BoardViewer.Selecting = -1;

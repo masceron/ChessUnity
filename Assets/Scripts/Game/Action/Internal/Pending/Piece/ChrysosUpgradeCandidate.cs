@@ -26,10 +26,8 @@ namespace Game.Action.Internal.Pending.Piece
         public readonly PieceRank UpgradeFrom;
         private PieceConfig _config;
 
-        public ChrysosUpgradeCandidate(int maker, int to, int cost, Chrysos ch) : base(maker)
+        public ChrysosUpgradeCandidate(int maker, int to, int cost, Chrysos ch) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
             Cost = (byte)cost;
             _chrysos = ch;
 
@@ -52,7 +50,7 @@ namespace Game.Action.Internal.Pending.Piece
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var p = BoardUtils.PieceOn(i);
-                if (p == null || p.Color != BoardUtils.PieceOn(Maker).Color) continue;
+                if (p == null || p.Color != GetMaker().Color) continue;
                 _allyPieces.Add(p);
                 switch (p.PieceRank)
                 {
@@ -113,7 +111,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         private void ActivateSkill(PieceLogic p, string type, byte cost)
         {
-            CommitResult(new ChrysosUpgrade(Maker, new PieceConfig(type, p.Color, p.Pos), cost));
+            CommitResult(new ChrysosUpgrade(GetFrom(), new PieceConfig(type, p.Color, p.Pos), cost));
         }
 
         private void HandleUpgrade(byte cost)

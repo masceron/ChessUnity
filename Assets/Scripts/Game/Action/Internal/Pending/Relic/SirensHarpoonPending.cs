@@ -12,11 +12,9 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SirensHarpoon _sirensHarpoon;
 
-        public SirensHarpoonPending(SirensHarpoon s, int target) : base(s.CommanderPiece.Pos)
+        public SirensHarpoonPending(SirensHarpoon s, int target) : base(s.CommanderPiece.Pos, target)
         {
             _sirensHarpoon = s;
-
-            Target = target;
         }
 
 
@@ -29,7 +27,7 @@ namespace Game.Action.Internal.Pending.Relic
         protected override void CompleteAction()
         {
             _sirensHarpoon.SetCooldown();
-            var execute = new SirenHarpoonExecute(Maker, Target);
+            var execute = new SirenHarpoonExecute(GetFrom(), GetTargetPos());
             CommitResult(execute);
 
             BoardViewer.Ins.Unmark();

@@ -15,8 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public OrnetesEdictPending(OrnetesEdict cp, int maker) : base(maker)
         {
             _ornetesEdict = cp;
-            Target = maker;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -27,7 +25,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            var execute = new OrnetesEdictExecute(Target);
+            var execute = new OrnetesEdictExecute(GetFrom());
             CommitResult(execute);
 
             BoardViewer.Selecting = -1;

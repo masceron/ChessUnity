@@ -11,15 +11,13 @@ namespace Game.Action.Relics
         {
         }
 
-        public SeabedLevelerExecute(int maker, int target) : base(maker)
+        public SeabedLevelerExecute(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            FormationManager.Ins.RemoveFormation(Target);
+            FormationManager.Ins.RemoveFormation(GetTargetPos());
         }
     }
 }

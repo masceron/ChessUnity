@@ -13,8 +13,6 @@ namespace Game.Action.Internal.Pending.Piece
 
         public RibbonEelPendingForChooseTarget(int maker, int sourcePiece) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
             _sourcePiecePos = sourcePiece;
         }
 
@@ -27,13 +25,13 @@ namespace Game.Action.Internal.Pending.Piece
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(BoardUtils.RankOf(Maker),
-                         BoardUtils.FileOf(Maker), 1))
+            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(BoardUtils.RankOf(GetFrom()),
+                         BoardUtils.FileOf(GetFrom()), 1))
             {
                 var index = BoardUtils.IndexOf(rankOff, fileOff);
                 var pOn = BoardUtils.PieceOn(index);
                 if (pOn != null) continue;
-                var newAction = new RibbonEelPendingForChooseMove(index, _sourcePiecePos, Maker);
+                var newAction = new RibbonEelPendingForChooseMove(index, _sourcePiecePos, GetFrom());
                 BoardViewer.ListOf.Add(newAction);
                 TileManager.Ins.MarkAsMoveable(index);
             }

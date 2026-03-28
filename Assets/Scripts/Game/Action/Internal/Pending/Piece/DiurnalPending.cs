@@ -12,10 +12,8 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _selectedPiece;
         private static int _movePosTo;
 
-        public DiurnalPending(int maker, int target) : base(maker)
+        public DiurnalPending(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -52,7 +50,7 @@ namespace Game.Action.Internal.Pending.Piece
                         if (PieceOn(idx) != null) continue;
 
                         TileManager.Ins.MarkAsMoveable(idx);
-                        BoardViewer.ListOf.Add(new DiurnalPending(Maker, idx));
+                        BoardViewer.ListOf.Add(new DiurnalPending(GetFrom(), idx));
                     }
                 }
 

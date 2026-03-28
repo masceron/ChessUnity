@@ -13,14 +13,13 @@ namespace Game.Action.Relics
         {
         }
 
-        public CorruptedWisperExecute(int target) : base(-1)
+        public CorruptedWisperExecute(int target) : base(-1, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget())));
         }
     }
 }

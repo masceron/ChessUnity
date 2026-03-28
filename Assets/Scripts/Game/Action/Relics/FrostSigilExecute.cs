@@ -27,7 +27,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = BoardUtils.RankFileOf(Maker);
+            var (rank, file) = BoardUtils.RankFileOf(GetFrom());
             var pieces = BoardUtils.GetPiecesInRadius(rank, file, Radius, _ => true);
 
             foreach (var piece in pieces)

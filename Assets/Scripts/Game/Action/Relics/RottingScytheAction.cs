@@ -13,12 +13,11 @@ namespace Game.Action.Relics
 
         public RottingScytheAction(int maker) : base(maker)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Maker));
+            ActionManager.EnqueueAction(new KillPiece(GetFrom()));
         }
     }
 }

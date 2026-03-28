@@ -15,7 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public AdrenalineRadiatorPending(AdrenalineRadiator relic, int maker) : base(maker)
         {
             _relic = relic;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -28,7 +27,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _relic.SetCooldown();
 
-            var execute = new AdrenalineRadiatorExecute(Maker);
+            var execute = new AdrenalineRadiatorExecute(GetFrom());
             CommitResult(execute);
 
             BoardViewer.Selecting = -1;

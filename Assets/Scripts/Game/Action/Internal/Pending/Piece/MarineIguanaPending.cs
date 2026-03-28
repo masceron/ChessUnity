@@ -12,10 +12,8 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _firstTarget;
         public static PieceLogic SecondTarget;
 
-        public MarineIguanaPending(int maker, int target) : base(maker)
+        public MarineIguanaPending(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void Dispose()
@@ -27,14 +25,14 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            return pieceAI.Color != BoardUtils.PieceOn(Maker).Color ? -50 : 0;
+            return pieceAI.Color != GetMaker().Color ? -50 : 0;
         }
 
         protected override void CompleteAction()
         {
             if (_firstTarget == null)
             {
-                _firstTarget = BoardUtils.PieceOn(Target);
+                _firstTarget = GetTarget();
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
                 foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(BoardUtils.RankOf(_firstTarget.Pos),
@@ -43,16 +41,16 @@ namespace Game.Action.Internal.Pending.Piece
                     var index = BoardUtils.IndexOf(rankOff, fileOff);
                     var piece = BoardUtils.PieceOn(index);
                     if (piece == null || piece.Color != _firstTarget.Color || piece == _firstTarget) continue;
-                    var newAction = new MarineIguanaPending(Maker, index);
+                    var newAction = new MarineIguanaPending(GetFrom(), index);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
                 }
             }
             else
             {
-                SecondTarget = BoardUtils.PieceOn(Target);
+                SecondTarget = GetTarget();
 
-                var kill = new MarinelKill(Maker, _firstTarget.Pos, SecondTarget.Pos);
+                var kill = new MarinelKill(GetFrom(), _firstTarget.Pos, SecondTarget.Pos);
                 CommitResult(kill);
 
                 BoardViewer.Ins.Unmark();

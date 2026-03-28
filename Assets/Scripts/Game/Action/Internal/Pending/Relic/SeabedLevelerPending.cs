@@ -14,8 +14,6 @@ namespace Game.Action.Internal.Pending.Relic
 
         public SeabedLevelerPending(Charge charge, int maker) : base(maker)
         {
-            Target = maker;
-            Maker = maker;
             _charges = charge;
         }
 
@@ -26,7 +24,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            var execute = new SeabedLevelerExecute(Maker, Target);
+            var execute = new SeabedLevelerExecute(GetFrom(), GetFrom());
             CommitResult(execute);
             _charges.Strength -= 3;
 

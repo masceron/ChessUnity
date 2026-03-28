@@ -15,10 +15,8 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _firstTarget;
         private static PieceLogic _secondTarget;
 
-        public MegalodonActivePending(int maker, int target) : base(maker)
+        public MegalodonActivePending(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void Dispose()
@@ -29,7 +27,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMaker();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -40;
             return 0;
@@ -43,13 +41,13 @@ namespace Game.Action.Internal.Pending.Piece
                 _firstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
-                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker),
-                             PieceOn(Maker).AttackRange()))
+                foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()),
+                             GetMaker().AttackRange()))
                 {
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
                     if (piece == null || piece.Color == _firstTarget.Color) continue;
-                    var newAction = new MegalodonActivePending(Maker, index);
+                    var newAction = new MegalodonActivePending(GetFrom(), index);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
                 }
@@ -60,7 +58,7 @@ namespace Game.Action.Internal.Pending.Piece
             _secondTarget = hovering;
             if (_firstTarget == null || _secondTarget == null) return;
             if (_firstTarget == _secondTarget) return;
-            CommitResult(new MegalodonActive(Maker, _firstTarget.Pos, _secondTarget.Pos));
+            CommitResult(new MegalodonActive(GetFrom(), _firstTarget.Pos, _secondTarget.Pos));
         }
 
         public void CompleteActionForAI()

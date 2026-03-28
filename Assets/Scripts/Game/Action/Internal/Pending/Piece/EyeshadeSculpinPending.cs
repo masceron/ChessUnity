@@ -15,10 +15,8 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _firstTarget;
         private static PieceLogic _secondTarget;
 
-        public EyeshadeSculpinPending(int maker, int target) : base(maker)
+        public EyeshadeSculpinPending(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void Dispose()
@@ -47,7 +45,7 @@ namespace Game.Action.Internal.Pending.Piece
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
                     if (piece == null || piece.Color != _firstTarget.Color) continue;
-                    var newAction = new EyeshadeSculpinPending(Maker, index);
+                    var newAction = new EyeshadeSculpinPending(GetFrom(), index);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
                 }
@@ -56,7 +54,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
 
             _secondTarget = hovering;
-            CommitResult(new EyeshadeSculpinActive(Maker, _firstTarget.Pos, _secondTarget.Pos));
+            CommitResult(new EyeshadeSculpinActive(GetFrom(), _firstTarget.Pos, _secondTarget.Pos));
         }
     }
 }

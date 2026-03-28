@@ -15,7 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public RottingScythePending(RottingScythe rottingScythe, int maker) : base(maker)
         {
             _rottingScythe = rottingScythe;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -30,7 +29,7 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.SelectingFunction = 0;
 
             _rottingScythe.SetCooldown();
-            CommitResult(new RottingScytheAction(Maker));
+            CommitResult(new RottingScytheAction(GetFrom()));
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();
         }

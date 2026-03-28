@@ -17,7 +17,6 @@ namespace Game.Action.Internal.Pending.Relic
         public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker) : base(maker)
         {
             _seafoamPhial = seafoamPhial;
-            Maker = maker;
         }
 
 
@@ -43,7 +42,7 @@ namespace Game.Action.Internal.Pending.Relic
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 
-            CommitResult(new SeafoamPhialAction(Maker));
+            CommitResult(new SeafoamPhialAction(GetFrom()));
             _seafoamPhial.SetCooldown();
             MatchManager.Ins.InputProcessor.Unmark();
             MatchManager.Ins.InputProcessor.UpdateRelic();

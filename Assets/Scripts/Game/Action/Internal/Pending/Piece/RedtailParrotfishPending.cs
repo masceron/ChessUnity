@@ -15,11 +15,9 @@ namespace Game.Action.Internal.Pending.Piece
         private static int _moveTo = -1;
         private readonly PieceLogic _redtail;
 
-        public RedtailParrotfishPending(int maker, int target) : base(maker)
+        public RedtailParrotfishPending(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
-            _redtail = PieceOn(Maker);
+            _redtail = GetMaker();
         }
 
         public void Dispose()
@@ -32,7 +30,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             if (_formationPos == -1)
             {
-                _formationPos = Target;
+                _formationPos = GetTargetPos();
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
                 for (var i = 0; i < BoardSize; ++i)
@@ -41,15 +39,15 @@ namespace Game.Action.Internal.Pending.Piece
                     var formation = GetFormation(i);
                     if (formation != null) continue;
 
-                    if (IsOnBlackSide(Maker) != _redtail.Color) continue;
-                    BoardViewer.ListOf.Add(new RedtailParrotfishPending(Maker, i));
+                    if (IsOnBlackSide(GetFrom()) != _redtail.Color) continue;
+                    BoardViewer.ListOf.Add(new RedtailParrotfishPending(GetFrom(), i));
                     TileManager.Ins.MarkAsMoveable(i);
                 }
             }
             else
             {
-                _moveTo = Target;
-                CommitResult(new RedtailParrotfishActive(Maker, _formationPos, _moveTo));
+                _moveTo = GetTargetPos();
+                CommitResult(new RedtailParrotfishActive(GetFrom(), _formationPos, _moveTo));
                 Reset();
             }
         }

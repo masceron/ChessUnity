@@ -15,7 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         public BlackPearlPending(BlackPearl cp, int maker) : base(maker)
         {
             _blackPearl = cp;
-            Target = maker;
         }
 
         public void Dispose()
@@ -80,7 +79,7 @@ namespace Game.Action.Internal.Pending.Relic
             //     ? new ApplyEffect(GetRandomBuffEffect())
             //     : new ApplyEffect(GetRandomDebuffEffect()));
 
-            CommitResult(new BlackPearlExecute(Target, _blackPearl.Color));
+            CommitResult(new BlackPearlExecute(GetFrom(), _blackPearl.Color));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
 

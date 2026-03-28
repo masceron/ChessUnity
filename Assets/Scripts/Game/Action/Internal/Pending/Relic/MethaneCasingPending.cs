@@ -17,7 +17,6 @@ namespace Game.Action.Internal.Pending.Relic
         public MethaneCasingPending(MethaneCasing methaneCasing, int maker) : base(maker)
         {
             _methaneCasing = methaneCasing;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -30,7 +29,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _methaneCasing.SetCooldown();
 
-            var excute = new MethaneCasingExecute(Maker);
+            var excute = new MethaneCasingExecute(GetFrom());
             CommitResult(excute);
 
             BoardViewer.Selecting = -1;

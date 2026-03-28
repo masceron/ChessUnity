@@ -12,10 +12,9 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private TimelessHourglass _timelessHourglass;
 
-        public TimelessHourglassPending(TimelessHourglass t, int target) : base(t.CommanderPiece.Pos)
+        public TimelessHourglassPending(TimelessHourglass t, int target) : base(t.CommanderPiece.Pos, target)
         {
             _timelessHourglass = t;
-            Target = target;
         }
 
         public void Dispose()
@@ -29,7 +28,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _timelessHourglass.SetCooldown();
 
-            var execute = new TimelessHourglassExecute(Maker, _timelessHourglass.Color, Target);
+            var execute = new TimelessHourglassExecute(GetFrom(), _timelessHourglass.Color, GetTargetPos());
             CommitResult(execute);
 
             BoardViewer.Ins.Unmark();

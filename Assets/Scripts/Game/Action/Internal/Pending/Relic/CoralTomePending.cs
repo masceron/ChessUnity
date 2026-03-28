@@ -15,8 +15,6 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _coralTome = ct;
             _pieceType = type;
-            Target = maker;
-            Maker = maker;
         }
 
         public void Dispose()
@@ -32,7 +30,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            CommitResult(new CoralTomeAction(_coralTome.Color, _pieceType, Maker));
+            CommitResult(new CoralTomeAction(_coralTome.Color, _pieceType, GetFrom()));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             _coralTome.SetCooldown();

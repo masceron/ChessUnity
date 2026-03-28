@@ -17,10 +17,8 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _firstTarget;
         private static PieceLogic _secondTarget;
 
-        public SpinsterWrassePending(int maker, int to) : base(maker)
+        public SpinsterWrassePending(int maker, int to) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
         }
 
         public void Dispose()
@@ -46,13 +44,13 @@ namespace Game.Action.Internal.Pending.Piece
                 _firstTarget = hovering;
                 TileManager.Ins.UnmarkAll();
                 TileManager.Ins.Select(_firstTarget.Pos);
-                TileManager.Ins.MarkPieceInRange(Maker, _firstTarget.Color, 5);
+                TileManager.Ins.MarkPieceInRange(GetFrom(), _firstTarget.Color, 5);
                 return;
             }
 
             _secondTarget = hovering;
             TileManager.Ins.UnmarkAll();
-            var buff = new SpinsterWrasseBuff(Maker, _firstTarget.Pos, _secondTarget.Pos);
+            var buff = new SpinsterWrasseBuff(GetFrom(), _firstTarget.Pos, _secondTarget.Pos);
             CommitResult(buff);
 
             BoardViewer.Selecting = -1;
@@ -61,8 +59,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         private void ApplyEffect(PieceLogic firstTarget, PieceLogic secondTarget)
         {
-            ActionManager.EnqueueAction(new Purify(Maker, firstTarget.Pos));
-            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new Purify(GetFrom(), firstTarget.Pos));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget), GetMaker()));
         }
 
         private static void ResetTargets()
@@ -73,8 +71,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         public void CompleteActionForAI()
         {
-            var listA = GetPiecesInRadius(RankOf(Maker), FileOf(Maker), 5,
-                p => p != null && p.Color == PieceOn(Maker).Color);
+            var listA = GetPiecesInRadius(RankOf(GetFrom()), FileOf(GetFrom()), 5,
+                p => p != null && p.Color == GetMaker().Color);
 
             if (listA.Count == 0) return;
             listA.Sort((a, b) =>
@@ -95,8 +93,8 @@ namespace Game.Action.Internal.Pending.Piece
             for (var i = 0; i < BoardSize; ++i)
             {
                 var piece = PieceOn(i);
-                if (piece == null || piece.Color != PieceOn(Maker).Color || piece.Effects.Any(e =>
-                        e.EffectName == "effect_extremophiles" || e.EffectName == "effect_Adaptation"))
+                if (piece == null || piece.Color != GetMaker().Color || piece.Effects.Any(e =>
+                        e.EffectName is "effect_extremophiles" or "effect_Adaptation"))
                     continue;
 
                 listB.Add(piece);

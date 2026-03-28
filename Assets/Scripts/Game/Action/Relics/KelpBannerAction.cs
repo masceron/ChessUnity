@@ -14,13 +14,12 @@ namespace Game.Action.Relics
 
         public KelpBannerAction(int maker) : base(maker)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var formation = GetFormation(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
+            var formation = GetFormation(GetFrom());
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {

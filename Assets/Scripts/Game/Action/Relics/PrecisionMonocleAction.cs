@@ -18,12 +18,11 @@ namespace Game.Action.Relics
 
         public PrecisionMonocleAction(int maker) : base(maker)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            var allyColor = BoardUtils.PieceOn(Maker).Color;
+            var allyColor = GetMaker().Color;
             var markedEnemy = BoardUtils.FindPiecesWithEffectName(!allyColor, EffectName);
             var markedAlly = BoardUtils.FindPiecesWithEffectName(allyColor, EffectName);
 

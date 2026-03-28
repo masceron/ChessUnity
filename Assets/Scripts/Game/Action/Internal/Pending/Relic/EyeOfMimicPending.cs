@@ -19,7 +19,6 @@ namespace Game.Action.Internal.Pending.Relic
         public EyeOfMimicPending(EyeOfMimic e, int maker) : base(maker)
         {
             _eyeOfMimic = e;
-            Maker = maker;
         }
 
         public void Dispose()

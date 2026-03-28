@@ -19,8 +19,6 @@ namespace Game.Action.Relics
 
         public ChaoticConstructorAction(int maker) : base(maker)
         {
-            Target = maker;
-            Maker = maker;
         }
 
         protected override void ModifyGameState()

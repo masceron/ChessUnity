@@ -15,7 +15,10 @@ namespace Game.Action.Internal.Pending
 
         protected PendingAction(int maker, int target) : base(maker, target)
         {
-            
+        }
+
+        protected PendingAction(int maker, int target, TargetingType targetingType) : base(maker, target, targetingType)
+        {
         }
 
         protected sealed override void ModifyGameState()

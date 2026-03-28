@@ -16,15 +16,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public RayStingerExecute(int target) : base(-1)
+        public RayStingerExecute(int target) : base(-1, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(BleedingStack, BoardUtils.PieceOn(Target))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken(BrokenDuration, BoardUtils.PieceOn(Target))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(BleedingStack, GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Broken(BrokenDuration, GetTarget())));
         }
     }
 }

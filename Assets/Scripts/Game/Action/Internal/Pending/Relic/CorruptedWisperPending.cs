@@ -12,9 +12,8 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private readonly CorruptedWisper _corruptedWisper;
 
-        public CorruptedWisperPending(int target, CorruptedWisper corruptedWisper) : base(target)
+        public CorruptedWisperPending(int target, CorruptedWisper corruptedWisper) : base(-1, target)
         {
-            Target = target;
             _corruptedWisper = corruptedWisper;
         }
 
@@ -26,7 +25,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            var execute = new CorruptedWisperExecute(Target);
+            var execute = new CorruptedWisperExecute(GetTargetPos());
 
             CommitResult(execute);
             _corruptedWisper.LevelUp();
