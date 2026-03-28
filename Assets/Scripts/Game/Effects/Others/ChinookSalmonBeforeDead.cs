@@ -27,13 +27,11 @@ namespace Game.Effects.Others
             }
         }
         
-        public void OnCallBeforePieceAction(Action.Action action)       
+        public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.Target == Piece.Pos)
-            {
-                action.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
-                ActionManager.EnqueueAction(new NormalMove(Piece.Pos, newPosition));
-            }
+            if (action is not ICaptures || action.GetTarget() != Piece) return;
+            action.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
+            ActionManager.EnqueueAction(new NormalMove(Piece.Pos, newPosition));
         }
         
         

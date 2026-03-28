@@ -23,10 +23,10 @@ namespace Game.Effects.Traits
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.GetTarget() != Piece || action.Result != ResultFlag.Success) return;
-            if (Distance(action.Maker, action.Target) < 3) return;
+            if (Distance(action.GetFrom(), action.GetTargetPos()) < 3) return;
             if (!MatchManager.Roll(Strength)) return;
 
-            if (PieceOn(action.Target).Effects.Any(e => e.EffectName == "effect_bound"))
+            if (action.GetTarget().Effects.Any(e => e.EffectName == "effect_bound"))
             {
                 var effect = action.GetMaker().Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)

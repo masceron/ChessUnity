@@ -31,7 +31,7 @@ namespace Game.Effects.States
         {
             foreach (var action in actions)
             {
-                if (action is ISkills && PieceOn(action.Target) == Piece)
+                if (action is ISkills && action.GetTarget() == Piece)
                 {
                     actions.Remove(action);
                 }

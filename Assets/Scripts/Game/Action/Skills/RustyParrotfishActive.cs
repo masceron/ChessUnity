@@ -15,10 +15,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public RustyParrotfishActive(int maker, int to) : base(maker)
+        public RustyParrotfishActive(int maker, int to) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -28,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            FormationManager.Ins.RemoveFormation(Target);
+            FormationManager.Ins.RemoveFormation(GetTargetPos());
             SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

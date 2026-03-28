@@ -18,9 +18,9 @@ namespace Game.Effects.Traits
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || BoardUtils.PieceOn(action.Target) == null || Distance(action.Target, Piece.Pos) > 2 ||
-                ColorOfPiece(action.Target) != Piece.Color ||
-                action.Target == Piece.Pos)
+            if (action is not ICaptures || action.GetTarget() == null || Distance(action.GetTargetPos(), Piece.Pos) > 2 ||
+                action.GetTarget().Color != Piece.Color ||
+                action.GetTarget() == Piece)
                 return;
 
             action.Target = Piece.Pos;

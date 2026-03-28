@@ -19,8 +19,6 @@ namespace Game.Action.Skills
 
         public ScalyheadSculpinActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic maker)

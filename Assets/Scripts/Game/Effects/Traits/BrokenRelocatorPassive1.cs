@@ -29,7 +29,7 @@ namespace Game.Effects.Traits
 
             if (action.GetTarget() != Piece) return;
 
-            var (nRank, nFile) = BoardUtils.RankFileOf(action.Maker);
+            var (nRank, nFile) = BoardUtils.RankFileOf(action.GetFrom());
 
             foreach (var (r, f) in MoveEnumerators.AroundUntil(nRank, nFile, Radius))
                 _possiblePositions.Add(BoardUtils.IndexOf(r, f));
@@ -44,7 +44,7 @@ namespace Game.Effects.Traits
             if (BoardUtils.PieceOn(_possiblePositions[idx]) != null)
                 ActionManager.EnqueueAction(new KillPiece(_possiblePositions[idx]));
 
-            MatchManager.Ins.GameState.Move(action.Target, _possiblePositions[idx]);
+            MatchManager.Ins.GameState.Move(action.GetTarget(), _possiblePositions[idx]);
         }
 
         public void OnApply()

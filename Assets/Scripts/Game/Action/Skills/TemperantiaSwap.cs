@@ -23,7 +23,6 @@ namespace Game.Action.Skills
 
         public TemperantiaSwap(int maker, int allyIndex, int enemyIndex) : base(maker)
         {
-            Maker = maker;
             this.allyIndex = allyIndex;
             this.enemyIndex = enemyIndex;
         }

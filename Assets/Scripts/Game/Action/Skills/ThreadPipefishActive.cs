@@ -17,8 +17,6 @@ namespace Game.Action.Skills
 
         public ThreadPipefishActive(int maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)

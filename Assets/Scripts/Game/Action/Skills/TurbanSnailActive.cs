@@ -19,7 +19,6 @@ namespace Game.Action.Skills
 
         public TurbanSnailActive(int maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

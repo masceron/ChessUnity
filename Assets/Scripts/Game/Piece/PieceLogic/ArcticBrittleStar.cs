@@ -20,7 +20,7 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 15, this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
 
@@ -43,7 +43,7 @@ namespace Game.Piece.PieceLogic
                     var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 3);
                     foreach (var target in targets)
                     {
-                        if (GetTarget().Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
                         listPieces.Add(PieceOn(target));
                     }
 

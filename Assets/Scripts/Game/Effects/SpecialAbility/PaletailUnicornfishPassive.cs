@@ -22,7 +22,7 @@ namespace Game.Effects.SpecialAbility
             if (action is ICaptures && action.GetMaker() == Piece &&
                 (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
                 ActionManager.EnqueueAction(
-                    new ApplyEffect(new Blinded(GetStat(EffectStat.Duration), 50, PieceOn(action.Target)), Piece));
+                    new ApplyEffect(new Blinded(GetStat(EffectStat.Duration), 50, action.GetTarget()), Piece));
         }
 
         BeforeApplyEffectTriggerPriority IBeforeApplyEffectTrigger.Priority =>

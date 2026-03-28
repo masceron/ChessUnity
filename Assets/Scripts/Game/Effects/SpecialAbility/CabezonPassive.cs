@@ -19,8 +19,8 @@ namespace Game.Effects.SpecialAbility
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is ICaptures && action.GetMaker() == Piece &&
-                (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target)), Piece));
+                action.Result is ResultFlag.Blocked or ResultFlag.Miss)
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, action.GetTarget()), Piece));
         }
     }
 }

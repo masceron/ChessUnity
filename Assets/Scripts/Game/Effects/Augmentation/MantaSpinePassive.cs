@@ -52,12 +52,11 @@ namespace Game.Effects.Augmentation
 
         private void MovePieceAndMakeIllusion(Action.Action action)
         {
-            var targetPiece = PieceOn(action.Target);
+            var targetPiece = action.GetTarget();
             if (targetPiece != null)
             {
-                var (rank, file) = RankFileOf(action.Target);
-                var piece = PieceOn(action.Target);
-                var color = piece.Color;
+                var (rank, file) = RankFileOf(action.GetTargetPos());
+                var color = targetPiece.Color;
                 var push = color ? -1 : 1;
                 var rankOff = rank;
 
@@ -91,11 +90,11 @@ namespace Game.Effects.Augmentation
                         available.RemoveAt(randomIdx);
                     }
 
-                    ActionManager.EnqueueAction(new NormalMove(action.Target, IndexOf(rankOff, file)));
+                    ActionManager.EnqueueAction(new NormalMove(action.GetTargetPos(), IndexOf(rankOff, file)));
 
                     foreach (var selectedIndex in selectedIndices)
                     {
-                        var config = new PieceConfig(piece.Type, Piece.Color, selectedIndex);
+                        var config = new PieceConfig(targetPiece.Type, Piece.Color, selectedIndex);
                         ActionManager.EnqueueAction(new SpawnPieceWithEffect(config,
                             new Illusion(PieceOn(selectedIndex))));
                     }

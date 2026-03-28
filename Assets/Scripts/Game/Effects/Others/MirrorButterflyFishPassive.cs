@@ -1,5 +1,4 @@
 ﻿using Game.Action.Skills;
-using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -22,8 +21,8 @@ namespace Game.Effects.Others
             if (action is not ISkills)
                 return;
 
-            var maker = BoardUtils.action.GetMaker();
-            var target = BoardUtils.PieceOn(action.Target);
+            var maker = action.GetMaker();
+            var target = action.GetTarget();
 
             if (target != Piece)
                 return;

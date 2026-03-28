@@ -76,11 +76,11 @@ namespace Game.Tile
         public virtual void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) return;
-            var pieceOn = BoardUtils.PieceOn(action.Target);
+            var pieceOn = action.GetTarget();
             if (pieceOn == null) return;
-            if (action.Target == Pos)
+            if (action.GetTargetPos() == Pos)
                 OnPieceEnter(pieceOn);
-            else if (action.Maker == Pos) OnPieceExit(pieceOn);
+            else if (action.GetFrom() == Pos) OnPieceExit(pieceOn);
         }
 
         public virtual void OnPieceSpawn(PieceLogic piece)

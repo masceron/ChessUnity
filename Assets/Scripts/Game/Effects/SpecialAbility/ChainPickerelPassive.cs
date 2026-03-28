@@ -33,9 +33,9 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action) 
         { 
-            if (CheckPieceInRange(action.Target))
+            if (CheckPieceInRange(action.GetTargetPos()))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(action.GetMaker(), action.Maker, -1)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(action.GetMaker(), action.GetFrom(), -1)));
             }
         }
     }

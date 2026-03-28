@@ -27,8 +27,8 @@ namespace Game.Effects.Traits
             var activeBoard = ActiveBoard();
             if (action.GetMaker() == Piece)
             {
-                var pos1 = action.Maker;
-                var pos2 = action.Target;
+                var pos1 = action.GetFrom();
+                var pos2 = action.GetTargetPos();
 
                 var (first1, first2) = RankFileOf(pos1);
                 var (second1, second2) = RankFileOf(pos2);
@@ -81,7 +81,7 @@ namespace Game.Effects.Traits
                     }
                 }
 
-                if (!activeBoard[action.Target] || !activeBoard[action.Maker])
+                if (!activeBoard[action.GetTargetPos()] || !activeBoard[action.GetFrom()])
                 {
                     foreach (var pos in initActive)
                         activeBoard[pos] = true;
@@ -91,7 +91,8 @@ namespace Game.Effects.Traits
                 }
 
                 var blocker = Pathfinder.LineBlocker(
-                    RankOf(action.Maker), FileOf(action.Maker), RankOf(action.Target), FileOf(action.Target)
+                    RankOf(action.GetFrom()), FileOf(action.GetFrom()), RankOf(action.GetTargetPos()),
+                    FileOf(action.GetTargetPos())
                 );
 
                 if (blocker.Item1 != -1)

@@ -27,7 +27,7 @@ namespace Game.Effects.Traits
 
             if (action.GetMaker() != Piece) return;
 
-            var targetPiece = PieceOn(action.Target);
+            var targetPiece = action.GetTarget();
             if (targetPiece is { PieceRank: PieceRank.Elite or PieceRank.Champion or PieceRank.Commander })
                 ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece), Piece));
         }

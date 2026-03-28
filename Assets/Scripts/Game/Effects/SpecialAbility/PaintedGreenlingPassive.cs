@@ -28,12 +28,12 @@ namespace Game.Effects.SpecialAbility
 
             Debug.Log(action.GetMaker().Type + " made a quiet action, check for painted greenling passive");
 
-            if (HasFormation(action.Target)) 
+            if (HasFormation(action.GetTargetPos())) 
             {
-                var formation = GetFormation(action.Target);
+                var formation = GetFormation(action.GetTargetPos());
                 if (formation.Color != action.GetMaker().Color) return;
 
-                var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(action.Target, GetStat(EffectStat.Radius));
+                var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(action.GetTargetPos(), GetStat(EffectStat.Radius));
                 foreach (var pos in listPieces)
                 {
                     var p = PieceOn(pos);

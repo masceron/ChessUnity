@@ -51,7 +51,7 @@ namespace Game.Effects.Traits
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetTarget() != Piece || action.Maker == action.Target) return;
+            if (action.GetTarget() != Piece) return;
             if (action.Result != ResultFlag.Success) return;
             if (Piece.Effects.Any(e =>
                     e.EffectName is "effect_shield" or "effect_carapace" or "effect_hardened_shield")) return;

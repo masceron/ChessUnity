@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
             if (action is DestroyConstruct && action.GetMaker() == Piece &&
                 action.GetMaker().Type != "piece_rusty_parrotfish" && action.Result == ResultFlag.Success)
             {
-                if (Piece is RedtailParrotfish && PieceOn(action.Target) is StoneWall) return;
+                if (Piece is RedtailParrotfish && action.GetTarget() is StoneWall) return;
                 // Giết chính mình
                 ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             }
@@ -35,7 +35,7 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is ICaptures)
-                    actions[i] = new DestroyConstruct(Piece.Pos, actions[i].Target);
+                    actions[i] = new DestroyConstruct(Piece.Pos, actions[i].GetTargetPos());
         }
 
         public override int GetValueForAI()

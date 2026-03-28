@@ -1,5 +1,4 @@
 using Game.Action.Skills;
-using Game.Common;
 using Game.Triggers;
 
 namespace Game.Effects.Others
@@ -22,8 +21,8 @@ namespace Game.Effects.Others
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction is ISkills && BoardUtils.PieceOn(lastMainAction.Maker) != null &&
-                BoardUtils.PieceOn(lastMainAction.Maker).Color != color) Strength++;
+            if (lastMainAction is ISkills && lastMainAction.GetMaker() != null &&
+                lastMainAction.GetMaker().Color != color) Strength++;
             if (Strength > 3) Strength = 3;
         }
     }

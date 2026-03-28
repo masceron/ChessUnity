@@ -25,8 +25,8 @@ namespace Game.Effects.Others
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not NormalMove move || BoardUtils.PieceOn(move.Maker) != Piece) return;
-            var targetPos = move.Target;
+            if (action is not NormalMove move || move.GetMaker() != Piece) return;
+            var targetPos = move.GetTargetPos();
             var (rank, file) = BoardUtils.RankFileOf(targetPos);
 
             var enemyPieces = BoardUtils.GetPiecesInRadius(

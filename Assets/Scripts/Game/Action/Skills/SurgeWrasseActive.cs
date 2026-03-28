@@ -19,7 +19,6 @@ namespace Game.Action.Skills
 
         public SurgeWrasseActive(int maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -29,7 +28,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Maker), FileOf(Maker), 1))
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()), 1))
             {
                 var pieceOn = PieceOn(IndexOf(rank, file));
                 if (pieceOn != null && pieceOn.Color == GetMaker().Color)

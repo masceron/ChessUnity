@@ -1,7 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -26,7 +25,7 @@ namespace Game.Effects.Buffs
                 || action.Result != ResultFlag.HardenedBlock
                 || action.Result != ResultFlag.Evade) return;
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.action.GetMaker()), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, action.GetMaker()), Piece));
             if (Strength > 1) Strength--;
             else
                 ActionManager.EnqueueAction(new RemoveEffect(this));

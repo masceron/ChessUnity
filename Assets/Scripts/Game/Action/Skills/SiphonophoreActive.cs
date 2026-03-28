@@ -21,7 +21,6 @@ namespace Game.Action.Skills
 
         public SiphonophoreActive(int maker, List<int> spawnPositions) : base(maker)
         {
-            Maker = maker;
             _spawnPositions = spawnPositions ?? new List<int>();
         }
 

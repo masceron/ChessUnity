@@ -17,9 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SirenActive(int maker, int target, int moveTo) : base(maker)
+        public SirenActive(int maker, int target, int moveTo) : base(maker, target)
         {
-            Target = target;
             _moveTo = moveTo;
         }
 
@@ -32,14 +31,14 @@ namespace Game.Action.Skills
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Target, _moveTo);
+            PieceManager.Ins.Move(GetTargetPos(), _moveTo);
         }
 
         protected override void ModifyGameState()
         {
-            Move(Target, _moveTo);
+            Move(GetTarget(), _moveTo);
 
-            FlipPieceColor(_moveTo);
+            FlipPieceColor(PieceOn(_moveTo));
             SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

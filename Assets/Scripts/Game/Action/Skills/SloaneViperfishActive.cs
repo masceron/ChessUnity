@@ -18,8 +18,6 @@ namespace Game.Action.Skills
 
         public SloaneViperfishActive(int maker, bool bleeding) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
             _bleeding = bleeding;
         }
 

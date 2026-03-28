@@ -18,8 +18,6 @@ namespace Game.Action.Skills
 
         public SwordFishActive(int maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

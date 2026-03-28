@@ -20,7 +20,6 @@ namespace Game.Action.Skills
         public string chosenType;
         public RoyalGrammaActive(int maker, List<int> positions, string type) : base(maker)
         {
-            Maker = maker;
             this.positions = positions;
             chosenType = type;
         }

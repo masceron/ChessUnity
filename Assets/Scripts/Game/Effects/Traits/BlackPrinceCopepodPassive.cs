@@ -23,7 +23,7 @@ namespace Game.Effects.SpecialAbility
             foreach (var redCopepod in listRedCopepod)
             {
                 redCopepod.SetAttackRange(redCopepod.GetAttackRange() + GetStat(EffectStat.Range));
-                SetCooldown(Piece.Pos, ((IPieceWithSkill)PieceOn(Piece.Pos)).TimeToCooldown - 2);
+                SetCooldown(Piece, ((IPieceWithSkill)Piece).TimeToCooldown - 2);
             }
         }
     }

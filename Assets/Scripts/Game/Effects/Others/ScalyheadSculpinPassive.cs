@@ -19,7 +19,7 @@ namespace Game.Effects.Others
             var effect = applyEffect.Effect;
 
             if (effect.EffectName == "effect_slow" || (effect.EffectName == "effect_stun"
-                                                       && BoardUtils.PieceOn(applyEffect.Target) == Piece))
+                                                       && applyEffect.GetTarget() == Piece))
                 applyEffect.Result = ResultFlag.EffectResistance;
         }
     }

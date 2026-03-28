@@ -21,7 +21,7 @@ namespace Game.Effects.Augmentation
         {
             if (action.GetMaker() != Piece || action is not ICaptures || action.Result != ResultFlag.Success) return;
 
-            var (rank, file) = RankFileOf(action.Target);
+            var (rank, file) = RankFileOf(action.GetTargetPos());
 
             var piece1 = PieceOn(IndexOf(rank, file - 1));
             var piece2 = PieceOn(IndexOf(rank, file + 1));
