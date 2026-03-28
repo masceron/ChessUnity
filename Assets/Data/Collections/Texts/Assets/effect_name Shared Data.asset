@@ -811,6 +811,26 @@ MonoBehaviour:
     m_Key: effect_dwarf_cuttlefish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 82917787327340544
+    m_Key: effect_melibe_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82918195902881792
+    m_Key: effect_tainted_heart_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82918635549827072
+    m_Key: effect_puppeteer_spirit_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82919049716375552
+    m_Key: effect_ray's_tail_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82919423391113216
+    m_Key: effect_pressure_membrane_passive
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

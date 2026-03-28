@@ -4,6 +4,7 @@ using Game.Effects.States;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using ZLinq;
 
 namespace Game.Tile
 {
@@ -135,6 +136,10 @@ namespace Game.Tile
         protected virtual void OnPieceEnter(PieceLogic piece)
         {
             PieceOnFormation = piece;
+            foreach (var effect in piece.Effects.OfType<IFormationTrigger>())
+            {
+                effect.OnEnter(piece, this);
+            }
         }
 
         /// <summary>
@@ -143,6 +148,11 @@ namespace Game.Tile
         protected virtual void OnPieceExit(PieceLogic piece)
         {
             PieceOnFormation = null;
+            foreach (var effect in piece.Effects.OfType<IFormationTrigger>())
+            {
+                effect.OnExit(piece, this);
+            }
+            
         }
 
         public virtual int GetValueForAI()
