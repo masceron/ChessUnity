@@ -26,7 +26,7 @@ namespace Game.Effects.SpecialAbility
             if (tetheredPiece.Color != Piece.Color) return;
 
             var amplify = new Amplify(-1, GetStat(EffectStat.Radius), tetheredPiece);
-            tethered.GrantedEffect = amplify;
+            tethered.GrantedEffects.Add(amplify);
             ActionManager.EnqueueAction(new ApplyEffect(amplify, Piece));
         }
     }
