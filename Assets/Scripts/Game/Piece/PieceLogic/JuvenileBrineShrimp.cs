@@ -20,13 +20,8 @@ namespace Game.Piece.PieceLogic
         private const int Duration2 = 10;
         public JuvenileBrineShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, None.Captures)
         {
-            SetStat(SkillStat.Strength, Strength1);
-            SetStat(SkillStat.Strength, Strength2);
-            SetStat(SkillStat.Duration, Duration1);
-            SetStat(SkillStat.Duration, Duration2);
-
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Haste(GetStat(SkillStat.Duration), GetStat(SkillStat.Strength), this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new LongReach(this, GetStat(SkillStat.Duration, 2), GetStat(SkillStat.Strength, 2))));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Haste(Duration1, Strength1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new LongReach(this, Duration2, Strength2)));
         }
     }
 }

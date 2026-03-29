@@ -823,6 +823,10 @@ MonoBehaviour:
     m_Key: effect_frog_fish_passive
     m_Metadata:
       m_Items: []
+  - m_Id: 83399986786283520
+    m_Key: effect_brine_shrimp_summon
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

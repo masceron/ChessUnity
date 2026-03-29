@@ -307,6 +307,10 @@ MonoBehaviour:
     m_Key: piece_royal_gramma_skill
     m_Metadata:
       m_Items: []
+  - m_Id: 83392226317250560
+    m_Key: piece_brine_shrimp_skill
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

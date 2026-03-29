@@ -1,6 +1,7 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
@@ -10,7 +11,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others
 {
-    public class BrineShrimpSummon : Effect, IStartTurnTrigger
+    public class BrineShrimpSummon : Effect, IStartTurnTrigger, ISkills
     {
         private Petrified petrified;
 
@@ -26,6 +27,11 @@ namespace Game.Effects.Others
         public override int GetValueForAI()
         {
             return base.GetValueForAI() + 10;
+        }
+
+        int ISkills.AIPenaltyValue(PieceLogic maker)
+        {
+            throw new System.NotImplementedException();
         }
 
         void IStartTurnTrigger.OnCallStart(Action.Action lastMainAction)

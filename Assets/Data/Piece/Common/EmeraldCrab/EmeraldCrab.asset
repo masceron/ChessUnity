@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: EmeraldCrab
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_emerald_crab
-  prefab: {fileID: 0}
-  rank: 0
-  moveRange: 0
+  prefab: {fileID: 5539094649158605941, guid: aaca16e74d68e5e49b6cde151215e1ad, type: 3}
+  rank: 4
+  moveRange: 1
   attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 0
   normalSkillCooldown: 0
   availableSlots: 0
-  logicClassName: 
+  logicClassName: EmeraldCrab
   baseValue: 0
   considerations: []
