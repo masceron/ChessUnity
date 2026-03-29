@@ -26,9 +26,9 @@ namespace Game.Effects.Traits
             if (Distance(action.GetFrom(), action.GetTargetPos()) < 3) return;
             if (!MatchManager.Roll(Strength)) return;
 
-            if (action.GetTarget().Effects.Any(e => e.EffectName == "effect_bound"))
+            if (((PieceLogic)action.GetTarget()).Effects.Any(e => e.EffectName == "effect_bound"))
             {
-                var effect = action.GetMaker() as PieceLogic.Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
+                var effect = (action.GetMaker() as PieceLogic)?.Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)
                 {
                     action.Result = ResultFlag.Evade;

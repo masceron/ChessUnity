@@ -19,12 +19,12 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
             {
-                if (actions[i].GetMaker() as PieceLogic.Effects
+                if (((PieceLogic)actions[i].GetMaker()).Effects
                     .All(e => e.EffectName != "effect_snapping_strike"))
                     continue;
 
                 if (actions[i] is NormalCapture capture)
-                    actions[i] = new Action.Captures.SnappingStrike(capture.GetMakerPos(), capture.GetTargetPos());
+                    actions[i] = new Action.Captures.SnappingStrike(capture.GetMaker() as PieceLogic, capture.GetTarget() as PieceLogic);
             }
         }
 

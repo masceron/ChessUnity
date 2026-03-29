@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Piece
     public class RoyalGrammaPending : PendingAction, IDisposable, ISkills
     {
         public static List<int> positions = new();
-        public RoyalGrammaPending(int maker, int target) : base(maker, target)
+        public RoyalGrammaPending(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             positions.Add(GetTargetPos());
             TileManager.Ins.UnMark(GetTargetPos());
-            if (positions.Count == GetMaker() as PieceLogic.GetStat(SkillStat.Target))
+            if (positions.Count == ((PieceLogic)GetMaker()).GetStat(SkillStat.Target))
             {
                 var ui = BoardViewer.Ins.GetOrInstantiateUI<RoyalGrammaUI>(IngameSubmenus.RoyalGrammaUI);
                 ui.Load(this);
