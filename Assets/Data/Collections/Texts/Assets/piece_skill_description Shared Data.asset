@@ -311,6 +311,10 @@ MonoBehaviour:
     m_Key: piece_brine_shrimp_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 83468104897449984
+    m_Key: piece_emerald_crab_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

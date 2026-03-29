@@ -1,10 +1,11 @@
-﻿using Game.Effects.Buffs;
+﻿using Game.Action.Skills;
+using Game.Effects.Buffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal
 {
-    public class SpinsterWrasseBuff : Action, IInternal
+    public class SpinsterWrasseBuff : Action, ISkills
     {
         private readonly int firstTarget;
         private readonly int secondTarget;
@@ -22,6 +23,11 @@ namespace Game.Action.Internal
 
             ActionManager.EnqueueAction(new Purify(Maker, firstTarget));
             ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(secondTarget)), PieceOn(Maker)));
+        }
+
+        int ISkills.AIPenaltyValue(PieceLogic maker)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
