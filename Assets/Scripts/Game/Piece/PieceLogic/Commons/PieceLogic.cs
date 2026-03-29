@@ -386,7 +386,7 @@ namespace Game.Piece.PieceLogic.Commons
                 if (effect is ISkillStatModifierTrigger modifier)
                     finalStat += modifier.Modify(stat);
 
-            return finalStat;
+            return Mathf.Max(finalStat, 0);
         }
 
         public void SetStat(SkillStat stat, int value, int num = 1)

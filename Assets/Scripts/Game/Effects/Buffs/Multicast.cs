@@ -3,43 +3,23 @@ using Game.Triggers;
 
 namespace Game.Effects.Buffs
 {
-    public class Multicast : Effect, IOnApplyTrigger, IOnRemoveTrigger
+    public class Multicast : Effect, ISkillStatModifierTrigger
     {
-        private readonly int Number;
-        public Multicast(PieceLogic piece, int number, int duration) : base(duration, -1, piece, "effect_multicast")
+        public Multicast(PieceLogic piece, int number, int duration) : base(duration, number, piece, "effect_multicast")
         {
-            Number = number;
         }
 
         public override int GetValueForAI()
         {
             return base.GetValueForAI() - 60;
         }
-
-        void IOnApplyTrigger.OnApply()
+        public int Modify(SkillStat stat)
         {
-            if (Piece.GetStat(SkillStat.Target) != 0)
+            if (stat == SkillStat.Unit || stat == SkillStat.Target)
             {
-                Piece.SetStat(SkillStat.Target, Piece.GetStat(SkillStat.Target) + Number);
+                return Strength;
             }
-
-            if (Piece.GetStat(SkillStat.Unit) != 0)
-            {
-                Piece.SetStat(SkillStat.Unit, Piece.GetStat(SkillStat.Unit) + Number);
-            }
-        }
-
-        void IOnRemoveTrigger.OnRemove()
-        {
-            if (Piece.GetStat(SkillStat.Target) != 0)
-            {
-                Piece.SetStat(SkillStat.Target, Piece.GetStat(SkillStat.Target) - Number);
-            }
-
-            if (Piece.GetStat(SkillStat.Unit) != 0)
-            {
-                Piece.SetStat(SkillStat.Unit, Piece.GetStat(SkillStat.Unit) - Number);
-            }
+            return 0;
         }
     }
 }
