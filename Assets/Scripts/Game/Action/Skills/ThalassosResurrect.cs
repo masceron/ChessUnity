@@ -32,12 +32,12 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var gameState = MatchManager.Ins.GameState;
-            var color = GetMaker().Color;
+            var color = GetMaker() as PieceLogic.Color;
             var collection = !color ? gameState.WhiteCaptured : gameState.BlackCaptured;
             ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, GetTargetPos())));
 
             collection.Remove(collection.First(e => e.Type == typeTo));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

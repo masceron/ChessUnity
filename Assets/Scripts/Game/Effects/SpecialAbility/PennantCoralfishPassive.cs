@@ -23,9 +23,9 @@ namespace Game.Effects.SpecialAbility
         void IAfterPieceActionTrigger.OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) return;
-            if (action.GetMaker() != Piece) return;
+            if (action.GetMaker() as PieceLogic != Piece) return;
 
-            var piece = action.GetMaker();
+            var piece = action.GetMaker() as PieceLogic;
             if (piece == null || piece.Type != "piece_pennant_coralfish") return;
             //Debug.Log(piece.Type + " made a quiet action, check for pennant coralfish passive");
 

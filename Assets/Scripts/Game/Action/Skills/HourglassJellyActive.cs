@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -25;
             return 0;
@@ -44,11 +44,11 @@ namespace Game.Action.Skills
             var destinationPiece = PieceOn(_destination);
             if (destinationPiece != null) MatchManager.Ins.GameState.Destroy(PieceOn(_destination));
             MatchManager.Ins.GameState.Move(GetTarget(), _destination);
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
         // public void CompleteActionForAI()
         // {
-        //     var makerPiece = GetMaker();
+        //     var makerPiece = GetMaker() as PieceLogic;
         //     if (makerPiece == null) return;
 
         //     var (r, f) = RankFileOf(Maker);

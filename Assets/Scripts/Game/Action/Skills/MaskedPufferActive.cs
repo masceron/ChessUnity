@@ -29,9 +29,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, GetMaker())));
-            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, GetMaker())));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, GetMaker())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, GetMaker() as PieceLogic)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, GetMaker() as PieceLogic)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, GetMaker() as PieceLogic)));
         }
     }
 }

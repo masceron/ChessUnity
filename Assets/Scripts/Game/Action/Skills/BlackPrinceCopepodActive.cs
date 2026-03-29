@@ -43,14 +43,14 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(secondIndex))));
             else
             {
-                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", GetMaker().Color, secondIndex)));
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", GetMaker() as PieceLogic.Color, secondIndex)));
             }
 
             if (PieceOn(thirdIndex) != null)
                 ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(thirdIndex))));
             else
             {
-                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", GetMaker().Color, thirdIndex)));
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", GetMaker() as PieceLogic.Color, thirdIndex)));
             }
         }
     }

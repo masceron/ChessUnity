@@ -23,7 +23,7 @@ namespace Game.Action.Internal.Pending.Relic
         // protected override void ModifyGameState()
         // {
         //     ActionManager.EnqueueAction(new Purify(Maker, Maker));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetMaker()), seafoamPhial));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetMaker() as PieceLogic), seafoamPhial));
         // BoardViewer.Selecting = -1;
         // BoardViewer.SelectingFunction = 0;
         //

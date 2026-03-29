@@ -24,7 +24,7 @@ namespace Game.Action.Internal.Pending.Relic
         // protected override void ModifyGameState()
         // {
         //     var (rank, file) = RankFileOf(Maker);
-        //     var caller = GetMaker();
+        //     var caller = GetMaker() as PieceLogic;
         //
         //     for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
         //     {

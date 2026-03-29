@@ -18,7 +18,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public SiphonophorePending(int maker, int target) : base(maker, target, TargetingType.Location)
         {
-            var makerPiece = GetMaker();
+            var makerPiece = GetMaker() as PieceLogic;
             if (makerPiece == null || isInitialized) return;
             
             unitCount = makerPiece.GetStat(SkillStat.Unit);
@@ -39,7 +39,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            var makerPiece = GetMaker();
+            var makerPiece = GetMaker() as PieceLogic;
             if (makerPiece == null) return;
 
 

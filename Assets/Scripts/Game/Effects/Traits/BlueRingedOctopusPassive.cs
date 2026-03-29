@@ -25,7 +25,7 @@ namespace Game.Effects.Traits
         {
             if (action is not IQuiets || action.Result != ResultFlag.Success) return;
             var activeBoard = ActiveBoard();
-            if (action.GetMaker() == Piece)
+            if (action.GetMaker() as PieceLogic == Piece)
             {
                 var pos1 = action.GetFrom();
                 var pos2 = action.GetTargetPos();
@@ -86,7 +86,7 @@ namespace Game.Effects.Traits
                     foreach (var pos in initActive)
                         activeBoard[pos] = true;
 
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, action.GetMaker()), Piece));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, action.GetMaker() as PieceLogic), Piece));
                     return;
                 }
 
@@ -96,7 +96,7 @@ namespace Game.Effects.Traits
                 );
 
                 if (blocker.Item1 != -1)
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, action.GetMaker()), Piece));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, action.GetMaker() as PieceLogic), Piece));
 
                 foreach (var pos in initActive)
                     activeBoard[pos] = true;

@@ -51,7 +51,7 @@ namespace Game.Effects.States
         {
             if (action is not { Result: ResultFlag.Success }) return;
 
-            if (action is IQuiets or ICaptures && action.GetMaker() == Piece)
+            if (action is IQuiets or ICaptures && action.GetMaker() as PieceLogic == Piece)
             {
                 action.Result = ResultFlag.Blocked;
                 return;

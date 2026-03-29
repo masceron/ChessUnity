@@ -27,7 +27,7 @@ namespace Game.Action.Captures
         {
             Debug.Log("Complete FrenziedCaptureDontMove");
             PieceManager.Ins.Destroy(GetTargetPos());
-            MatchManager.Ins.GameState.Kill(GetTarget());
+            MatchManager.Ins.GameState.Kill(GetTarget() as PieceLogic);
         }
     }
 }

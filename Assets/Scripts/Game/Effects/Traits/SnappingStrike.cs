@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
             {
-                if (actions[i].GetMaker().Effects
+                if (actions[i].GetMaker() as PieceLogic.Effects
                     .All(e => e.EffectName != "effect_snapping_strike"))
                     continue;
 

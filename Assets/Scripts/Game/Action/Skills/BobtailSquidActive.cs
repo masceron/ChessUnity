@@ -33,7 +33,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
             var Color = maker.Color;
             var direction = Color ? -1 : +1;

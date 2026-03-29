@@ -28,7 +28,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(GetMaker(), GetTargetPos());
+            MatchManager.Ins.GameState.Move(GetMaker() as PieceLogic, GetTargetPos());
         }
     }
 }

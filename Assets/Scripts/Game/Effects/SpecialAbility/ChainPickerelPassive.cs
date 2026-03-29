@@ -35,7 +35,7 @@ namespace Game.Effects.SpecialAbility
         { 
             if (CheckPieceInRange(action.GetTargetPos()))
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(action.GetMaker(), action.GetFrom(), -1)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(action.GetMaker() as PieceLogic, action.GetFrom(), -1)));
             }
         }
     }

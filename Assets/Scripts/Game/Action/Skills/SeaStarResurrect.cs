@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = GetMaker();
+            var caller = GetMaker() as PieceLogic;
             var collection = !caller.Color ? WhiteCaptured() : BlackCaptured();
 
             ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, GetTargetPos()),
@@ -37,7 +37,7 @@ namespace Game.Action.Skills
                 }));
             
             collection.Remove(collection.First(p => p.Type == "piece_sea_star"));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

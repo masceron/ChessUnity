@@ -19,7 +19,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.GetMaker() != Piece) return;
+            if (action is not ICaptures || action.GetMaker() as PieceLogic != Piece) return;
             var pieceOn = action.GetTarget();
             if (pieceOn == null) return;
             if (pieceOn.Effects.Any(e => e is Relentless) && IsAlive(pieceOn))

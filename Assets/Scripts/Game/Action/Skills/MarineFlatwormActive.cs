@@ -23,7 +23,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -25;
             return 0;
@@ -31,9 +31,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var config = new PieceConfig(GetMaker().Type, GetMaker().Color, GetTargetPos());
+            var config = new PieceConfig(GetMaker() as PieceLogic.Type, GetMaker() as PieceLogic.Color, GetTargetPos());
             ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(GetTarget())));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

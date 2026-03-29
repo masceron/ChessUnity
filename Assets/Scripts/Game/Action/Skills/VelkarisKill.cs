@@ -33,7 +33,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

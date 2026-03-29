@@ -17,10 +17,10 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
 
             ActionManager.EnqueueAction(new Purify(GetMakerPos(), _firstTarget));
-            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(_secondTarget)), GetMaker()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(PieceOn(_secondTarget)), GetMaker() as PieceLogic));
         }
     }
 }

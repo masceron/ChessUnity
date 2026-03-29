@@ -17,7 +17,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public RedtailParrotfishPending(int maker, int target) : base(maker, target)
         {
-            _redtail = GetMaker();
+            _redtail = GetMaker() as PieceLogic;
         }
 
         public void Dispose()

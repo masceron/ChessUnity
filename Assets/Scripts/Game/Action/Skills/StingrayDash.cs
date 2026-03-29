@@ -22,7 +22,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -30 : 0;
         }
@@ -33,7 +33,7 @@ namespace Game.Action.Skills
             var (rankFrom, fileFrom) = RankFileOf(GetFrom());
             var (rankTo, fileTo) = RankFileOf(GetTargetPos());
             var board = PieceBoard();
-            var caller = GetMaker();
+            var caller = GetMaker() as PieceLogic;
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;

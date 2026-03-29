@@ -33,7 +33,7 @@ namespace Game.Action.Skills
                 if (piece is not IPieceWithSkill) continue;
 
                 var deltaCooldown = ((IPieceWithSkill)PieceOn(i)).TimeToCooldown - piece.SkillCooldown;
-                if (piece.Color == GetMaker().Color)
+                if (piece.Color == GetMaker() as PieceLogic.Color)
                     a.Add((i, deltaCooldown));
                 else
                     b.Add((i, deltaCooldown));
@@ -50,7 +50,7 @@ namespace Game.Action.Skills
                 else
                 {
                     var idx = Random.Range(0, b.Count - 1);
-                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker()));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker() as PieceLogic));
                 }
             }
             else if (a.Count > 0)
@@ -61,10 +61,10 @@ namespace Game.Action.Skills
             else if (b.Count > 0)
             {
                 var idx = Random.Range(0, b.Count - 1);
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker()));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker() as PieceLogic));
             }
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -74,11 +74,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            if (GetTarget().Color != GetMaker().Color)
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTarget()), GetMaker()));
+            if (GetTarget().Color != GetMaker() as PieceLogic.Color)
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTarget()), GetMaker() as PieceLogic));
             else
                 SetCooldown(GetTarget(), 0);
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

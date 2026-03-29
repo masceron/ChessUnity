@@ -20,7 +20,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            var pieceOn = GetMaker();
+            var pieceOn = GetMaker() as PieceLogic;
             ActionManager.EnqueueAction(new Purify(GetFrom(), GetFrom()));
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, pieceOn)));
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(BoardUtils.RankOf(pieceOn.Pos),

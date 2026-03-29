@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerColor = GetMaker().Color;
+            var makerColor = GetMaker() as PieceLogic.Color;
             var direction = makerColor ? 1 : -1;
             var pieceOn = GetTarget();
             if (pieceOn != null)
@@ -57,7 +57,7 @@ namespace Game.Action.Skills
                         : RankOf(GetTargetPos());
                 ActionManager.EnqueueAction(new NormalMove(GetTargetPos(),
                     IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))));
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), GetMaker()));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), GetMaker() as PieceLogic));
                 ActionManager.EnqueueAction(
                     new NormalMove(GetFrom(), IndexOf(finalRankOfMaker, FileOf(GetTargetPos()))));
             }

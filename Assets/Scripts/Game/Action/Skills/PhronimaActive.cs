@@ -23,7 +23,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -50;
             return 0;

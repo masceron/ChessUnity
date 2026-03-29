@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = GetMaker();
+            var caller = GetMaker() as PieceLogic;
             if (caller == null) return;
 
             if (!VerifyIndex(GetTargetPos()) || !IsActive(GetTargetPos())) return;
@@ -37,7 +37,7 @@ namespace Game.Action.Skills
                 new PieceConfig("piece_olive_ridley_eggs", caller.Color, GetTargetPos())
             ));
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)caller).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)caller).TimeToCooldown);
         }
     }
 }

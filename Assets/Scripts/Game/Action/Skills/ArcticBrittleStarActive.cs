@@ -20,7 +20,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -5;
             return 0;
@@ -28,11 +28,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Formation anchorIce = new AnchorIce(GetMaker().Color);
+            Formation anchorIce = new AnchorIce(GetMaker() as PieceLogic.Color);
             anchorIce.SetDuration(3);
             FormationManager.Ins.SetFormation(GetTargetPos(), anchorIce);
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

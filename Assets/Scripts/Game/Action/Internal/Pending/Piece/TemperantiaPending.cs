@@ -19,7 +19,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public TemperantiaPending(int maker, int target) : base(maker, target)
         {
-            _temperantia = GetMaker();
+            _temperantia = GetMaker() as PieceLogic;
         }
 
         public void Dispose()

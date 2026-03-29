@@ -123,7 +123,7 @@ namespace Game.Effects.States
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetMaker() != Piece) return;
+            if (action.GetMaker() as PieceLogic != Piece) return;
 
             var target = action.GetTargetPos();
             var targetPiece = action.GetTarget();

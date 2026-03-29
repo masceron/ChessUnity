@@ -23,7 +23,7 @@ namespace Game.Effects.Traits
             if (action.GetTarget() != Piece) return;
             if (action.Result != ResultFlag.SurvivedHit) return;
 
-            var target = action.GetMaker();
+            var target = action.GetMaker() as PieceLogic;
             if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
                 ActionManager.EnqueueAction(new KillPiece(action.GetMakerPos()));
 

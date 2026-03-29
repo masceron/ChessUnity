@@ -26,7 +26,7 @@ namespace Game.Action.Skills
         {
             TileManager.Ins.DestroyTile(GetTargetPos());
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
@@ -53,7 +53,7 @@ namespace Game.Action.Skills
         //     var selectedTile = listTiles[random.Next(listTiles.Count)];
 
         //     TileManager.Ins.DestroyTile(selectedTile);
-        //     SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         // }
     }
 }

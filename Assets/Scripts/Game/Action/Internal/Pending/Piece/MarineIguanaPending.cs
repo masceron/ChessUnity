@@ -25,7 +25,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            return pieceAI.Color != GetMaker().Color ? -50 : 0;
+            return pieceAI.Color != GetMaker() as PieceLogic.Color ? -50 : 0;
         }
 
         protected override void CompleteAction()
@@ -50,7 +50,7 @@ namespace Game.Action.Internal.Pending.Piece
             {
                 SecondTarget = GetTarget();
 
-                var kill = new MarineKill(GetMaker(), _firstTarget, SecondTarget);
+                var kill = new MarineKill(GetMaker() as PieceLogic, _firstTarget, SecondTarget);
                 CommitResult(kill);
 
                 BoardViewer.Ins.Unmark();

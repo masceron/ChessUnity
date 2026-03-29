@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Piece
         private static PieceLogic _firstTarget;
         private static PieceLogic _secondTarget;
 
-        public MegalodonActivePending(int maker, int target) : base(maker, target)
+        public MegalodonActivePending(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -40;
             return 0;
@@ -42,12 +42,12 @@ namespace Game.Action.Internal.Pending.Piece
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
                 foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()),
-                             GetMaker().AttackRange()))
+                             ((PieceLogic)GetMaker()).AttackRange()))
                 {
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
                     if (piece == null || piece.Color == _firstTarget.Color) continue;
-                    var newAction = new MegalodonActivePending(GetFrom(), index);
+                    var newAction = new MegalodonActivePending(GetMaker() as PieceLogic, piece);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
                 }

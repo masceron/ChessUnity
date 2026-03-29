@@ -26,7 +26,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            BoardUtils.Move(GetMaker(), GetTargetPos());
+            BoardUtils.Move(GetMaker() as PieceLogic, GetTargetPos());
         }
     }
 }

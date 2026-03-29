@@ -25,7 +25,7 @@ namespace Game.Action.Captures
         protected override void ModifyGameState()
         {
             PieceManager.Ins.Destroy(GetTargetPos());
-            MatchManager.Ins.GameState.Kill(GetTarget());
+            MatchManager.Ins.GameState.Kill(GetTarget() as PieceLogic);
         }
     }
 }

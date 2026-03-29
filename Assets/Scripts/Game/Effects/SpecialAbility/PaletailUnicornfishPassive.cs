@@ -19,7 +19,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.GetMaker() == Piece &&
+            if (action is ICaptures && action.GetMaker() as PieceLogic == Piece &&
                 (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
                 ActionManager.EnqueueAction(
                     new ApplyEffect(new Blinded(GetStat(EffectStat.Duration), 50, action.GetTarget()), Piece));

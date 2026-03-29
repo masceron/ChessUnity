@@ -263,7 +263,7 @@ namespace Game.Managers
             SideToMove = !SideToMove;
         }
 
-        public PieceLogic GetPieceByID(int id)
+        public PieceLogic GetEntityByID(int id)
         {
             return _piecesDictionary.GetValueOrDefault(id);
         }

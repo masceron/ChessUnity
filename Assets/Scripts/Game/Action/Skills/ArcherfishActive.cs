@@ -22,7 +22,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
 
             // Skill này chỉ tác động lên quân địch.
@@ -37,16 +37,16 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTarget()), GetMaker()));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTarget()), GetMaker()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTarget()), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTarget()), GetMaker() as PieceLogic));
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
         // {
         //     var (rank, file) = RankFileOf(Maker);
-        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != GetMaker().Color)
+        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != GetMaker() as PieceLogic.Color)
         //         .Where(p => p.Effects.Any(p => p.EffectName != "effect_extremophile"
         //                                   && p.EffectName != "effect_blind" &&
         //                                   p.EffectName != "effect_marked")).ToList();
@@ -55,10 +55,10 @@ namespace Game.Action.Skills
         //     listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
 
         //     var idx = UnityEngine.Random.Range(0, listPieces.Count);
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMaker()));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMaker()));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMaker() as PieceLogic));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMaker() as PieceLogic));
 
-        //     SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         // }
     }
 }

@@ -21,8 +21,8 @@ namespace Game.Action.Internal
         /// <param name="target">Vị trí trống ngẫu nhiên xung quanh host để spawn Adhesive về.</param>
         /// <param name="adhesive">PieceLogic của quân Adhesive.</param>
         /// <param name="hostLogic">PieceLogic của host. Null nếu host là Formation.</param>
-        public MoveToDetachAdhesive(int maker, int target, PieceLogic adhesive, PieceLogic hostLogic)
-            : base((PieceLogic)maker, (PieceLogic)target)
+        public MoveToDetachAdhesive(PieceLogic maker, int target, PieceLogic adhesive, PieceLogic hostLogic)
+            : base(maker, target)
         {
             _adhesive = adhesive;
             _hostLogic = hostLogic;
@@ -42,7 +42,7 @@ namespace Game.Action.Internal
             else
             {
                 // Host là Formation — dùng map theo vị trí (Maker = vị trí formation)
-                PieceManager.Ins.MoveToDetachFromFormation(GetMakerPos(), GetTargetPos());
+                PieceManager.Ins.MoveToDetachFromFormation(GetFrom(), GetTargetPos());
             }
 
             // Cập nhật PieceBoard logic

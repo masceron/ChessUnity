@@ -22,7 +22,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -20 : 0;
         }
@@ -30,7 +30,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(GetFrom());
-            var caller = GetMaker();
+            var caller = GetMaker() as PieceLogic;
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -42,11 +42,11 @@ namespace Game.Action.Skills
                     var p = PieceOn(IndexOf(rankOff, fileOff));
                     if (p == null || p.Color == caller.Color) continue;
 
-                    ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, p), GetMaker()));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, p), GetMaker() as PieceLogic));
                 }
             }
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            GetMaker().SkillCooldown = 0;
+            GetMaker() as PieceLogic.SkillCooldown = 0;
         }
     }
 }

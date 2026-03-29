@@ -30,12 +30,11 @@ namespace Game.Effects.Augmentation
                 _buffForEachTurn = 1;
             }
 
-            if (applyEffect.Effect.Category == EffectCategory.Debuff && applyEffect.SourcePiece == Piece &&
-                _buffForEachTurn > 0)
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(Piece), Piece));
-                _buffForEachTurn--;
-            }
+            if (applyEffect.Effect.Category != EffectCategory.Debuff || applyEffect.GetMaker() as PieceLogic != Piece ||
+                _buffForEachTurn <= 0) return;
+            
+            ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(Piece), Piece));
+            _buffForEachTurn--;
         }
 
         private Effect GetRandomBuffEffect(PieceLogic piece)

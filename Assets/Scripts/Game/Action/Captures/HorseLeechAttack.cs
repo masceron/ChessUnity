@@ -21,8 +21,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, GetTarget()), GetMaker()));
-            ActionManager.EnqueueAction(new KillPiece(GetMaker()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, GetTarget() as PieceLogic), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new KillPiece(GetMaker() as PieceLogic));
         }
     }
 }

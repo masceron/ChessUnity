@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
         }
         public void OnCallEnd(Action.Action action)
         {
-            if (action.GetMaker() == Piece) return;
+            if (action.GetMaker() as PieceLogic == Piece) return;
             var piece = PieceOn(Piece.Pos);
 
             Effect bleeding = null;

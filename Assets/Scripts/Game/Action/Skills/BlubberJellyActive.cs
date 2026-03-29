@@ -15,7 +15,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             
             var (rank, file) = RankFileOf(GetFrom());
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, maker.GetStat(SkillStat.Range, 2)))

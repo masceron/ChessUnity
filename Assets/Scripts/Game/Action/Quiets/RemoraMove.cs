@@ -23,7 +23,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            Move(GetMaker(), GetTargetPos());
+            Move(GetMaker() as PieceLogic, GetTargetPos());
         }
     }
 }

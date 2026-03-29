@@ -11,7 +11,7 @@ namespace Game.Action.Internal
         /// <summary>Reference đến quân ký sinh, dùng để cập nhật PieceBoard sau khi tách.</summary>
         private readonly PieceLogic _parasite;
 
-        public MoveToDetach(int maker, int target, PieceLogic parasite, PieceLogic hostLogic) : base((PieceLogic)maker, (PieceLogic)target)
+        public MoveToDetach(PieceLogic maker, int target, PieceLogic parasite, PieceLogic hostLogic) : base(maker, target)
         {
             _parasite = parasite;
             _hostLogic = hostLogic;

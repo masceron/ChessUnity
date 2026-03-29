@@ -22,7 +22,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            var allyColor = GetMaker().Color;
+            var allyColor = GetMaker() as PieceLogic.Color;
             var markedEnemy = BoardUtils.FindPiecesWithEffectName(!allyColor, EffectName);
             var markedAlly = BoardUtils.FindPiecesWithEffectName(allyColor, EffectName);
 

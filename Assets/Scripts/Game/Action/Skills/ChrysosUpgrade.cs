@@ -34,7 +34,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieceOn = GetMaker();
+            var pieceOn = GetMaker() as PieceLogic;
             ActionManager.EnqueueAction(new DestroyPiece(_target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
             ((Chrysos)pieceOn).Coin -= _cost;

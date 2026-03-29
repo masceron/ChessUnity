@@ -21,8 +21,8 @@ namespace Game.Effects.Others
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction is ISkills && lastMainAction.GetMaker() != null &&
-                lastMainAction.GetMaker().Color != color) Strength++;
+            if (lastMainAction is ISkills && lastMainAction.GetMaker() as PieceLogic != null &&
+                lastMainAction.GetMaker() as PieceLogic.Color != color) Strength++;
             if (Strength > 3) Strength = 3;
         }
     }

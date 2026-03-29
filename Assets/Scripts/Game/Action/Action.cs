@@ -52,7 +52,7 @@ namespace Game.Action
         private int _target = -1;
         private readonly TargetingType targetingType;
 
-        protected Action(Entity maker, PieceLogic target)
+        protected Action(Entity maker, Entity target)
         {
             _maker = maker?.ID ?? -1;
             _from = maker?.Pos ?? -1;
@@ -99,19 +99,19 @@ namespace Game.Action
 
         protected abstract void ModifyGameState();
 
-        public PieceLogic GetMaker()
+        public Entity GetMaker()
         {
-            return BoardUtils.GetPieceByID(_maker);
+            return BoardUtils.GetEntityByID(_maker);
         }
 
-        public PieceLogic GetTarget()
+        public Entity GetTarget()
         {
-            return targetingType == TargetingType.Unit ? BoardUtils.GetPieceByID(_target) : null;
+            return targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) : null;
         }
 
         public int GetTargetPos()
         {
-            return targetingType == TargetingType.Unit ? BoardUtils.GetPieceByID(_target).Pos : _target;
+            return targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target).Pos : _target;
         }
 
         public int GetFrom()
@@ -142,12 +142,12 @@ namespace Game.Action
         public bool Equals(Action x, Action y)
         {
             if (x!.GetType() != y!.GetType()) return false;
-            return x.GetMaker() == y.GetMaker() && x.GetTarget() == y.GetTarget();
+            return x.GetMaker() as PieceLogic == y.GetMaker() as PieceLogic && x.GetTarget() == y.GetTarget();
         }
 
         public int GetHashCode(Action obj)
         {
-            return HashCode.Combine(obj.GetTarget(), obj.GetMaker());
+            return HashCode.Combine(obj.GetTarget(), obj.GetMaker() as PieceLogic);
         }
     }
 }

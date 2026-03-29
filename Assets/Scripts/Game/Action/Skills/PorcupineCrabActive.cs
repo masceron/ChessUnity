@@ -24,7 +24,7 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            var makerPiece = GetMaker();
+            var makerPiece = GetMaker() as PieceLogic;
 
             ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
 
@@ -45,7 +45,7 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
         
         List<(int rank, int file)> GetPath(int rank1, int file1, int rank2, int file2)    

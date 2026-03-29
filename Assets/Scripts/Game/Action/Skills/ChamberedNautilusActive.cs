@@ -22,15 +22,15 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -5 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, GetTarget()), GetMaker()));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, GetTarget()), GetMaker() as PieceLogic));
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

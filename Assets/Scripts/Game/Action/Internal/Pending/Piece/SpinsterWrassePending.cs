@@ -30,7 +30,7 @@ namespace Game.Action.Internal.Pending.Piece
         // protected override void ModifyGameState()
         // {
         //     ApplyEffect(FirstTarget, SecondTarget);
-        //     SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         //     
         //     ResetTargets();
         // }
@@ -60,7 +60,7 @@ namespace Game.Action.Internal.Pending.Piece
         private void ApplyEffect(PieceLogic firstTarget, PieceLogic secondTarget)
         {
             ActionManager.EnqueueAction(new Purify(GetFrom(), firstTarget.Pos));
-            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget), GetMaker()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Adaptation(secondTarget), GetMaker() as PieceLogic));
         }
 
         private static void ResetTargets()
@@ -72,7 +72,7 @@ namespace Game.Action.Internal.Pending.Piece
         public void CompleteActionForAI()
         {
             var listA = GetPiecesInRadius(RankOf(GetFrom()), FileOf(GetFrom()), 5,
-                p => p != null && p.Color == GetMaker().Color);
+                p => p != null && p.Color == GetMaker() as PieceLogic.Color);
 
             if (listA.Count == 0) return;
             listA.Sort((a, b) =>
@@ -93,7 +93,7 @@ namespace Game.Action.Internal.Pending.Piece
             for (var i = 0; i < BoardSize; ++i)
             {
                 var piece = PieceOn(i);
-                if (piece == null || piece.Color != GetMaker().Color || piece.Effects.Any(e =>
+                if (piece == null || piece.Color != GetMaker() as PieceLogic.Color || piece.Effects.Any(e =>
                         e.EffectName is "effect_extremophiles" or "effect_Adaptation"))
                     continue;
 

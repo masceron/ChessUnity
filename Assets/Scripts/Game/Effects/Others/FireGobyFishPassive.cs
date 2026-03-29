@@ -21,7 +21,7 @@ namespace Game.Effects.Others
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.GetMaker() != Piece || action.Result != ResultFlag.Success) return;
+            if (action is not ICaptures || action.GetMaker() as PieceLogic != Piece || action.Result != ResultFlag.Success) return;
             var targetPos = action.GetTargetPos();
             var (rank, file) = BoardUtils.RankFileOf(targetPos);
             List<PieceLogic> surroundingPieces = new();

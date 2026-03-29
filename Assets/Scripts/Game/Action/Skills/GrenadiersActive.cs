@@ -38,20 +38,20 @@ namespace Game.Action.Skills
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
             SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -60 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            SetFormation(GetTargetPos(), new NavalMines(true, GetMaker().Color));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetFormation(GetTargetPos(), new NavalMines(true, GetMaker() as PieceLogic.Color));
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

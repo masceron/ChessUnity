@@ -31,7 +31,7 @@ namespace Game.Effects.Debuffs
         public void OnCallEnd(Action.Action lastMainAction)
         {
             if (lastMainAction is not IQuiets) return;
-            if (lastMainAction.GetMaker() != Piece)
+            if (lastMainAction.GetMaker() as PieceLogic != Piece)
             {
                 TurnSinceLastMove++;
                 if (TurnSinceLastMove <= TurnToRemoveEffect) return;

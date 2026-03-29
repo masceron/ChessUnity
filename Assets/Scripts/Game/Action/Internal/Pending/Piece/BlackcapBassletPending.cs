@@ -10,7 +10,7 @@ namespace Game.Action.Internal.Pending.Piece
     public class BlackcapBassletPending : PendingAction, ISkills
     {
         
-        public BlackcapBassletPending(int maker, int target) : base(maker, target)
+        public BlackcapBassletPending(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -24,7 +24,7 @@ namespace Game.Action.Internal.Pending.Piece
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn != null) continue;
-                var newAction = new BlackcapBassletActive(GetMakerPos(), index);
+                var newAction = new BlackcapBassletActive(GetMaker() as PieceLogic, index);
                 BoardViewer.ListOf.Add(newAction);
                 TileManager.Ins.MarkAsMoveable(index);
             }

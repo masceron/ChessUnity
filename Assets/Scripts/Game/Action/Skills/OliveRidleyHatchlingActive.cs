@@ -27,8 +27,8 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new KillPiece(GetMakerPos()));
             ActionManager.EnqueueAction(
-                new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMaker().Color, GetMakerPos())));
-            SetCooldown(GetMaker(), -1);
+                new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMaker() as PieceLogic.Color, GetMakerPos())));
+            SetCooldown(GetMaker() as PieceLogic, -1);
         }
     }
 }

@@ -497,9 +497,9 @@ namespace Game.Common
             return MatchManager.Ins.GameState.NextEntityID();
         }
 
-        public static PieceLogic GetPieceByID(int id)
+        public static PieceLogic GetEntityByID(int id)
         {
-            return MatchManager.Ins.GameState.GetPieceByID(id);
+            return MatchManager.Ins.GameState.GetEntityByID(id);
         }
     }
 }

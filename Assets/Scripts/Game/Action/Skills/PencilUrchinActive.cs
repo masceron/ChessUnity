@@ -25,8 +25,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetFormation(GetTargetPos(), new UrchinField(false, GetMaker().Color));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetFormation(GetTargetPos(), new UrchinField(false, GetMaker() as PieceLogic.Color));
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

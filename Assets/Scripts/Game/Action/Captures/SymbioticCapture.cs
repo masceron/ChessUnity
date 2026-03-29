@@ -21,8 +21,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            var makerPiece = GetMaker();
-            var targetPiece = GetTarget();
+            var makerPiece = GetMaker() as PieceLogic;
+            var targetPiece = GetTarget() as PieceLogic;
 
             if (makerPiece == null || targetPiece == null) return;
 

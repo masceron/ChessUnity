@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(GetMaker(), GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new ThreadPipefishEffect(GetMaker() as PieceLogic, GetTarget())));
         }
     }
 }

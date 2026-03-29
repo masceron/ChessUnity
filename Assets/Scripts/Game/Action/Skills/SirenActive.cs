@@ -24,7 +24,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
@@ -39,7 +39,7 @@ namespace Game.Action.Skills
             Move(GetTarget(), _moveTo);
 
             FlipPieceColor(PieceOn(_moveTo));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

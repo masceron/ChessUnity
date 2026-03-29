@@ -52,13 +52,13 @@ namespace Game.Action.Skills
 
 
             //ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, selectedPiece)));
-            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), GetMaker()));
+            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), GetMaker() as PieceLogic));
 
             if (selectedPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
                 //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMaker()));
+                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMaker() as PieceLogic));
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -69,15 +69,15 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             //Apply effect Marked no duration
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, GetTarget()), GetMaker()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, GetTarget()), GetMaker() as PieceLogic));
 
             var targetPiece = GetTarget();
             if (targetPiece == null) return;
 
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMaker()));
+                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMaker() as PieceLogic));
 
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

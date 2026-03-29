@@ -15,11 +15,12 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
 
             ActionManager.EnqueueAction(
-                new ApplyEffect(new MarineIguanaKillEffect(0, GetMaker(), GetTarget(), GetPieceByID(secondTarget)),
-                    GetMaker()));
+                new ApplyEffect(
+                    new MarineIguanaKillEffect(0, GetMaker() as PieceLogic, GetTarget() as PieceLogic, GetEntityByID(secondTarget)),
+                    GetMaker() as PieceLogic));
         }
     }
 }

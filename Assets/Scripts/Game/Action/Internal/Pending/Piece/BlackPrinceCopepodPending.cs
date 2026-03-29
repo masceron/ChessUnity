@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending.Piece
         private static int _secondPos = -1;
         private static int _thirdPos = -1;
 
-        public BlackPrinceCopepodPending(int maker, int target) : base(maker, target)
+        public BlackPrinceCopepodPending(PieceLogic maker, int target) : base(maker, target)
         {
         }
 

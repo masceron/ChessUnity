@@ -37,7 +37,7 @@ namespace Game.Effects.Condition
             if (type == VengefulType.OnDeath) return;
             if (action.GetTarget() == Piece && action is ICaptures)
             {
-                Killer = action.GetMaker();
+                Killer = action.GetMaker() as PieceLogic;
             }
         }
 

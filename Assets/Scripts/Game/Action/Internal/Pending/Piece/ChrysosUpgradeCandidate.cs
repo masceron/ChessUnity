@@ -26,12 +26,12 @@ namespace Game.Action.Internal.Pending.Piece
         public readonly PieceRank UpgradeFrom;
         private PieceConfig _config;
 
-        public ChrysosUpgradeCandidate(int maker, int to, int cost, Chrysos ch) : base(maker, to)
+        public ChrysosUpgradeCandidate(PieceLogic maker, PieceLogic to, int cost, Chrysos ch) : base(maker, to)
         {
             Cost = (byte)cost;
             _chrysos = ch;
 
-            var cr = BoardUtils.PieceOn(to);
+            var cr = GetTarget() as PieceLogic;
             UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
             UpgradeFrom = cr.PieceRank;
             CurrentPiece = cr.Type;
@@ -50,7 +50,7 @@ namespace Game.Action.Internal.Pending.Piece
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var p = BoardUtils.PieceOn(i);
-                if (p == null || p.Color != GetMaker().Color) continue;
+                if (p == null || p.Color != ((PieceLogic)GetMaker()).Color) continue;
                 _allyPieces.Add(p);
                 switch (p.PieceRank)
                 {

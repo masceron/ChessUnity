@@ -19,7 +19,7 @@ namespace Game.Action.Quiets
             var hostLogic = GetTarget();
             PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic);
 
-            var parasite = GetMaker();
+            var parasite = GetMaker() as PieceLogic;
             if (parasite == null) return;
 
             BoardUtils.PieceBoard()[GetFrom()] = null;

@@ -27,7 +27,7 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color != GetMaker().Color &&
+            var listPieces = allPieces.Where(p => p != null && p.Color != GetMaker() as PieceLogic.Color &&
                                                   p.Effects.Any(e =>
                                                       e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();
 
@@ -38,7 +38,7 @@ namespace Game.Action.Skills
             var random = new Random();
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
-            SetCooldown(GetMaker(), -1);
+            SetCooldown(GetMaker() as PieceLogic, -1);
             foreach (var effect in selectedPiece.Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
                 if (effect.Duration > 0)
@@ -65,8 +65,8 @@ namespace Game.Action.Skills
                 else
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
 
-            SetCooldown(GetMaker(), -1);
-            //SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, -1);
+            //SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

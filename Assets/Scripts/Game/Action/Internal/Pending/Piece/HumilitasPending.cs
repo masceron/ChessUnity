@@ -32,7 +32,7 @@ namespace Game.Action.Internal.Pending.Piece
             // {
             //     var idx = IndexOf(rank, file);
             //     var pOn = PieceOn(idx);
-            //     if (pOn != null && pOn.Color != GetMaker().Color)
+            //     if (pOn != null && pOn.Color != GetMaker() as PieceLogic.Color)
             //     {
             //         if (pOn.Effects != null && pOn.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
             //         listPieces.Add(pOn);
@@ -44,7 +44,7 @@ namespace Game.Action.Internal.Pending.Piece
             // if (listPieces.Count == 1)
             // {
             //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, listPieces[0])));
-            //     SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
             //     return;
             // }
             // // neu co nhieu quan           
@@ -89,7 +89,7 @@ namespace Game.Action.Internal.Pending.Piece
             //     ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, piece)));
             // }
 
-            // SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            // SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
 
         public void Dispose()
@@ -102,7 +102,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker();
+            var maker = GetMaker() as PieceLogic;
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -20;
             return 0;

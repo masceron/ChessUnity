@@ -27,8 +27,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = GetMaker();
-            var direction = GetMaker().Color ? 1 : -1;
+            var makerPiece = GetMaker() as PieceLogic;
+            var direction = GetMaker() as PieceLogic.Color ? 1 : -1;
             ActionManager.EnqueueAction(new NormalMove(GetFrom(),
                 IndexOf(RankOf(GetTargetPos()) + direction, FileOf(GetTargetPos()))));
             var bleeding = GetTarget().Effects.First(e => e is Bleeding);

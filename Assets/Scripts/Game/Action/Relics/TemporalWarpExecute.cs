@@ -23,7 +23,7 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
-            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(GetMaker(), GetTargetPos())));
+            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(GetMaker() as PieceLogic, GetTargetPos())));
         }
     }
 }

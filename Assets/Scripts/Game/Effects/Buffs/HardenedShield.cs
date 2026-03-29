@@ -25,7 +25,7 @@ namespace Game.Effects.Buffs
                 || action.Result != ResultFlag.HardenedBlock
                 || action.Result != ResultFlag.Evade) return;
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, action.GetMaker()), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, action.GetMaker() as PieceLogic), Piece));
             if (Strength > 1) Strength--;
             else
                 ActionManager.EnqueueAction(new RemoveEffect(this));

@@ -20,7 +20,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallEnd(Action.Action action)
         {
-            if (action.GetMaker() != Piece || !Piece.Effects.Any(e => e.EffectName == "effect_ambush")) return;
+            if (action.GetMaker() as PieceLogic != Piece || !Piece.Effects.Any(e => e.EffectName == "effect_ambush")) return;
 
             _lastUsed++;
             if (_lastUsed < TurnsToActive) return;

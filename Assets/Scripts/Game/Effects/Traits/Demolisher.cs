@@ -20,8 +20,8 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is DestroyConstruct && action.GetMaker() == Piece &&
-                action.GetMaker().Type != "piece_rusty_parrotfish" && action.Result == ResultFlag.Success)
+            if (action is DestroyConstruct && action.GetMaker() as PieceLogic == Piece &&
+                action.GetMaker() as PieceLogic.Type != "piece_rusty_parrotfish" && action.Result == ResultFlag.Success)
             {
                 if (Piece is RedtailParrotfish && action.GetTarget() is StoneWall) return;
                 // Giết chính mình

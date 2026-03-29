@@ -20,7 +20,7 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new Purify(GetMakerPos(), GetMakerPos()));
-            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetMaker())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetMaker() as PieceLogic)));
         }
     }
 }

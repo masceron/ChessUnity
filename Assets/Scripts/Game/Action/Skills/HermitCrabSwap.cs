@@ -42,9 +42,9 @@ namespace Game.Action.Skills
             // if (pieceB != null) pieceB.Pos = a;
             // board[b] = pieceA;
             // if (pieceA != null) pieceA.Pos = b;
-            // SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            // SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
 
-            MatchManager.Ins.GameState.Swap(GetMaker(), GetTarget());
+            MatchManager.Ins.GameState.Swap(GetMaker() as PieceLogic, GetTarget());
             SetCooldown(GetTarget(), ((IPieceWithSkill)GetTarget()).TimeToCooldown);
         }
     }

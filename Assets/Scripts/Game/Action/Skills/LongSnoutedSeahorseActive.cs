@@ -30,8 +30,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Swap(GetMaker(), GetTarget());
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            MatchManager.Ins.GameState.Swap(GetMaker() as PieceLogic, GetTarget());
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
         }
     }
 }

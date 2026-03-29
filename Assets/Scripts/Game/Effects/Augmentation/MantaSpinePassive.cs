@@ -26,7 +26,7 @@ namespace Game.Effects.Augmentation
         public void OnCallBeforePieceAction(Action.Action action)
         {
             // if (action.GetTarget() != Piece || 
-            //     action.GetMaker() == Piece || 
+            //     action.GetMaker() as PieceLogic == Piece || 
             //     (action.Flag & ActionFlag.Unblockable) != 0) 
             //     return;
             // if (action is not ICaptures) return;
@@ -40,7 +40,7 @@ namespace Game.Effects.Augmentation
             // if (action.Result != ResultFlag.Success) return;
             //action.Result = ResultFlag.Dodged;
 
-            if (action is not ICaptures || action.GetTarget() != Piece || action.GetMaker() == Piece) return;
+            if (action is not ICaptures || action.GetTarget() != Piece || action.GetMaker() as PieceLogic == Piece) return;
 
             if (isFirstCaptured)
             {

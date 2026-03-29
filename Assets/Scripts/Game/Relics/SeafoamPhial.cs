@@ -67,7 +67,7 @@ namespace Game.Relics
             {
                 // If none found, default to caster (can be changed later)
                 case 0:
-                    // targetPiece = GetMaker();
+                    // targetPiece = GetMaker() as PieceLogic;
                     break;
                 case 1:
                     targetPiece = bestPieces[0];

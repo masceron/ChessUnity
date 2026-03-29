@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures) return;
 
-            if (action.GetMaker() == Piece) return;
+            if (action.GetMaker() as PieceLogic == Piece) return;
             if (action.GetTarget() != Piece) return;
 
             if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));

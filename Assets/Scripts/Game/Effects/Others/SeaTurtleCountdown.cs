@@ -21,7 +21,7 @@ namespace Game.Effects.Others
 
         public void OnCallEnd(Action.Action action)
         {
-            if (action.GetMaker() != Piece) ActionManager.EnqueueAction(new RemoveEffect(this));
+            if (action.GetMaker() as PieceLogic != Piece) ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 
         public void OnRemove()

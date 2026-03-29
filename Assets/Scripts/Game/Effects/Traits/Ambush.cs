@@ -26,7 +26,7 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action action)
         {
-            if (action.GetMaker() != Piece)
+            if (action.GetMaker() as PieceLogic != Piece)
             {
                 _lastUsed++;
                 if (_lastUsed < TurnsToActive || _active) return;

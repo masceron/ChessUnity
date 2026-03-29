@@ -6,14 +6,14 @@ namespace Game.Action.Skills
 {
     public class BlackcapBassletActive : Action, ISkills
     {
-        public BlackcapBassletActive(int maker, int target) : base(maker, target)
+        public BlackcapBassletActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
         
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
-            SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

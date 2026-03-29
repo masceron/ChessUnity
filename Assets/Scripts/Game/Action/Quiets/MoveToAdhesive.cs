@@ -29,7 +29,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            var adhesive = GetMaker();
+            var adhesive = GetMaker() as PieceLogic;
 
             if (_attachToFormation)
             {
