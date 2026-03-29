@@ -30,14 +30,13 @@ namespace Game.Managers
         {
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            env.SetPositon(pos);
+            env.SetPosition(pos);
             var prefab = AssetManager.Ins.FormationData[env.GetFormationType()].prefab;
             if (!prefab) prefab = defaultPrefab;
             _formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
                 Quaternion.identity, transform);
             if (_formations[pos] != null) RemoveFormation(pos);
             _formations[pos] = env;
-            AddEffectObserver(env);
             if (PieceOn(pos) != null) _formations[pos].OnCreated(PieceOn(pos));
         }
 
@@ -55,7 +54,6 @@ namespace Game.Managers
         {
             if (_formations[pos] == null) return;
             _formations[pos].OnRemove(PieceOn(pos)); // luôn gọi, dù ô không có Piece (truyền null)
-            RemoveObserver(_formations[pos]);
             _formations[pos] = null;
             Destroy(_formationObjects[pos]);
             _formationObjects[pos] = null;

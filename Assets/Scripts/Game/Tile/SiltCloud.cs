@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Broken lên quân đứng trên nó
+    /// </summary>
     public class SiltCloud : Formation
     {
         public SiltCloud(bool haveDuration)

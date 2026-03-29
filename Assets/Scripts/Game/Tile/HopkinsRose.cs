@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Frenzied 4 turn lên quân địch đi vào. Sau khi gây hiệu ứng, tự phá hủy formation này.
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HopkinsRose : Formation

@@ -5,6 +5,10 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Bất cứ quân nào đứng trên ô này sẽ nhận Trait Camouflage, 
+    /// ra khỏi ô sẽ mất (trừ các quân đã có sẵn Camouflage).
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Kelp : Formation

@@ -1,4 +1,4 @@
-﻿using Game.Action;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
@@ -7,7 +7,7 @@ using ZLinq;
 namespace Game.Tile
 {
     /// <summary>
-    ///     Urchin Field Tile
+    ///     Gây hiệu ứng Bleed 4 cho quân địch dẫm phải
     /// </summary>
     public class UrchinField : Formation
     {
@@ -24,6 +24,8 @@ namespace Game.Tile
         protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
+            if (piece == null || piece.Color == Color) return;
+
             //Theo Tân bảo thì bleed không cộng dồn, mà sẽ reset lại 4 turn
             var existingBleeding = piece.Effects.OfType<Bleeding>().ToList();
 

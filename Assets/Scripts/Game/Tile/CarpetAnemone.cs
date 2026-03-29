@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Leashed 3 turn và Poison 1 lên quân địch dẫm phải
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CarpetAnemone : Formation

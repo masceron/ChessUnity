@@ -20,12 +20,12 @@ namespace Game.Action.Relics
         {
             var fowPos = GetRandomPos();
             var fogOfWar = new FogOfWar(true);
-            fogOfWar.SetPositon(fowPos);
+            fogOfWar.SetPosition(fowPos);
             BoardUtils.SetFormation(fowPos, fogOfWar);
 
             var saposPos = GetRandomPos();
             var saprolegnia = new Saprolegnia(false, true);
-            saprolegnia.SetPositon(saposPos);
+            saprolegnia.SetPosition(saposPos);
             BoardUtils.SetFormation(saposPos, saprolegnia);
         }
 

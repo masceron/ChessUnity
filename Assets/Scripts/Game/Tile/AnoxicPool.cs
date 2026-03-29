@@ -6,6 +6,10 @@ using Game.Triggers;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Shortreach 1 3 turn cho quân địch dẫm phải. 
+    /// Nếu quân này đứng trên đây quá 3 turn, gây thêm hiệu ứng Pacified.
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class AnoxicPool : Formation, IEndTurnTrigger

@@ -7,7 +7,7 @@ using ZLinq;
 namespace Game.Tile
 {
     /// <summary>
-    ///     Urchin Field Tile
+    ///     Gây hiệu ứng Infected lên quân cờ
     /// </summary>
     public class Saprolegnia : Formation
     {

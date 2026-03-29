@@ -6,7 +6,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Tile
 {
     /// <summary>
-    ///     Placeholder for BubbleVentEffect implementation.
+    ///     "Bound quân cờ đứng trên nó trong 1 turn
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]

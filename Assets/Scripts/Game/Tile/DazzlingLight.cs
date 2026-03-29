@@ -6,7 +6,6 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Tile
 {
     /// <summary>
-    ///     Dazzling Light Tile
     ///     Gây hiệu ứng Blinded lên quân cờ trong 1 turn
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]

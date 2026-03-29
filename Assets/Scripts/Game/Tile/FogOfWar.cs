@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Che khuất tầm nhìn của quân địch bên trong fog. Quân địch đi lên fog mình, fog sẽ biến mất
+    /// </summary>
     public class FogOfWar : Formation
     {
         public FogOfWar(bool color) : base(color)
