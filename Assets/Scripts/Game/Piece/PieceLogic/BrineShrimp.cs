@@ -9,6 +9,7 @@ using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 using UnityEngine;
 using Game.Common;
+using Game.Action.Skills;
 
 namespace Game.Piece.PieceLogic
 {
@@ -16,7 +17,7 @@ namespace Game.Piece.PieceLogic
     {
         private const int Target = 1;
         private const int Duration = 3;
-        public BrineShrimp(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
+        public BrineShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, BishopMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
 
@@ -27,7 +28,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    
+                    list.Add(new BrineShrimpActive(Pos, Duration));
                 }
             };
         }

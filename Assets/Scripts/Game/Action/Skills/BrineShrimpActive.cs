@@ -38,6 +38,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
+            ActionManager.EnqueueAction(new ApplyEffect(new Petrified(Duration, PieceOn(Maker))));
             ActionManager.EnqueueAction(new ApplyEffect(new BrineShrimpSummon(PieceOn(Maker))));
         }
     }

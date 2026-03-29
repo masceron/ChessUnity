@@ -575,6 +575,18 @@ MonoBehaviour:
     m_Key: piece_pennant_coralfish
     m_Metadata:
       m_Items: []
+  - m_Id: 83156226572865536
+    m_Key: piece_juvenile_brine_shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83157774510116864
+    m_Key: piece_brine_shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83160662233894912
+    m_Key: piece_emerald_crab
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

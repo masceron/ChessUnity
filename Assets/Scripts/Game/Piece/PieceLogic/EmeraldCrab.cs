@@ -14,10 +14,10 @@ namespace Game.Piece.PieceLogic
 {
     public class EmeraldCrab : Commons.PieceLogic, IPieceWithSkill
     {
-        private const int Range = 4;
+        private const int Range = 3;
         private const int Target = 1;
         private const int Duration = 3;
-        public EmeraldCrab(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
+        public EmeraldCrab(PieceConfig cfg) : base(cfg, CrabMoves.Quiets, None.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Demolisher(this)));
 
