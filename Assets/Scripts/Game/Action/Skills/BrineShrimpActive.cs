@@ -28,6 +28,7 @@ namespace Game.Action.Skills
         public BrineShrimpActive(int maker, int duration) : base(maker)
         {
             Maker = maker;
+            Target = maker;
             Duration = duration;
         }
 
@@ -38,8 +39,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Petrified(Duration, PieceOn(Maker))));
-            ActionManager.EnqueueAction(new ApplyEffect(new BrineShrimpSummon(PieceOn(Maker))));
+            var petrified = new Petrified(Duration, PieceOn(Maker));
+            ActionManager.EnqueueAction(new ApplyEffect(petrified));
+            ActionManager.EnqueueAction(new ApplyEffect(new BrineShrimpSummon(PieceOn(Maker), Duration)));
         }
     }
 }

@@ -19,8 +19,8 @@ MonoBehaviour:
   attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
-  hasSkill: 0
-  normalSkillCooldown: 0
+  hasSkill: 1
+  normalSkillCooldown: 8
   availableSlots: 0
   logicClassName: EmeraldCrab
   baseValue: 0

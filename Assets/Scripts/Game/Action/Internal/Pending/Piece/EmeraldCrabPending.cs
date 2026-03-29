@@ -15,17 +15,16 @@ namespace Game.Action.Internal.Pending.Piece
     public class EmeraldCrabPending : PendingAction, IDisposable, ISkills
     {
         private static List<int> selectedTarget;
-        private EmeraldCrab emeraldCrab;
         private int Duration;
         private int NumTarget;
 
-        public EmeraldCrabPending(int maker, int target, int duration) : base(maker)
+        public EmeraldCrabPending(int maker, int target, int duration, int numTarget) : base(maker)
         {
             Maker = maker;
             Target = target;
-            emeraldCrab = (EmeraldCrab)PieceOn(Maker);
             selectedTarget = new List<int>();
             Duration = duration;
+            NumTarget = numTarget;
         }
 
         public void Dispose()
@@ -36,7 +35,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            NumTarget = emeraldCrab.GetStat(SkillStat.Target);
+            Debug.Log("EmeraldCrabPending CompleteAction");
             if (selectedTarget.Count < NumTarget)
             {
                 if (PieceOn(Target) != null)

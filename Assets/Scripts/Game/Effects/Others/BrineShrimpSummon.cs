@@ -6,23 +6,28 @@ using Game.Common;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others
 {
-    public class BrineShrimpSummon : Effect, IStartTurnTrigger, ISkills
+    public class BrineShrimpSummon : Effect, IEndTurnTrigger, ISkills
     {
-        private Petrified petrified;
+        private int Duration;
+        private static readonly System.Random Rng = new();
 
-        public BrineShrimpSummon(PieceLogic piece) : base(-1, 1, piece, "effect_brine_shrimp_summon")
+        public BrineShrimpSummon(PieceLogic piece, int duration) : base(-1, 1, piece, "effect_brine_shrimp_summon")
         {
-            petrified = Piece.Effects.OfType<Petrified>().FirstOrDefault();
+            Duration = duration;
+            Debug.Log($"Duration: {Duration}");
         }
 
-        StartTurnTriggerPriority IStartTurnTrigger.Priority => StartTurnTriggerPriority.Other;
+        EndTurnTriggerPriority IEndTurnTrigger.Priority => EndTurnTriggerPriority.Other;
 
-        StartTurnEffectType IStartTurnTrigger.StartTurnEffectType => StartTurnEffectType.StartOfAllyTurn;
+        EndTurnEffectType IEndTurnTrigger.EndTurnEffectType => EndTurnEffectType.EndOfEnemyTurn;
 
         public override int GetValueForAI()
         {
@@ -34,21 +39,53 @@ namespace Game.Effects.Others
             throw new System.NotImplementedException();
         }
 
-        void IStartTurnTrigger.OnCallStart(Action.Action lastMainAction)
+        void IEndTurnTrigger.OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.Maker != Piece.Pos) return;
-            if (Piece == null) return;
-            if (petrified == null) return;
+            Debug.Log("Petrified Duration: " + Duration);
 
-            if (petrified.Duration <= 0)
+            if (Duration == 0)
             {
-                var availableIndex = MoveEnumerators.AroundUntil(RankOf(Piece.Pos), FileOf(Piece.Pos), 1);
-                var idx = UnityEngine.Random.Range(0, availableIndex.Count());
-                var (rank, file) = availableIndex.ElementAt(idx);
+                SpawnJuvenileBrineShrimp();
+                ActionManager.EnqueueAction(new RemoveEffect(this));
 
-                ActionManager.EnqueueAction(new SpawnPiece(new Game.Piece.PieceConfig("piece_juvenile_brine_shrimp", Piece.Color, IndexOf(rank, file))));
-                
-                petrified = null;
+            }
+
+            Duration--;
+        }
+
+        void SpawnJuvenileBrineShrimp()
+        {
+            var availablePieces = new List<int>();
+            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Piece.Pos), FileOf(Piece.Pos), 1))
+            {
+                var piece = PieceOn(IndexOf(rank, file));
+                if (piece == null)
+                {
+                    availablePieces.Add(IndexOf(rank, file));
+                }
+            }
+
+            Shuffle(availablePieces);
+
+            for (int i = 0; i < Piece.GetStat(SkillStat.Target); ++i)
+            {
+                if (i >= availablePieces.Count)
+                {
+                    Debug.Log("No more available spaces to spawn Brine Shrimp.");
+                    return;
+                }
+
+                ActionManager.EnqueueAction(new SpawnPiece(new Game.Piece.PieceConfig("piece_juvenile_brine_shrimp", Piece.Color, availablePieces[i])));
+
+            }
+        }
+
+        private static void Shuffle<T>(IList<T> list)
+        {
+            for (var i = list.Count - 1; i > 0; i--)
+            {
+                var j = Rng.Next(i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
             }
         }
     }

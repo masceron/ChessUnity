@@ -15,7 +15,7 @@ namespace Game.Piece.PieceLogic
 {
     public class BrineShrimp : Commons.PieceLogic, IPieceWithSkill
     {
-        private const int Target = 1;
+        private const int Target = 3;
         private const int Duration = 3;
         public BrineShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, BishopMoves.Captures)
         {

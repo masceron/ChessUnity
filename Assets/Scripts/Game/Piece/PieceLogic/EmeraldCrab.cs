@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
 
                     foreach (var targetPiece in listPieces)
                     {
-                        list.Add(new EmeraldCrabPending(Pos, targetPiece, Duration));
+                        list.Add(new EmeraldCrabPending(Pos, targetPiece, Duration, Mathf.Min(listPieces.Count, GetStat(SkillStat.Target))));
                     }
                 }
             };
