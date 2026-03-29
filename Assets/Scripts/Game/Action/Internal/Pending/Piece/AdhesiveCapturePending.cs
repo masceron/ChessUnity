@@ -47,7 +47,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             if ((PieceLogic)GetTarget() is not { CurrentState: StateType.None }) return;
             ActionManager.EnqueueAction(new ApplyEffect(new Attached((PieceLogic)GetTarget(), _adhesivePiece)));
-            CommitResult(new MoveToAdhesive(GetFrom(), GetTargetPos(), attachToFormation: false));
+            CommitResult(new MoveToAdhesive(GetMaker() as PieceLogic, GetTarget(), attachToFormation: false));
         }
 
         /// <summary>Người chơi chọn bám vào Formation.</summary>
@@ -61,7 +61,7 @@ namespace Game.Action.Internal.Pending.Piece
                 formation.ClearState();
                 Attached.SpawnAdhesiveAround(formation.Pos, null, adhesive);
             };
-            CommitResult(new MoveToAdhesive(GetFrom(), targetFormation.Pos, attachToFormation: true));
+            CommitResult(new MoveToAdhesive(GetMaker() as PieceLogic, targetFormation, attachToFormation: true));
         }
     }
 }

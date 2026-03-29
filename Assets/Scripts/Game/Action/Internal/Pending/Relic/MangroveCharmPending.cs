@@ -16,7 +16,7 @@ namespace Game.Action.Internal.Pending.Relic
         public static PieceLogic SecondTarget;
         private MangroveCharm _mangroveCharm;
 
-        public MangroveCharmPending(MangroveCharm e, int target) : base(-1, target)
+        public MangroveCharmPending(MangroveCharm e, int target) : base(null, target)
         {
             _mangroveCharm = e;
         }

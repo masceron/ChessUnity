@@ -19,7 +19,7 @@ namespace Game.Relics
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
-            var action = new ChaoticConstructorAction(-1);
+            var action = new ChaoticConstructorAction();
             BoardViewer.Ins.ExecuteAction(action);
             BoardViewer.Selecting = -2;
             BoardViewer.SelectingFunction = 4;

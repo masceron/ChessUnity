@@ -22,7 +22,7 @@ namespace Game.Relics
                 var commander = GetCommanderOf(Color);
                 if (commander != null)
                 {
-                    var pending = new OvergrownSlugPending(this, commander.Pos);
+                    var pending = new OvergrownSlugPending(this, commander);
                     TileManager.Ins.MarkAsMoveable(commander.Pos);
                     BoardViewer.ListOf.Add(pending);
                     BoardViewer.Selecting = -2;

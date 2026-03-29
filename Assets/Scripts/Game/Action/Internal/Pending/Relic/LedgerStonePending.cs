@@ -7,12 +7,12 @@ namespace Game.Action.Internal.Pending.Relic
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class LedgerStonePending : PendingAction, IDisposable, IRelicAction, IInternal
+    public class LedgerStonePending : PendingAction, IDisposable, IRelicAction
     {
         private readonly bool _isFirstOption;
         private LedgerStone _ledgerStone;
 
-        public LedgerStonePending(LedgerStone cp, bool isFirstOption) : base(-1)
+        public LedgerStonePending(LedgerStone cp, bool isFirstOption) : base(null)
         {
             _ledgerStone = cp;
             _isFirstOption = isFirstOption;

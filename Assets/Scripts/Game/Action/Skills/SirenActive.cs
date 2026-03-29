@@ -39,7 +39,7 @@ namespace Game.Action.Skills
             Move(GetTarget(), _moveTo);
 
             FlipPieceColor(PieceOn(_moveTo));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

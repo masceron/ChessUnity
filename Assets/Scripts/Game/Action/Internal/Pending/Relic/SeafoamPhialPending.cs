@@ -3,6 +3,7 @@
 using System;
 using Game.Action.Relics;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 
@@ -14,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SeafoamPhial _seafoamPhial;
 
-        public SeafoamPhialPending(SeafoamPhial seafoamPhial, int maker) : base(maker)
+        public SeafoamPhialPending(SeafoamPhial seafoamPhial, PieceLogic maker) : base(null, maker)
         {
             _seafoamPhial = seafoamPhial;
         }

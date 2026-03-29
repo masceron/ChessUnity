@@ -9,16 +9,13 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class FlyingFishMove : Action, IQuiets
     {
-        public int From;
-
         [MemoryPackConstructor]
         private FlyingFishMove()
         {
         }
 
-        public FlyingFishMove(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
+        public FlyingFishMove(PieceLogic maker, int target) : base(maker, target)
         {
-            From = maker;
         }
 
         protected override void Animate()

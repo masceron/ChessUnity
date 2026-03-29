@@ -15,7 +15,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalMove(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
+        public NormalMove(PieceLogic maker, int target) : base(maker, target)
         {
         }
 

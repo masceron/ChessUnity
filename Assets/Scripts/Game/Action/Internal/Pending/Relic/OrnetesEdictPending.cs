@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private OrnetesEdict _ornetesEdict;
 
-        public OrnetesEdictPending(OrnetesEdict cp, int maker) : base(maker)
+        public OrnetesEdictPending(OrnetesEdict cp, int maker) : base(null, maker)
         {
             _ornetesEdict = cp;
         }
@@ -25,7 +25,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            var execute = new OrnetesEdictExecute(GetFrom());
+            var execute = new OrnetesEdictExecute(GetTargetPos());
             CommitResult(execute);
 
             BoardViewer.Selecting = -1;

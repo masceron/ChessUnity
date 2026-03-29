@@ -32,7 +32,7 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new DestroyPiece(_target.Index));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

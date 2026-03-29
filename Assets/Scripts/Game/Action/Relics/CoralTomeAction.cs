@@ -16,7 +16,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public CoralTomeAction(bool relicColor, string pieceType, int maker) : base(maker)
+        public CoralTomeAction(bool relicColor, string pieceType, int maker) : base(null, maker)
         {
             _relicColor = relicColor;
             _pieceType = pieceType;
@@ -24,7 +24,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor, GetFrom())));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_pieceType, _relicColor, GetTargetPos())));
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Game.Action.Skills
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
             SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -51,7 +51,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             SetFormation(GetTargetPos(), new NavalMines(true, GetMaker() as PieceLogic.Color));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

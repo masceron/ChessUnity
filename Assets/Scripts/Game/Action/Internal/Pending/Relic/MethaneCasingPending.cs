@@ -3,6 +3,7 @@
 using System;
 using Game.Action.Relics;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 
@@ -14,7 +15,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private MethaneCasing _methaneCasing;
 
-        public MethaneCasingPending(MethaneCasing methaneCasing, int maker) : base(maker)
+        public MethaneCasingPending(MethaneCasing methaneCasing, PieceLogic target) : base(null, target)
         {
             _methaneCasing = methaneCasing;
         }
@@ -29,8 +30,8 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _methaneCasing.SetCooldown();
 
-            var excute = new MethaneCasingExecute(GetFrom());
-            CommitResult(excute);
+            var execute = new MethaneCasingExecute(GetTargetPos());
+            CommitResult(execute);
 
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Action.Relics;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 
@@ -12,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private RottingScythe _rottingScythe;
 
-        public RottingScythePending(RottingScythe rottingScythe, int maker) : base(maker)
+        public RottingScythePending(RottingScythe rottingScythe, PieceLogic maker) : base(null, maker)
         {
             _rottingScythe = rottingScythe;
         }

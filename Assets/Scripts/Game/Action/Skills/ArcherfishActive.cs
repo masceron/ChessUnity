@@ -40,7 +40,7 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTarget()), GetMaker() as PieceLogic));
             ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTarget()), GetMaker() as PieceLogic));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
@@ -58,7 +58,7 @@ namespace Game.Action.Skills
         //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMaker() as PieceLogic));
         //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMaker() as PieceLogic));
 
-        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         // }
     }
 }

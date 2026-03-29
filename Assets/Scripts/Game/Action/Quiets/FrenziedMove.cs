@@ -14,7 +14,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public FrenziedMove(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
+        public FrenziedMove(PieceLogic maker, int target) : base(maker, target)
         {
         }
 

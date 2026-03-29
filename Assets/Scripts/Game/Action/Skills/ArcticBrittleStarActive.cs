@@ -32,7 +32,7 @@ namespace Game.Action.Skills
             anchorIce.SetDuration(3);
             FormationManager.Ins.SetFormation(GetTargetPos(), anchorIce);
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

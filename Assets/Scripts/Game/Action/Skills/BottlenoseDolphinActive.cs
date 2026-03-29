@@ -64,7 +64,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMaker() as PieceLogic));
             }
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -78,7 +78,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTarget()), GetMaker() as PieceLogic));
             else
                 SetCooldown(GetTarget(), 0);
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

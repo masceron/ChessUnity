@@ -37,7 +37,7 @@ namespace Game.Action.Skills
                 }));
             
             collection.Remove(collection.First(p => p.Type == "piece_sea_star"));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

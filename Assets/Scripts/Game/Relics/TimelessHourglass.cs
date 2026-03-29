@@ -30,7 +30,7 @@ namespace Game.Relics
                 if (piece == null) continue;
 
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new TimelessHourglassPending(this, piece.Pos);
+                var pending = new TimelessHourglassPending(this, piece);
                 BoardViewer.ListOf.Add(pending);
             }
 

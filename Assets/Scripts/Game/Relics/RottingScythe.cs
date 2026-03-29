@@ -30,7 +30,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Effects.All(e => e.EffectName != "effect_infected")) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new RottingScythePending(this, piece.Pos);
+                    var pending = new RottingScythePending(this, piece);
                     BoardViewer.ListOf.Add(pending);
                 }
 

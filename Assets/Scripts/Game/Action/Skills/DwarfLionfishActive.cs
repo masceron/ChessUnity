@@ -31,7 +31,7 @@ namespace Game.Action.Skills
             var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 1);
             foreach (var target in targets)
                 ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(target))));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

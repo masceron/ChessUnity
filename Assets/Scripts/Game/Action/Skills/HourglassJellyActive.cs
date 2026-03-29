@@ -44,7 +44,7 @@ namespace Game.Action.Skills
             var destinationPiece = PieceOn(_destination);
             if (destinationPiece != null) MatchManager.Ins.GameState.Destroy(PieceOn(_destination));
             MatchManager.Ins.GameState.Move(GetTarget(), _destination);
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
         // public void CompleteActionForAI()
         // {

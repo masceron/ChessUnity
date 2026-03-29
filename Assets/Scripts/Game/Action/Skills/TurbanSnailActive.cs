@@ -31,7 +31,7 @@ namespace Game.Action.Skills
             PieceLogic p = GetMaker() as PieceLogic;
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(p, p.GetStat(SkillStat.Duration, 1))));
             ActionManager.EnqueueAction(new ApplyEffect(new Pacified(p.GetStat(SkillStat.Duration, 2), p)));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

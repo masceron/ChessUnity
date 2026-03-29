@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private FrostSigil _frostSigil;
 
-        public FrostSigilPending(int maker, FrostSigil fs) : base(maker)
+        public FrostSigilPending(int maker, FrostSigil fs) : base(null)
         {
             _frostSigil = fs;
         }

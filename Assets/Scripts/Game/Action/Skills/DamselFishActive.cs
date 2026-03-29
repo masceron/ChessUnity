@@ -34,7 +34,7 @@ namespace Game.Action.Skills
                 .ToList();
             foreach (var piece in picked)
                 ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece), GetMaker() as PieceLogic));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

@@ -20,13 +20,13 @@ namespace Game.Action.Relics
         }
 
 
-        public CommonPearlExecute(int target) : base(-1, target)
+        public CommonPearlExecute(int target) : base(null, target)
         {
         }
 
         protected override void ModifyGameState()
         {
-            var effect = GetRandomBuffEffect(GetTarget());
+            var effect = GetRandomBuffEffect(GetTarget() as PieceLogic);
             if (effect == null) return;
             ActionManager.EnqueueAction(new ApplyEffect(effect));
         }

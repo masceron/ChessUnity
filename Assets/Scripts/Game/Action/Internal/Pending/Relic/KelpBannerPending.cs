@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private KelpBanner _kelpBanner;
 
-        public KelpBannerPending(KelpBanner kp, int maker) : base(maker)
+        public KelpBannerPending(KelpBanner kp) : base(null)
         {
             _kelpBanner = kp;
         }

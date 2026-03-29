@@ -1,6 +1,7 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -18,7 +19,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public PegasusSeamothMove(int maker, int target) : base(maker, target)
+        public PegasusSeamothMove(PieceLogic maker, int target) : base(maker, target)
         {
         }
 

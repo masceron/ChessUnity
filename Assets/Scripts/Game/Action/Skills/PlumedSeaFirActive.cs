@@ -32,7 +32,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
             PieceLogic maker = GetMaker() as PieceLogic;
             PieceLogic target = GetTarget();
             if (maker.Color == target.Color)

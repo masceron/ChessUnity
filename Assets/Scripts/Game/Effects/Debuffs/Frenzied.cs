@@ -62,7 +62,7 @@ namespace Game.Effects.Debuffs
                 var random = new Random();
                 var randomIndex = random.Next(0, moveTargets.Count);
                 var randomTarget = moveTargets[randomIndex];
-                ActionManager.EnqueueAction(new FrenziedMove(Piece.Pos, randomTarget));
+                ActionManager.EnqueueAction(new FrenziedMove(Piece, randomTarget));
             }
         }
     }

@@ -37,14 +37,14 @@ namespace Game.Effects.States
         {
            if (action is not ICaptures 
                 || action.GetMaker() as PieceLogic != Piece 
-                || action.GetTarget().CurrentState != StateType.None) return;
+                || ((PieceLogic)action.GetTarget())?.CurrentState != StateType.None) return;
 
            action.Result = ResultFlag.Infest;
 
            ApplySkill(action);    
 
-           ActionManager.EnqueueAction(new ApplyEffect(new Infested(action.GetTarget(), Piece)));
-           ActionManager.EnqueueAction(new MoveToParasitic(Piece.Pos, action.GetTargetPos()));
+           ActionManager.EnqueueAction(new ApplyEffect(new Infested(action.GetTarget() as PieceLogic, Piece)));
+           ActionManager.EnqueueAction(new MoveToParasitic(Piece, action.GetTarget() as PieceLogic));
         }
 
         protected virtual void ApplySkill(Action.Action action)

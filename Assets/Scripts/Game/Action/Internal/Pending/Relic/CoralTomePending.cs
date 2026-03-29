@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
         private readonly string _pieceType;
         private CoralTome _coralTome;
 
-        public CoralTomePending(CoralTome ct, string type) : base(null)
+        public CoralTomePending(CoralTome ct, string type, int pos) : base(null, pos)
         {
             _coralTome = ct;
             _pieceType = type;
@@ -30,7 +30,7 @@ namespace Game.Action.Internal.Pending.Relic
 
         protected override void CompleteAction()
         {
-            CommitResult(new CoralTomeAction(_coralTome.Color, _pieceType, GetFrom()));
+            CommitResult(new CoralTomeAction(_coralTome.Color, _pieceType, GetTargetPos()));
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;
             _coralTome.SetCooldown();

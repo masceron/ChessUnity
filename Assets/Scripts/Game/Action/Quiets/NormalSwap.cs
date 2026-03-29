@@ -14,18 +14,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalSwap(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
+        public NormalSwap(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Swap(GetMakerPos(), GetTargetPos());
+            PieceManager.Ins.Swap(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Swap(GetMaker() as PieceLogic, GetTarget());
+            MatchManager.Ins.GameState.Swap(GetMaker() as PieceLogic, GetTarget() as PieceLogic);
         }
     }
 }

@@ -40,7 +40,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), GetMaker() as PieceLogic));
             if (second != null)
                 ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), GetMaker() as PieceLogic));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

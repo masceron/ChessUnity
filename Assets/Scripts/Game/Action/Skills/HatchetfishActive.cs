@@ -58,7 +58,7 @@ namespace Game.Action.Skills
                 //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
                 BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMaker() as PieceLogic));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -77,7 +77,7 @@ namespace Game.Action.Skills
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
                 ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMaker() as PieceLogic));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

@@ -1,5 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -13,13 +14,13 @@ namespace Game.Action.Relics
         {
         }
 
-        public CorruptedWisperExecute(int target) : base(-1, target)
+        public CorruptedWisperExecute(int target) : base(null, target)
         {
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget() as PieceLogic)));
         }
     }
 }

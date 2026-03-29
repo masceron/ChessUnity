@@ -35,7 +35,7 @@ namespace Game.Action.Skills
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
             var ally = PieceOn(allyIndex);
             var enemy = PieceOn(enemyIndex);
             if (ally == null || enemy == null) return;

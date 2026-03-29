@@ -22,7 +22,7 @@ namespace Game.Relics
                 foreach (var formation in BoardUtils.GetFormation(FormationType.Kelp))
                 {
                     TileManager.Ins.MarkAsMoveable(formation.Pos);
-                    var pending = new KelpBannerPending(this, formation.Pos);
+                    var pending = new KelpBannerPending(this);
                     BoardViewer.ListOf.Add(pending);
                 }
 

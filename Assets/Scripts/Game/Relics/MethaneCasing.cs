@@ -22,7 +22,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color == Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new MethaneCasingPending(this, piece.Pos);
+                    var pending = new MethaneCasingPending(this, piece);
                     BoardViewer.ListOf.Add(pending);
                 }
 

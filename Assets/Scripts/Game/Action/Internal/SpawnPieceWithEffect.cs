@@ -10,7 +10,7 @@ namespace Game.Action.Internal
         private readonly Effect _effectToApply;
         private readonly PieceConfig _pieceToSpawn;
 
-        public SpawnPieceWithEffect(PieceConfig p, Effect effect) : base(-1)
+        public SpawnPieceWithEffect(PieceConfig p, Effect effect) : base(null)
         {
             _pieceToSpawn = p;
             _effectToApply = effect;

@@ -42,9 +42,8 @@ namespace Game.Relics
 
                     hoveringTile = thisTile;
                     TileManager.Ins.MarkTileInRange(hoveringTile, Size, true);
-
-                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    var pending = new StormCapacitorPending(pos, hoveringTile, this, Size);
+                    
+                    var pending = new StormCapacitorPending(hoveringTile, this, Size);
 
                     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
                 };

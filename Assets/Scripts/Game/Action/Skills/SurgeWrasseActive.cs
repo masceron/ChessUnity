@@ -35,7 +35,7 @@ namespace Game.Action.Skills
                     ActionManager.EnqueueAction(new ApplyEffect(new LongReach(pieceOn, 2, 2)));
             }
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

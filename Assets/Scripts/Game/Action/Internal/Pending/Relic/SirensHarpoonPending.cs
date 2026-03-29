@@ -1,6 +1,7 @@
 using System;
 using Game.Action.Relics;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 
@@ -12,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private SirensHarpoon _sirensHarpoon;
 
-        public SirensHarpoonPending(SirensHarpoon s, int target) : base(s.CommanderPiece.Pos, target)
+        public SirensHarpoonPending(SirensHarpoon s, PieceLogic target) : base(s.CommanderPiece, target)
         {
             _sirensHarpoon = s;
         }

@@ -13,7 +13,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public RemoraMove(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
+        public RemoraMove(PieceLogic maker, int target) : base(maker, target)
         {}
 
         protected override void Animate()

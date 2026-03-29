@@ -66,7 +66,7 @@ namespace Game.Action.Skills
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
 
             SetCooldown(GetMaker() as PieceLogic, -1);
-            //SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker() as PieceLogic).TimeToCooldown);
+            //SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }
 }

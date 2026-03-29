@@ -6,7 +6,7 @@ namespace Game.Action.Quiets
 {
     public class MoveToParasitic : Action
     {
-        public MoveToParasitic(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
+        public MoveToParasitic(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -17,7 +17,7 @@ namespace Game.Action.Quiets
         protected override void ModifyGameState()
         {
             var hostLogic = GetTarget();
-            PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic);
+            PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic as PieceLogic);
 
             var parasite = GetMaker() as PieceLogic;
             if (parasite == null) return;

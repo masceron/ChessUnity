@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Action.Relics;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Relics;
 using UX.UI.Ingame;
 
@@ -12,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private TimelessHourglass _timelessHourglass;
 
-        public TimelessHourglassPending(TimelessHourglass t, int target) : base(t.CommanderPiece.Pos, target)
+        public TimelessHourglassPending(TimelessHourglass t, PieceLogic target) : base(t.CommanderPiece, target)
         {
             _timelessHourglass = t;
         }

@@ -16,7 +16,7 @@ namespace Game.Action.Internal.Pending.Relic
         private static PieceLogic _secondTarget;
         private EyeOfMimic _eyeOfMimic;
 
-        public EyeOfMimicPending(EyeOfMimic e, int maker) : base(maker)
+        public EyeOfMimicPending(EyeOfMimic e) : base(null)
         {
             _eyeOfMimic = e;
         }
@@ -46,7 +46,7 @@ namespace Game.Action.Internal.Pending.Relic
             var source = _firstTarget.Color == ourSide ? _firstTarget : _secondTarget;
             var target = _firstTarget.Color == ourSide ? _secondTarget : _firstTarget;
 
-            var execute = new EyeOfMimicExecute(source.Pos, target.Pos);
+            var execute = new EyeOfMimicExecute(source, target);
             _eyeOfMimic.SetCooldown();
             CommitResult(execute);
             TileManager.Ins.UnmarkAll();

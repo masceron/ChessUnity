@@ -1,5 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Others;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -12,7 +13,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public EyeOfMimicExecute(int maker, int target) : base(maker, target)
+        public EyeOfMimicExecute(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

@@ -22,7 +22,7 @@ namespace Game.Effects.SpecialAbility
             if (action.GetMaker() as PieceLogic != Piece) return;
             if (action is not FlyingFishMove flyingFishMove) return;
 
-            var (rankFrom, fileFrom) = RankFileOf(flyingFishMove.From);
+            var (rankFrom, fileFrom) = RankFileOf(flyingFishMove.GetFrom());
             var (rankTo, fileTo) = RankFileOf(flyingFishMove.GetTargetPos());
             var board = PieceBoard();
 
@@ -47,7 +47,7 @@ namespace Game.Effects.SpecialAbility
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is IQuiets)
-                    actions[i] = new FlyingFishMove(Piece.Pos, actions[i].GetTargetPos());
+                    actions[i] = new FlyingFishMove(Piece, actions[i].GetTargetPos());
         }
     }
 }

@@ -2,6 +2,7 @@
 using Game.Action.Relics;
 using Game.Effects.Others;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Action.Internal.Pending.Relic
@@ -12,7 +13,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private readonly Charge _charges;
 
-        public SeabedLevelerPending(Charge charge, int maker) : base(maker)
+        public SeabedLevelerPending(Charge charge, PieceLogic maker) : base(null, maker)
         {
             _charges = charge;
         }

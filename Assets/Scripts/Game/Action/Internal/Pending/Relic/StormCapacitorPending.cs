@@ -14,7 +14,7 @@ namespace Game.Action.Internal.Pending.Relic
         private readonly Tile.Tile _thisTile;
         private StormCapacitor _stormCapacitor;
 
-        public StormCapacitorPending(int maker, Tile.Tile hoveringTile, StormCapacitor sc, int size) : base(maker)
+        public StormCapacitorPending(Tile.Tile hoveringTile, StormCapacitor sc, int size) : base(null)
         {
             _thisTile = hoveringTile;
             _stormCapacitor = sc;
