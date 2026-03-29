@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b96604b19288b83499cf01efb355f8a7, type: 3}
+  m_Script: {fileID: 11500000, guid: f85467eeb2f0e2547bd012e2e20e6d2a, type: 3}
   m_Name: Autotiles3D_Settings
   m_EditorClassIdentifier: Assembly-CSharp::Third_Party.Autotiles3D.Scripts.Utility.Autotiles3DSettings
   useUndoAPI: 0

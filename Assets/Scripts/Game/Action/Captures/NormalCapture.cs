@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -13,7 +14,7 @@ namespace Game.Action.Captures
         {
         }
 
-        public NormalCapture(int maker, int target) : base(maker, target)
+        public NormalCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -25,6 +26,7 @@ namespace Game.Action.Captures
         {
             PieceManager.Ins.Destroy(GetTargetPos());
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
+            
             MatchManager.Ins.GameState.Kill(GetTarget());
             MatchManager.Ins.GameState.Move(GetMaker(), GetTargetPos());
         }

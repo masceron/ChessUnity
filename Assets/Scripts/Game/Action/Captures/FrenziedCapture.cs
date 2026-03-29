@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Game.Action.Captures
         {
         }
 
-        public FrenziedCapture(int maker, int target) : base(maker, target)
+        public FrenziedCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

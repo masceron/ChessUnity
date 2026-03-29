@@ -50,7 +50,7 @@ namespace Game.Action.Internal.Pending.Piece
             {
                 SecondTarget = GetTarget();
 
-                var kill = new MarinelKill(GetFrom(), _firstTarget.Pos, SecondTarget.Pos);
+                var kill = new MarineKill(GetMaker(), _firstTarget, SecondTarget);
                 CommitResult(kill);
 
                 BoardViewer.Ins.Unmark();

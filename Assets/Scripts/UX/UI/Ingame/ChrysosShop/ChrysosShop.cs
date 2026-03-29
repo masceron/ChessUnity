@@ -74,7 +74,7 @@ namespace UX.UI.Ingame.ChrysosShop
         public void Buy(string type)
         {
             PendingAction.CommitResult(new ChrysosUpgrade(_chrysos.Pos,
-                new PieceConfig(type, _chrysos.Color, PendingAction.Target), _cost));
+                new PieceConfig(type, _chrysos.Color, PendingAction.GetTargetPos()), _cost));
             Disable();
         }
     }

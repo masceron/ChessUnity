@@ -22,7 +22,7 @@ namespace Game.Tile
         {
             base.OnPieceEnter(piece);
             appliedEffect = new LongReach(PieceOnFormation, -1, 2);
-            ActionManager.EnqueueAction(new ApplyEffect(appliedEffect, FormationType.PredatorLair));
+            ActionManager.EnqueueAction(new ApplyEffect(appliedEffect));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

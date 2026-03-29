@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Quiets
@@ -13,7 +14,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalSwap(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        public NormalSwap(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
         {
         }
 

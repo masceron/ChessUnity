@@ -36,7 +36,7 @@ namespace Game.Tile
 
     public abstract class Formation : Observer, IAfterPieceActionTrigger, IOnPieceSpawnedTrigger
     {
-        public readonly FormationCategory category;
+        public readonly FormationCategory Category;
         public System.Action<Formation> OnRemoveFormation;
         protected Formation()
         {
@@ -46,12 +46,11 @@ namespace Game.Tile
         {
             Color = color;
             var info = AssetManager.Ins.FormationData[GetFormationType()];
-            category = info.formationCategory;
-            if (duration != -1)
-            {
-                HaveDuration = true;
-                Duration = duration;
-            }
+            Category = info.formationCategory;
+            
+            if (duration == -1) return;
+            HaveDuration = true;
+            Duration = duration;
         }
 
         public int Pos { get; private set; }

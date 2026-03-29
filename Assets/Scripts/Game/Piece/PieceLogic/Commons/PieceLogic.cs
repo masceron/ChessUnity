@@ -42,24 +42,22 @@ namespace Game.Piece.PieceLogic.Commons
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public abstract class PieceLogic
+    public abstract class PieceLogic: Entity
     {
-        public readonly int ID;
         private bool _hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
         public readonly List<Effect> Effects;
-        public readonly List<ImmunityType> Immunities;
+        private readonly List<ImmunityType> immunities;
         public readonly PieceRank PieceRank;
         public readonly List<int> PreviousMoves;
-        private readonly UDictionary<SkillStat, List<int>> SkillStats;
-        public readonly List<FormationType> SpecificFormations;
+        private readonly UDictionary<SkillStat, List<int>> skillStats;
+        private readonly List<FormationType> specificFormations;
         public readonly string Type;
         private int _attackRange;
         private int _moveRange;
         public CapturesDelegate Captures;
         public bool Color;
         public bool IsVisible = true;
-        public int Pos;
 
         public QuietsDelegate Quiets;
         public int SkillCooldown;
@@ -74,19 +72,18 @@ namespace Game.Piece.PieceLogic.Commons
             Effects = new List<Effect>();
             PreviousMoves = new List<int>();
             Type = cfg.Type;
-            ID = NextPieceID();
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
             _moveRange = info.moveRange;
             _attackRange = info.attackRange;
             PieceRank = info.rank;
             _hasSkill = info.hasSkill;
-            Immunities = new List<ImmunityType>();
-            SpecificFormations = new List<FormationType>();
+            immunities = new List<ImmunityType>();
+            specificFormations = new List<FormationType>();
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
-                SkillStats = new UDictionary<SkillStat, List<int>>();
+                skillStats = new UDictionary<SkillStat, List<int>>();
                 pieceWithSkill.TimeToCooldown = info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1;
             }
             else
@@ -257,12 +254,12 @@ namespace Game.Piece.PieceLogic.Commons
         {
             if (formationType == FormationType.None || appliedEffect == null) return false;
 
-            if (Immunities.Contains(ImmunityType.FormationDebuff) &&
+            if (immunities.Contains(ImmunityType.FormationDebuff) &&
                 appliedEffect.Category == EffectCategory.Debuff)
                 return true;
 
-            if (Immunities.Contains(ImmunityType.FormationSpecific) &&
-                SpecificFormations.Contains(formationType))
+            if (immunities.Contains(ImmunityType.FormationSpecific) &&
+                specificFormations.Contains(formationType))
                 return true;
 
             return false;
@@ -270,22 +267,22 @@ namespace Game.Piece.PieceLogic.Commons
 
         public void AddImmunity(ImmunityType immunityType)
         {
-            if (!Immunities.Contains(immunityType)) Immunities.Add(immunityType);
+            if (!immunities.Contains(immunityType)) immunities.Add(immunityType);
         }
 
         public void RemoveImmunity(ImmunityType immunityType)
         {
-            Immunities.Remove(immunityType);
+            immunities.Remove(immunityType);
         }
 
         public void AddSpecificFormation(FormationType formationType)
         {
-            if (!SpecificFormations.Contains(formationType)) SpecificFormations.Add(formationType);
+            if (!specificFormations.Contains(formationType)) specificFormations.Add(formationType);
         }
 
         public void RemoveSpecificFormation(FormationType formationType)
         {
-            SpecificFormations.Remove(formationType);
+            specificFormations.Remove(formationType);
         }
 
         // ── State Management ──────────────────────────────────────────────────────
@@ -304,10 +301,12 @@ namespace Game.Piece.PieceLogic.Commons
         public void ClearState()
         {
             var existing = Effects.Find(e => e is IStateful);
-            if (existing != null) {
+            if (existing != null)
+            {
                 Effects.Remove(existing);
                 BoardUtils.RemoveObserver(existing);
             }
+
             CurrentState = StateType.None;
         }
 
@@ -362,7 +361,7 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetRawStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat)) return 0;
+            if (!skillStats.TryGetValue(stat, out var skillStat)) return 0;
 
             return skillStat[num - 1];
         }
@@ -375,7 +374,7 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetStat(SkillStat stat, int num = 1)
         {
-            if (!SkillStats.TryGetValue(stat, out var skillStat)) return 0;
+            if (!skillStats.TryGetValue(stat, out var skillStat)) return 0;
 
             var finalStat = skillStat[num - 1];
             foreach (var effect in Effects)
@@ -387,12 +386,12 @@ namespace Game.Piece.PieceLogic.Commons
 
         public void SetStat(SkillStat stat, int value, int num = 1)
         {
-            if (!SkillStats.ContainsKey(stat)) SkillStats.Add(stat, new List<int>());
+            if (!skillStats.ContainsKey(stat)) skillStats.Add(stat, new List<int>());
 
-            var lst = SkillStats[stat];
+            var lst = skillStats[stat];
             while (lst.Count < num) lst.Add(0);
 
-            SkillStats[stat][num - 1] = value;
+            skillStats[stat][num - 1] = value;
         }
     }
 }

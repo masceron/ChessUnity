@@ -29,7 +29,7 @@ namespace Game.Tile
 
             foreach (var bleeding in existingBleeding) ActionManager.EnqueueAction(new RemoveEffect(bleeding));
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece), FormationType.UrchinField));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, piece)));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

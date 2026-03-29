@@ -26,7 +26,7 @@ namespace Game.Tile
             base.OnPieceEnter(piece);
 
             if (piece.Effects.OfType<Infected>().ToList().Count != 0) return;
-            ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece), FormationType.Saprolegnia));
+            ActionManager.EnqueueAction(new ApplyEffect(new Infected(piece)));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

@@ -1,5 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -15,7 +16,7 @@ namespace Game.Action.Captures
         {
         }
 
-        public IllusionCapture(int maker, int target) : base(maker, target)
+        public IllusionCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

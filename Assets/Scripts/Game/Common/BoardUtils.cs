@@ -337,12 +337,18 @@ namespace Game.Common
 
         public static void NotifyInternalAction(IInternal action)
         {
-            if (action is ApplyEffect apply) MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
-            else if (action is KillPiece || action is DestroyPiece || action is CarapaceKill
-                     || action is MarinelKill || action is DestroyAdhesivePiece
-                     || action is DestroyParasitePiece)
+            switch (action)
             {
-                MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
+                case ApplyEffect apply:
+                    MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
+                    break;
+                case KillPiece:
+                case DestroyPiece:
+                case CarapaceKill:
+                case DestroyAdhesivePiece:
+                case DestroyParasitePiece:
+                    MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
+                    break;
             }
         }
 
@@ -407,7 +413,7 @@ namespace Game.Common
 
             return list;
         }
-        
+
         public static List<(int rank, int file)> GetEmptySquaresRankFile()
         {
             var result = new List<(int, int)>();
@@ -423,7 +429,7 @@ namespace Game.Common
 
             return result;
         }
-        
+
 
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
         {
@@ -475,8 +481,10 @@ namespace Game.Common
         {
             TileManager.Ins.DestroyTile(index);
             RemoveFormation(index);
-            if (PieceOn(index) != null) ActionManager.EnqueueAction(new KillPiece(index));
+            var on = PieceOn(index);
+            if (on != null) ActionManager.EnqueueAction(new KillPiece(on));
         }
+
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
 
         public static PieceLogic SpawnPiece(PieceConfig pieceConfig)
@@ -484,20 +492,14 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SpawnPiece(pieceConfig);
         }
 
-        public static int NextPieceID()
+        public static int NextEntityID()
         {
-            return MatchManager.Ins.GameState.NextPieceID();
+            return MatchManager.Ins.GameState.NextEntityID();
         }
 
         public static PieceLogic GetPieceByID(int id)
         {
             return MatchManager.Ins.GameState.GetPieceByID(id);
         }
-
-        public static int GetIDAt(int index)
-        {
-            return PieceOn(index)?.ID ?? 0;
-        }
     }
 }
-

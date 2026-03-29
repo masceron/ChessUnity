@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Game.Action.Captures
         {
         }
 
-        public CaptureWithoutEndTurn(int maker, int target) : base(maker, target)
+        public CaptureWithoutEndTurn(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

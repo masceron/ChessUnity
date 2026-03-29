@@ -27,7 +27,7 @@ namespace Game.Tile
             if (piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
                 _pieceHaveCamouflage = true;
             else
-                ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece), FormationType.Kelp));
+                ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece)));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

@@ -20,25 +20,19 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new PlumedSeaFirPassive(this)));
             SetStat(SkillStat.Range, 4);
             SetStat(SkillStat.Counter, 0);
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) { return; }
                 if (isPlayer)
                 {
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                     {
-                        int target = IndexOf(rankOff, fileOff);
-                        Commons.PieceLogic pieceOn = GetTarget();
-                        if (pieceOn != null)
+                        var target = IndexOf(rankOff, fileOff);
+                        var pieceOn = PieceOn(target);
+                        if (pieceOn == null) continue;
+                        if (pieceOn.Color == Color || GetStat(SkillStat.Counter) > 0)
                         {
-                            if (pieceOn.Color == this.Color)
-                            {
-                                list.Add(new PlumedSeaFirActive(Pos, target));
-                            }
-                            else if (pieceOn.Color != this.Color && GetStat(SkillStat.Counter) > 0)
-                            {
-                                list.Add(new PlumedSeaFirActive(Pos, target));
-                            }
+                            list.Add(new PlumedSeaFirActive(Pos, target));
                         }
                     }
                 }

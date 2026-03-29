@@ -20,7 +20,7 @@ namespace Assets.Scripts.Game.Action.Skills
         {
         }
 
-        public QuillbackRockfishActive(int maker) : base(maker)
+        public QuillbackRockfishActive(PieceLogic maker) : base(maker)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Assets.Scripts.Game.Action.Skills
             var makerPiece = GetMaker();
             if (makerPiece == null) return;
             var bleedingStack = makerPiece.GetStat(SkillStat.Stack);
-            var (rank, file) = RankFileOf(GetMakerPos());
+            var (rank, file) = RankFileOf(GetFrom());
             var push = makerPiece.Color ? 1 : -1;
 
 

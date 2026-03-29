@@ -4,15 +4,13 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal
 {
-    public class MarinelKill : Action, IInternal
+    public class MarineKill : Action
     {
-        private readonly int firstTarget;
         private readonly int secondTarget;
 
-        public MarinelKill(int maker, int firstTarget, int secondTarget) : base(maker)
+        public MarineKill(PieceLogic maker, PieceLogic firstTarget, PieceLogic secondTarget) : base(maker, firstTarget)
         {
-            this.firstTarget = firstTarget;
-            this.secondTarget = secondTarget;
+            this.secondTarget = secondTarget.ID;
         }
 
         protected override void ModifyGameState()
@@ -20,7 +18,8 @@ namespace Game.Action.Internal
             SetCooldown(GetMaker(), ((IPieceWithSkill)GetMaker()).TimeToCooldown);
 
             ActionManager.EnqueueAction(
-                new ApplyEffect(new MarineIguanaKillEffect(0, GetTarget(), GetFrom(), secondTarget), GetMaker()));
+                new ApplyEffect(new MarineIguanaKillEffect(0, GetMaker(), GetTarget(), GetPieceByID(secondTarget)),
+                    GetMaker()));
         }
     }
 }

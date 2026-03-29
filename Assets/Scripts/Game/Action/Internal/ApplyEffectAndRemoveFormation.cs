@@ -9,7 +9,7 @@ namespace Game.Action.Internal
         private readonly ApplyEffect _applyEffectAction;
         private readonly int _formationPos;
 
-        public ApplyEffectAndRemoveFormation(ApplyEffect applyEffect, int formationPosition) : base(-1)
+        public ApplyEffectAndRemoveFormation(ApplyEffect applyEffect, int formationPosition) : base(null)
         {
             _applyEffectAction = applyEffect;
             _formationPos = formationPosition;

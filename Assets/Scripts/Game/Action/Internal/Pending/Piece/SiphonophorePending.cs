@@ -16,7 +16,7 @@ namespace Game.Action.Internal.Pending.Piece
         private static int unitCount;
         private static bool isInitialized;
 
-        public SiphonophorePending(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        public SiphonophorePending(int maker, int target) : base(maker, target, TargetingType.Location)
         {
             var makerPiece = GetMaker();
             if (makerPiece == null || isInitialized) return;

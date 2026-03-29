@@ -17,7 +17,7 @@ namespace Game.Piece.PieceLogic
         public Coelacanth(PieceConfig cfg) : base(cfg, FrontDefenderMoves.Quiets, None.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new FreeMovement(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Regenarative(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Regenerative(this)));
             SetStat(SkillStat.Target, Target);
             SetStat(SkillStat.Range, Range);
             SetStat(SkillStat.Duration, Duration);

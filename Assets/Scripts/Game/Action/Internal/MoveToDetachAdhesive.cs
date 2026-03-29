@@ -22,7 +22,7 @@ namespace Game.Action.Internal
         /// <param name="adhesive">PieceLogic của quân Adhesive.</param>
         /// <param name="hostLogic">PieceLogic của host. Null nếu host là Formation.</param>
         public MoveToDetachAdhesive(int maker, int target, PieceLogic adhesive, PieceLogic hostLogic)
-            : base(maker, target, TargetingType.LocationTargeting)
+            : base((PieceLogic)maker, (PieceLogic)target)
         {
             _adhesive = adhesive;
             _hostLogic = hostLogic;

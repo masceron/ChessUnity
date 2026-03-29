@@ -54,7 +54,7 @@ namespace Game.Effects.Traits
             actions.RemoveAll(e => e is ISkills);
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is NormalCapture capture && capture.GetMaker() == Piece)
-                    actions[i] = new IllusionCapture(capture.GetMakerPos(), capture.GetTargetPos());
+                    actions[i] = new IllusionCapture(capture.GetMaker(), capture.GetTarget());
         }
     }
 }

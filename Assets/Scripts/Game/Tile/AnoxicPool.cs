@@ -35,7 +35,7 @@ namespace Game.Tile
             var hasPacified = PieceOnFormation.Effects.Any(e => e.EffectName == "effect_pacified");
             if (hasPacified) return;
             ActionManager.EnqueueAction(
-                new ApplyEffect(new Pacified(3, PieceOnFormation), FormationType.AnoxicPool));
+                new ApplyEffect(new Pacified(3, PieceOnFormation)));
         }
 
         public override FormationType GetFormationType()
@@ -49,7 +49,7 @@ namespace Game.Tile
             _turnsOnTile = 0;
 
             if (piece != null && piece.Color != Color)
-                ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(3, 1, piece), FormationType.AnoxicPool));
+                ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(3, 1, piece)));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

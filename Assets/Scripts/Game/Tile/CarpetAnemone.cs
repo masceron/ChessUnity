@@ -20,9 +20,8 @@ namespace Game.Tile
             base.OnPieceEnter(piece);
             if (piece != null && piece.Color != Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, piece.Pos, 3),
-                    FormationType.CarpetAnemone));
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, piece), FormationType.CarpetAnemone));
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, piece.Pos, 3)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, piece)));
             }
         }
 

@@ -12,13 +12,13 @@ namespace Game.Action.Internal
         private readonly PieceConfig _pieceToSpawn;
         private readonly System.Action<PieceLogic> _onSpawned;
 
-        public SpawnPiece(PieceConfig p) : base(-1)
+        public SpawnPiece(PieceConfig p) : base(null, p.Index)
         {
             _pieceToSpawn = p;
         }
         
         public SpawnPiece(PieceConfig p, System.Action<PieceLogic> onSpawned = null) 
-            : base(-1)
+            : base(null, p.Index)
         {
             _pieceToSpawn = p;
             _onSpawned = onSpawned;

@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -23,7 +22,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success || action.GetMaker() != Piece) return;
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, BoardUtils.PieceOn(action.Target)), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, action.GetTarget()), Piece));
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             action.Result = ResultFlag.SelfDestroy;
         }

@@ -1,6 +1,6 @@
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.States;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -15,7 +15,7 @@ namespace Game.Action.Captures
         {
         }
 
-        public SymbioticCapture(int maker, int target) : base(maker, target)
+        public SymbioticCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

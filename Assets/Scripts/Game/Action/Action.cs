@@ -35,9 +35,9 @@ namespace Game.Action
 
     public enum TargetingType
     {
-        None = 0,
-        UnitTargeting = 1,
-        LocationTargeting = 2,
+        Innate = 0,
+        Unit = 1,
+        Location = 2,
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -49,17 +49,32 @@ namespace Game.Action
         public ResultFlag Result = ResultFlag.Success;
         private readonly int _maker;
         private readonly int _from;
-        private readonly int _target = -1;
-        protected TargetingType TargetingType;
+        private int _target = -1;
+        private readonly TargetingType targetingType;
 
-        protected Action(int maker = -1, int target = -1, TargetingType targetingType = TargetingType.UnitTargeting)
+        protected Action(Entity maker, PieceLogic target)
         {
-            _maker = BoardUtils.GetIDAt(maker);
-            _from = maker;
-            TargetingType = targetingType;
+            _maker = maker?.ID ?? -1;
+            _from = maker?.Pos ?? -1;
+            targetingType = TargetingType.Unit;
+            
+            _target = target?.ID ?? -1;
+        }
 
-            if (targetingType == TargetingType.None) return;
-            _target = targetingType == TargetingType.UnitTargeting ? BoardUtils.GetIDAt(target) : target;
+        protected Action(Entity maker, int target)
+        {
+            _maker = maker?.ID ?? -1;
+            _from = maker?.Pos ?? -1;
+
+            targetingType = TargetingType.Location;
+            _target = target;
+        }
+
+        protected Action(Entity maker)
+        {
+            _maker = maker?.ID ?? -1;
+            _from = maker?.Pos ?? -1;
+            targetingType = TargetingType.Innate;
         }
 
         [MemoryPackConstructor]
@@ -91,22 +106,32 @@ namespace Game.Action
 
         public PieceLogic GetTarget()
         {
-            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(_target) : null;
-        }
-
-        public int GetMakerPos()
-        {
-            return BoardUtils.GetPieceByID(_maker).Pos;
+            return targetingType == TargetingType.Unit ? BoardUtils.GetPieceByID(_target) : null;
         }
 
         public int GetTargetPos()
         {
-            return TargetingType == TargetingType.UnitTargeting ? BoardUtils.GetPieceByID(_target).Pos : _target;
+            return targetingType == TargetingType.Unit ? BoardUtils.GetPieceByID(_target).Pos : _target;
         }
 
         public int GetFrom()
         {
             return _from;
+        }
+
+        public void ChangeTarget(PieceLogic target)
+        {
+            _target = target.ID;
+        }
+
+        public void ChangeTarget(int index)
+        {
+            _target = index;
+        }
+        
+        public TargetingType GetTargetingType()
+        {
+            return targetingType;
         }
     }
 

@@ -109,7 +109,7 @@ namespace Game.Managers
             return pieceLogic;
         }
 
-        public int NextPieceID()
+        public int NextEntityID()
         {
             return _pieceID++;
         }

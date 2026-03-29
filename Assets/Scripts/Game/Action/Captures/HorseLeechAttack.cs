@@ -1,7 +1,7 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Captures
 {
@@ -15,14 +15,14 @@ namespace Game.Action.Captures
         {
         }
 
-        public HorseLeechAttack(int maker, int target) : base(maker, target)
+        public HorseLeechAttack(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, GetTarget()), GetMaker()));
-            ActionManager.EnqueueAction(new KillPiece(GetFrom()));
+            ActionManager.EnqueueAction(new KillPiece(GetMaker()));
         }
     }
 }

@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Quiets
@@ -15,7 +16,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public FlyingFishMove(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        public FlyingFishMove(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
         {
             From = maker;
         }

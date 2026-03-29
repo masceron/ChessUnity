@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
         {
             if (action.GetMaker() != Piece || action.Result != ResultFlag.Success) return;
 
-            var behind = !Piece.Color ? PushWhite(action.Target) : PushBlack(action.Target);
+            var behind = !Piece.Color ? PushWhite(action.GetTargetPos()) : PushBlack(action.GetTargetPos());
             if (!VerifyIndex(behind)) return;
 
             var pieceBehind = PieceOn(behind);

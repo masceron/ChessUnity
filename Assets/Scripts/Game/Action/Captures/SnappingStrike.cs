@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -13,7 +14,7 @@ namespace Game.Action.Captures
         {
         }
 
-        public SnappingStrike(int maker, int target) : base(maker, target)
+        public SnappingStrike(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

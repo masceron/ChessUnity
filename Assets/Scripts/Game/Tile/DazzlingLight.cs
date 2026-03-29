@@ -26,7 +26,7 @@ namespace Game.Tile
         protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece), FormationType.DazzlingLight));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece)));
         }
 
         public override int GetValueForAI()

@@ -1,11 +1,12 @@
 using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Quiets
 {
     public class MoveToParasitic : Action
     {
-        public MoveToParasitic(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        public MoveToParasitic(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
         {
         }
 

@@ -31,9 +31,9 @@ namespace Game.Tile
         {
             if (PieceOnFormation == null) return;
             if (_stack == 0)
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation), FormationType.AnchorIce));
+                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
             else if (_stack == 2)
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation), FormationType.AnchorIce));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation)));
             _stack++;
         }
 

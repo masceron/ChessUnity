@@ -1,5 +1,6 @@
 using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Quiets
@@ -18,7 +19,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public MoveWithoutEndturn(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        public MoveWithoutEndturn(PieceLogic maker, int target) : base(maker, target)
         {
         }
 

@@ -1,4 +1,5 @@
 ﻿using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
@@ -6,7 +7,7 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DestroyPiece : Action, IInternal
     {
-        public DestroyPiece(int maker) : base(maker)
+        public DestroyPiece(PieceLogic maker) : base(maker)
         {
         }
 

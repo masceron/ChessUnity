@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -12,7 +13,7 @@ namespace Game.Action.Quiets
         {
         }
 
-        public RemoraMove(int maker, int target) : base(maker, target, TargetingType.LocationTargeting)
+        public RemoraMove(int maker, int target) : base((PieceLogic)maker, (PieceLogic)target)
         {}
 
         protected override void Animate()

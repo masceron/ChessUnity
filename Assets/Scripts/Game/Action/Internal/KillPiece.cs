@@ -1,10 +1,11 @@
 ﻿using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
     public class KillPiece : Action, IInternal
     {
-        public KillPiece(int maker) : base(maker)
+        public KillPiece(PieceLogic maker) : base(maker)
         {
         }
 

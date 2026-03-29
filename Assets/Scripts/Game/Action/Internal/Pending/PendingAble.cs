@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine.InputSystem;
 
 namespace Game.Action.Internal.Pending
@@ -17,7 +18,7 @@ namespace Game.Action.Internal.Pending
         {
         }
 
-        protected PendingAction(int maker, int target, TargetingType targetingType) : base(maker, target, targetingType)
+        protected PendingAction(int maker, int target, TargetingType targetingType) : base((PieceLogic)maker, (PieceLogic)target)
         {
         }
 

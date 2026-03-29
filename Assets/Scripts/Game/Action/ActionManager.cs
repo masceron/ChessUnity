@@ -130,7 +130,7 @@ namespace Game.Action
 
             foreach (var effect in startTurnListeners)
             {
-                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) continue;
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).Disabled) continue;
 
                 var shouldTrigger = false;
 
@@ -167,7 +167,7 @@ namespace Game.Action
 
             endTurnListeners.ForEach(effect =>
             {
-                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).Disabled) return;
 
                 var shouldTrigger = false;
                 if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)

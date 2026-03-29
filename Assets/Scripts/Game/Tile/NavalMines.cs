@@ -35,7 +35,7 @@ namespace Game.Tile
                 var pOn = PieceOn(index);
                 if (pOn == null) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn), FormationType.NavalMines));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn)));
             }
         }
 

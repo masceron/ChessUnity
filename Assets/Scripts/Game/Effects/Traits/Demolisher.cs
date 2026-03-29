@@ -5,7 +5,6 @@ using Game.Action.Internal;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -35,7 +34,7 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is ICaptures)
-                    actions[i] = new DestroyConstruct(Piece.Pos, actions[i].GetTargetPos());
+                    actions[i] = new DestroyConstruct(Piece, actions[i].GetTarget());
         }
 
         public override int GetValueForAI()

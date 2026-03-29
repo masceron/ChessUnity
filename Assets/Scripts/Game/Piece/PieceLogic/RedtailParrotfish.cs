@@ -51,7 +51,7 @@ namespace Game.Piece.PieceLogic
                         }
 
                         if (isOurSide) continue;
-                        if (formation.category != FormationCategory.Positive) continue;
+                        if (formation.Category != FormationCategory.Positive) continue;
 
                         var value = formation.GetValueForAI();
                         if (value > bestValue)

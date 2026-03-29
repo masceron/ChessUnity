@@ -1,5 +1,6 @@
 using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Quiets
 {
@@ -17,7 +18,7 @@ namespace Game.Action.Quiets
         /// <param name="maker">Vị trí quân Adhesive.</param>
         /// <param name="target">Vị trí ô target (Piece hoặc Formation).</param>
         /// <param name="attachToFormation">true = bám vào Formation; false = bám vào Piece.</param>
-        public MoveToAdhesive(int maker, int target, bool attachToFormation) : base(maker, target, TargetingType.LocationTargeting)
+        public MoveToAdhesive(int maker, int target, bool attachToFormation) : base((PieceLogic)maker, (PieceLogic)target)
         {
             _attachToFormation = attachToFormation;
         }
