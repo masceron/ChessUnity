@@ -19,7 +19,8 @@ namespace Game.Action.Internal
 
             ActionManager.EnqueueAction(
                 new ApplyEffect(
-                    new MarineIguanaKillEffect(0, GetMaker() as PieceLogic, GetTarget() as PieceLogic, GetEntityByID(secondTarget)),
+                    new MarineIguanaKillEffect(0, GetMaker() as PieceLogic, GetTarget() as PieceLogic,
+                        GetEntityByID(secondTarget) as PieceLogic),
                     GetMaker() as PieceLogic));
         }
     }

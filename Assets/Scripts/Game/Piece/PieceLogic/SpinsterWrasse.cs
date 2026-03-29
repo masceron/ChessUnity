@@ -14,7 +14,7 @@ namespace Game.Piece.PieceLogic
     {
         public SpinsterWrasse(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, None.Captures)
         {
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
 
@@ -27,7 +27,8 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new SpinsterWrassePending(Pos, idx));
+                        //Làm lại
+                        //list.Add(new SpinsterWrassePending(Pos, idx));
                     }
                 }
                 else

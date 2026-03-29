@@ -27,7 +27,7 @@ namespace Game.Relics
                 {
                     if (piece == null && piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new CommonPearlPending(this, piece.Pos);
+                    var pending = new CommonPearlPending(this);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -55,7 +55,7 @@ namespace Game.Relics
             var random = new Random();
             var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
 
-            var pending = new CommonPearlPending(this, selectedPiece.Pos);
+            var pending = new CommonPearlPending(this);
             BoardViewer.Ins.ExecuteAction(pending);
         }
     }

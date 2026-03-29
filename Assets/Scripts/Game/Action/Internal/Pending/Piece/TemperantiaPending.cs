@@ -15,11 +15,9 @@ namespace Game.Action.Internal.Pending.Piece
     {
         private static int _ally = -1;
         private static int _enemy = -1; // -1 nếu chưa chọn enemy
-        private readonly PieceLogic _temperantia;
 
-        public TemperantiaPending(int maker, int target) : base(maker, target)
+        public TemperantiaPending(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            _temperantia = GetMaker() as PieceLogic;
         }
 
         public void Dispose()
@@ -31,18 +29,19 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            if (GetTarget().Color == _temperantia.Color)
+            var temperantia = (PieceLogic)GetMaker();
+            if (((PieceLogic)GetTarget()).Color == temperantia.Color)
             {
                 _ally = GetTargetPos();
                 foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                pending.GetTarget().Color == _temperantia.Color))
+                             ((PieceLogic)pending.GetTarget()).Color == temperantia.Color))
                     TileManager.Ins.UnMark(pending.GetTargetPos());
             }
             else
             {
                 _enemy = GetTargetPos();
                 foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                pending.GetTarget().Color != _temperantia.Color))
+                             ((PieceLogic)pending.GetTarget()).Color != temperantia.Color))
                     TileManager.Ins.UnMark(pending.GetTargetPos());
             }
 

@@ -9,7 +9,7 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ThalassosResurrectCandidate : PendingAction, ISkills
     {
-        public ThalassosResurrectCandidate(int maker, int pos) : base(maker, pos)
+        public ThalassosResurrectCandidate(PieceLogic maker, int pos) : base(maker, pos)
         {
         }
 

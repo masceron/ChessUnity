@@ -23,7 +23,7 @@ namespace Game.Relics
                 if (piece == null || piece.Color != Color) continue;
                 if (BoardUtils.IsOnBlackSide(piece.Pos) == Color) continue;
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new AdrenalineRadiatorPending(this, piece.Pos);
+                var pending = new AdrenalineRadiatorPending(this);
                 BoardViewer.ListOf.Add(pending);
             }
 

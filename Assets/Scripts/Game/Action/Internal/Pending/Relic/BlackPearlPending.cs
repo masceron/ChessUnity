@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private BlackPearl _blackPearl;
 
-        public BlackPearlPending(BlackPearl cp, int maker) : base(maker)
+        public BlackPearlPending(BlackPearl cp, int maker) : base(null)
         {
             _blackPearl = cp;
         }

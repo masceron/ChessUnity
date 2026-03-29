@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public DiurnalActive(int maker, int target) : base(maker, target)
+        public DiurnalActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 

@@ -11,7 +11,7 @@ namespace Game.Action.Internal.Pending.Relic
         private readonly string _pieceType;
         private CoralTome _coralTome;
 
-        public CoralTomePending(CoralTome ct, int maker, string type) : base(maker)
+        public CoralTomePending(CoralTome ct, string type) : base(null)
         {
             _coralTome = ct;
             _pieceType = type;

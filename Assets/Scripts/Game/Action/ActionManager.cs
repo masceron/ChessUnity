@@ -6,6 +6,7 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using Game.Tile;
 using ZLinq;
@@ -71,8 +72,8 @@ namespace Game.Action
             else if (mainAction is not IInternal)
                 foreach (var listener in afterPieceActionListeners)
                 {
-                    if ((listener is Effect && !BoardUtils.IsAlive(((Effect)listener).Piece)) 
-                            || listener is Formation && !BoardUtils.IsAlive(((Formation)listener).PieceOnFormation)) continue;
+                    if ((listener is Effect effect && !BoardUtils.IsAlive(effect.Piece))
+                        || listener is Formation formation && !BoardUtils.IsAlive(formation.PieceOnFormation)) continue;
 
                     _buffering = true;
                     listener.OnCallAfterPieceAction(mainAction);

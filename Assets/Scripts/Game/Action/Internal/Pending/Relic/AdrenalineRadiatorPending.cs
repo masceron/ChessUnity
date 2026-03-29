@@ -12,7 +12,7 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private AdrenalineRadiator _relic;
 
-        public AdrenalineRadiatorPending(AdrenalineRadiator relic, int maker) : base(maker)
+        public AdrenalineRadiatorPending(AdrenalineRadiator relic) : base(null)
         {
             _relic = relic;
         }

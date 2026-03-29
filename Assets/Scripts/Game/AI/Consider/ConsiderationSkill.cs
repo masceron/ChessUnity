@@ -16,7 +16,7 @@ namespace Game.AI.Consider
             float score = weight;
             var targetPiece = action.GetTarget();
 
-            if (targetPiece != null) score += targetPiece.GetValueForAI();
+            if (targetPiece != null) score += ((PieceLogic)targetPiece).GetValueForAI();
 
             return score;
         }

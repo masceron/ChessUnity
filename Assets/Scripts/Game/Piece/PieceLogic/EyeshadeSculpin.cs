@@ -30,7 +30,8 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this || pOn.Color == Color) continue;
-                        list.Add(new EyeshadeSculpinPending(Pos, index));
+                        //Làm lại
+                        //list.Add(new EyeshadeSculpinPending(this, index));
                     }
                 }
                 else

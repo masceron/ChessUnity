@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Game.Action.Captures;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
@@ -19,8 +18,8 @@ namespace Game.AI.Consider
 
             try
             {
-                var value = (float)targetPiece.GetValueForAI();
-                return value + weight;
+                var value = ((PieceLogic)targetPiece).GetValueForAI();
+                return (float)value + weight;
             }
             catch
             {

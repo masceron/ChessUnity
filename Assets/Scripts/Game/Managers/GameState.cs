@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Game.Action;
 using Game.Action.Internal;
 using Game.AI;
+using Game.Common;
 using Game.Effects.RegionalEffect;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
@@ -51,7 +52,7 @@ namespace Game.Managers
         public PieceLogic WhiteCommander, BlackCommander;
         public RelicLogic WhiteRelic;
         
-        private Dictionary<int, PieceLogic> _piecesDictionary;
+        private Dictionary<int, PieceLogic> entityDict;
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -105,7 +106,7 @@ namespace Game.Managers
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];
             
-            _piecesDictionary.Add(pieceLogic.ID, pieceLogic);
+            entityDict.Add(pieceLogic.ID, pieceLogic);
             return pieceLogic;
         }
 
@@ -186,7 +187,7 @@ namespace Game.Managers
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
                 pieceAffected.Color, pieceAffected.Pos));
 
-            _piecesDictionary.Remove(pieceAffected.ID);
+            entityDict.Remove(pieceAffected.ID);
         }
 
         public void Move(PieceLogic piece, int t)
@@ -263,9 +264,9 @@ namespace Game.Managers
             SideToMove = !SideToMove;
         }
 
-        public PieceLogic GetEntityByID(int id)
+        public Entity GetEntityByID(int id)
         {
-            return _piecesDictionary.GetValueOrDefault(id);
+            return entityDict.GetValueOrDefault(id);
         }
 
         public void SetRegionalEffect(RegionalEffect e)

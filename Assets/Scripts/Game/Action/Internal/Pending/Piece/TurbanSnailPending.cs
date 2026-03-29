@@ -10,7 +10,7 @@ namespace Game.Action.Internal.Pending.Piece
     public class TurbanSnailPending : PendingAction
     {
 
-        public TurbanSnailPending(int maker) : base(maker, maker)
+        public TurbanSnailPending(PieceLogic maker) : base(maker)
         {
         }
 
