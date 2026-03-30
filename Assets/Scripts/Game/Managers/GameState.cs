@@ -35,7 +35,7 @@ namespace Game.Managers
         private const int NumberOfTurnToChange = 10;
         public readonly BitArray ActiveBoard;
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
-        public readonly Formation[] formations;
+        public readonly Formation[] Formations;
         public readonly bool OurSide;
         public readonly PieceLogic[] PieceBoard;
         public readonly BitArray SquareColor;
@@ -52,7 +52,7 @@ namespace Game.Managers
         public PieceLogic WhiteCommander, BlackCommander;
         public RelicLogic WhiteRelic;
         
-        private Dictionary<int, PieceLogic> entityDict;
+        public readonly Dictionary<int, Entity> EntityDict = new();
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -61,7 +61,7 @@ namespace Game.Managers
             PieceBoard = new PieceLogic[maxLength * maxLength];
             ActiveBoard = new BitArray(maxLength * maxLength);
             SquareColor = new BitArray(maxLength * maxLength);
-            formations = new Formation[maxLength * maxLength];
+            Formations = new Formation[maxLength * maxLength];
 
             SideToMove = side;
 
@@ -106,7 +106,7 @@ namespace Game.Managers
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];
             
-            entityDict.Add(pieceLogic.ID, pieceLogic);
+            EntityDict.Add(pieceLogic.ID, pieceLogic);
             return pieceLogic;
         }
 
@@ -150,14 +150,12 @@ namespace Game.Managers
                 }
             }
 
-            for (var pos = 0; pos < formations.Length; pos++)
+            foreach (var format in Formations)
             {
-                var format = formations[pos];
-
                 if (format is not { HaveDuration: true } || SideToMove != format.GetColor()) continue;
 
                 format.SetDuration(format.Duration - 1);
-                if (format.Duration <= 0) FormationManager.Ins.RemoveFormation(pos);
+                if (format.Duration <= 0) FormationManager.Ins.RemoveFormation(format);
             }
 
             WhiteRelic?.PassTurn();
@@ -187,7 +185,7 @@ namespace Game.Managers
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
                 pieceAffected.Color, pieceAffected.Pos));
 
-            entityDict.Remove(pieceAffected.ID);
+            EntityDict.Remove(pieceAffected.ID);
         }
 
         public void Move(PieceLogic piece, int t)
@@ -266,7 +264,7 @@ namespace Game.Managers
 
         public Entity GetEntityByID(int id)
         {
-            return entityDict.GetValueOrDefault(id);
+            return EntityDict.GetValueOrDefault(id);
         }
 
         public void SetRegionalEffect(RegionalEffect e)

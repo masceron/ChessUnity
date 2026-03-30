@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PistolShrimpActive(int maker, int target) : base(maker, target)
+        public PistolShrimpActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
+            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

@@ -35,7 +35,7 @@ namespace Game.Piece.PieceLogic
                     var p = PieceOn(piece);
                     if (p == null) continue;
                     
-                    list.Add(new OrrnateGhostpipefishActive(Pos, piece, GetStat(SkillStat.Duration)));
+                    list.Add(new OrnateGhostpipefishActive(Pos, piece, GetStat(SkillStat.Duration)));
                 }
             };
         }

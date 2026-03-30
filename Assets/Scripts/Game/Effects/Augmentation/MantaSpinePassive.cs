@@ -90,7 +90,7 @@ namespace Game.Effects.Augmentation
                         available.RemoveAt(randomIdx);
                     }
 
-                    ActionManager.EnqueueAction(new NormalMove(action.GetTargetPos(), IndexOf(rankOff, file)));
+                    ActionManager.EnqueueAction(new NormalMove(action.GetTargetAsPiece(), IndexOf(rankOff, file)));
 
                     foreach (var selectedIndex in selectedIndices)
                     {

@@ -22,7 +22,7 @@ namespace Game.Tile.RealityDistortion
             _lastProcessedTurn = currentTurn;
 
             var allDistortions = new List<RealityDistortion>();
-            foreach (var formation in gameState.formations)
+            foreach (var formation in gameState.Formations)
                 if (formation is RealityDistortion distortion)
                     allDistortions.Add(distortion);
 

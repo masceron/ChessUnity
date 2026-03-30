@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PlumedSeaFirActive(int maker, int target) : base(maker, target)
+        public PlumedSeaFirActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

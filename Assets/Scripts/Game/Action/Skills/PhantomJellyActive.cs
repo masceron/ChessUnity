@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PhantomJellyActive(int maker) : base(maker)
+        public PhantomJellyActive(PieceLogic maker) : base(maker)
         {
         }
 
@@ -34,7 +34,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(GetMakerPos());
+            var (rank, file) = RankFileOf(GetFrom());
             var caller = GetMakerAsPiece();
 
             for (var i = -3; i <= 3; i++)

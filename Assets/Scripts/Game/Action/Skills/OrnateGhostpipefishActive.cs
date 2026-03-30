@@ -9,16 +9,16 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class OrrnateGhostpipefishActive : Action, ISkills
+    public partial class OrnateGhostpipefishActive : Action, ISkills
     {
         [MemoryPackConstructor]
 
-        private OrrnateGhostpipefishActive()
+        private OrnateGhostpipefishActive()
         {
         }
         private readonly int Duration;
 
-        public OrrnateGhostpipefishActive(int maker, int to, int duration) : base(maker, to)
+        public OrnateGhostpipefishActive(PieceLogic maker, PieceLogic to, int duration) : base(maker, to)
         {
             Duration = duration;
         }
@@ -34,16 +34,11 @@ namespace Game.Action.Skills
             var pOnTarget = GetTargetAsPiece();
             if (caller == null) return;
 
-            if (GetMakerPos() == GetTargetPos())
+            if (GetMakerAsPiece() == GetTargetAsPiece())
             {
-                if (caller.HasState(StateType.None))
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration * 2, caller)));
-                }
-                else
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration * 2, pOnTarget)));
-                }
+                ActionManager.EnqueueAction(caller.HasState(StateType.None)
+                    ? new ApplyEffect(new Ethereal(Duration * 2, caller))
+                    : new ApplyEffect(new Ethereal(Duration * 2, pOnTarget)));
             }
             else
             {

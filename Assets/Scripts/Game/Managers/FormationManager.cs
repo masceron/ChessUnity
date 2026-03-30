@@ -15,7 +15,7 @@ namespace Game.Managers
 
         public void Initialize()
         {
-            _formations = MatchManager.Ins.GameState.formations;
+            _formations = MatchManager.Ins.GameState.Formations;
             _formationObjects = new GameObject[BoardSize];
         }
 
@@ -35,28 +35,30 @@ namespace Game.Managers
             if (!prefab) prefab = defaultPrefab;
             _formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
                 Quaternion.identity, transform);
-            if (_formations[pos] != null) RemoveFormation(pos);
+            if (_formations[pos] != null) RemoveFormation(_formations[pos]);
             _formations[pos] = env;
             if (PieceOn(pos) != null) _formations[pos].OnCreated(PieceOn(pos));
+            BoardUtils.AddToEntityList(env);
         }
 
         public void MoveFormation(int from, int to)
         {
             var movedFormation = GetFormation(from);
-            RemoveFormation(from);
+            RemoveFormation(movedFormation);
             SetFormation(to, movedFormation);
         }
 
         /// <summary>
         ///     Nên dùng để xóa Formation
         /// </summary>
-        public void RemoveFormation(int pos)
+        public void RemoveFormation(Formation formation)
         {
-            if (_formations[pos] == null) return;
-            _formations[pos].OnRemove(PieceOn(pos)); // luôn gọi, dù ô không có Piece (truyền null)
-            _formations[pos] = null;
-            Destroy(_formationObjects[pos]);
-            _formationObjects[pos] = null;
+            if (formation == null) return;
+            formation.OnRemove(PieceOn(formation.Pos)); // luôn gọi, dù ô không có Piece (truyền null)
+            RemoveFromEntityList(formation);
+            _formations[formation.Pos] = null;
+            Destroy(_formationObjects[formation.Pos]);
+            _formationObjects[formation.Pos] = null;
         }
 
         public static bool IsHideByFog(int pos, bool sideToMove)

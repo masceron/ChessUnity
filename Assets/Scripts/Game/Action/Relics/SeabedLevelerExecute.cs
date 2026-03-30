@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Tile;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -11,13 +12,13 @@ namespace Game.Action.Relics
         {
         }
 
-        public SeabedLevelerExecute(int target) : base(null, target)
+        public SeabedLevelerExecute(Formation target) : base(null, target)
         {
         }
 
         protected override void ModifyGameState()
         {
-            FormationManager.Ins.RemoveFormation(GetTargetPos());
+            FormationManager.Ins.RemoveFormation(GetTargetAsFormation());
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PhronimaActive(int from, int to) : base(from, to)
+        public PhronimaActive(PieceLogic from, PieceLogic to) : base(from, to)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Game.Action.Skills
             return 0;
         }
 
-        private void ApplyEffect(int pos)
+        private void ApplyEffect()
         {
             var targetPiece = GetTargetAsPiece();
 
@@ -39,7 +39,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ApplyEffect(GetTargetPos());
+            ApplyEffect();
         }
     }
 }

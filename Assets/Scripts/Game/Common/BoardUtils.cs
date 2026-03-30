@@ -452,9 +452,9 @@ namespace Game.Common
             FormationManager.Ins.MoveFormation(from, to);
         }
 
-        public static void RemoveFormation(int pos)
+        public static void RemoveFormation(Formation formation)
         {
-            FormationManager.Ins.RemoveFormation(pos);
+            FormationManager.Ins.RemoveFormation(formation);
         }
 
         public static List<Formation> GetFormation(FormationType type)
@@ -462,25 +462,25 @@ namespace Game.Common
             return GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
         }
 
-        public static Formation[] GetFormations()
+        private static Formation[] GetFormations()
         {
-            return MatchManager.Ins.GameState.formations;
+            return MatchManager.Ins.GameState.Formations;
         }
 
         public static Formation GetFormation(int pos)
         {
-            return MatchManager.Ins.GameState.formations[pos];
+            return MatchManager.Ins.GameState.Formations[pos];
         }
 
         public static bool HasFormation(int pos)
         {
-            return MatchManager.Ins.GameState.formations[pos] != null;
+            return MatchManager.Ins.GameState.Formations[pos] != null;
         }
 
         public static void DestroyTile(int index)
         {
             TileManager.Ins.DestroyTile(index);
-            RemoveFormation(index);
+            RemoveFormation(GetFormation(index));
             var on = PieceOn(index);
             if (on != null) ActionManager.EnqueueAction(new KillPiece(on));
         }
@@ -500,6 +500,16 @@ namespace Game.Common
         public static Entity GetEntityByID(int id)
         {
             return MatchManager.Ins.GameState.GetEntityByID(id);
+        }
+
+        public static void AddToEntityList(Entity entity)
+        { 
+            MatchManager.Ins.GameState.EntityDict.Add(entity.ID, entity);
+        }
+
+        public static void RemoveFromEntityList(Entity entity)
+        {
+            MatchManager.Ins.GameState.EntityDict.Remove(entity.ID);
         }
     }
 }

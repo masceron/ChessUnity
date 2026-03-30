@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PencilUrchinActive(int maker, int target) : base(maker, target)
+        public PencilUrchinActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
