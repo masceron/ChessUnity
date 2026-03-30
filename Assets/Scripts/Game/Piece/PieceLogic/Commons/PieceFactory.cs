@@ -148,6 +148,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_yellowlined_basslet" => new YellowlinedBasslet(cfg),
                 "piece_sunray_zoanthid" => new SunrayZoanthid(cfg),
                 "piece_tuxedo_urchin" => new TuxedoUrchin(cfg),
+                "piece_maxima_clam" => new MaximaClam(cfg),
                 
                 _ => null
             };

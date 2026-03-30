@@ -41,7 +41,6 @@ namespace Game.Effects.Condition
 
             var radius = GetStat(EffectStat.Radius);
 
-			// Enemy di chuyển
 			if (movedPiece != Piece && movedPiece.Color != Piece.Color)
             {
 				int prevPos = movedPiece.PreviousMoves.Count > 0
@@ -78,9 +77,7 @@ namespace Game.Effects.Condition
 
         public void OnCallStart(Action.Action lastMainAction)
 		{
-			// Ngày -> Đêm: gỡ Blind do aura trong bán kính (không đụng blind sẵn)
 			if (wasActive && !IsActive) RemoveAuraBlindInCurrentRadius();
-			// Đêm -> Ngày: áp Blind cho quân trong bán kính nếu không có blind sẵn
 			if (!wasActive && IsActive) ApplyBlindInCurrentRadius();
 			wasActive = IsActive;
 		}
@@ -88,13 +85,11 @@ namespace Game.Effects.Condition
 		private void OnEnterRange(PieceLogic target)
 		{
 			if (target == null) return;
-			// Nếu đã có Blinded sẵn, đánh dấu và bỏ qua
 			if (HasBlinded(target))
 			{
 				preBlinded.Add(target);
 				return;
 			}
-			// Nếu đã được aura áp trước đó, bỏ qua
 			if (auraBlinded.Contains(target)) return;
 
 			var probability = GetStat(EffectStat.Strength);
@@ -106,7 +101,6 @@ namespace Game.Effects.Condition
 		private void OnLeaveRange(PieceLogic target)
 		{
 			if (target == null) return;
-			// Chỉ gỡ Blind do aura đã thêm
 			if (!auraBlinded.Contains(target)) return;
 
 			for (int i = 0; i < target.Effects.Count; i++)
@@ -179,11 +173,5 @@ namespace Game.Effects.Condition
 			return false;
 		}
 
-		private void ClearAllAppliedBlind()
-		{
-			// Giữ tên hàm theo yêu cầu trước, nhưng thực hiện theo rule mới:
-			// chỉ gỡ các Blind do aura và chỉ trong bán kính hiện tại
-			RemoveAuraBlindInCurrentRadius();
-		}
     }
 }
