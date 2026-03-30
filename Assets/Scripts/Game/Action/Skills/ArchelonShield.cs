@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArchelonShield(int maker, int target) : base(maker, target)
+        public ArchelonShield(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -30,7 +30,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetTarget()), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetTarget() as PieceLogic), GetMaker() as PieceLogic));
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

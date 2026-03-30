@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public DwarfLionfishActive(int maker) : base(maker)
+        public DwarfLionfishActive(PieceLogic maker) : base(maker)
         {
         }
 

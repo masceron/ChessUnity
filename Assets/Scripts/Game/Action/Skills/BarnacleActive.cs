@@ -20,14 +20,14 @@ namespace Game.Action.Skills
         {
         }
 
-        public BarnacleActive(int maker, int target) : base(maker, target)
+        public BarnacleActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
         public void CompleteActionForAI()
         {
             var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color != GetMaker() as PieceLogic.Color &&
+            var listPieces = allPieces.Where(p => p != null && p.Color != ((PieceLogic)GetMaker()).Color &&
                                                   p.Effects.Any(e =>
                                                       e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();
 
@@ -58,7 +58,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in GetTarget().Effects
+            foreach (var effect in ((PieceLogic)GetTarget()).Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
                 if (effect.Duration > 0)
                     effect.Duration -= 1;

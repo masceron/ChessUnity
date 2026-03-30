@@ -7,7 +7,7 @@ namespace Game.Action.Skills
 {
     public class ChinookSalmonActive : Action, ISkills
     {
-        public ChinookSalmonActive(int maker, int target) : base(maker, target)
+        public ChinookSalmonActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
         

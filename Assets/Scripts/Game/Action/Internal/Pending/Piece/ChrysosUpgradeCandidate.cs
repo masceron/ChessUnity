@@ -111,7 +111,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         private void ActivateSkill(PieceLogic p, string type, byte cost)
         {
-            CommitResult(new ChrysosUpgrade(GetFrom(), new PieceConfig(type, p.Color, p.Pos), cost));
+            CommitResult(new ChrysosUpgrade(GetMaker() as PieceLogic, p, new PieceConfig(type, p.Color, p.Pos), cost));
         }
 
         private void HandleUpgrade(byte cost)

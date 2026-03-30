@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public EpauletteSharkActive(int maker, int target) : base(maker, target)
+        public EpauletteSharkActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
+            ActionManager.EnqueueAction(new KillPiece(GetTarget() as PieceLogic));
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

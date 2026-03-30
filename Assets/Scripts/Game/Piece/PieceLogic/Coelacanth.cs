@@ -27,11 +27,10 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var (rank, file) = RankFileOf(Pos);
                     var piecesInRange = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, GetStat(SkillStat.Range));
                     foreach (var targetPiece in piecesInRange) { 
                         if (PieceOn(targetPiece).Effects.Any(e => e.EffectName == "effect_slow")) continue;
-                        list.Add(new CoelacanthActive(Pos, targetPiece, GetStat(SkillStat.Duration)));
+                        list.Add(new CoelacanthActive(this, PieceOn(targetPiece), GetStat(SkillStat.Duration)));
                     }
                 }
             };

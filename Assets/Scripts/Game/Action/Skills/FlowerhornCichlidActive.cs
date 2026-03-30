@@ -15,7 +15,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public FlowerhornCichlidActive(int maker, int target) : base(maker, target)
+        public FlowerhornCichlidActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerColor = GetMaker() as PieceLogic.Color;
+            var makerColor = ((PieceLogic)GetMaker()).Color;
             var direction = makerColor ? 1 : -1;
             var pieceOn = GetTarget();
             if (pieceOn != null)
@@ -55,15 +55,16 @@ namespace Game.Action.Skills
                     finalRankOfTarget == RankOf(GetTargetPos())
                         ? RankOf(GetTargetPos()) - direction
                         : RankOf(GetTargetPos());
-                ActionManager.EnqueueAction(new NormalMove(GetTargetPos(),
+                ActionManager.EnqueueAction(new NormalMove(PieceOn(IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))),
                     IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))));
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), GetMaker() as PieceLogic));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn as PieceLogic),
+                    GetMaker() as PieceLogic));
                 ActionManager.EnqueueAction(
-                    new NormalMove(GetFrom(), IndexOf(finalRankOfMaker, FileOf(GetTargetPos()))));
+                    new NormalMove(GetMaker() as PieceLogic, IndexOf(finalRankOfMaker, FileOf(GetTargetPos()))));
             }
             else
             {
-                ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
+                ActionManager.EnqueueAction(new NormalMove(GetMaker() as PieceLogic, GetTargetPos()));
             }
         }
     }

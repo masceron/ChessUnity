@@ -12,7 +12,7 @@ namespace Game.Action.Relics
     public partial class ReliquaryExecute : Action, IRelicAction
     {
         [MemoryPackConstructor]
-        public ReliquaryExecute() : base(-1)
+        public ReliquaryExecute() : base(null)
         {
         }
 

@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rankOff, fileOff) in GetEmptySquaresRankFile())
                     {
                         var index = IndexOf(rankOff, fileOff);
-                        list.Add(new ChinookSalmonActive(Pos, index));
+                        list.Add(new ChinookSalmonActive(this, index));
                     }
                 }
                 else

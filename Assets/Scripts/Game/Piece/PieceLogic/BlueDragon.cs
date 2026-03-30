@@ -31,7 +31,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this) continue;
-                        if (pOn.Color != Color) list.Add(new BlueDragonActive(Pos, index));
+                        if (pOn.Color != Color) list.Add(new BlueDragonActive(this, pOn));
                     }
                 }
                 else
@@ -112,7 +112,7 @@ namespace Game.Piece.PieceLogic
                             }
                         }
 
-                        if (bestPiece != null) list.Add(new BlueDragonActive(Pos, bestPiece.Pos));
+                        if (bestPiece != null) list.Add(new BlueDragonActive(this, bestPiece));
                     }
                     else
                     {
@@ -121,7 +121,9 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            list.Add(new BlueDragonActive(Pos, index));
+                            var pOn = PieceOn(index);
+                            if (pOn == null || pOn == this) continue;
+                            list.Add(new BlueDragonActive(this, pOn));
                         }
                     }
                 }

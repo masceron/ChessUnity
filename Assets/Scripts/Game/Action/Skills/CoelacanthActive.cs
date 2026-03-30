@@ -15,7 +15,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public CoelacanthActive(int maker, int target, int duration) : base(maker, target)
+        public CoelacanthActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
             Duration = duration;
         }
@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(Duration, GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(Duration, GetTarget() as PieceLogic)));
         }
     }
 }

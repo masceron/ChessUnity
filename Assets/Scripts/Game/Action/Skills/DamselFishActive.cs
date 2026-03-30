@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public DamselFishActive(int maker) : base(maker)
+        public DamselFishActive(PieceLogic maker) : base(maker)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieces = FindPiece<PieceLogic>(GetMaker() as PieceLogic.Color);
+            var pieces = FindPiece<PieceLogic>(((PieceLogic)GetMaker()).Color);
             var picked = pieces
                 .OrderBy(_ => Random.value)
                 .Take(Mathf.Min(3, pieces.Count))

@@ -21,10 +21,10 @@ namespace Game.Action.Skills
         {
         }
 
-        public ChrysosUpgrade(int maker, PieceConfig target, byte cost) : base(maker)
+        public ChrysosUpgrade(PieceLogic maker, PieceLogic target, PieceConfig swap, byte cost) : base(maker, target)
         {
-            _target = target;
             _cost = cost;
+            _target = swap;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -35,7 +35,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var pieceOn = GetMaker() as PieceLogic;
-            ActionManager.EnqueueAction(new DestroyPiece(_target.Index));
+            ActionManager.EnqueueAction(new DestroyPiece(GetTarget() as PieceLogic));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
             ((Chrysos)pieceOn).Coin -= _cost;
             SetCooldown(pieceOn, ((IPieceWithSkill)pieceOn).TimeToCooldown);

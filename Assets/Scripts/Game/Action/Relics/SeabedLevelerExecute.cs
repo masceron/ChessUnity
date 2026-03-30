@@ -11,7 +11,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public SeabedLevelerExecute(int maker, int target) : base(maker, target)
+        public SeabedLevelerExecute(int target) : base(null, target)
         {
         }
 

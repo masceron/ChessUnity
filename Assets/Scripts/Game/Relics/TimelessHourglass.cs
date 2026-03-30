@@ -30,8 +30,9 @@ namespace Game.Relics
                 if (piece == null) continue;
 
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new TimelessHourglassPending(this, piece);
-                BoardViewer.ListOf.Add(pending);
+                //Làm lại
+                //var pending = new TimelessHourglassPending(this, piece);
+                //BoardViewer.ListOf.Add(pending);
             }
 
             BoardViewer.Selecting = -2;
@@ -67,7 +68,7 @@ namespace Game.Relics
             var top = candidates.Where(pieceLogic => pieceLogic.GetValueForAI() == bestScore).ToList();
             var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
-            var excute = new TimelessHourglassExecute(CommanderPiece.Pos, Color, chosen.Pos);
+            var excute = new TimelessHourglassExecute(Color, chosen.Pos);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new TimelessHourglassPending(this, chosen.Pos);

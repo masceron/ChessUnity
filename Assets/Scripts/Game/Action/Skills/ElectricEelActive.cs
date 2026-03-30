@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public ElectricEelActive(int maker) : base(maker)
+        public ElectricEelActive(PieceLogic maker) : base(maker)
         {
         }
 

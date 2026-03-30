@@ -21,8 +21,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public FrilledSharkActive(int from, int drank, int dfile) : base(from,
-            IndexOf(RankOf(from) + drank * 4, FileOf(from) + dfile * 4))
+        public FrilledSharkActive(PieceLogic from, int drank, int dfile) : base(from,
+            IndexOf(RankOf(from.Pos) + drank * 4, FileOf(from.Pos) + dfile * 4))
         {
             this.dfile = dfile;
             this.drank = drank;
@@ -30,8 +30,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
-            if (maker == null) return 0;
+            if (GetMaker() is not PieceLogic maker) return 0;
             return pieceAI.Color != maker.Color ? 20 : 0;
         }
 
@@ -44,11 +43,11 @@ namespace Game.Action.Skills
                 rank += drank;
                 file += dfile;
                 var pieceOn = PieceOn(IndexOf(rank, file));
-                if (pieceOn != null && pieceOn.Color != GetMaker() as PieceLogic.Color)
+                if (pieceOn != null && pieceOn.Color != ((PieceLogic)GetMaker()).Color)
                     ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn), GetMaker() as PieceLogic));
             }
 
-            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
+            ActionManager.EnqueueAction(new NormalMove(GetMaker() as PieceLogic, GetTargetPos()));
         }
     }
 }

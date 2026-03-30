@@ -1,6 +1,6 @@
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -16,14 +16,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public RayStingerExecute(int target) : base(-1, target)
+        public RayStingerExecute(int target) : base(null, target)
         {
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(BleedingStack, GetTarget())));
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken(BrokenDuration, GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(BleedingStack, GetTarget() as PieceLogic)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Broken(BrokenDuration, GetTarget() as PieceLogic)));
         }
     }
 }

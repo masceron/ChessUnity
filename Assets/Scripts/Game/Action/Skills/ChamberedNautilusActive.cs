@@ -16,20 +16,19 @@ namespace Game.Action.Skills
         {
         }
 
-        public ChamberedNautilusActive(int maker, int target) : base(maker, target)
+        public ChamberedNautilusActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
-            if (maker == null) return 0;
+            if (GetMaker() is not PieceLogic maker) return 0;
             return pieceAI.Color != maker.Color ? -5 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, GetTarget()), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, GetTarget() as PieceLogic), GetMaker() as PieceLogic));
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

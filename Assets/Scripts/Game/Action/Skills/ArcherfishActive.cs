@@ -16,14 +16,13 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArcherfishActive(int maker, int target) : base(maker, target)
+        public ArcherfishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
-            if (maker == null || pieceAI == null) return 0;
+            if (GetMaker() is not PieceLogic maker || pieceAI == null) return 0;
 
             // Skill này chỉ tác động lên quân địch.
             // Nếu quân của AI (pieceAI) khác màu với người tạo skill, nó sẽ bị phạt.
@@ -37,8 +36,10 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTarget()), GetMaker() as PieceLogic));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTarget()), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTarget() as PieceLogic),
+                GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTarget() as PieceLogic),
+                GetMaker() as PieceLogic));
 
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }

@@ -26,7 +26,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public StormCapacitorExecute(int rank, int file, int size, Corner corner, bool color) : base(-1)
+        public StormCapacitorExecute(int rank, int file, int size, Corner corner, bool color) : base(null)
         {
             _rank = rank;
             _file = file;

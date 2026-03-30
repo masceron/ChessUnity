@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public BobtailSquidActive(int maker, int target) : base(maker, target)
+        public BobtailSquidActive(PieceLogic maker) : base(maker)
         {
         }
 

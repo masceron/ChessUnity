@@ -54,7 +54,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
 
             if (_firstPos == -1 || _secondPos == -1 || _thirdPos == -1) return;
-            CommitResult(new BlackPrinceCopepodActive(GetFrom(), _firstPos, _secondPos, _thirdPos));
+            CommitResult(new BlackPrinceCopepodActive(GetMaker() as PieceLogic, _firstPos, _secondPos, _thirdPos));
             _firstPos = -1;
             _secondPos = -1;
             _thirdPos = -1;

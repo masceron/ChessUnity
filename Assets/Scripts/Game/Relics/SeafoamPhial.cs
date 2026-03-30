@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Common;
 using Game.Effects;
@@ -29,7 +28,9 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeafoamPhialPending(this, piece);
+                    
+                    //Làm lại
+                    //var pending = new SeafoamPhialPending(this, piece);
                     BoardViewer.ListOf.Add(pending);
                 }
 
@@ -90,7 +91,7 @@ namespace Game.Relics
 
             if (targetPiece == null) return;
             {
-                var excute = new SeafoamPhialAction(targetPiece.Pos);
+                var excute = new SeafoamPhialAction(targetPiece);
                 BoardViewer.Ins.ExecuteAction(excute);
 
                 // var pending = new SeafoamPhialPending(this, targetPiece.Pos);

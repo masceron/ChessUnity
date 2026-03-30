@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public AnglerfishTaunt(int maker, int target) : base(maker, target)
+        public AnglerfishTaunt(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(3, GetTarget()), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Taunted(3, GetTarget() as PieceLogic), GetMaker() as PieceLogic));
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

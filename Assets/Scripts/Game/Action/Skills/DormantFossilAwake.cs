@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public DormantFossilAwake(int maker, PieceConfig t) : base(maker)
+        public DormantFossilAwake(PieceLogic maker, PieceConfig t) : base(maker)
         {
             _target = t;
         }
@@ -30,7 +30,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new DestroyPiece(_target.Index));
+            ActionManager.EnqueueAction(new DestroyPiece(GetMaker() as PieceLogic));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }

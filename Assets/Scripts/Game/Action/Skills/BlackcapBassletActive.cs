@@ -12,7 +12,7 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
+            ActionManager.EnqueueAction(new NormalMove(GetMaker() as PieceLogic, GetTargetPos()));
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
 

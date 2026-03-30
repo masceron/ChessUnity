@@ -19,7 +19,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public BottlenoseDolphinActive(int maker, int target) : base(maker, target)
+        public BottlenoseDolphinActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -33,7 +33,7 @@ namespace Game.Action.Skills
                 if (piece is not IPieceWithSkill) continue;
 
                 var deltaCooldown = ((IPieceWithSkill)PieceOn(i)).TimeToCooldown - piece.SkillCooldown;
-                if (piece.Color == GetMaker() as PieceLogic.Color)
+                if (piece.Color == ((PieceLogic)GetMaker()).Color)
                     a.Add((i, deltaCooldown));
                 else
                     b.Add((i, deltaCooldown));
@@ -74,10 +74,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            if (GetTarget().Color != GetMaker() as PieceLogic.Color)
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTarget()), GetMaker() as PieceLogic));
+            if (((PieceLogic)GetTarget()).Color != ((PieceLogic)GetMaker()).Color)
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTarget() as PieceLogic), GetMaker() as PieceLogic));
             else
-                SetCooldown(GetTarget(), 0);
+                SetCooldown(GetTarget() as PieceLogic, 0);
             SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
         }
     }

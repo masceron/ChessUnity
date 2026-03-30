@@ -1,6 +1,6 @@
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -13,14 +13,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public SirenHarpoonExecute(int maker, int target) : base(maker, target)
+        public SirenHarpoonExecute(PieceLogic target) : base(null, target)
         {
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget())));
-            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, GetTarget())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget() as PieceLogic)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(1, GetTarget() as PieceLogic)));
         }
     }
 }
