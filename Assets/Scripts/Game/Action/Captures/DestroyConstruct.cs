@@ -25,8 +25,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(GetMaker() as PieceLogic);
-            MatchManager.Ins.GameState.Kill(GetTarget() as PieceLogic);
+            MatchManager.Ins.GameState.Kill(GetMakerAsPiece());
+            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
         }
     }
 }

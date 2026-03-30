@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public OliveRidleyHatchlingActive(int maker) : base(maker)
+        public OliveRidleyHatchlingActive(PieceLogic maker) : base(maker)
         {
         }
 
@@ -25,10 +25,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetMakerPos()));
+            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece()));
             ActionManager.EnqueueAction(
-                new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMaker() as PieceLogic.Color, GetMakerPos())));
-            SetCooldown(GetMaker() as PieceLogic, -1);
+                new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMakerAsPiece().Color,
+                    GetFrom())));
+            SetCooldown(GetMakerAsPiece(), -1);
         }
     }
 }

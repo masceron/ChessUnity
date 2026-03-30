@@ -17,7 +17,7 @@ namespace Game.Effects.Buffs
         {
             if (caller.Color == Piece.Color || caller.Effects.Any(e => e.EffectName == "effect_marked")) return;
 
-            actions.RemoveAll(a => BoardUtils.Distance(a.GetFrom(), Piece.Pos) > 4 && a.GetTarget() == Piece);
+            actions.RemoveAll(a => BoardUtils.Distance(a.GetFrom(), Piece.Pos) > 4 && a.GetTargetAsPiece() == Piece);
         }
 
         public override int GetValueForAI()

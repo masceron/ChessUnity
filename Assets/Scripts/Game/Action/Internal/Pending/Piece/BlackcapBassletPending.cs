@@ -24,7 +24,7 @@ namespace Game.Action.Internal.Pending.Piece
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);
                 if (pOn != null) continue;
-                var newAction = new BlackcapBassletActive(GetMaker() as PieceLogic, index);
+                var newAction = new BlackcapBassletActive(GetMakerAsPiece(), index);
                 BoardViewer.ListOf.Add(newAction);
                 TileManager.Ins.MarkAsMoveable(index);
             }

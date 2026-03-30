@@ -16,7 +16,7 @@ namespace Game.Effects.Buffs
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ISkills) return;
-            var caster = action.GetMaker() as PieceLogic;
+            var caster = action.GetMakerAsPiece();
             if (caster.Color == Piece.Color && Piece.SkillCooldown > 0) Piece.SkillCooldown--;
         }
 

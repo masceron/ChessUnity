@@ -32,9 +32,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
-            PieceLogic maker = GetMaker() as PieceLogic;
-            PieceLogic target = GetTarget();
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            PieceLogic maker = GetMakerAsPiece();
+            PieceLogic target = GetTargetAsPiece();
             if (maker.Color == target.Color)
             {
                 var debuffs = maker.Effects.Where(kvp => kvp.Category == EffectCategory.Debuff).ToArray();
@@ -47,7 +47,7 @@ namespace Game.Action.Skills
             }
             else
             {
-                EffectFactory.CreateRandomEffect(GetTarget());
+                EffectFactory.CreateRandomEffect(GetTargetAsPiece());
                 maker.SetStat(SkillStat.Counter, maker.GetStat(SkillStat.Counter) - 1);
             }
             

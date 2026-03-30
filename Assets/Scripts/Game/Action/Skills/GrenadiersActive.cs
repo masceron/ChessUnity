@@ -20,7 +20,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public GrenadiersActive(int maker, int target) : base(maker, target)
+        public GrenadiersActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -38,20 +38,20 @@ namespace Game.Action.Skills
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
             SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -60 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            SetFormation(GetTargetPos(), new NavalMines(true, GetMaker() as PieceLogic.Color));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetFormation(GetTargetPos(), new NavalMines(true, GetMakerAsPiece().Color));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

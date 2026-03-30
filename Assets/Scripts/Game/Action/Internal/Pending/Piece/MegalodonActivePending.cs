@@ -27,7 +27,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -40;
             return 0;
@@ -42,12 +42,12 @@ namespace Game.Action.Internal.Pending.Piece
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
                 foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()),
-                             ((PieceLogic)GetMaker()).AttackRange()))
+                             GetMakerAsPiece().AttackRange()))
                 {
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
                     if (piece == null || piece.Color == _firstTarget.Color) continue;
-                    var newAction = new MegalodonActivePending(GetMaker() as PieceLogic, piece);
+                    var newAction = new MegalodonActivePending(GetMakerAsPiece(), piece);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
                 }
@@ -58,7 +58,7 @@ namespace Game.Action.Internal.Pending.Piece
             _secondTarget = hovering;
             if (_firstTarget == null || _secondTarget == null) return;
             if (_firstTarget == _secondTarget) return;
-            CommitResult(new MegalodonActive(GetFrom(), _firstTarget.Pos, _secondTarget.Pos));
+            CommitResult(new MegalodonActive(GetMakerAsPiece(), _firstTarget.Pos, _secondTarget.Pos));
         }
 
         public void CompleteActionForAI()

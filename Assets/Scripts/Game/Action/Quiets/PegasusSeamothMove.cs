@@ -33,7 +33,7 @@ namespace Game.Action.Quiets
             var (rankFrom, fileFrom) = RankFileOf(GetFrom());
             var (rankTo, fileTo) = RankFileOf(GetTargetPos());
             var board = PieceBoard();
-            var caller = GetMaker() as PieceLogic;
+            var caller = GetMakerAsPiece();
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;

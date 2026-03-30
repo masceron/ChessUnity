@@ -30,7 +30,7 @@ namespace Game.Effects.Augmentation
                 _buffForEachTurn = 1;
             }
 
-            if (applyEffect.Effect.Category != EffectCategory.Debuff || applyEffect.GetMaker() as PieceLogic != Piece ||
+            if (applyEffect.Effect.Category != EffectCategory.Debuff || applyEffect.GetMakerAsPiece() != Piece ||
                 _buffForEachTurn <= 0) return;
             
             ActionManager.EnqueueAction(new ApplyEffect(GetRandomBuffEffect(Piece), Piece));

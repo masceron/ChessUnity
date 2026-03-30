@@ -20,10 +20,10 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetTarget() != Piece) return;
+            if (action.GetTargetAsPiece() != Piece) return;
             if (action.Result != ResultFlag.SurvivedHit) return;
 
-            var target = action.GetMaker() as PieceLogic;
+            var target = action.GetMakerAsPiece();
             if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
                 ActionManager.EnqueueAction(new KillPiece(action.GetMakerPos()));
 
@@ -38,7 +38,7 @@ namespace Game.Effects.Traits
             if (Piece.Effects.Any(e => e.EffectName == "effect_shield")
                 || Piece.Effects.Any(e => e.EffectName == "effect_carapace")
                 || Piece.Effects.Any(e => e.EffectName == "effect_hardened_shield")) return;
-            if (action.GetTarget() != Piece || action.Result != ResultFlag.Success) return;
+            if (action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Success) return;
             if (GetStat(EffectStat.Stack) <= 0) return;
 
             action.Result = ResultFlag.SurvivedHit;

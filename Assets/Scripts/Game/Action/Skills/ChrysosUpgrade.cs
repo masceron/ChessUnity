@@ -34,8 +34,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieceOn = GetMaker() as PieceLogic;
-            ActionManager.EnqueueAction(new DestroyPiece(GetTarget() as PieceLogic));
+            var pieceOn = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new DestroyPiece(GetTargetAsPiece()));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
             ((Chrysos)pieceOn).Coin -= _cost;
             SetCooldown(pieceOn, ((IPieceWithSkill)pieceOn).TimeToCooldown);

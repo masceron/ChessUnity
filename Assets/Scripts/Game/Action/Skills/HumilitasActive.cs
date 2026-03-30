@@ -20,7 +20,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public HumilitasActive(int maker, int firstTarget, int secondTarget) : base(maker)
+        public HumilitasActive(PieceLogic maker, int firstTarget, int secondTarget) : base(maker)
         {
             FirstTarget = firstTarget;
             SecondTarget = secondTarget;
@@ -37,10 +37,10 @@ namespace Game.Action.Skills
             var first = PieceOn(FirstTarget);
             var second = PieceOn(SecondTarget);
             if (first != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), GetMaker() as PieceLogic));
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), GetMakerAsPiece()));
             if (second != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), GetMaker() as PieceLogic));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+                ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

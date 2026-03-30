@@ -55,7 +55,7 @@ namespace Game.Effects.States
             {
                 if (action is ICaptures)
                 {
-                    var targetPiece = action.GetTarget();
+                    var targetPiece = action.GetTargetAsPiece();
                     // Kiểm tra chắc chắn là đồng minh thật sự (vì trong extraCaptures có thể lẫn cả kẻ địch)
                     if (targetPiece != null && targetPiece.Color == caller.Color && targetPiece != caller)
                     {

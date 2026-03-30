@@ -19,10 +19,10 @@ namespace Game.Effects.Augmentation
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetTarget() != Piece) return;
+            if (action.GetTargetAsPiece() != Piece) return;
             if (action.Result != ResultFlag.Parry) return;
 
-            ActionManager.EnqueueAction(new KillPiece(action.GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new KillPiece(action.GetMakerAsPiece()));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;
@@ -30,7 +30,7 @@ namespace Game.Effects.Augmentation
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetTarget() != Piece) return;
+            if (action.GetTargetAsPiece() != Piece) return;
             if (action.Result != ResultFlag.Success) return;
             if ((action.Flag & ActionFlag.Unblockable) != 0) return;
 

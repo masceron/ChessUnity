@@ -193,7 +193,7 @@ namespace Game.Tile
         {
             if (action is not IQuiets) return;
 
-            var pieceOn = action.GetTarget() as PieceLogic;
+            var pieceOn = action.GetTargetAsPiece();
             if (pieceOn == null) return;
 
             if (action.GetTargetPos() == Pos)

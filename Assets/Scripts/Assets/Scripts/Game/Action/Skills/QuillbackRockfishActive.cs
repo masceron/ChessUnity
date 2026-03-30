@@ -31,7 +31,7 @@ namespace Assets.Scripts.Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = GetMaker() as PieceLogic;
+            var makerPiece = GetMakerAsPiece();
             if (makerPiece == null) return;
             var bleedingStack = makerPiece.GetStat(SkillStat.Stack);
             var (rank, file) = RankFileOf(GetFrom());

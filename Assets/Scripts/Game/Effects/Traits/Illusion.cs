@@ -53,8 +53,8 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             actions.RemoveAll(e => e is ISkills);
             for (var i = 0; i < actions.Count; i++)
-                if (actions[i] is NormalCapture capture && capture.GetMaker() as PieceLogic == Piece)
-                    actions[i] = new IllusionCapture(capture.GetMaker() as PieceLogic, capture.GetTarget());
+                if (actions[i] is NormalCapture capture && capture.GetMakerAsPiece() == Piece)
+                    actions[i] = new IllusionCapture(capture.GetMakerAsPiece(), capture.GetTargetAsPiece());
         }
     }
 }

@@ -19,9 +19,9 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetMaker() as PieceLogic != Piece) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
-            var maker = action.GetMaker() as PieceLogic;
+            var maker = action.GetMakerAsPiece();
             if (maker.Effects.Any(e => e.EffectName == "effect_consume"))
                 if (action.Result == ResultFlag.Success)
                     ActionManager.EnqueueAction(new ApplyEffect(new LongReach(maker, 2, 5)));

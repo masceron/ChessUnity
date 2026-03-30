@@ -31,12 +31,12 @@ namespace Game.Effects.States
         {
             foreach (var action in actions)
             {
-                if (action is ISkills && action.GetTarget() == Piece)
+                if (action is ISkills && action.GetTargetAsPiece() == Piece)
                 {
                     actions.Remove(action);
                 }
 
-                if (action.GetMaker() as PieceLogic == Piece) {
+                if (action.GetMakerAsPiece() == Piece) {
                     if (action is IQuiets || action is ICaptures)
                     {
                         actions.Remove(action);

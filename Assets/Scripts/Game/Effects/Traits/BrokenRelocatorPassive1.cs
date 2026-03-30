@@ -27,7 +27,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures) return;
 
-            if (action.GetTarget() != Piece) return;
+            if (action.GetTargetAsPiece() != Piece) return;
 
             var (nRank, nFile) = BoardUtils.RankFileOf(action.GetFrom());
 
@@ -44,7 +44,7 @@ namespace Game.Effects.Traits
             if (BoardUtils.PieceOn(_possiblePositions[idx]) != null)
                 ActionManager.EnqueueAction(new KillPiece(_possiblePositions[idx]));
 
-            MatchManager.Ins.GameState.Move(action.GetTarget(), _possiblePositions[idx]);
+            MatchManager.Ins.GameState.Move(action.GetTargetAsPiece(), _possiblePositions[idx]);
         }
 
         public void OnApply()

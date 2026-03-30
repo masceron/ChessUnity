@@ -19,7 +19,7 @@ namespace Game.Effects.Augmentation
             var markedEnemies = FindPiecesWithEffectName(!caller.Color, "effect_marked");
             foreach (PieceLogic enemy in from enemy in markedEnemies
                      where enemy != null && IsAlive(enemy)
-                     let alreadyExists = actions.Any(a => a is ICaptures && a.GetTarget() == enemy)
+                     let alreadyExists = actions.Any(a => a is ICaptures && a.GetTargetAsPiece() == enemy)
                      where !alreadyExists
                      select enemy) actions.Add(new NormalCapture(caller, enemy));
         }

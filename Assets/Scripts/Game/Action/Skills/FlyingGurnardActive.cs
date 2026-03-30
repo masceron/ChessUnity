@@ -33,7 +33,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(GetFrom());
-            var color = ((PieceLogic)GetMaker()).Color;
+            var color = GetMakerAsPiece().Color;
             var push = color ? 1 : -1;
 
             var frontRank = rank + push;
@@ -96,7 +96,7 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

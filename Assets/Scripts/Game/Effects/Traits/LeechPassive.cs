@@ -20,9 +20,9 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Result != ResultFlag.Success || action.GetMaker() as PieceLogic != Piece) return;
+            if (action is not ICaptures || action.Result != ResultFlag.Success || action.GetMakerAsPiece() != Piece) return;
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, action.GetTarget()), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, action.GetTargetAsPiece()), Piece));
             ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
             action.Result = ResultFlag.SelfDestroy;
         }

@@ -28,7 +28,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(((PieceLogic)GetTarget()).Color == _color
+            ActionManager.EnqueueAction(GetTargetAsPiece().Color == _color
                 ? new ApplyEffect(GetRandomBuffEffect())
                 : new ApplyEffect(GetRandomDebuffEffect()));
         }
@@ -43,7 +43,7 @@ namespace Game.Action.Relics
             var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
             Debug.Log("Selected Effect Name: " + selectedEffectName);
-            return CreateEffectFromName(selectedEffectName, GetTarget() as PieceLogic);
+            return CreateEffectFromName(selectedEffectName, GetTargetAsPiece());
         }
 
         private Effect GetRandomDebuffEffect()
@@ -55,7 +55,7 @@ namespace Game.Action.Relics
 
             var random = new Random();
             var selectedEffectName = buffEffects[random.Next(buffEffects.Length)];
-            return CreateEffectFromName(selectedEffectName, GetTarget() as PieceLogic);
+            return CreateEffectFromName(selectedEffectName, GetTargetAsPiece());
         }
 
         private static Effect CreateEffectFromName(string effectName, PieceLogic piece)

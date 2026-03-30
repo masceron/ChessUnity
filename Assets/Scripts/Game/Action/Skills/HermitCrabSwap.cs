@@ -15,7 +15,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public HermitCrabSwap(int maker, int to) : base(maker, to)
+        public HermitCrabSwap(PieceLogic maker, PieceLogic to) : base(maker, to)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Game.Action.Skills
 
         protected override void Animate()
         {
-            PieceManager.Ins.Swap(GetMakerPos(), GetTargetPos());
+            PieceManager.Ins.Swap(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
@@ -42,10 +42,10 @@ namespace Game.Action.Skills
             // if (pieceB != null) pieceB.Pos = a;
             // board[b] = pieceA;
             // if (pieceA != null) pieceA.Pos = b;
-            // SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            // SetCooldown(GetMakerAsPiece() as PieceLogic, ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
 
-            MatchManager.Ins.GameState.Swap(GetMaker() as PieceLogic, GetTarget());
-            SetCooldown(GetTarget(), ((IPieceWithSkill)GetTarget()).TimeToCooldown);
+            MatchManager.Ins.GameState.Swap(GetMakerAsPiece(), GetTargetAsPiece());
+            SetCooldown(GetTargetAsPiece(), ((IPieceWithSkill)GetTargetAsPiece()).TimeToCooldown);
         }
     }
 }

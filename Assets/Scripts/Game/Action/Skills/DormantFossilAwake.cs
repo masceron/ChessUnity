@@ -30,9 +30,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new DestroyPiece(GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new DestroyPiece(GetMakerAsPiece()));
             ActionManager.EnqueueAction(new SpawnPiece(_target));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

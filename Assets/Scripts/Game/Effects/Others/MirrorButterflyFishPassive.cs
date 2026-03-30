@@ -22,8 +22,8 @@ namespace Game.Effects.Others
             if (action is not ISkills || action.GetTargetingType() != TargetingType.Unit)
                 return;
 
-            var maker = action.GetMaker() as PieceLogic;
-            var target = action.GetTarget();
+            var maker = action.GetMakerAsPiece();
+            var target = action.GetTargetAsPiece();
 
             if (target != Piece)
                 return;

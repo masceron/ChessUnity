@@ -40,7 +40,7 @@ namespace Assets.Scripts.Game.Effects.SpecialAbility
             var radius = GetStat(EffectStat.Radius);
             var duration = GetStat(EffectStat.Duration);
 
-            var movedPiece = action.GetMaker() as PieceLogic;
+            var movedPiece = action.GetMakerAsPiece();
             if (movedPiece != null && movedPiece != Piece && movedPiece.Color == Piece.Color && HasAmbushTrait(movedPiece))
             {
                 var prevPos = movedPiece.PreviousMoves.Count > 0

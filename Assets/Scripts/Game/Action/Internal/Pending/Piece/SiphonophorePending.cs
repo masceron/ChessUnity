@@ -19,7 +19,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             if (_isInitialized) return;
             
-            _unitCount = ((PieceLogic)GetMaker()).GetStat(SkillStat.Unit);
+            _unitCount = GetMakerAsPiece().GetStat(SkillStat.Unit);
             selectedTiles.Clear();
             _isInitialized = true;
         }

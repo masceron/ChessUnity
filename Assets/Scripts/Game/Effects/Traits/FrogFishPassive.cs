@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.GetMaker() as PieceLogic != Piece) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
             if (action.GetFrom() == action.GetMakerPos() || action.GetMakerPos() != action.GetTargetPos()) return;
             var targetFormation = GetFormation(action.GetTargetPos());

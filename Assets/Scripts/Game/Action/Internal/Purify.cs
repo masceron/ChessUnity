@@ -12,7 +12,7 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in ((PieceLogic)GetTarget()).Effects
+            foreach (var effect in GetTargetAsPiece().Effects
                          .Where(effect => effect.Category == EffectCategory.Debuff))
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
         }

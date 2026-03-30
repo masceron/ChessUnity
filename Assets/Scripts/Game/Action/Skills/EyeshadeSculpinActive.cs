@@ -30,11 +30,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, GetTarget() as PieceLogic),
-                GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, GetTargetAsPiece()),
+                GetMakerAsPiece()));
             ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, GetEntityByID(secondTarget) as PieceLogic),
-                GetMaker() as PieceLogic));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+                GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

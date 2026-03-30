@@ -13,11 +13,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             ActionManager.EnqueueAction(
-                new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration), 100, GetTarget() as PieceLogic),
+                new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration), 100, GetTargetAsPiece()),
                     maker)); // TODO: Check probability.
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)maker).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)maker).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

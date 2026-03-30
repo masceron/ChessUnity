@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public OliveRidleyTurtleActive(int maker, int to) : base(maker, to)
+        public OliveRidleyTurtleActive(PieceLogic maker, int to) : base(maker, to)
         {
         }
 
@@ -27,17 +27,17 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = GetMaker() as PieceLogic;
+            var caller = GetMakerAsPiece();
             if (caller == null) return;
 
             if (!VerifyIndex(GetTargetPos()) || !IsActive(GetTargetPos())) return;
-            if (GetTarget() != null) return;
+            if (GetTargetAsPiece() != null) return;
 
             ActionManager.EnqueueAction(new SpawnPiece(
                 new PieceConfig("piece_olive_ridley_eggs", caller.Color, GetTargetPos())
             ));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)caller).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)caller).TimeToCooldown);
         }
     }
 }

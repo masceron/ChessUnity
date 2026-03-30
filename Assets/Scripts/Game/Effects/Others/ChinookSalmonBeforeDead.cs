@@ -29,7 +29,7 @@ namespace Game.Effects.Others
         
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.GetTarget() != Piece) return;
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece) return;
             action.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
             ActionManager.EnqueueAction(new NormalMove(Piece.Pos, newPosition));
         }

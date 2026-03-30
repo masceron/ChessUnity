@@ -26,7 +26,7 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, GetTarget() as PieceLogic), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, GetTargetAsPiece()), GetMakerAsPiece()));
         }
     }
 }

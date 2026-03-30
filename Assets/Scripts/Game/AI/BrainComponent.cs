@@ -43,7 +43,7 @@ namespace Game.AI
 
             foreach (var a in actions)
             {
-                if (Maker != null && a.GetMaker() as PieceLogic != Maker) continue;
+                if (Maker != null && a.GetMakerAsPiece() != Maker) continue;
 
                 var score = Evaluate(a, allyActions, enemyActions);
 

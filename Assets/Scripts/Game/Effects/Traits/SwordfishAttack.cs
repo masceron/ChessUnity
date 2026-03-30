@@ -19,7 +19,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.GetMaker() as PieceLogic != Piece || action.Result != ResultFlag.Success) return;
+            if (action.GetMakerAsPiece() != Piece || action.Result != ResultFlag.Success) return;
 
             var behind = !Piece.Color ? PushWhite(action.GetTargetPos()) : PushBlack(action.GetTargetPos());
             if (!VerifyIndex(behind)) return;

@@ -19,12 +19,12 @@ namespace Game.Action.Relics
         public TimelessHourglassExecute(bool relicColor, int target) : base(null, target)
         {
             _relicColor = relicColor;
-            _targetColor = ((PieceLogic)GetTarget()).Color;
+            _targetColor = GetTargetAsPiece().Color;
         }
 
         protected override void ModifyGameState()
         {
-            var target = ((PieceLogic)GetTarget());
+            var target = GetTargetAsPiece();
             if (_targetColor == _relicColor)
                 target.SkillCooldown = Mathf.Max(0, target.SkillCooldown);
             else

@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.GetMaker() as PieceLogic == Piece)
+            if (lastMainAction.GetMakerAsPiece() == Piece)
             {
                 TriggerRows(lastMainAction.GetTargetPos(), Piece.Color);
                 return;
@@ -32,7 +32,7 @@ namespace Game.Effects.Traits
 
             var rowMovedTo = RankOf(lastMainAction.GetTargetPos());
 
-            if (!_rows.Contains(rowMovedTo) || ((PieceLogic)lastMainAction.GetMaker()).Color == Piece.Color) return;
+            if (!_rows.Contains(rowMovedTo) || lastMainAction.GetMakerAsPiece().Color == Piece.Color) return;
 
             ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, lastMainAction.GetMakerPos()));
             ActionManager.EnqueueAction(new RemoveEffect(this));

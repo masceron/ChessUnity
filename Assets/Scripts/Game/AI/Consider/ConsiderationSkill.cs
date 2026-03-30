@@ -14,9 +14,9 @@ namespace Game.AI.Consider
             if (action is not ISkills) return 0f;
 
             float score = weight;
-            var targetPiece = action.GetTarget();
+            var targetPiece = action.GetTargetAsPiece();
 
-            if (targetPiece != null) score += ((PieceLogic)targetPiece).GetValueForAI();
+            if (targetPiece != null) score += targetPiece.GetValueForAI();
 
             return score;
         }

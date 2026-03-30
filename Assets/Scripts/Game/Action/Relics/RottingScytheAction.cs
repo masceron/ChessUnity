@@ -18,7 +18,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetTarget() as PieceLogic));
+            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
         }
     }
 }

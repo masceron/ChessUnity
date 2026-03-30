@@ -25,8 +25,8 @@ namespace Game.Effects.Augmentation
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            // if (action.GetTarget() != Piece || 
-            //     action.GetMaker() as PieceLogic == Piece || 
+            // if (action.GetTargetAsPiece() != Piece || 
+            //     action.GetMakerAsPiece() as PieceLogic == Piece || 
             //     (action.Flag & ActionFlag.Unblockable) != 0) 
             //     return;
             // if (action is not ICaptures) return;
@@ -40,7 +40,7 @@ namespace Game.Effects.Augmentation
             // if (action.Result != ResultFlag.Success) return;
             //action.Result = ResultFlag.Dodged;
 
-            if (action is not ICaptures || action.GetTarget() != Piece || action.GetMaker() as PieceLogic == Piece) return;
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.GetMakerAsPiece() == Piece) return;
 
             if (isFirstCaptured)
             {
@@ -52,7 +52,7 @@ namespace Game.Effects.Augmentation
 
         private void MovePieceAndMakeIllusion(Action.Action action)
         {
-            var targetPiece = action.GetTarget();
+            var targetPiece = action.GetTargetAsPiece();
             if (targetPiece != null)
             {
                 var (rank, file) = RankFileOf(action.GetTargetPos());

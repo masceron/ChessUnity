@@ -13,7 +13,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public GulperEelActive(int maker, int target) : base(maker, target)
+        public GulperEelActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -26,7 +26,7 @@ namespace Game.Action.Skills
         {
             TileManager.Ins.DestroyTile(GetTargetPos());
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
@@ -53,7 +53,7 @@ namespace Game.Action.Skills
         //     var selectedTile = listTiles[random.Next(listTiles.Count)];
 
         //     TileManager.Ins.DestroyTile(selectedTile);
-        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+        //     SetCooldown(GetMakerAsPiece() as PieceLogic, ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         // }
     }
 }

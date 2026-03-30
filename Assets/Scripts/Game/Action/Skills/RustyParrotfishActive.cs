@@ -27,7 +27,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             FormationManager.Ins.RemoveFormation(GetTargetPos());
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

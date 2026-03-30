@@ -22,7 +22,7 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             var (rank, file) = RankFileOf(GetFrom());
-            var caller = GetTarget() as PieceLogic;
+            var caller = GetTargetAsPiece();
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {

@@ -18,7 +18,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ((PieceLogic)GetTarget()).SkillCooldown = 0;
+            GetTargetAsPiece().SkillCooldown = 0;
         }
     }
 }

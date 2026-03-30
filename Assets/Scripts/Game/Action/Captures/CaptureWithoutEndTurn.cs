@@ -31,8 +31,8 @@ namespace Game.Action.Captures
             PieceManager.Ins.Destroy(GetTargetPos());
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
             
-            MatchManager.Ins.GameState.Kill(GetTarget() as PieceLogic);
-            MatchManager.Ins.GameState.Move(GetMaker() as PieceLogic, GetTargetPos());
+            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
+            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

@@ -16,10 +16,10 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            var hostLogic = GetTarget();
-            PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic as PieceLogic);
+            var hostLogic = GetTargetAsPiece();
+            PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic);
 
-            var parasite = GetMaker() as PieceLogic;
+            var parasite = GetMakerAsPiece();
             if (parasite == null) return;
 
             BoardUtils.PieceBoard()[GetFrom()] = null;

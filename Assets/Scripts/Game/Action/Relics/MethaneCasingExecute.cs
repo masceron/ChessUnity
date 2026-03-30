@@ -21,7 +21,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            var pieceOn = GetTarget() as PieceLogic;
+            var pieceOn = GetTargetAsPiece();
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(3, pieceOn)));
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(BoardUtils.RankOf(GetTargetPos()),
                          BoardUtils.FileOf(GetTargetPos()), 1))

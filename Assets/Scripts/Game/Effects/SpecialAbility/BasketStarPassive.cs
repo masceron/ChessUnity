@@ -25,7 +25,7 @@ namespace Game.Effects.SpecialAbility
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) { return; }
-            PieceLogic movedPiece = action.GetMaker() as PieceLogic;
+            PieceLogic movedPiece = action.GetMakerAsPiece();
             if (movedPiece == null) { return; }
             
             int radius = GetStat(EffectStat.Radius);

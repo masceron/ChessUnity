@@ -26,7 +26,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            var effect = GetRandomBuffEffect(GetTarget() as PieceLogic);
+            var effect = GetRandomBuffEffect(GetTargetAsPiece());
             if (effect == null) return;
             ActionManager.EnqueueAction(new ApplyEffect(effect));
         }

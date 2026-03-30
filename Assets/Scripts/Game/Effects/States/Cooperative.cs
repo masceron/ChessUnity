@@ -53,7 +53,7 @@ namespace Game.Effects.States
 
             // Enqueue action tương ứng với IDontEndTurn
             if (chosen is ICaptures)
-                ActionManager.EnqueueAction(new CaptureWithoutEndTurn(Piece, chosen.GetTarget()));
+                ActionManager.EnqueueAction(new CaptureWithoutEndTurn(Piece, chosen.GetTargetAsPiece()));
             else if (chosen is IQuiets)
                 ActionManager.EnqueueAction(new MoveWithoutEndturn(Piece, chosen.GetTargetPos()));
             else if (chosen is ISkills)

@@ -21,7 +21,7 @@ namespace Game.Effects.Others
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not NormalMove move || action.GetMaker() as PieceLogic != Piece ||
+            if (action is not NormalMove move || action.GetMakerAsPiece() != Piece ||
                 action.Result != ResultFlag.Success) return;
             var (rank, file) = BoardUtils.RankFileOf(move.GetTargetPos());
 

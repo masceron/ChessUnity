@@ -27,14 +27,14 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var pieces = FindPiece<PieceLogic>(((PieceLogic)GetMaker()).Color);
+            var pieces = FindPiece<PieceLogic>(GetMakerAsPiece().Color);
             var picked = pieces
                 .OrderBy(_ => Random.value)
                 .Take(Mathf.Min(3, pieces.Count))
                 .ToList();
             foreach (var piece in picked)
-                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece), GetMaker() as PieceLogic));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece), GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTarget() as PieceLogic)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTargetAsPiece())));
         }
     }
 }

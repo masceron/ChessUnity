@@ -29,19 +29,19 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            var temperantia = (PieceLogic)GetMaker();
-            if (((PieceLogic)GetTarget()).Color == temperantia.Color)
+            var temperantia = GetMakerAsPiece();
+            if (GetTargetAsPiece().Color == temperantia.Color)
             {
                 _ally = GetTargetPos();
                 foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                             ((PieceLogic)pending.GetTarget()).Color == temperantia.Color))
+                             pending.GetTargetAsPiece().Color == temperantia.Color))
                     TileManager.Ins.UnMark(pending.GetTargetPos());
             }
             else
             {
                 _enemy = GetTargetPos();
                 foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                             ((PieceLogic)pending.GetTarget()).Color != temperantia.Color))
+                             pending.GetTargetAsPiece().Color != temperantia.Color))
                     TileManager.Ins.UnMark(pending.GetTargetPos());
             }
 

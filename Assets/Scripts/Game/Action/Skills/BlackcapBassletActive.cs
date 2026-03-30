@@ -12,8 +12,8 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(GetMaker() as PieceLogic, GetTargetPos()));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

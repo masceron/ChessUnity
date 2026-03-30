@@ -22,13 +22,13 @@ namespace Game.Effects.Traits
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.GetTarget() != Piece || action.Result != ResultFlag.Success) return;
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Success) return;
             if (Distance(action.GetFrom(), action.GetTargetPos()) < 3) return;
             if (!MatchManager.Roll(Strength)) return;
 
-            if (((PieceLogic)action.GetTarget()).Effects.Any(e => e.EffectName == "effect_bound"))
+            if (action.GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_bound"))
             {
-                var effect = (action.GetMaker() as PieceLogic)?.Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
+                var effect = action.GetMakerAsPiece()?.Effects.Find(e => e.EffectName == "effect_snipe_eel_passive");
                 if (effect != null)
                 {
                     action.Result = ResultFlag.Evade;
@@ -36,7 +36,7 @@ namespace Game.Effects.Traits
                 }
             }
 
-            var pieceTarget = action.GetMaker() as PieceLogic;
+            var pieceTarget = action.GetMakerAsPiece();
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy))
             {
                 if (!MatchManager.Roll(Strength - 15)) return;

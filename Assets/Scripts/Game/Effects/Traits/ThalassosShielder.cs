@@ -25,7 +25,7 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.GetMaker() as PieceLogic == Piece || lastMainAction.GetMaker() as PieceLogic.Color == Piece.Color) InRange();
+            if (lastMainAction.GetMakerAsPiece() == Piece || lastMainAction.GetMakerAsPiece().Color == Piece.Color) InRange();
         }
 
         public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;

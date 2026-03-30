@@ -67,7 +67,7 @@ namespace Game.Effects.States
             // Lọc: chỉ giữ target là đồng minh thực sự ở StateNone
             allyCaptures.RemoveAll(a =>
             {
-                var p = a.GetTarget();
+                var p = a.GetTargetAsPiece();
                 return p == null || p.Color != caller.Color || p.CurrentState != StateType.None;
             });
 
@@ -84,7 +84,7 @@ namespace Game.Effects.States
                 if (!BoardUtils.HasFormation(target)) continue;
 
                 var formation = BoardUtils.GetFormation(target);
-                var targetPiece = action.GetTarget();
+                var targetPiece = action.GetTargetAsPiece();
                 var isAllyStateNone = targetPiece != null
                                       && targetPiece.Color == caller.Color
                                       && targetPiece.CurrentState == StateType.None;
@@ -123,10 +123,10 @@ namespace Game.Effects.States
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.GetMaker() as PieceLogic != Piece) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
             var target = action.GetTargetPos();
-            var targetPiece = action.GetTarget();
+            var targetPiece = action.GetTargetAsPiece();
             var hasFormation = BoardUtils.HasFormation(target);
             var hasTargetPiece = targetPiece != null;
 

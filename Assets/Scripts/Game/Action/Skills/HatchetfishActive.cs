@@ -20,7 +20,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public HatchetfishActive(int maker, int target) : base(maker, target)
+        public HatchetfishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -29,8 +29,8 @@ namespace Game.Action.Skills
             var listPieces = new List<PieceLogic>();
             var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 4);
             foreach (var target in targets)
-                if (GetTarget().Effects.Any(e => e.EffectName == "effect_camouflage") &&
-                    !GetTarget().Effects.Any(e => e.EffectName is "effect_blinded" or "effect_extremophile"))
+                if (GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_camouflage") &&
+                    !GetTargetAsPiece().Effects.Any(e => e.EffectName is "effect_blinded" or "effect_extremophile"))
                     listPieces.Add(PieceOn(target));
 
 
@@ -38,7 +38,7 @@ namespace Game.Action.Skills
             {
                 var targets1 = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 2);
                 foreach (var target in targets1)
-                    if (GetTarget().Effects.Any(e =>
+                    if (GetTargetAsPiece().Effects.Any(e =>
                             e.EffectName == "effect_marked" || e.EffectName == "effect_extremophile"))
                         listPieces.Add(PieceOn(target));
             }
@@ -52,13 +52,13 @@ namespace Game.Action.Skills
 
 
             //ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, selectedPiece)));
-            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), GetMaker() as PieceLogic));
+            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), GetMakerAsPiece()));
 
             if (selectedPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
                 //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMaker() as PieceLogic));
+                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMakerAsPiece()));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -69,15 +69,14 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             //Apply effect Marked no duration
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, GetTarget()), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, GetTargetAsPiece()), GetMakerAsPiece()));
 
-            var targetPiece = GetTarget();
-            if (targetPiece == null) return;
+            if (GetTargetAsPiece() is not PieceLogic targetPiece) return;
 
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMaker() as PieceLogic));
+                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMakerAsPiece()));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

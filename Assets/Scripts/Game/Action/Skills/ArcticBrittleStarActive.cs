@@ -20,18 +20,18 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            if (GetMaker() is not PieceLogic maker || pieceAI == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -5;
             return 0;
         }
 
         protected override void ModifyGameState()
         {
-            Formation anchorIce = new AnchorIce(((PieceLogic)GetMaker()).Color);
+            Formation anchorIce = new AnchorIce(GetMakerAsPiece().Color);
             anchorIce.SetDuration(3);
             FormationManager.Ins.SetFormation(GetTargetPos(), anchorIce);
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

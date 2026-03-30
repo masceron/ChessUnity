@@ -27,8 +27,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(GetMaker() as PieceLogic, 1), GetMaker() as PieceLogic));
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(GetMakerAsPiece(), 1), GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

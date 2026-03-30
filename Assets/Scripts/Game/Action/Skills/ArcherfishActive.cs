@@ -22,7 +22,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            if (GetMaker() is not PieceLogic maker || pieceAI == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker || pieceAI == null) return 0;
 
             // Skill này chỉ tác động lên quân địch.
             // Nếu quân của AI (pieceAI) khác màu với người tạo skill, nó sẽ bị phạt.
@@ -36,18 +36,18 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTarget() as PieceLogic),
-                GetMaker() as PieceLogic));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTarget() as PieceLogic),
-                GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTargetAsPiece()),
+                GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTargetAsPiece()),
+                GetMakerAsPiece()));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
         // {
         //     var (rank, file) = RankFileOf(Maker);
-        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != GetMaker() as PieceLogic.Color)
+        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != ((PieceLogic)GetMakerAsPiece()).Color)
         //         .Where(p => p.Effects.Any(p => p.EffectName != "effect_extremophile"
         //                                   && p.EffectName != "effect_blind" &&
         //                                   p.EffectName != "effect_marked")).ToList();
@@ -56,10 +56,10 @@ namespace Game.Action.Skills
         //     listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
 
         //     var idx = UnityEngine.Random.Range(0, listPieces.Count);
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMaker() as PieceLogic));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMaker() as PieceLogic));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMakerAsPiece() as PieceLogic));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMakerAsPiece() as PieceLogic));
 
-        //     SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+        //     SetCooldown(GetMakerAsPiece() as PieceLogic, ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         // }
     }
 }

@@ -19,10 +19,10 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(GetTarget() as PieceLogic), GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(GetTargetAsPiece()), GetMakerAsPiece()));
 
-            SetCooldown(GetMaker() as PieceLogic, 0);
-            ((Velkaris)GetMaker()).Marked = GetTarget() as PieceLogic;
+            SetCooldown(GetMakerAsPiece(), 0);
+            ((Velkaris)GetMakerAsPiece()).Marked = GetTargetAsPiece();
         }
     }
 }

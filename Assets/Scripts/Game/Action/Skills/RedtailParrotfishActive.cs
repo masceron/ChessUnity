@@ -32,7 +32,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             MoveFormation(formationPos, moveTo);
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

@@ -18,15 +18,15 @@ namespace Game.Action.Skills
         {
         }
 
-        public HourglassJellyActive(int maker, int target) : base(maker, target)
+        public HourglassJellyActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            var piece = GetTarget();
+            var piece = GetTargetAsPiece();
             _destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -25;
             return 0;
@@ -43,12 +43,12 @@ namespace Game.Action.Skills
         {
             var destinationPiece = PieceOn(_destination);
             if (destinationPiece != null) MatchManager.Ins.GameState.Destroy(PieceOn(_destination));
-            MatchManager.Ins.GameState.Move(GetTarget(), _destination);
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            MatchManager.Ins.GameState.Move(GetTargetAsPiece(), _destination);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
         // public void CompleteActionForAI()
         // {
-        //     var makerPiece = GetMaker() as PieceLogic;
+        //     var makerPiece = GetMakerAsPiece() as PieceLogic;
         //     if (makerPiece == null) return;
 
         //     var (r, f) = RankFileOf(Maker);
@@ -59,7 +59,7 @@ namespace Game.Action.Skills
         //     var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
         //     Target = chosen.Pos;
-        //     var targetPiece = GetTarget();
+        //     var targetPiece = GetTargetAsPiece();
         //     if (targetPiece == null) return;
         //     destination = targetPiece.PreviousMoves[Math.Max(0, targetPiece.PreviousMoves.Count - 5)];
 

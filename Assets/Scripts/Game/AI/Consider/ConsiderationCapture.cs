@@ -13,12 +13,12 @@ namespace Game.AI.Consider
         {
             if (action is not ICaptures) return 0f;
 
-            var targetPiece = action.GetTarget();
+            var targetPiece = action.GetTargetAsPiece();
             if (targetPiece == null) return 0f;
 
             try
             {
-                var value = ((PieceLogic)targetPiece).GetValueForAI();
+                var value = targetPiece.GetValueForAI();
                 return (float)value + weight;
             }
             catch

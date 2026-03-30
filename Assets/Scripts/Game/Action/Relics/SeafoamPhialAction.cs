@@ -20,8 +20,8 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new Purify(null, GetTarget() as PieceLogic));
-            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetTarget() as PieceLogic)));
+            ActionManager.EnqueueAction(new Purify(null, GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetTargetAsPiece())));
         }
     }
 }

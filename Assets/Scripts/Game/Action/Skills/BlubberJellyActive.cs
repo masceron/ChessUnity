@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         }
         protected override void ModifyGameState()
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             ActionManager.EnqueueAction(new NormalMove(maker, GetTargetPos()));
             
             var (rank, file) = RankFileOf(GetFrom());

@@ -17,8 +17,8 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.GetMaker() as PieceLogic != Piece || action is not ICaptures || action.Result != ResultFlag.Success) return;
-            var captured = action.GetTarget();
+            if (action.GetMakerAsPiece() != Piece || action is not ICaptures || action.Result != ResultFlag.Success) return;
+            var captured = action.GetTargetAsPiece();
 
             if (captured.Effects.Any(e => e.EffectName is "effect_surpass" or "effect_vigorous")) return;
 

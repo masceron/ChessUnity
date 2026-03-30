@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public MaskedPufferActive(int maker, int target) : base(maker, target)
+        public MaskedPufferActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -29,9 +29,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, GetMaker() as PieceLogic)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, GetMaker() as PieceLogic)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, GetMaker() as PieceLogic)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, GetMakerAsPiece())));
         }
     }
 }

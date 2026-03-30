@@ -19,7 +19,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.GetMaker() as PieceLogic != Piece || action is not ICaptures || action.Result != ResultFlag.Success) return;
+            if (action.GetMakerAsPiece() != Piece || action is not ICaptures || action.Result != ResultFlag.Success) return;
 
             var (rank, file) = RankFileOf(action.GetTargetPos());
 
@@ -27,10 +27,10 @@ namespace Game.Effects.Augmentation
             var piece2 = PieceOn(IndexOf(rank, file + 1));
 
             if (piece1 != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece1), action.GetMaker() as PieceLogic));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece1), action.GetMakerAsPiece()));
 
             if (piece2 != null)
-                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece2), action.GetMaker() as PieceLogic));
+                ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, piece2), action.GetMakerAsPiece()));
         }
     }
 }

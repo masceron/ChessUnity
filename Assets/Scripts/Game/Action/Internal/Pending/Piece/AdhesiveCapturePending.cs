@@ -45,15 +45,15 @@ namespace Game.Action.Internal.Pending.Piece
         /// <summary>Người chơi chọn bám vào Piece.</summary>
         public void ChoosePiece()
         {
-            if ((PieceLogic)GetTarget() is not { CurrentState: StateType.None }) return;
-            ActionManager.EnqueueAction(new ApplyEffect(new Attached((PieceLogic)GetTarget(), _adhesivePiece)));
-            CommitResult(new MoveToAdhesive(GetMaker() as PieceLogic, GetTarget(), attachToFormation: false));
+            if (GetTargetAsPiece() is not { CurrentState: StateType.None }) return;
+            ActionManager.EnqueueAction(new ApplyEffect(new Attached(GetTargetAsPiece(), _adhesivePiece)));
+            CommitResult(new MoveToAdhesive(GetMakerAsPiece(), GetTargetAsPiece(), attachToFormation: false));
         }
 
         /// <summary>Người chơi chọn bám vào Formation.</summary>
         public void ChooseFormation()
         {
-            var targetFormation = (Formation)GetTarget();
+            var targetFormation = GetTargetAsFormation();
             targetFormation.SetState(StateType.Attached);
             var adhesive = _adhesivePiece;
             targetFormation.OnRemoveFormation += formation =>
@@ -61,7 +61,7 @@ namespace Game.Action.Internal.Pending.Piece
                 formation.ClearState();
                 Attached.SpawnAdhesiveAround(formation.Pos, null, adhesive);
             };
-            CommitResult(new MoveToAdhesive(GetMaker() as PieceLogic, targetFormation, attachToFormation: true));
+            CommitResult(new MoveToAdhesive(GetMakerAsPiece(), targetFormation, attachToFormation: true));
         }
     }
 }

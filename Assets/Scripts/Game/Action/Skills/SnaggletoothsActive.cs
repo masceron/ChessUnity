@@ -24,20 +24,20 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             if (maker == null) return 0;
             return pieceAI.Color == maker.Color ? 10 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            var existingBleeding = GetTarget().Effects.OfType<Bleeding>().ToList();
+            var existingBleeding = GetTargetAsPiece().Effects.OfType<Bleeding>().ToList();
 
             foreach (var bleeding in existingBleeding) ActionManager.EnqueueAction(new RemoveEffect(bleeding));
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetMaker() as PieceLogic, 5)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetMakerAsPiece(), 5)));
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)GetMaker()).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

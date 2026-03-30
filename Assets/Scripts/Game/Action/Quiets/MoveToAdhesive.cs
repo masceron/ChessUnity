@@ -29,7 +29,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            var adhesive = GetMaker() as PieceLogic;
+            var adhesive = GetMakerAsPiece();
 
             if (_attachToFormation)
             {
@@ -39,8 +39,8 @@ namespace Game.Action.Quiets
             else
             {
                 // Bám vào Piece — bay lên đỉnh Piece rồi parent vào (như Parasite)
-                var hostLogic = GetTarget();
-                PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic as PieceLogic);
+                var hostLogic = GetTargetAsPiece();
+                PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic);
             }
 
             // Xóa quân Adhesive khỏi PieceBoard

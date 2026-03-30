@@ -34,7 +34,7 @@ namespace Game.Action.Internal.Pending.Piece
         {
             positions.Add(GetTargetPos());
             TileManager.Ins.UnMark(GetTargetPos());
-            if (positions.Count == ((PieceLogic)GetMaker()).GetStat(SkillStat.Target))
+            if (positions.Count == GetMakerAsPiece().GetStat(SkillStat.Target))
             {
                 var ui = BoardViewer.Ins.GetOrInstantiateUI<RoyalGrammaUI>(IngameSubmenus.RoyalGrammaUI);
                 ui.Load(this);

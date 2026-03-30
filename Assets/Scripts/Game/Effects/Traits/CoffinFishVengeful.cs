@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
         //     if (!MatchManager.Roll(Strength)) return;
 
         //     if (action.Target == Piece.Pos)
-        //         ActionManager.EnqueueAction(new ApplyEffect(new Relentless(BoardUtils.action.GetMaker() as PieceLogic, 1)));
+        //         ActionManager.EnqueueAction(new ApplyEffect(new Relentless(BoardUtils.action.GetMakerAsPiece() as PieceLogic, 1)));
         // }
 
         /// <summary>

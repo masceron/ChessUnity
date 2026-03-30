@@ -31,7 +31,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = GetMaker() as PieceLogic;
+            var makerPiece = GetMakerAsPiece();
             if (makerPiece == null) return;
 
             // Spawn MiniSiphonophore ở các ô đã chọn
@@ -46,7 +46,7 @@ namespace Game.Action.Skills
                     spawnPos)));
             }
 
-            SetCooldown(GetMaker() as PieceLogic, ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
     }
 }

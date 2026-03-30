@@ -23,7 +23,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = GetMaker() as PieceLogic;
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -50;
             return 0;
@@ -31,7 +31,7 @@ namespace Game.Action.Skills
 
         private void ApplyEffect(int pos)
         {
-            var targetPiece = GetTarget();
+            var targetPiece = GetTargetAsPiece();
 
             foreach (var effect in targetPiece.Effects.Where(effect => effect.Category == EffectCategory.Debuff && effect.Duration > 0))
                 effect.Duration += increaseDuration;

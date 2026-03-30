@@ -24,7 +24,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(GetMaker() as PieceLogic, GetTargetPos()));
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

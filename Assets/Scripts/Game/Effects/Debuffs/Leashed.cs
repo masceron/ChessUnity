@@ -22,7 +22,7 @@ namespace Game.Effects.Debuffs
             if (actions == null || actions.Count == 0) return;
 
             actions.RemoveAll(action =>
-                action.GetMaker() as PieceLogic == Piece &&
+                action.GetMakerAsPiece() == Piece &&
                 Distance(action.GetTargetPos(), Position) > 3
             );
         }

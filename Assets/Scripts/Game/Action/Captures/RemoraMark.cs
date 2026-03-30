@@ -21,8 +21,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(GetMaker() as PieceLogic, GetTarget() as PieceLogic),
-                GetMaker() as PieceLogic));
+            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(GetMakerAsPiece(), GetTargetAsPiece()),
+                GetMakerAsPiece()));
         }
     }
 }

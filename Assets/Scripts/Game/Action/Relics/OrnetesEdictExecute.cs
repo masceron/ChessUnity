@@ -22,7 +22,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            if (GetTarget() is not PieceLogic piece) return;
+            if (GetTargetAsPiece() is not PieceLogic piece) return;
 
             var numberOfDebuffedPieces = piece.Effects.Count(e => e.Category == EffectCategory.Debuff);
             var rate = 7 * numberOfDebuffedPieces;

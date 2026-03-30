@@ -23,7 +23,7 @@ namespace Game.Effects.Debuffs
 
             actions.RemoveAll(action =>
                 action is ICaptures &&
-                action.GetTarget()?.Color != Piece.Color);
+                action.GetTargetAsPiece()?.Color != Piece.Color);
         }
     }
 }

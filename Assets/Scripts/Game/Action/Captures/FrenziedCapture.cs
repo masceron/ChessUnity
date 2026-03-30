@@ -28,8 +28,8 @@ namespace Game.Action.Captures
             Debug.Log("Complete FrenziedCapture");
             PieceManager.Ins.Destroy(GetTargetPos());
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
-            MatchManager.Ins.GameState.Kill(GetTarget() as PieceLogic);
-            MatchManager.Ins.GameState.Move(GetMaker() as PieceLogic, GetTargetPos());
+            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
+            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
         }
 
         public void CompleteActionForAI()

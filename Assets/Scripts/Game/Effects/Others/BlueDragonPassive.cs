@@ -16,7 +16,7 @@ namespace Game.Effects.Others
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.GetMaker() as PieceLogic == Piece && action.Result == ResultFlag.Success)
+            if (action is ICaptures && action.GetMakerAsPiece() == Piece && action.Result == ResultFlag.Success)
                 ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
         }
 

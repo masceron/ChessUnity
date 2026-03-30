@@ -212,7 +212,7 @@ namespace Game.Action
                     return false;
                 case ISkills:
                 {
-                    var maker = action.GetMaker() as PieceLogic;
+                    var maker = action.GetMakerAsPiece();
                     var hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
 
                     if (hasQuickReflex || action is IDontEndTurn)

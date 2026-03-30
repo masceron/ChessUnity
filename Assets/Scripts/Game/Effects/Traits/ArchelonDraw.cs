@@ -21,8 +21,8 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures || action.GetTargetingType() != TargetingType.Unit ||
                 Distance(action.GetTargetPos(), Piece.Pos) > 2 ||
-                action.GetTarget().Color != Piece.Color ||
-                action.GetTarget() == Piece)
+                action.GetTargetAsPiece().Color != Piece.Color ||
+                action.GetTargetAsPiece() == Piece)
                 return;
 
             action.ChangeTarget(Piece);
