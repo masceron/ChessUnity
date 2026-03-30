@@ -35,10 +35,10 @@ namespace Game.Effects.SpecialAbility
             //    Debug.Log("Longreach Strength: " + longReach.Strength);
             //}
 
-            foreach (var pos in SkillRangeHelper.GetActiveCellInRadius(action.GetMakerPos(), GetStat(EffectStat.Radius)))
+            foreach (var pos in SkillRangeHelper.GetActiveCellInRadius(action.GetMakerAsPiece().Pos, GetStat(EffectStat.Radius)))
             {
                 var p = PieceOn(pos);
-                if (pos == action.GetMakerPos()) continue;
+                if (p == action.GetMakerAsPiece()) continue;
                 if (p is not { Type: "piece_pennant_coralfish" }) continue;
 
                 // nếu đi cạnh quân đấy nhiều lần thì có stack lên không hay chỉ được 1 lần ?

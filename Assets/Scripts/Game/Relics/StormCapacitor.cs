@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Effects.Others;
@@ -43,9 +42,10 @@ namespace Game.Relics
                     hoveringTile = thisTile;
                     TileManager.Ins.MarkTileInRange(hoveringTile, Size, true);
                     
-                    var pending = new StormCapacitorPending(hoveringTile, this, Size);
+                    //Làm lại
+                    // var pending = new StormCapacitorPending(hoveringTile, this, Size);
 
-                    if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
+                    // if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
                 };
             }
 

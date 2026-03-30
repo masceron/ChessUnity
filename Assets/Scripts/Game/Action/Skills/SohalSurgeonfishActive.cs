@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SohalSurgeonfishActive(int maker, int target) : base(maker, target)
+        public SohalSurgeonfishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -27,7 +27,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), GetTargetPos(), 5), GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), 5), GetMakerAsPiece()));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

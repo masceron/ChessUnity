@@ -25,7 +25,7 @@ namespace Game.Tile
 
         protected override void OnPieceEnter(PieceLogic piece)
         {
-            if (piece.Color != Color) BoardUtils.RemoveFormation(piece.Pos);
+            if (piece.Color != Color) BoardUtils.RemoveFormation(BoardUtils.GetFormation(piece.Pos));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

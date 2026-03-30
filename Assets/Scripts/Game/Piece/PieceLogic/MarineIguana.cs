@@ -25,8 +25,9 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, SkillRadius);
-                    foreach (var target in targets) list.Add(new MarineIguanaPending(Pos, target));
+                    //Làm lại
+                    // var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, SkillRadius);
+                    // foreach (var target in targets) list.Add(new MarineIguanaPending(Pos, target));
                 }
                 else
                 {
@@ -71,9 +72,10 @@ namespace Game.Piece.PieceLogic
                     }
 
                     if (secondTarget == -1) return;
-                    var action = new MarineIguanaPending(Pos, firstTarget);
-                    MarineIguanaPending.SecondTarget = PieceOn(secondTarget);
-                    list.Add(action);
+                    //Làm lại
+                    // var action = new MarineIguanaPending(Pos, firstTarget);
+                    // MarineIguanaPending.SecondTarget = PieceOn(secondTarget);
+                    // list.Add(action);
                 }
             };
         }

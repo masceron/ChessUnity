@@ -53,7 +53,7 @@ namespace Game.Action.Skills
         //     var selectedTile = listTiles[random.Next(listTiles.Count)];
 
         //     TileManager.Ins.DestroyTile(selectedTile);
-        //     SetCooldown(GetMakerAsPiece() as PieceLogic, ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+        //     SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         // }
     }
 }

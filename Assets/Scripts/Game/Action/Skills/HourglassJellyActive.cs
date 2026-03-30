@@ -48,7 +48,7 @@ namespace Game.Action.Skills
         }
         // public void CompleteActionForAI()
         // {
-        //     var makerPiece = GetMakerAsPiece() as PieceLogic;
+        //     var makerPiece = GetMakerAsPiece();
         //     if (makerPiece == null) return;
 
         //     var (r, f) = RankFileOf(Maker);

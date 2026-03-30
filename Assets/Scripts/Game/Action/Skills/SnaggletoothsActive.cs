@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SnaggletoothsActive(int maker, int to) : base(maker, to)
+        public SnaggletoothsActive(PieceLogic maker, PieceLogic to) : base(maker, to)
         {
         }
 

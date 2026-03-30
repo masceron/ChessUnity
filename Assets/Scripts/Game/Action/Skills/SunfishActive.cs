@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SunfishActive(int maker, int target) : base(maker, target)
+        public SunfishActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -30,16 +30,17 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()), 4))
-            {
-                var index = IndexOf(rankOff, fileOff);
-                if (!VerifyIndex(index) || !IsActive(index)) continue;
-                var targetPiece = PieceOn(index);
-                if (targetPiece != null && ColorOfSquare(index) && targetPiece.Color != GetMakerAsPiece().Color)
-                    ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMakerAsPiece()));
-            }
-
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            //Làm lại
+            // foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()), 4))
+            // {
+            //     var index = IndexOf(rankOff, fileOff);
+            //     if (!VerifyIndex(index) || !IsActive(index)) continue;
+            //     var targetPiece = PieceOn(index);
+            //     if (targetPiece != null && ColorOfSquare(index) && targetPiece.Color != GetMakerAsPiece().Color)
+            //         ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMakerAsPiece()));
+            // }
+            //
+            // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

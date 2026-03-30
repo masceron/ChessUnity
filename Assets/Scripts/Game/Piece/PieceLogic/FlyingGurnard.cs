@@ -10,10 +10,10 @@ namespace Game.Piece.PieceLogic
     {
         public FlyingGurnard(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
         {
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
-                if (isPlayer) list.Add(new FlyingGurnardActive(Pos));
+                if (isPlayer) list.Add(new FlyingGurnardActive(this));
                 //query for AI in here
             };
         }

@@ -69,7 +69,7 @@ namespace UX.UI.Ingame.ThalassosResurrector
 
         public void Choose(string type)
         {
-            PendingAction.CommitResult(new ThalassosResurrect(_caller, _to, type));
+            PendingAction.CommitResult(new ThalassosResurrect(BoardUtils.PieceOn(_caller), _to, type));
             Disable();
         }
     }

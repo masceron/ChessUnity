@@ -19,7 +19,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SiphonophoreActive(int maker, List<int> spawnPositions) : base(maker)
+        public SiphonophoreActive(PieceLogic maker, List<int> spawnPositions) : base(maker)
         {
             _spawnPositions = spawnPositions ?? new List<int>();
         }

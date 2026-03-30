@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
 
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn.Color == Color) continue;
-                        list.Add(new SnipeEelActive(Pos, index));
+                        list.Add(new SnipeEelActive(this, pOn));
                     }
                 }
                 else
@@ -45,7 +45,7 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 5))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            list.Add(new SnipeEelActive(Pos, index));
+                            list.Add(new SnipeEelActive(this, PieceOn(index)));
                         }
                     }
 
@@ -70,7 +70,7 @@ namespace Game.Piece.PieceLogic
 
                     var random = new Random();
                     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-                    list.Add(new SnipeEelActive(Pos, selectedPiece.Pos));
+                    list.Add(new SnipeEelActive(this, selectedPiece));
                 }
             };
         }

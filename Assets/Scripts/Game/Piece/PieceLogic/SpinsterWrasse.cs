@@ -68,7 +68,8 @@ namespace Game.Piece.PieceLogic
                     var idxA = Random.Range(0, listA.Count - 1);
                     var idxB = Random.Range(0, listB.Count - 1);
 
-                    list.Add(new SpinsterWrasseBuff(this, listA[idxA].Pos, listB[idxB].Pos));
+                    //Làm lại
+                    // list.Add(new SpinsterWrasseBuff(this, listA[idxA].Pos, listB[idxB].Pos));
                 }
             };
         }

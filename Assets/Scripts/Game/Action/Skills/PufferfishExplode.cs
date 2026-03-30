@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public PufferfishExplode(int maker) : base(maker)
+        public PufferfishExplode(PieceLogic maker) : base(maker)
         {
         }
 
@@ -31,7 +31,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetFrom()));
+            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece()));
             var (rank, file) = RankFileOf(GetFrom());
             var caller = GetMakerAsPiece();
 

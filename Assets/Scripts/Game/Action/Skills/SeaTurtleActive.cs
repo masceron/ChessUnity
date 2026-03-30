@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SeaTurtleActive(int maker) : base(maker)
+        public SeaTurtleActive(PieceLogic maker) : base(maker)
         {
         }
 

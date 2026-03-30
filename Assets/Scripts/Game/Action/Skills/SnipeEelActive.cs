@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SnipeEelActive(int maker, int target) : base(maker, target)
+        public SnipeEelActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
 

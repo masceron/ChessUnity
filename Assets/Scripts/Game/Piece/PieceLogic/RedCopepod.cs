@@ -28,7 +28,7 @@ namespace Game.Piece.PieceLogic
                         if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
                         var targetPiece = PieceOn(IndexOf(x, y));
                         if (targetPiece != null) continue;
-                        list.Add(new RedCopepodActive(Pos, IndexOf(x, y)));
+                        list.Add(new RedCopepodActive(this, IndexOf(x, y)));
                     }
                 }
             };

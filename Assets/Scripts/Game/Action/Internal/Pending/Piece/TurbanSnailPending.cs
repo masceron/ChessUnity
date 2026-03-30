@@ -17,7 +17,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            CommitResult(new TurbanSnailActive(GetFrom()));
+            CommitResult(new TurbanSnailActive(GetMakerAsPiece()));
         }
 
         public int AIPenaltyValue(PieceLogic p)

@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SurgeWrasseActive(int maker) : base(maker)
+        public SurgeWrasseActive(PieceLogic maker) : base(maker)
         {
         }
 

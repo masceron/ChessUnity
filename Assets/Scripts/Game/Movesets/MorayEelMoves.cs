@@ -44,7 +44,7 @@ namespace Game.Movesets
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
 
-                    list.Add(new NormalMove(pos, idx));
+                    list.Add(new NormalMove(piece, idx));
                 }
 
             //Down
@@ -58,7 +58,7 @@ namespace Game.Movesets
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, rankTo, tFileTo).Item1 != -1) continue;
 
-                    list.Add(new NormalMove(pos, idx));
+                    list.Add(new NormalMove(piece, idx));
                 }
 
             //Left
@@ -72,7 +72,7 @@ namespace Game.Movesets
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
 
-                    list.Add(new NormalMove(pos, idx));
+                    list.Add(new NormalMove(piece, idx));
                 }
 
             //Right
@@ -86,7 +86,7 @@ namespace Game.Movesets
                     if (!IsActive(idx) || PieceOn(idx) != null) continue;
                     if (Pathfinder.LineBlocker(rank, file, tRankTo, fileTo).Item1 != -1) continue;
 
-                    list.Add(new NormalMove(pos, idx));
+                    list.Add(new NormalMove(piece, idx));
                 }
 
             return;
@@ -95,7 +95,7 @@ namespace Game.Movesets
             {
                 if (!IsActive(index) || PieceOn(index) != null) return false;
 
-                list.Add(new NormalMove(pos, index));
+                list.Add(new NormalMove(piece, index));
                 return true;
             }
         }

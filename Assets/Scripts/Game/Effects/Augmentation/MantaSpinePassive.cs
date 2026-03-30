@@ -26,7 +26,7 @@ namespace Game.Effects.Augmentation
         public void OnCallBeforePieceAction(Action.Action action)
         {
             // if (action.GetTargetAsPiece() != Piece || 
-            //     action.GetMakerAsPiece() as PieceLogic == Piece || 
+            //     action.GetMakerAsPiece() == Piece || 
             //     (action.Flag & ActionFlag.Unblockable) != 0) 
             //     return;
             // if (action is not ICaptures) return;
@@ -94,9 +94,10 @@ namespace Game.Effects.Augmentation
 
                     foreach (var selectedIndex in selectedIndices)
                     {
-                        var config = new PieceConfig(targetPiece.Type, Piece.Color, selectedIndex);
-                        ActionManager.EnqueueAction(new SpawnPieceWithEffect(config,
-                            new Illusion(PieceOn(selectedIndex))));
+                        //Làm lại
+                        // var config = new PieceConfig(targetPiece.Type, Piece.Color, selectedIndex);
+                        // ActionManager.EnqueueAction(new SpawnPieceWithEffect(config,
+                        //     new Illusion(PieceOn(selectedIndex))));
                     }
                 }
             }

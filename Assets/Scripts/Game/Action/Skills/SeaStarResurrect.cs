@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SeaStarResurrect(int maker, int to) : base((PieceLogic)maker, (PieceLogic)to)
+        public SeaStarResurrect(PieceLogic maker, int to) : base(maker, to)
         {
         }
 

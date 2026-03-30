@@ -36,7 +36,7 @@ namespace Game.Piece.PieceLogic
                             if (rankTo == rank && fileTo == file) continue;
                             var posTo = IndexOf(rankTo, fileTo);
 
-                            if (board[posTo] == null && active[posTo]) list.Add(new StingrayDash(Pos, posTo));
+                            if (board[posTo] == null && active[posTo]) list.Add(new StingrayDash(this, posTo));
                         }
                     }
                 }
@@ -56,7 +56,7 @@ namespace Game.Piece.PieceLogic
                                 if (!VerifyBounds(fileTo)) continue;
                                 if (rankTo == rank && fileTo == file) continue;
                                 var posTo = IndexOf(rankTo, fileTo);
-                                if (active[posTo]) list.Add(new StingrayDash(Pos, posTo));
+                                if (active[posTo]) list.Add(new StingrayDash(this, posTo));
                             }
                         }
                     }
@@ -107,7 +107,7 @@ namespace Game.Piece.PieceLogic
                     var maxVal = candidates.Max(c => c.bestValue);
                     var top = candidates.Where(c => c.bestValue == maxVal).ToList();
                     var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
-                    list.Add(new StingrayDash(Pos, chosen.finalIdx));
+                    list.Add(new StingrayDash(this, chosen.finalIdx));
                 }
             };
         }

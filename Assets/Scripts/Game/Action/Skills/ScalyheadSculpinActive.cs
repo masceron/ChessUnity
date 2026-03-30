@@ -10,14 +10,14 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ScalyheadSculpinActive : Action, ISkills
     {
-        private const int carapaceDuration = 4;
+        private const int CarapaceDuration = 4;
 
         [MemoryPackConstructor]
         private ScalyheadSculpinActive()
         {
         }
 
-        public ScalyheadSculpinActive(int maker) : base(maker)
+        public ScalyheadSculpinActive(PieceLogic maker) : base(maker)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(carapaceDuration, GetTargetAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(CarapaceDuration, GetTargetAsPiece())));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

@@ -31,8 +31,9 @@ namespace Game.Relics
                     if (!BoardUtils.HasFormation(i)) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeabedLevelerPending(charge, piece);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    // var pending = new SeabedLevelerPending(charge, piece);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;

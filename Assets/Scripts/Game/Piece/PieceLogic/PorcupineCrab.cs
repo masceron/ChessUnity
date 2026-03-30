@@ -34,7 +34,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn != null && pOn.Color != Color) continue;          
-                        list.Add(new PorcupineCrabActive(Pos, index));
+                        list.Add(new PorcupineCrabActive(this, index));
                     }
                 }
                 else

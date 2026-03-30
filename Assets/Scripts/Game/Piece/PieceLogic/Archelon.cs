@@ -42,7 +42,7 @@ namespace Game.Piece.PieceLogic
                     //     }
                     // }
                     var targets = SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
-                    foreach (var target in targets) list.Add(new ArchelonShield(Pos, target));
+                    foreach (var target in targets) list.Add(new ArchelonShield(this, PieceOn(target)));
                 }
                 else
                 {
@@ -53,7 +53,7 @@ namespace Game.Piece.PieceLogic
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);
                             if (pOn == this) continue;
-                            list.Add(new ArchelonShield(Pos, index));
+                            list.Add(new ArchelonShield(this, pOn));
                         }
 
                     var rank = RankOf(Pos);
@@ -89,7 +89,7 @@ namespace Game.Piece.PieceLogic
                     // Pick one (random if multiple)
                     var chosen = lowest.Count == 1 ? lowest[0] : lowest[Random.Range(0, lowest.Count)];
 
-                    list.Add(new ArchelonShield(Pos, chosen.Pos));
+                    list.Add(new ArchelonShield(this, chosen));
                 }
             };
         }

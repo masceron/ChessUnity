@@ -23,7 +23,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (isPlayer)
                     if (SkillCooldown == 0 && Marked != null)
-                        list.Add(new VelkarisKill(Pos, Marked.Pos));
+                        list.Add(new VelkarisKill(this, Marked));
                 //query for AI in here
             };
         }

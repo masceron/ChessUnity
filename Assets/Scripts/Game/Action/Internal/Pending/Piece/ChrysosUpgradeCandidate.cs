@@ -18,7 +18,6 @@ namespace Game.Action.Internal.Pending.Piece
     public class ChrysosUpgradeCandidate : PendingAction, ISkills, IAIAction
     {
         private readonly List<PieceLogic> _allyPieces;
-        private readonly Chrysos _chrysos;
         public readonly byte Cost;
 
         public readonly string CurrentPiece;
@@ -26,10 +25,9 @@ namespace Game.Action.Internal.Pending.Piece
         public readonly PieceRank UpgradeFrom;
         private PieceConfig _config;
 
-        public ChrysosUpgradeCandidate(PieceLogic maker, PieceLogic to, int cost, Chrysos ch) : base(maker, to)
+        public ChrysosUpgradeCandidate(PieceLogic maker, PieceLogic to, int cost) : base(maker, to)
         {
             Cost = (byte)cost;
-            _chrysos = ch;
 
             var cr = GetTargetAsPiece();
             UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
@@ -41,6 +39,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public void CompleteActionForAI()
         {
+            var chrysos = GetMakerAsPiece() as Chrysos;
             //Implement for AI automatically
             var hasElite = false;
             var hasCommon = false;
@@ -77,25 +76,25 @@ namespace Game.Action.Internal.Pending.Piece
 
             if (_allyPieces.Count == 0) return;
 
-            if (hasElite && _chrysos.Coin >= 5)
+            if (hasElite && chrysos.Coin >= 5)
             {
                 HandleUpgrade(5);
                 return;
             }
 
-            if (hasCommon && _chrysos.Coin >= 3)
+            if (hasCommon && chrysos.Coin >= 3)
             {
                 HandleUpgrade(3);
                 return;
             }
 
-            if (hasSwarm && _chrysos.Coin >= 1)
+            if (hasSwarm && chrysos.Coin >= 1)
             {
                 HandleUpgrade(1);
                 return;
             }
 
-            if (hasChampion && _chrysos.Coin >= 6) HandleUpgrade(6);
+            if (hasChampion && chrysos.Coin >= 6) HandleUpgrade(6);
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -106,7 +105,7 @@ namespace Game.Action.Internal.Pending.Piece
         protected override void CompleteAction()
         {
             var shop = BoardViewer.Ins.GetOrInstantiateUI<ChrysosShop>(IngameSubmenus.ChrysosShop);
-            shop.Load(_chrysos, this);
+            shop.Load(GetMakerAsPiece() as Chrysos, this);
         }
 
         private void ActivateSkill(PieceLogic p, string type, byte cost)

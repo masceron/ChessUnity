@@ -30,7 +30,7 @@ namespace Game.Piece.PieceLogic
                     var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, GetStat(SkillStat.Range));
                     foreach (var targetPiece in listPieces)
                     {
-                        list.Add(new WhiteMonkfishActive(Pos, targetPiece, GetStat(SkillStat.Duration)));
+                        list.Add(new WhiteMonkfishActive(this, PieceOn(targetPiece), GetStat(SkillStat.Duration)));
                     }
                 }
             };

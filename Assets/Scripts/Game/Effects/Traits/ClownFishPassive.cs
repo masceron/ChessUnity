@@ -40,7 +40,7 @@ namespace Game.Effects.Traits
                 var middlePiece = PieceOn(middlePiecePos);
 
                 if (middlePiece != null && middlePiece.Color != Piece.Color)
-                    ActionManager.EnqueueAction(new KillPiece(middlePiecePos));
+                    ActionManager.EnqueueAction(new KillPiece(middlePiece));
             }
         }
 

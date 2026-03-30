@@ -34,7 +34,7 @@ namespace Game.Effects.Traits
 
             if (randomPiece == null) return;
             
-            ActionManager.EnqueueAction(new Nullify(Piece.Pos, randomPiece.Pos));
+            ActionManager.EnqueueAction(new Nullify(Piece, randomPiece));
         }
 
 

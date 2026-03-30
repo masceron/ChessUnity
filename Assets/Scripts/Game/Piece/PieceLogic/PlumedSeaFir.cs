@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                         if (pieceOn == null) continue;
                         if (pieceOn.Color == Color || GetStat(SkillStat.Counter) > 0)
                         {
-                            list.Add(new PlumedSeaFirActive(Pos, target));
+                            list.Add(new PlumedSeaFirActive(this, pieceOn));
                         }
                     }
                 }

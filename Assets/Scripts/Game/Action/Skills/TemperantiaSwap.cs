@@ -21,7 +21,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public TemperantiaSwap(int maker, int allyIndex, int enemyIndex) : base(maker)
+        public TemperantiaSwap(PieceLogic maker, int allyIndex, int enemyIndex) : base(maker)
         {
             this.allyIndex = allyIndex;
             this.enemyIndex = enemyIndex;

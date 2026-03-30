@@ -22,7 +22,7 @@ namespace Game.Effects.Traits
             if (action.GetMakerAsPiece() == Piece) return;
             if (action.GetTargetAsPiece() != Piece) return;
 
-            if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
+            if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece, Piece));
         }
 
         public override int GetValueForAI()

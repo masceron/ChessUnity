@@ -1,4 +1,5 @@
-﻿using Game.Effects;
+﻿using Game.Common;
+using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 
@@ -6,7 +7,7 @@ namespace Game.Action.Internal
 {
     public class Purify : Action, IInternal
     {
-        public Purify(PieceLogic maker, PieceLogic target) : base(maker, target)
+        public Purify(Entity maker, PieceLogic target) : base(maker, target)
         {
         }
 

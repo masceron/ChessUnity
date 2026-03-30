@@ -26,7 +26,7 @@ namespace Game.Piece.PieceLogic
                         var piece = PieceOn(target);
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_bleeding"))
-                            list.Add(new SnaggletoothsActive(Pos, target));
+                            list.Add(new SnaggletoothsActive(this, piece));
                     }
                     // var (rank, file) = RankFileOf(Pos);
                     // foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
@@ -48,7 +48,7 @@ namespace Game.Piece.PieceLogic
                     {
                         var (rank, file) = RankFileOf(Pos);
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 2))
-                            list.Add(new SnaggletoothsActive(Pos, IndexOf(rankOff, fileOff)));
+                            list.Add(new SnaggletoothsActive(this, PieceOn(IndexOf(rankOff, fileOff))));
                     }
 
                     var maxValue = listPieces.Max(p => p.GetValueForAI());
@@ -57,7 +57,7 @@ namespace Game.Piece.PieceLogic
 
                     var random = new Random();
                     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-                    list.Add(new SnaggletoothsActive(Pos, selectedPiece.Pos));
+                    list.Add(new SnaggletoothsActive(this, selectedPiece));
                 }
             };
         }

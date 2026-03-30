@@ -31,8 +31,9 @@ namespace Game.Action.Internal.Pending.Piece
         /// <param name="targetFormation">Formation trên ô (không được null).</param>
         public AdhesiveCapturePending(
             PieceLogic maker,
-            Entity target)
-            : base(maker, target)
+            PieceLogic targetPiece,
+            Formation targeFormation)
+            : base(maker)
         {
         }
 

@@ -34,7 +34,7 @@ namespace Game.Effects.Traits
 
             if (!_rows.Contains(rowMovedTo) || lastMainAction.GetMakerAsPiece().Color == Piece.Color) return;
 
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, lastMainAction.GetMakerPos()));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece, lastMainAction.GetMakerAsPiece()));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 

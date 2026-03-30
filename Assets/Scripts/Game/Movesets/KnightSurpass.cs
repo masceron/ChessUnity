@@ -30,7 +30,7 @@ namespace Game.Movesets
                 if (piece != null ||
                     Distance(pos, index) != maxRange)
                     return;
-                list.Add(new NormalMove(pos, index));
+                list.Add(new NormalMove(caller, index));
             }
         }
 
@@ -53,14 +53,14 @@ namespace Game.Movesets
 
                 if (piece == null && !isPlayer)
                 {
-                    list.Add(new NormalCapture(pos, index));
+                    list.Add(new NormalCapture(caller, piece));
                 }
                 else if (piece != null)
                 {
                     if (piece.Color == color ||
                         Distance(pos, index) != maxRange)
                         return;
-                    list.Add(new NormalCapture(pos, index));
+                    list.Add(new NormalCapture(caller, piece));
                 }
             }
         }

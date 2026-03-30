@@ -22,7 +22,7 @@ namespace Game.Action.Internal.Pending.Piece
         }
         public void CommitResult(string chosenType)
         {
-            CommitResult(new RoyalGrammaActive(GetFrom(), new List<int>(positions), chosenType));
+            CommitResult(new RoyalGrammaActive(GetMakerAsPiece(), new List<int>(positions), chosenType));
             positions.Clear();
         }
         public void Dispose()

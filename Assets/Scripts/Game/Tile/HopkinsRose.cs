@@ -30,7 +30,7 @@ namespace Game.Tile
                 var frenziedEffect = new Frenzied(piece, 4);
                 var applyEffectAction = new ApplyEffect(frenziedEffect);
                 ActionManager.EnqueueAction(applyEffectAction);
-                ActionManager.EnqueueAction(new ApplyEffectAndRemoveFormation(applyEffectAction, Pos));
+                ActionManager.EnqueueAction(new ApplyEffectAndRemoveFormation(applyEffectAction, this));
             }
         }
 

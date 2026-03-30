@@ -9,16 +9,13 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SloaneViperfishActive : Action, ISkills
     {
-        [MemoryPackInclude] private bool _bleeding;
-
         [MemoryPackConstructor]
         private SloaneViperfishActive()
         {
         }
 
-        public SloaneViperfishActive(int maker, bool bleeding) : base(maker)
+        public SloaneViperfishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            _bleeding = bleeding;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -31,7 +28,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(_bleeding
+            ActionManager.EnqueueAction(GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_bleeding")
                 ? new ApplyEffect(new Poison(1, GetTargetAsPiece()), GetMakerAsPiece())
                 : new ApplyEffect(new Bleeding(5, GetTargetAsPiece()), GetMakerAsPiece()));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);

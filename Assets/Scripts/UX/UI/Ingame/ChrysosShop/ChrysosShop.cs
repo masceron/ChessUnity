@@ -8,6 +8,7 @@ using Game.Piece.PieceLogic.Commons;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using ZLinq;
 
 namespace UX.UI.Ingame.ChrysosShop
@@ -73,7 +74,7 @@ namespace UX.UI.Ingame.ChrysosShop
 
         public void Buy(string type)
         {
-            PendingAction.CommitResult(new ChrysosUpgrade(_chrysos.Pos,
+            PendingAction.CommitResult(new ChrysosUpgrade(_chrysos, PendingAction.GetTargetAsPiece() ,
                 new PieceConfig(type, _chrysos.Color, PendingAction.GetTargetPos()), _cost));
             Disable();
         }

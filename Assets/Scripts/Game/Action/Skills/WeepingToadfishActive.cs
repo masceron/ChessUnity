@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public WeepingToadfishActive(int maker, int target, int duration) : base(maker, target)
+        public WeepingToadfishActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
             Duration = duration;
         }

@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         {
         }
         
-        public PorcupineCrabActive(int maker, int target) : base(maker, target)
+        public PorcupineCrabActive(PieceLogic maker, int target) : base(maker, target)
         {
         }   
         
@@ -26,7 +26,7 @@ namespace Game.Action.Skills
         {
             var makerPiece = GetMakerAsPiece();
 
-            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
+            ActionManager.EnqueueAction(new NormalMove(makerPiece, GetTargetPos()));
 
             var (rank1, file1) = RankFileOf(GetFrom());
             var (rank2, file2) = RankFileOf(GetTargetPos());

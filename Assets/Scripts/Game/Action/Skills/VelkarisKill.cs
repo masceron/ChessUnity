@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public VelkarisKill(int f, int t) : base(f, t)
+        public VelkarisKill(PieceLogic f, PieceLogic t) : base(f, t)
         {
         }
 
@@ -32,7 +32,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
+            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

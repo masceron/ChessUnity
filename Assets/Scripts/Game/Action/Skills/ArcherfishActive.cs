@@ -56,10 +56,10 @@ namespace Game.Action.Skills
         //     listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
 
         //     var idx = UnityEngine.Random.Range(0, listPieces.Count);
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMakerAsPiece() as PieceLogic));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMakerAsPiece() as PieceLogic));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMakerAsPiece()));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMakerAsPiece()));
 
-        //     SetCooldown(GetMakerAsPiece() as PieceLogic, ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+        //     SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         // }
     }
 }

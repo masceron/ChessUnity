@@ -42,7 +42,7 @@ namespace Game.Effects.Traits
                      BoardUtils.PieceOn(_possiblePositions[idx]).Color == Piece.Color);
 
             if (BoardUtils.PieceOn(_possiblePositions[idx]) != null)
-                ActionManager.EnqueueAction(new KillPiece(_possiblePositions[idx]));
+                ActionManager.EnqueueAction(new KillPiece(BoardUtils.PieceOn(_possiblePositions[idx])));
 
             MatchManager.Ins.GameState.Move(action.GetTargetAsPiece(), _possiblePositions[idx]);
         }

@@ -94,7 +94,7 @@ namespace Game.Effects.States
                 if (isAllyStateNone)
                 {
                     // Ô có ally StateNone + Formation → pending popup
-                    formationActions.Add(new AdhesiveCapturePending(Piece.Pos, Piece, targetPiece, formation));
+                    formationActions.Add(new AdhesiveCapturePending(Piece, targetPiece, formation));
                     // Xóa ally-capture riêng lẻ (pending đã gộp cả 2)
                     allyCaptures.RemoveAll(a => a.GetTargetPos() == target);
                 }
@@ -147,7 +147,8 @@ namespace Game.Effects.States
                 ApplySkill(action);
                 action.Result = ResultFlag.Infest;
                 ActionManager.EnqueueAction(new ApplyEffect(new Attached(targetPiece, Piece)));
-                ActionManager.EnqueueAction(new MoveToAdhesive(Piece.Pos, target, attachToFormation: false));
+                //Làm lại
+                //ActionManager.EnqueueAction(new MoveToAdhesive(Piece, target, attachToFormation: false));
             }
             else if (hasFormation && !isAlly)
             {
@@ -162,7 +163,8 @@ namespace Game.Effects.States
                     f.ClearState();
                     Attached.SpawnAdhesiveAround(f.Pos, null, adhesive);
                 };
-                ActionManager.EnqueueAction(new MoveToAdhesive(Piece.Pos, target, attachToFormation: true));
+                //Làm lại
+                //ActionManager.EnqueueAction(new MoveToAdhesive(Piece, target, attachToFormation: true));
             }
             // Case isAlly + hasFormation được xử lý qua AdhesiveCapturePending → không rơi vào đây
         }

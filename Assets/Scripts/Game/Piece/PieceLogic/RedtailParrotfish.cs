@@ -27,8 +27,9 @@ namespace Game.Piece.PieceLogic
                     for (var i = 0; i < BoardSize; ++i)
                     {
                         if (!IsActive(i)) continue;
-                        var formation = GetFormation(i);
-                        if (formation != null) list.Add(new RedtailParrotfishPending(Pos, i));
+                        //Làm lại
+                        //var formation = GetFormation(i);
+                        //if (formation != null) list.Add(new RedtailParrotfishPending(Pos, i));
                     }
                 }
                 else
@@ -76,7 +77,7 @@ namespace Game.Piece.PieceLogic
                         ? listB[0]
                         : listB[Random.Range(0, listB.Count)];
 
-                    list.Add(new RedtailParrotfishActive(Pos, chosenFormation.Pos, chosenTarget));
+                    list.Add(new RedtailParrotfishActive(this, chosenFormation, chosenTarget));
                 }
             };
         }

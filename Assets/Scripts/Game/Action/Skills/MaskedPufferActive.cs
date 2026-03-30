@@ -18,7 +18,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public MaskedPufferActive(PieceLogic maker, PieceLogic target) : base(maker, target)
+        public MaskedPufferActive(PieceLogic maker) : base(maker)
         {
         }
 

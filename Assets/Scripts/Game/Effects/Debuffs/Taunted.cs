@@ -25,7 +25,7 @@ namespace Game.Effects.Debuffs
             var push = !Piece.Color ? PushWhite(Piece.Pos) : PushBlack(Piece.Pos);
             if (!VerifyIndex(push) || !IsActive(push) || PieceOn(push) != null) return;
 
-            ActionManager.EnqueueAction(new NormalMove(Piece.Pos, push));
+            ActionManager.EnqueueAction(new NormalMove(Piece, push));
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, Piece)));
         }
 

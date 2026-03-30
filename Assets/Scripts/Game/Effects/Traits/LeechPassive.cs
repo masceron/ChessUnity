@@ -23,7 +23,7 @@ namespace Game.Effects.Traits
             if (action is not ICaptures || action.Result != ResultFlag.Success || action.GetMakerAsPiece() != Piece) return;
 
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, action.GetTargetAsPiece()), Piece));
-            ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
+            ActionManager.EnqueueAction(new KillPiece(Piece));
             action.Result = ResultFlag.SelfDestroy;
         }
 

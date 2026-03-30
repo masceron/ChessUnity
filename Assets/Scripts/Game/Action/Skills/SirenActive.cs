@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SirenActive(int maker, int target, int moveTo) : base(maker, target)
+        public SirenActive(PieceLogic maker, PieceLogic target, int moveTo) : base(maker, target)
         {
             _moveTo = moveTo;
         }

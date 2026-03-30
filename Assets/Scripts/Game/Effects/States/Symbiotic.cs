@@ -61,7 +61,7 @@ namespace Game.Effects.States
                     {
                         if (targetPiece.CurrentState == StateType.None)
                         {
-                            actions.Add(new SymbioticCapture(caller.Pos, action.GetTargetPos()));
+                            actions.Add(new SymbioticCapture(caller, targetPiece));
                         }
                     }
                 }

@@ -16,7 +16,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public SwordFishActive(int maker) : base(maker)
+        public SwordFishActive(PieceLogic maker) : base(maker)
         {
         }
 

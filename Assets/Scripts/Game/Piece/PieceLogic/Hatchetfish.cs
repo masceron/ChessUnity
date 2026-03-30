@@ -27,7 +27,7 @@ namespace Game.Piece.PieceLogic
                             var pieceAt = PieceOn(tpos);
                             if (pieceAt == null || pieceAt.Color == Color) continue;
 
-                            list.Add(new HatchetfishActive(Pos, tpos));
+                            list.Add(new HatchetfishActive(this, pieceAt));
                         }
                     }
                 }

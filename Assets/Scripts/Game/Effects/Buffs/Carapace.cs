@@ -22,7 +22,7 @@ namespace Game.Effects.Buffs
             if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Blocked) return;
 
             ActionManager.EnqueueAction(new RemoveEffect(this));
-            if (MatchManager.Roll(25)) ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.GetMakerPos()));
+            if (MatchManager.Roll(25)) ActionManager.EnqueueAction(new CarapaceKill(Piece, action.GetMakerAsPiece()));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;

@@ -14,7 +14,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public RedCopepodActive(int maker, int target) : base(maker, target)
+        public RedCopepodActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -29,7 +29,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(GetFrom(), GetTargetPos()));
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

@@ -55,7 +55,7 @@ namespace UX.UI.Ingame.DormantFossil
         {
             var color = BoardUtils.PieceOn(piecePos).Color;
 
-            PendingAction.CommitResult(new DormantFossilAwake(piecePos, new PieceConfig(type, color, piecePos)));
+            PendingAction.CommitResult(new DormantFossilAwake(BoardUtils.PieceOn(piecePos), new PieceConfig(type, color, piecePos)));
 
             Disable();
         }

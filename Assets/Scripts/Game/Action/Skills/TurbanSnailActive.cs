@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public TurbanSnailActive(int maker) : base(maker)
+        public TurbanSnailActive(PieceLogic maker) : base(maker)
         {
         }
 

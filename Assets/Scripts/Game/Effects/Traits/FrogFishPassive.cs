@@ -23,7 +23,8 @@ namespace Game.Effects.Traits
         {
             if (action.GetMakerAsPiece() != Piece) return;
 
-            if (action.GetFrom() == action.GetMakerPos() || action.GetMakerPos() != action.GetTargetPos()) return;
+            if (action.GetFrom() == action.GetTargetPos() ||
+                action.GetMakerAsPiece().Pos != action.GetTargetPos()) return;
             var targetFormation = GetFormation(action.GetTargetPos());
             if (targetFormation is not PredatorLair) return;
 

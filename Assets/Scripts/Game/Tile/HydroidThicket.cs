@@ -27,7 +27,7 @@ namespace Game.Tile
             if (PieceOnFormation == null) return;
             if (_canPurifyEndTurn)
             {
-                ActionManager.EnqueueAction(new Purify(Pos, PieceOnFormation.Pos));
+                ActionManager.EnqueueAction(new Purify(this, PieceOnFormation));
                 _canPurifyEndTurn = false;
             }
         }
@@ -36,7 +36,7 @@ namespace Game.Tile
         {
             _canPurifyEndTurn = true;
             PieceOnFormation = piece;
-            ActionManager.EnqueueAction(new Purify(Pos, piece.Pos));
+            ActionManager.EnqueueAction(new Purify(this, piece));
         }
 
         public override FormationType GetFormationType()

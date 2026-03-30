@@ -36,7 +36,7 @@ namespace Game.Movesets
                 var tPos = IndexOf(tRank, tFile);
                 if (!IsActive(tPos)) return;
 
-                if (PieceOn(tPos) == null) list.Add(new NormalMove(pos, tPos));
+                if (PieceOn(tPos) == null) list.Add(new NormalMove(p, tPos));
             }
         }
 
@@ -70,8 +70,8 @@ namespace Game.Movesets
                 var pieceOn = PieceOn(tPos);
 
                 if (pieceOn != null && pieceOn.Color != color)
-                    list.Add(new NormalCapture(pos, tPos));
-                else if (pieceOn == null && !isPlayer) list.Add(new NormalCapture(pos, tPos));
+                    list.Add(new NormalCapture(p, pieceOn));
+                else if (pieceOn == null && !isPlayer) list.Add(new NormalCapture(p, pieceOn));
             }
         }
     }

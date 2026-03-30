@@ -34,8 +34,9 @@ namespace Game.Relics
                     if (piece.Color != Color && piece.PieceRank <= PieceRank.Common)
                     {
                         TileManager.Ins.MarkAsMoveable(piece.Pos);
-                        var pending = new SirensHarpoonPending(this, piece);
-                        BoardViewer.ListOf.Add(pending);
+                        //Làm lại
+                        // var pending = new SirensHarpoonPending(this, piece);
+                        // BoardViewer.ListOf.Add(pending);
                     }
 
                     BoardViewer.Selecting = -2;

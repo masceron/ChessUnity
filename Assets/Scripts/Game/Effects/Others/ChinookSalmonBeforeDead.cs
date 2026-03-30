@@ -23,7 +23,7 @@ namespace Game.Effects.Others
             if (action is Action.Action act)
             {
                 act.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
-                ActionManager.EnqueueAction(new NormalMove(Piece.Pos, newPosition));
+                ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
             }
         }
         
@@ -31,7 +31,7 @@ namespace Game.Effects.Others
         {
             if (action is not ICaptures || action.GetTargetAsPiece() != Piece) return;
             action.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
-            ActionManager.EnqueueAction(new NormalMove(Piece.Pos, newPosition));
+            ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
         }
         
         

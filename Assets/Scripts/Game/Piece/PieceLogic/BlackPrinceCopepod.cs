@@ -37,7 +37,7 @@ namespace Game.Piece.PieceLogic
                             if (targetPiece != null) continue;
 
                             Debug.Log($"Adding skill from {Pos} to {IndexOf(x, y)}");
-                            list.Add(new BlackPrinceCopepodPending(Pos, IndexOf(x, y)));
+                            list.Add(new BlackPrinceCopepodPending(this, IndexOf(x, y)));
                         }
                 }
             };

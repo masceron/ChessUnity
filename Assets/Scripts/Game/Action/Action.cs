@@ -51,13 +51,13 @@ namespace Game.Action
         private readonly int _maker;
         private readonly int _from;
         private int _target = -1;
-        private readonly TargetingType targetingType;
+        private readonly TargetingType _targetingType;
 
         protected Action(Entity maker, Entity target)
         {
             _maker = maker?.ID ?? -1;
             _from = maker?.Pos ?? -1;
-            targetingType = TargetingType.Unit;
+            _targetingType = TargetingType.Unit;
             
             _target = target?.ID ?? -1;
         }
@@ -67,7 +67,7 @@ namespace Game.Action
             _maker = maker?.ID ?? -1;
             _from = maker?.Pos ?? -1;
 
-            targetingType = TargetingType.Location;
+            _targetingType = TargetingType.Location;
             _target = target;
         }
 
@@ -75,7 +75,7 @@ namespace Game.Action
         {
             _maker = maker?.ID ?? -1;
             _from = maker?.Pos ?? -1;
-            targetingType = TargetingType.Innate;
+            _targetingType = TargetingType.Innate;
         }
 
         [MemoryPackConstructor]
@@ -112,17 +112,17 @@ namespace Game.Action
 
         public PieceLogic GetTargetAsPiece()
         {
-            return targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) as PieceLogic : null;
+            return _targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) as PieceLogic : null;
         }
 
         public Formation GetTargetAsFormation()
         {
-            return targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) as Formation : null;
+            return _targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) as Formation : null;
         }
 
         public int GetTargetPos()
         {
-            return targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target).Pos : _target;
+            return _targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target).Pos : _target;
         }
 
         public int GetFrom()
@@ -142,7 +142,7 @@ namespace Game.Action
         
         public TargetingType GetTargetingType()
         {
-            return targetingType;
+            return _targetingType;
         }
     }
 

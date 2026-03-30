@@ -17,7 +17,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public MarineFlatwormActive(PieceLogic maker, PieceLogic target) : base(maker, target)
+        public MarineFlatwormActive(PieceLogic maker, int target) : base(maker, target)
         {
         }
 
@@ -31,9 +31,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var config = new PieceConfig(GetMakerAsPiece().Type, GetMakerAsPiece().Color, GetTargetPos());
-            ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(GetTargetAsPiece())));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            //Làm lại
+            // var config = new PieceConfig(GetMakerAsPiece().Type, GetMakerAsPiece().Color, GetTargetPos());
+            // ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(GetTargetAsPiece())));
+            // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

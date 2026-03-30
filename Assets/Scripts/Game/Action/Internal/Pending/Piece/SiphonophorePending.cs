@@ -45,7 +45,7 @@ namespace Game.Action.Internal.Pending.Piece
 
             if (selectedTiles.Count != _unitCount) return;
             
-            CommitResult(new SiphonophoreActive(GetFrom(), new List<int>(selectedTiles)));
+            CommitResult(new SiphonophoreActive(GetMakerAsPiece(), new List<int>(selectedTiles)));
             Reset();
         }
 

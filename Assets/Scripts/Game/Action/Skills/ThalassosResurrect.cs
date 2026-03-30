@@ -19,7 +19,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public ThalassosResurrect(int maker, int to, string typeTo) : base(maker, to)
+        public ThalassosResurrect(PieceLogic maker, int to, string typeTo) : base(maker, to)
         {
             this.typeTo = typeTo;
         }

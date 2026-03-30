@@ -33,7 +33,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), GetTargetPos(), Duration)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), Duration)));
         }
     }
 }

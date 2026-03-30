@@ -31,7 +31,7 @@ namespace Game.Relics
                     
                     //Làm lại
                     //var pending = new SeafoamPhialPending(this, piece);
-                    BoardViewer.ListOf.Add(pending);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;
@@ -68,7 +68,7 @@ namespace Game.Relics
             {
                 // If none found, default to caster (can be changed later)
                 case 0:
-                    // targetPiece = GetMakerAsPiece() as PieceLogic;
+                    // targetPiece = GetMakerAsPiece();
                     break;
                 case 1:
                     targetPiece = bestPieces[0];

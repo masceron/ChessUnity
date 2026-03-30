@@ -14,8 +14,7 @@ namespace Game.Effects.Traits
     public class Illusion : StateEffect, IOnMoveGenTrigger
     {
         public override StateType StateType => StateType.Illusion;
-        private bool color;
-        private int PieceIdx;
+
         public Illusion(PieceLogic piece) : base(-1, 1, piece, "effect_illusion")
         {
 
@@ -23,8 +22,6 @@ namespace Game.Effects.Traits
 
         public Illusion(int idx, bool color) : base(-1, 1, null, "effect_illusion")
         {
-            this.PieceIdx = idx;
-            this.color = color;
         }   
 
         public override void OnApply()
