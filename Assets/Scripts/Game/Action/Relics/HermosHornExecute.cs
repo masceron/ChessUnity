@@ -22,7 +22,7 @@ namespace Game.Action.Relics
         ///     Option 1 là tăng strength ShortReach của tất cả quân địch. Option 2 là tăng strength của
         ///     tất cả các quân đồng minh
         /// </param>
-        public HermosHornExecute(bool relicColor, bool isFirstOption) : base(-1)
+        public HermosHornExecute(bool relicColor, bool isFirstOption) : base(null)
         {
             _isFirstOption = isFirstOption;
             _relicColor = relicColor;

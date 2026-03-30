@@ -12,7 +12,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public KelpBannerAction(int maker) : base(maker)
+        public KelpBannerAction(int maker) : base(null, maker)
         {
         }
 

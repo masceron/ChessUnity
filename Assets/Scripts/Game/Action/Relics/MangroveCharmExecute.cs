@@ -17,7 +17,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public MangroveCharmExecute(int firstTarget, int secondTarget) : base(-1)
+        public MangroveCharmExecute(int firstTarget, int secondTarget) : base(null)
         {
             _firstTarget = firstTarget;
             _secondTarget = secondTarget;

@@ -1,7 +1,7 @@
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -16,19 +16,18 @@ namespace Game.Action.Relics
         {
         }
 
-        public OrnetesEdictExecute(int target) : base(-1, target)
+        public OrnetesEdictExecute(PieceLogic target) : base(null, target)
         {
         }
 
         protected override void ModifyGameState()
         {
-            var piece = GetTarget();
-            if (piece == null) return;
+            if (GetTarget() is not PieceLogic piece) return;
 
             var numberOfDebuffedPieces = piece.Effects.Count(e => e.Category == EffectCategory.Debuff);
             var rate = 7 * numberOfDebuffedPieces;
 
-            if (MatchManager.Roll(rate)) ActionManager.EnqueueAction(new KillPiece(GetTargetPos()));
+            if (MatchManager.Roll(rate)) ActionManager.EnqueueAction(new KillPiece(piece));
         }
     }
 }

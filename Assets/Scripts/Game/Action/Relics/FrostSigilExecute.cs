@@ -20,7 +20,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public FrostSigilExecute(int maker, bool ourSide) : base(maker)
+        public FrostSigilExecute(int maker, bool ourSide) : base(null, maker)
         {
             _ourSide = ourSide;
         }
