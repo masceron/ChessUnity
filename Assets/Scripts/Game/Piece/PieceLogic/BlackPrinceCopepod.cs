@@ -16,10 +16,10 @@ namespace Game.Piece.PieceLogic
         private const int Range2 = 4;
         public BlackPrinceCopepod(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Sanity(-1, this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Evasion(-1, 25, this)));
-            ActionManager.EnqueueAction(new ApplyEffect(new BlackPrinceCopepodPassive(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new BlackPrinceCopepodPassive(this)));
 
             SetStat(SkillStat.Range, Range2, 2);
 

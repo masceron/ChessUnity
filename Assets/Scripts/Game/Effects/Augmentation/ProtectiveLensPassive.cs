@@ -8,7 +8,7 @@ namespace Game.Effects.Augmentation
     public class ProtectiveLensPassive : Effect, IBeforeApplyEffectTrigger
     {
         public ProtectiveLensPassive(int duration, int strength, PieceLogic piece) : base(duration, strength, piece,
-            "effect_protected_lens_passive")
+            "effect_protective_lens_passive")
         {
         }
 
