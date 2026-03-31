@@ -11,7 +11,7 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class DormantFossilAwake : Action, ISkills
     {
-        [MemoryPackInclude] private PieceConfig _target;
+        [MemoryPackInclude] private PieceConfig _toSpawn;
 
         [MemoryPackConstructor]
         private DormantFossilAwake()
@@ -20,7 +20,7 @@ namespace Game.Action.Skills
 
         public DormantFossilAwake(PieceLogic maker, PieceConfig t) : base(maker)
         {
-            _target = t;
+            _toSpawn = t;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -31,7 +31,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new DestroyPiece(GetMakerAsPiece()));
-            ActionManager.EnqueueAction(new SpawnPiece(_target));
+            ActionManager.EnqueueAction(new SpawnPiece(_toSpawn));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

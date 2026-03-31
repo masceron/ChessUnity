@@ -14,7 +14,7 @@ namespace Game.Action.Skills
     {
         [MemoryPackInclude] private byte _cost;
 
-        [MemoryPackInclude] private PieceConfig _target;
+        [MemoryPackInclude] private PieceConfig _swapTo;
 
         [MemoryPackConstructor]
         private ChrysosUpgrade()
@@ -24,7 +24,7 @@ namespace Game.Action.Skills
         public ChrysosUpgrade(PieceLogic maker, PieceLogic target, PieceConfig swap, byte cost) : base(maker, target)
         {
             _cost = cost;
-            _target = swap;
+            _swapTo = swap;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -36,7 +36,7 @@ namespace Game.Action.Skills
         {
             var pieceOn = GetMakerAsPiece();
             ActionManager.EnqueueAction(new DestroyPiece(GetTargetAsPiece()));
-            ActionManager.EnqueueAction(new SpawnPiece(_target));
+            ActionManager.EnqueueAction(new SpawnPiece(_swapTo));
             ((Chrysos)pieceOn).Coin -= _cost;
             SetCooldown(pieceOn, ((IPieceWithSkill)pieceOn).TimeToCooldown);
         }

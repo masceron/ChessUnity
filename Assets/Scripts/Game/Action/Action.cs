@@ -4,6 +4,9 @@ using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using MemoryPack;
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable MemberCanBeProtected.Global
 
 namespace Game.Action
 {
@@ -36,7 +39,6 @@ namespace Game.Action
 
     public enum TargetingType
     {
-        Innate = 0,
         Unit = 1,
         Location = 2,
     }
@@ -48,34 +50,35 @@ namespace Game.Action
     {
         public ActionFlag Flag = ActionFlag.None;
         public ResultFlag Result = ResultFlag.Success;
-        private readonly int _maker;
-        private readonly int _from;
-        private int _target = -1;
-        private readonly TargetingType _targetingType;
+        
+        [MemoryPackInclude] protected int Maker;
+        [MemoryPackInclude] protected int From;
+        [MemoryPackInclude] protected int Target = -1;
+        [MemoryPackInclude] protected TargetingType TargetingType;
 
         protected Action(Entity maker, Entity target)
         {
-            _maker = maker?.ID ?? -1;
-            _from = maker?.Pos ?? -1;
-            _targetingType = TargetingType.Unit;
-            
-            _target = target?.ID ?? -1;
+            Maker = maker?.ID ?? -1;
+            From = maker?.Pos ?? -1;
+            TargetingType = TargetingType.Unit;
+
+            Target = target?.ID ?? -1;
         }
 
         protected Action(Entity maker, int target)
         {
-            _maker = maker?.ID ?? -1;
-            _from = maker?.Pos ?? -1;
+            Maker = maker?.ID ?? -1;
+            From = maker?.Pos ?? -1;
 
-            _targetingType = TargetingType.Location;
-            _target = target;
+            TargetingType = TargetingType.Location;
+            Target = target;
         }
 
         protected Action(Entity maker)
         {
-            _maker = maker?.ID ?? -1;
-            _from = maker?.Pos ?? -1;
-            _targetingType = TargetingType.Innate;
+            Maker = maker?.ID ?? -1;
+            From = maker?.Pos ?? -1;
+            TargetingType = TargetingType.Unit;
         }
 
         [MemoryPackConstructor]
@@ -102,47 +105,47 @@ namespace Game.Action
 
         public PieceLogic GetMakerAsPiece()
         {
-            return BoardUtils.GetEntityByID(_maker) as PieceLogic;
+            return BoardUtils.GetEntityByID(Maker) as PieceLogic;
         }
 
         public Formation GetMakerAsFormation()
         {
-            return BoardUtils.GetEntityByID(_maker) as Formation;
+            return BoardUtils.GetEntityByID(Maker) as Formation;
         }
 
         public PieceLogic GetTargetAsPiece()
         {
-            return _targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) as PieceLogic : null;
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target) as PieceLogic : null;
         }
 
         public Formation GetTargetAsFormation()
         {
-            return _targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target) as Formation : null;
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target) as Formation : null;
         }
 
         public int GetTargetPos()
         {
-            return _targetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(_target).Pos : _target;
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target).Pos : Target;
         }
 
         public int GetFrom()
         {
-            return _from;
+            return From;
         }
 
         public void ChangeTarget(PieceLogic target)
         {
-            _target = target.ID;
+            Target = target.ID;
         }
 
         public void ChangeTarget(int index)
         {
-            _target = index;
+            Target = index;
         }
-        
+
         public TargetingType GetTargetingType()
         {
-            return _targetingType;
+            return TargetingType;
         }
     }
 
@@ -153,12 +156,17 @@ namespace Game.Action
         public bool Equals(Action x, Action y)
         {
             if (x!.GetType() != y!.GetType()) return false;
-            return x.GetMakerAsPiece() == y.GetMakerAsPiece() && x.GetTargetAsPiece() == y.GetTargetAsPiece();
+            if (x.GetTargetingType() != y.GetTargetingType()) return false;
+            return x.GetMakerAsPiece() == y.GetMakerAsPiece() && (
+                x.GetTargetingType() == TargetingType.Unit
+                    ? x.GetTargetAsPiece() == y.GetTargetAsPiece()
+                    : x.GetTargetPos() == y.GetTargetPos()
+            );
         }
 
         public int GetHashCode(Action obj)
         {
-            return HashCode.Combine(obj.GetTargetAsPiece(), obj.GetMakerAsPiece());
+            return HashCode.Combine(obj.GetType(), obj.GetMakerAsPiece()?.ID, obj.GetTargetPos());
         }
     }
 }
