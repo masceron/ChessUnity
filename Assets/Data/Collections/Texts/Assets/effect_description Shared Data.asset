@@ -799,11 +799,43 @@ MonoBehaviour:
     m_Key: effect_painted_greenling_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 81586457255120896
+  - m_Id: 81152509010583552
+    m_Key: effect_largehead_hairtail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81261225223462912
+    m_Key: effect_dwarf_cuttlefish_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81271893498601472
+    m_Key: effect_dwarf_cuttlefish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82941656134131712
+    m_Key: effect_melibe_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82942064663535616
+    m_Key: effect_tainted_heart_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82942504352423936
+    m_Key: effect_puppeteer_spirit_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82942918514778112
+    m_Key: effect_ray's_tail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82943292193710080
+    m_Key: effect_pressure_membrane_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82950944172875776
     m_Key: effect_invasive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 81586540382031872
+  - m_Id: 82950944214818816
     m_Key: effect_territorial_description
     m_Metadata:
       m_Items: []
