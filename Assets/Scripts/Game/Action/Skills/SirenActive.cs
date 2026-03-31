@@ -36,10 +36,22 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Move(GetTargetAsPiece(), _moveTo);
-
-            FlipPieceColor(PieceOn(_moveTo));
+            ActionManager.EnqueueAction(new SirenForceMove(GetTargetAsPiece(), _moveTo));
+            
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+        }
+    }
+    
+    internal class SirenForceMove: Action
+    {
+        public SirenForceMove(PieceLogic maker, int target) : base(maker, target)
+        {
+        }
+
+        protected override void ModifyGameState()
+        {
+            Move(GetMakerAsPiece(), GetTargetPos());
+            FlipPieceColor(GetMakerAsPiece());
         }
     }
 }
