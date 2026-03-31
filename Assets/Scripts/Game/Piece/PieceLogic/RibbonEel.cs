@@ -17,7 +17,7 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new TrueBite(-1,this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Diurnal(-1, 1, this, "effect_diurnal")));
 
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
@@ -25,7 +25,8 @@ namespace Game.Piece.PieceLogic
                     {
                         var p = BoardUtils.PieceOn(i);
                         if (p == null || p.Color == Color) continue;
-                        list.Add(new DiurnalPending(Pos, p.Pos));
+                        //Làm lại
+                        //list.Add(new DiurnalPending(Pos, p.Pos));
                     }
                 //query for AI in here
             };

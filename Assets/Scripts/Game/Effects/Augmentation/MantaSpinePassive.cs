@@ -25,8 +25,8 @@ namespace Game.Effects.Augmentation
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            // if (action.Target != Piece.Pos || 
-            //     action.Maker == Piece.Pos || 
+            // if (action.GetTargetAsPiece() != Piece || 
+            //     action.GetMakerAsPiece() == Piece || 
             //     (action.Flag & ActionFlag.Unblockable) != 0) 
             //     return;
             // if (action is not ICaptures) return;
@@ -40,7 +40,7 @@ namespace Game.Effects.Augmentation
             // if (action.Result != ResultFlag.Success) return;
             //action.Result = ResultFlag.Dodged;
 
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Maker == Piece.Pos) return;
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.GetMakerAsPiece() == Piece) return;
 
             if (isFirstCaptured)
             {
@@ -52,12 +52,11 @@ namespace Game.Effects.Augmentation
 
         private void MovePieceAndMakeIllusion(Action.Action action)
         {
-            var targetPiece = PieceOn(action.Target);
+            var targetPiece = action.GetTargetAsPiece();
             if (targetPiece != null)
             {
-                var (rank, file) = RankFileOf(action.Target);
-                var piece = PieceOn(action.Target);
-                var color = piece.Color;
+                var (rank, file) = RankFileOf(action.GetTargetPos());
+                var color = targetPiece.Color;
                 var push = color ? -1 : 1;
                 var rankOff = rank;
 
@@ -91,13 +90,14 @@ namespace Game.Effects.Augmentation
                         available.RemoveAt(randomIdx);
                     }
 
-                    ActionManager.EnqueueAction(new NormalMove(action.Target, IndexOf(rankOff, file)));
+                    ActionManager.EnqueueAction(new NormalMove(action.GetTargetAsPiece(), IndexOf(rankOff, file)));
 
                     foreach (var selectedIndex in selectedIndices)
                     {
-                        var config = new PieceConfig(piece.Type, Piece.Color, selectedIndex);
-                        ActionManager.EnqueueAction(new SpawnPieceWithEffect(config,
-                            new Illusion(PieceOn(selectedIndex))));
+                        //Làm lại
+                        // var config = new PieceConfig(targetPiece.Type, Piece.Color, selectedIndex);
+                        // ActionManager.EnqueueAction(new SpawnPieceWithEffect(config,
+                        //     new Illusion(PieceOn(selectedIndex))));
                     }
                 }
             }

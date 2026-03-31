@@ -10,15 +10,14 @@ namespace Game.Action.Internal.Pending.Piece
     public class TurbanSnailPending : PendingAction
     {
 
-        public TurbanSnailPending(int maker) : base(maker)
+        public TurbanSnailPending(PieceLogic maker) : base(maker)
         {
-            Target = maker;
         }
 
 
         protected override void CompleteAction()
         {
-            CommitResult(new TurbanSnailActive(Maker));
+            CommitResult(new TurbanSnailActive(GetMakerAsPiece()));
         }
 
         public int AIPenaltyValue(PieceLogic p)

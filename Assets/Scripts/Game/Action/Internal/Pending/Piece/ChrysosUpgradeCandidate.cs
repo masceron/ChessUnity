@@ -18,7 +18,6 @@ namespace Game.Action.Internal.Pending.Piece
     public class ChrysosUpgradeCandidate : PendingAction, ISkills, IAIAction
     {
         private readonly List<PieceLogic> _allyPieces;
-        private readonly Chrysos _chrysos;
         public readonly byte Cost;
 
         public readonly string CurrentPiece;
@@ -26,14 +25,11 @@ namespace Game.Action.Internal.Pending.Piece
         public readonly PieceRank UpgradeFrom;
         private PieceConfig _config;
 
-        public ChrysosUpgradeCandidate(int maker, int to, int cost, Chrysos ch) : base(maker)
+        public ChrysosUpgradeCandidate(PieceLogic maker, PieceLogic to, int cost) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
             Cost = (byte)cost;
-            _chrysos = ch;
 
-            var cr = BoardUtils.PieceOn(to);
+            var cr = GetTargetAsPiece();
             UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
             UpgradeFrom = cr.PieceRank;
             CurrentPiece = cr.Type;
@@ -43,6 +39,7 @@ namespace Game.Action.Internal.Pending.Piece
 
         public void CompleteActionForAI()
         {
+            var chrysos = GetMakerAsPiece() as Chrysos;
             //Implement for AI automatically
             var hasElite = false;
             var hasCommon = false;
@@ -52,7 +49,7 @@ namespace Game.Action.Internal.Pending.Piece
             for (var i = 0; i < BoardUtils.BoardSize; ++i)
             {
                 var p = BoardUtils.PieceOn(i);
-                if (p == null || p.Color != BoardUtils.PieceOn(Maker).Color) continue;
+                if (p == null || p.Color != GetMakerAsPiece().Color) continue;
                 _allyPieces.Add(p);
                 switch (p.PieceRank)
                 {
@@ -79,25 +76,25 @@ namespace Game.Action.Internal.Pending.Piece
 
             if (_allyPieces.Count == 0) return;
 
-            if (hasElite && _chrysos.Coin >= 5)
+            if (hasElite && chrysos.Coin >= 5)
             {
                 HandleUpgrade(5);
                 return;
             }
 
-            if (hasCommon && _chrysos.Coin >= 3)
+            if (hasCommon && chrysos.Coin >= 3)
             {
                 HandleUpgrade(3);
                 return;
             }
 
-            if (hasSwarm && _chrysos.Coin >= 1)
+            if (hasSwarm && chrysos.Coin >= 1)
             {
                 HandleUpgrade(1);
                 return;
             }
 
-            if (hasChampion && _chrysos.Coin >= 6) HandleUpgrade(6);
+            if (hasChampion && chrysos.Coin >= 6) HandleUpgrade(6);
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -108,12 +105,12 @@ namespace Game.Action.Internal.Pending.Piece
         protected override void CompleteAction()
         {
             var shop = BoardViewer.Ins.GetOrInstantiateUI<ChrysosShop>(IngameSubmenus.ChrysosShop);
-            shop.Load(_chrysos, this);
+            shop.Load(GetMakerAsPiece() as Chrysos, this);
         }
 
         private void ActivateSkill(PieceLogic p, string type, byte cost)
         {
-            CommitResult(new ChrysosUpgrade(Maker, new PieceConfig(type, p.Color, p.Pos), cost));
+            CommitResult(new ChrysosUpgrade(GetMakerAsPiece(), p, new PieceConfig(type, p.Color, p.Pos), cost));
         }
 
         private void HandleUpgrade(byte cost)

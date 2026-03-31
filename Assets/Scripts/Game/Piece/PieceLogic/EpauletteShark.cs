@@ -31,7 +31,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this || pOn.PieceRank != PieceRank.Swarm) continue;
-                        if (pOn.Color != Color) list.Add(new EpauletteSharkActive(Pos, index));
+                        if (pOn.Color != Color) list.Add(new EpauletteSharkActive(this, pOn));
                     }
                 }
                 else
@@ -52,14 +52,14 @@ namespace Game.Piece.PieceLogic
                             if (pOn == null || pOn.Pos == Pos || pOn.PieceRank != PieceRank.Swarm
                                 || pOn.Color == Color) continue;
 
-                            var AIValue = pOn.GetValueForAI();
-                            if (AIValue > maxPoint)
+                            var aiValue = pOn.GetValueForAI();
+                            if (aiValue > maxPoint)
                             {
                                 bestPieces.Clear();
                                 bestPieces.Add(pOn);
-                                maxPoint = AIValue;
+                                maxPoint = aiValue;
                             }
-                            else if (AIValue == maxPoint)
+                            else if (aiValue == maxPoint)
                             {
                                 bestPieces.Add(pOn);
                             }
@@ -78,7 +78,7 @@ namespace Game.Piece.PieceLogic
                             bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                         }
 
-                        if (bestPiece != null) list.Add(new EpauletteSharkActive(Pos, bestPiece.Pos));
+                        if (bestPiece != null) list.Add(new EpauletteSharkActive(this, bestPiece));
                     }
                     else
                     {
@@ -88,7 +88,7 @@ namespace Game.Piece.PieceLogic
                         {
                             var index = IndexOf(rankOff, fileOff);
                             if (!IsActive(IndexOf(rankOff, fileOff))) continue;
-                            list.Add(new EpauletteSharkActive(Pos, index));
+                            list.Add(new EpauletteSharkActive(this, PieceOn(index)));
                         }
                     }
                 }

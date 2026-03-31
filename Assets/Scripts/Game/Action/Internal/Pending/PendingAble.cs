@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Game.Common;
 
 namespace Game.Action.Internal.Pending
 {
@@ -8,8 +9,17 @@ namespace Game.Action.Internal.Pending
     {
         private UniTaskCompletionSource<Action> _task;
 
-        protected PendingAction(int maker) : base(maker)
+        protected PendingAction(Entity maker) : base(maker)
         {
+        }
+
+        protected PendingAction(Entity maker, int target) : base(maker, target)
+        {
+        }
+
+        protected PendingAction(Entity maker, Entity target) : base(maker, target)
+        {
+            
         }
 
         protected sealed override void ModifyGameState()

@@ -32,7 +32,7 @@ namespace Game.Movesets
                 if (piece != null ||
                     Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
                     return;
-                list.Add(new NormalMove(pos, index));
+                list.Add(new NormalMove(caller, index));
             }
         }
 
@@ -56,14 +56,14 @@ namespace Game.Movesets
                 var piece = PieceOn(index);
                 if (piece == null && !isPlayer)
                 {
-                    list.Add(new NormalCapture(pos, index));
+                    list.Add(new NormalCapture(caller, piece));
                 }
                 else if (piece != null)
                 {
                     if (piece.Color == color ||
                         Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
                         return;
-                    list.Add(new NormalCapture(pos, index));
+                    list.Add(new NormalCapture(caller, piece));
                 }
             }
         }

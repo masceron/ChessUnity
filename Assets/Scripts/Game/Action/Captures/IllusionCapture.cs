@@ -1,5 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -15,9 +16,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public IllusionCapture(int maker, int target) : base(maker)
+        public IllusionCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -26,7 +26,7 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOn(Target)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, GetTargetAsPiece()), GetMakerAsPiece()));
         }
     }
 }

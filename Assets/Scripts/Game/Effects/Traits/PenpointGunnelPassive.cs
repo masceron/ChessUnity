@@ -20,7 +20,7 @@ namespace Game.Effects.Traits
         protected override void OnVengefulTrigger()
         {
             if (Killer == null) return;
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(Killer, Piece.Pos, -1), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(Killer, -1), Piece));
         }
     
     }

@@ -2,6 +2,7 @@ using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Others;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -16,15 +17,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public TemporalWarpExecute(int maker, int target) : base(maker)
+        public TemporalWarpExecute(PieceLogic maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
-            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(BoardUtils.PieceOn(Maker), Target)));
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
+            ActionManager.EnqueueAction(new ApplyEffect(new TemporalWarpReturn(GetMakerAsPiece(), GetTargetPos())));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Game.Piece.PieceLogic
                         var piece = PieceOn(target);
                         if (piece == null) continue;
                         if (piece.Effects.Any(e => e.EffectName == "effect_slow"))
-                            list.Add(new SohalSurgeonfishActive(Pos, target));
+                            list.Add(new SohalSurgeonfishActive(this, piece));
                     }
                 }
                 else
@@ -37,7 +37,7 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 6))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            list.Add(new SohalSurgeonfishActive(Pos, index));
+                            list.Add(new SohalSurgeonfishActive(this, PieceOn(index)));
                         }
                     }
                     else
@@ -60,7 +60,7 @@ namespace Game.Piece.PieceLogic
                         if (bestPieces.Count == 0) return;
                         var random = new Random();
                         var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-                        list.Add(new SohalSurgeonfishActive(Pos, selectedPiece.Pos));
+                        list.Add(new SohalSurgeonfishActive(this, selectedPiece));
                     }
                 }
             };

@@ -27,7 +27,7 @@ namespace Game.Piece.PieceLogic
                         var hasShield = PieceOn(piece.Pos).Effects.Any(effect =>
                             effect.EffectName is "effect_shield" or "effect_hardened_shield");
 
-                        if (hasShield) list.Add(new BarnacleActive(Pos, piece.Pos));
+                        if (hasShield) list.Add(new BarnacleActive(this, piece));
                     }
                 }
                 //query for AI in here

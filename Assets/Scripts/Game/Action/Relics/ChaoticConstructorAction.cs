@@ -12,15 +12,8 @@ namespace Game.Action.Relics
     {
         [MemoryPackInclude] private List<int> _storedPos = new();
 
-        [MemoryPackConstructor]
-        private ChaoticConstructorAction()
+        public ChaoticConstructorAction() : base(null)
         {
-        }
-
-        public ChaoticConstructorAction(int maker) : base(maker)
-        {
-            Target = maker;
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
@@ -32,7 +25,7 @@ namespace Game.Action.Relics
                 if (p is not { PieceRank: PieceRank.Construct }) continue;
 
                 _storedPos.Add(p.Pos);
-                ActionManager.EnqueueAction(new KillPiece(p.Pos));
+                ActionManager.EnqueueAction(new KillPiece(p));
             }
 
             AddEffectObserver(new ChaoticConstructorSpawn(-1, _storedPos));

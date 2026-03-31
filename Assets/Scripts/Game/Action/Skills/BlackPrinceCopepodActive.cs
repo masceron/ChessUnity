@@ -23,9 +23,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public BlackPrinceCopepodActive(int maker, int firstIndex, int secondIndex, int thirdIndex) : base(maker)
+        public BlackPrinceCopepodActive(PieceLogic maker, int firstIndex, int secondIndex, int thirdIndex) : base(maker)
         {
-            Maker = maker;
             this.firstIndex = firstIndex;
             this.secondIndex = secondIndex;
             this.thirdIndex = thirdIndex;
@@ -38,20 +37,22 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, firstIndex));
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), firstIndex));
 
             if (PieceOn(secondIndex) != null)
                 ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(secondIndex))));
             else
             {
-                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", PieceOn(Maker).Color, secondIndex)));
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece",
+                    GetMakerAsPiece().Color, secondIndex)));
             }
 
             if (PieceOn(thirdIndex) != null)
                 ActionManager.EnqueueAction(new ApplyEffect(new Illusion(PieceOn(thirdIndex))));
             else
             {
-                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", PieceOn(Maker).Color, thirdIndex)));
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece",
+                    GetMakerAsPiece().Color, thirdIndex)));
             }
         }
     }

@@ -28,7 +28,7 @@ namespace Game.Piece.PieceLogic
                 {
                     var (rank, file) = RankFileOf(Pos);
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
-                        list.Add(new PencilUrchinActive(Pos, IndexOf(rankOff, fileOff)));
+                        list.Add(new PencilUrchinActive(this, IndexOf(rankOff, fileOff)));
                 }
                 else
                 {
@@ -74,7 +74,7 @@ namespace Game.Piece.PieceLogic
                             bestPiece = bestPieces[Random.Range(0, bestPieces.Count)];
                         }
 
-                        if (bestPiece != null) list.Add(new PencilUrchinActive(Pos, bestPiece.Pos));
+                        if (bestPiece != null) list.Add(new PencilUrchinActive(this, bestPiece.Pos));
                     }
                     else
                     {
@@ -83,7 +83,7 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, SkillRange))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            list.Add(new PencilUrchinActive(Pos, index));
+                            list.Add(new PencilUrchinActive(this, index));
                         }
                     }
                 }

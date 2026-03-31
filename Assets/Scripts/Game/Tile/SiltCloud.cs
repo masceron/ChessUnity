@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Broken lên quân đứng trên nó
+    /// </summary>
     public class SiltCloud : Formation
     {
         public SiltCloud(bool haveDuration)
@@ -21,7 +24,7 @@ namespace Game.Tile
         {
             base.OnPieceEnter(piece);
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Broken(-1, piece), FormationType.SiltCloud));
+            ActionManager.EnqueueAction(new ApplyEffect(new Broken(-1, piece)));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

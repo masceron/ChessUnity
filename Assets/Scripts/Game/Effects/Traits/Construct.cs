@@ -17,7 +17,7 @@ namespace Game.Effects.Traits
             if (actions == null || actions.Count == 0) return;
 
             for (var i = actions.Count - 1; i >= 0; i--)
-                if (actions[i] is not DestroyConstruct && actions[i].Target == Piece.Pos)
+                if (actions[i] is not DestroyConstruct && actions[i].GetTargetAsPiece() == Piece)
                     actions.RemoveAt(i);
         }
     }

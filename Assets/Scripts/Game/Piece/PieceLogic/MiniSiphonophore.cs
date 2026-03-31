@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 2);
-                    foreach (var target in targets) list.Add(new MiniSiphonophoreActive(Pos, target));
+                    foreach (var target in targets) list.Add(new MiniSiphonophoreActive(this, BoardUtils.PieceOn(target)));
                 }
             };
         }

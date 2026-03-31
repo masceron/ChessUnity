@@ -41,7 +41,7 @@ namespace Game.Effects.States
                 for (var i = actions.Count - 1; i >= 0; i--)
                 {
                     var act = actions[i];
-                    if (act is ISkills && act.Target == Piece.Pos)
+                    if (act is ISkills && act.GetTargetAsPiece() == Piece)
                         actions.RemoveAt(i);
                 }
             }
@@ -49,15 +49,15 @@ namespace Game.Effects.States
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action == null || action.Result != ResultFlag.Success) return;
+            if (action is not { Result: ResultFlag.Success }) return;
 
-            if ((action is IQuiets || action is ICaptures) && action.Maker == Piece.Pos)
+            if (action is IQuiets or ICaptures && action.GetMakerAsPiece() == Piece)
             {
                 action.Result = ResultFlag.Blocked;
                 return;
             }
 
-            if (action is ICaptures && action.Target == Piece.Pos)
+            if (action is ICaptures && action.GetTargetAsPiece() == Piece)
             {
                 action.Result = ResultFlag.Blocked;
                 return;

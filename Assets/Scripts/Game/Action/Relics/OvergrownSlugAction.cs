@@ -1,4 +1,5 @@
 using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -14,15 +15,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public OvergrownSlugAction(int maker) : base(maker)
+        public OvergrownSlugAction(int target) : base(null, target)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
+            var caller = GetTargetAsPiece();
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {

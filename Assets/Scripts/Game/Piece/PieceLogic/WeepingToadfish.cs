@@ -23,7 +23,7 @@ namespace Game.Piece.PieceLogic
                         var pieceOn = PieceOn(IndexOf(rankOff, fileOff));
                         if (pieceOn != null && pieceOn.Color != this.Color)
                         {
-                            list.Add(new WeepingToadfishActive(Pos, IndexOf(rankOff, fileOff), GetStat(SkillStat.Duration)));
+                            list.Add(new WeepingToadfishActive(this, pieceOn, GetStat(SkillStat.Duration)));
                         }
                     }
                 }

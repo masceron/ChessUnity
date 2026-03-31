@@ -29,7 +29,7 @@ namespace Game.Piece.PieceLogic
                             var pieceAt = PieceOn(tpos);
                             if (pieceAt != null) continue;
 
-                            list.Add(new GulperEelActive(Pos, tpos));
+                            list.Add(new GulperEelActive(this, tpos));
                         }
                     }
                 }

@@ -37,10 +37,10 @@ namespace Game.Effects.Debuffs
             if (_list.Count > 1) _list = _list.Distinct(new ActionComparer()).ToList();
 
             var captureTargets = _list.OfType<ICaptures>()
-                .Select(c => ((Action.Action)c).Target)
+                .Select(c => ((Action.Action)c).GetTargetPos())
                 .ToList();
             var moveTargets = _list.OfType<IQuiets>()
-                .Select(c => ((Action.Action)c).Target)
+                .Select(c => ((Action.Action)c).GetTargetPos())
                 .ToList();
 
             if (captureTargets.Count > 0)
@@ -51,17 +51,18 @@ namespace Game.Effects.Debuffs
 
                 if (nearestTarget < 0) return;
                 var piece = PieceOn(Piece.Pos);
+                var nearestPieceTarget = PieceOn(nearestTarget);
                 if (piece != null && piece.Effects.Any(e => e.EffectName == "effect_snapping_strike"))
-                    ActionManager.EnqueueAction(new FrenziedCaptureDontMove(Piece.Pos, nearestTarget));
+                    ActionManager.EnqueueAction(new FrenziedCaptureDontMove(Piece, nearestPieceTarget));
                 else
-                    ActionManager.EnqueueAction(new FrenziedCapture(Piece.Pos, nearestTarget));
+                    ActionManager.EnqueueAction(new FrenziedCapture(Piece, nearestPieceTarget));
             }
             else if (moveTargets.Count > 0)
             {
                 var random = new Random();
                 var randomIndex = random.Next(0, moveTargets.Count);
                 var randomTarget = moveTargets[randomIndex];
-                ActionManager.EnqueueAction(new FrenziedMove(Piece.Pos, randomTarget));
+                ActionManager.EnqueueAction(new FrenziedMove(Piece, randomTarget));
             }
         }
     }

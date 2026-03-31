@@ -1,5 +1,6 @@
 using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Quiets
@@ -14,20 +15,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalMove(int maker, int target) : base(maker)
+        public NormalMove(PieceLogic maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            BoardUtils.Move(Maker, Target);
-            Maker = Target;
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Game.Effects.Debuffs
                 rankOff += push;
             }
 
-            ActionManager.EnqueueAction(new NormalMove(Piece.Pos, IndexOf(rankOff, file)));
+            ActionManager.EnqueueAction(new NormalMove(Piece, IndexOf(rankOff, file)));
         }
 
         public override int GetValueForAI()

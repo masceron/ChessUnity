@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
                                 if (!IsActive(targetPos)) continue;
                                 var targetPiece = PieceOn(targetPos);
                                 if (targetPiece == null || targetPiece.Color == Color) continue;
-                                list.Add(new GoldenBassletActive(Pos, targetPos));
+                                list.Add(new GoldenBassletActive(this, targetPiece));
                             }
                             break;
                         case true:
@@ -43,7 +43,7 @@ namespace Game.Piece.PieceLogic
                                 if (!IsActive(targetPos)) continue;
                                 var targetPiece = PieceOn(targetPos);
                                 if (targetPiece == null || targetPiece.Color == Color) continue;
-                                list.Add(new GoldenBassletActive(Pos, targetPos));
+                                list.Add(new GoldenBassletActive(this, targetPiece));
                             }
                             break;
                     }

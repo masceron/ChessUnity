@@ -20,7 +20,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
                 {
-                    list.Add(new DwarfLionfishActive(Pos));
+                    list.Add(new DwarfLionfishActive(this));
                 }
                 else
                 {
@@ -33,9 +33,9 @@ namespace Game.Piece.PieceLogic
                     if (listA.Count >= 1)
                     {
                         if (!excludeEmptyTile)
-                            list.Add(new DwarfLionfishActive(Pos));
+                            list.Add(new DwarfLionfishActive(this));
                         else
-                            list.Add(new DwarfLionfishActive(Pos));
+                            list.Add(new DwarfLionfishActive(this));
                     }
                 }
             };

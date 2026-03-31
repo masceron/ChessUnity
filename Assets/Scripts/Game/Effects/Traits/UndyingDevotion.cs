@@ -25,10 +25,10 @@ namespace Game.Effects.Traits
         {
             // Cân nhắc làm lại cơ chế
             if (action is not KillPiece killAction) return;
-            if (PieceOn(killAction.Maker).Color != Piece.Color || killAction.Result != ResultFlag.Success) return;
+            if (killAction.GetMakerAsPiece().Color != Piece.Color || killAction.Result != ResultFlag.Success) return;
             killAction.Result = ResultFlag.SurvivedHit;
             Debug.Log("[UndyingDevotion] Failed capture");
-            ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(PieceOn(killAction.Maker)), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new OneMoreTurn(killAction.GetMakerAsPiece()), Piece));
         }
 
         public override int GetValueForAI()

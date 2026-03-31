@@ -26,8 +26,9 @@ namespace Game.Relics
             {
                 if (piece == null) continue;
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new BlackPearlPending(this, piece.Pos);
-                BoardViewer.ListOf.Add(pending);
+                //Làm lại
+                // var pending = new BlackPearlPending(this, piece.Pos);
+                // BoardViewer.ListOf.Add(pending);
             }
 
             BoardViewer.Selecting = -2;
@@ -72,8 +73,9 @@ namespace Game.Relics
             }
 
             if (selectedPiece == null) return;
-            var pending = new BlackPearlPending(this, selectedPiece.Pos);
-            BoardViewer.Ins.ExecuteAction(pending);
+            //Làm lại
+            // var pending = new BlackPearlPending(this, selectedPiece.Pos);
+            // BoardViewer.Ins.ExecuteAction(pending);
         }
     }
 }

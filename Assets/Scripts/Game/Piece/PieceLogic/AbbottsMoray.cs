@@ -1,3 +1,4 @@
+using Assets.Scripts.Game.Effects.SpecialAbility;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Traits;

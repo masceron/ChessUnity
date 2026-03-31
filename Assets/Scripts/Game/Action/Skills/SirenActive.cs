@@ -17,30 +17,41 @@ namespace Game.Action.Skills
         {
         }
 
-        public SirenActive(int maker, int target, int moveTo) : base(maker)
+        public SirenActive(PieceLogic maker, PieceLogic target, int moveTo) : base(maker, target)
         {
-            Target = target;
             _moveTo = moveTo;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Target, _moveTo);
+            PieceManager.Ins.Move(GetTargetPos(), _moveTo);
         }
 
         protected override void ModifyGameState()
         {
-            Move(Target, _moveTo);
+            ActionManager.EnqueueAction(new SirenForceMove(GetTargetAsPiece(), _moveTo));
+            
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+        }
+    }
+    
+    internal class SirenForceMove: Action
+    {
+        public SirenForceMove(PieceLogic maker, int target) : base(maker, target)
+        {
+        }
 
-            FlipPieceColor(_moveTo);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        protected override void ModifyGameState()
+        {
+            Move(GetMakerAsPiece(), GetTargetPos());
+            FlipPieceColor(GetMakerAsPiece());
         }
     }
 }

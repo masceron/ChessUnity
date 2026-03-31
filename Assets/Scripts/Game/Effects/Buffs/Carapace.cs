@@ -19,17 +19,17 @@ namespace Game.Effects.Buffs
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Blocked) return;
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Blocked) return;
 
             ActionManager.EnqueueAction(new RemoveEffect(this));
-            if (MatchManager.Roll(25)) ActionManager.EnqueueAction(new CarapaceKill(Piece.Pos, action.Maker));
+            if (MatchManager.Roll(25)) ActionManager.EnqueueAction(new CarapaceKill(Piece, action.GetMakerAsPiece()));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Mitigation;
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Success
                 || (action.Flag & ActionFlag.Unblockable) != 0) return;
 
             action.Result = ResultFlag.Parry;

@@ -9,17 +9,15 @@ namespace Game.Action.Skills
 {
     public class BlubberJellyActive : Action, ISkills
     {
-        public BlubberJellyActive(int maker, int target) : base(maker)
+        public BlubberJellyActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new NormalMove(maker, GetTargetPos()));
             
-            var (rank, file) = RankFileOf(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, maker.GetStat(SkillStat.Range, 2)))
             {
                 var index = IndexOf(rankOff, fileOff);

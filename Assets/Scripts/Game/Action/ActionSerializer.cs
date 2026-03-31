@@ -86,8 +86,6 @@ namespace Game.Action
     [MemoryPackUnion(77, typeof(PistolShrimpActive))]
     [MemoryPackUnion(78, typeof(PufferfishExplode))]
     [MemoryPackUnion(79, typeof(RedtailParrotfishActive))]
-    [MemoryPackUnion(80, typeof(RibbonEelActive))]
-    [MemoryPackUnion(81, typeof(RustyParrotfishActive))]
     [MemoryPackUnion(82, typeof(ScalyheadSculpinActive))]
     [MemoryPackUnion(83, typeof(SeaStarResurrect))]
     [MemoryPackUnion(84, typeof(SeaTurtleActive))]
@@ -102,7 +100,6 @@ namespace Game.Action
     [MemoryPackUnion(93, typeof(SwordFishActive))]
     [MemoryPackUnion(94, typeof(TemperantiaSwap))]
     [MemoryPackUnion(95, typeof(ThalassosResurrect))]
-    [MemoryPackUnion(96, typeof(ThreadPipefishActive))]
     [MemoryPackUnion(97, typeof(VelkarisKill))]
     [MemoryPackUnion(98, typeof(SkipTurn))]
     public abstract partial class Action

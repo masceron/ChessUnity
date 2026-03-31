@@ -54,8 +54,9 @@ namespace UX.UI.Ingame.CoralTome
                 TileManager.Ins.MarkAsMoveable(pos);
                 var relic = BoardUtils.GetRelicOf(color);
                 if (relic is not Game.Relics.CoralTome coralTome) continue;
-                var pending = new CoralTomePending(coralTome, pos, type);
-                BoardViewer.ListOf.Add(pending);
+                //Làm lại
+                // var pending = new CoralTomePending(coralTome, type, pos);
+                // BoardViewer.ListOf.Add(pending);
             }
 
             BoardViewer.Selecting = -2;

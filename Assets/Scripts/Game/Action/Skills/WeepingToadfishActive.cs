@@ -17,9 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public WeepingToadfishActive(int maker, int target, int duration) : base(maker)
+        public WeepingToadfishActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
-            Target = target;
             Duration = duration;
         }
 
@@ -30,8 +29,8 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration, PieceOn(Target))));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration, GetTargetAsPiece())));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

@@ -9,18 +9,17 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class OrrnateGhostpipefishActive : Action, ISkills
+    public partial class OrnateGhostpipefishActive : Action, ISkills
     {
         [MemoryPackConstructor]
 
-        private OrrnateGhostpipefishActive()
+        private OrnateGhostpipefishActive()
         {
         }
         private readonly int Duration;
 
-        public OrrnateGhostpipefishActive(int maker, int to, int duration) : base(maker)
+        public OrnateGhostpipefishActive(PieceLogic maker, PieceLogic to, int duration) : base(maker, to)
         {
-            Target = to;
             Duration = duration;
         }
 
@@ -31,27 +30,22 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var caller = PieceOn(Maker);
-            var pOnTarget = PieceOn(Target);
+            var caller = GetMakerAsPiece();
+            var pOnTarget = GetTargetAsPiece();
             if (caller == null) return;
 
-            if (Maker == Target)
+            if (GetMakerAsPiece() == GetTargetAsPiece())
             {
-                if (caller.HasState(Effects.States.StateType.None))
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration * 2, caller)));
-                }
-                else
-                {
-                    ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration * 2, pOnTarget)));
-                }
+                ActionManager.EnqueueAction(caller.HasState(StateType.None)
+                    ? new ApplyEffect(new Ethereal(Duration * 2, caller))
+                    : new ApplyEffect(new Ethereal(Duration * 2, pOnTarget)));
             }
             else
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration, pOnTarget)));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)caller).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)caller).TimeToCooldown);
         }
     }
 }

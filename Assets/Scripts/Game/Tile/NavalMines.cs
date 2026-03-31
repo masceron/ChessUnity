@@ -1,4 +1,4 @@
-﻿using Game.Action;
+using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -7,6 +7,10 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Giết bất cứ quân nào dẫm lên (Bị block bởi Shield/Hardened Shield/Carapace nhưng xuyên Evasion), 
+    /// sau đó stun các quân ở 8 ô xung quanh
+    /// </summary>
     public class NavalMines : Formation
     {
         public NavalMines(bool haveDuration, bool color) : base(color)
@@ -23,10 +27,10 @@ namespace Game.Tile
         {
             base.OnPieceEnter(piece);
 
-            if (!PieceOnFormation.Effects.Any(effect => effect.EffectName == "effect_shield" &&
+            if (!PieceOnFormation.Effects.Any(effect => effect.EffectName == "effect_shield" ||
                                                         effect.EffectName == "effect_hardened_shield"
-                                                        && effect.EffectName == "effect_carapace"))
-                ActionManager.EnqueueAction(new KillPiece(PieceOnFormation.Pos));
+                                                        || effect.EffectName == "effect_carapace"))
+                ActionManager.EnqueueAction(new KillPiece(PieceOnFormation));
 
             var (rank, file) = RankFileOf(PieceOnFormation.Pos);
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 8))
@@ -35,7 +39,7 @@ namespace Game.Tile
                 var pOn = PieceOn(index);
                 if (pOn == null) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn), FormationType.NavalMines));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pOn)));
             }
         }
 

@@ -2,13 +2,14 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Effects;
 using Game.Effects.Buffs;
 using Game.Effects.Traits;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using static Game.Common.BoardUtils;
 
-namespace Game.Effects.SpecialAbility
+namespace Assets.Scripts.Game.Effects.SpecialAbility
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -30,19 +31,19 @@ namespace Game.Effects.SpecialAbility
             return false;
         }
 
-        public void OnCallAfterPieceAction(Action.Action action)
+        public void OnCallAfterPieceAction(global::Game.Action.Action action)
         {
             if (Piece == null) return;
-            if (action == null || action.Result != ResultFlag.Success) return;
+            if (action is not { Result: ResultFlag.Success }) return;
             if (action is not IQuiets && action is not ICaptures) return;
 
-            int radius = GetStat(EffectStat.Radius);
-            int duration = GetStat(EffectStat.Duration);
+            var radius = GetStat(EffectStat.Radius);
+            var duration = GetStat(EffectStat.Duration);
 
-            var movedPiece = PieceOn(action.Maker);
+            var movedPiece = action.GetMakerAsPiece();
             if (movedPiece != null && movedPiece != Piece && movedPiece.Color == Piece.Color && HasAmbushTrait(movedPiece))
             {
-                int prevPos = movedPiece.PreviousMoves.Count > 0
+                var prevPos = movedPiece.PreviousMoves.Count > 0
                         ? movedPiece.PreviousMoves[movedPiece.PreviousMoves.Count - 1]
                         : -1;
                 if (Distance(movedPiece.Pos, Piece.Pos) <= radius)
@@ -73,8 +74,8 @@ namespace Game.Effects.SpecialAbility
 
             if (Piece.PreviousMoves.Count <= 0) return;
 
-            int oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
-            for (int i = 0; i < BoardSize; i++)
+            var oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
+            for (var i = 0; i < BoardSize; i++)
             {
                 if (!IsActive(i)) continue;
 
@@ -83,8 +84,8 @@ namespace Game.Effects.SpecialAbility
                 if (ally.Color != Piece.Color) continue;
                 if (!HasAmbushTrait(ally)) continue;
 
-                int distToNewPos = Distance(i, Piece.Pos);
-                int distToOldPos = Distance(i, oldPos);
+                var distToNewPos = Distance(i, Piece.Pos);
+                var distToOldPos = Distance(i, oldPos);
 
                 if (distToNewPos <= radius && distToOldPos > radius)
                 {

@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Quiets
@@ -8,28 +9,23 @@ namespace Game.Action.Quiets
     [MemoryPackable]
     public partial class FlyingFishMove : Action, IQuiets
     {
-        public int From;
-
         [MemoryPackConstructor]
         private FlyingFishMove()
         {
         }
 
-        public FlyingFishMove(int maker, int target) : base(maker)
+        public FlyingFishMove(PieceLogic maker, int target) : base(maker, target)
         {
-            From = maker;
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
+            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

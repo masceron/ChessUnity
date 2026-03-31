@@ -10,7 +10,7 @@ namespace Game.Action.Internal
         private readonly PieceLogic _parasite;
         private readonly PieceLogic _hostLogic;
 
-        public DestroyParasitePiece(PieceLogic parasite, PieceLogic hostLogic) : base(-1)
+        public DestroyParasitePiece(PieceLogic parasite, PieceLogic hostLogic) : base(null)
         {
             _parasite  = parasite;
             _hostLogic = hostLogic;

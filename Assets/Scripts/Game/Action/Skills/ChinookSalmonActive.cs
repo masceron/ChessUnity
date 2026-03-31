@@ -7,16 +7,14 @@ namespace Game.Action.Skills
 {
     public class ChinookSalmonActive : Action, ISkills
     {
-        public ChinookSalmonActive(int maker, int target) : base(maker)
+        public ChinookSalmonActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
-            ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, Target), maker));
+            var maker = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, GetTargetPos()), maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

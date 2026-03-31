@@ -1,4 +1,5 @@
-﻿using Game.Action.Captures;
+﻿using Game.Action;
+using Game.Action.Captures;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -18,12 +19,13 @@ namespace Game.Effects.Traits
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || BoardUtils.PieceOn(action.Target) == null || Distance(action.Target, Piece.Pos) > 2 ||
-                ColorOfPiece(action.Target) != Piece.Color ||
-                action.Target == Piece.Pos)
+            if (action is not ICaptures || action.GetTargetingType() != TargetingType.Unit ||
+                Distance(action.GetTargetPos(), Piece.Pos) > 2 ||
+                action.GetTargetAsPiece().Color != Piece.Color ||
+                action.GetTargetAsPiece() == Piece)
                 return;
 
-            action.Target = Piece.Pos;
+            action.ChangeTarget(Piece);
         }
 
         public override int GetValueForAI()

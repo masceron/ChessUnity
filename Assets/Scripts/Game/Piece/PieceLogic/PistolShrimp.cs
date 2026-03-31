@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
         {
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
             // ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(5, this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
@@ -28,7 +28,7 @@ namespace Game.Piece.PieceLogic
                                 var index = IndexOf(rankOff, fileOff);
                                 var pOn = PieceOn(index);
                                 if (pOn == null || pOn == this) continue;
-                                list.Add(new PistolShrimpActive(Pos, index));
+                                list.Add(new PistolShrimpActive(this, pOn));
                             }
 
                             break;
@@ -38,7 +38,7 @@ namespace Game.Piece.PieceLogic
                                 var index = IndexOf(rankOff, fileOff);
                                 var pOn = PieceOn(index);
                                 if (pOn == null || pOn == this) continue;
-                                list.Add(new PistolShrimpActive(Pos, index));
+                                list.Add(new PistolShrimpActive(this, pOn));
                             }
 
                             break;

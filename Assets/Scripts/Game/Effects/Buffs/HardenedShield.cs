@@ -1,7 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -21,12 +20,12 @@ namespace Game.Effects.Buffs
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures
-                || action.Target != Piece.Pos
+                || action.GetTargetAsPiece() != Piece
                 || action.Result != ResultFlag.Blocked
                 || action.Result != ResultFlag.HardenedBlock
                 || action.Result != ResultFlag.Evade) return;
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, BoardUtils.PieceOn(action.Maker)), Piece));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, action.GetMakerAsPiece()), Piece));
             if (Strength > 1) Strength--;
             else
                 ActionManager.EnqueueAction(new RemoveEffect(this));
@@ -36,7 +35,7 @@ namespace Game.Effects.Buffs
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Target != Piece.Pos || action.Result != ResultFlag.Success ||
+            if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Success ||
                 (action.Flag & ActionFlag.Unblockable) != 0) return;
             action.Result = ResultFlag.HardenedBlock;
         }

@@ -1,5 +1,5 @@
-﻿using Game.Action.Skills;
-using Game.Common;
+﻿using Game.Action;
+using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -19,19 +19,19 @@ namespace Game.Effects.Others
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ISkills)
+            if (action is not ISkills || action.GetTargetingType() != TargetingType.Unit)
                 return;
 
-            var maker = BoardUtils.PieceOn(action.Maker);
-            var target = BoardUtils.PieceOn(action.Target);
+            var maker = action.GetMakerAsPiece();
+            var target = action.GetTargetAsPiece();
 
             if (target != Piece)
                 return;
 
             if (maker == null || !MatchManager.Roll(Chance))
                 return;
-
-            action.Target = maker.Pos;
+            
+            action.ChangeTarget(maker);
         }
     }
 }

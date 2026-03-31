@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown > 0) return;
 
-                if (isPlayer) list.Add(new MaskedPufferActive(Pos, Pos));
+                if (isPlayer) list.Add(new MaskedPufferActive(this));
             };
         }
 

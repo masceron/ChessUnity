@@ -7,17 +7,17 @@ namespace Game.Action.Skills
 {
     public class GoldenBassletActive : Action, ISkills
     {
-        public GoldenBassletActive(int maker, int target) : base(maker)
+        public GoldenBassletActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
-        
+
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration), 100, PieceOn(Target)), maker)); // TODO: Check probability.
-            SetCooldown(Maker, ((IPieceWithSkill)maker).TimeToCooldown);
+            var maker = GetMakerAsPiece();
+            ActionManager.EnqueueAction(
+                new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration), 100, GetTargetAsPiece()),
+                    maker)); // TODO: Check probability.
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)maker).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

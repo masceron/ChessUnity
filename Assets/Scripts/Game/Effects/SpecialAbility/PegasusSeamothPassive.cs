@@ -17,7 +17,7 @@ namespace Game.Effects.SpecialAbility
 
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is IQuiets)
-                    actions[i] = new PegasusSeamothMove(Piece.Pos, actions[i].Target);
+                    actions[i] = new PegasusSeamothMove(Piece, actions[i].GetTargetPos());
         }
     }
 }

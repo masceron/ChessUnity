@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Tăng khoảng cách ăn quân lên 2 ô khi đứng trên ô này. Ra khỏi ô sẽ lập tức mất hiệu ứng
+    /// </summary>
     public class PredatorLair : Formation
     {
         private LongReach appliedEffect;
@@ -22,7 +25,7 @@ namespace Game.Tile
         {
             base.OnPieceEnter(piece);
             appliedEffect = new LongReach(PieceOnFormation, -1, 2);
-            ActionManager.EnqueueAction(new ApplyEffect(appliedEffect, FormationType.PredatorLair));
+            ActionManager.EnqueueAction(new ApplyEffect(appliedEffect));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

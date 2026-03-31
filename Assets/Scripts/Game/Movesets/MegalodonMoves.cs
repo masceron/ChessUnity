@@ -30,7 +30,7 @@ namespace Game.Movesets
                     if (piece == null || piece.Color == color) continue;
                     if (Pathfinder.LineBlocker(startRank, startFile, rank, file).Item1 != -1) continue;
 
-                    list.Add(new NormalCapture(pos, idx));
+                    list.Add(new NormalCapture(caller, piece));
                 }
             }
 

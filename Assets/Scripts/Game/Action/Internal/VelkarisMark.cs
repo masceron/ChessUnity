@@ -1,5 +1,6 @@
 ﻿using Game.Effects.Others;
 using Game.Piece.PieceLogic;
+using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal
@@ -8,21 +9,20 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class VelkarisMark : Action, IInternal
     {
-        public VelkarisMark(int p, int f, int t) : base(p)
+        public VelkarisMark(PieceLogic f, PieceLogic t) : base(f, t)
         {
-            Maker = f;
-            Target = t;
         }
 
         protected override void Animate()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(PieceOn(Target)), PieceOn(Maker)));
         }
 
         protected override void ModifyGameState()
         {
-            SetCooldown(Maker, 0);
-            ((Velkaris)PieceOn(Maker)).Marked = PieceOn(Target);
+            ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(GetTargetAsPiece()), GetMakerAsPiece()));
+
+            SetCooldown(GetMakerAsPiece(), 0);
+            ((Velkaris)GetMakerAsPiece()).Marked = GetTargetAsPiece();
         }
     }
 }

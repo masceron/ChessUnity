@@ -16,10 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public BobtailSquidActive(int maker, int target) : base(maker)
+        public BobtailSquidActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -35,23 +33,24 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
-            var Color = PieceOn(Maker).Color;
+            var maker = GetMakerAsPiece();
+            SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
+            var Color = maker.Color;
             var direction = Color ? -1 : +1;
             var steps = 0;
-            var (oldRank, oldFile) = RankFileOf(Maker);
+            var (oldRank, oldFile) = RankFileOf(GetFrom());
 
             while (IsActive(IndexOf(oldRank + (steps + 1) * direction, oldFile)) && steps < 3) steps++;
             var finalPos = IndexOf(oldRank + steps * direction, oldFile);
-            MatchManager.Ins.GameState.Move(Maker, finalPos);
-            PieceManager.Ins.Move(Maker, finalPos);
+            MatchManager.Ins.GameState.Move(maker, finalPos);
+            PieceManager.Ins.Move(GetFrom(), finalPos);
             for (var x = oldRank + (Color ? 0 : -1); x <= oldRank + (Color ? 1 : 0); ++x)
             for (var y = oldFile - 1; y <= oldFile + 1; ++y)
                 if (IsActive(IndexOf(x, y)))
                 {
-                    Formation FogOfWar = new FogOfWar(Color);
-                    FogOfWar.SetDuration(3);
-                    SetFormation(IndexOf(x, y), FogOfWar);
+                    Formation fogOfWar = new FogOfWar(Color);
+                    fogOfWar.SetDuration(3);
+                    SetFormation(IndexOf(x, y), fogOfWar);
                 }
         }
     }

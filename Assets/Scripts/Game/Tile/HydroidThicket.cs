@@ -5,6 +5,10 @@ using Game.Triggers;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// "Purify khi quân đứng trên ô này 2 turn.
+    /// (turn nó đi vào thì purify 1 lần, xong turn sau nó purify thêm lần nữa, nhưng đến turn thứ 3 trở đi thì nó ko purify nữa)
+    /// </summary>
     public class HydroidThicket : Formation, IEndTurnTrigger
     {
         private bool _canPurifyEndTurn = true;
@@ -23,7 +27,7 @@ namespace Game.Tile
             if (PieceOnFormation == null) return;
             if (_canPurifyEndTurn)
             {
-                ActionManager.EnqueueAction(new Purify(Pos, PieceOnFormation.Pos));
+                ActionManager.EnqueueAction(new Purify(this, PieceOnFormation));
                 _canPurifyEndTurn = false;
             }
         }
@@ -32,7 +36,7 @@ namespace Game.Tile
         {
             _canPurifyEndTurn = true;
             PieceOnFormation = piece;
-            ActionManager.EnqueueAction(new Purify(Pos, piece.Pos));
+            ActionManager.EnqueueAction(new Purify(this, piece));
         }
 
         public override FormationType GetFormationType()

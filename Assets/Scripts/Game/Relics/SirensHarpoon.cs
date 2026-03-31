@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
@@ -35,8 +34,9 @@ namespace Game.Relics
                     if (piece.Color != Color && piece.PieceRank <= PieceRank.Common)
                     {
                         TileManager.Ins.MarkAsMoveable(piece.Pos);
-                        var pending = new SirensHarpoonPending(this, piece.Pos);
-                        BoardViewer.ListOf.Add(pending);
+                        //Làm lại
+                        // var pending = new SirensHarpoonPending(this, piece);
+                        // BoardViewer.ListOf.Add(pending);
                     }
 
                     BoardViewer.Selecting = -2;
@@ -70,7 +70,7 @@ namespace Game.Relics
             var topGroup = listPieces.Where(pieceLogic => pieceLogic.GetValueForAI() == topValue).ToList();
             var idx = Random.Range(0, topGroup.Count);
 
-            var excute = new SirenHarpoonExecute(CommanderPiece.Pos, topGroup[idx].Pos);
+            var excute = new SirenHarpoonExecute(topGroup[idx]);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);

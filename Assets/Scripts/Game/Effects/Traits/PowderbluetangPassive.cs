@@ -24,14 +24,14 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos &&
+            if (action.GetMakerAsPiece() == Piece &&
                 action is NormalMove &&
                 action.Result == ResultFlag.Success &&
                 _count > 0 &&
-                BoardUtils.GetFormation(action.Target) is HydroidThicket)
+                BoardUtils.GetFormation(action.GetTargetPos()) is HydroidThicket)
             {
                 _count--;
-                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece), FormationType.HydroidThicket));
+                ActionManager.EnqueueAction(new ApplyEffect(new HardenedShield(Piece)));
             }
         }
     }

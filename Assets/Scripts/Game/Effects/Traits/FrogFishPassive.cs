@@ -21,12 +21,14 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker != Piece.Pos) return;
-            if (action.Maker == action.Target) return;
-            var targetFormation = GetFormation(action.Target);
+            if (action.GetMakerAsPiece() != Piece) return;
+
+            if (action.GetFrom() == action.GetTargetPos() ||
+                action.GetMakerAsPiece().Pos != action.GetTargetPos()) return;
+            var targetFormation = GetFormation(action.GetTargetPos());
             if (targetFormation is not PredatorLair) return;
 
-            var (rank, file) = RankFileOf(action.Target);
+            var (rank, file) = RankFileOf(action.GetTargetPos());
             foreach (var (nRank, nFile) in MoveEnumerators.AroundUntil(rank, file, 2))
             {
                 var piece = PieceOn(IndexOf(nRank, nFile));

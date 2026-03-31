@@ -1,7 +1,7 @@
 using Game.Action.Internal;
 using Game.Effects.Others;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Captures
 {
@@ -15,15 +15,14 @@ namespace Game.Action.Captures
         {
         }
 
-        public RemoraMark(int maker, int target) : base(maker)
+        public RemoraMark(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(PieceOn(Maker), PieceOn(Target)),
-                PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new RemoraMarked(GetMakerAsPiece(), GetTargetAsPiece()),
+                GetMakerAsPiece()));
         }
     }
 }

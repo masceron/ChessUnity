@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
@@ -15,7 +14,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MarineIguana : Commons.PieceLogic, IPieceWithSkill
     {
-        private readonly int skillRadius = 4;
+        private const int SkillRadius = 4;
 
         public MarineIguana(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, BluffingMoves.Captures)
         {
@@ -26,23 +25,22 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, skillRadius);
-                    foreach (var target in targets) list.Add(new MarineIguanaPending(Pos, target));
+                    //Làm lại
+                    // var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, SkillRadius);
+                    // foreach (var target in targets) list.Add(new MarineIguanaPending(Pos, target));
                 }
                 else
                 {
-                    var captureTargets = new List<int>();
-                    if (excludeEmptyTile)
-                        captureTargets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, skillRadius);
-                    else
-                        captureTargets = SkillRangeHelper.GetActiveCellInRadius(Pos, skillRadius);
+                    var captureTargets = excludeEmptyTile
+                        ? SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, SkillRadius)
+                        : SkillRangeHelper.GetActiveCellInRadius(Pos, SkillRadius);
 
                     if (captureTargets.Contains(Pos)) captureTargets.Remove(Pos);
 
                     if (captureTargets.Count == 0) return;
                     var firstTarget = captureTargets[0];
                     var secondTarget = -1;
-                    var MaxValue = int.MinValue;
+                    var maxValue = int.MinValue;
                     foreach (var target in captureTargets)
                     {
                         var maxSubValue = int.MinValue;
@@ -65,18 +63,19 @@ namespace Game.Piece.PieceLogic
                         }
 
                         if (secondSubTarget == -1) continue;
-                        if (PieceOn(target).GetValueForAI() + maxSubValue > MaxValue)
+                        if (PieceOn(target).GetValueForAI() + maxSubValue > maxValue)
                         {
-                            MaxValue = PieceOn(target).GetValueForAI() + maxSubValue;
+                            maxValue = PieceOn(target).GetValueForAI() + maxSubValue;
                             firstTarget = target;
                             secondTarget = secondSubTarget;
                         }
                     }
 
                     if (secondTarget == -1) return;
-                    var action = new MarineIguanaPending(Pos, firstTarget);
-                    MarineIguanaPending.SecondTarget = PieceOn(secondTarget);
-                    list.Add(action);
+                    //Làm lại
+                    // var action = new MarineIguanaPending(Pos, firstTarget);
+                    // MarineIguanaPending.SecondTarget = PieceOn(secondTarget);
+                    // list.Add(action);
                 }
             };
         }

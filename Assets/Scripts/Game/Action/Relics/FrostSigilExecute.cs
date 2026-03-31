@@ -20,14 +20,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public FrostSigilExecute(int maker, bool ourSide) : base(maker)
+        public FrostSigilExecute(int maker, bool ourSide) : base(null, maker)
         {
             _ourSide = ourSide;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = BoardUtils.RankFileOf(Maker);
+            var (rank, file) = BoardUtils.RankFileOf(GetFrom());
             var pieces = BoardUtils.GetPiecesInRadius(rank, file, Radius, _ => true);
 
             foreach (var piece in pieces)

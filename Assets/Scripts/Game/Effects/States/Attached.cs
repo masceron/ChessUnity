@@ -67,7 +67,8 @@ namespace Game.Effects.States
             else
             {
                 var randomPos = availablePos[UnityEngine.Random.Range(0, availablePos.Count)];
-                ActionManager.EnqueueAction(new MoveToDetachAdhesive(hostPos, randomPos, adhesivePiece, hostLogic));
+                //Làm lại
+                //ActionManager.EnqueueAction(new MoveToDetachAdhesive(hostPos, randomPos, adhesivePiece, hostLogic));
             }
         }
 

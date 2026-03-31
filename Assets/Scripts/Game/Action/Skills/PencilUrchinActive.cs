@@ -14,10 +14,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public PencilUrchinActive(int maker, int target) : base(maker)
+        public PencilUrchinActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -27,8 +25,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetFormation(Target, new UrchinField(false, PieceOn(Maker).Color));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetFormation(GetTargetPos(), new UrchinField(false, GetMakerAsPiece().Color));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

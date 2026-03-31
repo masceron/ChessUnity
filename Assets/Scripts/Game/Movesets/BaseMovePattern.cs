@@ -70,14 +70,14 @@ namespace Game.Movesets
                 if (target == null)
                 {
                     if (!forCapture && isClear)
-                        list.Add(new NormalMove(pos, targetPos));
+                        list.Add(new NormalMove(caller, targetPos));
                     if (forCapture && isClear && !excludeEmptyTile) // add capture để nếu đi vào đây thì sẽ bị phạt
-                        list.Add(new NormalCapture(pos, targetPos));
+                        list.Add(new NormalCapture(caller, target));
                 }
                 else if (target.Color != color)
                 {
                     if (forCapture && isClear)
-                        list.Add(new NormalCapture(pos, targetPos));
+                        list.Add(new NormalCapture(caller, target));
                 }
             }
         }

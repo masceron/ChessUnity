@@ -16,9 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SnipeEelActive(int maker, int target) : base(maker)
+        public SnipeEelActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -28,8 +27,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, BoardUtils.PieceOn(Target)),
-                BoardUtils.PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, GetTargetAsPiece()),
+                GetMakerAsPiece()));
         }
     }
 }

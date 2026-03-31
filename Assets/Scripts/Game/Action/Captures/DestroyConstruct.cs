@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -13,20 +14,19 @@ namespace Game.Action.Captures
         {
         }
 
-        public DestroyConstruct(int maker, int target) : base(maker)
+        public DestroyConstruct(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(Maker);
-            MatchManager.Ins.GameState.Kill(Target);
+            MatchManager.Ins.GameState.Kill(GetMakerAsPiece());
+            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 15, this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
 
@@ -31,7 +31,7 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                     {
                         var index = IndexOf(rankOff, fileOff);
-                        list.Add(new ArcticBrittleStarActive(Pos, index));
+                        list.Add(new ArcticBrittleStarActive(this, index));
                     }
                 }
                 else
@@ -55,7 +55,7 @@ namespace Game.Piece.PieceLogic
                     var random = new Random();
                     var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
-                    list.Add(new ArcticBrittleStarActive(Pos, selectedPiece.Pos));
+                    list.Add(new ArcticBrittleStarActive(this, selectedPiece.Pos));
                 }
             };
         }

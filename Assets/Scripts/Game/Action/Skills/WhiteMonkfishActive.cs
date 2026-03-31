@@ -17,9 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public WhiteMonkfishActive(int maker, int target, int duration) : base(maker)
+        public WhiteMonkfishActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
-            Target = target;
             Duration = duration;
         }
 
@@ -34,7 +33,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(Target), Target, Duration)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), Duration)));
         }
     }
 }

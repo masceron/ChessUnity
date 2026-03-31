@@ -16,10 +16,10 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SwordfishAttack(this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
-                if (isPlayer) list.Add(new SwordFishActive(Pos));
+                if (isPlayer) list.Add(new SwordFishActive(this));
                 //query for AI in here
             };
         }

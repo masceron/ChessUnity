@@ -20,7 +20,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.SourcePiece != Piece) return;
+            if (applyEffect.GetMakerAsPiece() != Piece) return;
             if (applyEffect.Effect is not Tethered tethered) return;
 
             var tetheredPiece = tethered.Piece;

@@ -1,5 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -13,15 +14,14 @@ namespace Game.Action.Relics
         {
         }
 
-        public SeafoamPhialAction(int maker) : base(maker)
+        public SeafoamPhialAction(PieceLogic target) : base(null, target)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new Purify(Maker, Maker));
-            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, PieceOn(Maker))));
+            ActionManager.EnqueueAction(new Purify(null, GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Haste(3, 1, GetTargetAsPiece())));
         }
     }
 }

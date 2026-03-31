@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                         if (upgradableTo == PieceRank.None) continue;
 
                         var cost = CalculateCost(piece.PieceRank, upgradableTo);
-                        if (Coin >= cost) list.Add(new ChrysosUpgradeCandidate(Pos, i, cost, this));
+                        if (Coin >= cost) list.Add(new ChrysosUpgradeCandidate(this, piece, cost));
                     }
                 }
                 // query for AI

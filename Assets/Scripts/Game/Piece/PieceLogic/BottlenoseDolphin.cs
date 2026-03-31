@@ -25,7 +25,7 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var listPieces = SkillRangeHelper.GetActiveEnemyPieceGlobal(Pos);
-                    foreach (var piece in listPieces) list.Add(new BottlenoseDolphinActive(Pos, PieceOn(piece).Pos));
+                    foreach (var piece in listPieces) list.Add(new BottlenoseDolphinActive(this, PieceOn(piece)));
                 }
                 //query for AI in here
             };

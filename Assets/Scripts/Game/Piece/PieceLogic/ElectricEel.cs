@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                     if (SkillCooldown == 0)
-                        list.Add(new ElectricEelActive(Pos));
+                        list.Add(new ElectricEelActive(this));
             };
         }
 

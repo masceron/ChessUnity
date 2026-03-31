@@ -34,7 +34,7 @@ namespace Game.Movesets
                 if (piece != null ||
                     Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
                     return;
-                list.Add(new NormalMove(pos, index));
+                list.Add(new NormalMove(caller, index));
             }
         }
 
@@ -89,7 +89,7 @@ namespace Game.Movesets
                 if (!p.Effects.Any(e => e.Category == EffectCategory.Debuff)) return false;
                 if (p.PieceRank != PieceRank.Construct && !p.Effects.Any(e => e.Category == EffectCategory.Debuff))
                     return false;
-                if (p.Color != color) list.Add(new NormalCapture(pos, index));
+                if (p.Color != color) list.Add(new NormalCapture(piece, p));
 
                 return false;
             }

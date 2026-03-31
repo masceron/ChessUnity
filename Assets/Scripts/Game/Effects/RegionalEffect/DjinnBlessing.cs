@@ -82,7 +82,7 @@ namespace Game.Effects.RegionalEffect
                                 new ApplyEffect(GetRandomDebuffEffect(validPieces[randomInd], duration, strength)));
                             break;
                         default:
-                            ActionManager.EnqueueAction(new KillPiece(validPieces[randomInd].Pos));
+                            ActionManager.EnqueueAction(new KillPiece(validPieces[randomInd]));
                             break;
                     }
                 }

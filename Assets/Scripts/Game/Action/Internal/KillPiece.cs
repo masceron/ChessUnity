@@ -1,10 +1,11 @@
 ﻿using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
     public class KillPiece : Action, IInternal
     {
-        public KillPiece(int maker) : base(maker)
+        public KillPiece(PieceLogic maker) : base(maker)
         {
         }
 
@@ -14,8 +15,8 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Maker);
-            MatchManager.Ins.GameState.Kill(Maker);
+            PieceManager.Ins.Destroy(GetFrom());
+            MatchManager.Ins.GameState.Kill(GetMakerAsPiece());
         }
     }
 }

@@ -19,10 +19,10 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures) return;
 
-            if (action.Maker == Piece.Pos) return;
-            if (action.Target != Piece.Pos) return;
+            if (action.GetMakerAsPiece() == Piece) return;
+            if (action.GetTargetAsPiece() != Piece) return;
 
-            if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
+            if (action.Result != ResultFlag.Success) ActionManager.EnqueueAction(new Purify(Piece, Piece));
         }
 
         public override int GetValueForAI()

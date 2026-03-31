@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                                                  || rank < startingSizeY ||
                                                  rank >= startingSizeY + MatchManager.Ins.StartingSize.y
                                                  || TileManager.Ins.IsTileEmpty(IndexOf(rank, file))) continue;
-                        list.Add(new GrenadiersActive(Pos, IndexOf(rank, file)));
+                        list.Add(new GrenadiersActive(this, IndexOf(rank, file)));
                     }
                 //query for AI in here
             };

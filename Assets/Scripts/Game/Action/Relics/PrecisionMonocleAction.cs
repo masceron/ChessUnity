@@ -1,5 +1,6 @@
 using Game.Common;
 using Game.Effects.Traits;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using ZLinq;
 
@@ -16,14 +17,13 @@ namespace Game.Action.Relics
         {
         }
 
-        public PrecisionMonocleAction(int maker) : base(maker)
+        public PrecisionMonocleAction(int maker) : base(null, maker)
         {
-            Maker = maker;
         }
 
         protected override void ModifyGameState()
         {
-            var allyColor = BoardUtils.PieceOn(Maker).Color;
+            var allyColor = GetTargetAsPiece().Color;
             var markedEnemy = BoardUtils.FindPiecesWithEffectName(!allyColor, EffectName);
             var markedAlly = BoardUtils.FindPiecesWithEffectName(allyColor, EffectName);
 

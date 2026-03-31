@@ -24,16 +24,16 @@ namespace Game.Effects.SpecialAbility
         void IAfterPieceActionTrigger.OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not IQuiets) return;
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
-            Debug.Log(PieceOn(action.Maker).Type + " made a quiet action, check for painted greenling passive");
+            Debug.Log(action.GetMakerAsPiece().Type + " made a quiet action, check for painted greenling passive");
 
-            if (HasFormation(action.Target)) 
+            if (HasFormation(action.GetTargetPos())) 
             {
-                var formation = GetFormation(action.Target);
-                if (formation.Color != PieceOn(action.Maker).Color) return;
+                var formation = GetFormation(action.GetTargetPos());
+                if (formation.Color != action.GetMakerAsPiece().Color) return;
 
-                var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(action.Target, GetStat(EffectStat.Radius));
+                var listPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(action.GetTargetPos(), GetStat(EffectStat.Radius));
                 foreach (var pos in listPieces)
                 {
                     var p = PieceOn(pos);

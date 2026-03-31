@@ -16,7 +16,7 @@ namespace Game.Effects.SpecialAbility
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is ICaptures)
-                    actions[i] = new DestroyConstruct(Piece.Pos, actions[i].Target);
+                    actions[i] = new DestroyConstruct(Piece, actions[i].GetTargetAsPiece());
         }
     }
 }

@@ -1,6 +1,6 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using UnityEngine;
 
 namespace Game.Action.Captures
 {
@@ -18,9 +18,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public CaptureWithoutEndTurn(int maker, int target) : base(maker)
+        public CaptureWithoutEndTurn(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -29,12 +28,11 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            Debug.Log("Complete CooperativeCapture");
-            PieceManager.Ins.Destroy(Target);
-            PieceManager.Ins.Move(Maker, Target);
-            MatchManager.Ins.GameState.Kill(Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
+            PieceManager.Ins.Destroy(GetTargetPos());
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
+            
+            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
+            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

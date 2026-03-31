@@ -179,7 +179,7 @@ namespace UX.UI.Ingame
             foreach (var quiets in _moveList.OfType<IQuiets>())
             {
                 _listOf.Add((Action)quiets);
-                TileManager.Ins.MarkAsMoveable(((Action)quiets).Target);
+                TileManager.Ins.MarkAsMoveable(((Action)quiets).GetTargetPos());
             }
 
             return _listOf.Count > 0;
@@ -192,10 +192,10 @@ namespace UX.UI.Ingame
 
             foreach (var captures in _moveList.OfType<ICaptures>())
             {
-                var targetPos = ((Action)captures).Target;
+                var targetPos = ((Action)captures).GetTargetPos();
                 if (FormationManager.IsHideByFog(targetPos, SideToMove())) continue;
                 _listOf.Add((Action)captures);
-                TileManager.Ins.MarkAsMoveable(((Action)captures).Target);
+                TileManager.Ins.MarkAsMoveable(targetPos);
             }
 
             return _listOf.Count > 0;
@@ -208,10 +208,10 @@ namespace UX.UI.Ingame
 
             foreach (var skills in _moveList.OfType<ISkills>())
             {
-                var targetPos = ((Action)skills).Target;
+                var targetPos = ((Action)skills).GetTargetPos();
                 if (FormationManager.IsHideByFog(targetPos, SideToMove())) continue;
                 _listOf.Add((Action)skills);
-                TileManager.Ins.MarkAsMoveable(((Action)skills).Target);
+                TileManager.Ins.MarkAsMoveable(targetPos);
             }
 
             return _listOf.Count > 0;

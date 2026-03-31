@@ -56,7 +56,7 @@ namespace Game.Piece.PieceLogic
                     if (PieceOn(index) != null) continue;
                     if (!IsEdgeTile(index)) continue;
 
-                    list.Add(new OliveRidleyTurtleActive(Pos, index));
+                    list.Add(new OliveRidleyTurtleActive(this, index));
                 }
             };
         }

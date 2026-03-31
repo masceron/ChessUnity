@@ -23,7 +23,8 @@ namespace Game.Piece.PieceLogic
                         if (piece == null || piece.Color == Color) continue;
                         if (!BoardUtils.HasFormation(i)) continue;
 
-                        list.Add(new RustyParrotfishActive(Pos, piece.Pos));
+                        //Làm lại
+                        //list.Add(new RustyParrotfishActive(Pos, piece.Pos));
                     }
                 //query for AI in here
             };

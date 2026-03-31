@@ -14,26 +14,24 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArcticBrittleStarActive(int maker, int target) : base(maker)
+        public ArcticBrittleStarActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
-            if (maker == null || pieceAI == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -5;
             return 0;
         }
 
         protected override void ModifyGameState()
         {
-            Formation anchorIce = new AnchorIce(PieceOn(Maker).Color);
+            Formation anchorIce = new AnchorIce(GetMakerAsPiece().Color);
             anchorIce.SetDuration(3);
-            FormationManager.Ins.SetFormation(Target, anchorIce);
+            FormationManager.Ins.SetFormation(GetTargetPos(), anchorIce);
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }
