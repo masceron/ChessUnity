@@ -855,6 +855,30 @@ MonoBehaviour:
     m_Key: effect_arrow_crab_nocturnal_description
     m_Metadata:
       m_Items: []
+  - m_Id: 84235162450579456
+    m_Key: effect_frog_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162475745280
+    m_Key: effect_sunray_zoanthid_diurnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162484133888
+    m_Key: effect_temporal_warp_return_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162492522496
+    m_Key: effect_brine_shrimp_summon_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162496716800
+    m_Key: effect_masked_pufferfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162500911104
+    m_Key: effect_maxima_clam_passive_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

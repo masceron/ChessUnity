@@ -88,6 +88,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_marine_flatworm" => new MarineFlatworm(cfg),
                 "piece_marine_iguana" => new MarineIguana(cfg),
                 "piece_masked_puffer" => new MaskedPuffer(cfg),
+                "piece_maxima_clam" => new MaximaClam(cfg),
                 "piece_medicinal_leech" => new MedicinalLeech(cfg),
                 "piece_megalodon" => new Megalodon(cfg),
                 "piece_melibe" => new Melibe(cfg),
@@ -142,6 +143,7 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_stone_crab" => new StoneCrab(cfg),
                 "piece_stone_wall" => new StoneWall(cfg),
                 "piece_sunfish" => new Sunfish(cfg),
+                "piece_sunray_zoanthid" => new SunrayZoanthid(cfg),
                 "piece_surge_wrasse" => new SurgeWrasse(cfg),
                 "piece_swordfish" => new Swordfish(cfg),
                 "piece_temperantia" => new Temperantia(cfg),
@@ -150,15 +152,12 @@ namespace Game.Piece.PieceLogic.Commons
                 "piece_tiger_prawn" => new TigerPrawn(cfg),
                 "piece_toxic_zoanthid" => new ToxicZoanthid(cfg),
                 "piece_turban_snail" => new TurbanSnail(cfg),
+                "piece_tuxedo_urchin" => new TuxedoUrchin(cfg),
                 "piece_umbrella_slug" => new UmbrellaSlug(cfg),
                 "piece_velkaris" => new Velkaris(cfg),
                 "piece_weeping_toadfish" => new WeepingToadfish(cfg),
                 "piece_wire_coral_goby" => new WireCoralGoby(cfg),
                 "piece_yellowlined_basslet" => new YellowlinedBasslet(cfg),
-                "piece_sunray_zoanthid" => new SunrayZoanthid(cfg),
-                "piece_tuxedo_urchin" => new TuxedoUrchin(cfg),
-                "piece_maxima_clam" => new MaximaClam(cfg),
-                
                 _ => null
             };
         }
