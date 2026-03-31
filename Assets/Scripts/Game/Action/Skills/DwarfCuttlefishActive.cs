@@ -1,11 +1,16 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class DwarfCuttlefishActive : Action, ISkills
+    [MemoryPackable]
+    public partial class DwarfCuttlefishActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private DwarfCuttlefishActive() { }
+
         public DwarfCuttlefishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }

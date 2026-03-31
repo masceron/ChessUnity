@@ -1,11 +1,16 @@
+using MemoryPack;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Quiets
 {
-    public class MoveToParasitic : Action
+    [MemoryPackable]
+    public partial class MoveToParasitic : Action
     {
+        [MemoryPackConstructor]
+        private MoveToParasitic() { }
+
         public MoveToParasitic(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }

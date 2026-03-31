@@ -1,11 +1,16 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Skills
 {
-    public class ChinookSalmonActive : Action, ISkills
+    [MemoryPackable]
+    public partial class ChinookSalmonActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private ChinookSalmonActive() { }
+
         public ChinookSalmonActive(PieceLogic maker, int target) : base(maker, target)
         {
         }

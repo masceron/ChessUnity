@@ -17,8 +17,11 @@ namespace Game.Action.Skills
         {
         }
 
-        private readonly List<int> _positions;
-        private readonly string _chosenType;
+        [MemoryPackInclude]
+
+        private List<int> _positions;
+        [MemoryPackInclude]
+        private string _chosenType;
         public RoyalGrammaActive(PieceLogic maker, List<int> positions, string type) : base(maker)
         {
             _positions = positions;

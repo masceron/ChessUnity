@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Effects.States;
 using Game.Managers;
@@ -8,8 +9,12 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class SandConchActiveMoveAndFormate : Action, ISkills
+    [MemoryPackable]
+    public partial class SandConchActiveMoveAndFormate : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SandConchActiveMoveAndFormate() { }
+
         public SandConchActiveMoveAndFormate(PieceLogic maker, int target) : base(maker, target)
         {
         }

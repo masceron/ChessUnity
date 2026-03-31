@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.Action.Quiets;
@@ -10,7 +10,8 @@ using MemoryPack;
 
 namespace Game.Action.Skills
 {
-    public class PorcupineCrabActive : Action, ISkills
+    [MemoryPackable]
+    public partial class PorcupineCrabActive : Action, ISkills
     {
         private const int BleedingStack = 5;
         [MemoryPackConstructor]
@@ -88,7 +89,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic maker)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

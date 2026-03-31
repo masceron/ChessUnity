@@ -3,7 +3,7 @@ using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using Game.Movesets;
 using Game.Effects.Buffs;
-using QuillbackRockfishActive = Assets.Scripts.Game.Action.Skills.QuillbackRockfishActive;
+using QuillbackRockfishActive = Game.Action.Skills.QuillbackRockfishActive;
 
 namespace Game.Piece.PieceLogic
 {

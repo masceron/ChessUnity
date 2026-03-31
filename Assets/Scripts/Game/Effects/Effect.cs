@@ -80,7 +80,7 @@ namespace Game.Effects
             {
                 var pieceType = piece != null ? piece.Type : "<null-piece>";
                 Debug.LogError($"[Effect] Missing EffectData for key '{name}' (piece: '{pieceType}'). Please add this key to EffectsData.");
-                throw new System.Collections.Generic.KeyNotFoundException($"Missing EffectData key '{name}' for piece '{pieceType}'.");
+                throw new KeyNotFoundException($"Missing EffectData key '{name}' for piece '{pieceType}'.");
             }
 
             Category = info.category;

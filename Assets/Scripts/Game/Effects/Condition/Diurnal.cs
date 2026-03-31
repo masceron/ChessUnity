@@ -14,7 +14,7 @@ namespace Game.Effects.Condition
         /// <summary>
         /// Trả về true nếu đang là ban ngày (IsDay). Các effect kế thừa Diurnal nên check biến này.
         /// </summary>
-        public bool IsActive => Game.Managers.MatchManager.Ins != null && Game.Managers.MatchManager.Ins.GameState.IsDay;
+        public bool IsActive => Managers.MatchManager.Ins != null && Managers.MatchManager.Ins.GameState.IsDay;
 
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {

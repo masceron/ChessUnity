@@ -135,7 +135,7 @@ namespace Editor.Windows
             var baseType = typeof(Action);
 
             var subTypes = TypeCache.GetTypesDerivedFrom<Action>()
-                .Where(t => !t.IsAbstract && !t.IsGenericType)
+                .Where(t => t.IsPublic && !t.IsAbstract && !t.IsGenericType)
                 .Where(t => !typeof(IInternal).IsAssignableFrom(t))
                 .OrderBy(t => t.FullName)
                 .ToList();

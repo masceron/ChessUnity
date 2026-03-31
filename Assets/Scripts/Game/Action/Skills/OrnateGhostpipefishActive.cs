@@ -1,4 +1,4 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -16,7 +16,8 @@ namespace Game.Action.Skills
         private OrnateGhostpipefishActive()
         {
         }
-        private readonly int Duration;
+        [MemoryPackInclude]
+        private int Duration;
 
         public OrnateGhostpipefishActive(PieceLogic maker, PieceLogic to, int duration) : base(maker, to)
         {

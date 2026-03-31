@@ -12,9 +12,12 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FrilledSharkActive : Action, ISkills
     {
-        private readonly int dfile;
+        [MemoryPackInclude]
+        private int dfile;
 
-        private readonly int drank;
+        [MemoryPackInclude]
+
+        private int drank;
 
         [MemoryPackConstructor]
         private FrilledSharkActive()

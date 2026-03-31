@@ -1,4 +1,4 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Others;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
@@ -16,7 +16,8 @@ namespace Game.Action.Skills
         private BrineShrimpActive()
         {
         }
-        private readonly int _duration;
+        [MemoryPackInclude]
+        private int _duration;
 
         public BrineShrimpActive(PieceLogic maker, int duration) : base(maker)
         {

@@ -1,4 +1,4 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -21,8 +21,11 @@ namespace Game.Action.Skills
         {
         }
 
-        private readonly List<int> _selectedTarget;
-        private readonly int _duration;
+        [MemoryPackInclude]
+
+        private List<int> _selectedTarget;
+        [MemoryPackInclude]
+        private int _duration;
 
         public EmeraldCrabActive(PieceLogic maker, List<int> listTarget, int duration) : base(maker)
         {

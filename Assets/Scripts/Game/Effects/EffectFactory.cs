@@ -19,7 +19,7 @@ namespace Game.Effects
                 var random = new System.Random();
             var selectedEffectName = debuffs[random.Next(debuffs.Length)];
             
-            return EffectFactory.CreateEffect(selectedEffectName, 5, 1, pieceLogic);
+            return CreateEffect(selectedEffectName, 5, 1, pieceLogic);
         }
         public static Effect CreateEffect(string effectName, int duration, int strength, PieceLogic piece)
         {

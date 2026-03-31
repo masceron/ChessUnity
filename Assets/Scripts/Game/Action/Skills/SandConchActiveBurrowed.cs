@@ -1,12 +1,17 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class SandConchActiveBurrowed : Action, ISkills
+    [MemoryPackable]
+    public partial class SandConchActiveBurrowed : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private SandConchActiveBurrowed() { }
+
         public SandConchActiveBurrowed(PieceLogic maker) : base(maker)
         {
         }

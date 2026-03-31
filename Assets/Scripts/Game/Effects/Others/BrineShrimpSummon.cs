@@ -71,7 +71,7 @@ namespace Game.Effects.Others
                     return;
                 }
 
-                ActionManager.EnqueueAction(new SpawnPiece(new Game.Piece.PieceConfig("piece_juvenile_brine_shrimp", Piece.Color, availablePieces[i])));
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_juvenile_brine_shrimp", Piece.Color, availablePieces[i])));
 
             }
         }

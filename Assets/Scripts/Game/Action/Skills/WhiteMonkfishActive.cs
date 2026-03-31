@@ -1,4 +1,4 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -10,6 +10,7 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class WhiteMonkfishActive : Action, ISkills
     {
+        [MemoryPackInclude]
         private int Duration;
         [MemoryPackConstructor]
         private WhiteMonkfishActive()

@@ -22,7 +22,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) { return; }
                 if (isPlayer)
                 {
-                    var allies = FindPiece<Commons.PieceLogic>(this.Color);
+                    var allies = FindPiece<Commons.PieceLogic>(Color);
                     foreach(var ally in allies)
                     {
                         if (ally != this)

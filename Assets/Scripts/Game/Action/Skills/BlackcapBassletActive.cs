@@ -1,11 +1,16 @@
-﻿using Game.Action.Quiets;
+using MemoryPack;
+using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class BlackcapBassletActive : Action, ISkills
+    [MemoryPackable]
+    public partial class BlackcapBassletActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private BlackcapBassletActive() { }
+
         public BlackcapBassletActive(PieceLogic maker, int target) : base(maker, target)
         {
         }

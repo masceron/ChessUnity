@@ -1,3 +1,4 @@
+using MemoryPack;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -11,9 +12,15 @@ namespace Game.Action.Quiets
     ///     - Bám Formation: gọi <see cref="PieceManager.MoveToAdhesiveFormation"/> — bay lên đỉnh ô Formation,
     ///       thu nhỏ, nhưng không parent (Formation không phải MonoBehaviour).
     /// </summary>
-    public class MoveToAdhesive : Action
+    [MemoryPackable]
+    public partial class MoveToAdhesive : Action
     {
-        private readonly bool _attachToFormation;
+        [MemoryPackConstructor]
+        private MoveToAdhesive() { }
+
+        [MemoryPackInclude]
+
+        private bool _attachToFormation;
 
         /// <param name="maker">Vị trí quân Adhesive.</param>
         /// <param name="target">Vị trí ô target (Piece hoặc Formation).</param>

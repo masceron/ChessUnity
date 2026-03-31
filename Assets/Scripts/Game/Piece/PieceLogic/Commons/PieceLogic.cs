@@ -299,7 +299,7 @@ namespace Game.Piece.PieceLogic.Commons
             if (existing != null)
             {
                 Effects.Remove(existing);
-                BoardUtils.RemoveObserver(existing);
+                RemoveObserver(existing);
             }
 
             CurrentState = StateType.None;

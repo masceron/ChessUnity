@@ -1,4 +1,5 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects.Debuffs;
@@ -7,8 +8,12 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class BlubberJellyActive : Action, ISkills
+    [MemoryPackable]
+    public partial class BlubberJellyActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private BlubberJellyActive() { }
+
         public BlubberJellyActive(PieceLogic maker, int target) : base(maker, target)
         {
         }

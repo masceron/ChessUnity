@@ -38,7 +38,7 @@ namespace Game.Managers
             if (_formations[pos] != null) RemoveFormation(_formations[pos]);
             _formations[pos] = env;
             if (PieceOn(pos) != null) _formations[pos].OnCreated(PieceOn(pos));
-            BoardUtils.AddToEntityList(env);
+            AddToEntityList(env);
         }
 
         public void MoveFormation(int from, int to)

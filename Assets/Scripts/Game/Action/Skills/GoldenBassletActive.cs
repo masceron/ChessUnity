@@ -1,12 +1,17 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class GoldenBassletActive : Action, ISkills
+    [MemoryPackable]
+    public partial class GoldenBassletActive : Action, ISkills
     {
+        [MemoryPackConstructor]
+        private GoldenBassletActive() { }
+
         public GoldenBassletActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
         }
