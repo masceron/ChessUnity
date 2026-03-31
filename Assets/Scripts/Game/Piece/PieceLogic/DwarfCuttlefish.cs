@@ -2,8 +2,6 @@
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
-using Game.Effects;
-using Game.Effects.Debuffs;
 using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
@@ -40,7 +38,7 @@ namespace Game.Piece.PieceLogic
                                 var targetPiece = PieceOn(targetPos);
                                 if (targetPiece == null || targetPiece.Color == Color
                                                         || targetPiece.Effects.All(e => e.EffectName == Stunned)) continue;
-                                list.Add(new DwarfCuttlefishActive(Pos, targetPos));
+                                list.Add(new DwarfCuttlefishActive(this, targetPiece));
                             }
                             break;
                         case true:
@@ -51,7 +49,7 @@ namespace Game.Piece.PieceLogic
                                 var targetPiece = PieceOn(targetPos);
                                 if (targetPiece == null || targetPiece.Color == Color
                                                         || targetPiece.Effects.All(e => e.EffectName == Stunned)) continue;
-                                list.Add(new DwarfCuttlefishActive(Pos, targetPos));
+                                list.Add(new DwarfCuttlefishActive(this, targetPiece));
                             }
                             break;
                     }

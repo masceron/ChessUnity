@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using Game.Action.Skills;
 using Game.Managers;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
-using UnityEngine;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
@@ -14,40 +11,37 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EmeraldCrabPending : PendingAction, IDisposable, ISkills
     {
-        private static List<int> selectedTarget;
-        private int Duration;
-        private int NumTarget;
+        private static List<int> _selectedTarget;
+        private readonly int _duration;
+        private readonly int _numTarget;
 
-        public EmeraldCrabPending(int maker, int target, int duration, int numTarget) : base(maker)
+        public EmeraldCrabPending(PieceLogic maker, PieceLogic target, int duration, int numTarget) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
-            selectedTarget = new List<int>();
-            Duration = duration;
-            NumTarget = numTarget;
+            _selectedTarget = new List<int>();
+            _duration = duration;
+            _numTarget = numTarget;
         }
 
         public void Dispose()
         {
-            selectedTarget.Clear();
+            _selectedTarget.Clear();
             BoardViewer.SelectingFunction = 0;
         }
 
         protected override void CompleteAction()
         {
-            Debug.Log("EmeraldCrabPending CompleteAction");
-            if (selectedTarget.Count < NumTarget)
+            if (_selectedTarget.Count < _numTarget)
             {
-                if (PieceOn(Target) != null)
+                if (GetTargetAsPiece() != null)
                 {
-                    selectedTarget.Add(Target);
-                    TileManager.Ins.UnMark(Target);
+                    _selectedTarget.Add(GetTargetPos());
+                    TileManager.Ins.UnMark(GetTargetPos());
                 }
             }
 
-            if (selectedTarget.Count == NumTarget)
+            if (_selectedTarget.Count == _numTarget)
             {
-                CommitResult(new EmeraldCrabActive(Maker, selectedTarget, Duration));
+                CommitResult(new EmeraldCrabActive(GetMakerAsPiece(), _selectedTarget, _duration));
             }
         }
 

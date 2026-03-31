@@ -28,9 +28,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 1);
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 1);
             foreach (var target in targets)
-                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, PieceOn(target))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target)));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

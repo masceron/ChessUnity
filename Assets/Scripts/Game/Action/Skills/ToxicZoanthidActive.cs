@@ -18,9 +18,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public ToxicZoanthidActive(int maker, List<int> targetPositions) : base(maker)
+        public ToxicZoanthidActive(PieceLogic maker, List<int> targetPositions) : base(maker)
         {
-            Maker = maker;
             _targetPositions = targetPositions;
         }
 
@@ -31,7 +30,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
+            var makerPiece = GetMakerAsPiece();
 
             foreach (var pos in _targetPositions)
             {
@@ -41,7 +40,7 @@ namespace Game.Action.Skills
                 SetFormation(pos, anoxicPool);
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(makerPiece, ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
     }
 }

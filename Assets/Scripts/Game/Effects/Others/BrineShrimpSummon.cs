@@ -1,28 +1,24 @@
 ﻿using Game.Action;
-using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
-using Game.Effects.States;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Others
 {
     public class BrineShrimpSummon : Effect, IEndTurnTrigger, ISkills
     {
-        private int Duration;
+        private int _duration;
         private static readonly System.Random Rng = new();
 
         public BrineShrimpSummon(PieceLogic piece, int duration) : base(-1, 1, piece, "effect_brine_shrimp_summon")
         {
-            Duration = duration;
-            Debug.Log($"Duration: {Duration}");
+            _duration = duration;
+            Debug.Log($"Duration: {_duration}");
         }
 
         EndTurnTriggerPriority IEndTurnTrigger.Priority => EndTurnTriggerPriority.Other;
@@ -41,16 +37,16 @@ namespace Game.Effects.Others
 
         void IEndTurnTrigger.OnCallEnd(Action.Action lastMainAction)
         {
-            Debug.Log("Petrified Duration: " + Duration);
+            Debug.Log("Petrified Duration: " + _duration);
 
-            if (Duration == 0)
+            if (_duration == 0)
             {
                 SpawnJuvenileBrineShrimp();
                 ActionManager.EnqueueAction(new RemoveEffect(this));
 
             }
 
-            Duration--;
+            _duration--;
         }
 
         void SpawnJuvenileBrineShrimp()

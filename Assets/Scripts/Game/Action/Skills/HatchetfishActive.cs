@@ -27,20 +27,20 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var listPieces = new List<PieceLogic>();
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 4);
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 4);
             foreach (var target in targets)
                 if (GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_camouflage") &&
                     !GetTargetAsPiece().Effects.Any(e => e.EffectName is "effect_blinded" or "effect_extremophile"))
-                    listPieces.Add(PieceOn(target));
+                    listPieces.Add(target);
 
 
             if (listPieces.Count == 0)
             {
-                var targets1 = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 2);
+                var targets1 = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 2);
                 foreach (var target in targets1)
                     if (GetTargetAsPiece().Effects.Any(e =>
                             e.EffectName == "effect_marked" || e.EffectName == "effect_extremophile"))
-                        listPieces.Add(PieceOn(target));
+                        listPieces.Add(target);
             }
 
             if (listPieces.Count == 0) return;
@@ -71,7 +71,8 @@ namespace Game.Action.Skills
             //Apply effect Marked no duration
             ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, GetTargetAsPiece()), GetMakerAsPiece()));
 
-            if (GetTargetAsPiece() is not PieceLogic targetPiece) return;
+            var targetPiece = GetTargetAsPiece();
+            if (targetPiece == null) return;
 
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
                 ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMakerAsPiece()));

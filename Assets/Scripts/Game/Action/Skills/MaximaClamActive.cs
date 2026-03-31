@@ -2,7 +2,6 @@ using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
-using Game.Effects.Traits;
 
 namespace Game.Action.Skills
 {
@@ -16,26 +15,23 @@ namespace Game.Action.Skills
         {
         }
 
-        public MaximaClamActive(int maker, int target) : base(maker)
+        public MaximaClamActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -50 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Target));
-            var maker = PieceOn(Maker);
-            if (maker != null)
-                maker.Quiets = PieceOn(Target).Quiets;
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
+            var maker = GetMakerAsPiece();
+            maker.Quiets = GetTargetAsPiece().Quiets;
+            SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
         }
     }
 }

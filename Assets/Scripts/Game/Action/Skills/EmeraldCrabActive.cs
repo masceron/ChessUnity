@@ -1,11 +1,9 @@
 ﻿using Game.Action.Internal;
-using Game.Action.Quiets;
 using Game.Effects.States;
-using Game.Effects.Traits;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using System.Collections.Generic;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 // <-- thêm để dùng LINQ
@@ -23,14 +21,13 @@ namespace Game.Action.Skills
         {
         }
 
-        public List<int> selectedTarget;
-        private int Duration;
+        private readonly List<int> _selectedTarget;
+        private readonly int _duration;
 
-        public EmeraldCrabActive(int maker, List<int> listTarget, int duration) : base(maker)
+        public EmeraldCrabActive(PieceLogic maker, List<int> listTarget, int duration) : base(maker)
         {
-            Maker = maker;
-            selectedTarget = listTarget;
-            Duration = duration;
+            _selectedTarget = listTarget;
+            _duration = duration;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -40,10 +37,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var pos in selectedTarget)
+            foreach (var piece in _selectedTarget.Select(PieceOn))
             {
-                var piece = PieceOn(pos);
-                ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration, piece)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(_duration, piece)));
             }
         }
     }

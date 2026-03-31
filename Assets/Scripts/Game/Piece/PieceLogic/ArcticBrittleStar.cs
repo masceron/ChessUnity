@@ -40,11 +40,11 @@ namespace Game.Piece.PieceLogic
 
                     var listPieces = new List<Commons.PieceLogic>();
 
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 3);
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, 3);
                     foreach (var target in targets)
                     {
-                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
-                        listPieces.Add(PieceOn(target));
+                        if (target.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        listPieces.Add(target);
                     }
 
                     if (listPieces.Count == 0) return;

@@ -1,6 +1,5 @@
 ﻿using Game.Action.Internal;
 using Game.Action.Quiets;
-using Game.Effects;
 using Game.Effects.States;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -11,23 +10,21 @@ namespace Game.Action.Skills
 {
     public class SandConchActiveMoveAndFormate : Action, ISkills
     {
-        public SandConchActiveMoveAndFormate(int maker, int target) : base(maker)
+        public SandConchActiveMoveAndFormate(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
-            Effect burrowed = maker.Effects.FirstOrDefault(e => e is Burrowed);
+            var maker = GetMakerAsPiece();
+            var burrowed = maker.Effects.FirstOrDefault(e => e is Burrowed);
             
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new NormalMove(maker, GetTargetPos()));
             //TODO: Fix Burrowed to work with SandConch
             
-            FormationManager.Ins.SetFormation(Target, new SiltCloud(false));
+            FormationManager.Ins.SetFormation(GetTargetPos(), new SiltCloud(false));
             if (burrowed != null) ActionManager.EnqueueAction(new ApplyEffect(new NoneState(maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

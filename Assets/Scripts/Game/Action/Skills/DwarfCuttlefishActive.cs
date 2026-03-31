@@ -6,16 +6,14 @@ namespace Game.Action.Skills
 {
     public class DwarfCuttlefishActive : Action, ISkills
     {
-        public DwarfCuttlefishActive(int maker, int target) : base(maker)
+        public DwarfCuttlefishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Target));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

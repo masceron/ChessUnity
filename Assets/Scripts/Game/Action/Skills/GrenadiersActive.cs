@@ -27,8 +27,8 @@ namespace Game.Action.Skills
         public void CompleteActionForAI()
         {
             var listPieces = new List<PieceLogic>();
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetFrom(), 3);
-            foreach (var target in targets) listPieces.Add(PieceOn(target));
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 3);
+            foreach (var target in targets) listPieces.Add(target);
 
             if (listPieces.Count == 0) return;
             var maxValue = listPieces.Max(p => p.GetValueForAI());

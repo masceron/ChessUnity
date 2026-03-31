@@ -3,7 +3,6 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
-using Game.Action.Quiets;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;

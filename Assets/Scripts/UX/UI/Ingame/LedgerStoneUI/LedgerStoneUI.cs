@@ -1,7 +1,5 @@
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Relics.Commons;
-using LedgerStoneRelic = Game.Relics.LedgerStone;
 
 namespace UX.UI.Ingame.LedgerStoneUI
 {

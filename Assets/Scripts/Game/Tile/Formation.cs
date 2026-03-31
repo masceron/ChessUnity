@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using Game.Action.Quiets;
 using Game.Common;
 using Game.Effects;
@@ -43,32 +41,24 @@ namespace Game.Tile
         // ── Fields ───────────────────────────────────────────────────────────────
 
         public readonly FormationCategory Category;
-        public bool Color;
+        public readonly bool Color;
 
         /// <summary>Callback được gọi khi Formation bị xóa khỏi board.</summary>
         public System.Action<Formation> OnRemoveFormation;
 
-        // ── Effects ──────────────────────────────────────────────────────────────
-
-        /// <summary>
-        ///     Danh sách các Effect (chủ yếu là <see cref="StateEffect"/>) mà Formation đang bị dính từ bên ngoài.
-        ///     Ví dụ: Formation bị Attached, Petrified, v.v.
-        /// </summary>
-        public readonly List<Effect> AffectedEffects = new List<Effect>();
-
         // ── Properties ───────────────────────────────────────────────────────────
 
         /// <summary>Quân cờ hiện đang đứng trên Formation.</summary>
-        public PieceLogic PieceOnFormation { get; set; }
+        public PieceLogic PieceOnFormation { get; protected set; }
 
         /// <summary>Formation có giới hạn thời gian tồn tại hay không.</summary>
         public bool HaveDuration { get; protected set; }
 
         /// <summary>Số lượt còn lại trước khi Formation biến mất (nếu <see cref="HaveDuration"/> = true).</summary>
-        public int Duration { get; protected set; }
+        public int Duration { get; private set; }
 
         /// <summary>State hiện tại của Formation. Mặc định là <see cref="StateType.None"/>.</summary>
-        public StateType CurrentState { get; private set; } = StateType.None;
+        private StateType CurrentState { get; set; } = StateType.None;
 
         public AfterActionPriority Priority => AfterActionPriority.Formation;
 
@@ -105,19 +95,19 @@ namespace Game.Tile
         {
             ClearState();
             CurrentState = stateEffect.StateType;
-            AffectedEffects.Add(stateEffect);
+            Effects.Add(stateEffect);
         }
 
         /// <summary>Gán State cho Formation bằng <see cref="StateType"/> trực tiếp (không qua Effect).</summary>
         public void SetState(StateType state) => CurrentState = state;
 
-        /// <summary>Xóa State hiện tại và loại bỏ StateEffect khỏi <see cref="AffectedEffects"/>.</summary>
+        /// <summary>Xóa State hiện tại và loại bỏ StateEffect khỏi <see cref="Effects"/>.</summary>
         public void ClearState()
         {
-            var existing = AffectedEffects.Find(e => e is IStateful);
+            var existing = Effects.Find(e => e is IStateful);
             if (existing != null)
             {
-                AffectedEffects.Remove(existing);
+                Effects.Remove(existing);
                 BoardUtils.RemoveObserver(existing);
             }
 
@@ -132,20 +122,20 @@ namespace Game.Tile
         /// <summary>Thêm một Effect (thường là debuff/state) mà Formation đang bị dính.</summary>
         public void AddAffectedEffect(Effect effect)
         {
-            if (effect != null && !AffectedEffects.Contains(effect))
-                AffectedEffects.Add(effect);
+            if (effect != null && !Effects.Contains(effect))
+                Effects.Add(effect);
         }
 
         /// <summary>Xóa một Effect khỏi danh sách effect mà Formation đang bị dính.</summary>
         public void RemoveAffectedEffect(Effect effect)
         {
-            AffectedEffects.Remove(effect);
+            Effects.Remove(effect);
         }
 
         /// <summary>Kiểm tra Formation có đang bị dính effect theo tên hay không.</summary>
         public bool HasAffectedEffect(string effectName)
         {
-            return AffectedEffects.Any(e => e.EffectName == effectName);
+            return Effects.Any(e => e.EffectName == effectName);
         }
 
 

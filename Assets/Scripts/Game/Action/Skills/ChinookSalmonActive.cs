@@ -1,7 +1,6 @@
 ﻿using Game.Action.Internal;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {

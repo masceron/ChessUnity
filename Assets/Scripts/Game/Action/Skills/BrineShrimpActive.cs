@@ -1,15 +1,8 @@
 ﻿using Game.Action.Internal;
-using Game.Action.Quiets;
 using Game.Effects.Others;
 using Game.Effects.States;
-using Game.Effects.Traits;
-using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using System.Collections.Generic;
-using static Game.Common.BoardUtils;
-
-// <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
@@ -23,13 +16,11 @@ namespace Game.Action.Skills
         private BrineShrimpActive()
         {
         }
-        private int Duration;
+        private readonly int _duration;
 
-        public BrineShrimpActive(int maker, int duration) : base(maker)
+        public BrineShrimpActive(PieceLogic maker, int duration) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
-            Duration = duration;
+            _duration = duration;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -39,9 +30,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var petrified = new Petrified(Duration, PieceOn(Maker));
+            var petrified = new Petrified(_duration, GetMakerAsPiece());
             ActionManager.EnqueueAction(new ApplyEffect(petrified));
-            ActionManager.EnqueueAction(new ApplyEffect(new BrineShrimpSummon(PieceOn(Maker), Duration)));
+            ActionManager.EnqueueAction(new ApplyEffect(new BrineShrimpSummon(GetMakerAsPiece(), _duration)));
         }
     }
 }

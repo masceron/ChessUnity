@@ -4,7 +4,6 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Augmentation
 {
@@ -34,9 +33,9 @@ namespace Game.Effects.Augmentation
 
         private void MakeActive()
         {
-            var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece.Pos, 4);
+            var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece, 4);
             foreach (var piece in listPieces)
-                ActionManager.EnqueueAction(new ApplyEffect(new Marked(1, PieceOn(piece))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Marked(1, piece)));
         }
     }
 }

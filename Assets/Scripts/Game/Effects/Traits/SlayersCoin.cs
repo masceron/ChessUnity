@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
-using Game.Common;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;

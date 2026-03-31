@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Game.Piece.PieceLogic.Commons;
+using ZLinq;
 
 namespace Game.Common
 {
@@ -18,14 +20,14 @@ namespace Game.Common
         }
 
         /// <summary>
-        ///     Gets a list of active cells containing Enemy pieces within a specified radius around the maker.
+        ///     Gets a list of Enemy pieces within a specified radius around the maker.
         /// </summary>
-        /// <param name="makerPos">The position index of the unit casting the skill.</param>
+        /// <param name="maker">The position index of the unit casting the skill.</param>
         /// <param name="radius">The radius range to search within.</param>
-        /// <returns>A list of board indices matching the criteria.</returns>
-        public static List<int> GetActiveEnemyPieceInRadius(int makerPos, int radius)
+        /// <returns>A list of PieceLogic matching the criteria.</returns>
+        public static List<PieceLogic> GetActiveEnemyPieceInRadius(Entity maker, int radius)
         {
-            return GetTargetsInRadius(makerPos, radius, TargetType.Enemy);
+            return GetTargetsInRadius(maker.Pos, radius, TargetType.Enemy).Select(BoardUtils.PieceOn).ToList();
         }
 
         /// <summary>

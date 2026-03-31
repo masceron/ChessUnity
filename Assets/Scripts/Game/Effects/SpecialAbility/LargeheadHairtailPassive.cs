@@ -1,6 +1,4 @@
-﻿using Game.Action.Skills;
-using Game.Common;
-using Game.Piece;
+﻿using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using static Game.Common.BoardUtils;

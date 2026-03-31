@@ -5,7 +5,6 @@ using Game.Effects.Others;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {

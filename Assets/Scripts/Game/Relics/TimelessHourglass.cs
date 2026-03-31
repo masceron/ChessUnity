@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;

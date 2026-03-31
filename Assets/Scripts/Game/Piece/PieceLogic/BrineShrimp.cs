@@ -1,14 +1,8 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
-using Game.Effects.Buffs;
-using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
-using UnityEngine;
-using Game.Common;
 using Game.Action.Skills;
 
 namespace Game.Piece.PieceLogic
@@ -28,7 +22,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    list.Add(new BrineShrimpActive(Pos, Duration));
+                    list.Add(new BrineShrimpActive(this, Duration));
                 }
             };
         }

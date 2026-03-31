@@ -1,6 +1,5 @@
 using Game.Action.Internal;
 using Game.Action.Quiets;
-using Game.Common;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;

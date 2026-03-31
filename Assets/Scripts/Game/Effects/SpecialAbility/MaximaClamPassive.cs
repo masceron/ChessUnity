@@ -23,7 +23,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
             var triggeredByCapture = action is ICaptures && action.Result == ResultFlag.Success;
             var triggeredByActive = action is MaximaClamActive && action.Result == ResultFlag.Success;

@@ -7,15 +7,13 @@ namespace Game.Action.Skills
 {
     public class SandConchActiveBurrowed : Action, ISkills
     {
-        public SandConchActiveBurrowed(int maker) : base(maker)
+        public SandConchActiveBurrowed(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
         
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             ActionManager.EnqueueAction(new ApplyEffect(new Burrowed(4, maker), maker));
         }
 

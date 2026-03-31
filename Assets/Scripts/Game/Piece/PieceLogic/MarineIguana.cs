@@ -1,11 +1,11 @@
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     var captureTargets = excludeEmptyTile
-                        ? SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, SkillRadius)
+                        ? SkillRangeHelper.GetActiveEnemyPieceInRadius(this, SkillRadius).Select(e => e.Pos).ToList()
                         : SkillRangeHelper.GetActiveCellInRadius(Pos, SkillRadius);
 
                     if (captureTargets.Contains(Pos)) captureTargets.Remove(Pos);

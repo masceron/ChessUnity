@@ -1,9 +1,5 @@
-﻿using Game.Action;
-using Game.Action.Internal;
-using Game.Action.Skills;
+﻿using Game.Action.Skills;
 using Game.Common;
-using Game.Effects.Debuffs;
-using Game.Effects.States;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -28,7 +24,7 @@ namespace Game.Piece.PieceLogic
                     var burrowed = Effects.Any(e => e.EffectName == BurrowedEffectName);
                     if (!burrowed)
                     {
-                        list.Add(new SandConchActiveBurrowed(Pos));
+                        list.Add(new SandConchActiveBurrowed(this));
                         return;
                     }
                     
@@ -37,7 +33,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (!IsActive(index) || pOn != null) continue;
-                        list.Add(new SandConchActiveMoveAndFormate(Pos, index));
+                        list.Add(new SandConchActiveMoveAndFormate(this, index));
                     }
                 }
                 else

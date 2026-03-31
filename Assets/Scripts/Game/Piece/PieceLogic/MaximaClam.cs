@@ -6,9 +6,7 @@ using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using Game.Common;
 using Game.Effects.Buffs;
-using Game.Effects.Debuffs;
 using Game.Effects.Traits;
-using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Piece.PieceLogic
@@ -49,7 +47,7 @@ namespace Game.Piece.PieceLogic
                         e.EffectName == "effect_bound" || e.EffectName == "effect_leashed");
                     if (!hasBoundOrLeashed) continue;
 
-                    list.Add(new MaximaClamActive(Pos, index));
+                    list.Add(new MaximaClamActive(this, target));
                 }
             };
         }

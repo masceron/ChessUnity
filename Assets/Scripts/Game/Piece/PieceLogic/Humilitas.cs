@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Others;
 using Game.Effects.Traits;

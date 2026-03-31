@@ -46,12 +46,11 @@ namespace Game.Piece.PieceLogic.Commons
     {
         private bool _hasSkill;
         public readonly List<Augmentation.Augmentation> Augmentations;
-        public readonly List<Effect> Effects;
-        private readonly List<ImmunityType> immunities;
+        private readonly List<ImmunityType> _immunities = new();
         public readonly PieceRank PieceRank;
-        public readonly List<int> PreviousMoves;
-        private readonly UDictionary<SkillStat, List<int>> skillStats;
-        private readonly List<FormationType> specificFormations;
+        public readonly List<int> PreviousMoves = new();
+        private readonly UDictionary<SkillStat, List<int>> _skillStats;
+        private readonly List<FormationType> _specificFormations = new();
         public readonly string Type;
         private int _attackRange;
         private int _moveRange;
@@ -69,8 +68,6 @@ namespace Game.Piece.PieceLogic.Commons
         {
             Color = cfg.Color;
             Pos = cfg.Index;
-            Effects = new List<Effect>();
-            PreviousMoves = new List<int>();
             Type = cfg.Type;
 
             var info = AssetManager.Ins.PieceData[cfg.Type];
@@ -78,12 +75,10 @@ namespace Game.Piece.PieceLogic.Commons
             _attackRange = info.attackRange;
             PieceRank = info.rank;
             _hasSkill = info.hasSkill;
-            immunities = new List<ImmunityType>();
-            specificFormations = new List<FormationType>();
 
             if (this is IPieceWithSkill pieceWithSkill)
             {
-                skillStats = new UDictionary<SkillStat, List<int>>();
+                _skillStats = new UDictionary<SkillStat, List<int>>();
                 pieceWithSkill.TimeToCooldown = info.normalSkillCooldown != -1 ? info.normalSkillCooldown + 1 : -1;
             }
             else
@@ -254,12 +249,12 @@ namespace Game.Piece.PieceLogic.Commons
         {
             if (formationType == FormationType.None || appliedEffect == null) return false;
 
-            if (immunities.Contains(ImmunityType.FormationDebuff) &&
+            if (_immunities.Contains(ImmunityType.FormationDebuff) &&
                 appliedEffect.Category == EffectCategory.Debuff)
                 return true;
 
-            if (immunities.Contains(ImmunityType.FormationSpecific) &&
-                specificFormations.Contains(formationType))
+            if (_immunities.Contains(ImmunityType.FormationSpecific) &&
+                _specificFormations.Contains(formationType))
                 return true;
 
             return false;
@@ -267,22 +262,22 @@ namespace Game.Piece.PieceLogic.Commons
 
         public void AddImmunity(ImmunityType immunityType)
         {
-            if (!immunities.Contains(immunityType)) immunities.Add(immunityType);
+            if (!_immunities.Contains(immunityType)) _immunities.Add(immunityType);
         }
 
         public void RemoveImmunity(ImmunityType immunityType)
         {
-            immunities.Remove(immunityType);
+            _immunities.Remove(immunityType);
         }
 
         public void AddSpecificFormation(FormationType formationType)
         {
-            if (!specificFormations.Contains(formationType)) specificFormations.Add(formationType);
+            if (!_specificFormations.Contains(formationType)) _specificFormations.Add(formationType);
         }
 
         public void RemoveSpecificFormation(FormationType formationType)
         {
-            specificFormations.Remove(formationType);
+            _specificFormations.Remove(formationType);
         }
 
         // ── State Management ──────────────────────────────────────────────────────
@@ -361,7 +356,7 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetRawStat(SkillStat stat, int num = 1)
         {
-            if (!skillStats.TryGetValue(stat, out var skillStat)) return 0;
+            if (!_skillStats.TryGetValue(stat, out var skillStat)) return 0;
 
             return skillStat[num - 1];
         }
@@ -374,7 +369,7 @@ namespace Game.Piece.PieceLogic.Commons
         /// <returns></returns>
         public int GetStat(SkillStat stat, int num = 1)
         {
-            if (!skillStats.TryGetValue(stat, out var skillStat)) return 0;
+            if (!_skillStats.TryGetValue(stat, out var skillStat)) return 0;
 
             var finalStat = skillStat[num - 1];
             foreach (var effect in Effects)
@@ -386,12 +381,12 @@ namespace Game.Piece.PieceLogic.Commons
 
         public void SetStat(SkillStat stat, int value, int num = 1)
         {
-            if (!skillStats.ContainsKey(stat)) skillStats.Add(stat, new List<int>());
+            if (!_skillStats.ContainsKey(stat)) _skillStats.Add(stat, new List<int>());
 
-            var lst = skillStats[stat];
+            var lst = _skillStats[stat];
             while (lst.Count < num) lst.Add(0);
 
-            skillStats[stat][num - 1] = value;
+            _skillStats[stat][num - 1] = value;
         }
     }
 }

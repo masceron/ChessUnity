@@ -1,5 +1,3 @@
-using Game.Common;
-using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics

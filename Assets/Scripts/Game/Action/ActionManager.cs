@@ -6,7 +6,6 @@ using Game.Common;
 using Game.Effects;
 using Game.Effects.Traits;
 using Game.Managers;
-using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using Game.Tile;
 using ZLinq;

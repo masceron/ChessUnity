@@ -20,13 +20,11 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, 6);
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, 6);
                     foreach (var target in targets)
                     {
-                        var piece = PieceOn(target);
-                        if (piece == null) continue;
-                        if (piece.Effects.Any(e => e.EffectName == "effect_slow"))
-                            list.Add(new SohalSurgeonfishActive(this, piece));
+                        if (target.Effects.Any(e => e.EffectName == "effect_slow"))
+                            list.Add(new SohalSurgeonfishActive(this, target));
                     }
                 }
                 else

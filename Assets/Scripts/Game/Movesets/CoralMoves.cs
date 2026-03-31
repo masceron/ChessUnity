@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Captures;
 using Game.Action.Quiets;
-using Game.Common;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
@@ -38,7 +37,7 @@ namespace Game.Movesets
 				var piece = PieceOn(index);
 				if (piece != null) return;
 
-				list.Add(new NormalMove(pos, index));
+				list.Add(new NormalMove(caller, index));
 			}
 		}
 
@@ -69,12 +68,12 @@ namespace Game.Movesets
 				if (piece == null)
 				{
 					if (!isPlayer)
-						list.Add(new NormalCapture(pos, index));
+						list.Add(new NormalCapture(caller, piece));
 					return;
 				}
 
 				if (piece.Color != color)
-					list.Add(new NormalCapture(pos, index));
+					list.Add(new NormalCapture(caller, piece));
 			}
 		}
 	}

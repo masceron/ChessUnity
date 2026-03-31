@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Common;
+﻿using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Relics.Commons;

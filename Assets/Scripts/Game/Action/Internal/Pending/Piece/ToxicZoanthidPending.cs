@@ -4,7 +4,6 @@ using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
@@ -12,12 +11,9 @@ namespace Game.Action.Internal.Pending.Piece
 	{
 		private static readonly List<int> SelectedPositions = new();
 		private static int _targetCount;
-		public ToxicZoanthidPending(int maker, int target) : base(maker)
+		public ToxicZoanthidPending(PieceLogic maker, int target) : base(maker, target)
 		{
-			Maker = maker;
-			Target = target;
-			var makerPiece = PieceOn(maker);
-			_targetCount = makerPiece.GetStat(SkillStat.Target);
+			_targetCount = GetMakerAsPiece().GetStat(SkillStat.Target);
 			SelectedPositions.Clear();
 		}
 
@@ -34,13 +30,12 @@ namespace Game.Action.Internal.Pending.Piece
 
 		protected override void CompleteAction()
 		{
-
-			SelectedPositions.Add(Target);
-			TileManager.Ins.UnMark(Target);
+			SelectedPositions.Add(GetTargetPos());
+			TileManager.Ins.UnMark(GetTargetPos());
 
 			if (SelectedPositions.Count < _targetCount) return;
 
-			CommitResult(new ToxicZoanthidActive(Maker, new List<int>(SelectedPositions)));
+			CommitResult(new ToxicZoanthidActive(GetMakerAsPiece(), new List<int>(SelectedPositions)));
 			Reset();
 		}
 

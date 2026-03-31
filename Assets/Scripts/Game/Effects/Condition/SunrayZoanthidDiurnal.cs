@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using Game.Common;
+using ZLinq;
 using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Condition
@@ -14,15 +15,15 @@ namespace Game.Effects.Condition
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SunrayZoanthidDiurnal : Diurnal, IAfterPieceActionTrigger, IStartTurnTrigger
     {
-		private readonly HashSet<PieceLogic> preBlinded = new();
-		private readonly HashSet<PieceLogic> auraBlinded = new();
-		private bool wasActive;
+		private readonly HashSet<PieceLogic> _preBlinded = new();
+		private readonly HashSet<PieceLogic> _auraBlinded = new();
+		private bool _wasActive;
 		public SunrayZoanthidDiurnal(int radius, int probability, PieceLogic piece)
             : base(-1, 1, piece, "effect_sunray_zoanthid_diurnal")
         {
             SetStat(EffectStat.Radius, radius);
             SetStat(EffectStat.Strength, probability);
-            wasActive = IsActive;
+            _wasActive = IsActive;
             StartTurnEffectType = StartTurnEffectType.StartOfAnyTurn;
         }
         public AfterActionPriority Priority => AfterActionPriority.Debuff;
@@ -36,15 +37,15 @@ namespace Game.Effects.Condition
 
             if (action is not IQuiets) return;
 
-            var movedPiece = PieceOn(action.Maker);
+            var movedPiece = action.GetMakerAsPiece();
             if (movedPiece == null) return;
 
             var radius = GetStat(EffectStat.Radius);
 
 			if (movedPiece != Piece && movedPiece.Color != Piece.Color)
             {
-				int prevPos = movedPiece.PreviousMoves.Count > 0
-						? movedPiece.PreviousMoves[movedPiece.PreviousMoves.Count - 1]
+				var prevPos = movedPiece.PreviousMoves.Count > 0
+						? movedPiece.PreviousMoves[^1]
 						: -1;
 
 				var nowIn = Distance(movedPiece.Pos, Piece.Pos) <= radius;
@@ -58,8 +59,8 @@ namespace Game.Effects.Condition
 
             if (Piece.PreviousMoves.Count <= 0) return;
 
-            int oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
-            for (int i = 0; i < BoardSize; i++)
+            var oldPos = Piece.PreviousMoves[^1];
+            for (var i = 0; i < BoardSize; i++)
             {
                 if (!IsActive(i)) continue;
 
@@ -67,8 +68,8 @@ namespace Game.Effects.Condition
 				if (enemy == null || enemy == Piece) continue;
 				if (enemy.Color == Piece.Color) continue;
 
-                int distToNewPos = Distance(i, Piece.Pos);
-                int distToOldPos = Distance(i, oldPos);
+                var distToNewPos = Distance(i, Piece.Pos);
+                var distToOldPos = Distance(i, oldPos);
 
 				if (distToNewPos <= radius && distToOldPos > radius) OnEnterRange(enemy);
 				else if (distToNewPos > radius && distToOldPos <= radius) OnLeaveRange(enemy);
@@ -77,9 +78,9 @@ namespace Game.Effects.Condition
 
         public void OnCallStart(Action.Action lastMainAction)
 		{
-			if (wasActive && !IsActive) RemoveAuraBlindInCurrentRadius();
-			if (!wasActive && IsActive) ApplyBlindInCurrentRadius();
-			wasActive = IsActive;
+			if (_wasActive && !IsActive) RemoveAuraBlindInCurrentRadius();
+			if (!_wasActive && IsActive) ApplyBlindInCurrentRadius();
+			_wasActive = IsActive;
 		}
 
 		private void OnEnterRange(PieceLogic target)
@@ -87,32 +88,28 @@ namespace Game.Effects.Condition
 			if (target == null) return;
 			if (HasBlinded(target))
 			{
-				preBlinded.Add(target);
+				_preBlinded.Add(target);
 				return;
 			}
-			if (auraBlinded.Contains(target)) return;
+			if (_auraBlinded.Contains(target)) return;
 
 			var probability = GetStat(EffectStat.Strength);
 			UnityEngine.Debug.Log("SunrayZoanthidDiurnal: OnEnterRange: ApplyBlind: ");
 			ActionManager.EnqueueAction(new ApplyEffect(new Blinded(-1, probability, target), Piece));
-			auraBlinded.Add(target);
+			_auraBlinded.Add(target);
 		}
 
 		private void OnLeaveRange(PieceLogic target)
 		{
 			if (target == null) return;
-			if (!auraBlinded.Contains(target)) return;
+			if (!_auraBlinded.Contains(target)) return;
 
-			for (int i = 0; i < target.Effects.Count; i++)
+			foreach (var effect in target.Effects.Where(effect => effect is Blinded))
 			{
-				var effect = target.Effects[i];
-				if (effect is Blinded)
-				{
-					ActionManager.EnqueueAction(new RemoveEffect(effect));
-					break;
-				}
+				ActionManager.EnqueueAction(new RemoveEffect(effect));
+				break;
 			}
-			auraBlinded.Remove(target);
+			_auraBlinded.Remove(target);
 		}
 
 		private void ApplyBlindInCurrentRadius()
@@ -120,7 +117,7 @@ namespace Game.Effects.Condition
 			var radius = GetStat(EffectStat.Radius);
 			var probability = GetStat(EffectStat.Strength);
 
-			for (int i = 0; i < BoardSize; i++)
+			for (var i = 0; i < BoardSize; i++)
 			{
 				if (!IsActive(i)) continue;
 				var enemy = PieceOn(i);
@@ -129,48 +126,39 @@ namespace Game.Effects.Condition
 
 				if (HasBlinded(enemy))
 				{
-					preBlinded.Add(enemy);
+					_preBlinded.Add(enemy);
 					continue;
 				}
-				if (auraBlinded.Contains(enemy) || preBlinded.Contains(enemy)) continue;
+				if (_auraBlinded.Contains(enemy) || _preBlinded.Contains(enemy)) continue;
 
 				ActionManager.EnqueueAction(new ApplyEffect(new Blinded(-1, probability, enemy), Piece));
-				auraBlinded.Add(enemy);
+				_auraBlinded.Add(enemy);
 			}
 		}
 
 		private void RemoveAuraBlindInCurrentRadius()
 		{
 			var radius = GetStat(EffectStat.Radius);
-			for (int i = 0; i < BoardSize; i++)
+			for (var i = 0; i < BoardSize; i++)
 			{
 				if (!IsActive(i)) continue;
 				var enemy = PieceOn(i);
 				if (enemy == null || enemy.Color == Piece.Color) continue;
 				if (Distance(enemy.Pos, Piece.Pos) > radius) continue;
-				if (!auraBlinded.Contains(enemy)) continue;
+				if (!_auraBlinded.Contains(enemy)) continue;
 
-				for (int j = 0; j < enemy.Effects.Count; j++)
+				foreach (var effect in enemy.Effects.Where(effect => effect is Blinded))
 				{
-					var effect = enemy.Effects[j];
-					if (effect is Blinded)
-					{
-						ActionManager.EnqueueAction(new RemoveEffect(effect));
-						break;
-					}
+					ActionManager.EnqueueAction(new RemoveEffect(effect));
+					break;
 				}
-				auraBlinded.Remove(enemy);
+				_auraBlinded.Remove(enemy);
 			}
 		}
 
 		private static bool HasBlinded(PieceLogic target)
 		{
-			if (target == null) return false;
-			for (int i = 0; i < target.Effects.Count; i++)
-			{
-				if (target.Effects[i] is Blinded) return true;
-			}
-			return false;
+			return target != null && Enumerable.Any(Enumerable.OfType<Blinded>(target.Effects));
 		}
 
     }

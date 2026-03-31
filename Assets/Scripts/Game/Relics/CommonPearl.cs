@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Effects;
+﻿using Game.Effects;
 using Game.Managers;
 using Game.Relics.Commons;
 using UnityEngine;
