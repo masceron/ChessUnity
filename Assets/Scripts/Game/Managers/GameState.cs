@@ -29,6 +29,7 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Friend(typeof(BoardUtils))]
     public class GameState
     {
         private int _pieceID = 1;

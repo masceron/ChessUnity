@@ -18,7 +18,7 @@ namespace Editor.Validators
 
         static ActionManagerGuard()
         {
-            EditorApplication.delayCall += () => ScanViolations();
+            ScanViolations();
         }
 
         public int callbackOrder => 0;
