@@ -2,7 +2,7 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using static Game.Common.BoardUtils;
 
-namespace Game.Effects.SpecialAbility
+namespace Game.Effects.Traits
 {
     public class BlackPrinceCopepodPassive : Effect, IStartTurnTrigger
     {
@@ -23,7 +23,7 @@ namespace Game.Effects.SpecialAbility
             foreach (var redCopepod in listRedCopepod)
             {
                 redCopepod.SetAttackRange(redCopepod.GetAttackRange() + GetStat(EffectStat.Range));
-                SetCooldown(Piece.Pos, ((IPieceWithSkill)PieceOn(Piece.Pos)).TimeToCooldown - 2);
+                SetCooldown(Piece, ((IPieceWithSkill)Piece).TimeToCooldown - 2);
             }
         }
     }

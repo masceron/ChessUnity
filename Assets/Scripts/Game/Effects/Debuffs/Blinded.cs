@@ -19,7 +19,7 @@ namespace Game.Effects.Debuffs
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Maker != Piece.Pos) return;
+            if (action is not ICaptures || action.GetMakerAsPiece() != Piece) return;
 
             if (MatchManager.Roll(Strength)) action.Result = ResultFlag.Miss;
         }

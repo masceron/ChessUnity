@@ -1,4 +1,5 @@
 using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -9,20 +10,19 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class RedtailParrotfishActive : Action, ISkills
     {
-        [MemoryPackInclude] private int formationPos;
+        [MemoryPackInclude] private int _formationPos;
 
-        [MemoryPackInclude] private int moveTo;
+        [MemoryPackInclude] private int _moveTo;
 
         [MemoryPackConstructor]
         private RedtailParrotfishActive()
         {
         }
 
-        public RedtailParrotfishActive(int maker, int formationPos, int moveTo) : base(maker)
+        public RedtailParrotfishActive(PieceLogic maker, Formation formationPos, int moveTo) : base(maker)
         {
-            Maker = maker;
-            this.formationPos = formationPos;
-            this.moveTo = moveTo;
+            _formationPos = formationPos.Pos;
+            _moveTo = moveTo;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -32,8 +32,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            MoveFormation(formationPos, moveTo);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            MoveFormation(_formationPos, _moveTo);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

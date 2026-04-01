@@ -18,9 +18,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public MegalodonActive(int maker, int firstTargetPos, int secondTargetPos) : base(maker)
+        public MegalodonActive(PieceLogic maker, int firstTargetPos, int secondTargetPos) : base(maker)
         {
-            Maker = maker;
             _firstTargetPos = firstTargetPos;
             _secondTargetPos = secondTargetPos;
         }
@@ -32,9 +31,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(_firstTargetPos));
-            ActionManager.EnqueueAction(new KillPiece(_secondTargetPos));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new KillPiece(PieceOn(_firstTargetPos)));
+            ActionManager.EnqueueAction(new KillPiece(PieceOn(_secondTargetPos)));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

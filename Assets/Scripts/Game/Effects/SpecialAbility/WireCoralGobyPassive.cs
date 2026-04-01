@@ -20,7 +20,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            if (applyEffect.SourcePiece != Piece) return;
+            if (applyEffect.GetMakerAsPiece() != Piece) return;
             if (applyEffect.Effect is not Tethered tethered) return;
 
             var tetheredPiece = tethered.Piece;
@@ -33,7 +33,7 @@ namespace Game.Effects.SpecialAbility
             var formation = GetFormation(Piece.Pos);
             if (formation != null && formation.GetColor() == Piece.Color)
             {
-                var snappingStrike = new Game.Effects.Traits.SnappingStrike(tetheredPiece);
+                var snappingStrike = new Traits.SnappingStrike(tetheredPiece);
                 tethered.GrantedEffects.Add(snappingStrike);
                 ActionManager.EnqueueAction(new ApplyEffect(snappingStrike, Piece));
             }

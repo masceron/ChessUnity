@@ -1,19 +1,18 @@
-﻿using Game.Common;
-using Game.Effects;
+﻿using Game.Effects;
+using Game.Piece.PieceLogic.Commons;
 using ZLinq;
 
 namespace Game.Action.Internal
 {
     public class Nullify : Action, IInternal
     {
-        public Nullify(int maker, int to) : base(maker)
+        public Nullify(PieceLogic maker, PieceLogic to) : base(maker, to)
         {
-            Target = to;
         }
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in BoardUtils.PieceOn(Target).Effects
+            foreach (var effect in GetTargetAsPiece().Effects
                          .Where(effect => effect.Category == EffectCategory.Buff))
                 ActionManager.EnqueueAction(new RemoveEffect(effect));
         }

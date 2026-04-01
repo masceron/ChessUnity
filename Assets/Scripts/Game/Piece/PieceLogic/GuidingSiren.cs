@@ -47,7 +47,7 @@ namespace Game.Piece.PieceLogic
                                 rankForce += push;
                             rankForce -= push;
                             if (rankForce == rankOff) continue;
-                            list.Add(new SirenActive(Pos, tpos, IndexOf(rankForce, fileOff)));
+                            list.Add(new SirenActive(this, pieceAt, IndexOf(rankForce, fileOff)));
                         }
                     }
                 }

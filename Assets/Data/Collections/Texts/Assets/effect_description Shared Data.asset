@@ -799,12 +799,84 @@ MonoBehaviour:
     m_Key: effect_painted_greenling_passive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 81586457255120896
+  - m_Id: 81152509010583552
+    m_Key: effect_largehead_hairtail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81261225223462912
+    m_Key: effect_dwarf_cuttlefish_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81271893498601472
+    m_Key: effect_dwarf_cuttlefish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82941656134131712
+    m_Key: effect_melibe_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82942064663535616
+    m_Key: effect_tainted_heart_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82942504352423936
+    m_Key: effect_puppeteer_spirit_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82942918514778112
+    m_Key: effect_ray's_tail_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82943292193710080
+    m_Key: effect_pressure_membrane_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82950944172875776
     m_Key: effect_invasive_description
     m_Metadata:
       m_Items: []
-  - m_Id: 81586540382031872
+  - m_Id: 82950944214818816
     m_Key: effect_territorial_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82692976535920640
+    m_Key: effect_pulse_coral_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82764756353015808
+    m_Key: effect_arrow_crab_diurnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82764809759088640
+    m_Key: effect_arrow_crab_territorial_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83152764541591552
+    m_Key: effect_arrow_crab_nocturnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162450579456
+    m_Key: effect_frog_fish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162475745280
+    m_Key: effect_sunray_zoanthid_diurnal_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162484133888
+    m_Key: effect_temporal_warp_return_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162492522496
+    m_Key: effect_brine_shrimp_summon_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162496716800
+    m_Key: effect_masked_pufferfish_passive_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235162500911104
+    m_Key: effect_maxima_clam_passive_description
     m_Metadata:
       m_Items: []
   m_Metadata:

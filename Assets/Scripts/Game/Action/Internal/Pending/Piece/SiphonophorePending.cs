@@ -4,7 +4,6 @@ using Game.Action.Skills;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
@@ -12,22 +11,17 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SiphonophorePending : PendingAction, IDisposable, ISkills
     {
-        private static List<int> selectedTiles = new List<int>();
-        private static int unitCount = 0;
-        private static bool isInitialized = false;
+        private readonly List<int> selectedTiles = new();
+        private int _unitCount;
+        private bool _isInitialized;
 
-        public SiphonophorePending(int maker, int target) : base(maker)
+        public SiphonophorePending(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
+            if (_isInitialized) return;
             
-            var makerPiece = PieceOn(maker);
-            if (makerPiece != null && !isInitialized)
-            {
-                unitCount = makerPiece.GetStat(SkillStat.Unit);
-                selectedTiles.Clear();
-                isInitialized = true;
-            }
+            _unitCount = GetMakerAsPiece().GetStat(SkillStat.Unit);
+            selectedTiles.Clear();
+            _isInitialized = true;
         }
 
         public void Dispose()
@@ -43,28 +37,23 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            var makerPiece = PieceOn(Maker);
-            if (makerPiece == null) return;
-
-
-            if (selectedTiles.Count < unitCount)
+            if (selectedTiles.Count < _unitCount)
             {
-                selectedTiles.Add(Target);
-                TileManager.Ins.UnMark(Target);
+                selectedTiles.Add(GetTargetPos());
+                TileManager.Ins.UnMark(GetTargetPos());
             }
 
-            if (selectedTiles.Count == unitCount)
-            {
-                CommitResult(new SiphonophoreActive(Maker, new List<int>(selectedTiles)));
-                Reset();
-            }
+            if (selectedTiles.Count != _unitCount) return;
+            
+            CommitResult(new SiphonophoreActive(GetMakerAsPiece(), new List<int>(selectedTiles)));
+            Reset();
         }
 
-        private static void Reset()
+        private void Reset()
         {
             selectedTiles.Clear();
-            unitCount = 0;
-            isInitialized = false;
+            _unitCount = 0;
+            _isInitialized = false;
         }
     }
 }

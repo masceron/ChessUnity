@@ -23,7 +23,7 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rank, file) in MoveEnumerators.Around(startRank, startFile, 1))
                     {
                         var idx = IndexOf(rank, file);
-                        if (PieceOn(idx) == null) list.Add(new SeaStarResurrect(Pos, idx));
+                        if (PieceOn(idx) == null) list.Add(new SeaStarResurrect(this, idx));
                     }
                 }
                 //query for AI in here

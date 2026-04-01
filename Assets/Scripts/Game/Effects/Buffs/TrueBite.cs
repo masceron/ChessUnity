@@ -17,7 +17,7 @@ namespace Game.Effects.Buffs
 
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.Maker == Piece.Pos) action.Flag |= ActionFlag.Undodgeable;
+            if (action is ICaptures && action.GetMakerAsPiece() == Piece) action.Flag |= ActionFlag.Undodgeable;
         }
 
         public override int GetValueForAI()

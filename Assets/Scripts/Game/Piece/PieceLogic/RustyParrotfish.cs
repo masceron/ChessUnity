@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Traits;
 using Game.Movesets;
@@ -23,7 +22,8 @@ namespace Game.Piece.PieceLogic
                         if (piece == null || piece.Color == Color) continue;
                         if (!BoardUtils.HasFormation(i)) continue;
 
-                        list.Add(new RustyParrotfishActive(Pos, piece.Pos));
+                        //Làm lại
+                        //list.Add(new RustyParrotfishActive(Pos, piece.Pos));
                     }
                 //query for AI in here
             };

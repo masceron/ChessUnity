@@ -27,7 +27,7 @@ namespace Game.Effects.Others
             // Day to Night transition
             if (!isDayNow && _yesterdayIsDay)
             {
-                ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
+                ActionManager.EnqueueAction(new Purify(Piece, Piece));
             }
 
             _yesterdayIsDay = isDayNow;

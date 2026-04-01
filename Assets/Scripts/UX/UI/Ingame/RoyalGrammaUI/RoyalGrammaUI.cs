@@ -13,7 +13,7 @@ namespace UX.UI.Ingame.RoyalGrammaUI
         public void CommitResult(string chosenType)
         {
             royalGramma.CommitResult(chosenType);
-            this.gameObject.SetActive(false);
+            gameObject.SetActive(false);
         }
     }
 }

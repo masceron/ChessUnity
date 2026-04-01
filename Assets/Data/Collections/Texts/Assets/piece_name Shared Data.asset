@@ -575,6 +575,54 @@ MonoBehaviour:
     m_Key: piece_pennant_coralfish
     m_Metadata:
       m_Items: []
+  - m_Id: 82406682647846912
+    m_Key: piece_toxic_zoanthid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82688083863527424
+    m_Key: piece_pulse_coral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82767549461684224
+    m_Key: piece_arrow_crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045404332032
+    m_Key: piece_brine_shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045458857984
+    m_Key: piece_largehead_hairtail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045463052288
+    m_Key: piece_sunray_zoanthid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045463052289
+    m_Key: piece_dwarf_cuttlefish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045463052290
+    m_Key: piece_emerald_crab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045471440896
+    m_Key: piece_maxima_clam
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045479829504
+    m_Key: piece_juvenile_brine_shrimp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045479829505
+    m_Key: piece_tuxedo_urchin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84235045479829506
+    m_Key: piece_sand_conch
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

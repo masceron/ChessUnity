@@ -80,7 +80,7 @@ namespace Game.Effects
             {
                 var pieceType = piece != null ? piece.Type : "<null-piece>";
                 Debug.LogError($"[Effect] Missing EffectData for key '{name}' (piece: '{pieceType}'). Please add this key to EffectsData.");
-                throw new System.Collections.Generic.KeyNotFoundException($"Missing EffectData key '{name}' for piece '{pieceType}'.");
+                throw new KeyNotFoundException($"Missing EffectData key '{name}' for piece '{pieceType}'.");
             }
 
             Category = info.category;
@@ -108,7 +108,11 @@ namespace Game.Effects
 
         public int GetStat(EffectStat stat, int num = 1)
         {
-            if (!Stats.TryGetValue(stat, out var statin)) return 0;
+            if (!Stats.TryGetValue(stat, out var statin))
+            {
+                Debug.LogError("[Effect] You call GetStat of a EffectStat that doesn't exist");
+                return 0;
+            }
             var finalStat = statin[num - 1];
             foreach (var effect in Piece.Effects)
                 if (effect is IEffectStatModifierTrigger modifier)

@@ -1,4 +1,3 @@
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -23,8 +22,9 @@ namespace Game.Relics
                 if (piece == null || piece.Color != Color) continue;
                 if (BoardUtils.IsOnBlackSide(piece.Pos) == Color) continue;
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new AdrenalineRadiatorPending(this, piece.Pos);
-                BoardViewer.ListOf.Add(pending);
+                //Làm lại
+                //var pending = new AdrenalineRadiatorPending(this);
+                //BoardViewer.ListOf.Add(pending);
             }
 
             BoardViewer.Selecting = -2;

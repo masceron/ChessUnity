@@ -25,7 +25,7 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(index);
                         if (pOn == null || pOn == this ||
                             pOn.Effects.All(effect => effect.EffectName != "effect_bound")) continue;
-                        list.Add(new LongSnoutedSeahorseActive(Pos, index));
+                        list.Add(new LongSnoutedSeahorseActive(this, pOn));
                     }
                 }
                 else
@@ -43,7 +43,7 @@ namespace Game.Piece.PieceLogic
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);
                             if (pOn == null || pOn.Pos == Pos || !IsActive(IndexOf(rankOff, fileOff))) continue;
-                            list.Add(new LongSnoutedSeahorseActive(Pos, index));
+                            list.Add(new LongSnoutedSeahorseActive(this, pOn));
                         }
                     }
                 }

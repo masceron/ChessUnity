@@ -3,7 +3,6 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
-using Game.Action.Quiets;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -67,7 +66,7 @@ namespace Game.Effects.States
             // Lọc: chỉ giữ target là đồng minh thực sự ở StateNone
             allyCaptures.RemoveAll(a =>
             {
-                var p = BoardUtils.PieceOn(a.Target);
+                var p = a.GetTargetAsPiece();
                 return p == null || p.Color != caller.Color || p.CurrentState != StateType.None;
             });
 
@@ -80,11 +79,11 @@ namespace Game.Effects.States
 
             foreach (var action in withFormationCaptures)
             {
-                var target = action.Target;
+                var target = action.GetTargetPos();
                 if (!BoardUtils.HasFormation(target)) continue;
 
                 var formation = BoardUtils.GetFormation(target);
-                var targetPiece = BoardUtils.PieceOn(target);
+                var targetPiece = action.GetTargetAsPiece();
                 var isAllyStateNone = targetPiece != null
                                       && targetPiece.Color == caller.Color
                                       && targetPiece.CurrentState == StateType.None;
@@ -94,9 +93,9 @@ namespace Game.Effects.States
                 if (isAllyStateNone)
                 {
                     // Ô có ally StateNone + Formation → pending popup
-                    formationActions.Add(new AdhesiveCapturePending(Piece.Pos, target, Piece, targetPiece, formation));
+                    formationActions.Add(new AdhesiveCapturePending(Piece, targetPiece, formation));
                     // Xóa ally-capture riêng lẻ (pending đã gộp cả 2)
-                    allyCaptures.RemoveAll(a => a.Target == target);
+                    allyCaptures.RemoveAll(a => a.GetTargetPos() == target);
                 }
                 else
                 {
@@ -108,7 +107,7 @@ namespace Game.Effects.States
 
             // Xóa các captures địch bình thường trên những ô có formation
             // (vì formation action đã đại diện cho ô đó)
-            actions.RemoveAll(a => a is ICaptures && formationTargets.Contains(a.Target));
+            actions.RemoveAll(a => a is ICaptures && formationTargets.Contains(a.GetTargetPos()));
 
             actions.AddRange(allyCaptures);
             actions.AddRange(formationActions);
@@ -123,10 +122,10 @@ namespace Game.Effects.States
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
-            var target = action.Target;
-            var targetPiece = BoardUtils.PieceOn(target);
+            var target = action.GetTargetPos();
+            var targetPiece = action.GetTargetAsPiece();
             var hasFormation = BoardUtils.HasFormation(target);
             var hasTargetPiece = targetPiece != null;
 
@@ -147,7 +146,8 @@ namespace Game.Effects.States
                 ApplySkill(action);
                 action.Result = ResultFlag.Infest;
                 ActionManager.EnqueueAction(new ApplyEffect(new Attached(targetPiece, Piece)));
-                ActionManager.EnqueueAction(new MoveToAdhesive(Piece.Pos, target, attachToFormation: false));
+                //Làm lại
+                //ActionManager.EnqueueAction(new MoveToAdhesive(Piece, target, attachToFormation: false));
             }
             else if (hasFormation && !isAlly)
             {
@@ -162,7 +162,8 @@ namespace Game.Effects.States
                     f.ClearState();
                     Attached.SpawnAdhesiveAround(f.Pos, null, adhesive);
                 };
-                ActionManager.EnqueueAction(new MoveToAdhesive(Piece.Pos, target, attachToFormation: true));
+                //Làm lại
+                //ActionManager.EnqueueAction(new MoveToAdhesive(Piece, target, attachToFormation: true));
             }
             // Case isAlly + hasFormation được xử lý qua AdhesiveCapturePending → không rơi vào đây
         }

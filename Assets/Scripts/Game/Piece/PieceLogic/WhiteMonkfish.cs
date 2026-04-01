@@ -21,16 +21,16 @@ namespace Game.Piece.PieceLogic
             SetStat(SkillStat.Range, Range);
             SetStat(SkillStat.Duration, Duration);
 
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
-                    var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, GetStat(SkillStat.Range));
+                    var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, GetStat(SkillStat.Range));
                     foreach (var targetPiece in listPieces)
                     {
-                        list.Add(new WhiteMonkfishActive(Pos, targetPiece, GetStat(SkillStat.Duration)));
+                        list.Add(new WhiteMonkfishActive(this, targetPiece, GetStat(SkillStat.Duration)));
                     }
                 }
             };

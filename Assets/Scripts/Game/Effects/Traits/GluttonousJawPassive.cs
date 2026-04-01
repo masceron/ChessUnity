@@ -3,7 +3,6 @@ using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -19,9 +18,9 @@ namespace Game.Effects.Traits
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
-            var maker = PieceOn(action.Maker);
+            var maker = action.GetMakerAsPiece();
             if (maker.Effects.Any(e => e.EffectName == "effect_consume"))
                 if (action.Result == ResultFlag.Success)
                     ActionManager.EnqueueAction(new ApplyEffect(new LongReach(maker, 2, 5)));

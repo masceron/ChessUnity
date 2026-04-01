@@ -19,7 +19,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public PeaceTreatyExecute(bool color) : base(-1)
+        public PeaceTreatyExecute(bool color) : base(null)
         {
             _color = color;
         }

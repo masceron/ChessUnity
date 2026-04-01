@@ -1,4 +1,3 @@
-using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
@@ -22,8 +21,9 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color == Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new MethaneCasingPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    //var pending = new MethaneCasingPending(this, piece);
+                   // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;

@@ -47,7 +47,7 @@ namespace UX.UI.Ingame.SeabedLevelerUI
 
         public void EraseFormation(int idx)
         {
-            FormationManager.Ins.RemoveFormation(_formationList[idx]);
+            FormationManager.Ins.RemoveFormation(BoardUtils.GetFormation(_formationList[idx]));
             Disable();
         }
     }

@@ -22,7 +22,7 @@ namespace Game.Tile.RealityDistortion
             _lastProcessedTurn = currentTurn;
 
             var allDistortions = new List<RealityDistortion>();
-            foreach (var formation in gameState.formations)
+            foreach (var formation in gameState.Formations)
                 if (formation is RealityDistortion distortion)
                     allDistortions.Add(distortion);
 
@@ -77,9 +77,9 @@ namespace Game.Tile.RealityDistortion
                 if (targetPos == currentPos) continue;
                 var pieceAtTarget = gameState.PieceBoard[targetPos];
                 if (pieceAtTarget == null)
-                    ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
+                    ActionManager.EnqueueAction(new NormalMove(BoardUtils.PieceOn(currentPos), targetPos));
                 else
-                    ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
+                    ActionManager.EnqueueAction(new NormalSwap(BoardUtils.PieceOn(currentPos), pieceAtTarget));
             }
         }
     }

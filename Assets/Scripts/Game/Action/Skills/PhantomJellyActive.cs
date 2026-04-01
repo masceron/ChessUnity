@@ -16,15 +16,13 @@ namespace Game.Action.Skills
         {
         }
 
-        public PhantomJellyActive(int maker) : base(maker)
+        public PhantomJellyActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -30;
             return 0;
@@ -36,8 +34,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
+            var caller = GetMakerAsPiece();
 
             for (var i = -3; i <= 3; i++)
             {
@@ -51,7 +49,7 @@ namespace Game.Action.Skills
                     var p = PieceOn(idx);
 
                     if (p != null && p.Color != caller.Color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p), PieceOn(Maker)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Fear(-1, p), GetMakerAsPiece()));
                 }
             }
         }

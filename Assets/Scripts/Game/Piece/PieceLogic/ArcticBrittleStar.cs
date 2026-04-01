@@ -34,18 +34,18 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                 {
-                    var activator = new ArcticBrittleStarActive(Pos, Pos, _gridSize, castRange);
+                    var activator = new ArcticBrittleStarActive(this, Pos, _gridSize, castRange);
                     list.Add(activator);
                 }
                 else
                 {
                     // AI: chọn enemy có value cao nhất, đặt AnchorIce tại đó
                     var listPieces = new List<Commons.PieceLogic>();
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, castRange);
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, castRange);
                     foreach (var target in targets)
                     {
-                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
-                        listPieces.Add(PieceOn(target));
+                        if (target.Effects.Any(e => e.EffectName == "effect_extremophile")) continue;
+                        listPieces.Add(target);
                     }
 
                     if (listPieces.Count == 0) return;
@@ -58,7 +58,7 @@ namespace Game.Piece.PieceLogic
                     var aiRank = RankOf(selectedPiece.Pos);
                     var aiFile = FileOf(selectedPiece.Pos);
                     var aiStart = _gridSize / 2;
-                    list.Add(new ArcticBrittleStarSkillExecute(Pos, aiRank - aiStart, aiFile - aiStart, _gridSize));
+                    list.Add(new ArcticBrittleStarSkillExecute(this, aiRank - aiStart, aiFile - aiStart, _gridSize));
                 }
             };
         }

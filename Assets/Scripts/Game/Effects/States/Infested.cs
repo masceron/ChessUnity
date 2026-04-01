@@ -58,7 +58,7 @@ namespace Game.Effects.States
             else
             {
                 var randomPos = availablePos[UnityEngine.Random.Range(0, availablePos.Count)];
-                ActionManager.EnqueueAction(new MoveToDetach(pieceToDie.Pos, randomPos, ParasitePiece, Piece));
+                ActionManager.EnqueueAction(new MoveToDetach(pieceToDie, randomPos, ParasitePiece, Piece));
             }
         }
     }

@@ -30,7 +30,7 @@ namespace Game.Piece.PieceLogic
                     Debug.Log("[Temperantia] Clicked");
                     var pendingActions = from piece in PieceBoard()
                         where piece != null && !piece.Equals(this)
-                        select new TemperantiaPending(Pos, piece.Pos);
+                        select new TemperantiaPending(this, piece);
 
                     foreach (var action in pendingActions) list.Add(action);
                 }
@@ -41,7 +41,7 @@ namespace Game.Piece.PieceLogic
                     {
                         for (var i = 0; i < BoardSize; ++i)
                             if (IsActive(i) && i != Pos)
-                                list.Add(new TemperantiaPending(Pos, i));
+                                list.Add(new TemperantiaPending(this, PieceOn(i)));
 
                         return;
                     }
@@ -76,7 +76,7 @@ namespace Game.Piece.PieceLogic
                         ? candidatesB[0]
                         : candidatesB[Random.Range(0, candidatesB.Count)];
                     // Execute effect now
-                    list.Add(new TemperantiaSwap(Pos, chosenAlly.Pos, chosenEnemy.Pos));
+                    list.Add(new TemperantiaSwap(this, chosenAlly.Pos, chosenEnemy.Pos));
                 }
             };
         }

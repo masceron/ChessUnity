@@ -12,11 +12,11 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
 
-    public class OrrnateGhostpipefish : Commons.PieceLogic, IPieceWithSkill
+    public class OrnateGhostpipefish : Commons.PieceLogic, IPieceWithSkill
     {
         private const int Range = 7;
         private const int Duration = 3;
-        public OrrnateGhostpipefish(PieceConfig cfg) : base(cfg, RangerMove.Quiets, None.Captures)
+        public OrnateGhostpipefish(PieceConfig cfg) : base(cfg, RangerMove.Quiets, None.Captures)
         {
             SetStat(SkillStat.Range, Range);
             SetStat(SkillStat.Duration, Duration);
@@ -35,7 +35,7 @@ namespace Game.Piece.PieceLogic
                     var p = PieceOn(piece);
                     if (p == null) continue;
                     
-                    list.Add(new OrrnateGhostpipefishActive(Pos, piece, GetStat(SkillStat.Duration)));
+                    list.Add(new OrnateGhostpipefishActive(this, p, GetStat(SkillStat.Duration)));
                 }
             };
         }

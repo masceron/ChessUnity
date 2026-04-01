@@ -1,7 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
@@ -23,7 +22,7 @@ namespace Game.Effects.Augmentation
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ICaptures) return;
-            if (BoardUtils.PieceOn(action.Maker) != Piece) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
             ActionManager.EnqueueAction(new ApplyEffect(new Stunned(stunDuration, Piece)));
         }

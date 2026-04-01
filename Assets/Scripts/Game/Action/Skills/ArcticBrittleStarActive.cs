@@ -22,9 +22,8 @@ namespace Game.Action.Skills
         private int _gridSize = 2;
         private int _castRange = 3;
 
-        public ArcticBrittleStarActive(int maker, int target, int gridSize, int castRange) : base(maker)
+        public ArcticBrittleStarActive(PieceLogic maker, int target, int gridSize, int castRange) : base(maker, target)
         {
-            Target = target;
             _gridSize = gridSize;
             _castRange = castRange;
 
@@ -32,8 +31,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
-            if (maker == null || pieceAI == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -5;
             return 0;
         }
@@ -42,7 +40,7 @@ namespace Game.Action.Skills
         {
             Tile.Tile.OnPointEnterHandle = thisTile =>
             {
-                if (Distance(IndexOf(thisTile.rank, thisTile.file), Maker) > _castRange)
+                if (Distance(IndexOf(thisTile.rank, thisTile.file), From) > _castRange)
                 {
                     TileManager.Ins.UnmarkAll();
                     return;
@@ -64,7 +62,7 @@ namespace Game.Action.Skills
                     BoardViewer.Selecting = -2;
                 }
 
-                var pending = new ArcticBrittleStarSkillPending(_hoveringPos, PieceOn(Maker), _gridSize);
+                var pending = new ArcticBrittleStarSkillPending(_hoveringPos, GetMakerAsPiece(), _gridSize);
 
                 if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
             

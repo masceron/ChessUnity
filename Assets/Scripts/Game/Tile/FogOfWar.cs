@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Che khuất tầm nhìn của quân địch bên trong fog. Quân địch đi lên fog mình, fog sẽ biến mất
+    /// </summary>
     public class FogOfWar : Formation
     {
         public FogOfWar(bool color) : base(color)
@@ -22,7 +25,7 @@ namespace Game.Tile
 
         protected override void OnPieceEnter(PieceLogic piece)
         {
-            if (piece.Color != Color) BoardUtils.RemoveFormation(piece.Pos);
+            if (piece.Color != Color) BoardUtils.RemoveFormation(BoardUtils.GetFormation(piece.Pos));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

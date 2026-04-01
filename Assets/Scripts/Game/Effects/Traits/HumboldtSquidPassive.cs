@@ -24,13 +24,11 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos
+            if (action.GetMakerAsPiece() == Piece
                 && action is ICaptures
-                && (action.Result == ResultFlag.Blocked
-                    || action.Result == ResultFlag.HardenedBlock
-                    || action.Result == ResultFlag.Parry))
+                && action.Result is ResultFlag.Blocked or ResultFlag.HardenedBlock or ResultFlag.Parry)
             {
-                var target = PieceOn(action.Target);
+                var target = PieceOn(action.GetTargetPos());
                 if (target != null && target.Color != Piece.Color)
                     ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target), Piece));
             }

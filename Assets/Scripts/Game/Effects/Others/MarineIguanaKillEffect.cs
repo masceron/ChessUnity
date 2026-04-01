@@ -8,14 +8,14 @@ namespace Game.Effects.Others
 {
     public class MarineIguanaKillEffect : Effect, IDeadTrigger, IOnApplyTrigger
     {
-        private readonly int maker;
-        private readonly int target;
+        private readonly PieceLogic maker;
+        private readonly PieceLogic target;
 
-        public MarineIguanaKillEffect(int duration, PieceLogic piece, int maker, int target) : base(duration, 1, piece,
+        public MarineIguanaKillEffect(int duration, PieceLogic maker, PieceLogic first, PieceLogic second) : base(duration, 1, first,
             "effect_marine_iguana_kill_effect")
         {
-            this.target = target;
             this.maker = maker;
+            target = second;
         }
 
         public void OnCallDead(PieceLogic pieceToDie)
@@ -26,7 +26,7 @@ namespace Game.Effects.Others
 
         public void OnApply()
         {
-            ActionManager.EnqueueAction(new NormalCapture(maker, Piece.Pos));
+            ActionManager.EnqueueAction(new NormalCapture(maker, Piece));
         }
     }
 }

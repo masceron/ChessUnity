@@ -27,7 +27,7 @@ namespace Game.Piece.PieceLogic
                     {
                         var piece = PieceOn(IndexOf(x, y));
                         if (piece == null || piece.Equals(this) || piece.PreviousMoves.Count <= 0) continue;
-                        list.Add(new HourglassJellyActive(Pos, piece.Pos));
+                        list.Add(new HourglassJellyActive(this, piece));
                     }
                 }
                 else
@@ -39,7 +39,7 @@ namespace Game.Piece.PieceLogic
                         for (var x = rank - 4; x <= rank + 4; ++x)
                         for (var y = file - 4; y <= file + 4; ++y)
                             if (VerifyBounds(x) && VerifyBounds(y) && IsActive(IndexOf(x, y)) && IndexOf(x, y) != Pos)
-                                list.Add(new HourglassJellyActive(Pos, IndexOf(x, y)));
+                                list.Add(new HourglassJellyActive(this, PieceOn(IndexOf(x, y))));
 
                         return;
                     }
@@ -54,7 +54,7 @@ namespace Game.Piece.PieceLogic
                     var top = enemies.Where(p => p.GetValueForAI() == bestScore).ToList();
                     var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
-                    list.Add(new HourglassJellyActive(Pos, chosen.Pos));
+                    list.Add(new HourglassJellyActive(this, PieceOn(chosen.Pos)));
                 }
             };
         }

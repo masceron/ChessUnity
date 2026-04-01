@@ -14,23 +14,20 @@ namespace Game.Action.Skills
         {
         }
 
-        public BlueDragonActive(int maker, int target) : base(maker)
+        public BlueDragonActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
-            if (maker == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker) return 0;
             return pieceAI.Color != maker.Color ? -15 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(Target)), PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, GetTargetAsPiece()), GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

@@ -112,7 +112,7 @@ namespace Game.Relics
             }
 
             if (ourPiece == null || enemyPiece == null) return;
-            var excute = new EyeOfMimicExecute(ourPiece.Pos, enemyPiece.Pos);
+            var excute = new EyeOfMimicExecute(ourPiece, enemyPiece);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var ourPending = new EyeOfMimicPending(this, ourPiece.Pos);

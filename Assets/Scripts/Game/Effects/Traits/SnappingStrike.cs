@@ -2,7 +2,6 @@
 using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -20,12 +19,12 @@ namespace Game.Effects.Traits
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
             {
-                if (PieceOn(actions[i].Maker).Effects
+                if (actions[i].GetMakerAsPiece().Effects
                     .All(e => e.EffectName != "effect_snapping_strike"))
                     continue;
 
                 if (actions[i] is NormalCapture capture)
-                    actions[i] = new Action.Captures.SnappingStrike(capture.Maker, capture.Target);
+                    actions[i] = new Action.Captures.SnappingStrike(capture.GetMakerAsPiece(), capture.GetTargetAsPiece());
             }
         }
 

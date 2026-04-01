@@ -33,17 +33,17 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     // PencilUrchinActive (ISkills + IDontEndTurn): đăng ký hover preview
-                    list.Add(new PencilUrchinActive(Pos, Pos, _gridSize, _castRange));
+                    list.Add(new PencilUrchinActive(this, Pos, _gridSize, _castRange));
                 }
                 else
                 {
                     // AI: chọn enemy có value cao nhất trong cast range
                     var listPieces = new List<Commons.PieceLogic>();
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Pos, _castRange);
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, _castRange);
                     foreach (var target in targets)
                     {
-                        if (PieceOn(target).Effects.Any(e => e.EffectName == "effect_extremophiles")) continue;
-                        listPieces.Add(PieceOn(target));
+                        if (target.Effects.Any(e => e.EffectName == "effect_extremophiles")) continue;
+                        listPieces.Add(target);
                     }
 
                     if (listPieces.Count == 0) return;
@@ -55,7 +55,7 @@ namespace Game.Piece.PieceLogic
                     var aiRank    = RankOf(selected.Pos);
                     var aiFile    = FileOf(selected.Pos);
                     var aiStart   = _gridSize / 2;
-                    list.Add(new PencilUrchinSkillExecute(Pos, aiRank - aiStart, aiFile - aiStart, _gridSize));
+                    list.Add(new PencilUrchinSkillExecute(this, aiRank - aiStart, aiFile - aiStart, _gridSize));
                 }
             };
         }

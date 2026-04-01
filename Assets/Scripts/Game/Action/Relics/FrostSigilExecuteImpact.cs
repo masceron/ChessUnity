@@ -2,8 +2,9 @@ using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Managers;
 using UnityEngine;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Relics
 {
@@ -11,17 +12,15 @@ namespace Game.Action.Relics
     {
         private int ProbabilityBound = 25;
 
-        public FrostSigilExecuteImpact(int maker, int target, int probabilityBound) : base(maker)
+        public FrostSigilExecuteImpact(PieceLogic maker, int target, int probabilityBound) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
             ProbabilityBound = probabilityBound;
         }
 
         protected override void ModifyGameState()
         {
-            var pieceTarget = BoardUtils.PieceOn((int)Target);
-            var pieceMaker = BoardUtils.PieceOn(Maker);
+            var pieceTarget = BoardUtils.PieceOn(GetTargetPos());
+            var pieceMaker = GetMakerAsPiece();
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, pieceTarget), pieceMaker));
 
             if (MatchManager.Roll(ProbabilityBound))

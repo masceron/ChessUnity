@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -13,9 +14,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public SnappingStrike(int maker, int target) : base(maker)
+        public SnappingStrike(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -24,8 +24,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Target);
-            MatchManager.Ins.GameState.Kill(Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
+            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
         }
     }
 }

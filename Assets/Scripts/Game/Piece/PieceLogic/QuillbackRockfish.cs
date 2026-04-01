@@ -1,9 +1,9 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
-using Game.Action.Skills;
 using Game.Movesets;
 using Game.Effects.Buffs;
+using QuillbackRockfishActive = Game.Action.Skills.QuillbackRockfishActive;
 
 namespace Game.Piece.PieceLogic
 {
@@ -19,7 +19,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown != 0) return;
                 if (!isPlayer) return;
-                list.Add(new QuillbackRockfishActive(Pos));
+                list.Add(new QuillbackRockfishActive(this));
             };
         
         }

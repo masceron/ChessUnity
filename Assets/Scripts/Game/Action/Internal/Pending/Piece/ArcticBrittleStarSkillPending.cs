@@ -23,10 +23,8 @@ namespace Game.Action.Internal.Pending.Piece
         private PieceLogic _piece;
         private readonly int _gridSize;
 
-        public ArcticBrittleStarSkillPending(int tilePos, PieceLogic piece, int gridSize) : base(tilePos)
+        public ArcticBrittleStarSkillPending(int tilePos, PieceLogic piece, int gridSize) : base(piece, tilePos)
         {
-            Maker      = tilePos;
-            Target     = tilePos;
             _piece     = piece;
             _gridSize  = gridSize;
         }
@@ -42,7 +40,7 @@ namespace Game.Action.Internal.Pending.Piece
         protected override void CompleteAction()
         {
             // Lấy Tile object của ô đang hover/click để đọc corner
-            var clickedTile = TileManager.Ins.GetTile(Maker);
+            var clickedTile = TileManager.Ins.GetTile(Target);
             if (clickedTile == null) return;
 
             int startRank, startFile;
@@ -62,8 +60,8 @@ namespace Game.Action.Internal.Pending.Piece
                 startFile  = clickedTile.file - radius;
             }
 
-            BoardUtils.SetCooldown(_piece.Pos, ((IPieceWithSkill)_piece).TimeToCooldown);
-            CommitResult(new ArcticBrittleStarSkillExecute(_piece.Pos, startRank, startFile, _gridSize));
+            BoardUtils.SetCooldown(_piece, ((IPieceWithSkill)_piece).TimeToCooldown);
+            CommitResult(new ArcticBrittleStarSkillExecute(_piece, startRank, startFile, _gridSize));
         }
     }
 }

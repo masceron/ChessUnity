@@ -23,7 +23,7 @@ namespace Game.Effects.Others
         {
             var piecePos = Piece.Pos;
             if (!IsAtPromotionRank(piecePos)) return;
-            ActionManager.EnqueueAction(new KillPiece(piecePos));
+            ActionManager.EnqueueAction(new KillPiece(Piece));
 
             if (Piece.Color)
             {

@@ -14,10 +14,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public OliveRidleyHatchlingActive(int maker) : base(maker)
+        public OliveRidleyHatchlingActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -27,9 +25,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Maker));
-            ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_archelon", PieceOn(Maker).Color, Maker)));
-            SetCooldown(Maker, -1);
+            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece()));
+            ActionManager.EnqueueAction(
+                new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMakerAsPiece().Color,
+                    GetFrom())));
+            SetCooldown(GetMakerAsPiece(), -1);
         }
     }
 }

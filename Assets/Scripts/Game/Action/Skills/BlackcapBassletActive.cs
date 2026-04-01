@@ -1,21 +1,24 @@
-﻿using Game.Action.Quiets;
+using MemoryPack;
+using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class BlackcapBassletActive : Action, ISkills
+    [MemoryPackable]
+    public partial class BlackcapBassletActive : Action, ISkills
     {
-        public BlackcapBassletActive(int maker, int target) : base(maker)
+        [MemoryPackConstructor]
+        private BlackcapBassletActive() { }
+
+        public BlackcapBassletActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Frenzied 4 turn lên quân địch đi vào. Sau khi gây hiệu ứng, tự phá hủy formation này.
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HopkinsRose : Formation
@@ -25,9 +28,9 @@ namespace Game.Tile
             if (piece != null && piece.Color != Color)
             {
                 var frenziedEffect = new Frenzied(piece, 4);
-                var applyEffectAction = new ApplyEffect(frenziedEffect, GetFormationType());
+                var applyEffectAction = new ApplyEffect(frenziedEffect);
                 ActionManager.EnqueueAction(applyEffectAction);
-                ActionManager.EnqueueAction(new ApplyEffectAndRemoveFormation(applyEffectAction, Pos));
+                ActionManager.EnqueueAction(new ApplyEffectAndRemoveFormation(applyEffectAction, this));
             }
         }
 

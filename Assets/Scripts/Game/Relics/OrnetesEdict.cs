@@ -1,4 +1,3 @@
-using Game.Action.Internal.Pending.Relic;
 using Game.Managers;
 using Game.Piece;
 using Game.Relics.Commons;
@@ -25,8 +24,9 @@ namespace Game.Relics
                     if (piece == null || piece.Color != Color) continue;
                     if (piece.PieceRank == PieceRank.Commander || piece.PieceRank == PieceRank.Construct) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new OrnetesEdictPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    //var pending = new OrnetesEdictPending(this, piece.Pos);
+                    //BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;

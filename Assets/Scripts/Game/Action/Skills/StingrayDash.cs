@@ -16,14 +16,13 @@ namespace Game.Action.Skills
         {
         }
 
-        public StingrayDash(int maker, int to) : base(maker)
+        public StingrayDash(PieceLogic maker, int to) : base(maker, to)
         {
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -30 : 0;
         }
@@ -31,10 +30,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var (rankFrom, fileFrom) = RankFileOf(Maker);
-            var (rankTo, fileTo) = RankFileOf(Target);
+            var (rankFrom, fileFrom) = RankFileOf(GetFrom());
+            var (rankTo, fileTo) = RankFileOf(GetTargetPos());
             var board = PieceBoard();
-            var caller = board[Maker];
+            var caller = GetMakerAsPiece();
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;
@@ -47,13 +46,12 @@ namespace Game.Action.Skills
                 var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.Color == caller.Color) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p), PieceOn(Maker)));
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), PieceOn(Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p), caller));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), caller));
             }
 
-            Move(Maker, Target);
-            Maker = Target;
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            Move(caller, GetTargetPos());
+            SetCooldown(caller, ((IPieceWithSkill)caller).TimeToCooldown);
         }
     }
 }

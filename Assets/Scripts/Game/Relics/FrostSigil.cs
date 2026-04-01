@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using Game.Action;
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
+using Game.Action.Internal.Pending.Relic;
+using Game.Action;
 
 namespace Game.Relics
 {
@@ -35,6 +35,7 @@ namespace Game.Relics
                     hoveringTile = thisTile;
                     TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
 
+                    //Làm lại
                     var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
                     var pending = new FrostSigilPending(pos, this);
 
@@ -81,8 +82,10 @@ namespace Game.Relics
             var bestArea = bestAreas[Random.Range(0, bestAreas.Count)];
             var pos = BoardUtils.IndexOf(bestArea.rank, bestArea.file);
 
-            var pending = new FrostSigilPending(pos, this);
-            BoardViewer.Ins.ExecuteAction(pending);
+            //Làm lại
+            SetCooldown();
+            var execute = new Game.Action.Relics.FrostSigilExecute(CommanderPiece, pos, Color);
+            Game.Action.ActionManager.EnqueueAction(execute);
         }
     }
 }

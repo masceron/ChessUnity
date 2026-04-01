@@ -23,7 +23,7 @@ namespace Game.Piece.PieceLogic
                         if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
                         var targetPiece = PieceOn(IndexOf(x, y));
                         if (targetPiece == null || targetPiece.Color == Color) continue;
-                        list.Add(new PhronimaActive(Pos, targetPiece.Pos));
+                        list.Add(new PhronimaActive(this, targetPiece));
                     }
                 }
                 else
@@ -50,7 +50,7 @@ namespace Game.Piece.PieceLogic
 
                         var idx = Random.Range(0, listPieces.Count - 1);
 
-                        list.Add(new PhronimaActive(Pos, listPieces[idx].Pos));
+                        list.Add(new PhronimaActive(this, listPieces[idx]));
                     }
                     else
                     {
@@ -58,7 +58,7 @@ namespace Game.Piece.PieceLogic
                         for (var y = file - 3; y <= file + 3; y++)
                         {
                             if (x == rank && y == file) continue;
-                            list.Add(new PhronimaActive(Pos, IndexOf(x, y)));
+                            list.Add(new PhronimaActive(this, PieceOn(IndexOf(x, y))));
                         }
                     }
                 }

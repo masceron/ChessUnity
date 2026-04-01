@@ -19,7 +19,7 @@ namespace Game.Piece.PieceLogic
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
-                if (isPlayer) list.Add(new PhantomJellyActive(Pos));
+                if (isPlayer) list.Add(new PhantomJellyActive(this));
                 //query for AI in here
             };
         }

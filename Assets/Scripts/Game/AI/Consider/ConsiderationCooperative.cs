@@ -21,7 +21,7 @@ namespace Game.AI.Consider
 
             var scaleValue = 1f;
 
-            var (targetRank, targetFile) = BoardUtils.RankFileOf(action.Target);
+            var (targetRank, targetFile) = BoardUtils.RankFileOf(action.GetTargetPos());
 
             // đếm số Ally Piece ở quanh action.Target, mỗi Ally Piece xung quanh giúp tăng scaleValue lên 0.25f
             for (var r = targetRank - 1; r <= targetRank + 1; r++)
@@ -37,14 +37,14 @@ namespace Game.AI.Consider
                 }
             }
 
-            var value = Mathf.FloorToInt(scaleValue * weight + TileManager.Ins.GetTileValue(action.Target));
+            var value = Mathf.FloorToInt(scaleValue * weight + TileManager.Ins.GetTileValue(action.GetTargetPos()));
             foreach (var ea in enemyActions)
             {
                 //if (ea.Target == action.Target && ea is ICaptures or ISkills) value -= threatenedTilePenalty;
-                if (ea.Target == action.Target && ea is ICaptures)
+                if (ea.GetTargetPos() == action.GetTargetPos() && ea is ICaptures)
                     value = PenaltyAction.PenaltyMoveToCapture(maker, value);
 
-                if (ea.Target == action.Target && ea is ISkills skills)
+                if (ea.GetTargetPos() == action.GetTargetPos() && ea is ISkills skills)
                     value = PenaltyAction.PenaltyMoveToSkill(skills, maker, value);
             }
 

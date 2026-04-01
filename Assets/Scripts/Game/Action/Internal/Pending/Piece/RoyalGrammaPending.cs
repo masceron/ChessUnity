@@ -5,16 +5,14 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using UX.UI.Ingame.RoyalGrammaUI;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
     public class RoyalGrammaPending : PendingAction, IDisposable, ISkills
     {
         public static List<int> positions = new();
-        public RoyalGrammaPending(int maker, int target) : base(maker)
+        public RoyalGrammaPending(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -23,7 +21,7 @@ namespace Game.Action.Internal.Pending.Piece
         }
         public void CommitResult(string chosenType)
         {
-            CommitResult(new RoyalGrammaActive(Maker, new List<int>(positions), chosenType));
+            CommitResult(new RoyalGrammaActive(GetMakerAsPiece(), new List<int>(positions), chosenType));
             positions.Clear();
         }
         public void Dispose()
@@ -33,9 +31,9 @@ namespace Game.Action.Internal.Pending.Piece
         }
         protected override void CompleteAction()
         {
-            positions.Add(Target);
-            TileManager.Ins.UnMark(Target);
-            if (positions.Count == PieceOn(Maker).GetStat(SkillStat.Target))
+            positions.Add(GetTargetPos());
+            TileManager.Ins.UnMark(GetTargetPos());
+            if (positions.Count == GetMakerAsPiece().GetStat(SkillStat.Target))
             {
                 var ui = BoardViewer.Ins.GetOrInstantiateUI<RoyalGrammaUI>(IngameSubmenus.RoyalGrammaUI);
                 ui.Load(this);

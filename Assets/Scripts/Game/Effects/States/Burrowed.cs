@@ -44,7 +44,7 @@ namespace Game.Effects.States
             {
                 if (action is ICaptures) actions.Remove(action);
                 if (action is IQuiets && caller == Piece) actions.Remove(action);
-                if (action is ISkills && action.Target == Piece.Pos && action is not ILocaltionTarget) actions.Remove(action);
+                if (action is ISkills && action.GetTargetPos() == Piece.Pos && action is not ILocaltionTarget) actions.Remove(action);
             }
         }
     }

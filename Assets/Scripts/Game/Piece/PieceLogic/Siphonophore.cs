@@ -22,7 +22,7 @@ namespace Game.Piece.PieceLogic
             SetStat(SkillStat.Unit, Unit);
             ActionManager.ExecuteImmediately(new ApplyEffect(new SiphonophorePassive(this)));
 
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
                 if (isPlayer)
@@ -32,7 +32,7 @@ namespace Game.Piece.PieceLogic
                         var idx = IndexOf(rank, file);
                         if (!VerifyIndex(idx) || !IsActive(idx)) continue;
                         var pOn = PieceOn(idx);
-                        if (pOn == null) list.Add(new SiphonophorePending(Pos, idx));
+                        if (pOn == null) list.Add(new SiphonophorePending(this, idx));
                     }
                 }
             };

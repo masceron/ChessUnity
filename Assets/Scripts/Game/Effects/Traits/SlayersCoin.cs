@@ -1,6 +1,5 @@
 ﻿using Game.Action;
 using Game.Action.Captures;
-using Game.Common;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -21,8 +20,8 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures || action.Result != ResultFlag.Success) return;
 
-            var caller = BoardUtils.PieceOn(action.Maker);
-            var captured = BoardUtils.PieceOn(action.Target);
+            var caller = action.GetMakerAsPiece();
+            var captured = action.GetTargetAsPiece();
 
             if (caller.Color == Piece.Color && caller.PieceRank < captured.PieceRank) ((Chrysos)Piece).Coin += 1;
         }

@@ -1,7 +1,6 @@
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Buffs
 {
@@ -16,7 +15,7 @@ namespace Game.Effects.Buffs
         public void OnCallAfterPieceAction(Action.Action action)
         {
             if (action is not ISkills) return;
-            var caster = PieceOn(action.Maker);
+            var caster = action.GetMakerAsPiece();
             if (caster.Color == Piece.Color && Piece.SkillCooldown > 0) Piece.SkillCooldown--;
         }
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
@@ -47,8 +46,10 @@ namespace Game.Relics
                     if (piece == null || piece.Color == Color) continue;
                     if (!possibleRank.Contains(piece.PieceRank)) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new CorruptedWisperPending(piece.Pos, this);
-                    BoardViewer.ListOf.Add(pending);
+                    
+                    //Làm lại
+                    // var pending = new CorruptedWisperPending(piece.Pos, this);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;

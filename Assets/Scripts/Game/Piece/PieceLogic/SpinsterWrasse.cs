@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects;
 using Game.Movesets;
@@ -14,7 +12,7 @@ namespace Game.Piece.PieceLogic
     {
         public SpinsterWrasse(PieceConfig cfg) : base(cfg, BluffingMoves.Quiets, None.Captures)
         {
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
 
@@ -27,7 +25,8 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new SpinsterWrassePending(Pos, idx));
+                        //Làm lại
+                        //list.Add(new SpinsterWrassePending(Pos, idx));
                     }
                 }
                 else
@@ -67,7 +66,8 @@ namespace Game.Piece.PieceLogic
                     var idxA = Random.Range(0, listA.Count - 1);
                     var idxB = Random.Range(0, listB.Count - 1);
 
-                    list.Add(new SpinsterWrasseBuff(Pos, listA[idxA].Pos, listB[idxB].Pos));
+                    //Làm lại
+                    // list.Add(new SpinsterWrasseBuff(this, listA[idxA].Pos, listB[idxB].Pos));
                 }
             };
         }

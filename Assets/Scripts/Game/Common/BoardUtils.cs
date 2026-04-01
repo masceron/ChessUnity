@@ -132,20 +132,14 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SquareColor[pos];
         }
 
-        public static bool ColorOfPiece(int pos)
+        public static void FlipPieceColor(PieceLogic piece)
         {
-            return PieceOn(pos).Color;
+            piece.Color = !piece.Color;
         }
 
-        public static void FlipPieceColor(int pos)
+        public static void SetCooldown(PieceLogic piece, int cd)
         {
-            var gameState = MatchManager.Ins.GameState;
-            gameState.PieceBoard[pos].Color = !gameState.PieceBoard[pos].Color;
-        }
-
-        public static void SetCooldown(int pos, int cd)
-        {
-            MatchManager.Ins.GameState.PieceBoard[pos].SkillCooldown = cd;
+            piece.SkillCooldown = cd;
         }
 
         public static PieceLogic[] PieceBoard()
@@ -178,9 +172,9 @@ namespace Game.Common
             return MatchManager.Ins.GameState.BlackCaptured;
         }
 
-        public static void Move(int from, int to)
+        public static void Move(PieceLogic pieceLogic, int to)
         {
-            MatchManager.Ins.GameState.Move(from, to);
+            MatchManager.Ins.GameState.Move(pieceLogic, to);
         }
 
         public static void FlipSideToMove()
@@ -343,12 +337,18 @@ namespace Game.Common
 
         public static void NotifyInternalAction(IInternal action)
         {
-            if (action is ApplyEffect apply) MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
-            else if (action is KillPiece || action is DestroyPiece || action is CarapaceKill
-                     || action is MarinelKill || action is DestroyAdhesivePiece
-                     || action is DestroyParasitePiece)
+            switch (action)
             {
-                MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
+                case ApplyEffect apply:
+                    MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
+                    break;
+                case KillPiece:
+                case DestroyPiece:
+                case CarapaceKill:
+                case DestroyAdhesivePiece:
+                case DestroyParasitePiece:
+                    MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
+                    break;
             }
         }
 
@@ -413,7 +413,7 @@ namespace Game.Common
 
             return list;
         }
-        
+
         public static List<(int rank, int file)> GetEmptySquaresRankFile()
         {
             var result = new List<(int, int)>();
@@ -429,7 +429,7 @@ namespace Game.Common
 
             return result;
         }
-        
+
 
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
         {
@@ -452,9 +452,9 @@ namespace Game.Common
             FormationManager.Ins.MoveFormation(from, to);
         }
 
-        public static void RemoveFormation(int pos)
+        public static void RemoveFormation(Formation formation)
         {
-            FormationManager.Ins.RemoveFormation(pos);
+            FormationManager.Ins.RemoveFormation(formation);
         }
 
         public static List<Formation> GetFormation(FormationType type)
@@ -462,28 +462,54 @@ namespace Game.Common
             return GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
         }
 
-        public static Formation[] GetFormations()
+        private static Formation[] GetFormations()
         {
-            return MatchManager.Ins.GameState.formations;
+            return MatchManager.Ins.GameState.Formations;
         }
 
         public static Formation GetFormation(int pos)
         {
-            return MatchManager.Ins.GameState.formations[pos];
+            return MatchManager.Ins.GameState.Formations[pos];
         }
 
         public static bool HasFormation(int pos)
         {
-            return MatchManager.Ins.GameState.formations[pos] != null;
+            return MatchManager.Ins.GameState.Formations[pos] != null;
         }
 
         public static void DestroyTile(int index)
         {
             TileManager.Ins.DestroyTile(index);
-            RemoveFormation(index);
-            if (PieceOn(index) != null) ActionManager.EnqueueAction(new KillPiece(index));
+            RemoveFormation(GetFormation(index));
+            var on = PieceOn(index);
+            if (on != null) ActionManager.EnqueueAction(new KillPiece(on));
         }
+
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
+
+        public static PieceLogic SpawnPiece(PieceConfig pieceConfig)
+        {
+            return MatchManager.Ins.GameState.SpawnPiece(pieceConfig);
+        }
+
+        public static int NextEntityID()
+        {
+            return MatchManager.Ins.GameState.NextEntityID();
+        }
+
+        public static Entity GetEntityByID(int id)
+        {
+            return MatchManager.Ins.GameState.GetEntityByID(id);
+        }
+
+        public static void AddToEntityList(Entity entity)
+        { 
+            MatchManager.Ins.GameState.EntityDict.Add(entity.ID, entity);
+        }
+
+        public static void RemoveFromEntityList(Entity entity)
+        {
+            MatchManager.Ins.GameState.EntityDict.Remove(entity.ID);
+        }
     }
 }
-

@@ -1,8 +1,7 @@
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using UnityEngine;
-using static Game.Common.BoardUtils;
+using ZLinq;
 
 namespace Game.Action.Skills
 {
@@ -16,35 +15,29 @@ namespace Game.Action.Skills
         {
         }
 
-        public PhronimaActive(int from, int to) : base(from)
+        public PhronimaActive(PieceLogic from, PieceLogic to) : base(from, to)
         {
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -50;
             return 0;
         }
 
-        private void ApplyEffect(int pos)
+        private void ApplyEffect()
         {
-            var targetPiece = PieceOn(Target);
+            var targetPiece = GetTargetAsPiece();
 
-            foreach (var effect in targetPiece.Effects)
-                //áp dụng cho debuff và chỉ tăng duration nếu nó là hữu hạn
-                if (effect.Category == EffectCategory.Debuff && effect.Duration > 0)
-                    effect.Duration += increaseDuration;
-                else if (effect.Category == EffectCategory.Debuff)
-                    Debug.Log(
-                        $"[PhronimaActive] Effect {effect.EffectName} on piece {targetPiece.Type} at position {Target} has infinite duration, skipping duration increase.");
+            foreach (var effect in targetPiece.Effects.Where(effect => effect.Category == EffectCategory.Debuff && effect.Duration > 0))
+                effect.Duration += increaseDuration;
         }
 
         protected override void ModifyGameState()
         {
-            ApplyEffect(Target);
+            ApplyEffect();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Game.Effects.States
 
             foreach (var action in actions)
             {
-                if (action is ISkills && PieceOn(action.Target) == Piece && action is not ILocaltionTarget)
+                if (action is ISkills && PieceOn(action.GetTargetPos()) == Piece && action is not ILocaltionTarget)
                 {
                     actions.Remove(action);
                 }
@@ -59,7 +59,7 @@ namespace Game.Effects.States
         /// <param name="action"></param>
         public void OnCallBeforePieceAction(Action.Action action)
         {
-            if (action is IAOE && action.Target == Piece.Pos) 
+            if (action is IAOE && action.GetTargetPos() == Piece.Pos) 
             {
                 action.Result = Action.ResultFlag.Failed;
             }

@@ -19,10 +19,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public ThalassosResurrect(int maker, int to, string typeTo) : base(maker)
+        public ThalassosResurrect(PieceLogic maker, int to, string typeTo) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
             this.typeTo = typeTo;
         }
 
@@ -34,12 +32,12 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var gameState = MatchManager.Ins.GameState;
-            var color = ColorOfPiece(Maker);
+            var color = GetMakerAsPiece().Color;
             var collection = !color ? gameState.WhiteCaptured : gameState.BlackCaptured;
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, Target)));
+            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(typeTo, color, GetTargetPos())));
 
             collection.Remove(collection.First(e => e.Type == typeTo));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

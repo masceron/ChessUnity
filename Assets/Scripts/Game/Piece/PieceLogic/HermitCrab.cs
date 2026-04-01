@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            if (index != Pos) list.Add(new HermitCrabSwap(Pos, index));
+                            if (index != Pos) list.Add(new HermitCrabSwap(this, PieceOn(index)));
                         }
 
                         return;
@@ -50,7 +50,7 @@ namespace Game.Piece.PieceLogic
                     }
 
                     var r = new Random();
-                    list.Add(new HermitCrabSwap(Pos, candidates[r.Next(candidates.Count)]));
+                    list.Add(new HermitCrabSwap(this, PieceOn(candidates[r.Next(candidates.Count)])));
                 }
             };
         }
@@ -62,7 +62,7 @@ namespace Game.Piece.PieceLogic
         {
             var piece = PieceOn(index);
             if (piece == null || piece.Color != Color) return;
-            list.Add(new HermitCrabSwap(Pos, index));
+            list.Add(new HermitCrabSwap(this, piece));
         }
     }
 }

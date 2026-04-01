@@ -1,8 +1,7 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
@@ -11,15 +10,15 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class WhiteMonkfishActive : Action, ISkills
     {
+        [MemoryPackInclude]
         private int Duration;
         [MemoryPackConstructor]
         private WhiteMonkfishActive()
         {
         }
 
-        public WhiteMonkfishActive(int maker, int target, int duration) : base(maker)
+        public WhiteMonkfishActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
-            Target = target;
             Duration = duration;
         }
 
@@ -34,7 +33,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(PieceOn(Target), Target, Duration)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), Duration)));
         }
     }
 }

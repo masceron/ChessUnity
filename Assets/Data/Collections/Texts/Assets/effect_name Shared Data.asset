@@ -799,12 +799,84 @@ MonoBehaviour:
     m_Key: effect_painted_greenling_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 81562588444135424
+  - m_Id: 81128640207986688
+    m_Key: effect_largehead_hairtail_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81237356408283136
+    m_Key: effect_dwarf_cuttlefish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81248024691810304
+    m_Key: effect_dwarf_cuttlefish_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82917787327340544
+    m_Key: effect_melibe_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82918195902881792
+    m_Key: effect_tainted_heart_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82918635549827072
+    m_Key: effect_puppeteer_spirit_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82919049716375552
+    m_Key: effect_ray's_tail_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82919423391113216
+    m_Key: effect_pressure_membrane_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82927075345113088
     m_Key: effect_invasive
     m_Metadata:
       m_Items: []
-  - m_Id: 81562671625572352
+  - m_Id: 82927075458359296
     m_Key: effect_territorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82669107712352256
+    m_Key: effect_pulse_coral_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82740887567196160
+    m_Key: effect_arrow_crab_diurnal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 82740940994240512
+    m_Key: effect_arrow_crab_territorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 83128895533473792
+    m_Key: effect_arrow_crab_nocturnal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84211293643788288
+    m_Key: effect_frog_fish_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84211293719285760
+    m_Key: effect_sunray_zoanthid_diurnal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84211293727674368
+    m_Key: effect_temporal_warp_return
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84211293736062976
+    m_Key: effect_brine_shrimp_summon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84211293740257280
+    m_Key: effect_masked_pufferfish_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84211293744451584
+    m_Key: effect_maxima_clam_passive
     m_Metadata:
       m_Items: []
   m_Metadata:

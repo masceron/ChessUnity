@@ -1,6 +1,6 @@
 using Game.Action.Internal;
-using Game.Common;
 using Game.Effects.States;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -15,15 +15,14 @@ namespace Game.Action.Captures
         {
         }
 
-        public SymbioticCapture(int maker, int target) : base(maker)
+        public SymbioticCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void ModifyGameState()
         {
-            var makerPiece = BoardUtils.PieceOn(Maker);
-            var targetPiece = BoardUtils.PieceOn(Target);
+            var makerPiece = GetMakerAsPiece();
+            var targetPiece = GetTargetAsPiece();
 
             if (makerPiece == null || targetPiece == null) return;
 

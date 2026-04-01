@@ -19,10 +19,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public BottlenoseDolphinActive(int maker, int target) : base(maker)
+        public BottlenoseDolphinActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void CompleteActionForAI()
@@ -35,7 +33,7 @@ namespace Game.Action.Skills
                 if (piece is not IPieceWithSkill) continue;
 
                 var deltaCooldown = ((IPieceWithSkill)PieceOn(i)).TimeToCooldown - piece.SkillCooldown;
-                if (piece.Color == PieceOn(Maker).Color)
+                if (piece.Color == GetMakerAsPiece().Color)
                     a.Add((i, deltaCooldown));
                 else
                     b.Add((i, deltaCooldown));
@@ -47,26 +45,26 @@ namespace Game.Action.Skills
                 if (type == 0)
                 {
                     var idx = Random.Range(0, a.Count - 1);
-                    SetCooldown(PieceOn(a[idx].pos).Pos, 0);
+                    SetCooldown(PieceOn(a[idx].pos), 0);
                 }
                 else
                 {
                     var idx = Random.Range(0, b.Count - 1);
-                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), PieceOn(Maker)));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMakerAsPiece()));
                 }
             }
             else if (a.Count > 0)
             {
                 var idx = Random.Range(0, a.Count - 1);
-                SetCooldown(PieceOn(a[idx].pos).Pos, 0);
+                SetCooldown(PieceOn(a[idx].pos), 0);
             }
             else if (b.Count > 0)
             {
                 var idx = Random.Range(0, b.Count - 1);
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), PieceOn(Maker)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMakerAsPiece()));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -76,11 +74,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            if (PieceOn(Target).Color != PieceOn(Maker).Color)
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(Target)), PieceOn(Maker)));
+            if (GetTargetAsPiece().Color != GetMakerAsPiece().Color)
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTargetAsPiece()), GetMakerAsPiece()));
             else
-                SetCooldown(Target, 0);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+                SetCooldown(GetTargetAsPiece(), 0);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Game.Action.Captures;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -18,7 +17,7 @@ namespace Game.Effects.Traits
         {
             if (caller != Piece) return;
             actions.RemoveAll(action =>
-                action is ICaptures && PieceOn(action.Maker).PieceRank <= PieceOn(action.Target).PieceRank);
+                action is ICaptures && action.GetMakerAsPiece().PieceRank <= action.GetTargetAsPiece().PieceRank);
         }
 
         public override int GetValueForAI()

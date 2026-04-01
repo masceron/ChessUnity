@@ -55,13 +55,13 @@ namespace Game.Effects.States
             {
                 if (action is ICaptures)
                 {
-                    var targetPiece = BoardUtils.PieceOn(action.Target);
+                    var targetPiece = action.GetTargetAsPiece();
                     // Kiểm tra chắc chắn là đồng minh thật sự (vì trong extraCaptures có thể lẫn cả kẻ địch)
                     if (targetPiece != null && targetPiece.Color == caller.Color && targetPiece != caller)
                     {
                         if (targetPiece.CurrentState == StateType.None)
                         {
-                            actions.Add(new SymbioticCapture(caller.Pos, action.Target));
+                            actions.Add(new SymbioticCapture(caller, targetPiece));
                         }
                     }
                 }

@@ -71,8 +71,8 @@ namespace Game.Action
             else if (mainAction is not IInternal)
                 foreach (var listener in afterPieceActionListeners)
                 {
-                    if ((listener is Effect && !BoardUtils.IsAlive(((Effect)listener).Piece)) 
-                            || listener is Formation && !BoardUtils.IsAlive(((Formation)listener).PieceOnFormation)) continue;
+                    if ((listener is Effect effect && !BoardUtils.IsAlive(effect.Piece))
+                        || listener is Formation formation && !BoardUtils.IsAlive(formation.PieceOnFormation)) continue;
 
                     _buffering = true;
                     listener.OnCallAfterPieceAction(mainAction);
@@ -130,7 +130,7 @@ namespace Game.Action
 
             foreach (var effect in startTurnListeners)
             {
-                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) continue;
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).Disabled) continue;
 
                 var shouldTrigger = false;
 
@@ -167,7 +167,7 @@ namespace Game.Action
 
             endTurnListeners.ForEach(effect =>
             {
-                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).disabled) return;
+                if (!BoardUtils.IsAlive(((Effect)effect).Piece) || ((Effect)effect).Disabled) return;
 
                 var shouldTrigger = false;
                 if (effect.EndTurnEffectType == EndTurnEffectType.EndOfAnyTurn)
@@ -211,7 +211,7 @@ namespace Game.Action
                     return false;
                 case ISkills:
                 {
-                    var maker = BoardUtils.PieceOn(action.Maker);
+                    var maker = action.GetMakerAsPiece();
                     var hasQuickReflex = maker?.Effects.OfType<QuickReflex>().Any() == true;
 
                     if (hasQuickReflex || action is IDontEndTurn)

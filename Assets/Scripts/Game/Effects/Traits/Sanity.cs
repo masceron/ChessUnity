@@ -8,7 +8,7 @@ namespace Game.Effects.Traits
 {
     public class Sanity : Effect, IBeforeApplyEffectTrigger
     {
-        private readonly List<string> _blockedEffects = new()
+        private static readonly List<string> BlockedEffects = new()
         {
             "effect_frenzied",
             "effect_controlled",
@@ -28,7 +28,7 @@ namespace Game.Effects.Traits
 
             var effect = applyEffect.Effect;
 
-            if (_blockedEffects.Contains(effect.EffectName)) applyEffect.Result = ResultFlag.Incorruptible;
+            if (BlockedEffects.Contains(effect.EffectName)) applyEffect.Result = ResultFlag.Incorruptible;
         }
 
         public override int GetValueForAI()

@@ -1,5 +1,7 @@
+using MemoryPack;
 using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Quiets
 {
@@ -10,16 +12,21 @@ namespace Game.Action.Quiets
     ///     - Bám Formation: gọi <see cref="PieceManager.MoveToAdhesiveFormation"/> — bay lên đỉnh ô Formation,
     ///       thu nhỏ, nhưng không parent (Formation không phải MonoBehaviour).
     /// </summary>
-    public class MoveToAdhesive : Action
+    [MemoryPackable]
+    public partial class MoveToAdhesive : Action
     {
-        private readonly bool _attachToFormation;
+        [MemoryPackConstructor]
+        private MoveToAdhesive() { }
+
+        [MemoryPackInclude]
+
+        private bool _attachToFormation;
 
         /// <param name="maker">Vị trí quân Adhesive.</param>
         /// <param name="target">Vị trí ô target (Piece hoặc Formation).</param>
         /// <param name="attachToFormation">true = bám vào Formation; false = bám vào Piece.</param>
-        public MoveToAdhesive(int maker, int target, bool attachToFormation) : base(maker)
+        public MoveToAdhesive(PieceLogic maker, Entity target, bool attachToFormation) : base(maker, target)
         {
-            Target            = target;
             _attachToFormation = attachToFormation;
         }
 
@@ -29,26 +36,24 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            var adhesive = BoardUtils.PieceOn(Maker);
+            var adhesive = GetMakerAsPiece();
 
             if (_attachToFormation)
             {
                 // Bám vào Formation — bay đến đỉnh tile Formation, thu nhỏ, không parent
-                PieceManager.Ins.MoveToAdhesiveFormation(Maker, Target);
+                PieceManager.Ins.MoveToAdhesiveFormation(GetFrom(), GetTargetPos());
             }
             else
             {
                 // Bám vào Piece — bay lên đỉnh Piece rồi parent vào (như Parasite)
-                var hostLogic = BoardUtils.PieceOn(Target);
-                PieceManager.Ins.MoveToParasitic(Maker, Target, hostLogic);
+                var hostLogic = GetTargetAsPiece();
+                PieceManager.Ins.MoveToParasitic(GetFrom(), GetTargetPos(), hostLogic);
             }
 
             // Xóa quân Adhesive khỏi PieceBoard
-            if (adhesive != null)
-            {
-                BoardUtils.PieceBoard()[Maker] = null;
-                adhesive.Pos = -9999;
-            }
+            if (adhesive == null) return;
+            BoardUtils.PieceBoard()[GetFrom()] = null;
+            adhesive.Pos = -9999;
         }
     }
 }

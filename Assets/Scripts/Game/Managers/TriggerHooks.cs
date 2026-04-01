@@ -98,7 +98,7 @@ namespace Game.Managers
             var snapshot = _onDies.ToArray();
             foreach (var effect in snapshot)
             {
-                if (((Observer)effect).disabled) continue;
+                if (((Observer)effect).Disabled) continue;
                 effect.OnCallDead(pieceToDie);
             }
         }
@@ -107,7 +107,7 @@ namespace Game.Managers
         {
             _onBeforeDestroyOrKill.ForEach(effect =>
             {
-                if (((Observer)effect).disabled) return;
+                if (((Observer)effect).Disabled) return;
                 effect.OnCallBeforeDestroyOrKill(action);
             });
         }
@@ -116,7 +116,7 @@ namespace Game.Managers
         {
             _onMoveGens.ForEach(e =>
             {
-                if (((Observer)e).disabled) return;
+                if (((Observer)e).Disabled) return;
                 e.OnCallMoveGen(caller, actions);
             });
         }
@@ -125,7 +125,7 @@ namespace Game.Managers
         {
             _onEffectApplies.ForEach(e =>
             {
-                if (((Observer)e).disabled) return;
+                if (((Observer)e).Disabled) return;
                 e.OnCallApplyEffect(action);
             });
         }
@@ -134,7 +134,7 @@ namespace Game.Managers
         {
             _beforePieceActions.ForEach(e =>
             {
-                if (((Observer)e).disabled) return;
+                if (((Observer)e).Disabled) return;
                 e.OnCallBeforePieceAction(action);
             });
         }
@@ -143,7 +143,7 @@ namespace Game.Managers
         {
             _beforeRelicActions.ForEach(e =>
             {
-                if (((Observer)e).disabled) return;
+                if (((Observer)e).Disabled) return;
                 e.OnCallBeforeRelicAction(relicAction);
             });
         }
@@ -152,7 +152,7 @@ namespace Game.Managers
         {
             _onSpawns.ForEach(e =>
             {
-                if (((Observer)e).disabled) return;
+                if (((Observer)e).Disabled) return;
 
                 e.OnPieceSpawn(piece);
             });

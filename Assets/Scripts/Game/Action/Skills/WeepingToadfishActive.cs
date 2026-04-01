@@ -1,4 +1,4 @@
-﻿using Game.Action.Internal;
+using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -11,15 +11,15 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class WeepingToadfishActive : Action, ISkills
     {
+        [MemoryPackInclude]
         private int Duration;
         [MemoryPackConstructor]
         private WeepingToadfishActive()
         {
         }
 
-        public WeepingToadfishActive(int maker, int target, int duration) : base(maker)
+        public WeepingToadfishActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
-            Target = target;
             Duration = duration;
         }
 
@@ -30,8 +30,8 @@ namespace Game.Action.Skills
         
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration, PieceOn(Target))));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration, GetTargetAsPiece())));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

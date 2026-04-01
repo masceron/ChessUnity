@@ -1,7 +1,6 @@
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using UnityEngine;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
@@ -14,10 +13,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public GulperEelActive(int maker, int target) : base(maker)
+        public GulperEelActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -27,11 +24,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Debug.Log("GulperEelActive: " + Target);
-            Debug.Log("GulperEelActive: " + RankFileOf(Target));
-            TileManager.Ins.DestroyTile(Target);
+            TileManager.Ins.DestroyTile(GetTargetPos());
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
@@ -58,7 +53,7 @@ namespace Game.Action.Skills
         //     var selectedTile = listTiles[random.Next(listTiles.Count)];
 
         //     TileManager.Ins.DestroyTile(selectedTile);
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        //     SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         // }
     }
 }

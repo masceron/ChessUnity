@@ -27,9 +27,9 @@ namespace Game.Effects.SpecialAbility
                 if (pOn == null) continue;
 
                 if (pOn.Color == Piece.Color)
-                    ActionManager.EnqueueAction(new Purify(Piece.Pos, idx));
+                    ActionManager.EnqueueAction(new Purify(Piece, pOn));
                 else
-                    ActionManager.EnqueueAction(new Nullify(Piece.Pos, idx));
+                    ActionManager.EnqueueAction(new Nullify(Piece, pOn));
             }
         }
 
@@ -38,8 +38,8 @@ namespace Game.Effects.SpecialAbility
             if (caller != Piece) return;
             for (var i = 0; i < actions.Count; i++)
                 if (actions[i] is NormalMove)
-                    actions[i] = new RemoraMove(Piece.Pos, actions[i].Target);
-                else if (actions[i] is NormalCapture) actions[i] = new RemoraMark(Piece.Pos, actions[i].Target);
+                    actions[i] = new RemoraMove(Piece, actions[i].GetTargetPos());
+                else if (actions[i] is NormalCapture) actions[i] = new RemoraMark(Piece, actions[i].GetTargetAsPiece());
         }
     }
 }

@@ -20,8 +20,8 @@ namespace Game.Action.Skills
         [MemoryPackConstructor]
         private PencilUrchinSkillExecute() { }
 
-        public PencilUrchinSkillExecute(int maker, int startRank, int startFile, int gridSize)
-            : base(maker)
+        public PencilUrchinSkillExecute(PieceLogic maker, int startRank, int startFile, int gridSize)
+            : base(maker, -1)
         {
             _startRank = startRank;
             _startFile = startFile;
@@ -30,7 +30,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null) return;
 
             for (var r = _startRank; r < _startRank + _gridSize; r++)

@@ -1,10 +1,9 @@
-using System.Collections.Generic;
+using System.Linq;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Condition;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 using Random = System.Random;
 
 namespace Game.Effects.Traits
@@ -22,10 +21,9 @@ namespace Game.Effects.Traits
         /// </summary>
         protected override void OnVengefulTrigger()
         {
-            var pieceAround = new List<PieceLogic>();
-            var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece.Pos, 1);
+            var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece, 1);
 
-            foreach (var piece in listPieces) pieceAround.Add(PieceOn(piece));
+            var pieceAround = Enumerable.ToList(listPieces);
 
             if (pieceAround.Count == 0) return;
 
@@ -34,7 +32,7 @@ namespace Game.Effects.Traits
 
             if (randomPiece == null) return;
             
-            ActionManager.EnqueueAction(new Nullify(Piece.Pos, randomPiece.Pos));
+            ActionManager.EnqueueAction(new Nullify(Piece, randomPiece));
         }
 
 

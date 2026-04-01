@@ -13,9 +13,8 @@ namespace Game.Action.Internal.Pending.Relic
     {
         private FrostSigil _frostSigil;
 
-        public FrostSigilPending(int maker, FrostSigil fs) : base(maker)
+        public FrostSigilPending(int target, FrostSigil fs) : base(fs.CommanderPiece, target)
         {
-            Maker = maker;
             _frostSigil = fs;
         }
 
@@ -29,7 +28,7 @@ namespace Game.Action.Internal.Pending.Relic
         {
             _frostSigil.SetCooldown();
 
-            var execute = new FrostSigilExecute(Maker, _frostSigil.Color);
+            var execute = new FrostSigilExecute(GetMakerAsPiece(), Target, _frostSigil.Color);
             CommitResult(execute);
             BoardViewer.Selecting = -1;
             BoardViewer.SelectingFunction = 0;

@@ -38,7 +38,7 @@ namespace Game.Movesets
                 if (!IsActive(index)) return false;
                 var p = PieceOn(index);
                 if (p != null) return false;
-                list.Add(new NormalMove(pos, index));
+                list.Add(new NormalMove(piece, index));
                 return true;
             }
         }
@@ -73,7 +73,7 @@ namespace Game.Movesets
                 {
                     if (!isPlayer)
                     {
-                        list.Add(new NormalCapture(pos, index));
+                        list.Add(new NormalCapture(piece, p));
                         return false;
                     }
 
@@ -81,7 +81,7 @@ namespace Game.Movesets
                 }
 
                 if (!IsActive(index)) return false;
-                if (p.Color != color) list.Add(new NormalCapture(pos, index));
+                if (p.Color != color) list.Add(new NormalCapture(piece, p));
 
                 return false;
             }

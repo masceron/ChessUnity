@@ -16,23 +16,21 @@ namespace Game.Action.Skills
         {
         }
 
-        public LionfishActive(int maker) : base(maker)
+        public LionfishActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -20 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
+            var caller = GetMakerAsPiece();
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -49,7 +47,7 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

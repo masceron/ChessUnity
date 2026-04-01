@@ -4,7 +4,6 @@ using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.SpecialAbility
 {
@@ -18,9 +17,9 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is ICaptures && action.Maker == Piece.Pos &&
-                (action.Result == ResultFlag.Blocked || action.Result == ResultFlag.Miss))
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, PieceOn(action.Target)), Piece));
+            if (action is ICaptures && action.GetMakerAsPiece() == Piece &&
+                action.Result is ResultFlag.Blocked or ResultFlag.Miss)
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, action.GetTargetAsPiece()), Piece));
         }
     }
 }

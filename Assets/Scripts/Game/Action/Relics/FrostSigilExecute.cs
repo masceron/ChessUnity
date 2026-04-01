@@ -3,6 +3,7 @@ using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using MemoryPack;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Relics
 {
@@ -20,20 +21,20 @@ namespace Game.Action.Relics
         {
         }
 
-        public FrostSigilExecute(int maker, bool ourSide) : base(maker)
+        public FrostSigilExecute(PieceLogic maker, int target, bool ourSide) : base(maker, target)
         {
             _ourSide = ourSide;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = BoardUtils.RankFileOf(Maker);
+            var (rank, file) = BoardUtils.RankFileOf(GetTargetPos());
             var pieces = BoardUtils.GetPiecesInRadius(rank, file, Radius, _ => true);
 
             foreach (var piece in pieces)
             {
                 if (piece == null || piece.Color == _ourSide) continue;
-                ActionManager.EnqueueAction(new FrostSigilExecuteImpact(Maker, piece.Pos, ProbabilityBound));
+                ActionManager.EnqueueAction(new FrostSigilExecuteImpact(GetMakerAsPiece(), piece.Pos, ProbabilityBound));
 
                 // ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece)));
 

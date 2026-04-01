@@ -20,25 +20,25 @@ namespace Game.Action.Skills
         private int _gridSize    = 1;
         private int _castRange   = 3;
 
-        public PencilUrchinActive(int maker, int target, int gridSize, int castRange) : base(maker)
+        public PencilUrchinActive(PieceLogic maker, int target, int gridSize, int castRange) : base(maker, target)
         {
-            Target     = target;
             _gridSize  = gridSize;
             _castRange = castRange;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -5 : 0;
         }
 
         protected override void ModifyGameState()
         {
+            UnityEngine.Debug.Log("PencilUrchinActive ModifyGameState");
             Tile.Tile.OnPointEnterHandle = thisTile =>
             {
-                if (Distance(IndexOf(thisTile.rank, thisTile.file), Maker) > _castRange)
+                if (Distance(IndexOf(thisTile.rank, thisTile.file), From) > _castRange)
                 {
                     TileManager.Ins.UnmarkAll();
                     return;
@@ -56,7 +56,7 @@ namespace Game.Action.Skills
                 if (BoardViewer.Selecting != -2)
                     BoardViewer.Selecting = -2;
 
-                var pending = new PencilUrchinSkillPending(_hoveringPos, PieceOn(Maker), _gridSize);
+                var pending = new PencilUrchinSkillPending(_hoveringPos, GetMakerAsPiece(), _gridSize);
                 if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
                     BoardViewer.ListOf.Add(pending);
             };

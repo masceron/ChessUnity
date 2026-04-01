@@ -19,7 +19,7 @@ namespace Game.Piece.PieceLogic
             {
                 if (SkillCooldown > 0) return;
 
-                if (isPlayer) list.Add(new LionfishActive(Pos));
+                if (isPlayer) list.Add(new LionfishActive(this));
                 //query for AI in here
             };
         }

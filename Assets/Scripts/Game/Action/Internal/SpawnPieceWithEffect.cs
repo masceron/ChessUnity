@@ -7,31 +7,28 @@ namespace Game.Action.Internal
 {
     public class SpawnPieceWithEffect : Action, IInternal
     {
-        private readonly Effect effectToApply;
-        private readonly PieceConfig pieceToSpawn;
+        private readonly Effect _effectToApply;
+        private readonly PieceConfig _pieceToSpawn;
 
-        public SpawnPieceWithEffect(PieceConfig p, Effect effect) : base(-1)
+        public SpawnPieceWithEffect(PieceConfig p, Effect effect) : base(null)
         {
-            pieceToSpawn = p;
-            effectToApply = effect;
+            _pieceToSpawn = p;
+            _effectToApply = effect;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.SpawnPiece(pieceToSpawn);
+            PieceManager.Ins.SpawnPiece(_pieceToSpawn);
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.SpawnPiece(pieceToSpawn);
+            var spawnedPiece = SpawnPiece(_pieceToSpawn);
 
-            var spawnedPiece = PieceOn(pieceToSpawn.Index);
-
-            if (spawnedPiece != null && effectToApply != null)
-            {
-                effectToApply.Piece = spawnedPiece;
-                ActionManager.EnqueueAction(new ApplyEffect(effectToApply));
-            }
+            if (spawnedPiece == null || _effectToApply == null) return;
+            
+            _effectToApply.Piece = spawnedPiece;
+            ActionManager.EnqueueAction(new ApplyEffect(_effectToApply));
         }
     }
 }

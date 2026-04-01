@@ -15,9 +15,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public FlowerhornCichlidActive(int maker, int target) : base(maker)
+        public FlowerhornCichlidActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -27,16 +26,16 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerColor = PieceOn(Maker).Color;
+            var makerColor = GetMakerAsPiece().Color;
             var direction = makerColor ? 1 : -1;
-            var pieceOn = PieceOn(Target);
+            var pieceOn = GetTargetAsPiece();
             if (pieceOn != null)
             {
-                var finalRankOfTarget = RankOf(Target);
+                var finalRankOfTarget = RankOf(GetTargetPos());
                 if (makerColor)
                 {
                     var knockbackCount = 0;
-                    while (IsActive(IndexOf(finalRankOfTarget + 1, FileOf(Target))) && knockbackCount < 2)
+                    while (IsActive(IndexOf(finalRankOfTarget + 1, FileOf(GetTargetPos()))) && knockbackCount < 2)
                     {
                         finalRankOfTarget++;
                         knockbackCount++;
@@ -45,7 +44,7 @@ namespace Game.Action.Skills
                 else
                 {
                     var knockbackCount = 0;
-                    while (IsActive(IndexOf(finalRankOfTarget - 1, FileOf(Target))) && knockbackCount < 2)
+                    while (IsActive(IndexOf(finalRankOfTarget - 1, FileOf(GetTargetPos()))) && knockbackCount < 2)
                     {
                         finalRankOfTarget--;
                         knockbackCount++;
@@ -53,14 +52,19 @@ namespace Game.Action.Skills
                 }
 
                 var finalRankOfMaker =
-                    finalRankOfTarget == RankOf(Target) ? RankOf(Target) - direction : RankOf(Target);
-                ActionManager.EnqueueAction(new NormalMove(Target, IndexOf(finalRankOfTarget, FileOf(Target))));
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn), PieceOn(Maker)));
-                ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(finalRankOfMaker, FileOf(Target))));
+                    finalRankOfTarget == RankOf(GetTargetPos())
+                        ? RankOf(GetTargetPos()) - direction
+                        : RankOf(GetTargetPos());
+                ActionManager.EnqueueAction(new NormalMove(PieceOn(IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))),
+                    IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))));
+                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn),
+                    GetMakerAsPiece()));
+                ActionManager.EnqueueAction(
+                    new NormalMove(GetMakerAsPiece(), IndexOf(finalRankOfMaker, FileOf(GetTargetPos()))));
             }
             else
             {
-                ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+                ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
             }
         }
     }

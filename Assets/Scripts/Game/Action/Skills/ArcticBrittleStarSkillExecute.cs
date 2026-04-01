@@ -25,8 +25,8 @@ namespace Game.Action.Skills
         /// <param name="startRank">Rank đầu tiên (top) của lưới NxN — từ TileManager</param>
         /// <param name="startFile">File đầu tiên (left) của lưới NxN — từ TileManager</param>
         /// <param name="gridSize">Kích thước N</param>
-        public ArcticBrittleStarSkillExecute(int maker, int startRank, int startFile, int gridSize)
-            : base(maker)
+        public ArcticBrittleStarSkillExecute(PieceLogic maker, int startRank, int startFile, int gridSize)
+            : base(maker, -1)
         {
             _startRank = startRank;
             _startFile = startFile;
@@ -43,7 +43,7 @@ namespace Game.Action.Skills
                 var idx = IndexOf(r, f);
                 if (!IsActive(idx) || HasFormation(idx)) continue;
 
-                Formation anchorIce = new AnchorIce(PieceOn(Maker).Color);
+                Formation anchorIce = new AnchorIce(GetMakerAsPiece().Color);
                 anchorIce.SetDuration(3);
                 FormationManager.Ins.SetFormation(idx, anchorIce);
             }

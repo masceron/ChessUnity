@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Game.Action.Internal;
 using Game.Action.Quiets;
@@ -10,7 +10,8 @@ using MemoryPack;
 
 namespace Game.Action.Skills
 {
-    public class PorcupineCrabActive : Action, ISkills
+    [MemoryPackable]
+    public partial class PorcupineCrabActive : Action, ISkills
     {
         private const int BleedingStack = 5;
         [MemoryPackConstructor]
@@ -18,20 +19,18 @@ namespace Game.Action.Skills
         {
         }
         
-        public PorcupineCrabActive(int maker, int target) : base(maker)
+        public PorcupineCrabActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }   
         
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
+            var makerPiece = GetMakerAsPiece();
 
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new NormalMove(makerPiece, GetTargetPos()));
 
-            var (rank1, file1) = RankFileOf(Maker);
-            var (rank2, file2) = RankFileOf(Target);
+            var (rank1, file1) = RankFileOf(GetFrom());
+            var (rank2, file2) = RankFileOf(GetTargetPos());
 
             var tiles = Pathfinder.AllLineBlockers(rank1, file1, rank2, file2);
 
@@ -47,7 +46,7 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
         
         List<(int rank, int file)> GetPath(int rank1, int file1, int rank2, int file2)    
@@ -90,7 +89,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic maker)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

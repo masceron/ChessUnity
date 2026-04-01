@@ -4,7 +4,6 @@ using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
@@ -18,10 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public MaskedPufferActive(int maker, int target) : base(maker)
+        public MaskedPufferActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -31,9 +28,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, PieceOn(Maker))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, PieceOn(Maker))));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, PieceOn(Maker))));
+            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, GetMakerAsPiece())));
         }
     }
 }

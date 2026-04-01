@@ -47,6 +47,10 @@ MonoBehaviour:
     m_Key: formation_urchin_field_description
     m_Metadata:
       m_Items: []
+  - m_Id: 17974696770048000
+    m_Key: formation_silt_cloud_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

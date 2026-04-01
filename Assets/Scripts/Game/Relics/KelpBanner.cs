@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Common;
+﻿using Game.Common;
 using Game.Managers;
 using Game.Relics.Commons;
 using Game.Tile;
@@ -22,8 +21,9 @@ namespace Game.Relics
                 foreach (var formation in BoardUtils.GetFormation(FormationType.Kelp))
                 {
                     TileManager.Ins.MarkAsMoveable(formation.Pos);
-                    var pending = new KelpBannerPending(this, formation.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    //var pending = new KelpBannerPending(this);
+                    //BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;
