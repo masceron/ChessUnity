@@ -29,6 +29,7 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Friend(typeof(BoardUtils))]
     public class GameState
     {
         private int _pieceID = 1;
@@ -184,8 +185,6 @@ namespace Game.Managers
 
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
                 pieceAffected.Color, pieceAffected.Pos));
-
-            EntityDict.Remove(pieceAffected.ID);
         }
 
         public void Move(PieceLogic piece, int t)

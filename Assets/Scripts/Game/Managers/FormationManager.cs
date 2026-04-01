@@ -55,7 +55,6 @@ namespace Game.Managers
         {
             if (formation == null) return;
             formation.OnRemove(PieceOn(formation.Pos)); // luôn gọi, dù ô không có Piece (truyền null)
-            RemoveFromEntityList(formation);
             _formations[formation.Pos] = null;
             Destroy(_formationObjects[formation.Pos]);
             _formationObjects[formation.Pos] = null;

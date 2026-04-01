@@ -342,7 +342,7 @@ namespace Game.Common
                 case ApplyEffect apply:
                     MatchManager.Ins.GameState.TriggerHooks.NotifyWhenApplyEffect(apply);
                     break;
-                case KillPiece:
+                case Game.Action.Internal.KillPiece:
                 case DestroyPiece:
                 case CarapaceKill:
                 case DestroyAdhesivePiece:
@@ -352,11 +352,16 @@ namespace Game.Common
             }
         }
 
-        public static bool IsAlive(PieceLogic piece)
+        public static bool IsAlive(Entity entity)
         {
-            if (piece == null) return true;
-            if (piece.Pos == -9999) return true;
-            return PieceOn(piece.Pos) == piece;
+            if (entity == null) return true;
+            if (entity.Pos == -9999) return true;
+            return entity switch
+            {
+                PieceLogic pieceLogic => PieceOn(pieceLogic.Pos) == pieceLogic,
+                Formation formation => GetFormation(formation.Pos) == formation,
+                _ => false
+            };
         }
 
         public static List<int> AllSidePos(bool side)
@@ -503,13 +508,25 @@ namespace Game.Common
         }
 
         public static void AddToEntityList(Entity entity)
-        { 
+        {
             MatchManager.Ins.GameState.EntityDict.Add(entity.ID, entity);
         }
 
-        public static void RemoveFromEntityList(Entity entity)
+        public static void KillPiece(PieceLogic pieceLogic)
         {
-            MatchManager.Ins.GameState.EntityDict.Remove(entity.ID);
+            MatchManager.Ins.GameState.Kill(pieceLogic);
+        }
+
+        public static void Prune()
+        {
+            var keysToRemove = MatchManager.Ins.GameState.EntityDict.Where(kvp => !IsAlive(kvp.Value))
+                .Select(kvp => kvp.Key)
+                .ToList();
+
+            foreach (var key in keysToRemove)
+            {
+                MatchManager.Ins.GameState.EntityDict.Remove(key);
+            }
         }
     }
 }
