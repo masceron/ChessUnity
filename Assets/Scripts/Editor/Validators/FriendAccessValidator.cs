@@ -29,7 +29,7 @@ namespace Editor.Validators
         {
             var ok = true;
 
-            var readerParams = new ReaderParameters { ReadSymbols = true };
+            var readerParams = new ReaderParameters { ReadSymbols = true, InMemory = true };
             AssemblyDefinition assembly;
             try
             {
@@ -37,70 +37,70 @@ namespace Editor.Validators
             }
             catch (System.Exception e)
             {
-                Debug.LogWarning(
-                    $"Could not load symbols for Assembly-CSharp.dll. Validation will run without clickable links. Error: {e.Message}");
-                assembly = AssemblyDefinition.ReadAssembly(AssemblyPath); // Fallback without symbols
+                Debug.LogWarning($"Could not load symbols... Error: {e.Message}");
+                assembly = AssemblyDefinition.ReadAssembly(AssemblyPath, new ReaderParameters { InMemory = true }); 
             }
 
-            var modules = assembly.Modules;
-
-            foreach (var type in modules.SelectMany(m => m.Types))
+            using (assembly)
             {
-                var actualCallerType = type.DeclaringType ?? type;
+                var modules = assembly.Modules;
 
-                foreach (var method in type.Methods.Where(m => m.HasBody))
+                foreach (var type in modules.SelectMany(m => m.Types))
                 {
-                    foreach (var instruction in method.Body.Instructions)
+                    var actualCallerType = type.DeclaringType ?? type;
+
+                    foreach (var method in type.Methods.Where(m => m.HasBody))
                     {
-                        if (instruction.Operand is not MemberReference memberRef) continue;
-                        if (memberRef.DeclaringType == null) continue;
-
-                        var declaringType = SafeResolveType(memberRef.DeclaringType);
-                        if (declaringType == null) continue;
-
-                        var attr = declaringType.CustomAttributes
-                            .FirstOrDefault(a => a.AttributeType.Name == "FriendAttribute");
-
-                        if (attr == null)
+                        foreach (var instruction in method.Body.Instructions)
                         {
-                            var resolvedMember = SafeResolveMember(memberRef);
-                            if (resolvedMember != null)
+                            if (instruction.Operand is not MemberReference memberRef) continue;
+                            if (memberRef.DeclaringType == null) continue;
+
+                            var declaringType = SafeResolveType(memberRef.DeclaringType);
+                            if (declaringType == null) continue;
+
+                            var attr = declaringType.CustomAttributes
+                                .FirstOrDefault(a => a.AttributeType.Name == "FriendAttribute");
+
+                            if (attr == null)
                             {
-                                attr = resolvedMember.CustomAttributes
-                                    .FirstOrDefault(a => a.AttributeType.Name == "FriendAttribute");
+                                var resolvedMember = SafeResolveMember(memberRef);
+                                if (resolvedMember != null)
+                                {
+                                    attr = resolvedMember.CustomAttributes
+                                        .FirstOrDefault(a => a.AttributeType.Name == "FriendAttribute");
+                                }
                             }
+
+                            if (attr == null) continue;
+                            if (actualCallerType.FullName == declaringType.FullName ||
+                                actualCallerType.DeclaringType?.FullName == declaringType.FullName)
+                            {
+                                continue;
+                            }
+
+                            var allowedTypes = ((CustomAttributeArgument[])attr.ConstructorArguments[0].Value)
+                                .Select(arg => (TypeReference)arg.Value)
+                                .ToList();
+
+                            if (allowedTypes.Any(at => at.FullName == actualCallerType.FullName)) continue;
+                            var sequencePoint = GetSequencePoint(method, instruction);
+
+                            var linkText = "";
+                            if (sequencePoint != null)
+                            {
+                                linkText =
+                                    $"\n<a href=\"{sequencePoint.Document.Url}\" line=\"{sequencePoint.StartLine}\">Open</a>";
+                            }
+
+                            LogViolation($"Illegal Access: <b>{actualCallerType.Name}.{method.Name}</b> " +
+                                         $"is accessing <b>{memberRef.Name}</b> (owned by {declaringType.Name}). " +
+                                         $"This is restricted to specific friend classes.{linkText}");
+                            ok = false;
                         }
-
-                        if (attr == null) continue;
-                        if (actualCallerType.FullName == declaringType.FullName ||
-                            actualCallerType.DeclaringType?.FullName == declaringType.FullName)
-                        {
-                            continue;
-                        }
-
-                        var allowedTypes = ((CustomAttributeArgument[])attr.ConstructorArguments[0].Value)
-                            .Select(arg => (TypeReference)arg.Value)
-                            .ToList();
-
-                        if (allowedTypes.Any(at => at.FullName == actualCallerType.FullName)) continue;
-                        var sequencePoint = GetSequencePoint(method, instruction);
-
-                        var linkText = "";
-                        if (sequencePoint != null)
-                        {
-                            linkText =
-                                $"\n<a href=\"{sequencePoint.Document.Url}\" line=\"{sequencePoint.StartLine}\">Open</a>";
-                        }
-
-                        LogViolation($"Illegal Access: <b>{actualCallerType.Name}.{method.Name}</b> " +
-                                     $"is accessing <b>{memberRef.Name}</b> (owned by {declaringType.Name}). " +
-                                     $"This is restricted to specific friend classes.{linkText}");
-                        ok = false;
                     }
                 }
             }
-            
-            assembly.Dispose();
 
             return ok;
         }

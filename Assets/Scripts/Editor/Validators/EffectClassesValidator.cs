@@ -47,7 +47,8 @@ namespace Editor.Validators
 
             foreach (var assemblyGroup in effectTypesByAssembly)
             {
-                using var assembly = AssemblyDefinition.ReadAssembly(assemblyGroup.Key);
+                var parameters = new ReaderParameters { InMemory = true };
+                using var assembly = AssemblyDefinition.ReadAssembly(assemblyGroup.Key, parameters);
                 foreach (var type in assemblyGroup)
                 {
                     var typeDef = assembly.MainModule.GetType(type.FullName);

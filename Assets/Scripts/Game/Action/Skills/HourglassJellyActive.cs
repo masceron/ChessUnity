@@ -21,7 +21,8 @@ namespace Game.Action.Skills
         public HourglassJellyActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
             var piece = GetTargetAsPiece();
-            _destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
+            //Làm lại
+            //_destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

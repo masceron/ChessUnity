@@ -24,44 +24,7 @@ namespace Game.Effects.SpecialAbility
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not IQuiets) { return; }
-            PieceLogic movedPiece = action.GetMakerAsPiece();
-            if (movedPiece == null) { return; }
-            
-            int radius = GetStat(EffectStat.Radius);
-            
-            // Case 1: Enemy piece moved into radius
-            if (movedPiece != Piece && movedPiece.Color != Piece.Color)
-            {
-                if (Distance(movedPiece.Pos, Piece.Pos) > radius) { return; }
-
-                int prevPos = movedPiece.PreviousMoves.Count > 0 ? movedPiece.PreviousMoves[movedPiece.PreviousMoves.Count - 1] : -1;
-                if (prevPos != -1 && Distance(prevPos, Piece.Pos) <= radius) { return; }
-
-                ActionManager.EnqueueAction(new ApplyEffect(new Bound(GetStat(EffectStat.Duration, 1), movedPiece)));
-            }
-            // Case 2: BasketStar moved, check if enemies enter its radius
-            else if (Piece.PreviousMoves.Count > 0)
-            {
-                int oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
-                
-                for (int i = 0; i < BoardSize; i++)
-                {
-                    if (!IsActive(i)) { continue; }
-                    
-                    PieceLogic enemy = PieceOn(i);
-                    if (enemy == null || enemy.Color == Piece.Color) { continue; }
-                    
-                    int distToNewPos = Distance(i, Piece.Pos);
-                    int distToOldPos = Distance(i, oldPos);
-                    
-                    // Enemy is within radius of new position but was not within radius of old position
-                    if (distToNewPos <= radius && distToOldPos > radius)
-                    {
-                        ActionManager.EnqueueAction(new ApplyEffect(new Bound(GetStat(EffectStat.Duration, 1), enemy)));
-                    }
-                }
-            }
+            //Làm lại
         }
         public void OnCallStart(Action.Action lastMainAction)
         {

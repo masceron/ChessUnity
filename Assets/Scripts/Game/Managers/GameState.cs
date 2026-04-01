@@ -190,7 +190,6 @@ namespace Game.Managers
         public void Move(PieceLogic piece, int t)
         {
             PieceBoard[t] = piece;
-            PieceBoard[t].PreviousMoves.Add(piece.Pos);
             PieceBoard[piece.Pos] = null;
             piece.Pos = t;
         }
