@@ -1,4 +1,4 @@
-using Game.Managers;
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
@@ -24,11 +24,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(GetTargetPos());
-            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
-            
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
-            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
+            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new Move(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

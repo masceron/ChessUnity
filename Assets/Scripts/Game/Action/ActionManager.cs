@@ -196,11 +196,15 @@ namespace Game.Action
             });
 
             var countdownDepth = _actionStack.Count;
+            
             _buffering = true;
             _state.EffectCountdown();
             _buffering = false;
+            
             FlushBuffer();
             ProcessStack(countdownDepth);
+            
+            BoardUtils.Prune();
         }
 
         private static bool ShouldEndTurn(Action action)

@@ -99,6 +99,8 @@ namespace Editor.Validators
                     }
                 }
             }
+            
+            assembly.Dispose();
 
             return ok;
         }

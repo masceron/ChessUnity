@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -21,12 +22,12 @@ namespace Game.Action.Quiets
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
+            
         }
 
         protected override void ModifyGameState()
         {
-            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
+            ActionManager.EnqueueAction(new Move(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

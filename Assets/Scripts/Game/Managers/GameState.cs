@@ -185,8 +185,6 @@ namespace Game.Managers
 
             (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
                 pieceAffected.Color, pieceAffected.Pos));
-
-            EntityDict.Remove(pieceAffected.ID);
         }
 
         public void Move(PieceLogic piece, int t)
