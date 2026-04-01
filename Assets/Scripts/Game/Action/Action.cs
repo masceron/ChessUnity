@@ -126,13 +126,7 @@ namespace Game.Action
 
         public int GetTargetPos()
         {
-            //return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target).Pos : Target;
-            if (TargetingType == TargetingType.Unit)
-            {
-                var targetEntity = BoardUtils.GetEntityByID(Target);
-                return targetEntity != null ? targetEntity.Pos : From;
-            }
-            return Target;
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target).Pos : Target;
         }
 
         public int GetFrom()
