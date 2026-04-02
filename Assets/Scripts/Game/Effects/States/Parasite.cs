@@ -34,16 +34,19 @@ namespace Game.Effects.States
         /// </summary>
         public void OnCallBeforePieceAction(Action.Action action)
         {
+           var targetPiece = action.GetTargetAsPiece();
+
            if (action is not ICaptures 
                 || action.GetMakerAsPiece() != Piece 
-                || action.GetTargetAsPiece()?.CurrentState != StateType.None) return;
+                || targetPiece == null
+                || targetPiece.CurrentState != StateType.None) return;
 
            action.Result = ResultFlag.Infest;
 
            ApplySkill(action);    
 
-           ActionManager.EnqueueAction(new ApplyEffect(new Infested(action.GetTargetAsPiece(), Piece)));
-           ActionManager.EnqueueAction(new MoveToParasitic(Piece, action.GetTargetAsPiece()));
+           ActionManager.EnqueueAction(new ApplyEffect(new Infested(targetPiece, Piece)));
+           ActionManager.EnqueueAction(new MoveToParasitic(Piece, targetPiece));
         }
 
         protected virtual void ApplySkill(Action.Action action)
