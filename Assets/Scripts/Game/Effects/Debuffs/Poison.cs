@@ -21,7 +21,7 @@ namespace Game.Effects.Debuffs
         public void OnCallEnd(Action.Action lastMainAction)
         {
             if (Strength >= Stack) TimeLeft--;
-            if (TimeLeft <= 0) ActionManager.EnqueueAction(new KillPiece(Piece));
+            if (TimeLeft <= 0) ActionManager.EnqueueAction(new KillPiece(null, Piece));
         }
 
         public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Debuff;

@@ -27,7 +27,7 @@ namespace Game.Effects.Others
             if (!BoardUtils.IsAlive(_caster) || BoardUtils.Distance(_caster.Pos, Piece.Pos) > 1)
                 ActionManager.EnqueueAction(new RemoveEffect(this));
             else
-                ActionManager.EnqueueAction(new KillPiece(Piece));
+                ActionManager.EnqueueAction(new KillPiece(_caster, Piece));
         }
     }
 }

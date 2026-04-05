@@ -29,7 +29,7 @@ namespace Game.Effects.Others
             if (_turnsPassed >= TurnToActive)
             {
                 var on = PieceOn(_target);
-                if (on != null) ActionManager.EnqueueAction(new KillPiece(on));
+                if (on != null) ActionManager.EnqueueAction(new KillPiece(null, on));
 
                 ActionManager.EnqueueAction(new NormalMove(Piece, _target));
                 Duration = 0;

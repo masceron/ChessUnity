@@ -24,7 +24,7 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece(), GetTargetAsPiece()));
             ActionManager.EnqueueAction(new Move(GetMakerAsPiece(), GetTargetPos()));
         }
     }

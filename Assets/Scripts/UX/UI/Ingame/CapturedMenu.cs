@@ -14,8 +14,8 @@ namespace UX.UI.Ingame
         [SerializeField] private RectTransform enemyCaptured;
         [SerializeField] private GameObject capturedUI;
 
-        private readonly List<GameObject> allyCapturedList = new();
-        private readonly List<GameObject> enemyCapturedList = new();
+        private readonly List<GameObject> _allyCapturedList = new();
+        private readonly List<GameObject> _enemyCapturedList = new();
 
         private void Start()
         {
@@ -26,10 +26,10 @@ namespace UX.UI.Ingame
         private void ReloadCaptureList(object o, NotifyCollectionChangedEventArgs e)
         {
             var color = OurSide();
-            var collection = o == WhiteCaptured() ? !color ? allyCapturedList : enemyCapturedList :
-                color ? allyCapturedList : enemyCapturedList;
+            var collection = o == WhiteCaptured() ? !color ? _allyCapturedList : _enemyCapturedList :
+                color ? _allyCapturedList : _enemyCapturedList;
 
-            var obj = collection == allyCapturedList ? allyCaptured : enemyCaptured;
+            var obj = collection == _allyCapturedList ? allyCaptured : enemyCaptured;
 
             if (e.OldItems != null)
             {

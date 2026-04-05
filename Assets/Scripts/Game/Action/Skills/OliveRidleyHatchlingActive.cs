@@ -25,7 +25,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new DestroyPiece(GetMakerAsPiece()));
             ActionManager.EnqueueAction(
                 new SpawnPiece(new Piece.PieceConfig("piece_archelon", GetMakerAsPiece().Color,
                     GetFrom())));

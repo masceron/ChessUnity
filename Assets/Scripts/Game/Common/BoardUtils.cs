@@ -493,7 +493,7 @@ namespace Game.Common
             TileManager.Ins.DestroyTile(index);
             RemoveFormation(GetFormation(index));
             var on = PieceOn(index);
-            if (on != null) ActionManager.EnqueueAction(new KillPiece(on));
+            if (on != null) ActionManager.EnqueueAction(new KillPiece(null, on));
         }
 
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;

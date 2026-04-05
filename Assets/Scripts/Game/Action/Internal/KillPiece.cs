@@ -6,7 +6,7 @@ namespace Game.Action.Internal
 {
     public class KillPiece : Action, IInternal
     {
-        public KillPiece(PieceLogic maker) : base(maker)
+        public KillPiece(Entity maker, PieceLogic target) : base(maker, target)
         {
         }
 
@@ -16,8 +16,8 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(GetFrom());
-            BoardUtils.KillPiece(GetMakerAsPiece());
+            PieceManager.Ins.Destroy(GetTargetPos());
+            BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }
 }

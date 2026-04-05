@@ -31,8 +31,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(PieceOn(_firstTargetPos)));
-            ActionManager.EnqueueAction(new KillPiece(PieceOn(_secondTargetPos)));
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), PieceOn(_firstTargetPos)));
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), PieceOn(_secondTargetPos)));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

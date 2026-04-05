@@ -23,7 +23,7 @@ namespace Game.Effects.Others
         {
             var piecePos = Piece.Pos;
             if (!IsAtPromotionRank(piecePos)) return;
-            ActionManager.EnqueueAction(new KillPiece(Piece));
+            ActionManager.EnqueueAction(new KillPiece(null, Piece));
 
             var relic = GetRelicOf(Piece.Color);
             if (relic is not { type: "relic_common_pearl" }) return;

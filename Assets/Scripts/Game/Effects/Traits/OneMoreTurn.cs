@@ -21,7 +21,7 @@ namespace Game.Effects.Traits
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            ActionManager.EnqueueAction(new KillPiece(Piece));
+            ActionManager.EnqueueAction(new KillPiece(null, Piece));
         }
     }
 }

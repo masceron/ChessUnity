@@ -113,6 +113,11 @@ namespace Game.Action
             return BoardUtils.GetEntityByID(Maker) as Formation;
         }
 
+        public Entity GetMaker()
+        {
+            return BoardUtils.GetEntityByID(Maker);
+        }
+
         public PieceLogic GetTargetAsPiece()
         {
             return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target) as PieceLogic : null;

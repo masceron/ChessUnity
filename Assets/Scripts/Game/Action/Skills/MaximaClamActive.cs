@@ -28,7 +28,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), GetTargetAsPiece()));
             var maker = GetMakerAsPiece();
             maker.Quiets = GetTargetAsPiece().Quiets;
             SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);

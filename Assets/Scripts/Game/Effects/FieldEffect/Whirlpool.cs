@@ -84,7 +84,7 @@ namespace Game.Effects.FieldEffect
                 // If piece already on whirlpool -> destroy it
                 if (centralIndices.Contains(fromIndex))
                 {
-                    ActionManager.EnqueueAction(new KillPiece(piece));
+                    ActionManager.EnqueueAction(new KillPiece(null, piece));
                     continue;
                 }
 
@@ -129,7 +129,7 @@ namespace Game.Effects.FieldEffect
                 ActionManager.EnqueueAction(new NormalMove(piece, nextIndex));
 
                 // If the piece lands in a whirlpool cell, destroy it
-                if (centralIndices.Contains(nextIndex)) ActionManager.EnqueueAction(new KillPiece(piece));
+                if (centralIndices.Contains(nextIndex)) ActionManager.EnqueueAction(new KillPiece(null, piece));
             }
         }
     }

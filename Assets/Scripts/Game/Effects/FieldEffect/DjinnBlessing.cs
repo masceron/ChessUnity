@@ -83,7 +83,7 @@ namespace Game.Effects.FieldEffect
                                 new ApplyEffect(GetRandomDebuffEffect(validPieces[randomInd], duration, strength)));
                             break;
                         default:
-                            ActionManager.EnqueueAction(new KillPiece(validPieces[randomInd]));
+                            ActionManager.EnqueueAction(new KillPiece(null, validPieces[randomInd]));
                             break;
                     }
                 }
