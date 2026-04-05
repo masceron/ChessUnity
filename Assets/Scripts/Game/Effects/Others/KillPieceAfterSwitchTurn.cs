@@ -9,7 +9,7 @@ namespace Game.Effects.Others
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class KillPieceAfterSwitchTurn : Effect, IEndTurnTrigger
     {
-        public KillPieceAfterSwitchTurn(PieceLogic piece) : base(-1, 1, piece, "effect_kill_after_switch_turn")
+        public KillPieceAfterSwitchTurn(PieceLogic piece) : base(-1, 1, piece, "effect_kill_piece_after_switch_turn")
         {
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
