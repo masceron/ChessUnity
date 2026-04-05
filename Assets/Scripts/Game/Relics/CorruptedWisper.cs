@@ -41,7 +41,7 @@ namespace Game.Relics
         {
             if (corruptedWisperCharge.Strength > 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null || piece.Color == Color) continue;
                     if (!possibleRank.Contains(piece.PieceRank)) continue;

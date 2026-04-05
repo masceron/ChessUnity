@@ -1,5 +1,6 @@
 using System;
 using Game.Action.Relics;
+using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -21,7 +22,7 @@ namespace Game.Relics
         {
             if (CurrentCooldown != 0) return;
 
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
@@ -36,7 +37,7 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var allPieces = BoardUtils.PieceBoard();
             var listPiecesA = allPieces.Where(p =>
                 p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
             var listPiecesB = allPieces.Where(p =>

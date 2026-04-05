@@ -5,7 +5,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.RegionalEffect
 {
-    public class BenthicStorm : RegionalEffect
+    public class BenthicStorm : FieldEffect
     {
         private const int TurnToActive = 10;
         private readonly int startingSizeX;

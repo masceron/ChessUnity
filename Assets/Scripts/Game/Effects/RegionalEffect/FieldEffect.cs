@@ -3,12 +3,12 @@ using Game.Triggers;
 
 namespace Game.Effects.RegionalEffect
 {
-    public abstract class RegionalEffect : Observer
+    public abstract class FieldEffect : Observer
     {
-        protected RegionalEffect(RegionalEffectType type)
+        protected FieldEffect(RegionalEffectType type)
         {
+            //Làm lại
             Type = type;
-            MatchManager.Ins.GameState.OnIncreaseTurn += ApplyEffect;
         }
 
         public RegionalEffectType Type { get; }
@@ -16,7 +16,7 @@ namespace Game.Effects.RegionalEffect
 
         public override bool Equals(object obj)
         {
-            if (obj is RegionalEffect other)
+            if (obj is FieldEffect other)
                 return Type == other.Type;
             return false;
         }
@@ -26,14 +26,14 @@ namespace Game.Effects.RegionalEffect
             return Type.GetHashCode();
         }
 
-        public static bool operator ==(RegionalEffect a, RegionalEffect b)
+        public static bool operator ==(FieldEffect a, FieldEffect b)
         {
             if (ReferenceEquals(a, b)) return true;
             if (a is null || b is null) return false;
             return a.Type == b.Type;
         }
 
-        public static bool operator !=(RegionalEffect a, RegionalEffect b)
+        public static bool operator !=(FieldEffect a, FieldEffect b)
         {
             return !(a == b);
         }

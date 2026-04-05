@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -27,7 +28,7 @@ namespace Game.Action.Internal
             PieceManager.Ins.MoveToDetach(_hostLogic, GetTargetPos());
 
             // Cập nhật PieceBoard logic
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = BoardUtils.PieceBoard();
             board[GetTargetPos()] = _parasite;
             _parasite.Pos = GetTargetPos();
         }

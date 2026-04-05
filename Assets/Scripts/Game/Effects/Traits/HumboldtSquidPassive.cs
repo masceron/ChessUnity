@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -33,7 +34,7 @@ namespace Game.Effects.Traits
                     ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target), Piece));
             }
 
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
                 if (piece.Effects.Any(e => e.EffectName == "effect_bleeding")) _count++;

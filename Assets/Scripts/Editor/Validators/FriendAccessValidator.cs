@@ -28,11 +28,24 @@ namespace Editor.Validators
         private static bool Validate()
         {
             var ok = true;
-
-            var readerParams = new ReaderParameters { ReadSymbols = true, InMemory = true };
             AssemblyDefinition assembly;
+            var pdbPath = AssemblyPath.Replace(".dll", ".pdb");
+            
+            var readerParams = new ReaderParameters { InMemory = true }; 
+            System.IO.MemoryStream symbolStream = null;
+
             try
             {
+                if (System.IO.File.Exists(pdbPath))
+                {
+                    // Read the PDB bytes entirely into memory to avoid file locks
+                    var pdbBytes = System.IO.File.ReadAllBytes(pdbPath);
+                    symbolStream = new System.IO.MemoryStream(pdbBytes);
+        
+                    readerParams.ReadSymbols = true;
+                    readerParams.SymbolStream = symbolStream;
+                }
+    
                 assembly = AssemblyDefinition.ReadAssembly(AssemblyPath, readerParams);
             }
             catch (System.Exception e)
@@ -42,6 +55,7 @@ namespace Editor.Validators
             }
 
             using (assembly)
+            using (symbolStream)
             {
                 var modules = assembly.Modules;
 

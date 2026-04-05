@@ -63,9 +63,9 @@ namespace Game.Managers
         public static bool IsHideByFog(int pos, bool sideToMove)
         {
             var formation = GetFormation(pos);
-            var pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
+            var pieceInPos = BoardUtils.PieceBoard()[pos];
             if (pieceInPos == null) return false;
-            var haveAbyssalTapetum = Enumerable.Any(MatchManager.Ins.GameState.PieceBoard,
+            var haveAbyssalTapetum = Enumerable.Any(BoardUtils.PieceBoard(),
                 pieceLogic => pieceLogic != null && pieceLogic.Color == sideToMove &&
                               pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum));
             return formation != null && formation.GetFormationType() == FormationType.FogOfWar

@@ -34,7 +34,7 @@ namespace Game.Tile
         [Header("Board Settings")] public int boardWidth => BoardUtils.MaxLength;
 
         public int boardHeight => BoardUtils.MaxLength;
-        public BitArray ActiveBoard => MatchManager.Ins.GameState.ActiveBoard;
+        public BitArray ActiveBoard => BoardUtils.ActiveBoard();
 
         private void Awake()
         {

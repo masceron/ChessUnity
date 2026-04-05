@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -8,7 +9,7 @@ using UnityEngine;
 
 namespace Game.Effects.RegionalEffect
 {
-    public class PsionicShock : RegionalEffect
+    public class PsionicShock : FieldEffect
     {
         public PsionicShock() : base(RegionalEffectType.PsionicShock)
         {
@@ -16,7 +17,7 @@ namespace Game.Effects.RegionalEffect
 
         protected override void ApplyEffect(int currentTurn)
         {
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = BoardUtils.PieceBoard();
             var pieces = new List<PieceLogic>();
             foreach (var piece in board)
                 if (piece != null)

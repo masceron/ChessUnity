@@ -16,7 +16,6 @@ namespace Game.Tile
 
         public AnchorIce(bool color) : base(color)
         {
-            MatchManager.Ins.GameState.OnIncreaseTurn += OnIncreaseTurn;
             _stack = 0;
         }
 
@@ -31,16 +30,17 @@ namespace Game.Tile
             _stack = 0;
         }
 
-        private void OnIncreaseTurn(int currentTurn)
-        {
-            if (PieceOnFormation == null) return;
-            if (PieceOnFormation.Color == Color) return;
-            if (_stack == 0)
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
-            else if (_stack == 2)
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation)));
-            _stack++;
-        }
+        //Làm lại
+        // private void OnIncreaseTurn(int currentTurn)
+        // {
+        //     if (PieceOnFormation == null) return;
+        //     if (PieceOnFormation.Color == Color) return;
+        //     if (_stack == 0)
+        //         ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
+        //     else if (_stack == 2)
+        //         ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation)));
+        //     _stack++;
+        // }
 
         public override int GetValueForAI()
         {

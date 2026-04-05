@@ -1,5 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;
@@ -11,7 +12,7 @@ using ZLinq;
 
 namespace Game.Effects.RegionalEffect
 {
-    public class DjinnBlessing : RegionalEffect
+    public class DjinnBlessing : FieldEffect
     {
         private int isActive;
 
@@ -59,7 +60,7 @@ namespace Game.Effects.RegionalEffect
             Debug.Log("isActive: " + isActive);
             if (isActive == 3)
             {
-                var board = MatchManager.Ins.GameState.PieceBoard;
+                var board = BoardUtils.PieceBoard();
 
                 var validPieces = board.Where(piece => piece != null && piece.PieceRank != PieceRank.Commander)
                     .ToList();

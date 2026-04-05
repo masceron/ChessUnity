@@ -24,7 +24,7 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
@@ -41,7 +41,7 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var allPieces = BoardUtils.PieceBoard();
             var bestPieces = new List<PieceLogic>();
             var maxDebuff = -1;
 

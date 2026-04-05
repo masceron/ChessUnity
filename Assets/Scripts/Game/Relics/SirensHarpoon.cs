@@ -26,7 +26,7 @@ namespace Game.Relics
         public override void Activate()
         {
             if (CurrentCooldown == 0)
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null) continue;
 

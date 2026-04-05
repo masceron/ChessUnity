@@ -1,4 +1,5 @@
 using Game.Common;
+using Game.Effects.States;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -6,7 +7,7 @@ using MemoryPack;
 namespace Game.Action.Quiets
 {
     /// <summary>
-    ///     Move action dùng cho quân có State <see cref="Game.Effects.States.PieceStateType.Cooperative"/>.
+    ///     Move action dùng cho quân có State <see cref="Cooperative"/>.
     ///     Implement <see cref="IDontEndTurn"/> để action này không kết thúc turn của người chơi.
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
@@ -19,7 +20,7 @@ using static Game.Common.BoardUtils;
 //Để giải quyết vấn đề 2 quân đi vào cùng 1 ô, bạn cần phải sắp xếp danh sách PieceLogic để quân nào gần vòng xoáy(tức độ dài vector ngắn hơn) được đi trước
 namespace Game.Effects.RegionalEffect
 {
-    public class Whirlpool : RegionalEffect
+    public class Whirlpool : FieldEffect
     {
         private readonly List<int> centralIndices;
 
@@ -47,7 +48,7 @@ namespace Game.Effects.RegionalEffect
 
             // Precompute their indices
 
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = BoardUtils.PieceBoard();
             var pieces = board.Where(piece => piece != null).ToList();
 
             // Build list of (piece, nearestCentralIndex, distance) and sort by distance asc
@@ -122,7 +123,7 @@ namespace Game.Effects.RegionalEffect
                 var nextIndex = IndexOf(nextRank, nextFile);
 
                 // Only move into empty squares, if a cell have piece, the move action is cancelled
-                if (MatchManager.Ins.GameState.PieceBoard[nextIndex] != null) continue;
+                if (BoardUtils.PieceBoard()[nextIndex] != null) continue;
 
                 // Execute immediate move
                 ActionManager.EnqueueAction(new NormalMove(piece, nextIndex));

@@ -1,6 +1,7 @@
 using System;
 using Game.Action.Internal;
 using Game.AI;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -26,7 +27,7 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var allPieces = PieceBoard();
             var listPieces = allPieces.Where(p => p != null && p.Color != GetMakerAsPiece().Color &&
                                                   p.Effects.Any(e =>
                                                       e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();

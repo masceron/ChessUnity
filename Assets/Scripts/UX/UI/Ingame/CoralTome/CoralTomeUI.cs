@@ -47,7 +47,7 @@ namespace UX.UI.Ingame.CoralTome
         public void Choose(string type)
         {
             Disable();
-            var color = MatchManager.Ins.GameState.OurSide;
+            var color = BoardUtils.OurSide();
             foreach (var pos in BoardUtils.AllSidePos(color))
             {
                 TileManager.Ins.MarkAsMoveable(pos);

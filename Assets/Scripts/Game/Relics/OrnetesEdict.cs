@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece;
 using Game.Relics.Commons;
@@ -19,7 +20,7 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null || piece.Color != Color) continue;
                     if (piece.PieceRank == PieceRank.Commander || piece.PieceRank == PieceRank.Construct) continue;

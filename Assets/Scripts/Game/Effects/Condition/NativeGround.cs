@@ -24,7 +24,7 @@ namespace Game.Effects.Condition
 
         private void ApplyEffectIfFitRegion()
         {
-            if (regionalEffect != MatchManager.Ins.GameState.RegionalEffect.Type) return;
+            if (regionalEffect != MatchManager.Ins.GameState.FieldEffect.Type) return;
 
             var e = GetRandomBuffEffect();
 

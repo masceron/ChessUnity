@@ -17,7 +17,7 @@ namespace Game.Relics
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null || piece.Color != Color) continue;
                 if (BoardUtils.IsOnBlackSide(piece.Pos) == Color) continue;

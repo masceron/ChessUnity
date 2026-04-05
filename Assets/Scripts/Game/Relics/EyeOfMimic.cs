@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -25,7 +26,7 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null) continue;
 
@@ -54,7 +55,7 @@ namespace Game.Relics
             var minMoveset = int.MaxValue;
             var maxMoveset = int.MinValue;
 
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
                 if (piece.Color == MatchManager.Ins.GameState.OurSide)

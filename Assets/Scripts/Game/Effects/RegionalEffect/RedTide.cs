@@ -7,7 +7,7 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Effects.RegionalEffect
 {
-    public class RedTide : RegionalEffect
+    public class RedTide : FieldEffect
     {
         private readonly int startingSizeY;
         private int isActive;

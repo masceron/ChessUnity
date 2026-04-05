@@ -29,7 +29,7 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Friend(typeof(BoardUtils))]
+    [Friend(typeof(BoardUtils), typeof(MatchManager))]
     public class GameState
     {
         private int _pieceID = 1;
@@ -46,9 +46,8 @@ namespace Game.Managers
 
         private Action.Action _lastMainAction;
         public RelicLogic BlackRelic;
-
-        public Action<int> OnIncreaseTurn;
-        public RegionalEffect RegionalEffect;
+        
+        public FieldEffect FieldEffect;
         public bool SideToMove;
         public PieceLogic WhiteCommander, BlackCommander;
         public RelicLogic WhiteRelic;
@@ -118,12 +117,12 @@ namespace Game.Managers
 
         public void MakeRegionalEffect(RegionalEffectType ret)
         {
-            RegionalEffect = GetRegionalEffectByType(ret);
+            FieldEffect = GetRegionalEffectByType(ret);
         }
 
-        private static RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
+        private static FieldEffect GetRegionalEffectByType(RegionalEffectType ret)
         {
-            RegionalEffect re = ret switch
+            FieldEffect re = ret switch
             {
                 RegionalEffectType.Whirlpool => new Whirlpool(),
                 RegionalEffectType.PsionicShock => new PsionicShock(),
@@ -165,7 +164,7 @@ namespace Game.Managers
 
         public void OnStart()
         {
-            OnIncreaseTurn?.Invoke(CurrentTurn);
+            
         }
 
         public void Destroy(PieceLogic pieceAffected)
@@ -209,7 +208,6 @@ namespace Game.Managers
             {
                 _countTurn++;
                 CurrentTurn++;
-                OnIncreaseTurn?.Invoke(CurrentTurn);
                 if (_countTurn == 151)
                 {
                     UIManager.Ins.Load(CanvasID.EndGameMessage);
@@ -265,9 +263,9 @@ namespace Game.Managers
             return EntityDict.GetValueOrDefault(id);
         }
 
-        public void SetRegionalEffect(RegionalEffect e)
+        public void SetRegionalEffect(FieldEffect e)
         {
-            RegionalEffect = e;
+            FieldEffect = e;
             TriggerHooks.AddObserver(e);
         }
     }

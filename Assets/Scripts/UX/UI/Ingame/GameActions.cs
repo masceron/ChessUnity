@@ -41,7 +41,7 @@ namespace UX.UI.Ingame
 
         public void UpdateRelic()
         {
-            var relicLogic = BoardUtils.GetRelicOf(MatchManager.Ins.GameState.OurSide);
+            var relicLogic = BoardUtils.GetRelicOf(BoardUtils.OurSide());
             if (relicLogic == null)
             {
                 relicCooldownText.gameObject.SetActive(false);
@@ -68,7 +68,7 @@ namespace UX.UI.Ingame
         private void PressRelic()
         {
             if (!relic.interactable) return;
-            BoardUtils.GetRelicOf(MatchManager.Ins.GameState.OurSide)?.Activate();
+            BoardUtils.GetRelicOf(BoardUtils.OurSide())?.Activate();
         }
     }
 }

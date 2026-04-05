@@ -153,7 +153,7 @@ namespace UX.UI.Ingame
                 pieceActions.LoadPieceActionInfo();
                 PanTo(RankOf(pos), FileOf(pos));
 
-                if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
+                if (piece.Color != GetSideToMove()) return;
 
                 pieceActions.EnablePieceInteractions();
                 MoveList.Clear();
