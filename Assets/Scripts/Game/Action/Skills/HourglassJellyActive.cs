@@ -1,4 +1,5 @@
 using System;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -43,8 +44,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var destinationPiece = PieceOn(_destination);
-            if (destinationPiece != null) MatchManager.Ins.GameState.Destroy(PieceOn(_destination));
-            MatchManager.Ins.GameState.Move(GetTargetAsPiece(), _destination);
+            if (destinationPiece != null) Destroy(PieceOn(_destination));
+            Move(GetTargetAsPiece(), _destination);
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
         // public void CompleteActionForAI()

@@ -6,7 +6,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.AI;
 using Game.Common;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -29,7 +29,7 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Friend(typeof(BoardUtils), typeof(MatchManager))]
+    [Friend(typeof(BoardUtils), typeof(MatchManager), typeof(ActionManager))]
     public class GameState
     {
         private int _pieceID = 1;
@@ -115,19 +115,19 @@ namespace Game.Managers
             return _pieceID++;
         }
 
-        public void MakeRegionalEffect(RegionalEffectType ret)
+        public void MakeFieldEffect(FieldEffectType ret)
         {
-            FieldEffect = GetRegionalEffectByType(ret);
+            FieldEffect = GetFieldEffectByType(ret);
         }
 
-        private static FieldEffect GetRegionalEffectByType(RegionalEffectType ret)
+        private static FieldEffect GetFieldEffectByType(FieldEffectType ret)
         {
             FieldEffect re = ret switch
             {
-                RegionalEffectType.Whirlpool => new Whirlpool(),
-                RegionalEffectType.PsionicShock => new PsionicShock(),
-                RegionalEffectType.BloodMoon => new BloodMoon(),
-                RegionalEffectType.RedTide => new RedTide(),
+                FieldEffectType.Whirlpool => new Whirlpool(),
+                FieldEffectType.PsionicShock => new PsionicShock(),
+                FieldEffectType.BloodMoon => new BloodMoon(),
+                FieldEffectType.RedTide => new RedTide(),
                 _ => null
             };
 
@@ -263,7 +263,7 @@ namespace Game.Managers
             return EntityDict.GetValueOrDefault(id);
         }
 
-        public void SetRegionalEffect(FieldEffect e)
+        public void SetFieldEffect(FieldEffect e)
         {
             FieldEffect = e;
             TriggerHooks.AddObserver(e);

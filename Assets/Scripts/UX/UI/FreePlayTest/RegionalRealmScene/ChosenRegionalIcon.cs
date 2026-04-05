@@ -1,9 +1,10 @@
 using Game.Common;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace UX.UI.FreePlayTest.RegionalRealmScene
 {
@@ -11,32 +12,32 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
     {
         public TMP_Text tmp;
         public bool isLoaded;
-        public RegionalEffectType chosenRegional;
+        [FormerlySerializedAs("chosenRegional")] public FieldEffectType chosenField;
 
         protected override void Awake()
         {
             base.Awake();
-            Load(Config.regionalEffectType);
+            Load(Config.FieldEffectType);
         }
 
         public void OnPointerClick(PointerEventData eventData)
         {
             if (eventData.button == PointerEventData.InputButton.Right) return;
-            if (chosenRegional != RegionalEffectType.None)
+            if (chosenField != FieldEffectType.None)
             {
                 Debug.Log("UnLoad regional effect");
-                Load(RegionalEffectType.None);
+                Load(FieldEffectType.None);
             }
         }
 
-        public void Load(RegionalEffectType type)
+        public void Load(FieldEffectType type)
         {
-            if (type == RegionalEffectType.None)
+            if (type == FieldEffectType.None)
                 tmp.text = "No regional effect";
             else
                 tmp.text = AssetManager.Ins.regionalsData.GetRegionalName(type);
-            chosenRegional = type;
-            Config.regionalEffectType = type;
+            chosenField = type;
+            Config.FieldEffectType = type;
         }
     }
 }

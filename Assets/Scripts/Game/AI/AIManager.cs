@@ -40,7 +40,7 @@ namespace Game.AI
         public void UIMethod_ShowAllScores()
         {
             // Assuming the current turn is the AI's turn.
-            var sideToMove = MatchManager.Ins.GameState.SideToMove;
+            var sideToMove = BoardUtils.SideToMove();
             AIShowAllActionScores(sideToMove);
         }
 
@@ -49,7 +49,7 @@ namespace Game.AI
         /// </summary>
         private void UIMethod_PlayBestAction()
         {
-            var sideToMove = MatchManager.Ins.GameState.SideToMove;
+            var sideToMove = BoardUtils.SideToMove();
             AIPlayAndExecuteBestAction(sideToMove);
         }
 
@@ -87,7 +87,7 @@ namespace Game.AI
         /// <param name="sideToMove">The color of the side currently making a move.</param>
         private void AIUseRelic(bool sideToMove)
         {
-            var relic = sideToMove ? MatchManager.Ins.GameState.BlackRelic : MatchManager.Ins.GameState.WhiteRelic;
+            var relic = BoardUtils.GetRelicOf(sideToMove);
 
             if (relic is not { CurrentCooldown: 0 }) return;
             Debug.Log("Use relic " + relic.type);
@@ -98,12 +98,10 @@ namespace Game.AI
         private List<Action.Action> GenerateEnemySnapshot(bool side)
         {
             var list = new List<Action.Action>();
-            var state = MatchManager.Ins.GameState;
-            if (state == null) return list;
 
             for (var i = 0; i < BoardUtils.BoardSize; i++)
             {
-                var p = state.PieceBoard[i];
+                var p = BoardUtils.PieceOn(i);
                 if (p == null) continue;
                 if (p.Color == side) continue;
                 try

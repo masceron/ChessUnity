@@ -18,7 +18,7 @@ using static Game.Common.BoardUtils;
 //Nếu hướng vector là chuẩn(hướng lên trên, dưới, trái, phải, chéo) thì cứ đi đúng như bình thường
 //Quân nào bị vào xoáy nước sẽ mất 
 //Để giải quyết vấn đề 2 quân đi vào cùng 1 ô, bạn cần phải sắp xếp danh sách PieceLogic để quân nào gần vòng xoáy(tức độ dài vector ngắn hơn) được đi trước
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
     public class Whirlpool : FieldEffect
     {
@@ -26,7 +26,7 @@ namespace Game.Effects.RegionalEffect
 
         private readonly int startTurn = 4;
 
-        public Whirlpool() : base(RegionalEffectType.Whirlpool)
+        public Whirlpool() : base(FieldEffectType.Whirlpool)
         {
             // Use MaxLength to derive center coordinates (board is MaxLength x MaxLength)
             var half = MaxLength / 2;

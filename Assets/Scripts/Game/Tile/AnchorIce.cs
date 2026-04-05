@@ -12,22 +12,16 @@ namespace Game.Tile
     /// </summary>
     public class AnchorIce : Formation
     {
-        private int _stack;
+        //private int _stack;
 
         public AnchorIce(bool color) : base(color)
         {
-            _stack = 0;
+           // _stack = 0;
         }
 
         public override FormationType GetFormationType()
         {
             return FormationType.AnchorIce;
-        }
-
-        protected override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
-            _stack = 0;
         }
 
         //Làm lại

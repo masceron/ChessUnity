@@ -1,17 +1,16 @@
-using Game.Managers;
 using Game.Triggers;
 
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
     public abstract class FieldEffect : Observer
     {
-        protected FieldEffect(RegionalEffectType type)
+        protected FieldEffect(FieldEffectType type)
         {
             //Làm lại
             Type = type;
         }
 
-        public RegionalEffectType Type { get; }
+        public FieldEffectType Type { get; }
         protected abstract void ApplyEffect(int currentTurn);
 
         public override bool Equals(object obj)
@@ -39,7 +38,7 @@ namespace Game.Effects.RegionalEffect
         }
     }
 
-    public enum RegionalEffectType
+    public enum FieldEffectType
     {
         Whirlpool,
         PsionicShock,

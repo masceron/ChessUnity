@@ -1,6 +1,7 @@
 ﻿using System;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Buffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -22,7 +23,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallApplyEffect(ApplyEffect applyEffect)
         {
-            var currentTurn = MatchManager.Ins.GameState.CurrentTurn;
+            var currentTurn = BoardUtils.GetCurrentTurn();
 
             if (currentTurn != _lastProcessedTurn)
             {

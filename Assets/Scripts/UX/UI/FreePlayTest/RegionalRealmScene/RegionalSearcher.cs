@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Game.Common;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using UnityEngine;
 using ZLinq;
 
@@ -12,12 +12,12 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
         public Transform list;
         public RegionalIcon regionalIcon;
         public readonly List<RegionalIcon> Pool = new();
-        private List<RegionalEffectType> lastSearchResult;
+        private List<FieldEffectType> lastSearchResult;
 
         public void Load()
         {
-            // lastSearchResult = new List<RegionalEffectType>() { RegionalEffectType.None };
-            lastSearchResult = Enum.GetValues(typeof(RegionalEffectType)).Cast<RegionalEffectType>().ToList();
+            // lastSearchResult = new List<FieldEffectType>() { FieldEffectType.None };
+            lastSearchResult = Enum.GetValues(typeof(FieldEffectType)).Cast<FieldEffectType>().ToList();
             // lastSearchResult.RemoveAt(lastSearchResult.Count - 1);
             DisplaySearchResult();
         }
@@ -48,7 +48,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 var obj = Pool[i].gameObject;
                 if (!obj.activeSelf) obj.SetActive(true);
                 Pool[i].Load(lastSearchResult[i]);
-                if (lastSearchResult[i] == Config.regionalEffectType) Pool[i].Choose();
+                if (lastSearchResult[i] == Config.FieldEffectType) Pool[i].Choose();
             }
         }
     }

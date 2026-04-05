@@ -58,7 +58,7 @@ namespace Game.Relics
             foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
-                if (piece.Color == MatchManager.Ins.GameState.OurSide)
+                if (piece.Color == BoardUtils.OurSide())
                 {
                     var pieceMoveset = piece.GetQuitesValue();
                     if (pieceMoveset < minMoveset)

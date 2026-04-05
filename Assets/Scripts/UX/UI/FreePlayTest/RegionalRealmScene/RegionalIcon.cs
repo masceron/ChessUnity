@@ -1,4 +1,4 @@
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Managers;
 using TMPro;
 using UnityEngine;
@@ -12,7 +12,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
     {
         public TMP_Text tmp;
         public Image image;
-        private RegionalEffectType regionalType;
+        private FieldEffectType _fieldType;
 
         public void OnPointerClick(PointerEventData eventData)
         {
@@ -20,10 +20,10 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             Choose();
         }
 
-        public void Load(RegionalEffectType regionalType)
+        public void Load(FieldEffectType fieldType)
         {
-            tmp.text = AssetManager.Ins.regionalsData.GetRegionalName(regionalType);
-            this.regionalType = regionalType;
+            tmp.text = AssetManager.Ins.regionalsData.GetRegionalName(fieldType);
+            this._fieldType = fieldType;
         }
 
         public void ResetColor()
@@ -36,7 +36,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
             var previous = RegionalManagerUI.Ins.chosenRegional;
             if (previous == this) return;
             image.color = Color.yellow;
-            Config.regionalEffectType = regionalType;
+            Config.FieldEffectType = _fieldType;
 
             if (previous != null) previous.ResetColor();
             RegionalManagerUI.Ins.chosenRegional = this;

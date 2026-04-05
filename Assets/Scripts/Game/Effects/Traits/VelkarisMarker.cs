@@ -1,5 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -28,7 +29,7 @@ namespace Game.Effects.Traits
                 return;
             }
 
-            if (MatchManager.Ins.GameState.SideToMove == Piece.Color) return;
+            if (SideToMove() == Piece.Color) return;
 
             var rowMovedTo = RankOf(lastMainAction.GetTargetPos());
 

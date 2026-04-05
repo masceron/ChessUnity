@@ -44,7 +44,7 @@ namespace Game.Action.Skills
             // if (pieceA != null) pieceA.Pos = b;
             // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
 
-            MatchManager.Ins.GameState.Swap(GetMakerAsPiece(), GetTargetAsPiece());
+            Swap(GetMakerAsPiece(), GetTargetAsPiece());
             SetCooldown(GetTargetAsPiece(), ((IPieceWithSkill)GetTargetAsPiece()).TimeToCooldown);
         }
     }

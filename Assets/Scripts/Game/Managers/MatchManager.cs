@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Piece;
 using Game.Relics.Commons;
 using UnityEngine;
@@ -70,7 +70,7 @@ namespace Game.Managers
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()),
                 Config.relicWhiteConfig,
                 Config.relicBlackConfig,
-                Config.regionalEffectType
+                Config.FieldEffectType
             );
             if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
             //UIManager.Ins.Load(CanvasID.LineupEdit);
@@ -91,14 +91,14 @@ namespace Game.Managers
             GameState.BlackRelic = RelicMaker.Get(black);
         }
 
-        private void MakeRegionalEffect(RegionalEffectType ret)
+        private void MakeFieldEffect(FieldEffectType ret)
         {
-            GameState.MakeRegionalEffect(ret);
+            GameState.MakeFieldEffect(ret);
         }
 
-        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, RegionalEffectType ret)
+        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, FieldEffectType ret)
         {
-            MakeRegionalEffect(ret);
+            MakeFieldEffect(ret);
             MakePieces(cfg);
             MakeRelics(whiteRelic, blackRelic);
             UIManager.Ins.Load(CanvasID.Ingame);

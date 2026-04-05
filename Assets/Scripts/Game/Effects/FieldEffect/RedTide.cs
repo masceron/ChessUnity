@@ -5,7 +5,7 @@ using Game.Effects.Debuffs;
 using Game.Managers;
 using static Game.Common.BoardUtils;
 
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
     public class RedTide : FieldEffect
     {
@@ -13,7 +13,7 @@ namespace Game.Effects.RegionalEffect
         private int isActive;
         private int startingSizeX;
 
-        public RedTide() : base(RegionalEffectType.RedTide)
+        public RedTide() : base(FieldEffectType.RedTide)
         {
             isActive = 0;
             startingSizeX = (MaxLength - MatchManager.Ins.StartingSize.x) / 2;

@@ -1,5 +1,4 @@
 using Game.Common;
-using Game.Managers;
 using MemoryPack;
 using UX.UI.Ingame;
 
@@ -26,16 +25,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            if (MatchManager.Ins.GameState.CurrentTurn >= TurnToEnd) BoardUtils.NotifyGameEnd(EndGameUI.MessageID.Win);
-
-            var relic = BoardUtils.GetRelicOf(_color);
-            if (relic != null)
-            {
-                if (_color)
-                    MatchManager.Ins.GameState.BlackRelic = null;
-                else
-                    MatchManager.Ins.GameState.WhiteRelic = null;
-            }
+            if (BoardUtils.GetCurrentTurn() >= TurnToEnd) BoardUtils.NotifyGameEnd(EndGameUI.MessageID.Win);
         }
     }
 }

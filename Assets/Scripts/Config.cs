@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Piece;
 using Game.Relics.Commons;
 
@@ -21,7 +21,7 @@ public static class Config
 
     public static RelicConfig relicWhiteConfig = new("relic_coral_tome", false, 6);
     public static RelicConfig relicBlackConfig = new("relic_coral_tome", true, 6);
-    public static RegionalEffectType regionalEffectType = RegionalEffectType.None;
+    public static FieldEffectType FieldEffectType = FieldEffectType.None;
 
     public static void SetBlackPieceConfig(List<PieceConfig> pieceConfigs)
     {

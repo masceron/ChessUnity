@@ -1,22 +1,22 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
 using Game.Effects.Debuffs;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
-    public class PsionicShock : FieldEffect
+    public class BloodMoon : FieldEffect
     {
-        public PsionicShock() : base(RegionalEffectType.PsionicShock)
+        public BloodMoon() : base(FieldEffectType.BloodMoon)
         {
         }
 
         protected override void ApplyEffect(int currentTurn)
         {
+            if (BoardUtils.IsDay()) return;
             var board = BoardUtils.PieceBoard();
             var pieces = new List<PieceLogic>();
             foreach (var piece in board)
@@ -24,7 +24,7 @@ namespace Game.Effects.RegionalEffect
                     pieces.Add(piece);
 
             var randomInd = Random.Range(0, pieces.Count);
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieces[randomInd])));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, pieces[randomInd])));
         }
     }
 }

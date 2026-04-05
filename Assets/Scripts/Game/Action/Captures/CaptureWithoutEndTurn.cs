@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Effects.States;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -32,8 +33,8 @@ namespace Game.Action.Captures
             PieceManager.Ins.Destroy(GetTargetPos());
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
             
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
-            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
+            BoardUtils.KillPiece(GetTargetAsPiece());
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

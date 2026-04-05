@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -25,8 +26,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(GetMakerAsPiece());
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
+            BoardUtils.KillPiece(GetMakerAsPiece());
+            BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }
 }

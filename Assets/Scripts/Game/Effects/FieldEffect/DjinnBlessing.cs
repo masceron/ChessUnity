@@ -10,13 +10,13 @@ using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using ZLinq;
 
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
     public class DjinnBlessing : FieldEffect
     {
         private int isActive;
 
-        public DjinnBlessing() : base(RegionalEffectType.DjinnBlessing)
+        public DjinnBlessing() : base(FieldEffectType.DjinnBlessing)
         {
             isActive = 1;
         }
