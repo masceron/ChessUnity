@@ -1,5 +1,4 @@
-using System;
-using Game.Common;
+using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -44,9 +43,9 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var destinationPiece = PieceOn(_destination);
-            if (destinationPiece != null) Destroy(PieceOn(_destination));
-            Move(GetTargetAsPiece(), _destination);
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            if (destinationPiece != null) ActionManager.EnqueueAction(new KillPiece(null, PieceOn(_destination)));
+            ActionManager.EnqueueAction(new Move(GetTargetAsPiece(), _destination));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
         // public void CompleteActionForAI()
         // {

@@ -167,23 +167,18 @@ namespace Game.Managers
             
         }
 
-        public void Destroy(PieceLogic pieceAffected)
-        {
-            PieceBoard[pieceAffected.Pos] = null;
-            TriggerHooks.NotifyDead(pieceAffected);
-
-            pieceAffected.Effects.ForEach(RemoveObserver);
-        }
-
-        public void Kill(PieceLogic pieceAffected)
+        public void Kill(PieceLogic pieceAffected, bool record)
         {
             PieceBoard[pieceAffected.Pos] = null;
             TriggerHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
 
-            (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
-                pieceAffected.Color, pieceAffected.Pos));
+            if (record)
+            {
+                (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
+                    pieceAffected.Color, pieceAffected.Pos));
+            }
         }
 
         public void Move(PieceLogic piece, int t)

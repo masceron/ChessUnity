@@ -12,11 +12,11 @@ namespace Game.Action.Internal
 
         protected override void Animate()
         {
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(GetTargetPos());
             BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }

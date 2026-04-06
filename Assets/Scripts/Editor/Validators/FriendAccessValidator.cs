@@ -38,7 +38,6 @@ namespace Editor.Validators
             {
                 if (System.IO.File.Exists(pdbPath))
                 {
-                    // Read the PDB bytes entirely into memory to avoid file locks
                     var pdbBytes = System.IO.File.ReadAllBytes(pdbPath);
                     symbolStream = new System.IO.MemoryStream(pdbBytes);
         

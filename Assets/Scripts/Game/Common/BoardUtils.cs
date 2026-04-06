@@ -123,6 +123,7 @@ namespace Game.Common
             return MatchManager.Ins.GameState.ActiveBoard[pos];
         }
 
+        [Mutator]
         public static void SetActiveSquare(int pos, bool value)
         {
             MatchManager.Ins.GameState.ActiveBoard[pos] = value;
@@ -133,11 +134,13 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SquareColor[pos];
         }
 
+        [Mutator]
         public static void FlipPieceColor(PieceLogic piece)
         {
             piece.Color = !piece.Color;
         }
 
+        [Mutator]
         public static void SetCooldown(PieceLogic piece, int cd)
         {
             piece.SkillCooldown = cd;
@@ -173,21 +176,25 @@ namespace Game.Common
             return MatchManager.Ins.GameState.BlackCaptured;
         }
 
+        [Mutator]
         public static void Move(PieceLogic pieceLogic, int to)
         {
             MatchManager.Ins.GameState.Move(pieceLogic, to);
         }
 
+        [Mutator]
         public static void FlipSideToMove()
         {
             MatchManager.Ins.GameState.FlipSideToMove();
         }
 
+        [Mutator]
         public static void AddEffectObserver(Observer effect)
         {
             MatchManager.Ins.GameState.TriggerHooks.AddObserver(effect);
         }
 
+        [Mutator]
         public static void RemoveObserver(Observer effect)
         {
             MatchManager.Ins.GameState.TriggerHooks.RemoveObserver(effect);
@@ -353,11 +360,6 @@ namespace Game.Common
             }
         }
 
-        public static void Destroy(PieceLogic piece)
-        {
-            MatchManager.Ins.GameState.Destroy(piece);
-        }
-
         public static bool IsAlive(Entity entity)
         {
             if (entity == null) return true;
@@ -440,8 +442,8 @@ namespace Game.Common
 
             return result;
         }
-
-
+        
+        [Mutator]
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
         {
             UIManager.Ins.Load(CanvasID.EndGameMessage);
@@ -453,16 +455,19 @@ namespace Game.Common
             return RankOf(pos) <= BoardSize / 2 - 1;
         }
 
+        [Mutator]
         public static void SetFormation(int pos, Formation env)
         {
             FormationManager.Ins.SetFormation(pos, env);
         }
 
+        [Mutator]
         public static void MoveFormation(int from, int to)
         {
             FormationManager.Ins.MoveFormation(from, to);
         }
 
+        [Mutator]
         public static void RemoveFormation(Formation formation)
         {
             FormationManager.Ins.RemoveFormation(formation);
@@ -488,6 +493,7 @@ namespace Game.Common
             return MatchManager.Ins.GameState.Formations[pos] != null;
         }
 
+        [Mutator]
         public static void DestroyTile(int index)
         {
             TileManager.Ins.DestroyTile(index);
@@ -498,6 +504,7 @@ namespace Game.Common
 
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
 
+        [Mutator]
         public static PieceLogic SpawnPiece(PieceConfig pieceConfig)
         {
             return MatchManager.Ins.GameState.SpawnPiece(pieceConfig);
@@ -518,9 +525,10 @@ namespace Game.Common
             MatchManager.Ins.GameState.EntityDict.Add(entity.ID, entity);
         }
 
-        public static void KillPiece(PieceLogic pieceLogic)
+        [Mutator]
+        public static void KillPiece(PieceLogic pieceLogic, bool record = true)
         {
-            MatchManager.Ins.GameState.Kill(pieceLogic);
+            MatchManager.Ins.GameState.Kill(pieceLogic, record);
         }
 
         public static void Prune()
@@ -545,6 +553,7 @@ namespace Game.Common
             return MatchManager.Ins.GameState.CurrentTurn;
         }
 
+        [Mutator]
         public static void SetRelic(bool color, RelicLogic relic)
         {
             if (!color)
@@ -554,6 +563,7 @@ namespace Game.Common
             else MatchManager.Ins.GameState.BlackRelic = relic;
         }
 
+        [Mutator]
         public static void Swap(PieceLogic a, PieceLogic b)
         {
             MatchManager.Ins.GameState.Swap(a, b);

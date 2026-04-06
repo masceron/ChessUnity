@@ -14,12 +14,12 @@ namespace Game.Action.Internal
 
         protected override void Animate()
         {
+            PieceManager.Ins.Destroy(GetFrom());
         }
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(GetFrom());
-            BoardUtils.Destroy(GetMakerAsPiece());
+            BoardUtils.KillPiece(GetMakerAsPiece(), false);
         }
     }
 }
