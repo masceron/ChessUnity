@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Game.Augmentation;
 using Game.Augmentation.Set;
@@ -201,8 +201,25 @@ namespace Game.Piece.PieceLogic.Commons
             if (Effects.Any(e => e.EffectName == "effect_stunned")) return;
             if (Effects.Any(e => e.EffectName == "effect_frenzied")) return;
 
-            Quiets(list, Pos, isPlayer);
-            Captures(list, Pos, excludeEmptyTile);
+            // Pha 1: Moveset trả về list positions (chỉ pathfinding)
+            var quietPositions = new List<int>();
+            Quiets(quietPositions, Pos);
+
+            var capturePositions = new List<int>();
+            Captures(capturePositions, Pos);
+
+            // Pha 2: Game logic — tạo Action từ positions
+            foreach (var targetPos in quietPositions)
+                list.Add(new Action.Quiets.NormalMove(this, targetPos));
+
+            foreach (var targetPos in capturePositions)
+            {
+                var target = PieceOn(targetPos);
+                if (target != null && target.Color != Color)
+                    list.Add(CreateCaptureAction(targetPos));
+                else if (target == null && !excludeEmptyTile)
+                    list.Add(CreateCaptureAction(targetPos)); // AI zone of control
+            }
 
             if (_hasSkill)
             {
@@ -214,6 +231,14 @@ namespace Game.Piece.PieceLogic.Commons
             }
 
             NotifyOnMoveGen(this, list);
+        }
+
+        /// <summary>
+        ///     Factory method tạo capture Action. Override cho quân đặc biệt (vd: HorseLeech → HorseLeechAttack).
+        /// </summary>
+        public virtual Action.Action CreateCaptureAction(int targetPos)
+        {
+            return new Action.Captures.NormalCapture(this, PieceOn(targetPos));
         }
 
         public int GetMoveRange()
@@ -323,13 +348,13 @@ namespace Game.Piece.PieceLogic.Commons
 
         public int GetQuitesValue()
         {
-            var value = Quiets(new List<Action.Action>(), Pos, true);
+            var value = Quiets(new List<int>(), Pos);
             return value;
         }
 
         public int GetCapturesValue()
         {
-            return Captures(new List<Action.Action>(), Pos, false);
+            return Captures(new List<int>(), Pos);
         }
 
         private int RankToValue(PieceRank rank)

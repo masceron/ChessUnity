@@ -35,6 +35,7 @@ namespace Game.Action
         SurvivedHit = 12, // bị ăn nhưng không chết
         SelfDestroy = 13, // Tự chết khi thực hiện ăn quân khác
         Infest = 14, // Ký sinh thay vì ăn quân
+        Failed = 15, // Thất bại
     }
 
     public enum TargetingType

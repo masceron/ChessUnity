@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Action.Captures;
-using Game.Action.Quiets;
+using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
@@ -12,7 +10,7 @@ namespace Game.Movesets
 		private static readonly int[] RankOffsets = { -1, -1, -1, 0, 0, 1, 1, 1 };
 		private static readonly int[] FileOffsets = { -2, 0, 2, -1, 1, -2, 0, 2 };
 
-		public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
+		public static int Quiets(List<int> list, int pos)
 		{
 			var file = FileOf(pos);
 			var rank = RankOf(pos);
@@ -23,7 +21,6 @@ namespace Game.Movesets
 			{
 				var rankOff = rank + RankOffsets[i];
 				var fileOff = file + FileOffsets[i];
-
 				MakeMove(rankOff, fileOff);
 			}
 
@@ -33,27 +30,23 @@ namespace Game.Movesets
 			{
 				var index = IndexOf(rankOff, fileOff);
 				if (!IsActive(index)) return;
-
 				var piece = PieceOn(index);
 				if (piece != null) return;
-
-				list.Add(new NormalMove(caller, index));
+				list.Add(index);
 			}
 		}
 
-		public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
+		public static int Captures(List<int> list, int pos)
 		{
 			var file = FileOf(pos);
 			var rank = RankOf(pos);
 			var caller = PieceOn(pos);
 			var range = caller.GetAttackRange();
-			var color = caller.Color;
 
 			for (var i = 0; i < RankOffsets.Length; i++)
 			{
 				var rankOff = rank + RankOffsets[i];
 				var fileOff = file + FileOffsets[i];
-
 				MakeCapture(rankOff, fileOff);
 			}
 
@@ -63,17 +56,7 @@ namespace Game.Movesets
 			{
 				var index = IndexOf(rankOff, fileOff);
 				if (!IsActive(index)) return;
-
-				var piece = PieceOn(index);
-				if (piece == null)
-				{
-					if (!isPlayer)
-						list.Add(new NormalCapture(caller, piece));
-					return;
-				}
-
-				if (piece.Color != color)
-					list.Add(new NormalCapture(caller, piece));
+				list.Add(index); // trả tất cả ô reachable
 			}
 		}
 	}

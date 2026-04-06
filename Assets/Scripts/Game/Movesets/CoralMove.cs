@@ -34,20 +34,20 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Quiets(List<int> list, int pos)
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new CoralMove().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile, true);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false, true);
 
             return 15 + 5 * moveRange;
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Captures(List<int> list, int pos)
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new CoralMove().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile, true);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true, true);
             return 15 + 5 * attackRange;
         }
     }

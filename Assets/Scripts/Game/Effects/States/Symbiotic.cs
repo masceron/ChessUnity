@@ -40,9 +40,9 @@ namespace Game.Effects.States
                 }
             }
 
-            // 2. Lấy danh sách nước đi ăn quân giả lập, lúc này đồng minh sẽ bị tính là địch
-            var extraCaptures = new List<Action.Action>();
-            caller.Captures(extraCaptures, caller.Pos, true);
+            // 2. Lấy danh sách vị trí tấn công giả lập, lúc này đồng minh sẽ bị tính là địch
+            var capturePositions = new List<int>();
+            caller.Captures(capturePositions, caller.Pos);
 
             // 3. Trả lại màu ngay lập tức
             foreach (var ally in flippedAllies)
@@ -50,19 +50,16 @@ namespace Game.Effects.States
                 ally.Color = !ally.Color;
             }
 
-            // 4. Lọc những action hướng vào đồng minh để thêm SymbioticCapture
-            foreach (var action in extraCaptures)
+            // 4. Lọc những vị trí hướng vào đồng minh để thêm SymbioticCapture
+            foreach (var targetPos in capturePositions)
             {
-                if (action is ICaptures)
+                var targetPiece = BoardUtils.PieceOn(targetPos);
+                // Kiểm tra chắc chắn là đồng minh thật sự (vì trong capturePositions có thể lẫn cả kẻ địch)
+                if (targetPiece != null && targetPiece.Color == caller.Color && targetPiece != caller)
                 {
-                    var targetPiece = action.GetTargetAsPiece();
-                    // Kiểm tra chắc chắn là đồng minh thật sự (vì trong extraCaptures có thể lẫn cả kẻ địch)
-                    if (targetPiece != null && targetPiece.Color == caller.Color && targetPiece != caller)
+                    if (targetPiece.CurrentState == StateType.None)
                     {
-                        if (targetPiece.CurrentState == StateType.None)
-                        {
-                            actions.Add(new SymbioticCapture(caller, targetPiece));
-                        }
+                        actions.Add(new SymbioticCapture(caller, targetPiece));
                     }
                 }
             }

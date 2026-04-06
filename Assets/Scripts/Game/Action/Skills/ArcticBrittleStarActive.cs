@@ -1,21 +1,32 @@
+using Game.Action.Internal.Pending.Piece;
+using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using MemoryPack;
+using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
     [MemoryPackable]
-    public partial class ArcticBrittleStarActive : Action, ISkills
+    public partial class ArcticBrittleStarActive : Action, ISkills, IDontEndTurn
     {
         [MemoryPackConstructor]
         private ArcticBrittleStarActive()
         {
         }
 
-        public ArcticBrittleStarActive(PieceLogic maker, int target) : base(maker, target)
+        private int _hoveringPos = -1;
+        private int _gridSize = 2;
+        private int _castRange = 3;
+
+        public ArcticBrittleStarActive(PieceLogic maker, int target, int gridSize, int castRange) : base(maker, target)
         {
+            _gridSize = gridSize;
+            _castRange = castRange;
+
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -27,11 +38,35 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Formation anchorIce = new AnchorIce(GetMakerAsPiece().Color);
-            anchorIce.SetDuration(3);
-            FormationManager.Ins.SetFormation(GetTargetPos(), anchorIce);
+            Tile.Tile.OnPointEnterHandle = thisTile =>
+            {
+                if (Distance(IndexOf(thisTile.rank, thisTile.file), From) > _castRange)
+                {
+                    TileManager.Ins.UnmarkAll();
+                    return;
+                }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+                var hoveringTile = TileManager.Ins.GetTile(_hoveringPos);
+                if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, false);
+
+                hoveringTile = thisTile;
+                _hoveringPos = IndexOf(hoveringTile.rank, hoveringTile.file);
+                TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, true);
+
+                if (BoardViewer.SelectingFunction != 3)
+                {
+                    BoardViewer.SelectingFunction = 3;
+                }
+                if (BoardViewer.Selecting != -2)
+                {
+                    BoardViewer.Selecting = -2;
+                }
+
+                var pending = new ArcticBrittleStarSkillPending(_hoveringPos, GetMakerAsPiece(), _gridSize);
+
+                if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
+            
+            };
         }
     }
 }

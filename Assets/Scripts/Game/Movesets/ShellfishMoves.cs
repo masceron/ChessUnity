@@ -7,41 +7,6 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class ShellfishMoves : BaseMovePattern
     {
-        /*public static void Quiets(List<Action.Action> list, int pos)
-        {
-            var (rank, file) = RankFileOf(pos);
-            var piece = PieceOn(pos);
-            var moveRange = piece.GetMoveRange();
-            var color = piece.Color;
-
-            int[] dr = { -1, 0, 1, 0 };
-            int[] dc = { 0, 1, 0, -1 };
-
-            foreach ( var (rankOff, fileOff)  in MoveEnumerators.AroundUntil(rank, file, 1))
-            {
-                MakeMove(rankOff, fileOff);
-            }
-
-            for (int dir = 0; dir < 4; ++dir)
-            {
-                var (rankOff, fileOff) = (rank + dr[dir] * moveRange, file + dc[dir] * moveRange);
-                MakeMove(rankOff, fileOff);
-            }
-
-            return;
-            void MakeMove(int rankOff, int fileOff)
-            {
-                var index = IndexOf(rankOff, fileOff);
-                if (!IsActive(index)) return;
-
-                var piece = PieceOn(index);
-                if (piece != null ||
-                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
-                    return;
-                list.Add(new NormalMove(pos, index));
-            }
-
-        }*/
         public override List<int> GenerateBaseMovePattern(int makerPos)
         {
             return GenerateShellfishMovePattern(makerPos);
@@ -73,20 +38,20 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Quiets(List<int> list, int pos)
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new ShellfishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false);
 
             return 30 + 5 * moveRange;
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Captures(List<int> list, int pos)
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new ShellfishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true);
             return 30 + 5 * attackRange;
         }
     }

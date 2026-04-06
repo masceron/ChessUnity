@@ -31,7 +31,7 @@ namespace Game.Relics
                     if (piece == null) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new EyeOfMimicPending(this);
+                    var pending = new EyeOfMimicPending(this, piece.Pos);
                     BoardViewer.ListOf.Add(pending);
                 }
 

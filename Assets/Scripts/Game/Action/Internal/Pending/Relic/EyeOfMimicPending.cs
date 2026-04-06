@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
@@ -16,7 +16,7 @@ namespace Game.Action.Internal.Pending.Relic
         private static PieceLogic _secondTarget;
         private EyeOfMimic _eyeOfMimic;
 
-        public EyeOfMimicPending(EyeOfMimic e) : base(null)
+        public EyeOfMimicPending(EyeOfMimic e, int target) : base(null, target)
         {
             _eyeOfMimic = e;
         }

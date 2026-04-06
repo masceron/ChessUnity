@@ -5,6 +5,8 @@ using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
+using Game.Action.Internal.Pending.Relic;
+using Game.Action;
 
 namespace Game.Relics
 {
@@ -34,10 +36,10 @@ namespace Game.Relics
                     TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
 
                     //Làm lại
-                    // var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    // var pending = new FrostSigilPending(pos, this);
+                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
+                    var pending = new FrostSigilPending(pos, this);
 
-                    // if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
+                    if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
                 };
             }
             else
@@ -81,8 +83,9 @@ namespace Game.Relics
             var pos = BoardUtils.IndexOf(bestArea.rank, bestArea.file);
 
             //Làm lại
-            // var pending = new FrostSigilPending(pos, this);
-            // BoardViewer.Ins.ExecuteAction(pending);
+            SetCooldown();
+            var execute = new Game.Action.Relics.FrostSigilExecute(CommanderPiece, pos, Color);
+            Game.Action.ActionManager.EnqueueAction(execute);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Quiets;
@@ -65,7 +65,7 @@ namespace UX.UI.Ingame
         private static void Disable(Toggle toggle)
         {
             toggle.colors = _normalColors;
-            toggle.isOn = false;
+            toggle.SetIsOnWithoutNotify(false);
         }
 
         public void DisablePieceInteractions()

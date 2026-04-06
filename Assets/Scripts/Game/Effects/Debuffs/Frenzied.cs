@@ -32,20 +32,28 @@ namespace Game.Effects.Debuffs
             if (!IsAlive(Piece) || PieceOn(Piece.Pos) != Piece) return;
             _list.Clear();
             Piece.Color = !Piece.Color;
-            Piece.Captures(_list, Piece.Pos, true);
-            Piece.Quiets(_list, Piece.Pos, true);
-            if (_list.Count > 1) _list = _list.Distinct(new ActionComparer()).ToList();
 
-            var captureTargets = _list.OfType<ICaptures>()
-                .Select(c => ((Action.Action)c).GetTargetPos())
-                .ToList();
-            var moveTargets = _list.OfType<IQuiets>()
-                .Select(c => ((Action.Action)c).GetTargetPos())
-                .ToList();
+            // Pha 1: lấy positions
+            var capturePositions = new List<int>();
+            Piece.Captures(capturePositions, Piece.Pos);
 
-            if (captureTargets.Count > 0)
+            var quietPositions = new List<int>();
+            Piece.Quiets(quietPositions, Piece.Pos);
+
+            // Pha 2: tạo Actions
+            foreach (var pos in capturePositions)
             {
-                var nearestTarget = captureTargets
+                var target = PieceOn(pos);
+                if (target != null && target.Color != Piece.Color)
+                    _list.Add(new NormalCapture(Piece, target));
+            }
+
+            foreach (var pos in quietPositions)
+                _list.Add(new NormalMove(Piece, pos));
+
+            if (capturePositions.Count > 0)
+            {
+                var nearestTarget = capturePositions
                     .OrderBy(c => Distance(Piece.Pos, c))
                     .FirstOrDefault();
 
@@ -57,11 +65,11 @@ namespace Game.Effects.Debuffs
                 else
                     ActionManager.EnqueueAction(new FrenziedCapture(Piece, nearestPieceTarget));
             }
-            else if (moveTargets.Count > 0)
+            else if (quietPositions.Count > 0)
             {
                 var random = new Random();
-                var randomIndex = random.Next(0, moveTargets.Count);
-                var randomTarget = moveTargets[randomIndex];
+                var randomIndex = random.Next(0, quietPositions.Count);
+                var randomTarget = quietPositions[randomIndex];
                 ActionManager.EnqueueAction(new FrenziedMove(Piece, randomTarget));
             }
         }

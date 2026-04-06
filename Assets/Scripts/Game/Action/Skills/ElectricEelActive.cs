@@ -9,7 +9,7 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class ElectricEelActive : Action, ISkills
+    public partial class ElectricEelActive : Action, ISkills, ILocaltionTarget
     {
         [MemoryPackConstructor]
         private ElectricEelActive()
@@ -39,10 +39,11 @@ namespace Game.Action.Skills
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;
-                    var p = PieceOn(IndexOf(rankOff, fileOff));
-                    if (p == null || p.Color == caller.Color) continue;
+                    var target = IndexOf(rankOff, fileOff);
+                    var pieceTarget = PieceOn(target);
+                    if (pieceTarget == null || pieceTarget.Color == caller.Color) continue;
 
-                    ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, p), GetMakerAsPiece()));
+                    ActionManager.EnqueueAction(new ElectricEelActiveImpact(Maker, IndexOf(rankOff, fileOff)));
                 }
             }
 

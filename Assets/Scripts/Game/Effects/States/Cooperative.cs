@@ -37,8 +37,21 @@ namespace Game.Effects.States
 
             var moveList = new List<Game.Action.Action>();
             var skills = new List<Game.Action.Action>();
-            Piece.Quiets(moveList, Piece.Pos, true);
-            Piece.Captures(moveList, Piece.Pos, true);
+
+            // Pha 1: lấy positions
+            var quietPositions = new List<int>();
+            Piece.Quiets(quietPositions, Piece.Pos);
+            foreach (var pos in quietPositions)
+                moveList.Add(new NormalMove(Piece, pos));
+
+            var capturePositions = new List<int>();
+            Piece.Captures(capturePositions, Piece.Pos);
+            foreach (var pos in capturePositions)
+            {
+                var target = BoardUtils.PieceOn(pos);
+                if (target != null && target.Color != Piece.Color)
+                    moveList.Add(new NormalCapture(Piece, target));
+            }
             if (Piece is IPieceWithSkill pieceWithSkill)
             {
                 pieceWithSkill.Skills(skills, false, true);

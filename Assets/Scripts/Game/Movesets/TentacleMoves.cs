@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
@@ -38,21 +38,21 @@ namespace Game.Movesets
         }
         
 
-        public static int Quiets(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Quiets(List<int> list, int pos)
         {
             var range = PieceOn(pos).GetMoveRange();
             var pattern = new TentacleMoves().GenerateTentacleMovePattern(pos, range);
 
-            AddToPatternMoves(list, pattern, pos, range, false, excludeEmptyTile);
+            AddToPatternMoves(list, pattern, pos, range, false);
             return 30 + 5 * range;
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Captures(List<int> list, int pos)
         {
             var range = PieceOn(pos).AttackRange();
             var pattern = new TentacleMoves().GenerateTentacleMovePattern(pos, range);
 
-            AddToPatternMoves(list, pattern, pos, range, true, excludeEmptyTile);
+            AddToPatternMoves(list, pattern, pos, range, true);
             return 30 + 5 * range;
         }
 

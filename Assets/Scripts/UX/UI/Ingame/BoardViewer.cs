@@ -92,6 +92,7 @@ namespace UX.UI.Ingame
         public void Unmark()
         {
             Selecting = -1;
+            SelectingFunction = 0;
             TileManager.Ins.UnmarkAll();
             _aiManager.ClearTileScores();
             pieceActions.DisablePieceInteractions();
@@ -126,7 +127,7 @@ namespace UX.UI.Ingame
                         return;
                     case 4:
                     {
-                        var action = ListOf.Find(a => a.GetFrom() == pos);
+                        var action = ListOf.Find(a => a.GetTargetPos() == pos);
                         if (action == null) return;
                         ExecuteAction(action);
                         break;

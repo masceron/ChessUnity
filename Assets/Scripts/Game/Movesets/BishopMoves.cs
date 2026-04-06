@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Action.Captures;
-using Game.Action.Quiets;
+using System.Collections.Generic;
 using Game.Common;
 using static Game.Common.BoardUtils;
 
@@ -10,84 +8,62 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class BishopMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
+        public static int Quiets(List<int> list, int pos)
         {
+            var (rank, file) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var rank = RankOf(pos);
-            var file = FileOf(pos);
-            var maxRange = piece.GetMoveRange();
+            var moveRange = piece.GetMoveRange();
 
-            foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, maxRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, moveRange))
+                if (!MakeMove(rankOff, fileOff)) break;
+            foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, moveRange))
+                if (!MakeMove(rankOff, fileOff)) break;
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, moveRange))
+                if (!MakeMove(rankOff, fileOff)) break;
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownRight(rank, file, moveRange))
+                if (!MakeMove(rankOff, fileOff)) break;
 
-            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, maxRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
+            return 15 + 5 * moveRange;
 
-            foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, maxRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
-
-            foreach (var (rankOff, fileOff) in MoveEnumerators.DownRight(rank, file, maxRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
-
-            return 10 + 5 * maxRange;
-
-            bool MakeMove(int index)
+            bool MakeMove(int rankOff, int fileOff)
             {
+                var index = IndexOf(rankOff, fileOff);
                 if (!IsActive(index)) return false;
                 var p = PieceOn(index);
                 if (p != null) return false;
-                list.Add(new NormalMove(piece, index));
+                list.Add(index);
                 return true;
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
+        public static int Captures(List<int> list, int pos)
         {
+            var (rank, file) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var color = piece.Color;
             var moveRange = piece.GetAttackRange();
 
-            var (rank, file) = RankFileOf(pos);
-
             foreach (var (rankOff, fileOff) in MoveEnumerators.UpLeft(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
-
-            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeCapture(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.UpRight(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeCapture(rankOff, fileOff)) break;
+            foreach (var (rankOff, fileOff) in MoveEnumerators.DownLeft(rank, file, moveRange))
+                if (!MakeCapture(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.DownRight(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
+                if (!MakeCapture(rankOff, fileOff)) break;
 
-            return 10 + 5 * moveRange;
+            return 15 + 5 * moveRange;
 
-            bool MakeCapture(int index)
+            bool MakeCapture(int rankOff, int fileOff)
             {
+                var index = IndexOf(rankOff, fileOff);
+                if (!IsActive(index)) return false;
                 var p = PieceOn(index);
                 if (p == null)
                 {
-                    if (!isPlayer)
-                    {
-                        list.Add(new NormalCapture(piece, p));
-                        return false;
-                    }
-
+                    list.Add(index);
                     return true;
                 }
-
-                if (!IsActive(index)) return false;
-                if (p.Color != color) list.Add(new NormalCapture(piece, p));
-
+                list.Add(index);
                 return false;
             }
         }
