@@ -46,6 +46,7 @@ namespace Game.Action.Internal.Pending.Piece
             }
 
             if (_ally == -1 || _enemy == -1) return;
+            //Làm lại
             // CommitResult(new TemperantiaSwap(GetMakerAsPiece(), _ally, _enemy));
             _ally = -1;
             _enemy = -1;
