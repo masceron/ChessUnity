@@ -22,7 +22,7 @@ namespace Game.Action.Captures
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(4, GetTargetAsPiece()), GetMakerAsPiece()));
-            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new KillPiece(null, GetMakerAsPiece()));
         }
     }
 }

@@ -407,10 +407,6 @@ MonoBehaviour:
     m_Key: effect_pegasus_seamoth_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 52207987264577536
-    m_Key: effect_meta_scope_passive
-    m_Metadata:
-      m_Items: []
   - m_Id: 52207987428155392
     m_Key: effect_metal_regulator_passive
     m_Metadata:
@@ -547,20 +543,12 @@ MonoBehaviour:
     m_Key: effect_broken_relocator_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 60980579624472576
-    m_Key: effect_tainted_heart
-    m_Metadata:
-      m_Items: []
   - m_Id: 60980579649638400
     m_Key: effect_fire_goby_fish_passive
     m_Metadata:
       m_Items: []
   - m_Id: 60980579662221312
     m_Key: effect_kill_piece_after_switch_turn
-    m_Metadata:
-      m_Items: []
-  - m_Id: 60980579666415616
-    m_Key: effect_pressure_membrane
     m_Metadata:
       m_Items: []
   - m_Id: 60980579678998528
@@ -571,16 +559,8 @@ MonoBehaviour:
     m_Key: effect_marine_flatworm_special_ability
     m_Metadata:
       m_Items: []
-  - m_Id: 60980579725135872
-    m_Key: effect_puppeteer_spirit
-    m_Metadata:
-      m_Items: []
   - m_Id: 60980579750301696
     m_Key: effect_sea_turtle_count_down
-    m_Metadata:
-      m_Items: []
-  - m_Id: 60981971256791040
-    m_Key: effect_rays_tail_passive
     m_Metadata:
       m_Items: []
   - m_Id: 60981971290345472
@@ -791,20 +771,12 @@ MonoBehaviour:
     m_Key: effect_amplify
     m_Metadata:
       m_Items: []
-  - m_Id: 80901506894057473
-    m_Key: effect_abbotts_moray_passive
-    m_Metadata:
-      m_Items: []
   - m_Id: 80901506898251776
     m_Key: effect_painted_greenling_passive
     m_Metadata:
       m_Items: []
   - m_Id: 81128640207986688
     m_Key: effect_largehead_hairtail_passive
-    m_Metadata:
-      m_Items: []
-  - m_Id: 81237356408283136
-    m_Key: effect_dwarf_cuttlefish
     m_Metadata:
       m_Items: []
   - m_Id: 81248024691810304
@@ -843,10 +815,6 @@ MonoBehaviour:
     m_Key: effect_pulse_coral_passive
     m_Metadata:
       m_Items: []
-  - m_Id: 82740887567196160
-    m_Key: effect_arrow_crab_diurnal
-    m_Metadata:
-      m_Items: []
   - m_Id: 82740940994240512
     m_Key: effect_arrow_crab_territorial
     m_Metadata:
@@ -877,6 +845,54 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 84211293744451584
     m_Key: effect_maxima_clam_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85995671503949824
+    m_Key: effect_metal_mind_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85995905726468096
+    m_Key: effect_metal_scope_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85996432971452416
+    m_Key: effect_sea_turtle_countdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85996663981133824
+    m_Key: effect_marine_flatworm_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85997144786784256
+    m_Key: effect_fear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85997268942376960
+    m_Key: effect_none_state
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85997523989614592
+    m_Key: effect_regenerative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85997978396315648
+    m_Key: effect_abbotts_moray_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85998307552710656
+    m_Key: effect_metal_spine_passive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85998472980254720
+    m_Key: effect_long_cast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85998672746565632
+    m_Key: effect_stalkers_instinct
+    m_Metadata:
+      m_Items: []
+  - m_Id: 85998916469182464
+    m_Key: effect_longcast
     m_Metadata:
       m_Items: []
   m_Metadata:

@@ -6,6 +6,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Relics;
 using Game.Effects;
+using Game.Effects.FieldEffect;
 using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
@@ -114,7 +115,7 @@ namespace Game.Common
 
         public static PieceLogic PieceOn(int pos)
         {
-            return MatchManager.Ins.GameState.PieceBoard[pos];
+            return PieceBoard()[pos];
         }
 
         public static bool IsActive(int pos)
@@ -254,12 +255,12 @@ namespace Game.Common
 
         public static List<PieceLogic> FindPiece<T>(bool side) where T : PieceLogic
         {
-            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece is T && piece.Color == side).ToList();
+            return PieceBoard().Where(piece => piece is T && piece.Color == side).ToList();
         }
 
         public static List<PieceLogic> FindAllies(bool side)
         {
-            return MatchManager.Ins.GameState.PieceBoard.Where(piece => piece != null && piece.Color == side).ToList();
+            return PieceBoard().Where(piece => piece != null && piece.Color == side).ToList();
         }
 
         public static RelicLogic GetRelicOf(bool side)
@@ -350,6 +351,11 @@ namespace Game.Common
                     MatchManager.Ins.GameState.TriggerHooks.NotifyBeforeDestroyOrKill(action);
                     break;
             }
+        }
+
+        public static void Destroy(PieceLogic piece)
+        {
+            MatchManager.Ins.GameState.Destroy(piece);
         }
 
         public static bool IsAlive(Entity entity)
@@ -467,7 +473,7 @@ namespace Game.Common
             return GetFormations().Where(f => f != null && f.GetFormationType() == type).ToList();
         }
 
-        private static Formation[] GetFormations()
+        public static Formation[] GetFormations()
         {
             return MatchManager.Ins.GameState.Formations;
         }
@@ -487,7 +493,7 @@ namespace Game.Common
             TileManager.Ins.DestroyTile(index);
             RemoveFormation(GetFormation(index));
             var on = PieceOn(index);
-            if (on != null) ActionManager.EnqueueAction(new KillPiece(on));
+            if (on != null) ActionManager.EnqueueAction(new KillPiece(null, on));
         }
 
         public static bool IsDay() => MatchManager.Ins.GameState.IsDay;
@@ -528,5 +534,40 @@ namespace Game.Common
                 MatchManager.Ins.GameState.EntityDict.Remove(key);
             }
         }
+
+        public static bool GetSideToMove()
+        {
+            return MatchManager.Ins.GameState.SideToMove;
+        }
+
+        public static int GetCurrentTurn()
+        {
+            return MatchManager.Ins.GameState.CurrentTurn;
+        }
+
+        public static void SetRelic(bool color, RelicLogic relic)
+        {
+            if (!color)
+            {
+                MatchManager.Ins.GameState.WhiteRelic = relic;
+            }
+            else MatchManager.Ins.GameState.BlackRelic = relic;
+        }
+
+        public static void Swap(PieceLogic a, PieceLogic b)
+        {
+            MatchManager.Ins.GameState.Swap(a, b);
+        }
+
+        public static FieldEffectType GetFieldEffectType()
+        {
+            return MatchManager.Ins.GameState.FieldEffect.Type;
+        }
+
+        public static TriggerHooks GetTriggerHooks()
+        {
+            return MatchManager.Ins.GameState.TriggerHooks;
+        }
+        
     }
 }

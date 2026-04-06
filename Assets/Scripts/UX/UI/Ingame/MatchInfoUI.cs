@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using TMPro;
 using UnityEngine;
@@ -10,15 +11,15 @@ namespace UX.UI.Ingame
 
         private void Start()
         {
-            MatchManager.Ins.GameState.OnIncreaseTurn += UpdateUI;
-            UpdateUI(1);
+            //UpdateUI(1);
         }
 
 
-        private void UpdateUI(int turn)
-        {
-            round.text = $"Round : {turn}/150";
-            day.text = MatchManager.Ins.GameState.IsDay ? "Day" : "Night";
-        }
+        //Làm lại
+        // private void UpdateUI(int turn)
+        // {
+        //     round.text = $"Round : {turn}/150";
+        //     day.text = BoardUtils.IsDay() ? "Day" : "Night";
+        // }
     }
 }

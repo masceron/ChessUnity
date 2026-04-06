@@ -22,7 +22,7 @@ namespace Game.Effects.Augmentation
             if (action.GetTargetAsPiece() != Piece) return;
             if (action.Result != ResultFlag.Parry) return;
 
-            ActionManager.EnqueueAction(new KillPiece(action.GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new KillPiece(Piece, action.GetMakerAsPiece()));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;

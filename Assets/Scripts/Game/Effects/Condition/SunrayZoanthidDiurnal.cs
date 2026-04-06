@@ -32,48 +32,7 @@ namespace Game.Effects.Condition
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-			UnityEngine.Debug.Log("SunrayZoanthidDiurnal: OnCallAfterPieceAction");
-			if (!IsActive) return;
-
-            if (action is not IQuiets) return;
-
-            var movedPiece = action.GetMakerAsPiece();
-            if (movedPiece == null) return;
-
-            var radius = GetStat(EffectStat.Radius);
-
-			if (movedPiece != Piece && movedPiece.Color != Piece.Color)
-            {
-				var prevPos = movedPiece.PreviousMoves.Count > 0
-						? movedPiece.PreviousMoves[^1]
-						: -1;
-
-				var nowIn = Distance(movedPiece.Pos, Piece.Pos) <= radius;
-				var wasIn = prevPos != -1 && Distance(prevPos, Piece.Pos) <= radius;
-
-				if (nowIn && !wasIn) OnEnterRange(movedPiece);
-				else if (!nowIn && wasIn) OnLeaveRange(movedPiece);
-
-				return;
-            }
-
-            if (Piece.PreviousMoves.Count <= 0) return;
-
-            var oldPos = Piece.PreviousMoves[^1];
-            for (var i = 0; i < BoardSize; i++)
-            {
-                if (!IsActive(i)) continue;
-
-				var enemy = PieceOn(i);
-				if (enemy == null || enemy == Piece) continue;
-				if (enemy.Color == Piece.Color) continue;
-
-                var distToNewPos = Distance(i, Piece.Pos);
-                var distToOldPos = Distance(i, oldPos);
-
-				if (distToNewPos <= radius && distToOldPos > radius) OnEnterRange(enemy);
-				else if (distToNewPos > radius && distToOldPos <= radius) OnLeaveRange(enemy);
-            }
+			//Làm lại
         }
 
         public void OnCallStart(Action.Action lastMainAction)

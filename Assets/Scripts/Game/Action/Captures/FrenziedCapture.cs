@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -25,11 +26,10 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            Debug.Log("Complete FrenziedCapture");
             PieceManager.Ins.Destroy(GetTargetPos());
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
-            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
+            BoardUtils.KillPiece(GetTargetAsPiece());
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
 
         public void CompleteActionForAI()

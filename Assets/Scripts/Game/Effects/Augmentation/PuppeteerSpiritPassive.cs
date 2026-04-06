@@ -23,8 +23,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallStart(Action.Action lastMainAction)
         {
-            Debug.Log(MatchManager.Ins.GameState.CurrentTurn);
-            if (MatchManager.Ins.GameState.CurrentTurn == 1)
+            if (BoardUtils.GetCurrentTurn() == 1)
                 foreach (var piece in BoardUtils.FindPiece<PieceLogic>(Piece.Color))
                     ActionManager.EnqueueAction(new ApplyEffect(new Sanity(-1, piece)));
         }

@@ -12,12 +12,11 @@ namespace Game.Tile
     /// </summary>
     public class AnchorIce : Formation
     {
-        private int _stack;
+        //private int _stack;
 
         public AnchorIce(bool color) : base(color)
         {
-            MatchManager.Ins.GameState.OnIncreaseTurn += OnIncreaseTurn;
-            _stack = 0;
+           // _stack = 0;
         }
 
         public override FormationType GetFormationType()
@@ -25,22 +24,17 @@ namespace Game.Tile
             return FormationType.AnchorIce;
         }
 
-        protected override void OnPieceExit(PieceLogic piece)
-        {
-            base.OnPieceExit(piece);
-            _stack = 0;
-        }
-
-        private void OnIncreaseTurn(int currentTurn)
-        {
-            if (PieceOnFormation == null) return;
-            if (PieceOnFormation.Color == Color) return;
-            if (_stack == 0)
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
-            else if (_stack == 2)
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation)));
-            _stack++;
-        }
+        //Làm lại
+        // private void OnIncreaseTurn(int currentTurn)
+        // {
+        //     if (PieceOnFormation == null) return;
+        //     if (PieceOnFormation.Color == Color) return;
+        //     if (_stack == 0)
+        //         ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, PieceOnFormation)));
+        //     else if (_stack == 2)
+        //         ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, PieceOnFormation)));
+        //     _stack++;
+        // }
 
         public override int GetValueForAI()
         {

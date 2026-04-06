@@ -1,4 +1,4 @@
-﻿using Game.Managers;
+﻿using Game.Common;
 using Game.Triggers;
 
 namespace Game.Effects.Others
@@ -19,7 +19,7 @@ namespace Game.Effects.Others
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (MatchManager.Ins.GameState.CurrentTurn % 10 == 0) Strength++;
+            if (BoardUtils.GetCurrentTurn() % 10 == 0) Strength++;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Game.Effects.SpecialAbility
 {
     public class DuskyButterflyfishPassive : Effect, IStartTurnTrigger
     {
-        public DuskyButterflyfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_dusky_butterfly_passive")
+        public DuskyButterflyfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_dusky_butterfly_fish_passive")
         {
         }
 

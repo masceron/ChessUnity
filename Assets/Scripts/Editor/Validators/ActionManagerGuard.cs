@@ -32,16 +32,8 @@ namespace Editor.Validators
 
         private static bool ScanViolations()
         {
-            AssemblyDefinition assembly;
-            try
-            {
-                assembly = AssemblyDefinition.ReadAssembly(AssemblyPath);
-            }
-            catch (FileNotFoundException)
-            {
-                Debug.LogWarning("⚠️ Could not find Assembly-CSharp.dll. Skipping architecture check.");
-                return false;
-            }
+            var parameters = new ReaderParameters { InMemory = true };
+            using var assembly = AssemblyDefinition.ReadAssembly(AssemblyPath, parameters);
 
             var violationFound = false;
 
@@ -67,8 +59,7 @@ namespace Editor.Validators
                     }
                 }
             }
-
-            assembly.Dispose();
+            
             return violationFound;
         }
 

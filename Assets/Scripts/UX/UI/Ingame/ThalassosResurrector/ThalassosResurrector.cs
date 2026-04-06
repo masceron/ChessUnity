@@ -33,9 +33,8 @@ namespace UX.UI.Ingame.ThalassosResurrector
             _caller = c;
             _to = t;
             PendingAction = cd;
-            var gameState = MatchManager.Ins.GameState;
             var pieceCaller = BoardUtils.PieceOn(c);
-            var collection = !pieceCaller.Color ? gameState.WhiteCaptured : gameState.BlackCaptured;
+            var collection = !pieceCaller.Color ? BoardUtils.WhiteCaptured() : BoardUtils.BlackCaptured();
             var pieceInfos = AssetManager.Ins.PieceData;
             var candidates = collection.Where(e => pieceInfos[e.Type].rank is PieceRank.Common or PieceRank.Swarm)
                 .Distinct().ToList();

@@ -31,7 +31,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new KillPiece(null, GetMakerAsPiece()));
             var (rank, file) = RankFileOf(GetFrom());
             var caller = GetMakerAsPiece();
 

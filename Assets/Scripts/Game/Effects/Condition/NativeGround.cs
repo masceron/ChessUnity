@@ -1,7 +1,8 @@
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Buffs;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
@@ -12,19 +13,19 @@ namespace Game.Effects.Condition
 {
     public class NativeGround : Effect
     {
-        private readonly RegionalEffectType regionalEffect;
+        private readonly FieldEffectType _fieldEffect;
 
-        public NativeGround(PieceLogic piece, RegionalEffectType fitRegionalEffect) : base(-1, 1, piece,
+        public NativeGround(PieceLogic piece, FieldEffectType fitFieldEffect) : base(-1, 1, piece,
             "effect_native_ground")
         {
-            regionalEffect = fitRegionalEffect;
+            _fieldEffect = fitFieldEffect;
 
             ApplyEffectIfFitRegion();
         }
 
         private void ApplyEffectIfFitRegion()
         {
-            if (regionalEffect != MatchManager.Ins.GameState.RegionalEffect.Type) return;
+            if (_fieldEffect != BoardUtils.GetFieldEffectType()) return;
 
             var e = GetRandomBuffEffect();
 

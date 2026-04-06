@@ -6,7 +6,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.AI;
 using Game.Common;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -29,7 +29,7 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    [Friend(typeof(BoardUtils))]
+    [Friend(typeof(BoardUtils), typeof(MatchManager), typeof(ActionManager))]
     public class GameState
     {
         private int _pieceID = 1;
@@ -46,9 +46,8 @@ namespace Game.Managers
 
         private Action.Action _lastMainAction;
         public RelicLogic BlackRelic;
-
-        public Action<int> OnIncreaseTurn;
-        public RegionalEffect RegionalEffect;
+        
+        public FieldEffect FieldEffect;
         public bool SideToMove;
         public PieceLogic WhiteCommander, BlackCommander;
         public RelicLogic WhiteRelic;
@@ -116,19 +115,19 @@ namespace Game.Managers
             return _pieceID++;
         }
 
-        public void MakeRegionalEffect(RegionalEffectType ret)
+        public void MakeFieldEffect(FieldEffectType ret)
         {
-            RegionalEffect = GetRegionalEffectByType(ret);
+            FieldEffect = GetFieldEffectByType(ret);
         }
 
-        private static RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
+        private static FieldEffect GetFieldEffectByType(FieldEffectType ret)
         {
-            RegionalEffect re = ret switch
+            FieldEffect re = ret switch
             {
-                RegionalEffectType.Whirlpool => new Whirlpool(),
-                RegionalEffectType.PsionicShock => new PsionicShock(),
-                RegionalEffectType.BloodMoon => new BloodMoon(),
-                RegionalEffectType.RedTide => new RedTide(),
+                FieldEffectType.Whirlpool => new Whirlpool(),
+                FieldEffectType.PsionicShock => new PsionicShock(),
+                FieldEffectType.BloodMoon => new BloodMoon(),
+                FieldEffectType.RedTide => new RedTide(),
                 _ => null
             };
 
@@ -165,7 +164,7 @@ namespace Game.Managers
 
         public void OnStart()
         {
-            OnIncreaseTurn?.Invoke(CurrentTurn);
+            
         }
 
         public void Destroy(PieceLogic pieceAffected)
@@ -190,7 +189,6 @@ namespace Game.Managers
         public void Move(PieceLogic piece, int t)
         {
             PieceBoard[t] = piece;
-            PieceBoard[t].PreviousMoves.Add(piece.Pos);
             PieceBoard[piece.Pos] = null;
             piece.Pos = t;
         }
@@ -210,7 +208,6 @@ namespace Game.Managers
             {
                 _countTurn++;
                 CurrentTurn++;
-                OnIncreaseTurn?.Invoke(CurrentTurn);
                 if (_countTurn == 151)
                 {
                     UIManager.Ins.Load(CanvasID.EndGameMessage);
@@ -266,9 +263,9 @@ namespace Game.Managers
             return EntityDict.GetValueOrDefault(id);
         }
 
-        public void SetRegionalEffect(RegionalEffect e)
+        public void SetFieldEffect(FieldEffect e)
         {
-            RegionalEffect = e;
+            FieldEffect = e;
             TriggerHooks.AddObserver(e);
         }
     }

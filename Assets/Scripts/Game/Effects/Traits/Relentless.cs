@@ -25,9 +25,9 @@ namespace Game.Effects.Traits
 
             var target = action.GetMakerAsPiece();
             if (target?.Effects != null && target.Effects.All(e => e.EffectName != "effect_snapping_strike"))
-                ActionManager.EnqueueAction(new KillPiece(action.GetMakerAsPiece()));
+                ActionManager.EnqueueAction(new KillPiece(Piece, action.GetMakerAsPiece()));
 
-            if (GetStat(EffectStat.Stack) <= 0) ActionManager.EnqueueAction(new KillPiece(Piece));
+            if (GetStat(EffectStat.Stack) <= 0) ActionManager.EnqueueAction(new KillPiece(null, Piece));
         }
 
         BeforeActionPriority IBeforePieceActionTrigger.Priority => BeforeActionPriority.Reaction;

@@ -41,7 +41,7 @@ namespace Game.Effects.Debuffs
             {
                 TurnSinceLastMove = 0;
                 TurnLeftToDie--;
-                if (TurnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(lastMainAction.GetMakerAsPiece()));
+                if (TurnLeftToDie == 0) ActionManager.EnqueueAction(new KillPiece(null, lastMainAction.GetMakerAsPiece()));
             }
         }
 

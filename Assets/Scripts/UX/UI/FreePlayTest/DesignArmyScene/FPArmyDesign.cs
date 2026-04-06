@@ -63,7 +63,7 @@ namespace UX.UI.FreePlayTest.DesignArmyScene
             board.EnemyTroops.Sort();
             army.EnemyTroops = board.EnemyTroops.ToArray();
             FreePlaySaveLoader.Save(army);
-            UIManager.Ins.Load(CanvasID.RegionalEffect);
+            UIManager.Ins.Load(CanvasID.FieldEffect);
             RegionalManagerUI.Ins.Load();
         }
 

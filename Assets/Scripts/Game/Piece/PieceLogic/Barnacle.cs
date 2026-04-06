@@ -1,4 +1,5 @@
 using Game.Action.Skills;
+using Game.Common;
 using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -19,7 +20,7 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var (_, _) = RankFileOf(Pos);
-                    foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                    foreach (var piece in BoardUtils.PieceBoard())
                     {
                         if (piece == null) continue;
                         if (piece.Color == Color) continue;

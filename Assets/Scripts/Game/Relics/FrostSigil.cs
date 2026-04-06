@@ -61,7 +61,7 @@ namespace Game.Relics
                     rank,
                     file,
                     3,
-                    piece => piece.Color != MatchManager.Ins.GameState.OurSide);
+                    piece => piece.Color != BoardUtils.OurSide());
 
                 var count = enemies.Count;
 

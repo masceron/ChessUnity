@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Action.Relics;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -24,7 +25,7 @@ namespace Game.Relics
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
 
@@ -41,7 +42,7 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             // Gather all pieces
-            var pieces = MatchManager.Ins.GameState.PieceBoard
+            var pieces = BoardUtils.PieceBoard()
                 .Where(pieceLogic => pieceLogic != null)
                 .ToList();
 

@@ -187,9 +187,9 @@ namespace Game.Tile
             var pieceOn = action.GetTargetAsPiece();
             if (pieceOn == null) return;
 
-            if (action.GetTargetPos() == Pos)
+            if (action.GetMaker().Pos == Pos && action.GetFrom() != Pos)
                 OnPieceEnter(pieceOn);
-            else if (action.GetFrom() == Pos)
+            else if (action.GetFrom() == Pos && action.GetMaker().Pos != Pos)
                 OnPieceExit(pieceOn);
         }
 

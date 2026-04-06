@@ -25,7 +25,7 @@ namespace Game.Action.Relics
                 if (p is not { PieceRank: PieceRank.Construct }) continue;
 
                 _storedPos.Add(p.Pos);
-                ActionManager.EnqueueAction(new KillPiece(p));
+                ActionManager.EnqueueAction(new KillPiece(null, p));
             }
 
             AddEffectObserver(new ChaoticConstructorSpawn(-1, _storedPos));

@@ -9,7 +9,7 @@ namespace Game.Effects.Augmentation
 {
     public class StalkerInstinctEffect : Effect, IOnMoveGenTrigger
     {
-        public StalkerInstinctEffect(PieceLogic piece) : base(-1, 1, piece, "effect_stalker_instinct")
+        public StalkerInstinctEffect(PieceLogic piece) : base(-1, 1, piece, "effect_stalkers_instinct")
         {
         }
 

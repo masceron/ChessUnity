@@ -25,7 +25,7 @@ namespace Game.Effects.Traits
             {
                 if (Piece is RedtailParrotfish && action.GetTargetAsPiece() is StoneWall) return;
                 // Giết chính mình
-                ActionManager.EnqueueAction(new KillPiece(Piece));
+                ActionManager.EnqueueAction(new KillPiece(null, Piece));
             }
         }
 

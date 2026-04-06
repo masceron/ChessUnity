@@ -26,50 +26,7 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (Piece == null) return;
-            if (action == null || action.Result != ResultFlag.Success) return;
-            if (action is not IQuiets) return;
-
-            int radius = GetStat(EffectStat.Radius);
-
-
-            var movedPiece = action.GetMakerAsPiece();
-            if (movedPiece != null && movedPiece != Piece && movedPiece.Color != Piece.Color)
-            {
-                int prevPos = movedPiece.PreviousMoves.Count > 0
-                    ? movedPiece.PreviousMoves[movedPiece.PreviousMoves.Count - 1]
-                    : -1;
-
-                int distToNewPos = Distance(movedPiece.Pos, Piece.Pos);
-                int distToOldPos = prevPos == -1 ? int.MaxValue : Distance(prevPos, Piece.Pos);
-
-                if (distToNewPos <= radius && distToOldPos > radius)
-                {
-                    UnityEngine.Debug.Log("Apply Passive Effects to " );
-                    TryApplyPassiveEffects(movedPiece);
-                }
-            }
-
-
-            if (action.GetMakerAsPiece() != Piece || Piece.PreviousMoves.Count <= 0) return;
-
-            int oldPos = Piece.PreviousMoves[Piece.PreviousMoves.Count - 1];
-            for (int i = 0; i < BoardSize; i++)
-            {
-                if (!IsActive(i)) continue;
-
-                var enemy = PieceOn(i);
-                if (enemy == null || enemy.Color == Piece.Color) continue;
-
-                int distToNewPos = Distance(enemy.Pos, Piece.Pos);
-                int distToOldPos = Distance(enemy.Pos, oldPos);
-
-                if (distToNewPos <= radius && distToOldPos > radius)
-                {
-                    UnityEngine.Debug.Log("Apply Passive Effects to " );
-                    TryApplyPassiveEffects(enemy);
-                }
-            }
+            //Làm lại
         }
 
         public void OnCallDead(PieceLogic pieceToDie)

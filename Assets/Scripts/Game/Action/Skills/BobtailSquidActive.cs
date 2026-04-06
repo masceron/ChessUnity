@@ -35,20 +35,20 @@ namespace Game.Action.Skills
         {
             var maker = GetMakerAsPiece();
             SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
-            var Color = maker.Color;
-            var direction = Color ? -1 : +1;
+            var color = maker.Color;
+            var direction = color ? -1 : +1;
             var steps = 0;
             var (oldRank, oldFile) = RankFileOf(GetFrom());
 
             while (IsActive(IndexOf(oldRank + (steps + 1) * direction, oldFile)) && steps < 3) steps++;
             var finalPos = IndexOf(oldRank + steps * direction, oldFile);
-            MatchManager.Ins.GameState.Move(maker, finalPos);
+            Move(maker, finalPos);
             PieceManager.Ins.Move(GetFrom(), finalPos);
-            for (var x = oldRank + (Color ? 0 : -1); x <= oldRank + (Color ? 1 : 0); ++x)
+            for (var x = oldRank + (color ? 0 : -1); x <= oldRank + (color ? 1 : 0); ++x)
             for (var y = oldFile - 1; y <= oldFile + 1; ++y)
                 if (IsActive(IndexOf(x, y)))
                 {
-                    Formation fogOfWar = new FogOfWar(Color);
+                    Formation fogOfWar = new FogOfWar(color);
                     fogOfWar.SetDuration(3);
                     SetFormation(IndexOf(x, y), fogOfWar);
                 }

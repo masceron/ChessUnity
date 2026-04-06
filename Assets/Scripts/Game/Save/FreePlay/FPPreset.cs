@@ -1,4 +1,4 @@
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Save.Army;
 using Game.Save.Relics;
 using MemoryPack;
@@ -12,6 +12,6 @@ namespace Game.Save.FreePlay
         public string Name;
         public int BoardSize;
         public Troop[] Troops, EnemyTroops;
-        public RegionalEffectType regionalEffect;
+        public FieldEffectType FieldEffect;
     }
 }

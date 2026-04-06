@@ -36,7 +36,7 @@ namespace Game.Effects.Others
                 p => p != null && p.Color != Piece.Color && p != Piece
             );
 
-            foreach (var target in enemyPieces) ActionManager.EnqueueAction(new KillPiece(target));
+            foreach (var target in enemyPieces) ActionManager.EnqueueAction(new KillPiece(Piece, target));
         }
 
         public override int GetValueForAI()

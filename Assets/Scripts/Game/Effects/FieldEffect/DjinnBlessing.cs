@@ -1,5 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Buffs;
 using Game.Effects.Debuffs;
 using Game.Effects.Traits;
@@ -9,13 +10,13 @@ using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using ZLinq;
 
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
-    public class DjinnBlessing : RegionalEffect
+    public class DjinnBlessing : FieldEffect
     {
         private int isActive;
 
-        public DjinnBlessing() : base(RegionalEffectType.DjinnBlessing)
+        public DjinnBlessing() : base(FieldEffectType.DjinnBlessing)
         {
             isActive = 1;
         }
@@ -59,7 +60,7 @@ namespace Game.Effects.RegionalEffect
             Debug.Log("isActive: " + isActive);
             if (isActive == 3)
             {
-                var board = MatchManager.Ins.GameState.PieceBoard;
+                var board = BoardUtils.PieceBoard();
 
                 var validPieces = board.Where(piece => piece != null && piece.PieceRank != PieceRank.Commander)
                     .ToList();
@@ -82,7 +83,7 @@ namespace Game.Effects.RegionalEffect
                                 new ApplyEffect(GetRandomDebuffEffect(validPieces[randomInd], duration, strength)));
                             break;
                         default:
-                            ActionManager.EnqueueAction(new KillPiece(validPieces[randomInd]));
+                            ActionManager.EnqueueAction(new KillPiece(null, validPieces[randomInd]));
                             break;
                     }
                 }

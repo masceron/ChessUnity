@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -46,7 +47,7 @@ namespace Game.Action.Internal
             }
 
             // Cập nhật PieceBoard logic
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = BoardUtils.PieceBoard();
             board[GetTargetPos()] = _adhesive;
             _adhesive.Pos = GetTargetPos();
         }

@@ -14,7 +14,7 @@ namespace Game.Effects.Augmentation
     {
         private bool isFirstCaptured = true;
 
-        public MantaSpinePassive(PieceLogic piece) : base(-1, 1, piece, "effect_manta_spine_passive")
+        public MantaSpinePassive(PieceLogic piece) : base(-1, 1, piece, "effect_metal_spine_passive")
         {
         }
 

@@ -1,4 +1,5 @@
-﻿using Game.Managers;
+﻿using Game.Common;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
@@ -18,7 +19,7 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
+            BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }
 }

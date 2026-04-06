@@ -48,7 +48,6 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly List<Augmentation.Augmentation> Augmentations;
         private readonly List<ImmunityType> _immunities = new();
         public readonly PieceRank PieceRank;
-        public readonly List<int> PreviousMoves = new();
         private readonly UDictionary<SkillStat, List<int>> _skillStats;
         private readonly List<FormationType> _specificFormations = new();
         public readonly string Type;

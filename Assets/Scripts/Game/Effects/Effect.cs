@@ -10,7 +10,7 @@ namespace Game.Effects
 {
     /*
      *  The effect queue at the end of plies must look like the following:
-     *  EndTurn..., RealmInfluence, RegionalEffect, StartTurn...
+     *  EndTurn..., RealmInfluence, FieldEffect, StartTurn...
      */
 
     public enum EffectCategory : byte

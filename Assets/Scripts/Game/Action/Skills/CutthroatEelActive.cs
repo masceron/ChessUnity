@@ -38,7 +38,7 @@ namespace Game.Action.Skills
             }
             else
             {
-                ActionManager.EnqueueAction(new KillPiece(GetTargetAsPiece()));
+                ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece(), GetTargetAsPiece()));
                 SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
         }

@@ -27,7 +27,7 @@ namespace Game.Action.Relics
             var numberOfDebuffedPieces = piece.Effects.Count(e => e.Category == EffectCategory.Debuff);
             var rate = 7 * numberOfDebuffedPieces;
 
-            if (MatchManager.Roll(rate)) ActionManager.EnqueueAction(new KillPiece(piece));
+            if (MatchManager.Roll(rate)) ActionManager.EnqueueAction(new KillPiece(null, piece));
         }
     }
 }

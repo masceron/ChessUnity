@@ -30,7 +30,7 @@ namespace Game.Tile
             if (!PieceOnFormation.Effects.Any(effect => effect.EffectName == "effect_shield" ||
                                                         effect.EffectName == "effect_hardened_shield"
                                                         || effect.EffectName == "effect_carapace"))
-                ActionManager.EnqueueAction(new KillPiece(PieceOnFormation));
+                ActionManager.EnqueueAction(new KillPiece(this, PieceOnFormation));
 
             var (rank, file) = RankFileOf(PieceOnFormation.Pos);
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 8))

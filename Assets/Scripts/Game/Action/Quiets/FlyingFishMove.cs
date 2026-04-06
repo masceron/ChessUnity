@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -25,7 +26,7 @@ namespace Game.Action.Quiets
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

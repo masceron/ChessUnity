@@ -1,4 +1,5 @@
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -50,7 +51,7 @@ namespace Game.Action.Quiets
                 break;
             }
 
-            MatchManager.Ins.GameState.Move(caller, GetTargetPos());
+            Move(caller, GetTargetPos());
         }
     }
 }

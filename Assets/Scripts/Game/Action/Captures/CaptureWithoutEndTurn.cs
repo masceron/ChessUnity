@@ -1,3 +1,5 @@
+using Game.Common;
+using Game.Effects.States;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -5,7 +7,7 @@ using MemoryPack;
 namespace Game.Action.Captures
 {
     /// <summary>
-    ///     Capture action dùng cho quân có State <see cref="Game.Effects.States.PieceStateType.Cooperative"/>.
+    ///     Capture action dùng cho quân có State <see cref="Cooperative"/>.
     ///     Implement <see cref="IDontEndTurn"/> để action này không kết thúc turn của người chơi.
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -31,8 +33,8 @@ namespace Game.Action.Captures
             PieceManager.Ins.Destroy(GetTargetPos());
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
             
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
-            MatchManager.Ins.GameState.Move(GetMakerAsPiece(), GetTargetPos());
+            BoardUtils.KillPiece(GetTargetAsPiece());
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -30,7 +31,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Swap(GetMakerAsPiece(), GetTargetAsPiece());
+            Swap(GetMakerAsPiece(), GetTargetAsPiece());
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

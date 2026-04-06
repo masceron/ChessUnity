@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
@@ -17,15 +18,15 @@ using static Game.Common.BoardUtils;
 //Nếu hướng vector là chuẩn(hướng lên trên, dưới, trái, phải, chéo) thì cứ đi đúng như bình thường
 //Quân nào bị vào xoáy nước sẽ mất 
 //Để giải quyết vấn đề 2 quân đi vào cùng 1 ô, bạn cần phải sắp xếp danh sách PieceLogic để quân nào gần vòng xoáy(tức độ dài vector ngắn hơn) được đi trước
-namespace Game.Effects.RegionalEffect
+namespace Game.Effects.FieldEffect
 {
-    public class Whirlpool : RegionalEffect
+    public class Whirlpool : FieldEffect
     {
         private readonly List<int> centralIndices;
 
         private readonly int startTurn = 4;
 
-        public Whirlpool() : base(RegionalEffectType.Whirlpool)
+        public Whirlpool() : base(FieldEffectType.Whirlpool)
         {
             // Use MaxLength to derive center coordinates (board is MaxLength x MaxLength)
             var half = MaxLength / 2;
@@ -47,7 +48,7 @@ namespace Game.Effects.RegionalEffect
 
             // Precompute their indices
 
-            var board = MatchManager.Ins.GameState.PieceBoard;
+            var board = BoardUtils.PieceBoard();
             var pieces = board.Where(piece => piece != null).ToList();
 
             // Build list of (piece, nearestCentralIndex, distance) and sort by distance asc
@@ -83,7 +84,7 @@ namespace Game.Effects.RegionalEffect
                 // If piece already on whirlpool -> destroy it
                 if (centralIndices.Contains(fromIndex))
                 {
-                    ActionManager.EnqueueAction(new KillPiece(piece));
+                    ActionManager.EnqueueAction(new KillPiece(null, piece));
                     continue;
                 }
 
@@ -122,13 +123,13 @@ namespace Game.Effects.RegionalEffect
                 var nextIndex = IndexOf(nextRank, nextFile);
 
                 // Only move into empty squares, if a cell have piece, the move action is cancelled
-                if (MatchManager.Ins.GameState.PieceBoard[nextIndex] != null) continue;
+                if (BoardUtils.PieceBoard()[nextIndex] != null) continue;
 
                 // Execute immediate move
                 ActionManager.EnqueueAction(new NormalMove(piece, nextIndex));
 
                 // If the piece lands in a whirlpool cell, destroy it
-                if (centralIndices.Contains(nextIndex)) ActionManager.EnqueueAction(new KillPiece(piece));
+                if (centralIndices.Contains(nextIndex)) ActionManager.EnqueueAction(new KillPiece(null, piece));
             }
         }
     }

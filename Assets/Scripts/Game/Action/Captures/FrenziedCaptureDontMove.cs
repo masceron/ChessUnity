@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -27,7 +28,7 @@ namespace Game.Action.Captures
         {
             Debug.Log("Complete FrenziedCaptureDontMove");
             PieceManager.Ins.Destroy(GetTargetPos());
-            MatchManager.Ins.GameState.Kill(GetTargetAsPiece());
+            BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }
 }
