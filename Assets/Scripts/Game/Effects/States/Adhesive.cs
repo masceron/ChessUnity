@@ -6,6 +6,7 @@ using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
+using Game.Action.Quiets;
 
 namespace Game.Effects.States
 {
@@ -58,7 +59,14 @@ namespace Game.Effects.States
             }
 
             var allyCaptures = new List<Action.Action>();
-            caller.Captures(allyCaptures, caller.Pos, true); // excludeEmptyTile = true
+            var allyCapturePositions = new List<int>();
+            caller.Captures(allyCapturePositions, caller.Pos);
+            foreach (var targetPos in allyCapturePositions)
+            {
+                var target = BoardUtils.PieceOn(targetPos);
+                if (target != null && target.Color != caller.Color)
+                    allyCaptures.Add(new NormalCapture(caller, target));
+            }
 
             foreach (var ally in flippedAllies)
                 ally.Color = !ally.Color;
@@ -70,38 +78,42 @@ namespace Game.Effects.States
                 return p == null || p.Color != caller.Color || p.CurrentState != StateType.None;
             });
 
-            // ─── Bước B: Lấy captures lên ô có formation (excludeEmptyTile = false) ───
-            var withFormationCaptures = new List<Action.Action>();
-            caller.Captures(withFormationCaptures, caller.Pos, false);
+            // ─── Bước B: Lấy captures lên ô có formation ───
+            // Duyệt trực tiếp positions, không tạo intermediate Actions
+            var formationCapturePositions = new List<int>();
+            caller.Captures(formationCapturePositions, caller.Pos);
 
             var formationActions = new List<Action.Action>();
             var formationTargets = new HashSet<int>(); // để tránh add trùng
 
-            foreach (var action in withFormationCaptures)
+            foreach (var targetPos in formationCapturePositions)
             {
-                var target = action.GetTargetPos();
-                if (!BoardUtils.HasFormation(target)) continue;
+                if (!BoardUtils.HasFormation(targetPos)) continue;
 
-                var formation = BoardUtils.GetFormation(target);
-                var targetPiece = action.GetTargetAsPiece();
+                var formation = BoardUtils.GetFormation(targetPos);
+                var targetPiece = BoardUtils.PieceOn(targetPos);
                 var isAllyStateNone = targetPiece != null
                                       && targetPiece.Color == caller.Color
                                       && targetPiece.CurrentState == StateType.None;
 
-                formationTargets.Add(target);
+                formationTargets.Add(targetPos);
 
                 if (isAllyStateNone)
                 {
                     // Ô có ally StateNone + Formation → pending popup
                     formationActions.Add(new AdhesiveCapturePending(Piece, targetPiece, formation));
                     // Xóa ally-capture riêng lẻ (pending đã gộp cả 2)
-                    allyCaptures.RemoveAll(a => a.GetTargetPos() == target);
+                    allyCaptures.RemoveAll(a => a.GetTargetPos() == targetPos);
+                }
+                else if (targetPiece != null && targetPiece.Color != caller.Color)
+                {
+                    // Ô có quân địch + Formation → NormalCapture, OnCallBeforePieceAction sẽ intercept
+                    formationActions.Add(new NormalCapture(caller, targetPiece));
                 }
                 else
                 {
-                    // Ô có formation nhưng không có ally StateNone (trống, có địch, hoặc ally ở state khác) 
-                    // → thêm action attach formation (OnCallBeforePieceAction sẽ intercept để attach)
-                    formationActions.Add(action);
+                    // Ô trống hoặc ally ở state khác + Formation → action chỉ mang pos để intercept sau
+                    formationActions.Add(caller.CreateCaptureAction(targetPos));
                 }
             }
 
@@ -146,8 +158,7 @@ namespace Game.Effects.States
                 ApplySkill(action);
                 action.Result = ResultFlag.Infest;
                 ActionManager.EnqueueAction(new ApplyEffect(new Attached(targetPiece, Piece)));
-                //Làm lại
-                //ActionManager.EnqueueAction(new MoveToAdhesive(Piece, target, attachToFormation: false));
+                ActionManager.EnqueueAction(new MoveToAdhesive(Piece, (Entity)targetPiece, attachToFormation: false));
             }
             else if (hasFormation && !isAlly)
             {
@@ -162,8 +173,7 @@ namespace Game.Effects.States
                     f.ClearState();
                     Attached.SpawnAdhesiveAround(f.Pos, null, adhesive);
                 };
-                //Làm lại
-                //ActionManager.EnqueueAction(new MoveToAdhesive(Piece, target, attachToFormation: true));
+                ActionManager.EnqueueAction(new MoveToAdhesive(Piece, (Entity)formation, attachToFormation: true));
             }
             // Case isAlly + hasFormation được xử lý qua AdhesiveCapturePending → không rơi vào đây
         }

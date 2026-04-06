@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Action.Captures;
-using Game.Action.Quiets;
+using System.Collections.Generic;
 using Game.Common;
 using static Game.Common.BoardUtils;
 
@@ -10,79 +8,62 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class RookMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
+        public static int Quiets(List<int> list, int pos)
         {
+            var (rank, file) = RankFileOf(pos);
             var piece = PieceOn(pos);
             var moveRange = piece.GetMoveRange();
 
-            var (rank, file) = RankFileOf(pos);
-
             foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, moveRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeMove(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, moveRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeMove(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, moveRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeMove(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, moveRange))
-                if (!MakeMove(IndexOf(rankOff, fileOff)))
-                    break;
+                if (!MakeMove(rankOff, fileOff)) break;
 
-            return 10 + 5 * moveRange;
+            return 15 + 5 * moveRange;
 
-            bool MakeMove(int index)
+            bool MakeMove(int rankOff, int fileOff)
             {
+                var index = IndexOf(rankOff, fileOff);
                 if (!IsActive(index)) return false;
                 var p = PieceOn(index);
-                if (p != null) return false;
-                list.Add(new NormalMove(piece, index));
-                return true;
+                if (p != null) return false; // ô có quân → stop, không thêm
+                list.Add(index);
+                return true; // ô trống → thêm, tiếp tục slide
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
+        public static int Captures(List<int> list, int pos)
         {
+            var (rank, file) = RankFileOf(pos);
             var piece = PieceOn(pos);
-            var color = piece.Color;
             var moveRange = piece.GetAttackRange();
 
-            var (rank, file) = RankFileOf(pos);
-
             foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeCapture(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeCapture(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.Left(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
-
+                if (!MakeCapture(rankOff, fileOff)) break;
             foreach (var (rankOff, fileOff) in MoveEnumerators.Right(rank, file, moveRange))
-                if (!MakeCapture(IndexOf(rankOff, fileOff)))
-                    break;
+                if (!MakeCapture(rankOff, fileOff)) break;
 
-            return 10 + 5 * moveRange;
+            return 15 + 5 * moveRange;
 
-            bool MakeCapture(int index)
+            bool MakeCapture(int rankOff, int fileOff)
             {
+                var index = IndexOf(rankOff, fileOff);
+                if (!IsActive(index)) return false;
                 var p = PieceOn(index);
                 if (p == null)
                 {
-                    if (!isPlayer) list.Add(new NormalCapture(piece, p));
+                    list.Add(index); // ô trống → thêm, tiếp tục slide
                     return true;
                 }
-
-                if (!IsActive(index)) return false;
-                if (p.Color != color) list.Add(new NormalCapture(piece, p));
-
+                list.Add(index); // ô có quân (bất kể màu) → thêm, stop
                 return false;
             }
         }

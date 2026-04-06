@@ -11,7 +11,7 @@ namespace Game.Action
     [MemoryPackUnion(2, typeof(DestroyConstruct))]
     [MemoryPackUnion(3, typeof(FrenziedCapture))]
     [MemoryPackUnion(4, typeof(FrenziedCaptureDontMove))]
-    [MemoryPackUnion(5, typeof(HorseLeechAttack))]
+    //[MemoryPackUnion(5, typeof(HorseLeechAttack))] đã xóa vì không dùng đến
     [MemoryPackUnion(6, typeof(IllusionCapture))]
     [MemoryPackUnion(7, typeof(NormalCapture))]
     [MemoryPackUnion(8, typeof(RemoraMark))]

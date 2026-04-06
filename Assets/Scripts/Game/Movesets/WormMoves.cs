@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
@@ -37,20 +37,20 @@ namespace Game.Movesets
         }
         
 
-        public static int Quiets(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Quiets(List<int> list, int pos)
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new WormMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false);
 
             return 10 + 5 * moveRange;
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile) 
+        public static int Captures(List<int> list, int pos) 
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new WormMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true);
             return 10 + 5 * attackRange;
         }
 

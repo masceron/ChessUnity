@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using static Game.Common.BoardUtils;
 
 namespace Game.Movesets
@@ -7,62 +7,6 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PufferfishMoves : BaseMovePattern // Front assault move
     {
-        /*public static void Quiets(List<Action.Action> list, int pos)
-        {
-            var caller = PieceOn(pos);
-            var color = caller.Color;
-            var range = caller.GetMoveRange(ref index);
-            var (startRank, startFile) = RankFileOf(pos);
-
-            var push = !color ? -1 : 1;
-
-            for (var rank = RankOf(pos) - (range - 1) * push; rank != RankOf(pos) + (range + 1) * push; rank += push)
-            {
-                if (!VerifyBounds(rank)) continue;
-                for (var file = FileOf(pos) - 1; file <= FileOf(pos) + 1; file++)
-                {
-                    if (!VerifyBounds(file)) continue;
-                    var idx = IndexOf(rank, file);
-                    if (!IsActive(idx)) continue;
-
-                    var piece = PieceOn(idx);
-
-                    if (piece != null) continue;
-                    if (Pathfinder.LineBlocker(startRank, startFile, rank, file).Item1 != -1) continue;
-
-                    list.Add(new NormalMove(pos, idx));
-                }
-            }
-        }
-
-        public static void Captures(List<Action.Action> list, int pos)
-        {
-            var caller = PieceOn(pos);
-            var color = caller.Color;
-            var range = caller.AttackRange;
-            var (startRank, startFile) = RankFileOf(pos);
-
-            var push = !color ? -1 : 1;
-
-            for (var rank = RankOf(pos) - (range - 1) * push; rank != RankOf(pos) + (range + 1) * push; rank += push)
-            {
-                if (!VerifyBounds(rank)) continue;
-                for (var file = FileOf(pos) - 1; file <= FileOf(pos) + 1; file++)
-                {
-                    if (!VerifyBounds(file)) continue;
-                    var idx = IndexOf(rank, file);
-                    if (!IsActive(idx)) continue;
-
-                    var piece = PieceOn(idx);
-
-                    if (piece == null || piece.Color == color) continue;
-                    if (Pathfinder.LineBlocker(startRank, startFile, rank, file).Item1 != -1) continue;
-
-                    list.Add(new NormalCapture(pos, idx));
-                }
-            }
-        }*/
-
         public override List<int> GenerateBaseMovePattern(int makerPos)
         {
             return GeneratePufferfishMovePattern(makerPos);
@@ -93,20 +37,20 @@ namespace Game.Movesets
             return positions;
         }
 
-        public static int Quiets(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Quiets(List<int> list, int pos)
         {
             var moveRange = PieceOn(pos).GetMoveRange();
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, moveRange, false, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, moveRange, false);
 
             return 20 + 5 * moveRange;
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool excludeEmptyTile)
+        public static int Captures(List<int> list, int pos)
         {
             var attackRange = PieceOn(pos).GetAttackRange();
             var basePattern = new HashSet<int>(new PufferfishMoves().GenerateBaseMovePattern(pos));
-            AddToPatternMoves(list, basePattern, pos, attackRange, true, excludeEmptyTile);
+            AddToPatternMoves(list, basePattern, pos, attackRange, true);
             return 20 + 5 * attackRange;
         }
     }
