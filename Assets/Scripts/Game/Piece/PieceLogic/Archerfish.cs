@@ -9,21 +9,29 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Archerfish : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int SkillRange = 4;
+        private const int Duration1 = 2;
+        private const int Duration2 = 2;
+        
         public Archerfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
+                SetStat(SkillStat.Range, SkillRange);
+                SetStat(SkillStat.Duration, Duration1, 1);
+                SetStat(SkillStat.Duration, Duration2, 2);
+                
                 if (SkillCooldown > 0) return;
 
                 if (isPlayer)
                 {
                     //Find all enemy pieces within 4 cells
                     var (trank, file) = RankFileOf(Pos);
-                    for (var i = -4; i <= 4; i++)
+                    for (var i = -GetStat(SkillStat.Range); i <= GetStat(SkillStat.Range); i++)
                     {
                         var rankOff = trank + i;
                         if (!VerifyBounds(rankOff)) continue;
-                        for (var j = -4; j <= 4; j++)
+                        for (var j = -GetStat(SkillStat.Range); j <= GetStat(SkillStat.Range); j++)
                         {
                             var fileOff = file + j;
                             if (!VerifyBounds(fileOff)) continue;

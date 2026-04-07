@@ -36,12 +36,13 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTargetAsPiece()),
+            var maker = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration, 1), 100, GetTargetAsPiece()),
                 GetMakerAsPiece()));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTargetAsPiece()),
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(maker.GetStat(SkillStat.Duration, 2), GetTargetAsPiece()),
                 GetMakerAsPiece()));
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
 
         // public void CompleteActionForAI()
