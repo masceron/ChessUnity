@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game.Action.Internal;
 using Game.AI;
 using Game.Common;
 using Game.Piece.PieceLogic.Commons;
@@ -51,7 +52,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             SetFormation(GetTargetPos(), new NavalMines(true, GetMakerAsPiece().Color));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
