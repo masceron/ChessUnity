@@ -1,55 +1,33 @@
-using System;
+using Cysharp.Threading.Tasks;
 using Game.Action.Skills;
-using Game.Managers;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
-using UX.UI.Ingame;
-using ZLinq;
-
-// <-- thêm để dùng LINQ
 
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class TemperantiaPending : PendingAction, IDisposable, ISkills
+    public class TemperantiaPending : PendingAction, ISkills
     {
-        private static int _ally = -1;
-        private static int _enemy = -1; // -1 nếu chưa chọn enemy
-
-        public TemperantiaPending(PieceLogic maker, PieceLogic target) : base(maker, target)
+        public TemperantiaPending(PieceLogic maker, PieceLogic firstTarget) : base(maker, firstTarget)
         {
         }
 
-        public void Dispose()
+        protected override async UniTask<Action> BuildAction(ITargetingContext context)
         {
-            _ally = -1;
-            _enemy = -1;
-            BoardViewer.SelectingFunction = 0;
-        }
-
-        protected override void CompleteAction()
-        {
-            var temperantia = GetMakerAsPiece();
-            if (GetTargetAsPiece().Color == temperantia.Color)
+            var firstPiece = GetTargetAsPiece();
+            var firstIsAlly = firstPiece.Color == GetMakerAsPiece().Color;
+            
+            var secondPos = await context.NextSelection(pos => 
             {
-                _ally = GetTargetPos();
-                foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                             pending.GetTargetAsPiece().Color == temperantia.Color))
-                    TileManager.Ins.UnMark(pending.GetTargetPos());
-            }
-            else
-            {
-                _enemy = GetTargetPos();
-                foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                             pending.GetTargetAsPiece().Color != temperantia.Color))
-                    TileManager.Ins.UnMark(pending.GetTargetPos());
-            }
-
-            if (_ally == -1 || _enemy == -1) return;
-            //Làm lại
-            // CommitResult(new TemperantiaSwap(GetMakerAsPiece(), _ally, _enemy));
-            _ally = -1;
-            _enemy = -1;
+                var p = BoardUtils.PieceOn(pos);
+                if (p == null) return false;
+            
+                var isAlly = p.Color == GetMakerAsPiece().Color;
+                return firstIsAlly ? !isAlly : isAlly;
+            });
+            
+            return new TemperantiaSwap(GetMakerAsPiece(), firstPiece.Pos, secondPos);
         }
 
         public int AIPenaltyValue(PieceLogic p)

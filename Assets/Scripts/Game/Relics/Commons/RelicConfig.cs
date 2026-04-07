@@ -1,15 +1,18 @@
+using MemoryPack;
+
 namespace Game.Relics.Commons
 {
-    public class RelicConfig
+    [MemoryPackable]
+    public partial class RelicConfig
     {
         public readonly bool Color;
         public readonly string Type;
-        public int TimeCooldown;
+        public readonly int TimeCooldown;
 
-        public RelicConfig(string t, bool c, int timeCooldown)
+        public RelicConfig(string type, bool color, int timeCooldown)
         {
-            Type = t;
-            Color = c;
+            Type = type;
+            Color = color;
             TimeCooldown = timeCooldown;
         }
     }

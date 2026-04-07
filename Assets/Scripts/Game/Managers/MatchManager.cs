@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Effects.FieldEffect;
 using Game.Piece;
-using Game.Relics.Commons;
 using UnityEngine;
-using UX.UI;
 using UX.UI.Ingame;
 using ZLinq;
 using static Game.Common.BoardUtils;
@@ -39,7 +36,13 @@ namespace Game.Managers
 
         private void Start()
         {
-            Init(new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)));
+            Init(new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)), new LineupConfig(
+                Config.PieceConfigWhite.ToArray(),
+                Config.PieceConfigBlack.ToArray(),
+                Config.relicWhiteConfig,
+                Config.relicBlackConfig,
+                Config.FieldEffectType
+            ));
         }
 
         private static void MakeBoard()
@@ -58,48 +61,31 @@ namespace Game.Managers
                 ActionManager.ExecuteImmediately(new SpawnPiece(pieceConfig));
         }
 
-        private void MakeGame(GameConfig cfg)
+        private void MakeGame(GameConfig cfg, LineupConfig lineupConfig)
         {
-            GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
+            GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide,
+                (lineupConfig.WhiteRelic, lineupConfig.BlackRelic), lineupConfig.FieldEffect);
             ActionManager.Init(GameState);
         }
 
-        public void Init(GameConfig cfg, GameMode gameMode = GameMode.PlayerVsPlayer)
+        public void Init(GameConfig cfg, LineupConfig lineupConfig, GameMode gameMode = GameMode.PlayerVsPlayer)
         {
             _seed = (uint)Random.Range(int.MinValue, int.MaxValue);
             _randomizer = new Unity.Mathematics.Random(_seed);
             StartingSize = cfg.StartingSize;
-            MakeGame(cfg);
+            MakeGame(cfg, lineupConfig);
             MakeBoard();
 
-            StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()),
-                Config.relicWhiteConfig,
-                Config.relicBlackConfig,
-                Config.FieldEffectType
+            StartGame(
+                lineupConfig
             );
             if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
         }
-        
-        private void MakeRelics(RelicConfig white, RelicConfig black)
-        {
-            GameState.WhiteRelic = RelicMaker.Get(white);
-            GameState.BlackRelic = RelicMaker.Get(black);
-        }
 
-        private void MakeFieldEffect(FieldEffectType ret)
+        private void StartGame(LineupConfig cfg)
         {
-            GameState.MakeFieldEffect(ret);
-        }
-
-        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, FieldEffectType ret)
-        {
-            MakeFieldEffect(ret);
             MakePieces(cfg);
-            MakeRelics(whiteRelic, blackRelic);
-            UIManager.Ins.Load(CanvasID.Ingame);
-            GameState.OnStart();
             ActionManager.ExecuteWhenStart();
-            // InputProcessor.LoadRelic(whiteRelic, blackRelic);
         }
 
         public static bool Roll(int chance)

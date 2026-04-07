@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Relics;
@@ -166,14 +165,14 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SideToMove;
         }
 
-        public static ObservableCollection<PieceConfig> WhiteCaptured()
+        public static List<PieceConfig> WhiteCaptured()
         {
-            return MatchManager.Ins.GameState.WhiteCaptured;
+            return MatchManager.Ins.GameState.Captured.Item1;
         }
 
-        public static ObservableCollection<PieceConfig> BlackCaptured()
+        public static List<PieceConfig> BlackCaptured()
         {
-            return MatchManager.Ins.GameState.BlackCaptured;
+            return MatchManager.Ins.GameState.Captured.Item2;
         }
 
         [Mutator]
@@ -272,7 +271,7 @@ namespace Game.Common
 
         public static RelicLogic GetRelicOf(bool side)
         {
-            return !side ? MatchManager.Ins.GameState.WhiteRelic : MatchManager.Ins.GameState.BlackRelic;
+            return !side ? MatchManager.Ins.GameState.Relics.Item1 : MatchManager.Ins.GameState.Relics.Item2;
         }
 
         public static PieceLogic GetCommanderOf(bool side)
@@ -522,7 +521,7 @@ namespace Game.Common
 
         public static void AddToEntityList(Entity entity)
         {
-            MatchManager.Ins.GameState.EntityDict.Add(entity.ID, entity);
+            MatchManager.Ins.GameState.AddToEntityList(entity);
         }
 
         [Mutator]
@@ -533,14 +532,7 @@ namespace Game.Common
 
         public static void Prune()
         {
-            var keysToRemove = MatchManager.Ins.GameState.EntityDict.Where(kvp => !IsAlive(kvp.Value))
-                .Select(kvp => kvp.Key)
-                .ToList();
-
-            foreach (var key in keysToRemove)
-            {
-                MatchManager.Ins.GameState.EntityDict.Remove(key);
-            }
+            MatchManager.Ins.GameState.PruneEntityList();
         }
 
         public static bool GetSideToMove()
@@ -558,9 +550,9 @@ namespace Game.Common
         {
             if (!color)
             {
-                MatchManager.Ins.GameState.WhiteRelic = relic;
+                MatchManager.Ins.GameState.Relics.Item1 = relic;
             }
-            else MatchManager.Ins.GameState.BlackRelic = relic;
+            else MatchManager.Ins.GameState.Relics.Item2 = relic;
         }
 
         [Mutator]

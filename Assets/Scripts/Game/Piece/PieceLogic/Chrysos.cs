@@ -12,7 +12,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Chrysos : Commons.PieceLogic, IPieceWithSkill
     {
-        public byte Coin = 10;
+        public int Coin = 10;
 
         public Chrysos(PieceConfig cfg) : base(cfg, RookMoves.Quiets, RookMoves.Captures)
         {
@@ -29,10 +29,9 @@ namespace Game.Piece.PieceLogic
                         if (piece == null || piece.Color != Color) continue;
 
                         var upgradableTo = UpgradableTo(piece.PieceRank);
-                        if (upgradableTo == PieceRank.None) continue;
-
-                        var cost = CalculateCost(piece.PieceRank, upgradableTo);
-                        if (Coin >= cost) list.Add(new ChrysosUpgradeCandidate(this, piece, cost));
+                        if (upgradableTo.Item1 == PieceRank.None) continue;
+                        
+                        if (Coin >= upgradableTo.Item2) list.Add(new ChrysosUpgradeCandidate(this, piece));
                     }
                 }
                 // query for AI
@@ -42,42 +41,17 @@ namespace Game.Piece.PieceLogic
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
 
-        public static PieceRank UpgradableTo(PieceRank from)
+        public static (PieceRank, int) UpgradableTo(PieceRank from)
         {
             return from switch
             {
-                PieceRank.Swarm => PieceRank.Common,
-                PieceRank.Common => PieceRank.Elite,
-                PieceRank.Elite or PieceRank.Champion => PieceRank.Champion,
-                _ => PieceRank.None
+                PieceRank.Swarm => (PieceRank.Common, 1),
+                PieceRank.Common => (PieceRank.Elite, 3),
+                PieceRank.Elite => (PieceRank.Champion, 5),
+                PieceRank.Champion => (PieceRank.Champion, 6),
+                _ => (PieceRank.None, 0)
             };
-        }
-
-        private static int CalculateCost(PieceRank from, PieceRank to)
-        {
-            switch (to)
-            {
-                case PieceRank.Common:
-                    return 1;
-                case PieceRank.Elite:
-                    return 3;
-                case PieceRank.Champion:
-                    return from switch
-                    {
-                        PieceRank.Elite => 5,
-                        PieceRank.Champion => 6,
-                        _ => -1
-                    };
-                case PieceRank.Commander:
-                case PieceRank.Construct:
-                case PieceRank.Summoned:
-                case PieceRank.None:
-                case PieceRank.Swarm:
-                default:
-                    break;
-            }
-
-            return -1;
+            
         }
     }
 }

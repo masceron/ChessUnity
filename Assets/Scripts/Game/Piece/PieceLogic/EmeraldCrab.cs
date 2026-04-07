@@ -31,8 +31,9 @@ namespace Game.Piece.PieceLogic
 
                     foreach (var targetPiece in listPieces)
                     {
-                        list.Add(new EmeraldCrabPending(this, targetPiece, Duration,
-                            Mathf.Min(listPieces.Count, GetStat(SkillStat.Target))));
+                        //Làm lại
+                        // list.Add(new EmeraldCrabPending(this, targetPiece, Duration,
+                        //     Mathf.Min(listPieces.Count, GetStat(SkillStat.Target))));
                     }
                 }
             };

@@ -17,7 +17,7 @@ namespace Game.Relics
     {
         public MangroveCharm(RelicConfig config) : base(config)
         {
-            type = config.Type;
+            Type = config.Type;
             Color = config.Color;
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
             CurrentCooldown = 0;
@@ -32,8 +32,9 @@ namespace Game.Relics
                     if (piece == null) continue;
                     if (!IsNextEachOther(piece)) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new MangroveCharmPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    //var pending = new MangroveCharmPending(this, piece.Pos);
+                    //BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;
@@ -116,20 +117,21 @@ namespace Game.Relics
 
             if (bestDuoNoExtremofiles.Count == 0)
             {
-                var best = bestDuo[Random.Range(0, bestDuo.Count - 1)];
-                var pending = new MangroveCharmPending(this, best.pos1);
-                MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
-                MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
-                BoardViewer.Ins.ExecuteAction(pending);
+            //     var best = bestDuo[Random.Range(0, bestDuo.Count - 1)];
+            //     var pending = new MangroveCharmPending(this, best.pos1);
+            //     MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
+            //     MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
+            //     BoardViewer.Ins.ExecuteAction(pending);
+            // }
+            // else
+            // {
+            //     var best = bestDuoNoExtremofiles[Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
+            //     var pending = new MangroveCharmPending(this, best.pos1);
+            //     MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
+            //     MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
+            //     BoardViewer.Ins.ExecuteAction(pending);
             }
-            else
-            {
-                var best = bestDuoNoExtremofiles[Random.Range(0, bestDuoNoExtremofiles.Count - 1)];
-                var pending = new MangroveCharmPending(this, best.pos1);
-                MangroveCharmPending.FirstTarget = PieceOn(best.pos1);
-                MangroveCharmPending.SecondTarget = PieceOn(best.pos2);
-                BoardViewer.Ins.ExecuteAction(pending);
-            }
+            //Làm lại
         }
     }
 }

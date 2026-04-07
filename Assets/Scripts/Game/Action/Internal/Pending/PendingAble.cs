@@ -1,4 +1,5 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System;
+using Cysharp.Threading.Tasks;
 using Game.Common;
 
 namespace Game.Action.Internal.Pending
@@ -26,25 +27,18 @@ namespace Game.Action.Internal.Pending
         {
         }
 
-        public UniTask<Action> WaitForCompletion()
+        public async UniTask<Action> WaitForCompletion(ITargetingContext context)
         {
-            _task = new UniTaskCompletionSource<Action>();
-            CompleteAction();
-
-            return _task.Task;
+            try
+            {
+                return await BuildAction(context);
+            }
+            catch (OperationCanceledException)
+            {
+                return null; 
+            }
         }
-
-        public void CommitResult(Action action)
-        {
-            _task.TrySetResult(action);
-        }
-
-        public void CancelResult()
-        {
-            if (_task == null) return;
-            _task.TrySetCanceled();
-        }
-
-        protected abstract void CompleteAction();
+        
+        protected abstract UniTask<Action> BuildAction(ITargetingContext context);
     }
 }

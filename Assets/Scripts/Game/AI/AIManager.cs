@@ -30,8 +30,8 @@ namespace Game.AI
 
         private void Start()
         {
-            playActionButton.onClick.AddListener(UIMethod_PlayBestAction);
-            showScoreButton.onClick.AddListener(ShowScoreToggle);
+            // playActionButton.onClick.AddListener(UIMethod_PlayBestAction);
+            // showScoreButton.onClick.AddListener(ShowScoreToggle);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace Game.AI
             var relic = BoardUtils.GetRelicOf(sideToMove);
 
             if (relic is not { CurrentCooldown: 0 }) return;
-            Debug.Log("Use relic " + relic.type);
+            Debug.Log("Use relic " + relic.Type);
             relic.ActiveForAI();
         }
 

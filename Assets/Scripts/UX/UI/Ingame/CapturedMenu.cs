@@ -19,8 +19,8 @@ namespace UX.UI.Ingame
 
         private void Start()
         {
-            WhiteCaptured().CollectionChanged += ReloadCaptureList;
-            BlackCaptured().CollectionChanged += ReloadCaptureList;
+            // WhiteCaptured().CollectionChanged += ReloadCaptureList;
+            // BlackCaptured().CollectionChanged += ReloadCaptureList;
         }
 
         private void ReloadCaptureList(object o, NotifyCollectionChangedEventArgs e)

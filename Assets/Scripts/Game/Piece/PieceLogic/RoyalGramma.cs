@@ -27,7 +27,8 @@ namespace Game.Piece.PieceLogic
                     {
                         if (ally != this)
                         {
-                            list.Add(new RoyalGrammaPending(this, ally));
+                            //Làm lại
+                            //list.Add(new RoyalGrammaPending(this, ally));
                         }
                     }
                 }

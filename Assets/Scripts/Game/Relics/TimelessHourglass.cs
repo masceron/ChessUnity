@@ -16,7 +16,7 @@ namespace Game.Relics
     {
         public TimelessHourglass(RelicConfig config) : base(config)
         {
-            type = config.Type;
+            Type = config.Type;
             Color = config.Color;
             TimeCooldown = config.TimeCooldown;
             CurrentCooldown = 0;

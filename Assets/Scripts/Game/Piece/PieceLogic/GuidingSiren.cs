@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SirenDebuffer(this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
 

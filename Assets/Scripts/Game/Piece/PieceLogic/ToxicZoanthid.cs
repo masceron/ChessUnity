@@ -24,7 +24,8 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rank, file);
                         if (!VerifyIndex(index) || !IsActive(index)) continue;
 
-                        list.Add(new ToxicZoanthidPending(this, index));
+                        //Làm lại
+                        //list.Add(new ToxicZoanthidPending(this, index));
                     }
                 }
                 

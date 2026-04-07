@@ -32,7 +32,8 @@ namespace Game.Piece.PieceLogic
                         var pOn = PieceOn(idx);
                         if (pOn == null) continue;
 
-                        list.Add(new MegalodonActivePending(this, pOn));
+                        //Làm lại
+                        //list.Add(new MegalodonActivePending(this, pOn));
                     }
                 }
                 else

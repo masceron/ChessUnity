@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Game.Managers;
 using Game.Piece;
+using Game.Save.Stage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.SceneManagement.SceneManager;
@@ -38,7 +39,13 @@ namespace UX.UI.Loader
 
                         MatchManager.Ins.Init(
                             new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)),
-                            _chosenGameMode);
+                            new LineupConfig(
+                                Config.PieceConfigWhite.ToArray(),
+                                Config.PieceConfigBlack.ToArray(),
+                                Config.relicWhiteConfig,
+                                Config.relicBlackConfig,
+                                Config.FieldEffectType
+                            ));
                         break;
                     case 2:
                         UIManager.Ins.Load(CanvasID.FreePlayMenu);

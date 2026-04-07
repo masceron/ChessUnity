@@ -1,142 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
 using Game.Action.Skills;
-using Game.AI;
-using Game.Common;
-using Game.Managers;
 using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
-using UX.UI.Ingame;
-using UX.UI.Ingame.ChrysosShop;
-using ZLinq;
-using Random = UnityEngine.Random;
+using UX.UI.Toolkit.Common;
 
 namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate : PendingAction, ISkills, IAIAction
+    public class ChrysosUpgradeCandidate : PendingAction
     {
-        private readonly List<PieceLogic> _allyPieces;
-        public readonly byte Cost;
+        private readonly int _cost;
+        private readonly PieceRank _upgradableTo;
+        private readonly PieceRank _upgradeFrom;
 
-        public readonly string CurrentPiece;
+        public ChrysosUpgradeCandidate(PieceLogic maker, PieceLogic to) : base(maker, to)
+        {
+            var toUpgrade = GetTargetAsPiece();
+            (_upgradableTo, _cost) = Chrysos.UpgradableTo(toUpgrade.PieceRank);
+            _upgradeFrom = toUpgrade.PieceRank;
+        }
+
+        protected override async UniTask<Action> BuildAction(ITargetingContext context)
+        {
+            var payload = new ShopPayLoad(_upgradableTo, _upgradeFrom);
+
+            var chosenUpgrade = await context.OpenMenu<PieceConfig?, ShopPayLoad>(InGameMenuType.ChrysosShop, payload);
+
+            return chosenUpgrade == null
+                ? null
+                : new ChrysosUpgrade(GetMakerAsPiece(), GetTargetAsPiece(), chosenUpgrade.Value, _cost);
+        }
+    }
+
+    public struct ShopPayLoad
+    {
         public readonly PieceRank UpgradableTo;
         public readonly PieceRank UpgradeFrom;
-        private PieceConfig _config;
 
-        public ChrysosUpgradeCandidate(PieceLogic maker, PieceLogic to, int cost) : base(maker, to)
+        public ShopPayLoad(PieceRank upgradableTo, PieceRank upgradeFrom)
         {
-            Cost = (byte)cost;
-
-            var cr = GetTargetAsPiece();
-            UpgradableTo = Chrysos.UpgradableTo(cr.PieceRank);
-            UpgradeFrom = cr.PieceRank;
-            CurrentPiece = cr.Type;
-
-            _allyPieces = new List<PieceLogic>();
-        }
-
-        public void CompleteActionForAI()
-        {
-            var chrysos = GetMakerAsPiece() as Chrysos;
-            //Implement for AI automatically
-            var hasElite = false;
-            var hasCommon = false;
-            var hasSwarm = false;
-            var hasChampion = false;
-
-            for (var i = 0; i < BoardUtils.BoardSize; ++i)
-            {
-                var p = BoardUtils.PieceOn(i);
-                if (p == null || p.Color != GetMakerAsPiece().Color) continue;
-                _allyPieces.Add(p);
-                switch (p.PieceRank)
-                {
-                    case PieceRank.Champion:
-                        hasChampion = true;
-                        break;
-                    case PieceRank.Elite:
-                        hasElite = true;
-                        break;
-                    case PieceRank.Common:
-                        hasCommon = true;
-                        break;
-                    case PieceRank.Swarm:
-                        hasSwarm = true;
-                        break;
-                    case PieceRank.None:
-                    case PieceRank.Construct:
-                    case PieceRank.Summoned:
-                    case PieceRank.Commander:
-                    default:
-                        continue;
-                }
-            }
-
-            if (_allyPieces.Count == 0) return;
-
-            if (hasElite && chrysos.Coin >= 5)
-            {
-                HandleUpgrade(5);
-                return;
-            }
-
-            if (hasCommon && chrysos.Coin >= 3)
-            {
-                HandleUpgrade(3);
-                return;
-            }
-
-            if (hasSwarm && chrysos.Coin >= 1)
-            {
-                HandleUpgrade(1);
-                return;
-            }
-
-            if (hasChampion && chrysos.Coin >= 6) HandleUpgrade(6);
-        }
-
-        public int AIPenaltyValue(PieceLogic p)
-        {
-            return 0;
-        }
-
-        protected override void CompleteAction()
-        {
-            var shop = BoardViewer.Ins.GetOrInstantiateUI<ChrysosShop>(IngameSubmenus.ChrysosShop);
-            shop.Load(GetMakerAsPiece() as Chrysos, this);
-        }
-
-        private void ActivateSkill(PieceLogic p, string type, byte cost)
-        {
-            CommitResult(new ChrysosUpgrade(GetMakerAsPiece(), p, new PieceConfig(type, p.Color, p.Pos), cost));
-        }
-
-        private void HandleUpgrade(byte cost)
-        {
-            _allyPieces.Sort((a, b) =>
-                a.GetValueForAI().CompareTo(b.GetValueForAI()));
-
-            var topValue = _allyPieces[0].GetValueForAI();
-            var topGroup = _allyPieces.Where(p => p.GetValueForAI() == topValue).ToList();
-
-            var upgradableTo = (from piece in AssetManager.Ins.PieceData.Values
-                where piece.rank == UpgradableTo
-                select piece.key).ToList();
-            if (UpgradeFrom == PieceRank.Champion) upgradableTo.Remove(CurrentPiece);
-
-            var idx = Random.Range(0, upgradableTo.Count);
-
-            if (topGroup.Count == 1)
-            {
-                ActivateSkill(_allyPieces[0], upgradableTo[idx], cost);
-            }
-            else
-            {
-                var p = Random.Range(0, topGroup.Count);
-                ActivateSkill(_allyPieces[p], upgradableTo[idx], cost);
-            }
+            UpgradableTo = upgradableTo;
+            UpgradeFrom = upgradeFrom;
         }
     }
 }

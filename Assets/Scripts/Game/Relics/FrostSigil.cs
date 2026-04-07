@@ -28,19 +28,20 @@ namespace Game.Relics
                 BoardViewer.Selecting = -2;
                 BoardViewer.SelectingFunction = 4;
 
-                Tile.Tile.OnPointEnterHandle = thisTile =>
-                {
-                    if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, 3, false);
-
-                    hoveringTile = thisTile;
-                    TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
-
-                    //Làm lại
-                    var pos = BoardUtils.IndexOf(hoveringTile.rank, hoveringTile.file);
-                    var pending = new FrostSigilPending(pos, this);
-
-                    if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
-                };
+                //Làm lại
+                // Tile.Tile.OnPointEnterHandle = thisTile =>
+                // {
+                //     if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, 3, false);
+                //
+                //     hoveringTile = thisTile;
+                //     TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
+                //
+                //     //Làm lại
+                //     var pos = BoardUtils.IndexOf(hoveringTile.Rank, hoveringTile.File);
+                //     var pending = new FrostSigilPending(pos, this);
+                //
+                //     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
+                // };
             }
             else
             {

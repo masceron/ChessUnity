@@ -26,7 +26,7 @@ namespace Game.Effects.Others
             ActionManager.EnqueueAction(new KillPiece(null, Piece));
 
             var relic = GetRelicOf(Piece.Color);
-            if (relic is not { type: "relic_common_pearl" }) return;
+            if (relic is not { Type: "relic_common_pearl" }) return;
             SetRelic(Piece.Color, RelicMaker.Get(new RelicConfig("relic_black_pearl", Piece.Color, 4)));
 
             MatchManager.Ins.InputProcessor.UpdateRelic();

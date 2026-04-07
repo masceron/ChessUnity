@@ -1,7 +1,8 @@
+using Game.Action.Internal;
+using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
@@ -37,8 +38,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new SirenForceMove(GetTargetAsPiece(), _moveTo));
-            
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Controlled(-1, GetTargetAsPiece())));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
     
@@ -50,8 +51,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Move(GetMakerAsPiece(), GetTargetPos());
-            FlipPieceColor(GetMakerAsPiece());
+            ActionManager.EnqueueAction(new Move(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Game.Relics
     {
         public EyeOfMimic(RelicConfig config) : base(config)
         {
-            type = config.Type;
+            Type = config.Type;
             Color = config.Color;
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
             CurrentCooldown = 0;
@@ -31,8 +31,9 @@ namespace Game.Relics
                     if (piece == null) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new EyeOfMimicPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    //var pending = new EyeOfMimicPending(this, piece.Pos);
+                    //BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;

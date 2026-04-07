@@ -10,7 +10,7 @@ namespace Game.Relics
     {
         public ChaoticConstructor(RelicConfig config) : base(config)
         {
-            type = config.Type;
+            Type = config.Type;
             Color = config.Color;
             TimeCooldown = 2;
             CurrentCooldown = 0;

@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 132528746952919713}
   - component: {fileID: 7388311451526754003}
   - component: {fileID: 8170602275189436149}
-  - component: {fileID: 7351792778274815522}
-  m_Layer: 6
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,28 +88,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7351792778274815522
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 572704897915699195}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6039345488177170192
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +100,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6461314428904419309}
   - component: {fileID: 2543799856137370629}
-  m_Layer: 0
+  - component: {fileID: 7698598534177343760}
+  m_Layer: 6
   m_Name: BlackFloor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +136,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467ecc634ee2a9c40b14eb23946d88b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rank: 0
-  file: 0
   color: 1
+--- !u!65 &7698598534177343760
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6039345488177170192}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}

@@ -40,7 +40,8 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(file)) continue;
                             var posTo = IndexOf(rank, file);
 
-                            if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(this, posTo));
+                            //Làm lại
+                            //if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(this, posTo));
                         }
                     }
                 }
@@ -58,8 +59,9 @@ namespace Game.Piece.PieceLogic
                                 var file = FileOf(Pos) + fileOff;
                                 var posTo = IndexOf(rank, file);
 
-                                if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
-                                    list.Add(new ThalassosResurrectCandidate(this, posTo));
+                                //Làm lại
+                                // if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
+                                //     list.Add(new ThalassosResurrectCandidate(this, posTo));
                             }
                         }
 

@@ -32,7 +32,8 @@ namespace Game.Piece.PieceLogic
                         var idx = IndexOf(rank, file);
                         if (!VerifyIndex(idx) || !IsActive(idx)) continue;
                         var pOn = PieceOn(idx);
-                        if (pOn == null) list.Add(new SiphonophorePending(this, idx));
+                        //Làm lại
+                        //if (pOn == null) list.Add(new SiphonophorePending(this, idx));
                     }
                 }
             };

@@ -1,6 +1,4 @@
 ﻿using Game.Relics.Commons;
-using UX.UI.Ingame;
-using UX.UI.Ingame.CoralTome;
 
 namespace Game.Relics
 {
@@ -16,9 +14,10 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                var ui = BoardViewer.Ins.GetOrInstantiateUI<CoralTomeUI>(IngameSubmenus.CoralTomeUI);
+                //Làm lại
+                //var ui = BoardViewer.Ins.GetOrInstantiateUI<CoralTomeUI>(IngameSubmenus.CoralTomeUI);
 
-                ui.Load();
+                //ui.Load();
             }
         }
     }

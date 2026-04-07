@@ -164,7 +164,7 @@ namespace Game.Managers
 
         private void UpdateBorder()
         {
-            if (boardBorder3D == null) boardBorder3D = FindFirstObjectByType<ActiveBoardBorder>();
+            if (!boardBorder3D) boardBorder3D = FindFirstObjectByType<ActiveBoardBorder>();
             boardBorder3D.UpdateBorder();
         }
 
@@ -233,37 +233,37 @@ namespace Game.Managers
 
         public Corner IndexToCorner(Vector3 hit, Tile.Tile hoveringTile)
         {
-            if (hit.x > hoveringTile.rank && hit.z < hoveringTile.file) return Corner.BottomLeft;
-            if (hit.x > hoveringTile.rank && hit.z > hoveringTile.file) return Corner.BottomRight;
-            if (hit.x < hoveringTile.rank && hit.z > hoveringTile.file) return Corner.TopLeft;
-            if (hit.x < hoveringTile.rank && hit.z < hoveringTile.file) return Corner.TopRight;
+            if (hit.x > hoveringTile.Rank && hit.z < hoveringTile.File) return Corner.BottomLeft;
+            if (hit.x > hoveringTile.Rank && hit.z > hoveringTile.File) return Corner.BottomRight;
+            if (hit.x < hoveringTile.Rank && hit.z > hoveringTile.File) return Corner.TopLeft;
+            if (hit.x < hoveringTile.Rank && hit.z < hoveringTile.File) return Corner.TopRight;
             return Corner.TopLeft;
         }
 
         public void MarkTileInRange(Tile.Tile hoveringTile, int range, bool isMark, bool onlyMarkEnemy = false)
         {
-            var centerIndex = IndexOf(hoveringTile.rank, hoveringTile.file);
+            var centerIndex = IndexOf(hoveringTile.Rank, hoveringTile.File);
             if (!IsActive(centerIndex)) return;
             if (range % 2 == 0)
             {
-                var startRank = hoveringTile.rank;
-                var startFile = hoveringTile.file;
-                if (hoveringTile.corner == Corner.BottomRight)
+                var startRank = hoveringTile.Rank;
+                var startFile = hoveringTile.File;
+                if (hoveringTile.Corner == Corner.BottomRight)
                 {
                     startRank = startRank - range / 2 + 1;
                     startFile = startFile - range / 2 + 1;
                 }
-                else if (hoveringTile.corner == Corner.TopLeft)
+                else if (hoveringTile.Corner == Corner.TopLeft)
                 {
                     startFile = startFile - range / 2 + 1;
                     startRank = startRank - range / 2;
                 }
-                else if (hoveringTile.corner == Corner.TopRight)
+                else if (hoveringTile.Corner == Corner.TopRight)
                 {
                     startRank = startRank - range / 2;
                     startFile = startFile - range / 2;
                 }
-                else if (hoveringTile.corner == Corner.BottomLeft)
+                else if (hoveringTile.Corner == Corner.BottomLeft)
                 {
                     startRank = startRank - range / 2 + 1;
                     startFile = startFile - range / 2;
@@ -283,8 +283,8 @@ namespace Game.Managers
 
             var radius = range / 2;
 
-            for (var r = hoveringTile.rank - radius; r <= hoveringTile.rank + radius; r++)
-            for (var f = hoveringTile.file - radius; f <= hoveringTile.file + radius; f++)
+            for (var r = hoveringTile.Rank - radius; r <= hoveringTile.Rank + radius; r++)
+            for (var f = hoveringTile.File - radius; f <= hoveringTile.File + radius; f++)
             {
                 var index = IndexOf(r, f);
                 if (!IsActive(index)) continue;
@@ -359,7 +359,7 @@ namespace Game.Managers
 
         public bool IsTileEmpty(int index)
         {
-            return _tiles[index] == null || _tiles[index].color == Color.None;
+            return !_tiles[index] || _tiles[index].color == Color.None;
         }
 
         public void MarkPieceInRange(int pos, bool color, int range)

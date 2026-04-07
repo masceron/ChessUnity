@@ -36,30 +36,31 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             UnityEngine.Debug.Log("PencilUrchinActive ModifyGameState");
-            Tile.Tile.OnPointEnterHandle = thisTile =>
-            {
-                if (Distance(IndexOf(thisTile.rank, thisTile.file), From) > _castRange)
-                {
-                    TileManager.Ins.UnmarkAll();
-                    return;
-                }
-
-                var hoveringTile = TileManager.Ins.GetTile(_hoveringPos);
-                if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, false);
-
-                hoveringTile = thisTile;
-                _hoveringPos = IndexOf(hoveringTile.rank, hoveringTile.file);
-                TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, true);
-
-                if (BoardViewer.SelectingFunction != 3)
-                    BoardViewer.SelectingFunction = 3;
-                if (BoardViewer.Selecting != -2)
-                    BoardViewer.Selecting = -2;
-
-                var pending = new PencilUrchinSkillPending(_hoveringPos, GetMakerAsPiece(), _gridSize);
-                if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
-                    BoardViewer.ListOf.Add(pending);
-            };
+            //Làm lại
+            // Tile.Tile.OnPointEnterHandle = thisTile =>
+            // {
+            //     if (Distance(IndexOf(thisTile.Rank, thisTile.File), From) > _castRange)
+            //     {
+            //         TileManager.Ins.UnmarkAll();
+            //         return;
+            //     }
+            //
+            //     var hoveringTile = TileManager.Ins.GetTile(_hoveringPos);
+            //     if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, false);
+            //
+            //     hoveringTile = thisTile;
+            //     _hoveringPos = IndexOf(hoveringTile.Rank, hoveringTile.File);
+            //     TileManager.Ins.MarkTileInRange(hoveringTile, _gridSize, true);
+            //
+            //     if (BoardViewer.SelectingFunction != 3)
+            //         BoardViewer.SelectingFunction = 3;
+            //     if (BoardViewer.Selecting != -2)
+            //         BoardViewer.Selecting = -2;
+            //
+            //     var pending = new PencilUrchinSkillPending(_hoveringPos, GetMakerAsPiece(), _gridSize);
+            //     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer()))
+            //         BoardViewer.ListOf.Add(pending);
+            // };
         }
     }
 }

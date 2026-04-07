@@ -8,7 +8,8 @@ namespace Game.Piece.PieceLogic
     {
         public DormantFossil(PieceConfig cfg) : base(cfg)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new DormantFossilPassive(this)));
+            //Làm lại
+            //ActionManager.ExecuteImmediately(new ApplyEffect(new DormantFossilPassive(this)));
         }
     }
 }

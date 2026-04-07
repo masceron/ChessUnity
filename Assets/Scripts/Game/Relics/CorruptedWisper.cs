@@ -18,7 +18,7 @@ namespace Game.Relics
 
         public CorruptedWisper(RelicConfig config) : base(config)
         {
-            type = config.Type;
+            Type = config.Type;
             Color = config.Color;
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
             CurrentCooldown = 0;

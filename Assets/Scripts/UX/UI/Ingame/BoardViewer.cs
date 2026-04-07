@@ -99,7 +99,7 @@ namespace UX.UI.Ingame
             foreach (var action in ListOf)
             {
                 if (action is IDisposable disposable) disposable.Dispose();
-                if (action is PendingAction pending) pending.CancelResult(); //hủy những task đang treo
+                //if (action is PendingAction pending) pending.CancelResult(); //hủy những task đang treo
             }
 
             ListOf.Clear();
@@ -108,7 +108,7 @@ namespace UX.UI.Ingame
 
         public async void ExecuteAction(Action action)
         {
-            if (action is PendingAction pendingAction) action = await pendingAction.WaitForCompletion();
+            //if (action is PendingAction pendingAction) action = await pendingAction.WaitForCompletion();
 
             if (ActionManager.DoManualAction(action)) EndTurn();
             Unmark();

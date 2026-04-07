@@ -22,7 +22,8 @@ namespace Game.Piece.PieceLogic
                     {
                         var (rank, file) = RankFileOf(enemy.Pos);
                         var index = IndexOf(rank, file);
-                        list.Add(new BlackcapBassletPending(this, index));
+                        //list.Add(new BlackcapBassletPending(this, index));
+                        //Làm lại
                     }
                 }
                 else

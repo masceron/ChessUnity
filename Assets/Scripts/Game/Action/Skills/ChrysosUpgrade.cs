@@ -12,7 +12,7 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class ChrysosUpgrade : Action, ISkills
     {
-        [MemoryPackInclude] private byte _cost;
+        [MemoryPackInclude] private int _cost;
 
         [MemoryPackInclude] private PieceConfig _swapTo;
 
@@ -21,7 +21,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public ChrysosUpgrade(PieceLogic maker, PieceLogic target, PieceConfig swap, byte cost) : base(maker, target)
+        public ChrysosUpgrade(PieceLogic maker, PieceLogic target, PieceConfig swap, int cost) : base(maker, target)
         {
             _cost = cost;
             _swapTo = swap;
