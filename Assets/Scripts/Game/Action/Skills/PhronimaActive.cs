@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -38,6 +39,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ApplyEffect();
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
