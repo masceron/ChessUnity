@@ -10,8 +10,6 @@ namespace Game.Piece.PieceLogic
     {
         public PistolShrimp(PieceConfig cfg) : base(cfg, SmallChargingMoves.Quiets, SmallChargingMoves.Captures)
         {
-            // ActionManager.ExecuteImmediately(new ApplyEffect(new Shield(this)));
-            // ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(5, this)));
             Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
