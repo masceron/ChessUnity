@@ -37,7 +37,7 @@ namespace Game.Action.Skills
 
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetMakerAsPiece(), 5)));
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
