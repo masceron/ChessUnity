@@ -28,6 +28,7 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, GetTargetAsPiece()),
                 GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
