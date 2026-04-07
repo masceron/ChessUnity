@@ -31,7 +31,7 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_bleeding")
                 ? new ApplyEffect(new Poison(1, GetTargetAsPiece()), GetMakerAsPiece())
                 : new ApplyEffect(new Bleeding(5, GetTargetAsPiece()), GetMakerAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
