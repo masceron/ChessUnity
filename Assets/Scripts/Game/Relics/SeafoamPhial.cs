@@ -32,6 +32,7 @@ namespace Game.Relics
                     //Làm lại
                     //var pending = new SeafoamPhialPending(this, piece);
                     // BoardViewer.ListOf.Add(pending);
+                    BoardViewer.ListOf.Add(new SeafoamPhialAction(piece));
                 }
 
                 BoardViewer.Selecting = -2;
