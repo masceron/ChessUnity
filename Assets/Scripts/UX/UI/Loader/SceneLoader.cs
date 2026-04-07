@@ -14,8 +14,8 @@ namespace UX.UI.Loader
     public static class SceneLoader
     {
         private static bool _isRegistered;
-        private static GameMode chosenGameMode = GameMode.PlayerVsAI;
-        private static List<PieceConfig> statuePieceConfigs;
+        private static GameMode _chosenGameMode = GameMode.PlayerVsAI;
+        private static List<PieceConfig> _statuePieceConfigs;
 
         public static void Start()
         {
@@ -30,15 +30,15 @@ namespace UX.UI.Loader
                         UIManager.Ins.Load(CanvasID.MainMenu);
                         break;
                     case 1:
-                        if (statuePieceConfigs != null)
+                        if (_statuePieceConfigs != null)
                         {
-                            Config.SetBlackPieceConfig(statuePieceConfigs);
-                            statuePieceConfigs = null;
+                            Config.SetBlackPieceConfig(_statuePieceConfigs);
+                            _statuePieceConfigs = null;
                         }
 
                         MatchManager.Ins.Init(
-                            new GameConfig(false, false, new Vector2Int(Config.boardSize, Config.boardSize)),
-                            chosenGameMode);
+                            new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)),
+                            _chosenGameMode);
                         break;
                     case 2:
                         UIManager.Ins.Load(CanvasID.FreePlayMenu);
@@ -61,13 +61,13 @@ namespace UX.UI.Loader
         public static void LoadFreePlay(GameMode gameMode)
         {
             LoadSceneWithLoadingScreen(1);
-            chosenGameMode = gameMode;
+            _chosenGameMode = gameMode;
         }
 
         public static void LoadStatueBattle(List<PieceConfig> blackPieceConfigs)
         {
-            statuePieceConfigs = blackPieceConfigs;
-            chosenGameMode = GameMode.PlayerVsPlayer;
+            _statuePieceConfigs = blackPieceConfigs;
+            _chosenGameMode = GameMode.PlayerVsPlayer;
             LoadSceneWithLoadingScreen(1);
         }
 

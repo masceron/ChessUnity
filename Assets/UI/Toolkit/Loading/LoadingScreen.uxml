@@ -1,0 +1,5 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Loading/loading.jpg?fileID=2800000&amp;guid=f19a4dab48cbbea4bb2239585cbf9891&amp;type=3#loading&quot;); flex-direction: column-reverse; display: none;">
+        <ui:Label text="Loading..." style="font-size: 40px; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); -unity-font-style: bold; flex-direction: column; flex-wrap: nowrap; -unity-text-align: middle-center; bottom: 10%; color: rgb(255, 255, 255);"/>
+    </ui:VisualElement>
+</ui:UXML>

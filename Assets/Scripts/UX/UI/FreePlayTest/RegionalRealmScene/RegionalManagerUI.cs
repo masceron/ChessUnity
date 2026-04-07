@@ -26,7 +26,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
 
         public void ToGameScene()
         {
-            Config.boardSize = FPArmyDesign.Ins.army.BoardSize;
+            Config.BoardSize = FPArmyDesign.Ins.army.BoardSize;
 
             Config.PieceConfigWhite.Clear();
             foreach (var troop in FPArmyDesign.Ins.board.Troops)
@@ -39,7 +39,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 //     infos.Add(info);
                 // }
                 var pieceConfig = new PieceConfig(troop.PieceType, false,
-                    troop.Rank * Config.boardSize + troop.File, augNameLst);
+                    troop.Rank * Config.BoardSize + troop.File, augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigWhite.Add(pieceConfig);
             }
@@ -55,7 +55,7 @@ namespace UX.UI.FreePlayTest.RegionalRealmScene
                 //     infos.Add(info);
                 // }
                 var pieceConfig = new PieceConfig(troop.PieceType, true,
-                    troop.Rank * Config.boardSize + troop.File, augNameLst);
+                    troop.Rank * Config.BoardSize + troop.File, augNameLst);
                 Debug.Log($"{BoardUtils.IndexOf(troop.Rank, troop.File)}, {troop.Rank}, {troop.File}");
                 Config.PieceConfigBlack.Add(pieceConfig);
             }

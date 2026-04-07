@@ -5,7 +5,7 @@ using Game.Relics.Commons;
 
 public static class Config
 {
-    public static int boardSize = 12;
+    public static int BoardSize = 12;
 
     public static List<PieceConfig> PieceConfigWhite = new()
     {

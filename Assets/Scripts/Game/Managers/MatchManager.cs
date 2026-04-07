@@ -37,6 +37,11 @@ namespace Game.Managers
 
         public Vector2Int StartingSize { get; private set; }
 
+        private void Start()
+        {
+            Init(new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)));
+        }
+
         private static void MakeBoard()
         {
             TileManager.Ins.Spawn();
@@ -73,18 +78,8 @@ namespace Game.Managers
                 Config.FieldEffectType
             );
             if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
-            //UIManager.Ins.Load(CanvasID.LineupEdit);
-            //FindAnyObjectByType<LineupEditor>().Load(startingSize.x);
         }
-
-        // public void InitForFreePlay(GameConfig cfg, GameMode gameMode)
-        // {
-        //     Init(cfg);
-        //     if (gameMode == GameMode.AIvsAI)
-        //     {
-        //         this.gameObject.AddComponent<AIvsAIController>();
-        //     }
-        // }
+        
         private void MakeRelics(RelicConfig white, RelicConfig black)
         {
             GameState.WhiteRelic = RelicMaker.Get(white);

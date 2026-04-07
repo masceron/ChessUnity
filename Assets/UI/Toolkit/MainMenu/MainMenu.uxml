@@ -1,0 +1,10 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Toolkit/MainMenu/MenuButtons.uss?fileID=7433441132597879392&amp;guid=71b61b36a9c6f20419fa9e2af86308c0&amp;type=3#MenuButtons"/>
+    <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Main%20Menu/pxfuel.jpg?fileID=2800000&amp;guid=c74ed1cab566dec4798d240144c66e82&amp;type=3#pxfuel&quot;);">
+        <ui:VisualElement style="flex-grow: 1; width: 464px; flex-direction: column; flex-basis: auto; justify-content: center; align-content: center; align-items: stretch;">
+            <ui:Button text="Play" name="Play" style="border-bottom-width: 0; border-top-width: 0; border-right-width: 0;"/>
+            <ui:Button text="Settings" name="Settings" style="border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0;"/>
+            <ui:Button text="Quit" name="Quit" style="border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; border-right-width: 0; border-left-width: 0;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
