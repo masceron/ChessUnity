@@ -29,8 +29,10 @@ namespace Game.Piece.PieceLogic
                 {
                     var piecesInRange = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, GetStat(SkillStat.Range));
                     foreach (var targetPiece in piecesInRange) { 
-                        if (targetPiece.Effects.Any(e => e.EffectName == "effect_slow")) continue;
-                        list.Add(new CoelacanthActive(this, targetPiece, GetStat(SkillStat.Duration)));
+                        if (targetPiece.Effects.Any(e => e.EffectName == "effect_slow"))
+                        {
+                            list.Add(new CoelacanthActive(this, targetPiece, GetStat(SkillStat.Duration)));
+                        }
                     }
                 }
             };
