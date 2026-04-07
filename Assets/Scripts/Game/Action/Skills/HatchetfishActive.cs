@@ -69,15 +69,15 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             //Apply effect Marked no duration
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, GetTargetAsPiece()), GetMakerAsPiece()));
-
             var targetPiece = GetTargetAsPiece();
-            if (targetPiece == null) return;
+            var makerPiece = GetMakerAsPiece();
+            
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, targetPiece), makerPiece));
 
             if (targetPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
-                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), GetMakerAsPiece()));
+                ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, targetPiece), makerPiece));
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(makerPiece));
         }
     }
 }
