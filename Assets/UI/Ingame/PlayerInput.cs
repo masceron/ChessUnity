@@ -190,6 +190,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MarkRelics"",
+                    ""type"": ""Button"",
+                    ""id"": ""8fdd9f37-188a-4772-a908-54c9b16a6405"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -313,6 +322,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Point"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8de074e4-f553-40aa-b0e9-2a70457302fb"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MarkRelics"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -332,6 +352,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_PlayerActions_Select = m_PlayerActions.FindAction("Select", throwIfNotFound: true);
         m_PlayerActions_Cancel = m_PlayerActions.FindAction("Cancel", throwIfNotFound: true);
         m_PlayerActions_Point = m_PlayerActions.FindAction("Point", throwIfNotFound: true);
+        m_PlayerActions_MarkRelics = m_PlayerActions.FindAction("MarkRelics", throwIfNotFound: true);
     }
 
     ~@PlayerInput()
@@ -423,6 +444,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerActions_Select;
     private readonly InputAction m_PlayerActions_Cancel;
     private readonly InputAction m_PlayerActions_Point;
+    private readonly InputAction m_PlayerActions_MarkRelics;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerActions".
     /// </summary>
@@ -478,6 +500,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerActions/Point".
         /// </summary>
         public InputAction @Point => m_Wrapper.m_PlayerActions_Point;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerActions/MarkRelics".
+        /// </summary>
+        public InputAction @MarkRelics => m_Wrapper.m_PlayerActions_MarkRelics;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -537,6 +563,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Point.started += instance.OnPoint;
             @Point.performed += instance.OnPoint;
             @Point.canceled += instance.OnPoint;
+            @MarkRelics.started += instance.OnMarkRelics;
+            @MarkRelics.performed += instance.OnMarkRelics;
+            @MarkRelics.canceled += instance.OnMarkRelics;
         }
 
         /// <summary>
@@ -581,6 +610,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Point.started -= instance.OnPoint;
             @Point.performed -= instance.OnPoint;
             @Point.canceled -= instance.OnPoint;
+            @MarkRelics.started -= instance.OnMarkRelics;
+            @MarkRelics.performed -= instance.OnMarkRelics;
+            @MarkRelics.canceled -= instance.OnMarkRelics;
         }
 
         /// <summary>
@@ -698,5 +730,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPoint(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MarkRelics" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMarkRelics(InputAction.CallbackContext context);
     }
 }

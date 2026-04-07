@@ -15,6 +15,12 @@ namespace UX.UI.Toolkit.Ingame
         public event Action<int> OnTileLeftClicked;
         public event Action OnRightClicked;
         public event Action<int> OnTileHovered;
+        public event Action OnMarkQuiets;
+        public event Action OnMarkCaptures;
+        public event Action OnMarkSkills;
+        public event Action OnMarkRelics;
+        public event Action OnMarkSkip;
+        
         private int _tileLayerMask;
 
         private void Awake()
@@ -25,6 +31,11 @@ namespace UX.UI.Toolkit.Ingame
 
             _controls.PlayerActions.Select.performed += HandleSelect;
             _controls.PlayerActions.Cancel.performed += HandleCancel;
+            _controls.PlayerActions.MarkQuiets.performed += HandleMarkQuiets;
+            _controls.PlayerActions.MarkCaptures.performed += HandleMarkCaptures;
+            _controls.PlayerActions.MarkSkill.performed += HandleMarkSkills;
+            _controls.PlayerActions.MarkRelics.performed += HandleMarkRelics;
+            _controls.PlayerActions.SkipTurn.performed += HandleSkipTurn;
         }
         
         private void OnEnable()
@@ -81,6 +92,31 @@ namespace UX.UI.Toolkit.Ingame
         private void HandleCancel(InputAction.CallbackContext context)
         {
             OnRightClicked?.Invoke();
+        }
+
+        private void HandleMarkQuiets(InputAction.CallbackContext context)
+        {
+            OnMarkQuiets?.Invoke();
+        }
+        
+        private void HandleMarkCaptures(InputAction.CallbackContext context)
+        {
+            OnMarkCaptures?.Invoke();
+        }
+        
+        private void HandleMarkSkills(InputAction.CallbackContext context)
+        {
+            OnMarkSkills?.Invoke();
+        }
+        
+        private void HandleMarkRelics(InputAction.CallbackContext context)
+        {
+            OnMarkRelics?.Invoke();
+        }
+
+        private void HandleSkipTurn(InputAction.CallbackContext context)
+        {
+            OnMarkSkip?.Invoke();
         }
     }
 }

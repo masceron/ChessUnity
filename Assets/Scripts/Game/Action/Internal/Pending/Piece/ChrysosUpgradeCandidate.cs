@@ -9,7 +9,7 @@ namespace Game.Action.Internal.Pending.Piece
 {
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
-    public class ChrysosUpgradeCandidate : PendingAction
+    public class ChrysosUpgradeCandidate : PendingAction, ISkills
     {
         private readonly int _cost;
         private readonly PieceRank _upgradableTo;
@@ -31,6 +31,11 @@ namespace Game.Action.Internal.Pending.Piece
             return chosenUpgrade == null
                 ? null
                 : new ChrysosUpgrade(GetMakerAsPiece(), GetTargetAsPiece(), chosenUpgrade.Value, _cost);
+        }
+
+        public int AIPenaltyValue(PieceLogic maker)
+        {
+            return 0;
         }
     }
 

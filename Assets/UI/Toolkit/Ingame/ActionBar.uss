@@ -1,0 +1,46 @@
+:root {
+}
+
+.unity-button {
+    aspect-ratio: 1;
+    height: 75%;
+    color: rgb(0, 0, 0);
+    font-size: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    background-color: rgb(35, 32, 32);
+    border-left-color: rgb(250, 255, 2);
+    border-right-color: rgb(250, 255, 2);
+    border-top-color: rgb(250, 255, 2);
+    border-bottom-color: rgb(250, 255, 2);
+    border-top-width: 2px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 2px;
+}
+
+.unity-button:hover {
+    background-color: rgba(0, 0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 215, 0);
+}
+
+.active-function {
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-left-color: rgb(236, 248, 2);
+    border-right-color: rgb(236, 248, 2);
+    border-top-color: rgb(236, 248, 2);
+    border-bottom-color: rgb(236, 248, 2);
+}
+
+.unity-button:disabled {
+    -unity-background-image-tint-color: rgb(154, 147, 147);
+}

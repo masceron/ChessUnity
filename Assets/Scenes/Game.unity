@@ -1246,6 +1246,7 @@ GameObject:
   - component: {fileID: 2083513919}
   - component: {fileID: 2083513918}
   - component: {fileID: 2083513921}
+  - component: {fileID: 2083513922}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -1265,6 +1266,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac7668dbf194597bd1e7d3012fd16f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.BoardViewer
+  menuTemplates:
+    keys: 
+    values: []
+  uiParent: {fileID: 0}
 --- !u!114 &2083513919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1315,6 +1320,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3e10e0cfd604fe9bf2af6f1831aec94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.InputManager
+--- !u!114 &2083513922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083513917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8515229aec44e06ba579f552f605c90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.ActionBar
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0

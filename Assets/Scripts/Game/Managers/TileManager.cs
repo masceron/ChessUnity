@@ -228,7 +228,7 @@ namespace Game.Managers
 
         public void UnMark(int pos)
         {
-            if (_selections[pos] != null) _selections[pos].gameObject.SetActive(false);
+            if (_selections[pos]) _selections[pos].gameObject.SetActive(false);
         }
 
         public Corner IndexToCorner(Vector3 hit, Tile.Tile hoveringTile)
