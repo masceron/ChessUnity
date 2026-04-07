@@ -33,8 +33,8 @@ namespace Game.Action.Skills
                 .Take(Mathf.Min(3, pieces.Count))
                 .ToList();
             foreach (var piece in picked)
-                ActionManager.EnqueueAction(new ApplyEffect(new Rally(1, piece), GetMakerAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+                ActionManager.EnqueueAction(new ApplyEffect(new Rally(6, piece), GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
