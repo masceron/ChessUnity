@@ -2,6 +2,7 @@
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;    
 
@@ -18,19 +19,31 @@ namespace Game.Effects.Others
 
         public BeforeActionPriority Priority => BeforeActionPriority.Declaration; // TODO: Check priority.
         
-        public void OnCallBeforeDestroyOrKill(IInternal action)
-        {
-            if (action is Action.Action act)
-            {
-                act.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
-                ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
-            }
-        }
-        
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.GetTargetAsPiece() != Piece) return;
-            action.Result = ResultFlag.Blocked; // TODO: Check ResultFlag.
+
+            bool isValid = BoardUtils.VerifyIndex(newPosition)
+                    && BoardUtils.IsActive(newPosition)
+                    && BoardUtils.PieceOn(newPosition) == null;
+
+            if (!isValid) return; 
+
+            action.Result = ResultFlag.Blocked;
+            ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
+        }
+
+        public void OnCallBeforeDestroyOrKill(IInternal action)
+        {
+            if (action is not Action.Action act) return;
+
+            bool isValid = BoardUtils.VerifyIndex(newPosition)
+                    && BoardUtils.IsActive(newPosition)
+                    && BoardUtils.PieceOn(newPosition) == null;
+
+            if (!isValid) return; 
+
+            act.Result = ResultFlag.Blocked;
             ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
         }
         
