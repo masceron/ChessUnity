@@ -32,7 +32,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            
             PieceLogic maker = GetMakerAsPiece();
             PieceLogic target = GetTargetAsPiece();
             if (maker.Color == target.Color)
@@ -51,6 +51,7 @@ namespace Game.Action.Skills
                 maker.SetStat(SkillStat.Counter, maker.GetStat(SkillStat.Counter) - 1);
             }
             
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
     }
 }
