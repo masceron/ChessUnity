@@ -12,6 +12,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GulperEel : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 1;
         public GulperEel(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
@@ -20,11 +21,11 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
-                    for (var dr = -1; dr <= 1; dr++)
+                    for (var dr = -Range; dr <= Range; dr++)
                     {
                         var trank = rank + dr;
                         if (!VerifyBounds(trank)) continue;
-                        for (var df = -1; df <= 1; df++)
+                        for (var df = -Range; df <= Range; df++)
                         {
                             var fileOff = file + df;
                             if (!VerifyBounds(fileOff)) continue;
