@@ -13,14 +13,15 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class PorcupineCrabActive : Action, ISkills
     {
-        private const int BleedingStack = 5;
+        private int BleedingStack;
         [MemoryPackConstructor]
         private PorcupineCrabActive()
         {
         }
         
-        public PorcupineCrabActive(PieceLogic maker, int target) : base(maker, target)
+        public PorcupineCrabActive(PieceLogic maker, int target, int Stack) : base(maker, target)
         {
+            BleedingStack = Stack;
         }   
         
         protected override void ModifyGameState()
@@ -46,47 +47,9 @@ namespace Game.Action.Skills
                 }
             }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(makerPiece));
         }
         
-        List<(int rank, int file)> GetPath(int rank1, int file1, int rank2, int file2)    
-        {
-            var path = new List<(int, int)>();
-
-            int dRank = rank2 - rank1;
-            int dFile = file2 - file1;
-
-            int steps = GCD(Math.Abs(dRank), Math.Abs(dFile));
-
-            if (steps == 0) return path; // cùng 1 điểm
-
-            int stepRank = dRank / steps;
-            int stepFile = dFile / steps;
-
-            int currentRank = rank1 + stepRank;
-            int currentFile = file1 + stepFile;
-
-            for (int i = 1; i < steps; i++)
-            {
-                path.Add((currentRank, currentFile));
-                currentRank += stepRank;
-                currentFile += stepFile;
-            }
-
-            return path;
-        }
-
-        int GCD(int a, int b)
-        {
-            while (b != 0)
-            {
-                int temp = b;
-                b = a % b;
-                a = temp;
-            }
-            return a;
-        }
-
         public int AIPenaltyValue(PieceLogic maker)
         {
             throw new NotImplementedException();

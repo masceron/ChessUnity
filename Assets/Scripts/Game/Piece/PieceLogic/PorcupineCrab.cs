@@ -14,13 +14,15 @@ namespace Game.Piece.PieceLogic
         private int timeToCooldown;
         private const int Cooldown = 6;
         private const int Range = 3;
+        private const int Stack = 5;
 
         public PorcupineCrab(PieceConfig cfg) : base(cfg, ShellfishMoves.Quiets, BishopMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Carapace(-1,this)));
             
             SetStat(SkillStat.Cooldown, Cooldown);
-            SetStat(SkillStat.Range, 3);
+            SetStat(SkillStat.Range, Range);
+            SetStat(SkillStat.Stack, Stack);
             
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -32,9 +34,10 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, GetStat(SkillStat.Range)))
                     {
                         var index = IndexOf(rankOff, fileOff);
+                        if (!IsActive(index)) continue;
                         var pOn = PieceOn(index);
-                        if (pOn != null && pOn.Color != Color) continue;          
-                        list.Add(new PorcupineCrabActive(this, index));
+                        if (pOn != null) continue;          
+                        list.Add(new PorcupineCrabActive(this, index, GetStat(SkillStat.Stack)));
                     }
                 }
                 else
