@@ -394,7 +394,6 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
-  - component: {fileID: 330585548}
   - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
@@ -521,22 +520,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &330585548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 330585543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c49b4cc203aa6414fae5c798d1d0e7d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EventMask:
-    serializedVersion: 2
-    m_Bits: 96
-  m_MaxRayIntersections: 0
 --- !u!114 &330585549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,6 +1233,7 @@ GameObject:
   - component: {fileID: 2083513923}
   - component: {fileID: 2083513924}
   - component: {fileID: 2083513925}
+  - component: {fileID: 2083513926}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -1269,10 +1253,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ac7668dbf194597bd1e7d3012fd16f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.BoardViewer
-  menuTemplates:
-    keys: 
-    values: []
-  uiParent: {fileID: 0}
 --- !u!114 &2083513919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1374,6 +1354,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.EffectBar
   effectIcon: {fileID: 9197481963319205126, guid: cbc89676728243549ac4b7336b22d36a, type: 3}
   missing: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
+--- !u!114 &2083513926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083513917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d18f8c10a0c0476d994b9fe73c60c4b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Common.UIHolder
+  menuTemplates:
+    keys: 0000000001000000
+    values:
+    - {fileID: 9197481963319205126, guid: 679731de295f1ce478c01d486de5f78f, type: 3}
+    - {fileID: 9197481963319205126, guid: f54c77b1687ef2e4295532df59385c3a, type: 3}
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0

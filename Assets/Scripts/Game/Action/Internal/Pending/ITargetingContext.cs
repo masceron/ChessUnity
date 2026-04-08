@@ -15,7 +15,7 @@ namespace Game.Action.Internal.Pending
     public interface ITargetingContext
     {
         UniTask<int> NextSelection(Func<int, bool> validator);
-        UniTask<TResult> OpenMenu<TResult, TPayload>(InGameMenuType menuType, TPayload payload);
+        UniTask<TResult> OpenMenu<TPayload, TResult>(InGameMenuType menuType, TPayload payload);
         
         void Highlighter(IEnumerable<int> positions);
         void ClearHighlights();

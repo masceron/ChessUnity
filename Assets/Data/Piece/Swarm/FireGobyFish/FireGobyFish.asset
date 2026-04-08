@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FireGobyFish
   m_EditorClassIdentifier: 
   key: piece_fire_goby_fish
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 395919914944283270, guid: 50a8544cfe7422f4eb4063858481b0ee, type: 3}
   rank: 3
   moveRange: 1

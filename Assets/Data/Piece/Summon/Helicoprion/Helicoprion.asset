@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Helicoprion
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_helicoprion
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 5227270986293185192, guid: ebd65b5fc4dd55f41981eab9c7698e3f, type: 3}
   rank: 2
   moveRange: 3
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: Helicoprion
+  baseValue: 0
+  considerations: []

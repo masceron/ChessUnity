@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BoneEatingWorm
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_bone_eating_worm
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
   rank: 3
   moveRange: 0

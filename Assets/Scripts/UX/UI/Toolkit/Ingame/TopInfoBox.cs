@@ -9,7 +9,6 @@ namespace UX.UI.Toolkit.Ingame
         private BoardViewer _boardViewer;
         private Button _surrender;
         private Button _callDraw;
-        private Label _turnCount;
 
         private void Awake()
         {
@@ -19,13 +18,24 @@ namespace UX.UI.Toolkit.Ingame
 
             _surrender = root.Q<Button>("Surrender");
             _callDraw = root.Q<Button>("CallDraw");
-
-            _turnCount = root.Q<Label>("RoundCounter");
-            _turnCount.SetBinding("text", new DataBinding
+            
+            root.Q<Label>("RoundCounter").SetBinding("text", new DataBinding
             {
                 dataSourcePath = new PropertyPath("CurrentTurn"),
                 bindingMode = BindingMode.ToTarget
             });
+            
+            var binding = new DataBinding
+            {
+                dataSourcePath = new PropertyPath("IsDay"),
+                bindingMode = BindingMode.ToTarget
+            };
+            
+            var converterGroup = new ConverterGroup("DayNightConverter");
+            converterGroup.AddConverter((ref bool isDay) => isDay ? "Day" : "Night");
+            binding.ApplyConverterGroupToUI(converterGroup);
+
+            root.Q<Label>("DayNight").SetBinding("text", binding);
         }
     }
 }

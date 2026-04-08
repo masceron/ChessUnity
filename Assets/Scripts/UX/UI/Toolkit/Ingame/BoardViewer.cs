@@ -45,6 +45,7 @@ namespace UX.UI.Toolkit.Ingame
                 OnStateChanged?.Invoke(_currentState);
             }
         }
+
         public event Action<ControlState> OnStateChanged;
 
         public event Action<PieceLogic> OnSelectingPieceChanged;
@@ -60,12 +61,10 @@ namespace UX.UI.Toolkit.Ingame
                 OnSelectingPieceChanged?.Invoke(_selectingPiece);
             }
         }
-        
+
         [NonSerialized] public List<Action> AllMoves;
         [NonSerialized] public List<Action> CurrentAvailableMoves;
-
-        [SerializeField] private UDictionary<InGameMenuType, VisualTreeAsset> menuTemplates;
-        [SerializeField] private Transform uiParent;
+        
         [NonSerialized] private UIDocument _mainUIDocument;
 
         private void Awake()
@@ -119,7 +118,7 @@ namespace UX.UI.Toolkit.Ingame
             }
         }
 
-        public void Idle()
+        private void Idle()
         {
             CurrentState = ControlState.Idle;
             SelectingPiece = null;
@@ -158,6 +157,7 @@ namespace UX.UI.Toolkit.Ingame
                         {
                             pieceClicked.MoveList(AllMoves);
                         }
+
                         Select(pieceClicked);
                     }
 
@@ -176,6 +176,7 @@ namespace UX.UI.Toolkit.Ingame
                                 AllMoves.Clear();
                                 pieceClicked.MoveList(AllMoves);
                             }
+
                             Select(pieceClicked);
                         }
                         else
@@ -270,21 +271,26 @@ namespace UX.UI.Toolkit.Ingame
             TileManager.Ins.UnMark(position);
         }
 
-        public async UniTask<TResult> OpenMenu<TResult, TPayload>(InGameMenuType menuType, TPayload payload)
+        public async UniTask<TResult> OpenMenu<TPayload, TResult>(InGameMenuType menuType, TPayload payload)
         {
-            if (!menuTemplates.TryGetValue(menuType, out var uiAsset))
+            if (!UIHolder.Ins.Get(menuType, out var uiAsset))
             {
                 throw new Exception($"No UI registered for MenuType: {menuType}");
             }
 
             var uiInstance = uiAsset.Instantiate();
-
-            // 2. Add the instantiated UI to the screen
+            
+            uiInstance.style.position = Position.Absolute;
+            uiInstance.style.top = 0;
+            uiInstance.style.bottom = 0;
+            uiInstance.style.left = 0;
+            uiInstance.style.right = 0;
+            
             _mainUIDocument.rootVisualElement.Add(uiInstance);
 
             var awaitableUI =
-                uiInstance.Children().FirstOrDefault(e => e is IAwaitableUI<TResult, TPayload>) as
-                    IAwaitableUI<TResult, TPayload>;
+                uiInstance.Children().FirstOrDefault(e => e is IAwaitableUI<TPayload, TResult>) as
+                    IAwaitableUI<TPayload, TResult>;
 
             if (awaitableUI == null)
             {

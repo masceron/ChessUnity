@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Lizardfish
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_lizardfish
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 2560844638400570401, guid: 5fbeb5a3da0051a40876bc58430711a5, type: 3}
   rank: 3
   moveRange: 2

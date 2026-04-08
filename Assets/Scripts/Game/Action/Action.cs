@@ -4,6 +4,7 @@ using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using MemoryPack;
+
 // ReSharper disable FieldCanBeMadeReadOnly.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable MemberCanBeProtected.Global
@@ -51,7 +52,7 @@ namespace Game.Action
     {
         public ActionFlag Flag = ActionFlag.None;
         public ResultFlag Result = ResultFlag.Success;
-        
+
         [MemoryPackInclude] protected int Maker;
         [MemoryPackInclude] protected int From;
         [MemoryPackInclude] protected int Target = -1;
@@ -131,7 +132,9 @@ namespace Game.Action
 
         public int GetTargetPos()
         {
-            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target).Pos : Target;
+            return TargetingType == TargetingType.Unit
+                ? BoardUtils.GetEntityByID(Target) != null ? BoardUtils.GetEntityByID(Target).Pos : From
+                : Target;
         }
 
         public int GetFrom()

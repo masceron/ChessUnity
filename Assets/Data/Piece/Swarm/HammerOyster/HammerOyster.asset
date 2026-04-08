@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: HammerOyster
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_hammer_oyster
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 919132149155446097, guid: 2beb4fe94a52600499b279ac8cd0e0c8, type: 3}
   rank: 3
   moveRange: 1
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: HammerOyster
+  baseValue: 0
+  considerations: []

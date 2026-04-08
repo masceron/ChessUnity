@@ -3,6 +3,7 @@ using Game.Action.Skills;
 using Game.Piece;
 using Game.Piece.PieceLogic;
 using Game.Piece.PieceLogic.Commons;
+using UnityEngine;
 using UX.UI.Toolkit.Common;
 
 namespace Game.Action.Internal.Pending.Piece
@@ -24,13 +25,16 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override async UniTask<Action> BuildAction(ITargetingContext context)
         {
-            var payload = new ShopPayLoad(_upgradableTo, _upgradeFrom);
-
-            var chosenUpgrade = await context.OpenMenu<PieceConfig?, ShopPayLoad>(InGameMenuType.ChrysosShop, payload);
+            var payload = new ShopPayLoad(GetTargetAsPiece().Type, ((Chrysos)GetMakerAsPiece()).Coin, _cost,
+                _upgradableTo, _upgradeFrom);
+            
+            var chosenUpgrade = await context.OpenMenu<ShopPayLoad, string>(InGameMenuType.ChrysosShop, payload);
+            var target = GetTargetAsPiece();
 
             return chosenUpgrade == null
                 ? null
-                : new ChrysosUpgrade(GetMakerAsPiece(), GetTargetAsPiece(), chosenUpgrade.Value, _cost);
+                : new ChrysosUpgrade(GetMakerAsPiece(), GetTargetAsPiece(),
+                    new PieceConfig(chosenUpgrade, target.Color, target.Pos), _cost);
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -41,11 +45,18 @@ namespace Game.Action.Internal.Pending.Piece
 
     public struct ShopPayLoad
     {
+        public readonly string CurrentPiece;
+        public readonly int CurrentBalance;
+        public readonly int Cost;
         public readonly PieceRank UpgradableTo;
         public readonly PieceRank UpgradeFrom;
 
-        public ShopPayLoad(PieceRank upgradableTo, PieceRank upgradeFrom)
+        public ShopPayLoad(string currentPiece, int currentBalance, int cost, PieceRank upgradableTo,
+            PieceRank upgradeFrom)
         {
+            CurrentPiece = currentPiece;
+            CurrentBalance = currentBalance;
+            Cost = cost;
             UpgradableTo = upgradableTo;
             UpgradeFrom = upgradeFrom;
         }

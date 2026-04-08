@@ -48,7 +48,19 @@ namespace Game.Managers
         public FieldEffect FieldEffect;
         public bool SideToMove;
         public (PieceLogic, PieceLogic) Commanders;
-        public bool IsDay { get; private set; }
+
+        private bool _isDay;
+        [CreateProperty]
+        public bool IsDay
+        {
+            get => _isDay;
+            private set
+            {
+                if (_isDay == value) return;
+                _isDay = value;
+                NotifyPropertyChanged();
+            } 
+        }
         
         [CreateProperty]
         public int CurrentTurn

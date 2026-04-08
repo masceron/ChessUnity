@@ -12,8 +12,8 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class TemperantiaSwap : Action, ISkills
     {
-        private readonly int _firstPiece;
-        private readonly int _secondPiece;
+        private readonly int _allyPiece;
+        private readonly int _enemyPiece;
 
         [MemoryPackConstructor]
         private TemperantiaSwap()
@@ -22,8 +22,8 @@ namespace Game.Action.Skills
 
         public TemperantiaSwap(PieceLogic maker, PieceLogic firstPiece, PieceLogic secondPiece) : base(maker)
         {
-            _firstPiece = firstPiece.ID;
-            _secondPiece = secondPiece.ID;
+            _allyPiece = firstPiece.ID;
+            _enemyPiece = secondPiece.ID;
             
             Debug.Log($"Choosing {firstPiece.Type} and {secondPiece.Type}");
         }
@@ -36,8 +36,8 @@ namespace Game.Action.Skills
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
         protected override void ModifyGameState()
         {
-            var ally = GetEntityByID(_firstPiece) as PieceLogic;
-            var enemy = GetEntityByID(_secondPiece) as PieceLogic;
+            var ally = GetEntityByID(_allyPiece) as PieceLogic;
+            var enemy = GetEntityByID(_enemyPiece) as PieceLogic;
             if (ally == null || enemy == null) return;
 
             // Copy danh sách buff và debuff trước khi bị xóa

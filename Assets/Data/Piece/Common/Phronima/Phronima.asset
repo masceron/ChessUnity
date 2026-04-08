@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Phronima
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_phronima
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 2560844638400570401, guid: 8e25dcc9610631746a9c215e64712cfd, type: 3}
   rank: 4
   moveRange: 1
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 7
   availableSlots: 0
   logicClassName: Phronima
+  baseValue: 0
+  considerations: []

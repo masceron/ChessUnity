@@ -1,7 +1,6 @@
 using System;
 using Game.Managers;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using static Game.Common.BoardUtils;
 using Color = Game.Managers.Color;
 

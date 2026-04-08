@@ -106,6 +106,10 @@ MonoBehaviour:
     m_Localized: Free Play Test
     m_Metadata:
       m_Items: []
+  - m_Id: 87115194802032640
+    m_Localized: Confirm
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

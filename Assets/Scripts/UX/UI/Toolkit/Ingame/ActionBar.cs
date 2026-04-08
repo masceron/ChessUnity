@@ -25,6 +25,7 @@ namespace UX.UI.Toolkit.Ingame
         private Button _skills;
         private Button _relics;
         private Button _skip;
+        private VisualElement _icon;
 
         private RadialProgress _skillCooldown;
         private RadialProgress _relicCooldown;
@@ -54,6 +55,8 @@ namespace UX.UI.Toolkit.Ingame
 
             _skip = root.Q<Button>("Skip");
             _skip.clicked += ClickSkip;
+
+            _icon = root.Q<VisualElement>("Icon");
 
             _skillCooldown = root.Q<RadialProgress>("SkillCooldownRadial");
             _relicCooldown = root.Q<RadialProgress>("RelicCooldownRadial");
@@ -148,6 +151,8 @@ namespace UX.UI.Toolkit.Ingame
 
         private void SelectingPieceChangedHandler(PieceLogic pieceLogic)
         {
+            _icon.style.backgroundImage = pieceLogic != null ? AssetManager.Ins.PieceData[pieceLogic.Type].icon : null;
+
             if (pieceLogic is IPieceWithSkill)
             {
                 var data = AssetManager.Ins.PieceData[pieceLogic.Type];

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: EmeraldCrab
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_emerald_crab
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 5539094649158605941, guid: aaca16e74d68e5e49b6cde151215e1ad, type: 3}
   rank: 4
   moveRange: 1

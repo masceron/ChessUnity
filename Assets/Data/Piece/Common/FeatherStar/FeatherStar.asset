@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: FeatherStar
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_feather_star
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 5011701986001230811, guid: 850b9ed59a3b61c448717dfd5e1eaf60, type: 3}
   rank: 4
   moveRange: 2
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: -1
   availableSlots: 0
   logicClassName: FeatherStar
+  baseValue: 0
+  considerations: []

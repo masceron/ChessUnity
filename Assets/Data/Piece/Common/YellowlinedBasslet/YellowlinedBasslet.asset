@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: YellowlinedBasslet
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_yellowlined_basslet
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 2560844638400570401, guid: 8d365168f258cab44b15b8a92f6f1f81, type: 3}
   rank: 4
   moveRange: 1

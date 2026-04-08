@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BlueDragon
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_blue_dragon
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 4097937938846779027, guid: b5d13c97bef4649419a74a5d45caef60, type: 3}
   rank: 2
   moveRange: 1
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 4
   availableSlots: 0
   logicClassName: BlueDragon
+  baseValue: 0
+  considerations: []

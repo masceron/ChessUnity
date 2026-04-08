@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MaskedPuffer
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_masked_puffer
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 100000, guid: 4f2ce47a52db2cc4ea19a2607398edcd, type: 3}
   rank: 4
   moveRange: 1

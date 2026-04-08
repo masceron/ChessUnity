@@ -35,8 +35,10 @@ namespace Game.Action.Internal.Pending.Piece
                 var isAlly = p.Color == GetMakerAsPiece().Color;
                 return firstIsAlly ? !isAlly : isAlly && pos != GetFrom();
             });
+            var secondPiece = BoardUtils.PieceOn(secondPos);
 
-            return new TemperantiaSwap(GetMakerAsPiece(), firstPiece, BoardUtils.PieceOn(secondPos));
+            return new TemperantiaSwap(GetMakerAsPiece(), firstIsAlly ? firstPiece : secondPiece,
+                firstIsAlly ? secondPiece : firstPiece);
         }
 
         public int AIPenaltyValue(PieceLogic p)

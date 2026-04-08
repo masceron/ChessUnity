@@ -103,6 +103,10 @@ MonoBehaviour:
     m_Key: freePlayTest
     m_Metadata:
       m_Items: []
+  - m_Id: 87115194802032640
+    m_Key: confirm
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

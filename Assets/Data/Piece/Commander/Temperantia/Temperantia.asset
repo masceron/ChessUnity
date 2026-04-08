@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Temperantia
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_temperantia
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 5598166101255696859, guid: b5743e98285446748982a08ad7d79d7a, type: 3}
   rank: 7
   moveRange: 4

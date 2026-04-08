@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MorayEel
   m_EditorClassIdentifier: 
   key: piece_moray_eel
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 919132149155446097, guid: bcbe64a94ad893840bc1e7f69cf90a2a, type: 3}
   rank: 5
   moveRange: 2
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: MorayEel
+  baseValue: 0
+  considerations: []

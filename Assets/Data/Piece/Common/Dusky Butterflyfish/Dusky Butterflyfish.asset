@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Dusky Butterflyfish
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_dusky_butterflyfish
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 5271979791856331558, guid: 4793ebc334d81b64b99ab152ac0d6093, type: 3}
   rank: 4
   moveRange: 1

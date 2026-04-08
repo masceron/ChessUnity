@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: StoneCrab
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_stone_crab
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 9077907352732945540, guid: 356607b4ccc8dd84b87af3344b3cc477, type: 3}
   rank: 3
   moveRange: 1

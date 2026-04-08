@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Swordfish
   m_EditorClassIdentifier: 
   key: piece_swordfish
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 919132149155446097, guid: b9edf077500980e4f901097c8237b4d0, type: 3}
   rank: 6
   moveRange: 3
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 3
   availableSlots: 0
   logicClassName: Swordfish
+  baseValue: 0
+  considerations: []

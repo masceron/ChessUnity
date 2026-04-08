@@ -4,13 +4,14 @@ namespace UX.UI.Toolkit.Common
 {
     public enum InGameMenuType
     {
-        ChrysosShop    
+        ChrysosShop,
+        ChrysosShopItem,
     }
     
-    public interface IAwaitableUI<TResult, in TPayload>
+    public interface IAwaitableUI<in TPayload, TResult>
     {
         UniTask<TResult> WaitForSelection(TPayload payload);
-        
-        void Close();
+
+        void Cancel();
     }
 }

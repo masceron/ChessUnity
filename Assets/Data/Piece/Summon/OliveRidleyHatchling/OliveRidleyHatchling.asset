@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: OliveRidleyHatchling
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_olive_ridley_hatchling
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 587261439291084240, guid: f0bf4247c93a85a4384cf98d760dd27b, type: 3}
   rank: 2
   moveRange: 1

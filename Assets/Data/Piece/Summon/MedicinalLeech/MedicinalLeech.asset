@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MedicinalLeech
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_medicinal_leech
+  icon: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
   prefab: {fileID: 919132149155446097, guid: e5505f02f43e0b64292bfcd5c9dfb292, type: 3}
   rank: 2
   moveRange: 1
@@ -23,3 +24,5 @@ MonoBehaviour:
   normalSkillCooldown: 0
   availableSlots: 0
   logicClassName: MedicinalLeech
+  baseValue: 0
+  considerations: []

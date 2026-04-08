@@ -2,6 +2,7 @@ using System;
 using PrimeTween;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace UX.Camera
@@ -61,6 +62,10 @@ namespace UX.Camera
 
         private void Update()
         {
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                return; 
+            }
             CameraMove(Time.unscaledDeltaTime);
             CameraZoom(Time.unscaledDeltaTime);
         }

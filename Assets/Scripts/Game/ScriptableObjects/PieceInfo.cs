@@ -23,6 +23,7 @@ namespace Game.ScriptableObjects
         }
 
         [SerializeField] public string key;
+        [SerializeField] public Texture2D icon;
         [SerializeField] public GameObject prefab;
         [SerializeField] public PieceRank rank;
         [SerializeField] public byte moveRange;
