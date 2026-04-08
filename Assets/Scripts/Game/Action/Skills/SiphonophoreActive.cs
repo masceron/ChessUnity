@@ -33,7 +33,6 @@ namespace Game.Action.Skills
         {
             var makerPiece = GetMakerAsPiece();
             if (makerPiece == null) return;
-
             // Spawn MiniSiphonophore ở các ô đã chọn
             foreach (var spawnPos in _spawnPositions)
             {
@@ -46,7 +45,7 @@ namespace Game.Action.Skills
                     spawnPos)));
             }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(makerPiece));
         }
     }
 }

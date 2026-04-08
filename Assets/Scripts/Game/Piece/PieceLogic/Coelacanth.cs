@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
             SetStat(SkillStat.Target, Target);
             SetStat(SkillStat.Range, Range);
             SetStat(SkillStat.Duration, Duration);
-
+            // TODO: làm cho trường hợp làm cho trường hợp Target > 1
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;

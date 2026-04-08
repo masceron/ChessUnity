@@ -19,6 +19,7 @@ namespace Game.Action.Skills
         {
             var maker = GetMakerAsPiece();
             ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, GetTargetPos()), maker));
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)
