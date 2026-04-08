@@ -29,9 +29,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Effects.All(e => e.EffectName != "effect_infected")) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    // var pending = new RottingScythePending(this, piece);
-                    // BoardViewer.ListOf.Add(pending);
+                    BoardViewer.ListOf.Add(new RottingScytheAction(piece));
                 }
 
                 BoardViewer.Selecting = -2;
@@ -108,7 +106,7 @@ namespace Game.Relics
 
             if (bestPiece == null) return;
 
-            var excute = new RottingScytheAction(bestPiece.Pos);
+            var excute = new RottingScytheAction(bestPiece);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new RottingScythePending(this, bestPiece.Pos);
