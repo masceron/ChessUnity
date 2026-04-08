@@ -19,32 +19,34 @@ namespace Game.Effects.Others
 
         public BeforeActionPriority Priority => BeforeActionPriority.Declaration; // TODO: Check priority.
         
+        private bool CanEscape()
+        {
+            return BoardUtils.VerifyIndex(newPosition)
+                && BoardUtils.IsActive(newPosition)
+                && BoardUtils.PieceOn(newPosition) == null;
+        }
+
+        private void TriggerSurvival(Action.Action incomingAction)
+        {
+            if (!CanEscape()) return;
+            
+            // TODO: Tạm dùng SurvivedHit cho cơ chế "thoát chết" của Chinook.
+            incomingAction.Result = ResultFlag.SurvivedHit;
+            ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
+            ActionManager.EnqueueAction(new RemoveEffect(this)); 
+        }
+
         public void OnCallBeforePieceAction(Action.Action action)
         {
             if (action is not ICaptures || action.GetTargetAsPiece() != Piece) return;
-
-            bool isValid = BoardUtils.VerifyIndex(newPosition)
-                    && BoardUtils.IsActive(newPosition)
-                    && BoardUtils.PieceOn(newPosition) == null;
-
-            if (!isValid) return; 
-
-            action.Result = ResultFlag.Blocked;
-            ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
+            TriggerSurvival(action);
         }
 
         public void OnCallBeforeDestroyOrKill(IInternal action)
         {
             if (action is not Action.Action act) return;
-
-            bool isValid = BoardUtils.VerifyIndex(newPosition)
-                    && BoardUtils.IsActive(newPosition)
-                    && BoardUtils.PieceOn(newPosition) == null;
-
-            if (!isValid) return; 
-
-            act.Result = ResultFlag.Blocked;
-            ActionManager.EnqueueAction(new NormalMove(Piece, newPosition));
+            if (act.GetTargetAsPiece() != Piece) return; 
+            TriggerSurvival(act);
         }
         
         
