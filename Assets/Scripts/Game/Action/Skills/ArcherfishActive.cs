@@ -37,10 +37,11 @@ namespace Game.Action.Skills
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
             var maker = GetMakerAsPiece();
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration, 1), 100, GetTargetAsPiece()),
-                GetMakerAsPiece()));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(maker.GetStat(SkillStat.Duration, 2), GetTargetAsPiece()),
-                GetMakerAsPiece()));
+            var target = GetTargetAsPiece();
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration, 1), 100, target),
+                maker));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(maker.GetStat(SkillStat.Duration, 2), target),
+                maker));
 
             ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
