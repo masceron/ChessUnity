@@ -12,6 +12,8 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FrilledSharkActive : Action, ISkills
     {
+        private const int Duration = 2;
+
         [MemoryPackInclude]
         private int dfile;
 
@@ -47,7 +49,7 @@ namespace Game.Action.Skills
                 file += dfile;
                 var pieceOn = PieceOn(IndexOf(rank, file));
                 if (pieceOn != null && pieceOn.Color != GetMakerAsPiece().Color)
-                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn), GetMakerAsPiece()));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(Duration, pieceOn), GetMakerAsPiece()));
             }
 
             ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
