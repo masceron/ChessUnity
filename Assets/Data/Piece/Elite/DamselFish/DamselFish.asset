@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
   key: piece_damsel_fish
   prefab: {fileID: 5011701986001230811, guid: eccc3a8cca3aa884b828daca202cc323, type: 3}
-  rank: 0
-  moveRange: 0
-  attackRange: 0
+  rank: 5
+  moveRange: 1
+  attackRange: 1
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 1
