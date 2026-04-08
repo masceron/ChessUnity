@@ -37,7 +37,7 @@ namespace Game.Action.Skills
                 new PieceConfig("piece_olive_ridley_eggs", caller.Color, GetTargetPos())
             ));
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)caller).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(caller));
         }
     }
 }
