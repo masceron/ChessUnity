@@ -15,19 +15,28 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override async UniTask<Action> BuildAction(ITargetingContext context)
         {
+            var maker = GetMakerAsPiece();
             var firstPiece = GetTargetAsPiece();
             var firstIsAlly = firstPiece.Color == GetMakerAsPiece().Color;
-            
-            var secondPos = await context.NextSelection(pos => 
+            foreach (var piece in BoardUtils.GetAllPieces())
+            {
+                if (firstIsAlly)
+                {
+                    if (piece.Color == maker.Color) context.ClearHighlight(piece.Pos);
+                }
+                else if (piece.Color != maker.Color) context.ClearHighlight(piece.Pos);
+            }
+
+            var secondPos = await context.NextSelection(pos =>
             {
                 var p = BoardUtils.PieceOn(pos);
                 if (p == null) return false;
-            
+
                 var isAlly = p.Color == GetMakerAsPiece().Color;
-                return firstIsAlly ? !isAlly : isAlly;
+                return firstIsAlly ? !isAlly : isAlly && pos != GetFrom();
             });
-            
-            return new TemperantiaSwap(GetMakerAsPiece(), firstPiece.Pos, secondPos);
+
+            return new TemperantiaSwap(GetMakerAsPiece(), firstPiece, BoardUtils.PieceOn(secondPos));
         }
 
         public int AIPenaltyValue(PieceLogic p)

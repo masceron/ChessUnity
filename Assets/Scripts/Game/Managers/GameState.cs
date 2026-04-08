@@ -65,7 +65,7 @@ namespace Game.Managers
         
         public readonly TriggerHooks TriggerHooks = new();
         private int _pieceID = 1;
-        private readonly Dictionary<int, Entity> _entityDict = new();
+        public readonly Dictionary<int, Entity> EntityDict = new();
         
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -118,7 +118,7 @@ namespace Game.Managers
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];
 
-            _entityDict.Add(pieceLogic.ID, pieceLogic);
+            EntityDict.Add(pieceLogic.ID, pieceLogic);
             return pieceLogic;
         }
 
@@ -255,7 +255,7 @@ namespace Game.Managers
 
         public Entity GetEntityByID(int id)
         {
-            return _entityDict.GetValueOrDefault(id);
+            return EntityDict.GetValueOrDefault(id);
         }
 
         public void SetFieldEffect(FieldEffect e)
@@ -266,18 +266,18 @@ namespace Game.Managers
 
         public void AddToEntityList(Entity entity)
         {
-            _entityDict.Add(entity.ID, entity);
+            EntityDict.Add(entity.ID, entity);
         }
 
         public void PruneEntityList()
         {
-            var keysToRemove = _entityDict.Where(kvp => !IsAlive(kvp.Value))
+            var keysToRemove = EntityDict.Where(kvp => !IsAlive(kvp.Value))
                 .Select(kvp => kvp.Key)
                 .ToList();
 
             foreach (var key in keysToRemove)
             {
-                _entityDict.Remove(key);
+                EntityDict.Remove(key);
             }
         }
     }

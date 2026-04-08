@@ -86,6 +86,19 @@ namespace UX.UI.Toolkit.Ingame
             _captures.RemoveFromClassList(activeClass);
             _skills.RemoveFromClassList(activeClass);
             _relics.RemoveFromClassList(activeClass);
+            
+            var relic = BoardUtils.GetRelicOf(BoardUtils.OurSide());
+            if (relic is { CurrentCooldown: > 0 })
+            {
+                _relicCooldown.Progress =
+                    (float)(relic.TimeCooldown - relic.CurrentCooldown) / relic.TimeCooldown;
+                _relicCooldownTime.text = relic.CurrentCooldown.ToString();
+            }
+            else
+            {
+                _relicCooldown.Progress = 1f;
+                _relicCooldownTime.text = "";
+            }
 
             switch (newState)
             {
@@ -105,41 +118,16 @@ namespace UX.UI.Toolkit.Ingame
                     _quiets.SetEnabled(_boardViewer.AllMoves.Count(a => a is IQuiets) != 0);
                     _captures.SetEnabled(_boardViewer.AllMoves.Count(a => a is ICaptures) != 0);
                     _skills.SetEnabled(_boardViewer.AllMoves.Count(a => a is ISkills) != 0);
-
-                    if (BoardUtils.OurSide() == BoardUtils.SideToMove())
+                    
+                    var piece = _boardViewer.SelectingPiece;
+                    
+                    if (piece.SkillCooldown > 0)
                     {
-                        if (!_relics.enabledSelf)
-                        {
-                            var relic = BoardUtils.GetRelicOf(BoardUtils.OurSide());
-                            if (relic is { CurrentCooldown: > 0 })
-                            {
-                                _relicCooldown.Progress =
-                                    (float)(relic.TimeCooldown - relic.CurrentCooldown) / relic.TimeCooldown;
-                                _relicCooldownTime.text = relic.CurrentCooldown.ToString();
-                            }
-                            else
-                            {
-                                _relicCooldown.Progress = 1f;
-                            }
-                        }
-
-                        if (!_skills.enabledSelf)
-                        {
-                            var piece = _boardViewer.SelectingPiece;
-                            if (piece.Color == BoardUtils.OurSide() && piece.SkillCooldown > 0)
-                            {
-                                var timeToCooldown = ((IPieceWithSkill)piece).TimeToCooldown;
-                                _skillCooldown.Progress =
-                                    (float)(timeToCooldown - piece.SkillCooldown) / timeToCooldown;
-                                _skillCooldownTime.text = piece.SkillCooldown.ToString();
-                            }
-                            else
-                            {
-                                _skillCooldown.Progress = 1f;
-                            }
-                        }
+                        var timeToCooldown = ((IPieceWithSkill)piece).TimeToCooldown;
+                        _skillCooldown.Progress =
+                            (float)(timeToCooldown - piece.SkillCooldown) / timeToCooldown;
+                        _skillCooldownTime.text = piece.SkillCooldown.ToString();
                     }
-
                     break;
                 case ControlState.Idle:
                     _quiets.SetEnabled(false);
@@ -147,9 +135,7 @@ namespace UX.UI.Toolkit.Ingame
                     _skills.SetEnabled(false);
                     _relics.SetEnabled(BoardUtils.OurSide() == BoardUtils.SideToMove());
                     _skip.SetEnabled(BoardUtils.OurSide() == BoardUtils.SideToMove());
-
-                    _relicCooldown.Progress = 1f;
-                    _relicCooldownTime.text = "";
+                    
                     _skillCooldown.Progress = 1f;
                     _skillCooldownTime.text = "";
                     break;

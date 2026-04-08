@@ -441,7 +441,7 @@ namespace Game.Common
 
             return result;
         }
-        
+
         [Mutator]
         public static void NotifyGameEnd(EndGameUI.MessageID messageID)
         {
@@ -570,6 +570,12 @@ namespace Game.Common
         {
             return MatchManager.Ins.GameState.TriggerHooks;
         }
-        
+
+        public static List<PieceLogic> GetAllPieces()
+        {
+            return MatchManager.Ins.GameState.EntityDict.Where(entity => entity.Value is PieceLogic)
+                .Select(e => (PieceLogic)e.Value)
+                .ToList();
+        }
     }
 }

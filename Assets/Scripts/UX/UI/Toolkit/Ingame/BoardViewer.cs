@@ -100,6 +100,7 @@ namespace UX.UI.Toolkit.Ingame
             {
                 if (action is PendingAction pendingAction)
                 {
+                    CurrentState = ControlState.TargetingPending;
                     action = await pendingAction.WaitForCompletion(this);
 
                     if (action == null)
@@ -262,6 +263,11 @@ namespace UX.UI.Toolkit.Ingame
         public void ClearHighlights()
         {
             TileManager.Ins.UnmarkAll();
+        }
+
+        public void ClearHighlight(int position)
+        {
+            TileManager.Ins.UnMark(position);
         }
 
         public async UniTask<TResult> OpenMenu<TResult, TPayload>(InGameMenuType menuType, TPayload payload)

@@ -27,7 +27,6 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0 || FindPiece<Commons.PieceLogic>(!Color).Count == 0) return;
                 if (isPlayer)
                 {
-                    Debug.Log("[Temperantia] Clicked");
                     var pendingActions = from piece in PieceBoard()
                         where piece != null && !piece.Equals(this)
                         select new TemperantiaPending(this, piece);
@@ -76,7 +75,7 @@ namespace Game.Piece.PieceLogic
                         ? candidatesB[0]
                         : candidatesB[Random.Range(0, candidatesB.Count)];
                     // Execute effect now
-                    list.Add(new TemperantiaSwap(this, chosenAlly.Pos, chosenEnemy.Pos));
+                    list.Add(new TemperantiaSwap(this, chosenAlly, chosenEnemy));
                 }
             };
         }

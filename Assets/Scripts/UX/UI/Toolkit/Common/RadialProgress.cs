@@ -37,13 +37,20 @@ namespace UX.UI.Toolkit.Common
             painter.BeginPath();
         
             painter.MoveTo(center);
-            
-            var startAngle = -90f + (360f * _progress);
-            var sweepAngle = 360f * (1f - _progress);
-            
-            painter.Arc(center, radius, startAngle, startAngle + sweepAngle);
-            painter.LineTo(center);
-        
+
+            if (_progress <= 0f)
+            {
+                painter.Arc(center, radius, 0f, 360f);
+            }
+            else
+            {
+                var startAngle = -90f + 360f * _progress;
+                var sweepAngle = 360f * (1f - _progress);
+
+                painter.Arc(center, radius, startAngle, startAngle + sweepAngle);
+                painter.LineTo(center);
+            }
+
             painter.Fill();
         }
     }

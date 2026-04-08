@@ -2,9 +2,8 @@ using Game.Action.Internal;
 using Game.Effects;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
+using UnityEngine;
 using static Game.Common.BoardUtils;
-
-// <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
@@ -13,18 +12,20 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class TemperantiaSwap : Action, ISkills
     {
-        public int allyIndex = -1;
-        public int enemyIndex = -1; // -1 nếu chưa chọn enemy
+        private readonly int _firstPiece;
+        private readonly int _secondPiece;
 
         [MemoryPackConstructor]
         private TemperantiaSwap()
         {
         }
 
-        public TemperantiaSwap(PieceLogic maker, int allyIndex, int enemyIndex) : base(maker)
+        public TemperantiaSwap(PieceLogic maker, PieceLogic firstPiece, PieceLogic secondPiece) : base(maker)
         {
-            this.allyIndex = allyIndex;
-            this.enemyIndex = enemyIndex;
+            _firstPiece = firstPiece.ID;
+            _secondPiece = secondPiece.ID;
+            
+            Debug.Log($"Choosing {firstPiece.Type} and {secondPiece.Type}");
         }
         
         public int AIPenaltyValue(PieceLogic p)
@@ -35,9 +36,8 @@ namespace Game.Action.Skills
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
-            var ally = PieceOn(allyIndex);
-            var enemy = PieceOn(enemyIndex);
+            var ally = GetEntityByID(_firstPiece) as PieceLogic;
+            var enemy = GetEntityByID(_secondPiece) as PieceLogic;
             if (ally == null || enemy == null) return;
 
             // Copy danh sách buff và debuff trước khi bị xóa
@@ -61,6 +61,7 @@ namespace Game.Action.Skills
                 effect.Piece = ally;
                 ActionManager.EnqueueAction(new ApplyEffect(effect, GetMakerAsPiece()));
             }
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

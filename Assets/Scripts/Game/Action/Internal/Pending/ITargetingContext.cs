@@ -19,5 +19,6 @@ namespace Game.Action.Internal.Pending
         
         void Highlighter(IEnumerable<int> positions);
         void ClearHighlights();
+        void ClearHighlight(int position);
     }
 }
