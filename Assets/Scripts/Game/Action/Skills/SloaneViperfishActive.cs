@@ -9,6 +9,9 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SloaneViperfishActive : Action, ISkills
     {
+        private const int PoisonStack = 1;
+        private const int BleedingTurnToDie = 5;
+        
         [MemoryPackConstructor]
         private SloaneViperfishActive()
         {
@@ -28,10 +31,13 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_bleeding")
-                ? new ApplyEffect(new Poison(1, GetTargetAsPiece()), GetMakerAsPiece())
-                : new ApplyEffect(new Bleeding(5, GetTargetAsPiece()), GetMakerAsPiece()));
-            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
+            var targetPiece = GetTargetAsPiece();
+            var makerPiece = GetMakerAsPiece();
+            
+            ActionManager.EnqueueAction(targetPiece.Effects.Any(e => e.EffectName == "effect_bleeding")
+                ? new ApplyEffect(new Poison(PoisonStack, targetPiece), makerPiece)
+                : new ApplyEffect(new Bleeding(BleedingTurnToDie, targetPiece), makerPiece));
+            ActionManager.EnqueueAction(new CooldownSkill(makerPiece));
         }
     }
 }
