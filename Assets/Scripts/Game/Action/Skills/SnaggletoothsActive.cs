@@ -32,12 +32,13 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var existingBleeding = GetTargetAsPiece().Effects.OfType<Bleeding>().ToList();
+            var maker = GetMakerAsPiece();
 
             foreach (var bleeding in existingBleeding) ActionManager.EnqueueAction(new RemoveEffect(bleeding));
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetMakerAsPiece(), 5)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(maker)));
 
-            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
     }
 }
