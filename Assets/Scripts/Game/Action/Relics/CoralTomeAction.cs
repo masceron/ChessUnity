@@ -16,7 +16,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public CoralTomeAction(bool relicColor, string pieceType, int maker) : base(null, maker)
+        public CoralTomeAction(bool relicColor, string pieceType, int target) : base(null, target)
         {
             _relicColor = relicColor;
             _pieceType = pieceType;
