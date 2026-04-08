@@ -7,6 +7,7 @@ namespace Game.Piece.PieceLogic
 {
     public class SloaneSViperfish : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 4;
         public SloaneSViperfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
             Skills = (list, isPlayer, _) =>
@@ -17,10 +18,10 @@ namespace Game.Piece.PieceLogic
                     var (rank, file) = RankFileOf(Pos);
                     var caller = PieceOn(Pos);
 
-                    for (var i = -4; i <= 4; i++)
+                    for (var i = -Range; i <= Range; i++)
                     {
                         if (!VerifyBounds(rank + i)) continue;
-                        for (var j = -4; j <= 4; j++)
+                        for (var j = -Range; j <= Range; j++)
                         {
                             if (!VerifyBounds(file + j)) continue;
 
