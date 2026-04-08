@@ -32,7 +32,6 @@ namespace Game.Action.Skills
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(GetTargetPos(), _moveTo);
         }
 
         protected override void ModifyGameState()

@@ -1247,6 +1247,9 @@ GameObject:
   - component: {fileID: 2083513918}
   - component: {fileID: 2083513921}
   - component: {fileID: 2083513922}
+  - component: {fileID: 2083513923}
+  - component: {fileID: 2083513924}
+  - component: {fileID: 2083513925}
   m_Layer: 5
   m_Name: UIDocument
   m_TagString: Untagged
@@ -1332,6 +1335,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8515229aec44e06ba579f552f605c90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.ActionBar
+--- !u!114 &2083513923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083513917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6d5c286b5f4260be67f087c3b7bf13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.TopInfoBox
+--- !u!114 &2083513924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083513917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9888236cc554431a67018b21647ffa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Common.Tooltip.TooltipManager
+  tooltipAsset: {fileID: 9197481963319205126, guid: 08cf2c095ad2dc54fb53de0f0cf3ca39, type: 3}
+--- !u!114 &2083513925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083513917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fe56f00b75e4d6d92892929dd4ff158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Ingame.EffectBar
+  effectIcon: {fileID: 9197481963319205126, guid: cbc89676728243549ac4b7336b22d36a, type: 3}
+  missing: {fileID: 2800000, guid: a95c8ae8d68a43b479c5d56a44bcf811, type: 3}
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0

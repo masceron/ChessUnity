@@ -5,6 +5,7 @@ using Game.Action.Internal;
 using Game.Common;
 using Game.Piece;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UX.UI.Ingame;
 using ZLinq;
 using static Game.Common.BoardUtils;
@@ -29,10 +30,14 @@ namespace Game.Managers
 
         [NonSerialized] private static uint _seed;
         [NonSerialized] private static Unity.Mathematics.Random _randomizer;
-
-        [NonSerialized] public BoardViewer InputProcessor;
+        [NonSerialized] private UIDocument _mainUI;
 
         public Vector2Int StartingSize { get; private set; }
+
+        private new void Awake()
+        {
+            _mainUI = FindAnyObjectByType<UIDocument>();
+        }
 
         private void Start()
         {
@@ -63,9 +68,10 @@ namespace Game.Managers
 
         private void MakeGame(GameConfig cfg, LineupConfig lineupConfig)
         {
-            GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide,
+            GameState = new GameState(cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide,
                 (lineupConfig.WhiteRelic, lineupConfig.BlackRelic), lineupConfig.FieldEffect);
             ActionManager.Init(GameState);
+            _mainUI.rootVisualElement.dataSource = GameState;
         }
 
         public void Init(GameConfig cfg, LineupConfig lineupConfig, GameMode gameMode = GameMode.PlayerVsPlayer)

@@ -70,6 +70,10 @@ MonoBehaviour:
     m_Localized: Taunt
     m_Metadata:
       m_Items: []
+  - m_Id: 60977772506828800
+    m_Localized: Enchanting Tune
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -76,6 +76,11 @@ MonoBehaviour:
     m_Localized: Taunt an enemy for 3 turns.
     m_Metadata:
       m_Items: []
+  - m_Id: 60977664922931200
+    m_Localized: Force an enemy in a 6-square radius to step up 3 squares, then apply
+      Controlled to them.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

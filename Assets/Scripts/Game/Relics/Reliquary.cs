@@ -31,7 +31,7 @@ namespace Game.Relics
                 var excute = new ReliquaryExecute();
                 BoardViewer.Ins.ExecuteAction(excute);
                 SetCooldown();
-                MatchManager.Ins.InputProcessor.UpdateRelic();
+                // MatchManager.Ins.InputProcessor.UpdateRelic();
             }
         }
 

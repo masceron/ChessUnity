@@ -52,7 +52,7 @@ namespace Game.Effects
     {
         public readonly EffectCategory Category;
         public readonly string EffectName;
-        public readonly UDictionary<EffectStat, List<int>> Stats;
+        private readonly UDictionary<EffectStat, List<int>> _stats;
         public int Duration;
         public PieceLogic Piece;
         public int Strength;
@@ -63,8 +63,9 @@ namespace Game.Effects
             EffectName = name;
             Color = Piece.Color;
             Duration = duration;
+            Strength = strength;
 
-            if (AssetManager.Ins == null)
+            if (!AssetManager.Ins)
             {
                 Debug.LogError($"[Effect] AssetManager.Ins is null while creating effect '{name}'.");
                 throw new System.NullReferenceException($"AssetManager.Ins is null while creating effect '{name}'.");
@@ -76,7 +77,7 @@ namespace Game.Effects
                 throw new System.NullReferenceException($"EffectData is null while creating effect '{name}'.");
             }
 
-            if (!AssetManager.Ins.EffectData.TryGetValue(name, out var info) || info == null)
+            if (!AssetManager.Ins.EffectData.TryGetValue(name, out var info) || !info)
             {
                 var pieceType = piece != null ? piece.Type : "<null-piece>";
                 Debug.LogError($"[Effect] Missing EffectData for key '{name}' (piece: '{pieceType}'). Please add this key to EffectsData.");
@@ -85,7 +86,7 @@ namespace Game.Effects
 
             Category = info.category;
 
-            Stats = new UDictionary<EffectStat, List<int>>();
+            _stats = new UDictionary<EffectStat, List<int>>();
             if (strength != -1) SetStat(EffectStat.Strength, strength);
         }
 
@@ -103,12 +104,12 @@ namespace Game.Effects
 
         public int GetRawStat(EffectStat stat, int num = 1)
         {
-            return !Stats.TryGetValue(stat, out var stat1) ? 0 : stat1[num - 1];
+            return !_stats.TryGetValue(stat, out var stat1) ? 0 : stat1[num - 1];
         }
 
         public int GetStat(EffectStat stat, int num = 1)
         {
-            if (!Stats.TryGetValue(stat, out var statin))
+            if (!_stats.TryGetValue(stat, out var statin))
             {
                 Debug.LogError("[Effect] You call GetStat of a EffectStat that doesn't exist");
                 return 0;
@@ -124,10 +125,10 @@ namespace Game.Effects
         public void SetStat(EffectStat stat, int value, int num = 1)
         {
             if (value < 0) value = 0;
-            if (!Stats.ContainsKey(stat)) Stats.Add(stat, new List<int>());
-            var lst = Stats[stat];
+            if (!_stats.ContainsKey(stat)) _stats.Add(stat, new List<int>());
+            var lst = _stats[stat];
             while (lst.Count < num) lst.Add(0);
-            Stats[stat][num - 1] = value;
+            _stats[stat][num - 1] = value;
         }
         public virtual int GetNumeral() => Strength;
     }

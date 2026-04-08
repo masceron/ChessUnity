@@ -17,6 +17,7 @@ namespace Game.Relics
 
         public override void Activate()
         {
+            //Làm lại
             if (CurrentCooldown == 0)
             {
                 // foreach (var piece in BoardUtils.PieceBoard())
@@ -31,7 +32,7 @@ namespace Game.Relics
                 var excute = new PeaceTreatyExecute(Color);
                 BoardViewer.Ins.ExecuteAction(excute);
                 SetCooldown();
-                MatchManager.Ins.InputProcessor.UpdateRelic();
+                //MatchManager.Ins.InputProcessor.UpdateRelic();
             }
         }
 

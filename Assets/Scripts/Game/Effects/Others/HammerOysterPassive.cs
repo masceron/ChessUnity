@@ -29,7 +29,7 @@ namespace Game.Effects.Others
             if (relic is not { Type: "relic_common_pearl" }) return;
             SetRelic(Piece.Color, RelicMaker.Get(new RelicConfig("relic_black_pearl", Piece.Color, 4)));
 
-            MatchManager.Ins.InputProcessor.UpdateRelic();
+            // MatchManager.Ins.InputProcessor.UpdateRelic();
         }
 
         public override int GetValueForAI()

@@ -276,7 +276,7 @@ namespace Game.Common
 
         public static PieceLogic GetCommanderOf(bool side)
         {
-            return side ? MatchManager.Ins.GameState.BlackCommander : MatchManager.Ins.GameState.WhiteCommander;
+            return side ? MatchManager.Ins.GameState.Commanders.Item1 : MatchManager.Ins.GameState.Commanders.Item2;
         }
 
         public static Vector3 FromRankFileToWorldPos(float rank, float file)

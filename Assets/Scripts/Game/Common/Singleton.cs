@@ -30,9 +30,8 @@ namespace Game.Common
 
         protected virtual void Awake()
         {
-            if (_instance == null)
+            if (!_instance)
                 _instance = this as T;
-            // Debug.Log($"New Singleton: {typeof(T)}");
             else
                 Debug.LogError($"Found two instances of {typeof(T)}, second instance will be ignored");
         }

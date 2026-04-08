@@ -6,7 +6,7 @@ namespace Game.Relics.Commons
     public abstract class RelicLogic
     {
         public bool Color; // false for white, true for black
-        protected int TimeCooldown;
+        public int TimeCooldown;
         public string Type;
 
         protected RelicLogic(RelicConfig cfg)

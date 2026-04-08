@@ -7,21 +7,18 @@ namespace Game.Effects.Debuffs
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Controlled : Effect, IOnApplyTrigger, IOnRemoveTrigger
     {
-        private readonly bool initSide;
-
         public Controlled(int duration, PieceLogic piece) : base(duration, -1, piece, "effect_controlled")
         {
-            initSide = piece.Color;
         }
 
         public void OnApply()
         {
-            Piece.Color = !initSide;
+            Piece.Color = !Piece.Color;
         }
 
         public void OnRemove()
         {
-            Piece.Color = initSide;
+            Piece.Color = !Piece.Color;
         }
 
         public override int GetValueForAI()

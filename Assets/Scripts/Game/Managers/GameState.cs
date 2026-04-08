@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Game.Action;
 using Game.Action.Internal;
 using Game.AI;
@@ -10,6 +12,7 @@ using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using Game.Tile;
+using Unity.Properties;
 using UnityEngine;
 using UX.UI;
 using UX.UI.Ingame;
@@ -28,47 +31,60 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [GeneratePropertyBag]
     [Friend(typeof(BoardUtils), typeof(MatchManager), typeof(ActionManager))]
-    public class GameState
+    public class GameState: INotifyPropertyChanged
     {
-        public readonly BitArray ActiveBoard;
+        public readonly BitArray ActiveBoard = new(MaxLength * MaxLength);
 
         public readonly Tuple<List<PieceConfig>, List<PieceConfig>> Captured =
             new(new List<PieceConfig>(), new List<PieceConfig>());
 
-        public readonly BitArray SquareColor;
-        public readonly PieceLogic[] PieceBoard;
-        public readonly Formation[] Formations;
+        public readonly BitArray SquareColor = new(MaxLength * MaxLength);
+        public readonly PieceLogic[] PieceBoard = new PieceLogic[MaxLength * MaxLength];
+        public readonly Formation[] Formations = new Formation[MaxLength * MaxLength];
         public readonly bool OurSide;
         public (RelicLogic, RelicLogic) Relics;
         public FieldEffect FieldEffect;
         public bool SideToMove;
-        public PieceLogic WhiteCommander, BlackCommander;
-
-        private int _countTurn;
+        public (PieceLogic, PieceLogic) Commanders;
+        public bool IsDay { get; private set; }
+        
+        [CreateProperty]
+        public int CurrentTurn
+        {
+            get => _currentTurn;
+            private set
+            {
+                if (_currentTurn == value) return;
+                _currentTurn = value;
+                NotifyPropertyChanged();
+            }
+        }
+        private int _currentTurn;
+        
         public readonly TriggerHooks TriggerHooks = new();
-
         private int _pieceID = 1;
-        private const int NumberOfTurnToChange = 10;
         private readonly Dictionary<int, Entity> _entityDict = new();
-
-        public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide,
+        
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        
+        public GameState(Vector2Int startingSize, bool side, bool ourSide,
             (RelicConfig, RelicConfig) relics, FieldEffectType fieldEffectType)
         {
             OurSide = ourSide;
-            PieceBoard = new PieceLogic[maxLength * maxLength];
-            ActiveBoard = new BitArray(maxLength * maxLength);
-            SquareColor = new BitArray(maxLength * maxLength);
-            Formations = new Formation[maxLength * maxLength];
             Relics = (RelicMaker.Get(relics.Item1), RelicMaker.Get(relics.Item2));
-
             SideToMove = side;
             FieldEffect = GetFieldEffectByType(fieldEffectType);
 
             for (var i = 0; i < SquareColor.Count; i++) SquareColor[i] = (RankOf(i) + FileOf(i)) % 2 != 0;
 
-            var rankStart = (maxLength - startingSize.x) / 2;
-            var fileStart = (maxLength - startingSize.y) / 2;
+            var rankStart = (MaxLength - startingSize.x) / 2;
+            var fileStart = (MaxLength - startingSize.y) / 2;
 
             for (var offRank = 0; offRank < startingSize.x; offRank++)
             {
@@ -82,11 +98,7 @@ namespace Game.Managers
 
             IsDay = true;
             CurrentTurn = 1;
-            _countTurn = 0;
         }
-
-        public bool IsDay { get; private set; }
-        public int CurrentTurn { get; private set; }
 
         public PieceLogic SpawnPiece(PieceConfig piece)
         {
@@ -95,9 +107,9 @@ namespace Game.Managers
             if (pieceLogic.PieceRank == PieceRank.Commander)
             {
                 if (!pieceLogic.Color)
-                    WhiteCommander = pieceLogic;
+                    Commanders.Item1 = pieceLogic;
                 else
-                    BlackCommander = pieceLogic;
+                    Commanders.Item2 = pieceLogic;
             }
 
             PieceBoard[piece.Index] = pieceLogic;
@@ -191,31 +203,29 @@ namespace Game.Managers
         {
             if (SideToMove)
             {
-                _countTurn++;
                 CurrentTurn++;
-                if (_countTurn == 151)
+                if (CurrentTurn == 151)
                 {
                     UIManager.Ins.Load(CanvasID.EndGameMessage);
                     EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Draw);
                 }
 
-                if (_countTurn >= NumberOfTurnToChange)
+                if (CurrentTurn % 10 == 0)
                 {
                     IsDay = !IsDay;
-                    _countTurn = 0;
                 }
             }
 
             switch (SideToMove)
             {
-                case true when WhiteCommander != null && !IsAlive(WhiteCommander):
+                case true when Commanders.Item1 != null && !IsAlive(Commanders.Item1):
                 {
-                    if (WhiteCommander != null && !IsAlive(WhiteCommander))
+                    if (Commanders.Item1 != null && !IsAlive(Commanders.Item1))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
                     }
-                    else if (BlackCommander != null && !IsAlive(BlackCommander))
+                    else if (Commanders.Item2 != null && !IsAlive(Commanders.Item2))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
@@ -223,14 +233,14 @@ namespace Game.Managers
 
                     break;
                 }
-                case false when BlackCommander != null && !IsAlive(BlackCommander):
+                case false when Commanders.Item2 != null && !IsAlive(Commanders.Item2):
                 {
-                    if (BlackCommander != null && !IsAlive(BlackCommander))
+                    if (Commanders.Item2 != null && !IsAlive(Commanders.Item2))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
                     }
-                    else if (WhiteCommander != null && !IsAlive(WhiteCommander))
+                    else if (Commanders.Item1 != null && !IsAlive(Commanders.Item1))
                     {
                         UIManager.Ins.Load(CanvasID.EndGameMessage);
                         EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);

@@ -47,7 +47,20 @@ namespace UX.UI.Toolkit.Ingame
         }
         public event Action<ControlState> OnStateChanged;
 
-        [NonSerialized] public PieceLogic SelectingPiece;
+        public event Action<PieceLogic> OnSelectingPieceChanged;
+        private PieceLogic _selectingPiece;
+
+        public PieceLogic SelectingPiece
+        {
+            get => _selectingPiece;
+            private set
+            {
+                if (_selectingPiece == value) return;
+                _selectingPiece = value;
+                OnSelectingPieceChanged?.Invoke(_selectingPiece);
+            }
+        }
+        
         [NonSerialized] public List<Action> AllMoves;
         [NonSerialized] public List<Action> CurrentAvailableMoves;
 
@@ -125,10 +138,10 @@ namespace UX.UI.Toolkit.Ingame
 
         private void Select(PieceLogic piece)
         {
-            CurrentState = ControlState.PieceSelected;
             SelectingPiece = piece;
             TileManager.Ins.Select(piece.Pos);
             PanTo(piece.Pos);
+            CurrentState = ControlState.PieceSelected;
         }
 
         private void TileClick(int position)
@@ -195,6 +208,8 @@ namespace UX.UI.Toolkit.Ingame
                     }
 
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

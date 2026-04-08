@@ -6,8 +6,12 @@ using Game.Action.Quiets;
 using Game.Action.Relics;
 using Game.Action.Skills;
 using Game.Common;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UX.UI.Toolkit.Common;
+using UX.UI.Toolkit.Common.Tooltip;
 using ZLinq;
 using Action = Game.Action.Action;
 
@@ -22,9 +26,18 @@ namespace UX.UI.Toolkit.Ingame
         private Button _relics;
         private Button _skip;
 
+        private RadialProgress _skillCooldown;
+        private RadialProgress _relicCooldown;
+
+        private Label _skillCooldownTime;
+        private Label _relicCooldownTime;
+
+        private TooltipManipulator _tooltipManipulator;
+
         private void Awake()
         {
             _boardViewer = gameObject.GetComponent<BoardViewer>();
+            _tooltipManipulator = null;
 
             var root = GetComponent<UIDocument>().rootVisualElement;
             _quiets = root.Q<Button>("Move");
@@ -42,12 +55,19 @@ namespace UX.UI.Toolkit.Ingame
             _skip = root.Q<Button>("Skip");
             _skip.clicked += ClickSkip;
 
+            _skillCooldown = root.Q<RadialProgress>("SkillCooldownRadial");
+            _relicCooldown = root.Q<RadialProgress>("RelicCooldownRadial");
+
+            _skillCooldownTime = root.Q<Label>("SkillCooldown");
+            _relicCooldownTime = root.Q<Label>("RelicCooldown");
+
             var input = GetComponent<InputManager>();
             input.OnMarkQuiets += ClickMove;
             input.OnMarkCaptures += ClickCapture;
             input.OnMarkSkills += ClickSkill;
             input.OnMarkRelics += ClickRelic;
             _boardViewer.OnStateChanged += UpdateUIState;
+            _boardViewer.OnSelectingPieceChanged += SelectingPieceChangedHandler;
 
             input.OnMarkSkip += ClickSkip;
         }
@@ -55,7 +75,7 @@ namespace UX.UI.Toolkit.Ingame
         private void ClickSkip()
         {
             if (!_skip.enabledSelf) return;
-                _boardViewer.ExecuteAction(new SkipTurn());
+            _boardViewer.ExecuteAction(new SkipTurn());
         }
 
         private void UpdateUIState(ControlState newState)
@@ -85,6 +105,41 @@ namespace UX.UI.Toolkit.Ingame
                     _quiets.SetEnabled(_boardViewer.AllMoves.Count(a => a is IQuiets) != 0);
                     _captures.SetEnabled(_boardViewer.AllMoves.Count(a => a is ICaptures) != 0);
                     _skills.SetEnabled(_boardViewer.AllMoves.Count(a => a is ISkills) != 0);
+
+                    if (BoardUtils.OurSide() == BoardUtils.SideToMove())
+                    {
+                        if (!_relics.enabledSelf)
+                        {
+                            var relic = BoardUtils.GetRelicOf(BoardUtils.OurSide());
+                            if (relic is { CurrentCooldown: > 0 })
+                            {
+                                _relicCooldown.Progress =
+                                    (float)(relic.TimeCooldown - relic.CurrentCooldown) / relic.TimeCooldown;
+                                _relicCooldownTime.text = relic.CurrentCooldown.ToString();
+                            }
+                            else
+                            {
+                                _relicCooldown.Progress = 1f;
+                            }
+                        }
+
+                        if (!_skills.enabledSelf)
+                        {
+                            var piece = _boardViewer.SelectingPiece;
+                            if (piece.Color == BoardUtils.OurSide() && piece.SkillCooldown > 0)
+                            {
+                                var timeToCooldown = ((IPieceWithSkill)piece).TimeToCooldown;
+                                _skillCooldown.Progress =
+                                    (float)(timeToCooldown - piece.SkillCooldown) / timeToCooldown;
+                                _skillCooldownTime.text = piece.SkillCooldown.ToString();
+                            }
+                            else
+                            {
+                                _skillCooldown.Progress = 1f;
+                            }
+                        }
+                    }
+
                     break;
                 case ControlState.Idle:
                     _quiets.SetEnabled(false);
@@ -92,11 +147,32 @@ namespace UX.UI.Toolkit.Ingame
                     _skills.SetEnabled(false);
                     _relics.SetEnabled(BoardUtils.OurSide() == BoardUtils.SideToMove());
                     _skip.SetEnabled(BoardUtils.OurSide() == BoardUtils.SideToMove());
+
+                    _relicCooldown.Progress = 1f;
+                    _relicCooldownTime.text = "";
+                    _skillCooldown.Progress = 1f;
+                    _skillCooldownTime.text = "";
                     break;
                 case ControlState.TargetingPending:
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+            }
+        }
+
+        private void SelectingPieceChangedHandler(PieceLogic pieceLogic)
+        {
+            if (pieceLogic is IPieceWithSkill)
+            {
+                var data = AssetManager.Ins.PieceData[pieceLogic.Type];
+                _tooltipManipulator = _skills.AddTooltip(Localizer.GetText("piece_skill", data.key + "_skill", null),
+                    "",
+                    Localizer.GetText("piece_skill_description", data.key + "_skill_description", null));
+            }
+            else
+            {
+                _skills.RemoveTooltip(_tooltipManipulator);
+                _tooltipManipulator = null;
             }
         }
 

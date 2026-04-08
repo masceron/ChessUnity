@@ -10,9 +10,14 @@ namespace Game.Action.Internal
         {
             
         }
-        protected override void ModifyGameState()
+
+        protected override void Animate()
         {
             PieceManager.Ins.Move(GetFrom(), GetTargetPos());
+        }
+
+        protected override void ModifyGameState()
+        {
             BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }

@@ -3,7 +3,7 @@
 
 .unity-button {
     aspect-ratio: 1;
-    height: 75%;
+    height: 65%;
     color: rgb(0, 0, 0);
     font-size: 0;
     border-top-left-radius: 20px;
@@ -43,4 +43,5 @@
 
 .unity-button:disabled {
     -unity-background-image-tint-color: rgb(154, 147, 147);
+    opacity: 1;
 }

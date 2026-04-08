@@ -50,7 +50,7 @@ namespace UX.UI.Ingame
 
         private void OnEnable()
         {
-            MatchManager.Ins.InputProcessor = this;
+            // MatchManager.Ins.InputProcessor = this;
         }
 
         public void UpdateRelic()

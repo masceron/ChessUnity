@@ -355,10 +355,6 @@ MonoBehaviour:
     m_Key: effect_leashed_description
     m_Metadata:
       m_Items: []
-  - m_Id: 47464611887632384
-    m_Key: effect_manta_spine_passive_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 47464611887632385
     m_Key: effect_rally_description
     m_Metadata:
@@ -559,10 +555,6 @@ MonoBehaviour:
     m_Key: effect_marine_flatworm_special_ability_description
     m_Metadata:
       m_Items: []
-  - m_Id: 61004448506761216
-    m_Key: effect_sea_turtle_count_down_description
-    m_Metadata:
-      m_Items: []
   - m_Id: 61005840046804992
     m_Key: effect_slayers_coin_description
     m_Metadata:
@@ -673,10 +665,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 76519868856717312
     m_Key: effect_ethereal_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 76519868881883136
-    m_Key: effect_regenarative_description
     m_Metadata:
       m_Items: []
   - m_Id: 76519868881883137
@@ -881,10 +869,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 86022176321753088
     m_Key: effect_metal_spine_passive_description
-    m_Metadata:
-      m_Items: []
-  - m_Id: 86022341740908544
-    m_Key: effect_long_cast_description
     m_Metadata:
       m_Items: []
   - m_Id: 86022541503025152
