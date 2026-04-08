@@ -7,6 +7,7 @@ using Game.Tile;
 using MemoryPack;
 using ZLinq;
 using static Game.Common.BoardUtils;
+using Game.Action.Internal;
 
 namespace Game.Action.Skills
 {
@@ -50,7 +51,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            SetFormation(GetTargetPos(), new NavalMines(true, GetMakerAsPiece().Color));
+            ActionManager.EnqueueAction(new SetFormation(GetTargetPos(), new NavalMines(true, GetMakerAsPiece().Color)));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
