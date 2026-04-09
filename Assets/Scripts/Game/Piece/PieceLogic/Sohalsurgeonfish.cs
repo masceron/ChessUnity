@@ -13,18 +13,21 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class SohalSurgeonfish : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 6;
+        private const int Duration = 5;
         public SohalSurgeonfish(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
+            SetStat(SkillStat.Range, Range);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, 6);
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(this, GetStat(SkillStat.Range));
                     foreach (var target in targets)
                     {
                         if (target.Effects.Any(e => e.EffectName == "effect_slow"))
-                            list.Add(new SohalSurgeonfishActive(this, target));
+                            list.Add(new SohalSurgeonfishActive(this, target, Duration));
                     }
                 }
                 else
@@ -32,17 +35,17 @@ namespace Game.Piece.PieceLogic
                     if (!excludeEmptyTile)
                     {
                         var (rank, file) = RankFileOf(Pos);
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 6))
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, GetStat(SkillStat.Range)))
                         {
                             var index = IndexOf(rankOff, fileOff);
-                            list.Add(new SohalSurgeonfishActive(this, PieceOn(index)));
+                            list.Add(new SohalSurgeonfishActive(this, PieceOn(index), Duration));
                         }
                     }
                     else
                     {
                         var listPieces = new List<Commons.PieceLogic>();
 
-                        foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 6))
+                        foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                         {
                             var idx = IndexOf(rank, file);
                             var pOn = PieceOn(idx);
@@ -58,7 +61,7 @@ namespace Game.Piece.PieceLogic
                         if (bestPieces.Count == 0) return;
                         var random = new Random();
                         var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-                        list.Add(new SohalSurgeonfishActive(this, selectedPiece));
+                        list.Add(new SohalSurgeonfishActive(this, selectedPiece, Duration));
                     }
                 }
             };
