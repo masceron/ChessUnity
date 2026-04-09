@@ -10,14 +10,14 @@ namespace Game.Action.Internal
     public class SpawnPiece : Action, IInternal
     {
         private readonly PieceConfig _pieceToSpawn;
-        private readonly System.Action<PieceLogic> _onSpawned;
+        private readonly System.Action<PieceLogic>[] _onSpawned;
 
         public SpawnPiece(PieceConfig p) : base(null, p.Index)
         {
             _pieceToSpawn = p;
         }
         
-        public SpawnPiece(PieceConfig p, System.Action<PieceLogic> onSpawned = null) 
+        public SpawnPiece(PieceConfig p, params System.Action<PieceLogic>[] onSpawned)
             : base(null, p.Index)
         {
             _pieceToSpawn = p;
@@ -32,7 +32,12 @@ namespace Game.Action.Internal
         protected override void ModifyGameState()
         {
             var spawnedPiece = SpawnPiece(_pieceToSpawn);
-            _onSpawned?.Invoke(spawnedPiece);
+            
+            if (_onSpawned == null) return;
+            foreach (var callback in _onSpawned)
+            {
+                callback?.Invoke(spawnedPiece);
+            }
         }
     }
 }

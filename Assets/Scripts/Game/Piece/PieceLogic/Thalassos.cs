@@ -3,7 +3,6 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
-using Game.Common;
 using Game.Effects.Traits;
 using Game.Managers;
 using Game.Movesets;
@@ -40,8 +39,7 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(file)) continue;
                             var posTo = IndexOf(rank, file);
 
-                            //Làm lại
-                            //if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(this, posTo));
+                            if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(this, posTo));
                         }
                     }
                 }
@@ -59,9 +57,8 @@ namespace Game.Piece.PieceLogic
                                 var file = FileOf(Pos) + fileOff;
                                 var posTo = IndexOf(rank, file);
 
-                                //Làm lại
-                                // if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
-                                //     list.Add(new ThalassosResurrectCandidate(this, posTo));
+                                if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
+                                    list.Add(new ThalassosResurrectCandidate(this, posTo));
                             }
                         }
 
@@ -69,9 +66,7 @@ namespace Game.Piece.PieceLogic
                     }
 
                     // captured list for the maker's side
-                    var capturedList = Color
-                        ? BlackCaptured()
-                        : WhiteCaptured();
+                    var capturedList = GetCapturedOf(Color);
                     if (capturedList == null || capturedList.Count == 0) return;
 
                     // Filter candidates: only Common or Swarm rank
@@ -117,11 +112,6 @@ namespace Game.Piece.PieceLogic
 
                     // Spawn piece immediately
                     list.Add(new ThalassosResurrect(this, chosenSquare, chosenPiece.Type));
-
-                    // Remove the resurrected piece from captured list
-                    var toRemove =
-                        capturedList.FirstOrDefault(c => c.Type == chosenPiece.Type && c.Color == chosenPiece.Color);
-                    if (toRemove != null) capturedList.Remove(toRemove);
                 }
             };
         }

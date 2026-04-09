@@ -21,7 +21,7 @@ namespace Game.Action.Skills
 
         public ThalassosResurrect(PieceLogic maker, int to, string typeTo) : base(maker, to)
         {
-            this._typeTo = typeTo;
+            _typeTo = typeTo;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -31,12 +31,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var color = GetMakerAsPiece().Color;
-            var collection = !color ? WhiteCaptured() : BlackCaptured();
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig(_typeTo, color, GetTargetPos())));
-
-            collection.Remove(collection.First(e => e.Type == _typeTo));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            var caller = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new Resurrect(caller, new PieceConfig(_typeTo, caller.Color, GetTargetPos())));
+            ActionManager.EnqueueAction(new CooldownSkill(caller));
         }
     }
 }

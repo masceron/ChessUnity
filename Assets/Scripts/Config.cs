@@ -9,14 +9,14 @@ public static class Config
 
     public static List<PieceConfig> PieceConfigWhite = new()
     {
-        new PieceConfig("piece_chrysos", false, 111),
+        new PieceConfig("piece_thalassos", false, 111),
         new PieceConfig("piece_redtail_parrotfish", false, 98),
         new PieceConfig("piece_swordfish", false, 88),
     };
 
     public static List<PieceConfig> PieceConfigBlack = new()
     {
-        new PieceConfig("piece_temperantia", true, 20),
+        new PieceConfig("piece_chrysos", true, 20),
         new PieceConfig("piece_archelon", true, 25)
     };
 

@@ -1367,10 +1367,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Common.UIHolder
   menuTemplates:
-    keys: 0000000001000000
+    keys: 00000000010000000200000003000000
     values:
     - {fileID: 9197481963319205126, guid: 679731de295f1ce478c01d486de5f78f, type: 3}
     - {fileID: 9197481963319205126, guid: f54c77b1687ef2e4295532df59385c3a, type: 3}
+    - {fileID: 9197481963319205126, guid: 15632a13648d8e140886cd90238a6eac, type: 3}
+    - {fileID: 9197481963319205126, guid: 1bda2f02186a4574faefc7f77fbec052, type: 3}
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0

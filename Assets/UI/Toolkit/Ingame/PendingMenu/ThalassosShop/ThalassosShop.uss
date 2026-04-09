@@ -1,7 +1,7 @@
 :root {
 }
 
-#ChrysosClose {
+#ThalassosClose {
     margin-left: auto;
     aspect-ratio: 1;
     min-width: auto;
@@ -24,11 +24,11 @@
     background-image: url("project://database/Assets/UI/Toolkit/Common/close.png?fileID=2800000&guid=5243a95c5cbce034fbd13d57d1efc46c&type=3#close");
 }
 
-#ChrysosClose:hover {
+#ThalassosClose:hover {
     -unity-background-image-tint-color: rgb(255, 0, 0);
 }
 
-#ChrysosConfirm {
+#ThalassosConfirm {
     right: auto;
     width: 25%;
     margin-left: auto;
@@ -47,9 +47,10 @@
     border-bottom-left-radius: 10px;
     -unity-font-style: bold;
     font-size: 15px;
+    color: rgb(255, 255, 255);
 }
 
-#ChrysosConfirm:hover {
+#ThalassosConfirm:hover {
     border-left-color: rgb(170, 255, 0);
     border-right-color: rgb(170, 255, 0);
     border-top-color: rgb(170, 255, 0);
@@ -58,7 +59,7 @@
     background-color: rgba(170, 255, 0, 0.55);
 }
 
-#ChrysosChoiceList .unity-scroll-view__content-container {
+#ThalassosChoiceList .unity-scroll-view__content-container {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -75,31 +76,32 @@
     border-left-width: 2px;
 }
 
-#ChrysosChoiceList .unity-scroller--vertical {
+#ThalassosChoiceList .unity-scroller--vertical {
     width: 6px;
     background-color: rgba(0, 0, 0, 0);
     border-width: 0;
 }
 
-#ChrysosChoiceList .unity-base-slider__dragger {
+#ThalassosChoiceList .unity-base-slider__dragger {
     width: 6px;
-    background-color: #555555;
+    background-color: rgb(85, 85, 85);
     border-width: 0;
     border-radius: 3px;
     left: 0;
 }
-#ChrysosChoiceList .unity-base-slider__tracker {
+
+#ThalassosChoiceList .unity-base-slider__tracker {
     background-color: rgba(255, 255, 255, 0.05);
     border-width: 0;
     width: 2px;
     align-self: center;
 }
 
-#ChrysosChoiceList .unity-scroller__low-button,
-#ChrysosChoiceList .unity-scroller__high-button {
+#ThalassosChoiceList .unity-scroller__low-button,
+#ThalassosChoiceList .unity-scroller__high-button {
     display: none;
 }
 
-#ChrysosChoiceList .unity-base-slider__dragger:hover {
-    background-color: #FFD700;
+#ThalassosChoiceList .unity-base-slider__dragger:hover {
+    background-color: rgb(255, 215, 0);
 }

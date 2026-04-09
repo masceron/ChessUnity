@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     if (SkillCooldown != 0 ||
-                        (!Color ? WhiteCaptured() : BlackCaptured()).All(p => p.Type != "piece_sea_star")) return;
+                        GetCapturedOf(Color).All(p => p.Type != "piece_sea_star")) return;
                     var (startRank, startFile) = RankFileOf(Pos);
                     foreach (var (rank, file) in MoveEnumerators.Around(startRank, startFile, 1))
                     {

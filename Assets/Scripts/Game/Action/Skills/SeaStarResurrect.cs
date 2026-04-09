@@ -1,4 +1,5 @@
 using Game.Action.Internal;
+using Game.Common;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -28,15 +29,14 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var caller = GetMakerAsPiece();
-            var collection = !caller.Color ? WhiteCaptured() : BlackCaptured();
+            var collection = GetCapturedOf(caller.Color);
 
-            ActionManager.EnqueueAction(new SpawnPiece(new PieceConfig("piece_sea_star", caller.Color, GetTargetPos()),
+            ActionManager.EnqueueAction(new Resurrect(caller, new PieceConfig("piece_sea_star", caller.Color, GetTargetPos()),
                 logic =>
                 {
                     SetCooldown(logic, -1);
                 }));
             
-            collection.Remove(collection.First(p => p.Type == "piece_sea_star"));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }

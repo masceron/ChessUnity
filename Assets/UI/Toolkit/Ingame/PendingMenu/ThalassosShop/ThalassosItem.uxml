@@ -1,0 +1,6 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Toolkit/Ingame/PendingMenu/ThalassosShop/ThalassosItem.uss?fileID=7433441132597879392&amp;guid=5a4a2647c3dcdea4996485323f9fd4cd&amp;type=3#ThalassosItem"/>
+    <ui:VisualElement name="SingleIcon" class="single-icon">
+        <ui:Label text="" name="Name" style="font-size: 15px; -unity-font-style: bold; color: rgb(255, 255, 0); margin-bottom: 0; padding-bottom: 3px;"/>
+    </ui:VisualElement>
+</ui:UXML>

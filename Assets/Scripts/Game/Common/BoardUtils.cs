@@ -165,14 +165,9 @@ namespace Game.Common
             return MatchManager.Ins.GameState.SideToMove;
         }
 
-        public static List<PieceConfig> WhiteCaptured()
+        public static IReadOnlyList<PieceConfig> GetCapturedOf(bool color)
         {
-            return MatchManager.Ins.GameState.Captured.Item1;
-        }
-
-        public static List<PieceConfig> BlackCaptured()
-        {
-            return MatchManager.Ins.GameState.Captured.Item2;
+            return !color ? MatchManager.Ins.GameState.Captured.Item1 : MatchManager.Ins.GameState.Captured.Item2;
         }
 
         [Mutator]
