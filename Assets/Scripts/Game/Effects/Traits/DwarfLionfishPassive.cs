@@ -10,6 +10,7 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DwarfLionfishPassive : Vengeful
     {
+        private const int Stack = 2;
         public DwarfLionfishPassive(PieceLogic piece) : base(piece, VengefulType.OnCapture, "effect_dwarf_lionfish_passive")
         {
         }
@@ -20,7 +21,7 @@ namespace Game.Effects.Traits
         protected override void OnVengefulTrigger()
         {
             if (Killer == null) return;
-            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(2, Killer)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(Stack, Killer)));
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class DwarfLionfishActive : Action, ISkills
     {
+        private const int Stack = 5;
         [MemoryPackConstructor]
         private DwarfLionfishActive()
         {
@@ -28,10 +29,12 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 1);
+            var maker = GetMakerAsPiece();
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(maker, maker.GetStat(SkillStat.Range));
             foreach (var target in targets)
-                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target)));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+                ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(Stack, target)));
+            
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
     }
 }

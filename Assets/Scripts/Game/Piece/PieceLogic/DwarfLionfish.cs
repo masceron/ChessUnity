@@ -12,8 +12,10 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DwarfLionfish : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 1;
         public DwarfLionfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
         {
+            SetStat(SkillStat.Range, Range);
             ActionManager.ExecuteImmediately(new ApplyEffect(new DwarfLionfishPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -26,7 +28,7 @@ namespace Game.Piece.PieceLogic
                 {
                     //query for AI in here
                     var (rank, file) = RankFileOf(Pos);
-                    var listA = GetPiecesInRadius(rank, file, 1, p =>
+                    var listA = GetPiecesInRadius(rank, file, GetStat(SkillStat.Range), p =>
                         p != null && p.Color != Color &&
                         (p.Effects == null || !p.Effects.Any(e => e.EffectName == "effect_extremophile")));
 
