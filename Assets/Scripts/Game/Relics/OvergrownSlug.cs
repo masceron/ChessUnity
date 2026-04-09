@@ -1,4 +1,5 @@
-﻿using Game.Action.Relics;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
@@ -14,21 +15,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                var commander = GetCommanderOf(Color);
-                if (commander != null)
-                {
-                    //Làm lại
-                    //var pending = new OvergrownSlugPending(this, commander);
-                    TileManager.Ins.MarkAsMoveable(commander.Pos);
-                    //BoardViewer.ListOf.Add(pending);
-                    BoardViewer.Selecting = -2;
-                    BoardViewer.SelectingFunction = 4;
-                }
-            }
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Game.Common;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
+using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -19,22 +21,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                foreach (var piece in BoardUtils.PieceBoard())
-                {
-                    if (piece == null && piece.Color != Color) continue;
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    // var pending = new CommonPearlPending(this);
-                    // BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

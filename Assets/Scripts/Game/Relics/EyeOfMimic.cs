@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Common;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
@@ -22,26 +21,13 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
+            if (CurrentCooldown != 0) return;
+            
+            foreach (var piece in BoardUtils.GetAllPieces())
             {
-                foreach (var piece in BoardUtils.PieceBoard())
-                {
-                    if (piece == null) continue;
-
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    //var pending = new EyeOfMimicPending(this, piece.Pos);
-                    //BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
-            else
-            {
-                Debug.Log("Eye of Mimic is on cooldown for " + CurrentCooldown + " more turns.");
+                actions.Add(new EyeOfMimicPending(piece));
             }
         }
 

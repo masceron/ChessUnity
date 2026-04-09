@@ -21,22 +21,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                foreach (var piece in PieceBoard())
-                {
-                    if (piece == null || piece.Effects.All(e => e.EffectName != "effect_infected")) continue;
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    // var pending = new RottingScythePending(this, piece);
-                    // BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

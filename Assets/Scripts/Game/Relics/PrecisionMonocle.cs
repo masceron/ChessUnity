@@ -1,4 +1,6 @@
-﻿using Game.Relics.Commons;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
+using Game.Relics.Commons;
 using UX.UI.Ingame;
 
 namespace Game.Relics
@@ -13,17 +15,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                // TileManager.Ins.MarkAsMoveable();
-                // var pending = new PrecisionMonoclePending(this, piece.Pos);
-                // BoardViewer.ListOf.Add(pending);
-                //TODO: Find Maker
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            throw new System.NotImplementedException();
         }
     }
 }

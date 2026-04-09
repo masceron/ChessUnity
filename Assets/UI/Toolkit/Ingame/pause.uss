@@ -77,7 +77,7 @@
 .pause-side-panel {
     translate: -120% 0;
     transition-property: translate;
-    transition-duration: 0.2s;
+    transition-duration: 0.15s;
     transition-timing-function: ease-out-cubic;
 }
 

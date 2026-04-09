@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Game.Action.Relics;
 using Game.Common;
 using Game.Effects;
@@ -18,21 +19,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown != 0) return;
-
-            foreach (var piece in BoardUtils.PieceBoard())
-            {
-                if (piece == null) continue;
-                TileManager.Ins.MarkAsMoveable(piece.Pos);
-                //Làm lại
-                // var pending = new BlackPearlPending(this, piece.Pos);
-                // BoardViewer.ListOf.Add(pending);
-            }
-
-            BoardViewer.Selecting = -2;
-            BoardViewer.SelectingFunction = 4;
+            throw new NotImplementedException();
         }
 
         public override void ActiveForAI()

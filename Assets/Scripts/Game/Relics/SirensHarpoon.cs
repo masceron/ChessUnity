@@ -23,25 +23,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-                foreach (var piece in BoardUtils.PieceBoard())
-                {
-                    if (piece == null) continue;
-
-
-                    if (piece.Color != Color && piece.PieceRank <= PieceRank.Common)
-                    {
-                        TileManager.Ins.MarkAsMoveable(piece.Pos);
-                        //Làm lại
-                        // var pending = new SirensHarpoonPending(this, piece);
-                        // BoardViewer.ListOf.Add(pending);
-                    }
-
-                    BoardViewer.Selecting = -2;
-                    BoardViewer.SelectingFunction = 4;
-                }
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

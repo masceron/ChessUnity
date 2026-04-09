@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
@@ -36,27 +37,10 @@ namespace Game.Relics
                 possibleRank.Add(PieceRank.Elite);
             else if (currentLevel == 3) possibleRank.Add(PieceRank.Champion);
         }
-
-        public override void Activate()
+        
+        public override void Activate(List<Action.Action> actions)
         {
-            if (corruptedWisperCharge.Strength > 0)
-            {
-                foreach (var piece in BoardUtils.PieceBoard())
-                {
-                    if (piece == null || piece.Color == Color) continue;
-                    if (!possibleRank.Contains(piece.PieceRank)) continue;
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    
-                    //Làm lại
-                    // var pending = new CorruptedWisperPending(piece.Pos, this);
-                    // BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-
-                corruptedWisperCharge.Strength--;
-            }
+            throw new System.NotImplementedException();
         }
     }
 }

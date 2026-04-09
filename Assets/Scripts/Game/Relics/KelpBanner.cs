@@ -1,8 +1,6 @@
-﻿using Game.Common;
-using Game.Managers;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
 using Game.Relics.Commons;
-using Game.Tile;
-using UX.UI.Ingame;
 
 namespace Game.Relics
 {
@@ -14,21 +12,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                foreach (var formation in BoardUtils.GetFormation(FormationType.Kelp))
-                {
-                    TileManager.Ins.MarkAsMoveable(formation.Pos);
-                    //Làm lại
-                    //var pending = new KelpBannerPending(this);
-                    //BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            throw new System.NotImplementedException();
         }
     }
 }

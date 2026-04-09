@@ -10,9 +10,8 @@ namespace UX.UI.Toolkit.MainMenu
         {
             var root = GetComponent<UIDocument>().rootVisualElement;
 
-            var play = root.Q<Button>("Play");
-
-            play.clicked += LoadMatch;
+            root.Q<Button>("Play").clicked += LoadMatch;
+            root.Q<Button>("Quit").clicked += () => Application.Quit(0);
         }
 
         private static void LoadMatch()

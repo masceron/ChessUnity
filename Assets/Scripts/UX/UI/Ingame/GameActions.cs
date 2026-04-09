@@ -68,7 +68,6 @@ namespace UX.UI.Ingame
         private void PressRelic()
         {
             if (!relic.interactable) return;
-            BoardUtils.GetRelicOf(BoardUtils.OurSide())?.Activate();
         }
     }
 }

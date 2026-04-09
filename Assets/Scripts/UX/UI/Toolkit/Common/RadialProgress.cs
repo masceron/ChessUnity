@@ -6,6 +6,9 @@ namespace UX.UI.Toolkit.Common
     [UxmlElement]
     public partial class RadialProgress: VisualElement
     {
+        [UxmlAttribute] 
+        public Color FillColor;
+        
         private float _progress = 1.0f;
         public float Progress
         {
@@ -32,8 +35,8 @@ namespace UX.UI.Toolkit.Common
             var center = r.center;
             
             var radius = Mathf.Sqrt(r.width * r.width + r.height * r.height) / 2f;
-            
-            painter.fillColor = new Color(0, 62f / 255f, 116 / 255f, 1f);
+
+            painter.fillColor = FillColor;
             painter.BeginPath();
         
             painter.MoveTo(center);

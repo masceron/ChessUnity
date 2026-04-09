@@ -6,6 +6,7 @@ using Game.Save.Stage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using UX.UI.Toolkit.Common;
 using static UnityEngine.SceneManagement.SceneManager;
 
 namespace UX.UI.Toolkit.Loader
@@ -14,6 +15,7 @@ namespace UX.UI.Toolkit.Loader
     {
         [NonSerialized] private UIDocument _loadingDoc;
         private VisualElement _loadingRoot;
+        private RadialProgress _loadingProgress;
 
         protected override void Awake()
         {
@@ -42,6 +44,7 @@ namespace UX.UI.Toolkit.Loader
                 }
             };
             _loadingRoot = _loadingDoc.rootVisualElement.Q<VisualElement>("Root");
+            _loadingProgress = _loadingRoot.Q<RadialProgress>("RadialProgress");
         }
 
         public void ChangeScene(string sceneName)
@@ -52,15 +55,36 @@ namespace UX.UI.Toolkit.Loader
         private IEnumerator Load(string sceneName)
         {
             _loadingRoot.style.display = DisplayStyle.Flex;
+            _loadingProgress.Progress = 1f;
 
             yield return new WaitForSeconds(0.2f);
+    
             var op = LoadSceneAsync(sceneName, LoadSceneMode.Single);
             op.allowSceneActivation = false;
-            while (!op.isDone)
+
+            var visualProgress = 0f;
+            
+            while (visualProgress < 0.9f)
             {
-                if (op.progress >= 0.9f) op.allowSceneActivation = true;
+                visualProgress = Mathf.MoveTowards(visualProgress, op.progress, Time.deltaTime * 2.5f);
+                
+                _loadingProgress.Progress = 1f - visualProgress;
+
                 yield return null;
             }
+            
+            op.allowSceneActivation = true;
+            
+            while (visualProgress < 1f)
+            {
+                visualProgress = Mathf.MoveTowards(visualProgress, 1f, Time.deltaTime * 2f);
+                _loadingProgress.Progress = 1f - visualProgress;
+                yield return null;
+            }
+            
+            _loadingProgress.Progress = 0f; 
+            
+            yield return new WaitForSeconds(0.1f);
 
             _loadingRoot.style.display = DisplayStyle.None;
         }

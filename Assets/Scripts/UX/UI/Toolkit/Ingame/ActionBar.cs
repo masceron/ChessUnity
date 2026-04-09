@@ -322,10 +322,7 @@ namespace UX.UI.Toolkit.Ingame
                         _boardViewer.SelectingPiece.MoveList(_boardViewer.AllMoves);
                         _boardViewer.CurrentAvailableMoves.Clear();
                         _boardViewer.ClearHighlights();
-                        foreach (var move in Enumerable.OfType<IRelicAction>(_boardViewer.AllMoves))
-                        {
-                            _boardViewer.CurrentAvailableMoves.Add((Action)move);
-                        }
+                        BoardUtils.GetRelicOf(BoardUtils.OurSide()).Activate(_boardViewer.CurrentAvailableMoves);
 
                         _boardViewer.Highlighter(
                             _boardViewer.CurrentAvailableMoves.Select(a => a.GetTargetPos()).ToList());

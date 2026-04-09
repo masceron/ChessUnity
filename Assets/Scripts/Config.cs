@@ -20,7 +20,7 @@ public static class Config
         new PieceConfig("piece_archelon", true, 25)
     };
 
-    public static RelicConfig relicWhiteConfig = new("relic_coral_tome", false, 6);
+    public static RelicConfig relicWhiteConfig = new("relic_eye_of_mimic", false, 6);
     public static RelicConfig relicBlackConfig = new("relic_coral_tome", true, 6);
     public static FieldEffectType FieldEffectType = FieldEffectType.None;
 

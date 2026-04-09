@@ -11,7 +11,7 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
     {
         private UniTaskCompletionSource<Empty> _tcs;
         private VisualElement _mainPanel;
-        private const int AnimationTime = 200;
+        private const int AnimationTime = 180;
         private Button _resume;
         private Button _quit;
         private Button _mainMenu;
@@ -47,7 +47,7 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
             
             await UniTask.DelayFrame(2);
             _mainPanel.AddToClassList("pause-side-panel--visible");
-            await UniTask.Delay(AnimationTime + 30, ignoreTimeScale: true);
+            await UniTask.Delay(AnimationTime, ignoreTimeScale: true);
             
             _resume.SetEnabled(true);
             _mainMenu.SetEnabled(true);
@@ -61,7 +61,7 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
             this.Q<VisualElement>("MainContainer").style.display = DisplayStyle.None;
             _mainPanel.RemoveFromClassList("pause-side-panel--visible");
             
-            await UniTask.Delay(AnimationTime + 30, ignoreTimeScale: true);
+            await UniTask.Delay(AnimationTime, ignoreTimeScale: true);
             
             _tcs.TrySetResult(new Empty());
         }

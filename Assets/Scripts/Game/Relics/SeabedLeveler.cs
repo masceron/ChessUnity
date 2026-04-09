@@ -1,4 +1,6 @@
-﻿using Game.Common;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
+using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -19,27 +21,9 @@ namespace Game.Relics
             BoardUtils.AddEffectObserver(charge);
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (charge.Strength >= 3)
-            {
-                for (var i = 0; i < BoardUtils.BoardSize; ++i)
-                {
-                    var piece = BoardUtils.PieceOn(i);
-                    if (piece == null || piece.Color == Color) continue;
-                    if (!BoardUtils.HasFormation(i)) continue;
-
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    // var pending = new SeabedLevelerPending(charge, piece);
-                    // BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
-
-            if (CurrentCooldown > 0) charge.Strength = 0;
+            throw new System.NotImplementedException();
         }
     }
 }

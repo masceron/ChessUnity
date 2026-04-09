@@ -20,7 +20,7 @@ namespace Game.Action.Relics
         protected override void ModifyGameState()
         {
             // apply 1 turn nhưng vì ApplyEffect tự động ++duration nên ở đây để là 0
-            ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(GetFrom(), GetTargetPos(), 0)));
+            ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(GetMakerAsPiece(), GetTargetAsPiece(), 0)));
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Game.Relics.Commons;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
+using Game.Relics.Commons;
 
 namespace Game.Relics
 {
@@ -10,15 +12,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                //Làm lại
-                //var ui = BoardViewer.Ins.GetOrInstantiateUI<CoralTomeUI>(IngameSubmenus.CoralTomeUI);
-
-                //ui.Load();
-            }
+            throw new System.NotImplementedException();
         }
     }
 }

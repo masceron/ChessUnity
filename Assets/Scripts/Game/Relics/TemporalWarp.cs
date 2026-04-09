@@ -1,4 +1,6 @@
-﻿using Game.Common;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
+using Game.Common;
 using Game.Managers;
 using Game.Relics.Commons;
 using UnityEngine;
@@ -18,20 +20,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown != 0) return;
-            foreach (var piece in BoardUtils.FindAllAlliesInEnemyHalf(Color))
-            {
-                Debug.Log(piece.Type);
-                TileManager.Ins.MarkAsMoveable(piece.Pos);
-                //Làm lại
-                // var pending = new TemporalWarpPending(piece.Pos);
-                // BoardViewer.ListOf.Add(pending);
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

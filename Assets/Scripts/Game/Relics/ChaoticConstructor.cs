@@ -1,6 +1,6 @@
-﻿using Game.Action.Relics;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
 using Game.Relics.Commons;
-using UX.UI.Ingame;
 
 namespace Game.Relics
 {
@@ -16,13 +16,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown != 0) return;
-            var action = new ChaoticConstructorAction();
-            BoardViewer.Ins.ExecuteAction(action);
-            BoardViewer.Selecting = -2;
-            BoardViewer.SelectingFunction = 4;
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

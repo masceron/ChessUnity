@@ -11,7 +11,7 @@ namespace UX.UI.Toolkit.Ingame
         [NonSerialized] private InputManager _inputManager;
         [NonSerialized] private VisualElement _inGameHUD;
         [NonSerialized] private UIDocument _mainDoc;
-        private const int FadeTime = 150;
+        private const int FadeTime = 180;
 
         private void Awake()
         {

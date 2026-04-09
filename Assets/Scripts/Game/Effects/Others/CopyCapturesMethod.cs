@@ -12,12 +12,12 @@ namespace Game.Effects.Others
         private int _ourPieceAttackRangeSaver;
         private CapturesDelegate _ourPieceCapturesSaver;
 
-        public CopyCapturesMethod(int firstPiece, int secondPiece, int duration) : base(duration, 1,
-            BoardUtils.PieceOn(firstPiece), "effect_copy_captures_method")
+        public CopyCapturesMethod(PieceLogic firstPiece, PieceLogic secondPiece, int duration) : base(duration, 1,
+            firstPiece, "effect_copy_captures_method")
         {
             Duration = duration;
-            _ourPiece = BoardUtils.PieceOn(firstPiece);
-            _opponentPiece = BoardUtils.PieceOn(secondPiece);
+            _ourPiece = firstPiece;
+            _opponentPiece = secondPiece;
         }
 
         public void OnApply()

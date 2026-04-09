@@ -1,4 +1,6 @@
-﻿using Game.Common;
+﻿using System.Collections.Generic;
+using Game.Action.Relics;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Relics.Commons
@@ -20,7 +22,7 @@ namespace Game.Relics.Commons
 
         public PieceLogic CommanderPiece => BoardUtils.GetCommanderOf(Color);
 
-        public abstract void Activate();
+        public abstract void Activate(List<Action.Action> actions);
 
         public void SetCooldown()
         {

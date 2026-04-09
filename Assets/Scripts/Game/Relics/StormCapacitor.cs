@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Action.Internal;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Effects.Others;
@@ -25,31 +26,9 @@ namespace Game.Relics
             BoardUtils.AddEffectObserver(charge);
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            Debug.Log("Charge: " + charge.Strength);
-            if (charge.Strength >= 3)
-            {
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-
-                //Làm lại
-                // Tile.Tile.OnPointEnterHandle = thisTile =>
-                // {
-                //     if (hoveringTile == thisTile) return;
-                //     if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, Size, false);
-                //
-                //     hoveringTile = thisTile;
-                //     TileManager.Ins.MarkTileInRange(hoveringTile, Size, true);
-                //     
-                //     //Làm lại
-                //     // var pending = new StormCapacitorPending(hoveringTile, this, Size);
-                //
-                //     // if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
-                // };
-            }
-
-            if (CurrentCooldown > 0) charge.Strength = 0;
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

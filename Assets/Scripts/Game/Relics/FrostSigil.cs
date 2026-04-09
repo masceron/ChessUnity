@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using Game.Common;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using UnityEngine;
-using UX.UI.Ingame;
-using Game.Action.Internal.Pending.Relic;
-using Game.Action;
+using Game.Action.Relics;
 
 namespace Game.Relics
 {
@@ -21,32 +18,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown == 0)
-            {
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-
-                //Làm lại
-                // Tile.Tile.OnPointEnterHandle = thisTile =>
-                // {
-                //     if (hoveringTile != null) TileManager.Ins.MarkTileInRange(hoveringTile, 3, false);
-                //
-                //     hoveringTile = thisTile;
-                //     TileManager.Ins.MarkTileInRange(hoveringTile, 3, true);
-                //
-                //     //Làm lại
-                //     var pos = BoardUtils.IndexOf(hoveringTile.Rank, hoveringTile.File);
-                //     var pending = new FrostSigilPending(pos, this);
-                //
-                //     if (!BoardViewer.ListOf.Contains(pending, new ActionComparer())) BoardViewer.ListOf.Add(pending);
-                // };
-            }
-            else
-            {
-                Debug.Log("Frost Sigil is on cooldown for " + CurrentCooldown + "more turn");
-            }
+            
         }
 
         public override void ActiveForAI()

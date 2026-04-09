@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -21,29 +21,6 @@ namespace Game.Relics
             Color = config.Color;
             TimeCooldown = config.TimeCooldown; // Cooldown in turns
             CurrentCooldown = 0;
-        }
-
-        public override void Activate()
-        {
-            if (CurrentCooldown == 0)
-            {
-                foreach (var piece in BoardUtils.PieceBoard())
-                {
-                    if (piece == null) continue;
-                    if (!IsNextEachOther(piece)) continue;
-                    TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    //var pending = new MangroveCharmPending(this, piece.Pos);
-                    //BoardViewer.ListOf.Add(pending);
-                }
-
-                BoardViewer.Selecting = -2;
-                BoardViewer.SelectingFunction = 4;
-            }
-            else
-            {
-                Debug.Log("Eye of Mimic is on cooldown for " + CurrentCooldown + " more turns.");
-            }
         }
 
         private PieceLogic BestNextPiece(PieceLogic p)
@@ -69,6 +46,11 @@ namespace Game.Relics
                 potentialPiece.Sort((a, b) => RankOf(b.Pos).CompareTo(RankOf(a.Pos)));
 
             return potentialPiece[0];
+        }
+
+        public override void Activate(List<Action.Action> actions)
+        {
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()

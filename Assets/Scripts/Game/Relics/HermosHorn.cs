@@ -1,6 +1,6 @@
+using System.Collections.Generic;
+using Game.Action.Relics;
 using Game.Relics.Commons;
-using UX.UI.Ingame;
-using UX.UI.Ingame.HermosHornUI;
 
 namespace Game.Relics
 {
@@ -13,12 +13,9 @@ namespace Game.Relics
             CurrentCooldown = 0;
         }
 
-        public override void Activate()
+        public override void Activate(List<Action.Action> actions)
         {
-            if (CurrentCooldown != 0) return;
-
-            var ui = BoardViewer.Ins.GetOrInstantiateUI<HermosHornUI>(IngameSubmenus.HermosHornUI);
-            ui.Load(this);
+            throw new System.NotImplementedException();
         }
 
         public override void ActiveForAI()
