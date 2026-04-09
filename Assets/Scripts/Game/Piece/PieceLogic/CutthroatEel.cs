@@ -18,6 +18,7 @@ namespace Game.Piece.PieceLogic
         private const int Range = 4;
         public CutthroatEel(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Nocturnal(-1, -1, this, "effect_nocturnal")));
             SetStat(SkillStat.Range, Range);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -27,21 +28,17 @@ namespace Game.Piece.PieceLogic
                     foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                     {
                         int direction = Color ? 1 : -1;
-                        var targetPos = IndexOf(rank, file);
-                        if (!IsActive(targetPos)) return;
-                        var pieceOn = PieceOn(targetPos);
 
                         var pieceBehindTarget = PieceOn(IndexOf(rank + direction, file));
                         if (pieceBehindTarget != null) continue;
 
-                        if (pieceOn != null && pieceOn.Color != Color &&
-                            pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
-                            foreach (var effect in pieceOn.Effects)
-                                if (effect is Bleeding)
-                                {
-                                    list.Add(new CutthroatEelActive(this, pieceOn));
-                                    break;
-                                }
+                        var targetPos = IndexOf(rank, file);
+                        if (!IsActive(targetPos)) return;
+                        var pieceOn = PieceOn(targetPos);
+
+                        if (pieceOn != null && pieceOn.Color != Color && pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
+                            list.Add(new CutthroatEelActive(this, pieceOn));
+                                
                     }
                 }
                 else

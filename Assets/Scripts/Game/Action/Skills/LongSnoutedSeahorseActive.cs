@@ -32,7 +32,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Swap(GetMakerAsPiece(), GetTargetAsPiece());
+            ActionManager.EnqueueAction(new SwapPiece(GetMakerAsPiece(), GetTargetAsPiece()));
             ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }

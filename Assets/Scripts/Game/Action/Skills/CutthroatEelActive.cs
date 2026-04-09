@@ -31,6 +31,7 @@ namespace Game.Action.Skills
             var direction = makerPiece.Color ? 1 : -1;
             ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), 
                 IndexOf(RankOf(GetTargetPos()) + direction, FileOf(GetTargetPos()))));
+
             var bleeding = GetTargetAsPiece().Effects.First(e => e is Bleeding);
             if (bleeding.Strength >= 4)
             {
@@ -41,6 +42,8 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece(), GetTargetAsPiece()));
                 SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
+
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
