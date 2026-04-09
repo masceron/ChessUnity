@@ -1,4 +1,5 @@
-﻿using Game.Common;
+﻿using System;
+using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -23,8 +24,16 @@ namespace UX.UI.Toolkit.Ingame
             _uiDocument = GetComponent<UIDocument>();
             _boardViewer = GetComponent<BoardViewer>();
             _effectBar = _uiDocument.rootVisualElement.Q<VisualElement>("EffectBar");
+        }
 
+        private void OnEnable()
+        {
             _boardViewer.OnSelectingPieceChanged += SelectingPieceHandler;
+        }
+
+        private void OnDisable()
+        {
+            _boardViewer.OnSelectingPieceChanged -= SelectingPieceHandler;
         }
 
         private void SelectingPieceHandler(PieceLogic pieceLogic)

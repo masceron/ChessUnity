@@ -1,0 +1,50 @@
+﻿using System;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+using UnityEngine.UIElements;
+using UX.UI.Toolkit.Common;
+
+namespace UX.UI.Toolkit.Ingame
+{
+    public class PauseMenu : MonoBehaviour
+    {
+        [NonSerialized] private InputManager _inputManager;
+        [NonSerialized] private VisualElement _inGameHUD;
+        private const int FadeTime = 150;
+
+        private void Awake()
+        {
+            _inputManager = GetComponent<InputManager>();
+            _inGameHUD = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("InGameRoot");
+        }
+
+        private void OnEnable()
+        {
+            _inputManager.OnMenuToggle += MenuClick;
+        }
+
+        private void OnDisable()
+        {
+            _inputManager.OnMenuToggle -= MenuClick;
+        }
+
+        private async void MenuClick()
+        {
+            _inGameHUD.AddToClassList("hud-container--hidden");
+            await UniTask.Delay(FadeTime);
+            try
+            {
+                await UIManager.Ins.OpenMenu(InGameMenuType.PauseMenu);
+            }
+            catch (Exception)
+            {
+                //ignore
+            }
+            finally
+            {
+                _inGameHUD.RemoveFromClassList("hud-container--hidden");
+                await UniTask.Delay(FadeTime);
+            }
+        }
+    }
+}

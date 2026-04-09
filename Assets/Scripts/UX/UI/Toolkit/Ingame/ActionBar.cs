@@ -42,28 +42,24 @@ namespace UX.UI.Toolkit.Ingame
 
             var root = GetComponent<UIDocument>().rootVisualElement;
             _quiets = root.Q<Button>("Move");
-            _quiets.clicked += ClickMove;
-
             _captures = root.Q<Button>("Capture");
-            _captures.clicked += ClickCapture;
-
             _skills = root.Q<Button>("Skill");
-            _skills.clicked += ClickSkill;
-
             _relics = root.Q<Button>("Relic");
-            _relics.clicked += ClickRelic;
-
             _skip = root.Q<Button>("Skip");
-            _skip.clicked += ClickSkip;
-
             _icon = root.Q<VisualElement>("Icon");
-
             _skillCooldown = root.Q<RadialProgress>("SkillCooldownRadial");
             _relicCooldown = root.Q<RadialProgress>("RelicCooldownRadial");
-
             _skillCooldownTime = root.Q<Label>("SkillCooldown");
             _relicCooldownTime = root.Q<Label>("RelicCooldown");
+        }
 
+        private void OnEnable()
+        {
+            _quiets.clicked += ClickMove;
+            _captures.clicked += ClickCapture;
+            _skills.clicked += ClickSkill;
+            _relics.clicked += ClickRelic;
+            _skip.clicked += ClickSkip;
             var input = GetComponent<InputManager>();
             input.OnMarkQuiets += ClickMove;
             input.OnMarkCaptures += ClickCapture;
@@ -71,8 +67,24 @@ namespace UX.UI.Toolkit.Ingame
             input.OnMarkRelics += ClickRelic;
             _boardViewer.OnStateChanged += UpdateUIState;
             _boardViewer.OnSelectingPieceChanged += SelectingPieceChangedHandler;
-
             input.OnMarkSkip += ClickSkip;
+        }
+
+        private void OnDisable()
+        {
+            _quiets.clicked -= ClickMove;
+            _captures.clicked -= ClickCapture;
+            _skills.clicked -= ClickSkill;
+            _relics.clicked -= ClickRelic;
+            _skip.clicked -= ClickSkip;
+            var input = GetComponent<InputManager>();
+            input.OnMarkQuiets -= ClickMove;
+            input.OnMarkCaptures -= ClickCapture;
+            input.OnMarkSkills -= ClickSkill;
+            input.OnMarkRelics -= ClickRelic;
+            _boardViewer.OnStateChanged -= UpdateUIState;
+            _boardViewer.OnSelectingPieceChanged -= SelectingPieceChangedHandler;
+            input.OnMarkSkip -= ClickSkip;
         }
 
         private void ClickSkip()

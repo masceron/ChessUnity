@@ -108,5 +108,13 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
         {
             _tcs.TrySetResult(null);
         }
+
+        public void ForceClose()
+        {
+            if (_tcs is { Task: { Status: UniTaskStatus.Pending } })
+            {
+                Cancel();
+            }
+        }
     }
 }

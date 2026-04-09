@@ -46,3 +46,14 @@
     -unity-background-image-tint-color: rgb(154, 147, 147);
     opacity: 1;
 }
+
+.hud-container {
+    opacity: 1;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-in-out;
+}
+
+.hud-container--hidden {
+    opacity: 0;
+}

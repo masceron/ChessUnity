@@ -27,7 +27,7 @@ namespace UX.UI.Toolkit.Ingame
 
     public class BoardViewer : MonoBehaviour, ITargetingContext
     {
-        private UniTaskCompletionSource<int> _pendingClickTcs;
+        public UniTaskCompletionSource<int> PendingTask;
         private Func<int, bool> _pendingClickValidator;
 
         [NonSerialized] private Transform _centerOfView;
@@ -64,8 +64,6 @@ namespace UX.UI.Toolkit.Ingame
 
         [NonSerialized] public List<Action> AllMoves;
         [NonSerialized] public List<Action> CurrentAvailableMoves;
-        
-        [NonSerialized] private UIDocument _mainUIDocument;
 
         private void Awake()
         {
@@ -73,7 +71,7 @@ namespace UX.UI.Toolkit.Ingame
             AllMoves = new List<Action>();
             CurrentAvailableMoves = new List<Action>();
             _centerOfView = GameObject.Find("CameraTarget").GetComponent<Transform>();
-            _mainUIDocument = gameObject.GetComponent<UIDocument>();
+            gameObject.GetComponent<UIDocument>();
         }
 
         private void OnEnable()
@@ -118,7 +116,7 @@ namespace UX.UI.Toolkit.Ingame
             }
         }
 
-        private void Idle()
+        public void Idle()
         {
             CurrentState = ControlState.Idle;
             SelectingPiece = null;
@@ -199,12 +197,12 @@ namespace UX.UI.Toolkit.Ingame
 
                     break;
                 case ControlState.TargetingPending:
-                    if (_pendingClickTcs != null)
+                    if (PendingTask != null)
                     {
                         if (_pendingClickValidator == null || _pendingClickValidator(position))
                         {
-                            var tcs = _pendingClickTcs;
-                            _pendingClickTcs = null;
+                            var tcs = PendingTask;
+                            PendingTask = null;
                             tcs.TrySetResult(position);
                         }
                     }
@@ -219,9 +217,9 @@ namespace UX.UI.Toolkit.Ingame
         {
             switch (CurrentState)
             {
-                case ControlState.TargetingPending when _pendingClickTcs != null:
-                    _pendingClickTcs.TrySetCanceled();
-                    _pendingClickTcs = null;
+                case ControlState.TargetingPending when PendingTask != null:
+                    PendingTask.TrySetCanceled();
+                    PendingTask = null;
                     break;
                 case ControlState.PieceSelected:
                     Idle();
@@ -248,9 +246,9 @@ namespace UX.UI.Toolkit.Ingame
         {
             CurrentState = ControlState.TargetingPending;
             _pendingClickValidator = validator;
-            _pendingClickTcs = new UniTaskCompletionSource<int>();
+            PendingTask = new UniTaskCompletionSource<int>();
 
-            return _pendingClickTcs.Task;
+            return PendingTask.Task;
         }
 
         public void Highlighter(IEnumerable<int> positions)
@@ -271,41 +269,9 @@ namespace UX.UI.Toolkit.Ingame
             TileManager.Ins.UnMark(position);
         }
 
-        public async UniTask<TResult> OpenMenu<TPayload, TResult>(InGameMenuType menuType, TPayload payload)
+        public UniTask<TResult> OpenMenu<TPayload, TResult>(InGameMenuType menuType, TPayload payload)
         {
-            if (!UIHolder.Ins.Get(menuType, out var uiAsset))
-            {
-                throw new Exception($"No UI registered for MenuType: {menuType}");
-            }
-
-            var uiInstance = uiAsset.Instantiate();
-            
-            uiInstance.style.position = Position.Absolute;
-            uiInstance.style.top = 0;
-            uiInstance.style.bottom = 0;
-            uiInstance.style.left = 0;
-            uiInstance.style.right = 0;
-            
-            _mainUIDocument.rootVisualElement.Add(uiInstance);
-
-            var awaitableUI =
-                uiInstance.Children().FirstOrDefault(e => e is IAwaitableUI<TPayload, TResult>) as
-                    IAwaitableUI<TPayload, TResult>;
-
-            if (awaitableUI == null)
-            {
-                uiInstance.RemoveFromHierarchy();
-            }
-
-            try
-            {
-                var result = await awaitableUI.WaitForSelection(payload);
-                return result;
-            }
-            finally
-            {
-                uiInstance.RemoveFromHierarchy();
-            }
+            return UIManager.Ins.OpenMenu<TPayload, TResult>(menuType, payload);
         }
     }
 }

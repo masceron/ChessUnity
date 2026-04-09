@@ -9,6 +9,7 @@ namespace UX.UI.Toolkit.Ingame
     public class InputManager: MonoBehaviour
     {
         [NonSerialized] private UnityEngine.Camera _mainCamera;
+        [NonSerialized] private BoardViewer _boardViewer;
         private PlayerInput _controls;
         private Tile _currentHoveredTile;
         
@@ -20,6 +21,7 @@ namespace UX.UI.Toolkit.Ingame
         public event Action OnMarkSkills;
         public event Action OnMarkRelics;
         public event Action OnMarkSkip;
+        public event Action OnMenuToggle;
         
         private int _tileLayerMask;
 
@@ -27,6 +29,7 @@ namespace UX.UI.Toolkit.Ingame
         {
             _mainCamera = UnityEngine.Camera.main;
             _controls = new PlayerInput();
+            _boardViewer = GetComponent<BoardViewer>();
             _tileLayerMask = LayerMask.GetMask("Tile");
 
             _controls.PlayerActions.Select.performed += HandleSelect;
@@ -36,6 +39,7 @@ namespace UX.UI.Toolkit.Ingame
             _controls.PlayerActions.MarkSkill.performed += HandleMarkSkills;
             _controls.PlayerActions.MarkRelics.performed += HandleMarkRelics;
             _controls.PlayerActions.SkipTurn.performed += HandleSkipTurn;
+            _controls.PlayerActions.Quit.performed += HandleEsc;
         }
         
         private void OnEnable()
@@ -117,6 +121,31 @@ namespace UX.UI.Toolkit.Ingame
         private void HandleSkipTurn(InputAction.CallbackContext context)
         {
             OnMarkSkip?.Invoke();
+        }
+
+        private void HandleEsc(InputAction.CallbackContext context)
+        {
+            if (UIManager.Ins.HasActiveMenus)
+            {
+                UIManager.Ins.Pop();
+                return;
+            }
+            
+            if (_boardViewer.CurrentState == ControlState.TargetingPending && _boardViewer.PendingTask != null)
+            {
+                _boardViewer.PendingTask.TrySetCanceled();
+                _boardViewer.PendingTask = null;
+                _boardViewer.Idle();
+                return;
+            }
+    
+            if (_boardViewer.CurrentState != ControlState.Idle)
+            {
+                _boardViewer.Idle();
+                return;
+            }
+            
+            OnMenuToggle?.Invoke();
         }
     }
 }

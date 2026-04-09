@@ -1,0 +1,21 @@
+:root {
+}
+
+#Resume:hover {
+    background-color: rgba(14, 140, 7, 0.61);
+}
+
+#Quit:hover {
+    background-color: rgba(247, 12, 12, 0.61);
+}
+
+.pause-side-panel {
+    translate: -120% 0;
+    transition-property: translate;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.pause-side-panel--visible {
+    translate: 0 0;
+}
