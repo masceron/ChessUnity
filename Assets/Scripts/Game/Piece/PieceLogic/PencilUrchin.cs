@@ -21,7 +21,7 @@ namespace Game.Piece.PieceLogic
         public int GridSize  => _gridSize;
         public int CastRange => _castRange;
 
-        public PencilUrchin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
+        public PencilUrchin(PieceConfig cfg) : base(cfg, KingMoves.Quiets, None.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Adaptation(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new FreeMovement(this)));
