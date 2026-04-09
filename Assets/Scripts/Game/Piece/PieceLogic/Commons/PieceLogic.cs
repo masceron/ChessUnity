@@ -388,7 +388,7 @@ namespace Game.Piece.PieceLogic.Commons
 
             return Mathf.Max(finalStat, 0);
         }
-
+        // public bool HaveStat() =
         public void SetStat(SkillStat stat, int value, int num = 1)
         {
             if (!SkillStats.ContainsKey(stat)) SkillStats.Add(stat, new List<int>());
