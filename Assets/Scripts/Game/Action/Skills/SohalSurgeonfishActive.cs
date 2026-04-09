@@ -11,13 +11,15 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SohalSurgeonfishActive : Action, ISkills
     {
+        private readonly int duration;
         [MemoryPackConstructor]
         private SohalSurgeonfishActive()
         {
         }
 
-        public SohalSurgeonfishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
+        public SohalSurgeonfishActive(PieceLogic maker, PieceLogic target, int duration) : base(maker, target)
         {
+            this.duration = duration;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -27,8 +29,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), 5), GetMakerAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Leashed(GetTargetAsPiece(), duration), GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
