@@ -8,8 +8,10 @@ namespace Game.Piece.PieceLogic
 {
     public class LongSnoutedSeahorse : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 3;
         public LongSnoutedSeahorse(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
+            SetStat(SkillStat.Range, Range);
             //TODO: Change quite and capture movesets
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -19,7 +21,7 @@ namespace Game.Piece.PieceLogic
                 {
                     var (rank, file) = RankFileOf(Pos);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, GetStat(SkillStat.Range)))
                     {
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
@@ -38,7 +40,7 @@ namespace Game.Piece.PieceLogic
                     {
                         var (rank, file) = RankFileOf(Pos);
 
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, GetStat(SkillStat.Range)))
                         {
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);

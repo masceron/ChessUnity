@@ -15,8 +15,8 @@ MonoBehaviour:
   key: piece_long_snouted_seahorse
   prefab: {fileID: 2560844638400570401, guid: 5fbeb5a3da0051a40876bc58430711a5, type: 3}
   rank: 3
-  moveRange: 2
-  attackRange: 2
+  moveRange: 0
+  attackRange: 0
   movePattern: {fileID: 0}
   capturePattern: {fileID: 0}
   hasSkill: 1
