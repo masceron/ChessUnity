@@ -36,18 +36,18 @@ namespace Game.Managers
 
         private new void Awake()
         {
-            _mainUI = FindAnyObjectByType<UIDocument>();
+            _mainUI = GameObject.Find("MainUI").GetComponent<UIDocument>();
         }
 
         private void Start()
         {
-            Init(new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)), new LineupConfig(
-                Config.PieceConfigWhite.ToArray(),
-                Config.PieceConfigBlack.ToArray(),
-                Config.relicWhiteConfig,
-                Config.relicBlackConfig,
-                Config.FieldEffectType
-            ));
+            // Init(new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)), new LineupConfig(
+            //     Config.PieceConfigWhite.ToArray(),
+            //     Config.PieceConfigBlack.ToArray(),
+            //     Config.relicWhiteConfig,
+            //     Config.relicBlackConfig,
+            //     Config.FieldEffectType
+            // ));
         }
 
         private static void MakeBoard()

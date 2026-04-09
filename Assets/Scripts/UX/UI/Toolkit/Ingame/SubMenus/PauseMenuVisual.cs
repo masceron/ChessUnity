@@ -2,15 +2,16 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using UX.UI.Toolkit.Common;
+using UX.UI.Toolkit.Loader;
 
 namespace UX.UI.Toolkit.Ingame.SubMenus
 {
     [UxmlElement]
-    public partial class PauseMenuVisual: VisualElement, IAwaitableUI<Empty, Empty>
+    public partial class PauseMenuVisual: VisualElement, IAwaitableUI<UIDocument, Empty>
     {
         private UniTaskCompletionSource<Empty> _tcs;
         private VisualElement _mainPanel;
-        private const int AnimationTime = 250;
+        private const int AnimationTime = 200;
         private Button _resume;
         private Button _quit;
         private Button _mainMenu;
@@ -23,8 +24,9 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
             }
         }
 
-        public async UniTask<Empty> WaitForSelection(Empty payload)
+        public async UniTask<Empty> WaitForSelection(UIDocument payload)
         {
+            payload.GetComponent<UIDocumentBlur>().RefreshPanels();
             _resume = this.Q<Button>("Resume");
             _quit = this.Q<Button>("Quit");
             _mainMenu = this.Q<Button>("MainMenu");
@@ -36,6 +38,10 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
             _tcs = new UniTaskCompletionSource<Empty>();
 
             _resume.clicked += Cancel;
+            _mainMenu.clicked += () =>
+            {
+                SceneLoader.Ins.ChangeScene("Main Menu");
+            };
             _quit.clicked += () => Application.Quit(0);
             _mainPanel = this.Q<VisualElement>("MainPanel");
             

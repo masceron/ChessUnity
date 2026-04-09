@@ -21,7 +21,7 @@ namespace UX.UI.Toolkit
 
         private void AssignMainDocument()
         {
-            _mainUIDocument = FindAnyObjectByType<UIDocument>();
+            _mainUIDocument = GameObject.Find("MainUI").GetComponent<UIDocument>();
             if (!_mainUIDocument)
             {
                 Debug.LogWarning($"[UIManager] No UIDocument found in scene {SceneManager.GetActiveScene().name}!");
@@ -31,9 +31,9 @@ namespace UX.UI.Toolkit
         protected override void Awake()
         {
             base.Awake();
-            DontDestroyOnLoad(gameObject);
             _activeMenus = new List<ICloseableUI>();
             AssignMainDocument();
+            DontDestroyOnLoad(gameObject);
         }
 
         private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
@@ -59,7 +59,6 @@ namespace UX.UI.Toolkit
             uiInstance.style.right = 0;
 
             _mainUIDocument.rootVisualElement.Add(uiInstance);
-            _mainUIDocument.GetComponent<UIDocumentBlur>().RefreshPanels();
             
             var awaitableUI =
                 uiInstance.Children().FirstOrDefault(e => e is IAwaitableUI<TPayload, TResult>) as

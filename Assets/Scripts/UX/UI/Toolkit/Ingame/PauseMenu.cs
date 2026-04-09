@@ -10,12 +10,14 @@ namespace UX.UI.Toolkit.Ingame
     {
         [NonSerialized] private InputManager _inputManager;
         [NonSerialized] private VisualElement _inGameHUD;
+        [NonSerialized] private UIDocument _mainDoc;
         private const int FadeTime = 150;
 
         private void Awake()
         {
             _inputManager = GetComponent<InputManager>();
-            _inGameHUD = GetComponent<UIDocument>().rootVisualElement.Q<VisualElement>("InGameRoot");
+            _mainDoc = GetComponent<UIDocument>();
+            _inGameHUD = _mainDoc.rootVisualElement.Q<VisualElement>("InGameRoot");
         }
 
         private void OnEnable()
@@ -34,11 +36,11 @@ namespace UX.UI.Toolkit.Ingame
             await UniTask.Delay(FadeTime);
             try
             {
-                await UIManager.Ins.OpenMenu(InGameMenuType.PauseMenu);
+                await UIManager.Ins.OpenMenu(InGameMenuType.PauseMenu, _mainDoc);
             }
             catch (Exception)
             {
-                //ignore
+                // ignored
             }
             finally
             {

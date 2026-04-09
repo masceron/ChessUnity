@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using Game.Common;
 using Game.Managers;
 using Game.Save.Stage;
@@ -11,12 +12,18 @@ namespace UX.UI.Toolkit.Loader
 {
     public class SceneLoader : Singleton<SceneLoader>
     {
-        [SerializeField] private UIDocument loadingDoc;
+        [NonSerialized] private UIDocument _loadingDoc;
         private VisualElement _loadingRoot;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            DontDestroyOnLoad(gameObject);
+            _loadingDoc = GetComponent<UIDocument>();
+        }
 
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
             sceneLoaded += (sceneCount, _) =>
             {
                 switch (sceneCount.name)
@@ -34,7 +41,7 @@ namespace UX.UI.Toolkit.Loader
                         break;
                 }
             };
-            _loadingRoot = loadingDoc.rootVisualElement.Q<VisualElement>("Root");
+            _loadingRoot = _loadingDoc.rootVisualElement.Q<VisualElement>("Root");
         }
 
         public void ChangeScene(string sceneName)
