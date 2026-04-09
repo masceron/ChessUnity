@@ -15,19 +15,24 @@ namespace Game.Piece.PieceLogic
 {
     public class CutthroatEel : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 4;
         public CutthroatEel(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Nocturnal(-1, 1, this, "effect_nocturnal")));
+            SetStat(SkillStat.Range, Range);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Pos), FileOf(Pos), 4))
+                    foreach (var (rank, file) in MoveEnumerators.Around(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                     {
+                        int direction = Color ? 1 : -1;
                         var targetPos = IndexOf(rank, file);
                         if (!IsActive(targetPos)) return;
                         var pieceOn = PieceOn(targetPos);
+
+                        var pieceBehindTarget = PieceOn(IndexOf(rank + direction, file));
+                        if (pieceBehindTarget != null) continue;
 
                         if (pieceOn != null && pieceOn.Color != Color &&
                             pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))
@@ -42,7 +47,7 @@ namespace Game.Piece.PieceLogic
                 else
                 {
                     var (rank, file) = RankFileOf(Pos);
-                    var enemiesWithBleeding = GetPiecesInRadius(rank, file, 4, p => p != null && p.Color != Color);
+                    var enemiesWithBleeding = GetPiecesInRadius(rank, file, GetStat(SkillStat.Range), p => p != null && p.Color != Color);
 
                     // Filter kẻ địch với Bleeding effect
                     var validTargets = new List<(Commons.PieceLogic piece, Bleeding bleeding)>();
