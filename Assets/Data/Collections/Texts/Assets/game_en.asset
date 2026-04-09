@@ -78,6 +78,10 @@ MonoBehaviour:
     m_Localized: Start
     m_Metadata:
       m_Items: []
+  - m_Id: 87401443429371904
+    m_Localized: Skill
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

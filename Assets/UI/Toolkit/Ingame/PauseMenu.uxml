@@ -2,9 +2,10 @@
     <Style src="project://database/Assets/UI/Toolkit/Ingame/pause.uss?fileID=7433441132597879392&amp;guid=e6562693b4706d64da76e1035e5f3f05&amp;type=3#pause"/>
     <UX.UI.Toolkit.Ingame.SubMenus.PauseMenuVisual style="-unity-material: url(&quot;&quot;); position: absolute; top: 0; right: 0; left: 0; bottom: 0; background-color: rgba(0, 0, 0, 0);">
         <ui:VisualElement name="MainContainer" class="blur" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0;"/>
-        <ui:VisualElement name="MainPanel" class="pause-side-panel" style="flex-grow: 1; background-color: rgba(58, 50, 50, 0.79); position: absolute; top: 0; left: 0; bottom: 0; width: 25%; -unity-material: url(&quot;&quot;); justify-content: center; align-items: center; transition-duration: 0.5s; transition-property: translate;">
-            <ui:Button text="Resume" name="Resume" style="flex-grow: 0; width: 100%; background-color: rgba(50, 42, 42, 0.61); margin-bottom: 20px; color: rgb(255, 255, 255); -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#LegacyRuntime&quot;); font-size: 25px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px;"/>
-            <ui:Button text="Quit" name="Quit" style="width: 100%; margin-top: 20px; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; background-color: rgba(50, 42, 42, 0.61); -unity-font-style: bold; font-size: 25px; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&quot;); color: rgb(255, 255, 255); padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px;"/>
+        <ui:VisualElement name="MainPanel" class="pause-side-panel" style="flex-grow: 1; background-color: rgba(58, 50, 50, 0.59); position: absolute; top: 0; left: 0; bottom: 0; width: 25%; -unity-material: url(&quot;&quot;); justify-content: center; align-items: center; transition-duration: 0.5s; transition-property: translate;">
+            <ui:Button text="Resume" name="Resume" class="resume-button"/>
+            <ui:Button text="Main Menu" name="MainMenu" class="main-menu"/>
+            <ui:Button text="Quit" name="Quit" class="quit-game"/>
         </ui:VisualElement>
     </UX.UI.Toolkit.Ingame.SubMenus.PauseMenuVisual>
 </ui:UXML>

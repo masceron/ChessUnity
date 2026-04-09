@@ -107,6 +107,10 @@ MonoBehaviour:
     m_Key: confirm
     m_Metadata:
       m_Items: []
+  - m_Id: 87451616092278784
+    m_Key: skip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

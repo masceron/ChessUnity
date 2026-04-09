@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UIElements;
 using UX.UI.Toolkit.Common;
 
@@ -12,6 +13,7 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
         private const int AnimationTime = 250;
         private Button _resume;
         private Button _quit;
+        private Button _mainMenu;
         
         public void ForceClose()
         {
@@ -25,12 +27,16 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
         {
             _resume = this.Q<Button>("Resume");
             _quit = this.Q<Button>("Quit");
+            _mainMenu = this.Q<Button>("MainMenu");
+            
             _resume.SetEnabled(false);
+            _mainMenu.SetEnabled(false);
             _quit.SetEnabled(false);
             
             _tcs = new UniTaskCompletionSource<Empty>();
 
             _resume.clicked += Cancel;
+            _quit.clicked += () => Application.Quit(0);
             _mainPanel = this.Q<VisualElement>("MainPanel");
             
             await UniTask.DelayFrame(2);
@@ -38,6 +44,7 @@ namespace UX.UI.Toolkit.Ingame.SubMenus
             await UniTask.Delay(AnimationTime + 30, ignoreTimeScale: true);
             
             _resume.SetEnabled(true);
+            _mainMenu.SetEnabled(true);
             _quit.SetEnabled(true);
             
             return await _tcs.Task;

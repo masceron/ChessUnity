@@ -64,7 +64,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 316064544067584
-    m_Key: capture
+    m_Key: relic
     m_Metadata:
       m_Items: []
   - m_Id: 2482791394578432
@@ -73,6 +73,10 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 2484470571601920
     m_Key: start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 87401443429371904
+    m_Key: skill
     m_Metadata:
       m_Items: []
   m_Metadata:

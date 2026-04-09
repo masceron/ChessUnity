@@ -53,6 +53,11 @@ namespace UX.UI.Toolkit.Ingame
             _relicCooldownTime = root.Q<Label>("RelicCooldown");
         }
 
+        private void Start()
+        {
+            UpdateUIState(ControlState.Idle);
+        }
+
         private void OnEnable()
         {
             _quiets.clicked += ClickMove;
