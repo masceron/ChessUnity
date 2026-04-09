@@ -17,9 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SeaTurtleActive(int maker) : base(maker)
+        public SeaTurtleActive(PieceLogic maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -33,8 +32,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, PieceOn(Maker))));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, GetMakerAsPiece())));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

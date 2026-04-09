@@ -19,9 +19,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SiphonophoreActive(int maker, List<int> spawnPositions) : base(maker)
+        public SiphonophoreActive(PieceLogic maker, List<int> spawnPositions) : base(maker)
         {
-            Maker = maker;
             _spawnPositions = spawnPositions ?? new List<int>();
         }
 
@@ -32,7 +31,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
+            var makerPiece = GetMakerAsPiece();
             if (makerPiece == null) return;
 
             // Spawn MiniSiphonophore ở các ô đã chọn
@@ -47,7 +46,7 @@ namespace Game.Action.Skills
                     spawnPos)));
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)makerPiece).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)makerPiece).TimeToCooldown);
         }
     }
 }

@@ -14,10 +14,10 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Dominator(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SurgeWrassePassive(this)));
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
-                if (isPlayer) list.Add(new SurgeWrasseActive(Pos));
+                if (isPlayer) list.Add(new SurgeWrasseActive(this));
                 // ....
             };
         }

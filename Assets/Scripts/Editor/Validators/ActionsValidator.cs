@@ -15,12 +15,12 @@ namespace Editor.Validators
     [InitializeOnLoad]
     public class ActionsValidator : IPreprocessBuildWithReport
     {
+        public int callbackOrder => 0;
+
         static ActionsValidator()
         {
             ValidateArchitecture();
         }
-
-        public int callbackOrder => 0;
 
         public void OnPreprocessBuild(BuildReport report)
         {

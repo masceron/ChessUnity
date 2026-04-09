@@ -17,9 +17,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public TurbanSnailActive(int maker) : base(maker)
+        public TurbanSnailActive(PieceLogic maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -29,10 +28,10 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            PieceLogic p = PieceOn(Maker);
+            PieceLogic p = GetMakerAsPiece();
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(p, p.GetStat(SkillStat.Duration, 1))));
             ActionManager.EnqueueAction(new ApplyEffect(new Pacified(p.GetStat(SkillStat.Duration, 2), p)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

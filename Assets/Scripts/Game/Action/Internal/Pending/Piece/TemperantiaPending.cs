@@ -4,7 +4,6 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using ZLinq;
-using static Game.Common.BoardUtils;
 
 // <-- thêm để dùng LINQ
 
@@ -16,13 +15,9 @@ namespace Game.Action.Internal.Pending.Piece
     {
         private static int _ally = -1;
         private static int _enemy = -1; // -1 nếu chưa chọn enemy
-        private readonly PieceLogic _temperantia;
 
-        public TemperantiaPending(int maker, int target) : base(maker)
+        public TemperantiaPending(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
-            _temperantia = PieceOn(Maker);
         }
 
         public void Dispose()
@@ -34,26 +29,27 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            if (PieceOn(Target).Color == _temperantia.Color)
+            var temperantia = GetMakerAsPiece();
+            if (GetTargetAsPiece().Color == temperantia.Color)
             {
-                _ally = Target;
+                _ally = GetTargetPos();
                 foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                PieceOn(pending.Target).Color == _temperantia.Color))
-                    TileManager.Ins.UnMark(pending.Target);
+                             pending.GetTargetAsPiece().Color == temperantia.Color))
+                    TileManager.Ins.UnMark(pending.GetTargetPos());
             }
             else
             {
-                _enemy = Target;
+                _enemy = GetTargetPos();
                 foreach (var pending in BoardViewer.ListOf.Where(pending =>
-                                PieceOn(pending.Target).Color != _temperantia.Color))
-                    TileManager.Ins.UnMark(pending.Target);
+                             pending.GetTargetAsPiece().Color != temperantia.Color))
+                    TileManager.Ins.UnMark(pending.GetTargetPos());
             }
-            if (_ally != -1 && _enemy != -1 )
-            {
-                CommitResult(new TemperantiaSwap(Maker, _ally, _enemy));
-                _ally = -1;
-                _enemy = -1;
-            }
+
+            if (_ally == -1 || _enemy == -1) return;
+            //Làm lại
+            // CommitResult(new TemperantiaSwap(GetMakerAsPiece(), _ally, _enemy));
+            _ally = -1;
+            _enemy = -1;
         }
 
         public int AIPenaltyValue(PieceLogic p)

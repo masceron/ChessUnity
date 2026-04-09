@@ -5,6 +5,10 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Bất cứ quân nào đứng trên ô này sẽ nhận Trait Camouflage, 
+    /// ra khỏi ô sẽ mất (trừ các quân đã có sẵn Camouflage).
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Kelp : Formation
@@ -27,7 +31,7 @@ namespace Game.Tile
             if (piece.Effects.Any(effect => effect.EffectName == "effect_camouflage"))
                 _pieceHaveCamouflage = true;
             else
-                ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece), FormationType.Kelp));
+                ActionManager.EnqueueAction(new ApplyEffect(new Camouflage(piece)));
         }
 
         protected override void OnPieceExit(PieceLogic piece)

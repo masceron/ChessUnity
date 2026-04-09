@@ -7,6 +7,7 @@ using Game.Tile;
 using MemoryPack;
 using ZLinq;
 using static Game.Common.BoardUtils;
+using Game.Action.Internal;
 
 namespace Game.Action.Skills
 {
@@ -20,17 +21,15 @@ namespace Game.Action.Skills
         {
         }
 
-        public GrenadiersActive(int maker, int target) : base(maker)
+        public GrenadiersActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void CompleteActionForAI()
         {
             var listPieces = new List<PieceLogic>();
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(Maker, 3);
-            foreach (var target in targets) listPieces.Add(PieceOn(target));
+            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 3);
+            foreach (var target in targets) listPieces.Add(target);
 
             if (listPieces.Count == 0) return;
             var maxValue = listPieces.Max(p => p.GetValueForAI());
@@ -40,20 +39,20 @@ namespace Game.Action.Skills
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
             SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             return pieceAI.Color != maker.Color ? -60 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            SetFormation(Target, new NavalMines(true, PieceOn(Maker).Color));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new SetFormation(GetTargetPos(), new NavalMines(true, GetMakerAsPiece().Color)));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

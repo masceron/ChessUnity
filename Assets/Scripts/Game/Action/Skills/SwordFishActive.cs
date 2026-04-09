@@ -16,10 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public SwordFishActive(int maker) : base(maker)
+        public SwordFishActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -29,8 +27,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(PieceOn(Maker), 1), PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new SnappingStrike(GetMakerAsPiece(), 1), GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

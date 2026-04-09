@@ -1,3 +1,4 @@
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 
@@ -23,7 +24,7 @@ namespace Game.Action.Internal
         /// <param name="hostLogic">PieceLogic của host. Null nếu host là Formation.</param>
         /// <param name="formationPos">Vị trí của Formation host (dùng khi hostLogic == null).</param>
         public DestroyAdhesivePiece(PieceLogic adhesive, PieceLogic hostLogic, int formationPos = -1)
-            : base(-1)
+            : base(null)
         {
             _adhesive     = adhesive;
             _hostLogic    = hostLogic;
@@ -37,7 +38,7 @@ namespace Game.Action.Internal
         protected override void ModifyGameState()
         {
             // Dọn data: xóa observers của adhesive khỏi TriggerHooks
-            _adhesive.Effects.ForEach(MatchManager.Ins.GameState.TriggerHooks.RemoveObserver);
+            _adhesive.Effects.ForEach(BoardUtils.GetTriggerHooks().RemoveObserver);
 
             if (_hostLogic != null)
             {

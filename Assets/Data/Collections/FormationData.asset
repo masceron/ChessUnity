@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FormationData
   m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.EnviromentsData
   formationsData:
-    keys: 0c0000000d000000010000000e000000070000000f000000
+    keys: 0c0000000d000000010000000e000000070000000f0000000300000005000000050000000a000000
     values:
     - {fileID: 11400000, guid: 2ebcbea01465d944fb406228ff32224f, type: 2}
     - {fileID: 11400000, guid: 625cec811fda81a42aac3f902cd9256c, type: 2}
@@ -21,3 +21,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0978a4a63a8657f45ae3c57dd0f7181e, type: 2}
     - {fileID: 11400000, guid: 630d4ddd171c1054aa2e102485cfea0b, type: 2}
     - {fileID: 11400000, guid: 233dc53d2a735e449b020bfa5ecd7046, type: 2}
+    - {fileID: 11400000, guid: 4c2e0ef154e88df439f85d7d695f50c4, type: 2}
+    - {fileID: 11400000, guid: 4c2e0ef154e88df439f85d7d695f50c4, type: 2}
+    - {fileID: 11400000, guid: 60e484535ff804d4a8a72199644dde7a, type: 2}
+    - {fileID: 11400000, guid: 8da0443c37103d34c929bfe2f0c3acd7, type: 2}

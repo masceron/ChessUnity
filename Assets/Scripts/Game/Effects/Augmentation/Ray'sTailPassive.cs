@@ -4,7 +4,6 @@ using Game.Action.Internal;
 using Game.Effects.Debuffs;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Augmentation
 {
@@ -18,9 +17,8 @@ namespace Game.Effects.Augmentation
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not ICaptures || action.Maker != Piece.Pos) return;
-            var targetIndex = action.Target;
-            var targetPiece = PieceOn(targetIndex);
+            if (action is not ICaptures || action.GetMakerAsPiece() != Piece) return;
+            var targetPiece = action.GetTargetAsPiece();
             var hasShield = false;
             var hasHardenedShield = false;
             var hasCarapace = false;

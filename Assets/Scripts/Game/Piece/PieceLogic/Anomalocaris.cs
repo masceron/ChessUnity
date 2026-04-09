@@ -41,7 +41,7 @@ namespace Game.Piece.PieceLogic
         {
             var piece = PieceOn(index);
             if (piece == null || piece.Color == Color) return;
-            list.Add(new AnomalocarisActive(Pos, index));
+            list.Add(new AnomalocarisActive(this, piece));
         }
     }
 }

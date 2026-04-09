@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -24,18 +25,16 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action.Maker == Piece.Pos
+            if (action.GetMakerAsPiece() == Piece
                 && action is ICaptures
-                && (action.Result == ResultFlag.Blocked
-                    || action.Result == ResultFlag.HardenedBlock
-                    || action.Result == ResultFlag.Parry))
+                && action.Result is ResultFlag.Blocked or ResultFlag.HardenedBlock or ResultFlag.Parry)
             {
-                var target = PieceOn(action.Target);
+                var target = PieceOn(action.GetTargetPos());
                 if (target != null && target.Color != Piece.Color)
                     ActionManager.EnqueueAction(new ApplyEffect(new Bleeding(5, target), Piece));
             }
 
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
                 if (piece.Effects.Any(e => e.EffectName == "effect_bleeding")) _count++;

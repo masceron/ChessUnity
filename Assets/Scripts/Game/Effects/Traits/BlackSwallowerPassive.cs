@@ -5,7 +5,6 @@ using Game.Effects.Others;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
-using static Game.Common.BoardUtils;
 
 namespace Game.Effects.Traits
 {
@@ -25,9 +24,9 @@ namespace Game.Effects.Traits
 
             if (action.Result != ResultFlag.Success) return;
 
-            if (action.Maker != Piece.Pos) return;
+            if (action.GetMakerAsPiece() != Piece) return;
 
-            var targetPiece = PieceOn(action.Target);
+            var targetPiece = action.GetTargetAsPiece();
             if (targetPiece is { PieceRank: PieceRank.Elite or PieceRank.Champion or PieceRank.Commander })
                 ActionManager.EnqueueAction(new ApplyEffect(new KillPieceAfterSwitchTurn(Piece), Piece));
         }

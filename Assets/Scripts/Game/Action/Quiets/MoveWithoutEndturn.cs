@@ -1,12 +1,13 @@
 using Game.Common;
+using Game.Effects.States;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using UnityEngine;
 
 namespace Game.Action.Quiets
 {
     /// <summary>
-    ///     Move action dùng cho quân có State <see cref="Game.Effects.States.PieceStateType.Cooperative"/>.
+    ///     Move action dùng cho quân có State <see cref="Cooperative"/>.
     ///     Implement <see cref="IDontEndTurn"/> để action này không kết thúc turn của người chơi.
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -19,21 +20,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public MoveWithoutEndturn(int maker, int target) : base(maker)
+        public MoveWithoutEndturn(PieceLogic maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            Debug.Log("Complete CooperativeMove");
-            BoardUtils.Move(Maker, Target);
-            Maker = Target;
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

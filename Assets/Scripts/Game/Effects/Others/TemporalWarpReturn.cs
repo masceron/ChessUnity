@@ -28,9 +28,10 @@ namespace Game.Effects.Others
             _turnsPassed++;
             if (_turnsPassed >= TurnToActive)
             {
-                if (PieceOn(_target) != null) ActionManager.EnqueueAction(new KillPiece(_target));
+                var on = PieceOn(_target);
+                if (on != null) ActionManager.EnqueueAction(new KillPiece(null, on));
 
-                ActionManager.EnqueueAction(new NormalMove(Piece.Pos, _target));
+                ActionManager.EnqueueAction(new NormalMove(Piece, _target));
                 Duration = 0;
             }
         }

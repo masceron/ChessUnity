@@ -1,9 +1,5 @@
-using Game.Action;
-using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Common;
-using Game.Effects.Others;
-using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
@@ -28,7 +24,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rank, file);
                         if (!VerifyIndex(index) || !IsActive(index)) continue;
 
-                        list.Add(new ToxicZoanthidPending(Pos, index));
+                        list.Add(new ToxicZoanthidPending(this, index));
                     }
                 }
                 

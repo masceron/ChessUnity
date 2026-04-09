@@ -1,7 +1,5 @@
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Relics.Commons;
-using LedgerStoneRelic = Game.Relics.LedgerStone;
 
 namespace UX.UI.Ingame.LedgerStoneUI
 {
@@ -17,13 +15,15 @@ namespace UX.UI.Ingame.LedgerStoneUI
         public void FirstOption()
         {
             gameObject.SetActive(false);
-            BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)_relic, true));
+            //Làm lại
+            //BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)_relic, true));
         }
 
         public void SecondOption()
         {
             gameObject.SetActive(false);
-            BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)_relic, false));
+            //Làm lại
+            //BoardViewer.Ins.ExecuteAction(new LedgerStonePending((LedgerStoneRelic)_relic, false));
         }
     }
 }

@@ -311,7 +311,7 @@ namespace Game.Managers
             }
 
             var piece = PieceOn(index);
-            if (piece != null && piece.Color != MatchManager.Ins.GameState.OurSide) MarkAsMoveable(index);
+            if (piece != null && piece.Color != BoardUtils.OurSide()) MarkAsMoveable(index);
         }
 
 

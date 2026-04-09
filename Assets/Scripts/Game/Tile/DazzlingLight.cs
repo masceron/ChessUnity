@@ -6,7 +6,6 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Tile
 {
     /// <summary>
-    ///     Dazzling Light Tile
     ///     Gây hiệu ứng Blinded lên quân cờ trong 1 turn
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -26,7 +25,7 @@ namespace Game.Tile
         protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece), FormationType.DazzlingLight));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(1, 100, piece)));
         }
 
         public override int GetValueForAI()

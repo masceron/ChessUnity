@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Game.Action.Captures;
-using Game.Action.Quiets;
+using System.Collections.Generic;
 using Game.Common;
 using static Game.Common.BoardUtils;
 
@@ -10,7 +8,7 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class KnightMoves
     {
-        public static int Quiets(List<Action.Action> list, int pos, bool isPlayer)
+        public static int Quiets(List<int> list, int pos)
         {
             var (rank, file) = RankFileOf(pos);
             var caller = PieceOn(pos);
@@ -25,21 +23,16 @@ namespace Game.Movesets
             {
                 var index = IndexOf(rankOff, fileOff);
                 if (!IsActive(index)) return;
-
                 var piece = PieceOn(index);
-                if (piece != null ||
-                    Distance(pos, index) != maxRange ||
-                    Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
-                    return;
-                list.Add(new NormalMove(pos, index));
+                if (piece != null) return; // ô có quân → skip
+                list.Add(index);
             }
         }
 
-        public static int Captures(List<Action.Action> list, int pos, bool isPlayer)
+        public static int Captures(List<int> list, int pos)
         {
             var (rank, file) = RankFileOf(pos);
             var caller = PieceOn(pos);
-            var color = caller.Color;
             var maxRange = caller.GetAttackRange();
 
             foreach (var (rankOff, fileOff) in MoveEnumerators.KnightMovement(rank, file, maxRange))
@@ -50,20 +43,8 @@ namespace Game.Movesets
             void MakeCapture(int rankOff, int fileOff)
             {
                 var index = IndexOf(rankOff, fileOff);
-                var piece = PieceOn(index);
-
-                if (piece == null && !isPlayer)
-                {
-                    list.Add(new NormalCapture(pos, index));
-                }
-                else if (piece != null)
-                {
-                    if (piece.Color == color ||
-                        Distance(pos, index) != maxRange ||
-                        Pathfinder.LineBlocker(rank, file, rankOff, fileOff).Item1 != -1)
-                        return;
-                    list.Add(new NormalCapture(pos, index));
-                }
+                if (!IsActive(index)) return;
+                list.Add(index); // trả tất cả ô active trong range (kể cả trống)
             }
         }
     }

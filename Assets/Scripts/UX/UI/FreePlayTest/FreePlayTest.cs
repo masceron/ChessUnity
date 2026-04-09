@@ -12,7 +12,7 @@ namespace UX.UI.FreePlayTest
     {
         DesignArmy,
         Augmentation,
-        RegionalEffect
+        FieldEffect
     }
 
     public class FreePlayTest : Singleton<FreePlayTest>
@@ -38,7 +38,7 @@ namespace UX.UI.FreePlayTest
             Config.PieceConfigWhite.Add(pieceConfig);
         }
 
-        public void AddRegionalEffect(RegionalsData regionalsData)
+        public void AddFieldEffect(RegionalsData regionalsData)
         {
         }
 

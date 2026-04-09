@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Common;
+﻿using Game.Common;
 using Game.Effects.Others;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -31,8 +30,9 @@ namespace Game.Relics
                     if (!BoardUtils.HasFormation(i)) continue;
 
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeabedLevelerPending(charge, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    // var pending = new SeabedLevelerPending(charge, piece);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;

@@ -5,6 +5,9 @@ using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Tile
 {
+    /// <summary>
+    /// Gây hiệu ứng Leashed 3 turn và Poison 1 lên quân địch dẫm phải
+    /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CarpetAnemone : Formation
@@ -20,9 +23,8 @@ namespace Game.Tile
             base.OnPieceEnter(piece);
             if (piece != null && piece.Color != Color)
             {
-                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, piece.Pos, 3),
-                    FormationType.CarpetAnemone));
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, piece), FormationType.CarpetAnemone));
+                ActionManager.EnqueueAction(new ApplyEffect(new Leashed(piece, 3)));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, piece)));
             }
         }
 

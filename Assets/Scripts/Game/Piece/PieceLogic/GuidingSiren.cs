@@ -13,7 +13,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class GuidingSiren : Commons.PieceLogic, IPieceWithSkill
     {
-        public GuidingSiren(PieceConfig cfg) : base(cfg, GuidingSirenMoves.Quiets, GuidingSirenMoves.Captures)
+        public GuidingSiren(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Evasion(-1, 25, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Surpass(this)));
@@ -47,7 +47,7 @@ namespace Game.Piece.PieceLogic
                                 rankForce += push;
                             rankForce -= push;
                             if (rankForce == rankOff) continue;
-                            list.Add(new SirenActive(Pos, tpos, IndexOf(rankForce, fileOff)));
+                            list.Add(new SirenActive(this, pieceAt, IndexOf(rankForce, fileOff)));
                         }
                     }
                 }

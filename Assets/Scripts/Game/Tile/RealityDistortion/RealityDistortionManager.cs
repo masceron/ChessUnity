@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Quiets;
 using Game.Common;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using ZLinq;
@@ -15,14 +14,13 @@ namespace Game.Tile.RealityDistortion
 
         public void OnTurnStart()
         {
-            var gameState = MatchManager.Ins.GameState;
-            var currentTurn = gameState.CurrentTurn;
+            var currentTurn = BoardUtils.GetCurrentTurn();
 
             if (_lastProcessedTurn == currentTurn) return;
             _lastProcessedTurn = currentTurn;
 
             var allDistortions = new List<RealityDistortion>();
-            foreach (var formation in gameState.formations)
+            foreach (var formation in BoardUtils.GetFormations())
                 if (formation is RealityDistortion distortion)
                     allDistortions.Add(distortion);
 
@@ -34,7 +32,7 @@ namespace Game.Tile.RealityDistortion
             foreach (var distortion in allDistortions)
             {
                 distortionPositions.Add(distortion.Pos);
-                var piece = gameState.PieceBoard[distortion.Pos];
+                var piece = BoardUtils.PieceBoard()[distortion.Pos];
                 if (piece != null) piecesOnDistortions.Add((piece, distortion.Pos));
             }
 
@@ -75,11 +73,11 @@ namespace Game.Tile.RealityDistortion
                 usedPositions.Add(targetPos);
 
                 if (targetPos == currentPos) continue;
-                var pieceAtTarget = gameState.PieceBoard[targetPos];
+                var pieceAtTarget = BoardUtils.PieceBoard()[targetPos];
                 if (pieceAtTarget == null)
-                    ActionManager.EnqueueAction(new NormalMove(currentPos, targetPos));
+                    ActionManager.EnqueueAction(new NormalMove(BoardUtils.PieceOn(currentPos), targetPos));
                 else
-                    ActionManager.EnqueueAction(new NormalSwap(currentPos, targetPos));
+                    ActionManager.EnqueueAction(new NormalSwap(BoardUtils.PieceOn(currentPos), pieceAtTarget));
             }
         }
     }

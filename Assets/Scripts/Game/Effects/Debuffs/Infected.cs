@@ -32,7 +32,7 @@ namespace Game.Effects.Debuffs
         private void InfectedActivate()
         {
             var (rank, file) = RankFileOf(Piece.Pos);
-            ActionManager.EnqueueAction(new KillPiece(Piece.Pos));
+            ActionManager.EnqueueAction(new KillPiece(null, Piece));
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, radius))
             {
                 var index = IndexOf(rankOff, fileOff);

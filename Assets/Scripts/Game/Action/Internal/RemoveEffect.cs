@@ -11,7 +11,7 @@ namespace Game.Action.Internal
     {
         private readonly Effect _effect;
 
-        public RemoveEffect(Effect e) : base(-1)
+        public RemoveEffect(Effect e) : base(null)
         {
             _effect = e;
         }

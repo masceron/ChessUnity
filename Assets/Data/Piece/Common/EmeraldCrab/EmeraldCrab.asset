@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab37ce53fcd091241a81b55a003725d4, type: 3}
+  m_Name: EmeraldCrab
+  m_EditorClassIdentifier: Assembly-CSharp::Game.ScriptableObjects.PieceInfo
+  key: piece_emerald_crab
+  prefab: {fileID: 5539094649158605941, guid: aaca16e74d68e5e49b6cde151215e1ad, type: 3}
+  rank: 4
+  moveRange: 1
+  attackRange: 0
+  movePattern: {fileID: 0}
+  capturePattern: {fileID: 0}
+  hasSkill: 1
+  normalSkillCooldown: 8
+  availableSlots: 0
+  logicClassName: EmeraldCrab
+  baseValue: 0
+  considerations: []

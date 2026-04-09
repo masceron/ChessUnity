@@ -1,6 +1,8 @@
 using Game.Action.Internal;
+using Game.Common;
 using Game.Effects.Debuffs;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -18,23 +20,21 @@ namespace Game.Action.Quiets
         {
         }
 
-        public PegasusSeamothMove(int maker, int target) : base(maker)
+        public PegasusSeamothMove(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            var (rankFrom, fileFrom) = RankFileOf(Maker);
-            var (rankTo, fileTo) = RankFileOf(Target);
+            var (rankFrom, fileFrom) = RankFileOf(GetFrom());
+            var (rankTo, fileTo) = RankFileOf(GetTargetPos());
             var board = PieceBoard();
-            var caller = board[Maker];
+            var caller = GetMakerAsPiece();
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;
@@ -51,9 +51,7 @@ namespace Game.Action.Quiets
                 break;
             }
 
-            MatchManager.Ins.GameState.Move(Maker, Target);
-
-            Maker = Target;
+            Move(caller, GetTargetPos());
         }
     }
 }

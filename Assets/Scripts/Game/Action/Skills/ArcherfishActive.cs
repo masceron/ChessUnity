@@ -16,16 +16,13 @@ namespace Game.Action.Skills
         {
         }
 
-        public ArcherfishActive(int maker, int target) : base(maker)
+        public ArcherfishActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
-            if (maker == null || pieceAI == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker || pieceAI == null) return 0;
 
             // Skill này chỉ tác động lên quân địch.
             // Nếu quân của AI (pieceAI) khác màu với người tạo skill, nó sẽ bị phạt.
@@ -39,16 +36,18 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             // Gây hiệu ứng Blind và Marked lên 1 quân địch trong bán kính 4 ô
-            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, PieceOn(Target)), PieceOn(Maker)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, PieceOn(Target)), PieceOn(Maker)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, GetTargetAsPiece()),
+                GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, GetTargetAsPiece()),
+                GetMakerAsPiece()));
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         // public void CompleteActionForAI()
         // {
         //     var (rank, file) = RankFileOf(Maker);
-        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != PieceOn(Maker).Color)
+        //     var listPieces = GetPiecesInRadius(rank, file,4, p => p != null && p.Color != ((PieceLogic)GetMakerAsPiece()).Color)
         //         .Where(p => p.Effects.Any(p => p.EffectName != "effect_extremophile"
         //                                   && p.EffectName != "effect_blind" &&
         //                                   p.EffectName != "effect_marked")).ToList();
@@ -57,10 +56,10 @@ namespace Game.Action.Skills
         //     listPieces.Sort((a, b) => a.GetValueForAI().CompareTo(b.GetValueForAI()));
 
         //     var idx = UnityEngine.Random.Range(0, listPieces.Count);
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), PieceOn(Maker)));
-        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), PieceOn(Maker)));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, listPieces[idx]), GetMakerAsPiece()));
+        //     ActionManager.EnqueueAction(new ApplyEffect(new Marked(2, listPieces[idx]), GetMakerAsPiece()));
 
-        //     SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+        //     SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         // }
     }
 }

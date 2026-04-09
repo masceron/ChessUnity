@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
@@ -26,12 +25,13 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in PieceBoard())
                 {
                     if (piece == null || piece.Effects.All(e => e.EffectName != "effect_infected")) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new RottingScythePending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    // var pending = new RottingScythePending(this, piece);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;
@@ -43,13 +43,13 @@ namespace Game.Relics
         {
             var bestPieces = new List<PieceLogic>();
 
-            var piecesInfected = FindPiecesWithEffectName(MatchManager.Ins.GameState.OurSide, "effect_infected");
-            var enemyPiecesInfected = FindPiecesWithEffectName(!MatchManager.Ins.GameState.OurSide, "effect_infected");
+            var piecesInfected = FindPiecesWithEffectName(OurSide(), "effect_infected");
+            var enemyPiecesInfected = FindPiecesWithEffectName(!OurSide(), "effect_infected");
             piecesInfected.AddRange(enemyPiecesInfected);
 
             var bestPiece = Enumerable.FirstOrDefault(piecesInfected,
                 piece => piece is { PieceRank: PieceRank.Commander } &&
-                         piece.Color == !MatchManager.Ins.GameState.OurSide);
+                         piece.Color == !OurSide());
 
             // If no enemy commander found, evaluate based on surrounding pieces
             if (bestPiece == null)
@@ -69,10 +69,10 @@ namespace Game.Relics
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
 
-                        if (pOn != null && pOn.Color == MatchManager.Ins.GameState.OurSide
+                        if (pOn != null && pOn.Color == OurSide()
                                         && pOn.Pos != piece.Pos)
                             ourPieceCount++;
-                        else if (pOn != null && pOn.Color == !MatchManager.Ins.GameState.OurSide
+                        else if (pOn != null && pOn.Color == !OurSide()
                                              && pOn.Pos != piece.Pos)
                             enemyPieceCount++;
                     }

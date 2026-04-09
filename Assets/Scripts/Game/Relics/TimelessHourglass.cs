@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -25,13 +25,14 @@ namespace Game.Relics
         public override void Activate()
         {
             if (CurrentCooldown != 0) return;
-            foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+            foreach (var piece in BoardUtils.PieceBoard())
             {
                 if (piece == null) continue;
 
                 TileManager.Ins.MarkAsMoveable(piece.Pos);
-                var pending = new TimelessHourglassPending(this, piece.Pos);
-                BoardViewer.ListOf.Add(pending);
+                //Làm lại
+                //var pending = new TimelessHourglassPending(this, piece);
+                //BoardViewer.ListOf.Add(pending);
             }
 
             BoardViewer.Selecting = -2;
@@ -41,7 +42,7 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             // Gather all pieces
-            var pieces = MatchManager.Ins.GameState.PieceBoard
+            var pieces = BoardUtils.PieceBoard()
                 .Where(pieceLogic => pieceLogic != null)
                 .ToList();
 
@@ -67,7 +68,7 @@ namespace Game.Relics
             var top = candidates.Where(pieceLogic => pieceLogic.GetValueForAI() == bestScore).ToList();
             var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
-            var excute = new TimelessHourglassExecute(CommanderPiece.Pos, Color, chosen.Pos);
+            var excute = new TimelessHourglassExecute(Color, chosen.Pos);
             BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new TimelessHourglassPending(this, chosen.Pos);

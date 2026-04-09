@@ -1,6 +1,7 @@
 using System;
 using Game.Action.Internal;
 using Game.AI;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -20,19 +21,16 @@ namespace Game.Action.Skills
         {
         }
 
-        public BarnacleActive(int maker, int target) : base(maker)
+        public BarnacleActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public void CompleteActionForAI()
         {
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
-            var listPieces = allPieces.Where(p => p != null && p.Color != PieceOn(Maker).Color &&
+            var allPieces = PieceBoard();
+            var listPieces = allPieces.Where(p => p != null && p.Color != GetMakerAsPiece().Color &&
                                                   p.Effects.Any(e =>
-                                                      e.EffectName == "effect_shield" ||
-                                                      e.EffectName == "effect_hardened_shield")).ToList();
+                                                      e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();
 
             if (listPieces.Count == 0) return;
             var maxValue = listPieces.Max(p => p.GetValueForAI());
@@ -41,7 +39,7 @@ namespace Game.Action.Skills
             var random = new Random();
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
-            SetCooldown(Maker, -1);
+            SetCooldown(GetMakerAsPiece(), -1);
             foreach (var effect in selectedPiece.Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
                 if (effect.Duration > 0)
@@ -61,15 +59,15 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var effect in PieceOn(Target).Effects
+            foreach (var effect in GetTargetAsPiece().Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
                 if (effect.Duration > 0)
                     effect.Duration -= 1;
                 else
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
 
-            SetCooldown(Maker, -1);
-            //SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), -1);
+            //SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

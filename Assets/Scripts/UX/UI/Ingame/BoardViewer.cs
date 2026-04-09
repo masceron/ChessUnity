@@ -92,6 +92,7 @@ namespace UX.UI.Ingame
         public void Unmark()
         {
             Selecting = -1;
+            SelectingFunction = 0;
             TileManager.Ins.UnmarkAll();
             _aiManager.ClearTileScores();
             pieceActions.DisablePieceInteractions();
@@ -126,14 +127,14 @@ namespace UX.UI.Ingame
                         return;
                     case 4:
                     {
-                        var action = ListOf.Find(a => a.Maker == pos);
+                        var action = ListOf.Find(a => a.GetTargetPos() == pos);
                         if (action == null) return;
                         ExecuteAction(action);
                         break;
                     }
                     default:
                     {
-                        var action = ListOf.Find(a => a.Target == pos);
+                        var action = ListOf.Find(a => a.GetTargetPos() == pos);
                         if (action == null) return;
                         ExecuteAction(action);
                         break;
@@ -153,7 +154,7 @@ namespace UX.UI.Ingame
                 pieceActions.LoadPieceActionInfo();
                 PanTo(RankOf(pos), FileOf(pos));
 
-                if (piece.Color != MatchManager.Ins.GameState.SideToMove) return;
+                if (piece.Color != GetSideToMove()) return;
 
                 pieceActions.EnablePieceInteractions();
                 MoveList.Clear();

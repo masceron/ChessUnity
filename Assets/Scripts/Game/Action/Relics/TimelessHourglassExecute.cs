@@ -1,4 +1,3 @@
-using Game.Common;
 using MemoryPack;
 using UnityEngine;
 
@@ -16,19 +15,19 @@ namespace Game.Action.Relics
         {
         }
 
-        public TimelessHourglassExecute(int maker, bool relicColor, int target, bool targetColor = false) : base(maker)
+        public TimelessHourglassExecute(bool relicColor, int target) : base(null, target)
         {
             _relicColor = relicColor;
-            Target = target;
-            _targetColor = BoardUtils.PieceOn(target).Color;
+            _targetColor = GetTargetAsPiece().Color;
         }
 
         protected override void ModifyGameState()
         {
+            var target = GetTargetAsPiece();
             if (_targetColor == _relicColor)
-                BoardUtils.PieceOn(Target).SkillCooldown = Mathf.Max(0, BoardUtils.PieceOn(Target).SkillCooldown);
+                target.SkillCooldown = Mathf.Max(0, target.SkillCooldown);
             else
-                BoardUtils.PieceOn(Target).SkillCooldown += 2;
+                target.SkillCooldown += 2;
         }
     }
 }

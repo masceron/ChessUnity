@@ -13,9 +13,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public DiurnalActive(int maker, int target) : base(maker)
+        public DiurnalActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -25,7 +24,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

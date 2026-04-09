@@ -4,7 +4,6 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
 using UX.UI.Ingame;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Internal.Pending.Piece
 {
@@ -15,13 +14,9 @@ namespace Game.Action.Internal.Pending.Piece
         private static int _firstPos = -1;
         private static int _secondPos = -1;
         private static int _thirdPos = -1;
-        private readonly PieceLogic _blackPrinceCopepod;
 
-        public BlackPrinceCopepodPending(int maker, int target) : base(maker)
+        public BlackPrinceCopepodPending(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
-            _blackPrinceCopepod = PieceOn(Maker);
         }
 
         public void Dispose()
@@ -36,35 +31,33 @@ namespace Game.Action.Internal.Pending.Piece
         {
             if (_firstPos == -1 || _secondPos == -1 || _thirdPos == -1)
             {
-                if (PieceOn(Target) == null)
+                if (GetTargetAsPiece() == null)
                 {
                     if (_firstPos == -1) {
-                        _firstPos = Target;
+                        _firstPos = GetTargetPos();
                         TileManager.Ins.UnMark(_firstPos);
                         Debug.Log("selected first target");
                     }
                     else if (_secondPos == -1)
                     {
-                        _secondPos = Target;
+                        _secondPos = GetTargetPos();
                         TileManager.Ins.UnMark(_secondPos);
                         Debug.Log("selected second target");
                     }
                     else if (_thirdPos == -1)
                     {
-                        _thirdPos = Target;
+                        _thirdPos = GetTargetPos();
                         TileManager.Ins.UnMark(_thirdPos);
                         Debug.Log("selected third target");
                     }
                 }
             }
-            
-            if (_firstPos != -1 && _secondPos != -1 && _thirdPos != -1)
-            {
-                CommitResult(new BlackPrinceCopepodActive(Maker, _firstPos, _secondPos, _thirdPos));
-                _firstPos = -1;
-                _secondPos = -1;
-                _thirdPos = -1;
-            }
+
+            if (_firstPos == -1 || _secondPos == -1 || _thirdPos == -1) return;
+            CommitResult(new BlackPrinceCopepodActive(GetMakerAsPiece(), _firstPos, _secondPos, _thirdPos));
+            _firstPos = -1;
+            _secondPos = -1;
+            _thirdPos = -1;
         }
 
         public int AIPenaltyValue(PieceLogic p)

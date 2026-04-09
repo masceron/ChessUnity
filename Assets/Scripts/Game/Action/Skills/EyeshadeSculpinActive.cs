@@ -10,20 +10,17 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class EyeshadeSculpinActive : Action, ISkills
     {
-        [MemoryPackInclude] private int firstTargetPos;
-
-        [MemoryPackInclude] private int secondTargetPos;
+        [MemoryPackInclude] private int secondTarget;
 
         [MemoryPackConstructor]
         private EyeshadeSculpinActive()
         {
         }
 
-        public EyeshadeSculpinActive(int maker, int firstTarget, int secondTarget) : base(maker)
+        public EyeshadeSculpinActive(PieceLogic maker, PieceLogic firstTarget, PieceLogic secondTarget) : base(maker,
+            firstTarget)
         {
-            Maker = maker;
-            firstTargetPos = firstTarget;
-            secondTargetPos = secondTarget;
+            this.secondTarget = secondTarget.ID;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -33,10 +30,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(firstTargetPos)), PieceOn(Maker)));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, PieceOn(secondTargetPos)),
-                PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, GetTargetAsPiece()),
+                GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, GetEntityByID(secondTarget) as PieceLogic),
+                GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

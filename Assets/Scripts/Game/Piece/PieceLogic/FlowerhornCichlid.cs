@@ -10,7 +10,7 @@ namespace Game.Piece.PieceLogic
     {
         public FlowerhornCichlid(PieceConfig cfg) : base(cfg, QueenMoves.Quiets, QueenMoves.Captures)
         {
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
@@ -23,11 +23,11 @@ namespace Game.Piece.PieceLogic
                             var pieceOn = PieceOn(target);
                             if (pieceOn != null)
                             {
-                                if (pieceOn.Color != Color) list.Add(new FlowerhornCichlidActive(Pos, target));
+                                if (pieceOn.Color != Color) list.Add(new FlowerhornCichlidActive(this, target));
                                 return;
                             }
 
-                            list.Add(new FlowerhornCichlidActive(Pos, target));
+                            list.Add(new FlowerhornCichlidActive(this, target));
                         }
                     else
                         for (var rank = RankOf(Pos) - 1; rank >= Math.Max(0, RankOf(Pos) - 3); --rank)
@@ -37,11 +37,11 @@ namespace Game.Piece.PieceLogic
                             var pieceOn = PieceOn(target);
                             if (pieceOn != null)
                             {
-                                if (pieceOn.Color != Color) list.Add(new FlowerhornCichlidActive(Pos, target));
+                                if (pieceOn.Color != Color) list.Add(new FlowerhornCichlidActive(this, target));
                                 return;
                             }
 
-                            list.Add(new FlowerhornCichlidActive(Pos, target));
+                            list.Add(new FlowerhornCichlidActive(this, target));
                         }
                 }
             };

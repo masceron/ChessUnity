@@ -16,16 +16,14 @@ namespace Game.Action.Skills
         {
         }
 
-        public AnomalocarisActive(int maker, int target) : base(maker)
+        public AnomalocarisActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            if (PieceOn(Maker) == null || pieceAI == null) return 0;
-            if (pieceAI.Color != PieceOn(Maker).Color) return -10;
+            if (pieceAI == null) return 0;
+            if (pieceAI.Color != GetMakerAsPiece().Color) return -10;
             return 0;
         }
 
@@ -35,8 +33,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, PieceOn(Target)), PieceOn(Maker)));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, GetTargetAsPiece()), GetMakerAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

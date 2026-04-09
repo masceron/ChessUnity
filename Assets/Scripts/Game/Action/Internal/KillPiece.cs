@@ -1,21 +1,23 @@
-﻿using Game.Managers;
+﻿using Game.Common;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
     public class KillPiece : Action, IInternal
     {
-        public KillPiece(int maker) : base(maker)
+        public KillPiece(Entity maker, PieceLogic target) : base(maker, target)
         {
         }
 
         protected override void Animate()
         {
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Maker);
-            MatchManager.Ins.GameState.Kill(Maker);
+            BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }
 }

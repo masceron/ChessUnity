@@ -3,6 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Effects.Traits;
 using Game.Managers;
 using Game.Movesets;
@@ -39,7 +40,7 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(file)) continue;
                             var posTo = IndexOf(rank, file);
 
-                            if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                            if (PieceOn(posTo) == null) list.Add(new ThalassosResurrectCandidate(this, posTo));
                         }
                     }
                 }
@@ -58,7 +59,7 @@ namespace Game.Piece.PieceLogic
                                 var posTo = IndexOf(rank, file);
 
                                 if (VerifyBounds(rank) && VerifyBounds(file) && IsActive(posTo))
-                                    list.Add(new ThalassosResurrectCandidate(Pos, posTo));
+                                    list.Add(new ThalassosResurrectCandidate(this, posTo));
                             }
                         }
 
@@ -67,17 +68,17 @@ namespace Game.Piece.PieceLogic
 
                     // captured list for the maker's side
                     var capturedList = Color
-                        ? MatchManager.Ins.GameState.BlackCaptured
-                        : MatchManager.Ins.GameState.WhiteCaptured;
+                        ? BlackCaptured()
+                        : WhiteCaptured();
                     if (capturedList == null || capturedList.Count == 0) return;
 
                     // Filter candidates: only Common or Swarm rank
                     var candidates = capturedList.ToList()
-                        .Where(cfg =>
+                        .Where(_cfg =>
                         {
                             try
                             {
-                                var info = AssetManager.Ins.PieceData[cfg.Type];
+                                var info = AssetManager.Ins.PieceData[_cfg.Type];
                                 return info.rank == PieceRank.Common || info.rank == PieceRank.Swarm;
                             }
                             catch
@@ -113,7 +114,7 @@ namespace Game.Piece.PieceLogic
                     var chosenSquare = emptySquares[Random.Range(0, emptySquares.Count)];
 
                     // Spawn piece immediately
-                    list.Add(new ThalassosResurrect(Pos, chosenSquare, chosenPiece.Type));
+                    list.Add(new ThalassosResurrect(this, chosenSquare, chosenPiece.Type));
 
                     // Remove the resurrected piece from captured list
                     var toRemove =

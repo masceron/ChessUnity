@@ -20,7 +20,7 @@ namespace Game.Effects.SpecialAbility
             var rand = new Random();
             int index = rand.Next(dict.Count);
             var pair = dict.ElementAt(index);
-            Formation formation = FormationFactory.CreateInstance(pair.Key, this.Color, -1);
+            Formation formation = FormationFactory.CreateInstance(pair.Key, Color, -1);
             FormationManager.Ins.SetFormation(pos, formation);
         }
     }

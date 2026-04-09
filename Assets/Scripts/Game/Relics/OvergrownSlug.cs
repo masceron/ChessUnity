@@ -1,5 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
-using Game.Action.Relics;
+﻿using Game.Action.Relics;
 using Game.Managers;
 using Game.Relics.Commons;
 using UX.UI.Ingame;
@@ -22,9 +21,10 @@ namespace Game.Relics
                 var commander = GetCommanderOf(Color);
                 if (commander != null)
                 {
-                    var pending = new OvergrownSlugPending(this, commander.Pos);
+                    //Làm lại
+                    //var pending = new OvergrownSlugPending(this, commander);
                     TileManager.Ins.MarkAsMoveable(commander.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //BoardViewer.ListOf.Add(pending);
                     BoardViewer.Selecting = -2;
                     BoardViewer.SelectingFunction = 4;
                 }

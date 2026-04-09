@@ -5,7 +5,8 @@ using System.Collections.ObjectModel;
 using Game.Action;
 using Game.Action.Internal;
 using Game.AI;
-using Game.Effects.RegionalEffect;
+using Game.Common;
+using Game.Effects.FieldEffect;
 using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
@@ -18,12 +19,6 @@ using static Game.Common.BoardUtils;
 
 namespace Game.Managers
 {
-    public interface ISubscriber
-    {
-        public void OnCall(Action.Action action);
-        public void OnCallEnd(bool color);
-    }
-
     public enum Color : byte
     {
         White,
@@ -34,28 +29,30 @@ namespace Game.Managers
 
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
+    [Friend(typeof(BoardUtils), typeof(MatchManager), typeof(ActionManager))]
     public class GameState
     {
+        private int _pieceID = 1;
         private const int NumberOfTurnToChange = 10;
         public readonly BitArray ActiveBoard;
         public readonly ObservableCollection<PieceConfig> BlackCaptured = new();
-        public readonly Formation[] formations;
+        public readonly Formation[] Formations;
         public readonly bool OurSide;
         public readonly PieceLogic[] PieceBoard;
         public readonly BitArray SquareColor;
-        public readonly List<ISubscriber> Subscribers = new();
         public readonly TriggerHooks TriggerHooks = new();
         public readonly ObservableCollection<PieceConfig> WhiteCaptured = new();
         private int _countTurn;
 
         private Action.Action _lastMainAction;
         public RelicLogic BlackRelic;
-
-        public Action<int> OnIncreaseTurn;
-        public RegionalEffect RegionalEffect;
+        
+        public FieldEffect FieldEffect;
         public bool SideToMove;
         public PieceLogic WhiteCommander, BlackCommander;
         public RelicLogic WhiteRelic;
+        
+        public readonly Dictionary<int, Entity> EntityDict = new();
 
         public GameState(int maxLength, Vector2Int startingSize, bool side, bool ourSide)
         {
@@ -64,7 +61,7 @@ namespace Game.Managers
             PieceBoard = new PieceLogic[maxLength * maxLength];
             ActiveBoard = new BitArray(maxLength * maxLength);
             SquareColor = new BitArray(maxLength * maxLength);
-            formations = new Formation[maxLength * maxLength];
+            Formations = new Formation[maxLength * maxLength];
 
             SideToMove = side;
 
@@ -91,7 +88,7 @@ namespace Game.Managers
         public bool IsDay { get; private set; }
         public int CurrentTurn { get; private set; }
 
-        public void SpawnPiece(PieceConfig piece)
+        public PieceLogic SpawnPiece(PieceConfig piece)
         {
             var pieceLogic = PieceMaker.Get(piece);
             PieceBoard[piece.Index] = pieceLogic;
@@ -108,21 +105,29 @@ namespace Game.Managers
 
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];
+            
+            EntityDict.Add(pieceLogic.ID, pieceLogic);
+            return pieceLogic;
         }
 
-        public void MakeRegionalEffect(RegionalEffectType ret)
+        public int NextEntityID()
         {
-            RegionalEffect = GetRegionalEffectByType(ret);
+            return _pieceID++;
         }
 
-        private static RegionalEffect GetRegionalEffectByType(RegionalEffectType ret)
+        public void MakeFieldEffect(FieldEffectType ret)
         {
-            RegionalEffect re = ret switch
+            FieldEffect = GetFieldEffectByType(ret);
+        }
+
+        private static FieldEffect GetFieldEffectByType(FieldEffectType ret)
+        {
+            FieldEffect re = ret switch
             {
-                RegionalEffectType.Whirlpool => new Whirlpool(),
-                RegionalEffectType.PsionicShock => new PsionicShock(),
-                RegionalEffectType.BloodMoon => new BloodMoon(),
-                RegionalEffectType.RedTide => new RedTide(),
+                FieldEffectType.Whirlpool => new Whirlpool(),
+                FieldEffectType.PsionicShock => new PsionicShock(),
+                FieldEffectType.BloodMoon => new BloodMoon(),
+                FieldEffectType.RedTide => new RedTide(),
                 _ => null
             };
 
@@ -145,14 +150,12 @@ namespace Game.Managers
                 }
             }
 
-            for (var pos = 0; pos < formations.Length; pos++)
+            foreach (var format in Formations)
             {
-                var format = formations[pos];
-
                 if (format is not { HaveDuration: true } || SideToMove != format.GetColor()) continue;
 
                 format.SetDuration(format.Duration - 1);
-                if (format.Duration <= 0) FormationManager.Ins.RemoveFormation(pos);
+                if (format.Duration <= 0) FormationManager.Ins.RemoveFormation(format);
             }
 
             WhiteRelic?.PassTurn();
@@ -161,45 +164,37 @@ namespace Game.Managers
 
         public void OnStart()
         {
-            OnIncreaseTurn?.Invoke(CurrentTurn);
+            
         }
 
-        public void Destroy(int pos)
+        public void Kill(PieceLogic pieceAffected, bool record)
         {
-            var pieceAffected = PieceBoard[pos];
-            PieceBoard[pos] = null;
-            TriggerHooks.NotifyDead(pieceAffected);
-
-            pieceAffected.Effects.ForEach(RemoveObserver);
-        }
-
-        public void Kill(int pos)
-        {
-            var pieceAffected = PieceBoard[pos];
-            PieceBoard[pos] = null;
+            PieceBoard[pieceAffected.Pos] = null;
             TriggerHooks.NotifyDead(pieceAffected);
 
             pieceAffected.Effects.ForEach(RemoveObserver);
 
-            (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
-                pieceAffected.Color, pieceAffected.Pos));
+            if (record)
+            {
+                (!pieceAffected.Color ? WhiteCaptured : BlackCaptured).Add(new PieceConfig(pieceAffected.Type,
+                    pieceAffected.Color, pieceAffected.Pos));
+            }
         }
 
-        public void Move(int f, int t)
+        public void Move(PieceLogic piece, int t)
         {
-            PieceBoard[t] = PieceBoard[f];
-            PieceBoard[t].Pos = t;
-            PieceBoard[t].PreviousMoves.Add(f);
-            PieceBoard[f] = null;
+            PieceBoard[t] = piece;
+            PieceBoard[piece.Pos] = null;
+            piece.Pos = t;
         }
 
-        public void Swap(int a, int b)
+        public void Swap(PieceLogic a, PieceLogic b)
         {
-            var pieceB = PieceBoard[b];
-            PieceBoard[b] = PieceBoard[a];
-            PieceBoard[b].Pos = b;
-            PieceBoard[a] = pieceB;
-            PieceBoard[a].Pos = a;
+            var oldPosA = a.Pos;
+            a.Pos = b.Pos;
+            PieceBoard[a.Pos] = a;
+            b.Pos = oldPosA;
+            PieceBoard[b.Pos] = b;
         }
 
         public void FlipSideToMove()
@@ -208,7 +203,6 @@ namespace Game.Managers
             {
                 _countTurn++;
                 CurrentTurn++;
-                OnIncreaseTurn?.Invoke(CurrentTurn);
                 if (_countTurn == 151)
                 {
                     UIManager.Ins.Load(CanvasID.EndGameMessage);
@@ -259,9 +253,14 @@ namespace Game.Managers
             SideToMove = !SideToMove;
         }
 
-        public void SetRegionalEffect(RegionalEffect e)
+        public Entity GetEntityByID(int id)
         {
-            RegionalEffect = e;
+            return EntityDict.GetValueOrDefault(id);
+        }
+
+        public void SetFieldEffect(FieldEffect e)
+        {
+            FieldEffect = e;
             TriggerHooks.AddObserver(e);
         }
     }

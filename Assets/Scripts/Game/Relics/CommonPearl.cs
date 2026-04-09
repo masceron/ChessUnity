@@ -1,4 +1,4 @@
-﻿using Game.Action.Internal.Pending.Relic;
+﻿using Game.Common;
 using Game.Effects;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -23,12 +23,13 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null && piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new CommonPearlPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    //Làm lại
+                    // var pending = new CommonPearlPending(this);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;
@@ -39,7 +40,7 @@ namespace Game.Relics
         public override void ActiveForAI()
         {
             Debug.Log("CompleteActionForAI");
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var allPieces = BoardUtils.PieceBoard();
             var listPieces = allPieces.Where(p =>
                 p != null && p.Color == Color && !p.Effects.Any(e => e.EffectName == "effect_extremophile")).ToList();
             var minValue = int.MaxValue;
@@ -55,8 +56,9 @@ namespace Game.Relics
             var random = new Random();
             var selectedPiece = bestPiece[random.Next(bestPiece.Count)];
 
-            var pending = new CommonPearlPending(this, selectedPiece.Pos);
-            BoardViewer.Ins.ExecuteAction(pending);
+            //Làm lại
+            // var pending = new CommonPearlPending(this);
+            // BoardViewer.Ins.ExecuteAction(pending);
         }
     }
 }

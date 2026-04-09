@@ -15,7 +15,7 @@ namespace Game.Managers
 
         public void Initialize()
         {
-            _formations = MatchManager.Ins.GameState.formations;
+            _formations = GetFormations();
             _formationObjects = new GameObject[BoardSize];
         }
 
@@ -30,43 +30,42 @@ namespace Game.Managers
         {
             var rank = RankOf(pos);
             var file = FileOf(pos);
-            env.SetPositon(pos);
+            env.SetPosition(pos);
             var prefab = AssetManager.Ins.FormationData[env.GetFormationType()].prefab;
             if (!prefab) prefab = defaultPrefab;
             _formationObjects[pos] = Instantiate(prefab, new Vector3(rank, YCoordinate, file),
                 Quaternion.identity, transform);
-            if (_formations[pos] != null) RemoveFormation(pos);
+            if (_formations[pos] != null) RemoveFormation(_formations[pos]);
             _formations[pos] = env;
-            AddEffectObserver(env);
             if (PieceOn(pos) != null) _formations[pos].OnCreated(PieceOn(pos));
+            AddToEntityList(env);
         }
 
         public void MoveFormation(int from, int to)
         {
             var movedFormation = GetFormation(from);
-            RemoveFormation(from);
+            RemoveFormation(movedFormation);
             SetFormation(to, movedFormation);
         }
 
         /// <summary>
         ///     Nên dùng để xóa Formation
         /// </summary>
-        public void RemoveFormation(int pos)
+        public void RemoveFormation(Formation formation)
         {
-            if (_formations[pos] == null) return;
-            _formations[pos].OnRemove(PieceOn(pos)); // luôn gọi, dù ô không có Piece (truyền null)
-            RemoveObserver(_formations[pos]);
-            _formations[pos] = null;
-            Destroy(_formationObjects[pos]);
-            _formationObjects[pos] = null;
+            if (formation == null) return;
+            formation.OnRemove(PieceOn(formation.Pos)); // luôn gọi, dù ô không có Piece (truyền null)
+            _formations[formation.Pos] = null;
+            Destroy(_formationObjects[formation.Pos]);
+            _formationObjects[formation.Pos] = null;
         }
 
         public static bool IsHideByFog(int pos, bool sideToMove)
         {
             var formation = GetFormation(pos);
-            var pieceInPos = MatchManager.Ins.GameState.PieceBoard[pos];
+            var pieceInPos = PieceBoard()[pos];
             if (pieceInPos == null) return false;
-            var haveAbyssalTapetum = Enumerable.Any(MatchManager.Ins.GameState.PieceBoard,
+            var haveAbyssalTapetum = Enumerable.Any(PieceBoard(),
                 pieceLogic => pieceLogic != null && pieceLogic.Color == sideToMove &&
                               pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum));
             return formation != null && formation.GetFormationType() == FormationType.FogOfWar

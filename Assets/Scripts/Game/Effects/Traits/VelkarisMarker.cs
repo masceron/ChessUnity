@@ -1,5 +1,6 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
+using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
@@ -11,30 +12,30 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class VelkarisMarker : Effect, IEndTurnTrigger
     {
-        private readonly int[] rows;
+        private readonly int[] _rows;
 
         public VelkarisMarker(PieceLogic p) : base(-1, 1, p, "effect_velkaris_marker")
         {
-            rows = new int[2];
+            _rows = new int[2];
             TriggerRows(p.Pos, p.Color);
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            if (lastMainAction.Maker == Piece.Pos)
+            if (lastMainAction.GetMakerAsPiece() == Piece)
             {
-                TriggerRows(lastMainAction.Target, Piece.Color);
+                TriggerRows(lastMainAction.GetTargetPos(), Piece.Color);
                 return;
             }
 
-            if (MatchManager.Ins.GameState.SideToMove == Piece.Color) return;
+            if (SideToMove() == Piece.Color) return;
 
-            var rowMovedTo = RankOf(lastMainAction.Target);
+            var rowMovedTo = RankOf(lastMainAction.GetTargetPos());
 
-            if (!rows.Contains(rowMovedTo) || ColorOfPiece(lastMainAction.Target) == Piece.Color) return;
+            if (!_rows.Contains(rowMovedTo) || lastMainAction.GetMakerAsPiece().Color == Piece.Color) return;
 
-            ActionManager.EnqueueAction(new VelkarisMark(Piece.Pos, Piece.Pos, lastMainAction.Target));
+            ActionManager.EnqueueAction(new VelkarisMark(Piece, lastMainAction.GetMakerAsPiece()));
             ActionManager.EnqueueAction(new RemoveEffect(this));
         }
 
@@ -48,12 +49,12 @@ namespace Game.Effects.Traits
             switch (side)
             {
                 case false:
-                    rows[0] = row - 1;
-                    rows[1] = row - 2;
+                    _rows[0] = row - 1;
+                    _rows[1] = row - 2;
                     break;
                 case true:
-                    rows[0] = row + 1;
-                    rows[1] = row + 2;
+                    _rows[0] = row + 1;
+                    _rows[1] = row + 2;
                     break;
             }
         }

@@ -32,7 +32,7 @@ namespace Game.Effects.States
             
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {
-            actions.RemoveAll(a => a is ICaptures && a.Maker == caller.Pos || a.Target == caller.Pos);
+            actions.RemoveAll(a => a is ICaptures && a.GetMakerAsPiece() == caller || a.GetTargetAsPiece() == caller);
         }
     }
 }

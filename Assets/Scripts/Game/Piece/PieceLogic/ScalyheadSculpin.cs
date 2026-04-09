@@ -18,7 +18,7 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                 {
-                    list.Add(new ScalyheadSculpinActive(Pos));
+                    list.Add(new ScalyheadSculpinActive(this));
                 }
                 else
                 {

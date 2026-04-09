@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using Game.Action.Captures;
-using Game.Action.Quiets;
 using Game.Common;
 using UnityEngine;
 using static Game.Common.BoardUtils;
@@ -11,13 +9,18 @@ namespace Game.Movesets
     {
         public abstract List<int> GenerateBaseMovePattern(int makerPos);
 
-        public static void AddToPatternMoves(List<Action.Action> list, HashSet<int> basePositions, int pos, int range,
-            bool forCapture, bool excludeEmptyTile, bool isSurpass = false)
+        /// <summary>
+        /// Từ basePositions, lọc ra các vị trí hợp lệ (bounds, active, không bị chặn)
+        /// và thêm vào list positions.
+        /// forCapture = false → chỉ trả ô trống (Quiets)
+        /// forCapture = true  → trả tất cả ô reachable (cả trống lẫn có quân)
+        /// </summary>
+        public static void AddToPatternMoves(List<int> list, HashSet<int> basePositions, int pos, int range,
+            bool forCapture, bool isSurpass = false)
         {
             if (range <= 0) return;
 
             var caller = PieceOn(pos);
-            var color = caller.Color;
             var (rank, file) = RankFileOf(pos);
 
             if (range > 1)
@@ -65,19 +68,20 @@ namespace Game.Movesets
                     isClear = blocker.Item1 == -1 && blocker.Item2 == -1;
                 }
 
+                if (!isClear) continue;
+
                 var target = PieceOn(targetPos);
 
-                if (target == null)
+                if (!forCapture)
                 {
-                    if (!forCapture && isClear)
-                        list.Add(new NormalMove(pos, targetPos));
-                    if (forCapture && isClear && !excludeEmptyTile) // add capture để nếu đi vào đây thì sẽ bị phạt
-                        list.Add(new NormalCapture(pos, targetPos));
+                    // Quiets: chỉ trả ô trống
+                    if (target == null)
+                        list.Add(targetPos);
                 }
-                else if (target.Color != color)
+                else
                 {
-                    if (forCapture && isClear)
-                        list.Add(new NormalCapture(pos, targetPos));
+                    // Captures: trả tất cả ô reachable (cả trống lẫn có quân)
+                    list.Add(targetPos);
                 }
             }
         }

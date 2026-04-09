@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Game.Action.Internal.Pending.Relic;
 using Game.Action.Relics;
 using Game.Common;
 using Game.Effects;
@@ -25,12 +24,14 @@ namespace Game.Relics
         {
             if (CurrentCooldown == 0)
             {
-                foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                foreach (var piece in BoardUtils.PieceBoard())
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    var pending = new SeafoamPhialPending(this, piece.Pos);
-                    BoardViewer.ListOf.Add(pending);
+                    
+                    //Làm lại
+                    //var pending = new SeafoamPhialPending(this, piece);
+                    // BoardViewer.ListOf.Add(pending);
                 }
 
                 BoardViewer.Selecting = -2;
@@ -40,7 +41,7 @@ namespace Game.Relics
 
         public override void ActiveForAI()
         {
-            var allPieces = MatchManager.Ins.GameState.PieceBoard;
+            var allPieces = BoardUtils.PieceBoard();
             var bestPieces = new List<PieceLogic>();
             var maxDebuff = -1;
 
@@ -67,7 +68,7 @@ namespace Game.Relics
             {
                 // If none found, default to caster (can be changed later)
                 case 0:
-                    // targetPiece = PieceOn(Maker);
+                    // targetPiece = GetMakerAsPiece();
                     break;
                 case 1:
                     targetPiece = bestPieces[0];
@@ -90,7 +91,7 @@ namespace Game.Relics
 
             if (targetPiece == null) return;
             {
-                var excute = new SeafoamPhialAction(targetPiece.Pos);
+                var excute = new SeafoamPhialAction(targetPiece);
                 BoardViewer.Ins.ExecuteAction(excute);
 
                 // var pending = new SeafoamPhialPending(this, targetPiece.Pos);

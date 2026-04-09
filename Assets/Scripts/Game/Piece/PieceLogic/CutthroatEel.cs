@@ -34,7 +34,7 @@ namespace Game.Piece.PieceLogic
                             foreach (var effect in pieceOn.Effects)
                                 if (effect is Bleeding)
                                 {
-                                    list.Add(new CutthroatEelActive(Pos, targetPos));
+                                    list.Add(new CutthroatEelActive(this, pieceOn));
                                     break;
                                 }
                     }
@@ -83,7 +83,7 @@ namespace Game.Piece.PieceLogic
 
                     // Chọn 1 hoặc random
                     var chosen = candidates.Count == 1 ? candidates[0] : candidates[Random.Range(0, candidates.Count)];
-                    list.Add(new CutthroatEelActive(Pos, chosen.piece.Pos));
+                    list.Add(new CutthroatEelActive(this, chosen.piece));
                 }
             };
         }

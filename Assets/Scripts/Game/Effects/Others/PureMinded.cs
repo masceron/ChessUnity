@@ -22,7 +22,7 @@ namespace Game.Effects.Others
             if (_count > 0) _count--;
             if (_count == 0)
             {
-                ActionManager.EnqueueAction(new Purify(Piece.Pos, Piece.Pos));
+                ActionManager.EnqueueAction(new Purify(Piece, Piece));
                 _count = RoundsPerSelfPurify;
             }
         }

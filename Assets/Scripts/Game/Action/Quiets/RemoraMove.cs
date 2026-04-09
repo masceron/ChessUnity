@@ -1,4 +1,5 @@
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
 
@@ -12,20 +13,17 @@ namespace Game.Action.Quiets
         {
         }
 
-        public RemoraMove(int maker, int target) : base(maker)
-        {
-            Target = target;
-        }
+        public RemoraMove(PieceLogic maker, int target) : base(maker, target)
+        {}
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Maker, Target);
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            Move(Maker, Target);
-            Maker = Target;
+            Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

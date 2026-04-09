@@ -39,7 +39,7 @@ namespace Game.Effects.SpecialAbility
         {
             if (isPlayer)
             {
-                list.Add(new OliveRidleyHatchlingActive(Piece.Pos));
+                list.Add(new OliveRidleyHatchlingActive(Piece));
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using Game.Piece;
 using Game.Relics.Commons;
 using UnityEngine;
@@ -30,6 +30,9 @@ namespace Game.Managers
     {
         [NonSerialized] public GameState GameState;
 
+        [NonSerialized] private static uint _seed;
+        [NonSerialized] private static Unity.Mathematics.Random _randomizer;
+
         [NonSerialized] public BoardViewer InputProcessor;
 
         public Vector2Int StartingSize { get; private set; }
@@ -53,12 +56,13 @@ namespace Game.Managers
         private void MakeGame(GameConfig cfg)
         {
             GameState = new GameState(MaxLength, cfg.StartingSize, cfg.FirstSideToMove, cfg.OurSide);
-            GameState.OnIncreaseTurn += ct => { Debug.Log("current turn : " + ct); };
             ActionManager.Init(GameState);
         }
 
         public void Init(GameConfig cfg, GameMode gameMode = GameMode.PlayerVsPlayer)
         {
+            _seed = (uint)Random.Range(int.MinValue, int.MaxValue);
+            _randomizer = new Unity.Mathematics.Random(_seed);
             StartingSize = cfg.StartingSize;
             MakeGame(cfg);
             MakeBoard();
@@ -66,7 +70,7 @@ namespace Game.Managers
             StartGame(new LineupConfig(Config.PieceConfigWhite.ToArray(), Config.PieceConfigBlack.ToArray()),
                 Config.relicWhiteConfig,
                 Config.relicBlackConfig,
-                Config.regionalEffectType
+                Config.FieldEffectType
             );
             if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
             //UIManager.Ins.Load(CanvasID.LineupEdit);
@@ -87,14 +91,14 @@ namespace Game.Managers
             GameState.BlackRelic = RelicMaker.Get(black);
         }
 
-        private void MakeRegionalEffect(RegionalEffectType ret)
+        private void MakeFieldEffect(FieldEffectType ret)
         {
-            GameState.MakeRegionalEffect(ret);
+            GameState.MakeFieldEffect(ret);
         }
 
-        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, RegionalEffectType ret)
+        private void StartGame(LineupConfig cfg, RelicConfig whiteRelic, RelicConfig blackRelic, FieldEffectType ret)
         {
-            MakeRegionalEffect(ret);
+            MakeFieldEffect(ret);
             MakePieces(cfg);
             MakeRelics(whiteRelic, blackRelic);
             UIManager.Ins.Load(CanvasID.Ingame);
@@ -105,12 +109,8 @@ namespace Game.Managers
 
         public static bool Roll(int chance)
         {
-            var a = Random.Range(1, 101);
+            var a = _randomizer.NextUInt(100);
             return a <= chance;
-        }
-
-        public void CallDraw(bool side)
-        {
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Game.Managers;
+﻿using Game.Common;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
@@ -6,20 +8,18 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class CarapaceKill : Action, IInternal
     {
-        public CarapaceKill(int maker, int to) : base(maker)
+        public CarapaceKill(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = to;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Kill(Target);
+            BoardUtils.KillPiece(GetTargetAsPiece());
         }
     }
 }

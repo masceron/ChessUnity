@@ -16,9 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public CutthroatEelActive(int maker, int target) : base(maker)
+        public CutthroatEelActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target; // Target is enemy
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -28,17 +27,18 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerPiece = PieceOn(Maker);
-            var direction = PieceOn(Maker).Color ? 1 : -1;
-            ActionManager.EnqueueAction(new NormalMove(Maker, IndexOf(RankOf(Target) + direction, FileOf(Target))));
-            var bleeding = PieceOn(Target).Effects.First(e => e is Bleeding);
+            var makerPiece = GetMakerAsPiece();
+            var direction = makerPiece.Color ? 1 : -1;
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), 
+                IndexOf(RankOf(GetTargetPos()) + direction, FileOf(GetTargetPos()))));
+            var bleeding = GetTargetAsPiece().Effects.First(e => e is Bleeding);
             if (bleeding.Strength >= 4)
             {
                 bleeding.Strength -= 1;
             }
             else
             {
-                ActionManager.EnqueueAction(new KillPiece(Target));
+                ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece(), GetTargetAsPiece()));
                 SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
         }

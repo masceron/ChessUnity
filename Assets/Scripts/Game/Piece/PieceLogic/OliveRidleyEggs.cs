@@ -1,6 +1,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.SpecialAbility;
+using Game.Movesets;
 
 namespace Game.Piece.PieceLogic
 {
@@ -11,8 +12,8 @@ namespace Game.Piece.PieceLogic
         public OliveRidleyEggs(PieceConfig cfg)
             : base(
                 cfg,
-                (list, pos, isPlayer) => 0,                
-                (list, pos, excludeEmptyTile) => 0
+                None.Quiets,
+                None.Captures
             )   
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new OliveRidleyEggsPassive(this)));

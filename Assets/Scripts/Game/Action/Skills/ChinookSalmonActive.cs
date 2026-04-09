@@ -1,22 +1,24 @@
-﻿using Game.Action.Internal;
+using MemoryPack;
+using Game.Action.Internal;
 using Game.Effects.Others;
 using Game.Piece.PieceLogic.Commons;
-using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
 {
-    public class ChinookSalmonActive : Action, ISkills
+    [MemoryPackable]
+    public partial class ChinookSalmonActive : Action, ISkills
     {
-        public ChinookSalmonActive(int maker, int target) : base(maker)
+        [MemoryPackConstructor]
+        private ChinookSalmonActive() { }
+
+        public ChinookSalmonActive(PieceLogic maker, int target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
         
         protected override void ModifyGameState()
         {
-            var maker = PieceOn(Maker);
-            ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, Target), maker));
+            var maker = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new ApplyEffect(new ChinookSalmonBeforeDead(maker, GetTargetPos()), maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

@@ -1,4 +1,6 @@
+using Game.Common;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Quiets
@@ -13,19 +15,18 @@ namespace Game.Action.Quiets
         {
         }
 
-        public NormalSwap(int maker, int target) : base(maker)
+        public NormalSwap(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
         {
-            PieceManager.Ins.Swap(Maker, Target);
+            PieceManager.Ins.Swap(GetFrom(), GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            MatchManager.Ins.GameState.Swap(Maker, Target);
+            BoardUtils.Swap(GetMakerAsPiece(), GetTargetAsPiece());
         }
     }
 }

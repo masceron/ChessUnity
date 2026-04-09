@@ -24,7 +24,7 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new Haste(Duration1, Strength, this)));
 
             SetStat(SkillStat.Cooldown, Cooldown);
-            SetStat(SkillStat.Range, Range1, 1);
+            SetStat(SkillStat.Range, Range1);
             SetStat(SkillStat.Range, Range2, 2);
             SetStat(SkillStat.Duration, Duration2, 2);
             
@@ -39,7 +39,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         var pOn = PieceOn(index);
                         if (pOn != null) continue;
-                        list.Add(new BlubberJellyActive(Pos, index));
+                        list.Add(new BlubberJellyActive(this, index));
                     }
                 }
                 else

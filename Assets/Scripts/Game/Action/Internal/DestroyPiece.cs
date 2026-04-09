@@ -1,4 +1,6 @@
-﻿using Game.Managers;
+﻿using Game.Common;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 
 namespace Game.Action.Internal
 {
@@ -6,18 +8,18 @@ namespace Game.Action.Internal
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class DestroyPiece : Action, IInternal
     {
-        public DestroyPiece(int maker) : base(maker)
+        public DestroyPiece(PieceLogic maker) : base(maker)
         {
         }
 
         protected override void Animate()
         {
+            PieceManager.Ins.Destroy(GetFrom());
         }
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Maker);
-            MatchManager.Ins.GameState.Destroy(Maker);
+            BoardUtils.KillPiece(GetMakerAsPiece(), false);
         }
     }
 }

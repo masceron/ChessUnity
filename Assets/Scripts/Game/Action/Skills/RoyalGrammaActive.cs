@@ -16,13 +16,16 @@ namespace Game.Action.Skills
         private RoyalGrammaActive()
         {
         }
-        List<int> positions;
-        public string chosenType;
-        public RoyalGrammaActive(int maker, List<int> positions, string type) : base(maker)
+
+        [MemoryPackInclude]
+
+        private List<int> _positions;
+        [MemoryPackInclude]
+        private string _chosenType;
+        public RoyalGrammaActive(PieceLogic maker, List<int> positions, string type) : base(maker)
         {
-            Maker = maker;
-            this.positions = positions;
-            chosenType = type;
+            _positions = positions;
+            _chosenType = type;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -32,18 +35,18 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (int pos in positions)
+            foreach (int pos in _positions)
             {
-                PieceLogic pieceOn = PieceOn(pos);
+                var pieceOn = PieceOn(pos);
                 List<AugmentationName> names = new();
                 foreach(var aug in pieceOn.Augmentations)
                 {
                     names.Add(aug.Name);
                 }
-                ActionManager.EnqueueAction(new DestroyPiece(pos));
-                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig(chosenType, PieceOn(Maker).Color, pos, names)));
+                ActionManager.EnqueueAction(new DestroyPiece(pieceOn));
+                ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig(_chosenType, GetMakerAsPiece().Color, pos, names)));
             }
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

@@ -1,4 +1,5 @@
 using Game.Action.Skills;
+using Game.Common;
 using Game.Managers;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -19,7 +20,7 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var (_, _) = RankFileOf(Pos);
-                    foreach (var piece in MatchManager.Ins.GameState.PieceBoard)
+                    foreach (var piece in BoardUtils.PieceBoard())
                     {
                         if (piece == null) continue;
                         if (piece.Color == Color) continue;
@@ -27,7 +28,7 @@ namespace Game.Piece.PieceLogic
                         var hasShield = PieceOn(piece.Pos).Effects.Any(effect =>
                             effect.EffectName is "effect_shield" or "effect_hardened_shield");
 
-                        if (hasShield) list.Add(new BarnacleActive(Pos, piece.Pos));
+                        if (hasShield) list.Add(new BarnacleActive(this, piece));
                     }
                 }
                 //query for AI in here

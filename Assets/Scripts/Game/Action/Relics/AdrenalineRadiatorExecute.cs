@@ -1,4 +1,3 @@
-using Game.Common;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -11,13 +10,13 @@ namespace Game.Action.Relics
         {
         }
 
-        public AdrenalineRadiatorExecute(int maker) : base(maker)
+        public AdrenalineRadiatorExecute(int maker) : base(null, maker)
         {
         }
 
         protected override void ModifyGameState()
         {
-            BoardUtils.PieceOn(Maker).SkillCooldown = 0;
+            GetTargetAsPiece().SkillCooldown = 0;
         }
     }
 }

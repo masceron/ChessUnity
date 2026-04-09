@@ -12,43 +12,45 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FrilledSharkActive : Action, ISkills
     {
-        private readonly int dfile;
+        [MemoryPackInclude]
+        private int dfile;
 
-        private readonly int drank;
+        [MemoryPackInclude]
+
+        private int drank;
 
         [MemoryPackConstructor]
         private FrilledSharkActive()
         {
         }
 
-        public FrilledSharkActive(int from, int drank, int dfile) : base(from)
+        public FrilledSharkActive(PieceLogic from, int drank, int dfile) : base(from,
+            IndexOf(RankOf(from.Pos) + drank * 4, FileOf(from.Pos) + dfile * 4))
         {
             this.dfile = dfile;
             this.drank = drank;
-            Target = IndexOf(RankOf(Maker) + drank * 4, FileOf(Maker) + dfile * 4);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
-            if (maker == null) return 0;
+            if (GetMakerAsPiece() is not PieceLogic maker) return 0;
             return pieceAI.Color != maker.Color ? 20 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            var rank = RankOf(Maker);
-            var file = FileOf(Maker);
+            var rank = RankOf(GetFrom());
+            var file = FileOf(GetFrom());
             for (var i = 0; i < 4; ++i)
             {
                 rank += drank;
                 file += dfile;
                 var pieceOn = PieceOn(IndexOf(rank, file));
-                if (pieceOn != null && pieceOn.Color != PieceOn(Maker).Color)
-                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn), PieceOn(Maker)));
+                if (pieceOn != null && pieceOn.Color != GetMakerAsPiece().Color)
+                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(2, pieceOn), GetMakerAsPiece()));
             }
 
-            ActionManager.EnqueueAction(new NormalMove(Maker, Target));
+            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

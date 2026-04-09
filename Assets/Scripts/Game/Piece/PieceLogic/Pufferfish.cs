@@ -15,10 +15,10 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Dominator(this)));
 
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;
-                if (isPlayer) list.Add(new PufferfishExplode(Pos));
+                if (isPlayer) list.Add(new PufferfishExplode(this));
                 //query for AI in here
             };
         }

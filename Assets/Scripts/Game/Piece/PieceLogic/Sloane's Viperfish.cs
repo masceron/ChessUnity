@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
     {
         public SloaneSViperfish(PieceConfig cfg) : base(cfg, SmallPredatorMoves.Quiets, SmallPredatorMoves.Captures)
         {
-            Skills = (list, isPlayer, excludeEmptyTile) =>
+            Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
@@ -29,9 +29,7 @@ namespace Game.Piece.PieceLogic
                             var p = PieceOn(idx);
                             if (p == null || p == caller || p.Color == caller.Color) continue;
 
-                            var bleeding = p.Effects.Any(t => t.EffectName == "effect_bleeding");
-
-                            list.Add(new SloaneViperfishActive(idx, bleeding));
+                            list.Add(new SloaneViperfishActive(this, p));
                         }
                     }
                 }

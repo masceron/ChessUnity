@@ -19,7 +19,7 @@ namespace UX.UI
         LineupEdit,
         FreePlayPreset,
         FreePlayDesignArmy,
-        RegionalEffect,
+        FieldEffect,
         Augmentation,
         EndGameMessage,
         FreePlayMenu,

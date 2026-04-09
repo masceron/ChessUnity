@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Internal.Pending;
-using Game.Action.Internal.Pending.Relic;
 using Game.Common;
 using Game.Managers;
 using PrimeTween;
@@ -48,14 +47,15 @@ namespace UX.UI.Ingame.CoralTome
         public void Choose(string type)
         {
             Disable();
-            var color = MatchManager.Ins.GameState.OurSide;
+            var color = BoardUtils.OurSide();
             foreach (var pos in BoardUtils.AllSidePos(color))
             {
                 TileManager.Ins.MarkAsMoveable(pos);
                 var relic = BoardUtils.GetRelicOf(color);
                 if (relic is not Game.Relics.CoralTome coralTome) continue;
-                var pending = new CoralTomePending(coralTome, pos, type);
-                BoardViewer.ListOf.Add(pending);
+                //Làm lại
+                // var pending = new CoralTomePending(coralTome, type, pos);
+                // BoardViewer.ListOf.Add(pending);
             }
 
             BoardViewer.Selecting = -2;

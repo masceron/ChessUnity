@@ -3,7 +3,6 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Common;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using UnityEngine;
@@ -27,9 +26,9 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures) return;
 
-            if (action.Target != Piece.Pos) return;
+            if (action.GetTargetAsPiece() != Piece) return;
 
-            var (nRank, nFile) = BoardUtils.RankFileOf(action.Maker);
+            var (nRank, nFile) = BoardUtils.RankFileOf(action.GetFrom());
 
             foreach (var (r, f) in MoveEnumerators.AroundUntil(nRank, nFile, Radius))
                 _possiblePositions.Add(BoardUtils.IndexOf(r, f));
@@ -42,9 +41,9 @@ namespace Game.Effects.Traits
                      BoardUtils.PieceOn(_possiblePositions[idx]).Color == Piece.Color);
 
             if (BoardUtils.PieceOn(_possiblePositions[idx]) != null)
-                ActionManager.EnqueueAction(new KillPiece(_possiblePositions[idx]));
+                ActionManager.EnqueueAction(new KillPiece(Piece, BoardUtils.PieceOn(_possiblePositions[idx])));
 
-            MatchManager.Ins.GameState.Move(action.Target, _possiblePositions[idx]);
+            BoardUtils.Move(action.GetTargetAsPiece(), _possiblePositions[idx]);
         }
 
         public void OnApply()

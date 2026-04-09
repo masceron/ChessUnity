@@ -6,7 +6,7 @@ using Game.Piece.PieceLogic.Commons;
 namespace Game.Tile
 {
     /// <summary>
-    ///     Placeholder for BubbleVentEffect implementation.
+    ///     "Bound quân cờ đứng trên nó trong 1 turn
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
@@ -19,7 +19,7 @@ namespace Game.Tile
         protected override void OnPieceEnter(PieceLogic piece)
         {
             base.OnPieceEnter(piece);
-            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece), FormationType.BubbleVent));
+            ActionManager.EnqueueAction(new ApplyEffect(new Bound(1, piece)));
         }
 
         public override FormationType GetFormationType()

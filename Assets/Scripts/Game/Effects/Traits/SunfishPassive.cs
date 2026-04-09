@@ -1,7 +1,6 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
-using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using UnityEngine;
@@ -17,7 +16,7 @@ namespace Game.Effects.Traits
 
         public SunfishPassive(PieceLogic piece) : base(-1, 1, piece, "effect_sunfish_passive")
         {
-            _wasNight = !MatchManager.Ins.GameState.IsDay;
+            _wasNight = !IsDay();
             EndTurnEffectType = EndTurnEffectType.EndOfAnyTurn;
         }
 
@@ -25,12 +24,12 @@ namespace Game.Effects.Traits
         {
             switch (_wasNight)
             {
-                case true when MatchManager.Ins.GameState.IsDay:
+                case true when IsDay():
                     Debug.Log("SunfishPassive: MakeActive");
                     MakeActive();
                     _wasNight = false;
                     break;
-                case false when !MatchManager.Ins.GameState.IsDay:
+                case false when !IsDay():
                     _wasNight = true;
                     break;
             }

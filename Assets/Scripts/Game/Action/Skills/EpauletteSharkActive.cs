@@ -14,10 +14,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public EpauletteSharkActive(int maker, int target) : base(maker)
+        public EpauletteSharkActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -27,8 +25,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Target));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), GetTargetAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

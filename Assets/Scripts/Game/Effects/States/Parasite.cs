@@ -2,7 +2,6 @@ using Game.Action;
 using Game.Action.Captures;
 using Game.Action.Internal;
 using Game.Action.Quiets;
-using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
@@ -35,16 +34,19 @@ namespace Game.Effects.States
         /// </summary>
         public void OnCallBeforePieceAction(Action.Action action)
         {
+           var targetPiece = action.GetTargetAsPiece();
+
            if (action is not ICaptures 
-                || action.Maker != Piece.Pos 
-                || BoardUtils.PieceOn(action.Target).CurrentState != StateType.None) return;
+                || action.GetMakerAsPiece() != Piece 
+                || targetPiece == null
+                || targetPiece.CurrentState != StateType.None) return;
 
            action.Result = ResultFlag.Infest;
 
            ApplySkill(action);    
 
-           ActionManager.EnqueueAction(new ApplyEffect(new Infested(BoardUtils.PieceOn(action.Target), Piece)));
-           ActionManager.EnqueueAction(new MoveToParasitic(Piece.Pos, action.Target));
+           ActionManager.EnqueueAction(new ApplyEffect(new Infested(targetPiece, Piece)));
+           ActionManager.EnqueueAction(new MoveToParasitic(Piece, targetPiece));
         }
 
         protected virtual void ApplySkill(Action.Action action)

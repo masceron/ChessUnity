@@ -16,10 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public VelkarisKill(int p, int f, int t) : base(p)
+        public VelkarisKill(PieceLogic f, PieceLogic t) : base(f, t)
         {
-            Maker = f;
-            Target = t;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -29,13 +27,13 @@ namespace Game.Action.Skills
 
         protected override void Animate()
         {
-            PieceManager.Ins.Destroy(Target);
+            PieceManager.Ins.Destroy(GetTargetPos());
         }
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Target));
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), GetTargetAsPiece()));
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

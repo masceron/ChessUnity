@@ -25,8 +25,8 @@ namespace Game.Effects.Others
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is not NormalMove move || BoardUtils.PieceOn(move.Maker) != Piece) return;
-            var targetPos = move.Target;
+            if (action is not NormalMove move || move.GetMakerAsPiece() != Piece) return;
+            var targetPos = move.GetTargetPos();
             var (rank, file) = BoardUtils.RankFileOf(targetPos);
 
             var enemyPieces = BoardUtils.GetPiecesInRadius(
@@ -36,7 +36,7 @@ namespace Game.Effects.Others
                 p => p != null && p.Color != Piece.Color && p != Piece
             );
 
-            foreach (var target in enemyPieces) ActionManager.EnqueueAction(new KillPiece(target.Pos));
+            foreach (var target in enemyPieces) ActionManager.EnqueueAction(new KillPiece(Piece, target));
         }
 
         public override int GetValueForAI()

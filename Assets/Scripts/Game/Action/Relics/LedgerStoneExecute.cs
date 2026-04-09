@@ -17,7 +17,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public LedgerStoneExecute(bool isFirstOption) : base(-1)
+        public LedgerStoneExecute(bool isFirstOption) : base(null)
         {
             _isFirstOption = isFirstOption;
         }

@@ -21,7 +21,7 @@ namespace Game.Effects.Augmentation
 
         public void OnCallEnd(Action.Action lastMainAction)
         {
-            ActionManager.EnqueueAction(new Purge(Piece.Pos, Piece.Pos));
+            ActionManager.EnqueueAction(new Purge(Piece, Piece));
         }
 
         public EndTurnTriggerPriority Priority => EndTurnTriggerPriority.Buff;

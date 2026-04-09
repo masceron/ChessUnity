@@ -30,7 +30,7 @@ namespace Game.Piece.PieceLogic
                             var tpos = IndexOf(rankOff, fileOff);
                             var pieceAt = PieceOn(tpos);
                             if (pieceAt == null || pieceAt.Color == Color) continue;
-                            list.Add(new ArcherfishActive(Pos, tpos));
+                            list.Add(new ArcherfishActive(this, pieceAt));
                         }
                     }
                 }

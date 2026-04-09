@@ -9,7 +9,7 @@ namespace Game.Piece.PieceLogic
     {
         public LeatherbackTurtle(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, RookMoves.Captures)
         {
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Regenarative(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Regenerative(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
         }   
     }

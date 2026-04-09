@@ -9,30 +9,28 @@ namespace Game.Action.Skills
     [Il2CppSetOption(Option.NullChecks, false)]
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [MemoryPackable]
-    public partial class LionfishActive : Action, ISkills
+    public partial class LionfishActive : Action, ISkills, ILocaltionTarget
     {
         [MemoryPackConstructor]
         private LionfishActive()
         {
         }
 
-        public LionfishActive(int maker) : base(maker)
+        public LionfishActive(PieceLogic maker) : base(maker)
         {
-            Maker = maker;
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null) return 0;
             return pieceAI.Color != maker.Color ? -20 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            var (rank, file) = RankFileOf(GetFrom());
+            var caller = GetMakerAsPiece();
 
             for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
             {
@@ -41,14 +39,15 @@ namespace Game.Action.Skills
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;
-                    var p = PieceOn(IndexOf(rankOff, fileOff));
-                    if (p == null || p.Color == caller.Color) continue;
+                    var target = IndexOf(rankOff, fileOff);
+                    var pieceTarget = PieceOn(target);
+                    if (pieceTarget == null || pieceTarget.Color == caller.Color) continue;
 
-                    ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), PieceOn(Maker)));
+                    ActionManager.EnqueueAction(new LionfishActiveImpact(Maker, target));
                 }
             }
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

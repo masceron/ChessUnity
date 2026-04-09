@@ -5,7 +5,7 @@ namespace Game.Action
     [MemoryPackable]
     public partial class SkipTurn : Action
     {
-        public SkipTurn() : base(-1)
+        public SkipTurn() : base(null)
         {
         }
 

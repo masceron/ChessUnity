@@ -16,9 +16,8 @@ namespace Game.Action.Skills
         {
         }
 
-        public PufferfishExplode(int maker) : base(maker)
+        public PufferfishExplode(PieceLogic maker) : base(maker)
         {
-            Target = maker;
         }
 
         public int AIPenaltyValue(PieceLogic p)
@@ -32,9 +31,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(Maker));
-            var (rank, file) = RankFileOf(Maker);
-            var caller = PieceOn(Maker);
+            ActionManager.EnqueueAction(new KillPiece(null, GetMakerAsPiece()));
+            var (rank, file) = RankFileOf(GetFrom());
+            var caller = GetMakerAsPiece();
 
             for (var i = -1; i <= 1; i++)
             {
@@ -48,7 +47,7 @@ namespace Game.Action.Skills
                     var p = PieceOn(idx);
 
                     if (p != null && p.Color != caller.Color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), PieceOn(Maker)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), GetMakerAsPiece()));
                 }
             }
         }

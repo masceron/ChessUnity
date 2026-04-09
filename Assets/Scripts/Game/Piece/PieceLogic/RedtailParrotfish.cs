@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
 using Game.Action.Skills;
 using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
@@ -27,8 +26,9 @@ namespace Game.Piece.PieceLogic
                     for (var i = 0; i < BoardSize; ++i)
                     {
                         if (!IsActive(i)) continue;
-                        var formation = GetFormation(i);
-                        if (formation != null) list.Add(new RedtailParrotfishPending(Pos, i));
+                        //Làm lại
+                        //var formation = GetFormation(i);
+                        //if (formation != null) list.Add(new RedtailParrotfishPending(Pos, i));
                     }
                 }
                 else
@@ -51,7 +51,7 @@ namespace Game.Piece.PieceLogic
                         }
 
                         if (isOurSide) continue;
-                        if (formation.category != FormationCategory.Positive) continue;
+                        if (formation.Category != FormationCategory.Positive) continue;
 
                         var value = formation.GetValueForAI();
                         if (value > bestValue)
@@ -76,7 +76,7 @@ namespace Game.Piece.PieceLogic
                         ? listB[0]
                         : listB[Random.Range(0, listB.Count)];
 
-                    list.Add(new RedtailParrotfishActive(Pos, chosenFormation.Pos, chosenTarget));
+                    list.Add(new RedtailParrotfishActive(this, chosenFormation, chosenTarget));
                 }
             };
         }

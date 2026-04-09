@@ -18,28 +18,26 @@ namespace Game.Action.Skills
         {
         }
 
-        public SnaggletoothsActive(int maker, int to) : base(maker)
+        public SnaggletoothsActive(PieceLogic maker, PieceLogic to) : base(maker, to)
         {
-            Maker = maker;
-            Target = to;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null) return 0;
             return pieceAI.Color == maker.Color ? 10 : 0;
         }
 
         protected override void ModifyGameState()
         {
-            var existingBleeding = PieceOn(Target).Effects.OfType<Bleeding>().ToList();
+            var existingBleeding = GetTargetAsPiece().Effects.OfType<Bleeding>().ToList();
 
             foreach (var bleeding in existingBleeding) ActionManager.EnqueueAction(new RemoveEffect(bleeding));
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Shield(PieceOn(Maker), 5)));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shield(GetMakerAsPiece(), 5)));
 
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
     }
 }

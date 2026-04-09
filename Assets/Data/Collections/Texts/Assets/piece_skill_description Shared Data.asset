@@ -307,6 +307,30 @@ MonoBehaviour:
     m_Key: piece_royal_gramma_skill_description
     m_Metadata:
       m_Items: []
+  - m_Id: 81233081326182400
+    m_Key: piece_dwarf_cuttlefish_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 81557595561992192
+    m_Key: piece_sand_conch_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84208379412008960
+    m_Key: piece_brine_shrimp_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84208379437174784
+    m_Key: piece_emerald_crab_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84208379445563392
+    m_Key: piece_maxima_clam_skill_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 84208379449757696
+    m_Key: piece_toxic_zoanthid_skill_description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

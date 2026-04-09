@@ -1,4 +1,4 @@
-using System;
+using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -18,17 +18,16 @@ namespace Game.Action.Skills
         {
         }
 
-        public HourglassJellyActive(int maker, int target) : base(maker)
+        public HourglassJellyActive(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Maker = maker;
-            Target = target;
-            var piece = PieceOn(target);
-            _destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
+            var piece = GetTargetAsPiece();
+            //Làm lại
+            //_destination = piece.PreviousMoves[Math.Max(0, piece.PreviousMoves.Count - 5)];
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
         {
-            var maker = PieceOn(Maker);
+            var maker = GetMakerAsPiece();
             if (maker == null || pieceAI == null) return 0;
             if (pieceAI.Color != maker.Color) return -25;
             return 0;
@@ -36,7 +35,7 @@ namespace Game.Action.Skills
 
         protected override void Animate()
         {
-            PieceManager.Ins.Move(Target, _destination);
+            PieceManager.Ins.Move(GetTargetPos(), _destination);
             var destinationPiece = PieceOn(_destination);
             if (destinationPiece != null) PieceManager.Ins.Destroy(_destination);
         }
@@ -44,13 +43,13 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var destinationPiece = PieceOn(_destination);
-            if (destinationPiece != null) MatchManager.Ins.GameState.Destroy(_destination);
-            MatchManager.Ins.GameState.Move(Target, _destination);
-            SetCooldown(Maker, ((IPieceWithSkill)PieceOn(Maker)).TimeToCooldown);
+            if (destinationPiece != null) ActionManager.EnqueueAction(new KillPiece(null, PieceOn(_destination)));
+            ActionManager.EnqueueAction(new Move(GetTargetAsPiece(), _destination));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
         // public void CompleteActionForAI()
         // {
-        //     var makerPiece = PieceOn(Maker);
+        //     var makerPiece = GetMakerAsPiece();
         //     if (makerPiece == null) return;
 
         //     var (r, f) = RankFileOf(Maker);
@@ -61,7 +60,7 @@ namespace Game.Action.Skills
         //     var chosen = top.Count == 1 ? top[0] : top[UnityEngine.Random.Range(0, top.Count)];
 
         //     Target = chosen.Pos;
-        //     var targetPiece = PieceOn(Target);
+        //     var targetPiece = GetTargetAsPiece();
         //     if (targetPiece == null) return;
         //     destination = targetPiece.PreviousMoves[Math.Max(0, targetPiece.PreviousMoves.Count - 5)];
 

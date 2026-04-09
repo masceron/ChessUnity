@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
+using Game.Common;
+using Game.Piece.PieceLogic.Commons;
+using Game.Tile;
 using MemoryPack;
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable MemberCanBeProtected.Global
 
 namespace Game.Action
 {
@@ -29,6 +35,13 @@ namespace Game.Action
         SurvivedHit = 12, // bị ăn nhưng không chết
         SelfDestroy = 13, // Tự chết khi thực hiện ăn quân khác
         Infest = 14, // Ký sinh thay vì ăn quân
+        Failed = 15, // Thất bại
+    }
+
+    public enum TargetingType
+    {
+        Unit = 1,
+        Location = 2,
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -37,13 +50,36 @@ namespace Game.Action
     public abstract partial class Action
     {
         public ActionFlag Flag = ActionFlag.None;
-        public int Maker;
         public ResultFlag Result = ResultFlag.Success;
-        public int Target = -1;
+        
+        [MemoryPackInclude] protected int Maker;
+        [MemoryPackInclude] protected int From;
+        [MemoryPackInclude] protected int Target = -1;
+        [MemoryPackInclude] protected TargetingType TargetingType;
 
-        protected Action(int maker)
+        protected Action(Entity maker, Entity target)
         {
-            Maker = maker;
+            Maker = maker?.ID ?? -1;
+            From = maker?.Pos ?? -1;
+            TargetingType = TargetingType.Unit;
+
+            Target = target?.ID ?? -1;
+        }
+
+        protected Action(Entity maker, int target)
+        {
+            Maker = maker?.ID ?? -1;
+            From = maker?.Pos ?? -1;
+
+            TargetingType = TargetingType.Location;
+            Target = target;
+        }
+
+        protected Action(Entity maker)
+        {
+            Maker = maker?.ID ?? -1;
+            From = maker?.Pos ?? -1;
+            TargetingType = TargetingType.Unit;
         }
 
         [MemoryPackConstructor]
@@ -67,6 +103,56 @@ namespace Game.Action
         }
 
         protected abstract void ModifyGameState();
+
+        public PieceLogic GetMakerAsPiece()
+        {
+            return BoardUtils.GetEntityByID(Maker) as PieceLogic;
+        }
+
+        public Formation GetMakerAsFormation()
+        {
+            return BoardUtils.GetEntityByID(Maker) as Formation;
+        }
+
+        public Entity GetMaker()
+        {
+            return BoardUtils.GetEntityByID(Maker);
+        }
+
+        public PieceLogic GetTargetAsPiece()
+        {
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target) as PieceLogic : null;
+        }
+
+        public Formation GetTargetAsFormation()
+        {
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target) as Formation : null;
+        }
+
+        public int GetTargetPos()
+        {
+            return TargetingType == TargetingType.Unit ? BoardUtils.GetEntityByID(Target).Pos : Target;
+        }
+
+        public int GetFrom()
+        {
+            return From;
+        }
+
+        public void ChangeTarget(PieceLogic target)
+        {
+            Target = target.ID;
+        }
+
+        public void ChangeTarget(int index)
+        {
+            Target = index;
+        }
+
+        public TargetingType GetTargetingType()
+        {
+            return TargetingType;
+        }
     }
 
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -76,12 +162,17 @@ namespace Game.Action
         public bool Equals(Action x, Action y)
         {
             if (x!.GetType() != y!.GetType()) return false;
-            return x.Target == y.Target && x.Maker == y.Maker;
+            if (x.GetTargetingType() != y.GetTargetingType()) return false;
+            return x.GetMakerAsPiece() == y.GetMakerAsPiece() && (
+                x.GetTargetingType() == TargetingType.Unit
+                    ? x.GetTargetAsPiece() == y.GetTargetAsPiece()
+                    : x.GetTargetPos() == y.GetTargetPos()
+            );
         }
 
         public int GetHashCode(Action obj)
         {
-            return HashCode.Combine(obj.Target, obj.Maker);
+            return HashCode.Combine(obj.GetType(), obj.GetMakerAsPiece()?.ID, obj.GetTargetPos());
         }
     }
 }

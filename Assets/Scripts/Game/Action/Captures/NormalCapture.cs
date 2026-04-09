@@ -1,4 +1,5 @@
-using Game.Managers;
+using Game.Action.Internal;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Captures
@@ -13,9 +14,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public NormalCapture(int maker, int target) : base(maker)
+        public NormalCapture(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -24,11 +24,8 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            PieceManager.Ins.Destroy(Target);
-            PieceManager.Ins.Move(Maker, Target);
-            MatchManager.Ins.GameState.Kill(Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
+            ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece(), GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new Move(GetMakerAsPiece(), GetTargetPos()));
         }
     }
 }

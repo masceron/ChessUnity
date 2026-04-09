@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
-using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Others;
 using Game.Effects.Traits;
@@ -33,7 +32,8 @@ namespace Game.Piece.PieceLogic
                     {
                         var idx = IndexOf(rank, file);
                         var pOn = PieceOn(idx);
-                        if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
+                        //Làm lại
+                        //if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
                     }
                 }
                 else
@@ -44,7 +44,8 @@ namespace Game.Piece.PieceLogic
                         {
                             var idx = IndexOf(rank, file);
                             var pOn = PieceOn(idx);
-                            if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
+                            //Làm lại
+                            //if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
                         }
 
                         return;
@@ -106,9 +107,10 @@ namespace Game.Piece.PieceLogic
 
                     if (selectedPieces.Count < 2) return;
 
-                    var action = new HumilitasPending(Pos, selectedPieces[0].Pos);
-                    HumilitasPending.SecondTarget = selectedPieces[1].Pos;
-                    list.Add(action);
+                    //Làm lại
+                    // var action = new HumilitasPending(Pos, selectedPieces[0].Pos);
+                    // HumilitasPending.SecondTarget = selectedPieces[1].Pos;
+                    // list.Add(action);
                 }
             };
         }

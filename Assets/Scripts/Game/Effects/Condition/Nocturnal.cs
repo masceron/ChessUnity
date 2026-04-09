@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Action.Skills;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 
@@ -14,7 +15,7 @@ namespace Game.Effects.Condition
         /// <summary>
         /// Trả về true nếu đang là ban đêm (!IsDay). Các effect kế thừa Nocturnal nên check biến này.
         /// </summary>
-        public bool IsActive => Game.Managers.MatchManager.Ins != null && !Game.Managers.MatchManager.Ins.GameState.IsDay;
+        public static bool IsActive => Managers.MatchManager.Ins != null && !BoardUtils.IsDay();
 
         public void OnCallMoveGen(PieceLogic caller, List<Action.Action> actions)
         {

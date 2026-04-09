@@ -1,11 +1,13 @@
+using Game.Common;
+using Game.Effects.States;
 using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
-using UnityEngine;
 
 namespace Game.Action.Captures
 {
     /// <summary>
-    ///     Capture action dùng cho quân có State <see cref="Game.Effects.States.PieceStateType.Cooperative"/>.
+    ///     Capture action dùng cho quân có State <see cref="Cooperative"/>.
     ///     Implement <see cref="IDontEndTurn"/> để action này không kết thúc turn của người chơi.
     /// </summary>
     [Il2CppSetOption(Option.NullChecks, false)]
@@ -18,9 +20,8 @@ namespace Game.Action.Captures
         {
         }
 
-        public CaptureWithoutEndTurn(int maker, int target) : base(maker)
+        public CaptureWithoutEndTurn(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
-            Target = target;
         }
 
         protected override void Animate()
@@ -29,12 +30,11 @@ namespace Game.Action.Captures
 
         protected override void ModifyGameState()
         {
-            Debug.Log("Complete CooperativeCapture");
-            PieceManager.Ins.Destroy(Target);
-            PieceManager.Ins.Move(Maker, Target);
-            MatchManager.Ins.GameState.Kill(Target);
-            MatchManager.Ins.GameState.Move(Maker, Target);
-            Maker = Target;
+            PieceManager.Ins.Destroy(GetTargetPos());
+            PieceManager.Ins.Move(GetFrom(), GetTargetPos());
+            
+            BoardUtils.KillPiece(GetTargetAsPiece());
+            BoardUtils.Move(GetMakerAsPiece(), GetTargetPos());
         }
     }
 }

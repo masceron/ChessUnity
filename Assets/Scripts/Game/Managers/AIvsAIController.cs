@@ -1,5 +1,6 @@
 using System.Collections;
 using Game.AI;
+using Game.Common;
 using UnityEngine;
 using UX.UI.Ingame;
 using UX.UI.Menus;
@@ -24,7 +25,7 @@ namespace Game.Managers
                     continue;
                 }
 
-                AIManager.Ins.AIPlayAndExecuteBestAction(MatchManager.Ins.GameState.SideToMove);
+                AIManager.Ins.AIPlayAndExecuteBestAction(BoardUtils.SideToMove());
                 yield return new WaitForSeconds(SettingPanel.AIvsAIplayspeed);
             }
         }

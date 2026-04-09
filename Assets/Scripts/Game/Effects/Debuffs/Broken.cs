@@ -16,12 +16,12 @@ namespace Game.Effects.Debuffs
         public void OnApply()
         {
             specialAbility = Piece.Effects.FirstOrDefault(e => e.Category == EffectCategory.SpecialAbility);
-            if (specialAbility != null) specialAbility.disabled = true;
+            if (specialAbility != null) specialAbility.Disabled = true;
         }
 
         public void OnRemove()
         {
-            if (specialAbility != null) specialAbility.disabled = false;
+            if (specialAbility != null) specialAbility.Disabled = false;
         }
 
         public override int GetValueForAI()

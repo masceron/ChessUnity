@@ -1,4 +1,4 @@
-using Game.Common;
+﻿using Game.Common;
 using MemoryPack;
 
 namespace Game.Action
@@ -8,9 +8,8 @@ namespace Game.Action
     [MemoryPackable]
     public partial class EndTurn : Action
     {
-        public EndTurn() : base(-1)
+        public EndTurn()
         {
-            Target = 0;
         }
 
         protected override void Animate()

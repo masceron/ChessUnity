@@ -1,4 +1,4 @@
-using Game.Effects.RegionalEffect;
+using Game.Effects.FieldEffect;
 using UnityEngine;
 
 namespace Game.ScriptableObjects.Collections
@@ -15,12 +15,12 @@ namespace Game.ScriptableObjects.Collections
             return Instantiate(whirlPoolGameObj, position, Quaternion.identity);
         }
 
-        public string GetRegionalName(RegionalEffectType type)
+        public string GetRegionalName(FieldEffectType type)
         {
             var result = type switch
             {
-                RegionalEffectType.Whirlpool => "Whirpool",
-                RegionalEffectType.None => "No Regional effect is chosen",
+                FieldEffectType.Whirlpool => "Whirpool",
+                FieldEffectType.None => "No Regional effect is chosen",
                 _ => type.ToString()
             };
             return result;
