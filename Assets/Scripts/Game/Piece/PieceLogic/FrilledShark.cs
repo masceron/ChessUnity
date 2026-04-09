@@ -46,7 +46,7 @@ namespace Game.Piece.PieceLogic
                         var piece = PieceOn(idx);
                         // Nếu có quân đứng đúng ở ô lướt thì không lướt được
                         if (piece != null) continue;
-                        list.Add(new FrilledSharkActive(this, dRank[dir], dFile[dir]));
+                        list.Add(new FrilledSharkActive(this, IndexOf(r, f), dRank[dir], dFile[dir]));
                     }
                 }
                 else
@@ -112,7 +112,7 @@ namespace Game.Piece.PieceLogic
                         ? bestDirs[0]
                         : bestDirs[Random.Range(0, bestDirs.Count)];
 
-                    list.Add(new FrilledSharkActive(this, dRank[chosenDir], dFile[chosenDir]));
+                    list.Add(new FrilledSharkActive(this, IndexOf(rank + dRank[chosenDir] * step, file + dFile[chosenDir] * step), dRank[chosenDir], dFile[chosenDir]));
                 }
             };
         }

@@ -26,46 +26,47 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            var makerColor = GetMakerAsPiece().Color;
-            var direction = makerColor ? 1 : -1;
-            var pieceOn = GetTargetAsPiece();
-            if (pieceOn != null)
-            {
-                var finalRankOfTarget = RankOf(GetTargetPos());
-                if (makerColor)
-                {
-                    var knockbackCount = 0;
-                    while (IsActive(IndexOf(finalRankOfTarget + 1, FileOf(GetTargetPos()))) && knockbackCount < 2)
-                    {
-                        finalRankOfTarget++;
-                        knockbackCount++;
-                    }
-                }
-                else
-                {
-                    var knockbackCount = 0;
-                    while (IsActive(IndexOf(finalRankOfTarget - 1, FileOf(GetTargetPos()))) && knockbackCount < 2)
-                    {
-                        finalRankOfTarget--;
-                        knockbackCount++;
-                    }
-                }
+            var maker = GetMakerAsPiece();
+            var direction = maker.Color ? 1 : -1;
 
-                var finalRankOfMaker =
-                    finalRankOfTarget == RankOf(GetTargetPos())
-                        ? RankOf(GetTargetPos()) - direction
-                        : RankOf(GetTargetPos());
-                ActionManager.EnqueueAction(new NormalMove(PieceOn(IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))),
-                    IndexOf(finalRankOfTarget, FileOf(GetTargetPos()))));
-                ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceOn),
-                    GetMakerAsPiece()));
-                ActionManager.EnqueueAction(
-                    new NormalMove(GetMakerAsPiece(), IndexOf(finalRankOfMaker, FileOf(GetTargetPos()))));
-            }
-            else
+            var (rank, file) = RankFileOf(GetFrom());
+
+            for (var r = rank + direction; r != rank + maker.GetStat(SkillStat.Range) * direction; r += direction)
             {
-                ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
+                var pieceOn = PieceOn(IndexOf(r, file));
+                if (pieceOn != null)
+                {
+                    if (r - direction != rank)
+                    {
+                        ActionManager.EnqueueAction(new NormalMove(maker, IndexOf(r - direction, file)));
+                    }
+                    PushPiece(pieceOn, direction);
+
+                    return;
+                }
             }
+
+            ActionManager.EnqueueAction(new NormalMove(maker, IndexOf(rank + maker.GetStat(SkillStat.Range) * direction, file)));
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
+
         }
+
+        private void PushPiece(PieceLogic piece, int direction)
+        {
+            var (rank, file) = RankFileOf(piece.Pos);
+
+            if (VerifyBounds(rank + direction) && VerifyIndex(IndexOf(rank + direction, file)) && PieceOn(IndexOf(rank + direction, file)) == null) 
+            {
+                rank += direction;
+            }
+
+            if (VerifyBounds(rank + direction) && VerifyIndex(IndexOf(rank + direction, file)) && PieceOn(IndexOf(rank + direction, file)) == null)
+            {
+                rank += direction;
+            }
+
+            ActionManager.EnqueueAction(new NormalMove(piece, IndexOf(rank, file)));
+        }
+
     }
 }

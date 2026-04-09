@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
@@ -29,8 +30,8 @@ namespace Game.Action.Skills
         {
             //Làm lại
             // var config = new PieceConfig(GetMakerAsPiece().Type, GetMakerAsPiece().Color, GetTargetPos());
-            // ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(GetTargetAsPiece())));
-            // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig("piece_illusion_piece", GetMakerAsPiece().Color, GetTargetPos())));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

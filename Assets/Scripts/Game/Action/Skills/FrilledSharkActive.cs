@@ -26,8 +26,7 @@ namespace Game.Action.Skills
         {
         }
 
-        public FrilledSharkActive(PieceLogic from, int drank, int dfile) : base(from,
-            IndexOf(RankOf(from.Pos) + drank * 4, FileOf(from.Pos) + dfile * 4))
+        public FrilledSharkActive(PieceLogic from, int target, int drank, int dfile) : base(from, target)
         {
             this.dfile = dfile;
             this.drank = drank;
@@ -53,6 +52,7 @@ namespace Game.Action.Skills
             }
 
             ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

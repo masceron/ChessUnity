@@ -12,6 +12,8 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FlyingGurnardActive : Action, ISkills
     {
+        private const int Duration1 = 3;
+        private const int Duration2 = 3;
         [MemoryPackConstructor]
         private FlyingGurnardActive()
         {
@@ -44,9 +46,9 @@ namespace Game.Action.Skills
                 {
                     var pOn = PieceOn(frontIndex);
                     if (pOn != null && pOn.Color != color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration2, pOn)));
                     var siltCloud = new SiltCloud(color);
-                    siltCloud.SetDuration(3);
+                    siltCloud.SetDuration(Duration1);
                     SetFormation(frontIndex, siltCloud);
                 }
             }
@@ -59,9 +61,9 @@ namespace Game.Action.Skills
                 {
                     var pOn = PieceOn(backIndex);
                     if (pOn != null && pOn.Color != color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration2, pOn)));
                     var siltCloud = new SiltCloud(color);
-                    siltCloud.SetDuration(3);
+                    siltCloud.SetDuration(Duration1);
                     SetFormation(backIndex, siltCloud);
                 }
             }
@@ -74,9 +76,9 @@ namespace Game.Action.Skills
                 {
                     var pOn = PieceOn(leftIndex);
                     if (pOn != null && pOn.Color != color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration2, pOn)));
                     var siltCloud = new SiltCloud(color);
-                    siltCloud.SetDuration(3);
+                    siltCloud.SetDuration(Duration1);
                     SetFormation(leftIndex, siltCloud);
                 }
             }
@@ -89,14 +91,14 @@ namespace Game.Action.Skills
                 {
                     var pOn = PieceOn(rightIndex);
                     if (pOn != null && pOn.Color != color)
-                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(3, pOn)));
+                        ActionManager.EnqueueAction(new ApplyEffect(new Pacified(Duration2, pOn)));
                     var siltCloud = new SiltCloud(color);
-                    siltCloud.SetDuration(3);
+                    siltCloud.SetDuration(Duration1);
                     SetFormation(rightIndex, siltCloud);
                 }
             }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
