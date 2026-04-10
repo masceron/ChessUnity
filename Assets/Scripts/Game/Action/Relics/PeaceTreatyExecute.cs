@@ -25,7 +25,7 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            if (BoardUtils.GetCurrentTurn() >= TurnToEnd) BoardUtils.NotifyGameEnd(EndGameUI.MessageID.Win);
+            
         }
     }
 }

@@ -78,7 +78,7 @@ namespace Game.Relics
             if (targetPiece == null) return;
             {
                 var excute = new SeafoamPhialAction(targetPiece);
-                BoardViewer.Ins.ExecuteAction(excute);
+                // BoardViewer.Ins.ExecuteAction(excute);
 
                 // var pending = new SeafoamPhialPending(this, targetPiece.Pos);
                 // if (pending is PendingAction p)

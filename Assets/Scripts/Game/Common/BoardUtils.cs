@@ -437,13 +437,6 @@ namespace Game.Common
             return result;
         }
 
-        [Mutator]
-        public static void NotifyGameEnd(EndGameUI.MessageID messageID)
-        {
-            UIManager.Ins.Load(CanvasID.EndGameMessage);
-            EndGameUI.Ins.SetMessage(messageID);
-        }
-
         public static bool IsOnBlackSide(int pos)
         {
             return RankOf(pos) <= BoardSize / 2 - 1;

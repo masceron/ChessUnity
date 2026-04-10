@@ -55,7 +55,7 @@ namespace Game.Relics
             var idx = Random.Range(0, topGroup.Count);
 
             var excute = new SirenHarpoonExecute(topGroup[idx]);
-            BoardViewer.Ins.ExecuteAction(excute);
+            // BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new SirensHarpoonPending(this, topGroup[idx].Pos);
             // if (pending is PendingAction p)

@@ -1,42 +1,61 @@
-﻿using Game.Piece.PieceLogic.Commons;
+﻿using Game.Effects;
+using Game.Managers;
+using Game.Piece.PieceLogic.Commons;
 using UnityEngine;
+using UnityEngine.UIElements;
+using UX.UI.Common.Tooltip;
 
 namespace UX.UI.Ingame
 {
-    [Il2CppSetOption(Option.NullChecks, false)]
-    [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class EffectBar : MonoBehaviour
     {
-        [SerializeField] private GameObject pieceStatusEffect;
-        [SerializeField] private GameObject effectUI;
+        [Header("Setup")] [SerializeField] private VisualTreeAsset effectIcon;
 
+        [SerializeField] private Texture2D missing;
 
-        public void Disable()
+        private UIDocument _uiDocument;
+        private BoardViewer _boardViewer;
+        private VisualElement _effectBar;
+
+        private void Awake()
         {
-            pieceStatusEffect.SetActive(false);
+            _uiDocument = GetComponent<UIDocument>();
+            _boardViewer = GetComponent<BoardViewer>();
+            _effectBar = _uiDocument.rootVisualElement.Q<VisualElement>("EffectBar");
         }
 
-        public void SetUpStatusEffects(PieceLogic piece)
+        private void OnEnable()
         {
-            pieceStatusEffect.SetActive(true);
-            var already = pieceStatusEffect.transform.childCount;
-            var needed = piece.Effects.Count;
-            if (already < needed)
-            {
-                for (var i = 1; i <= needed - already; i++) Instantiate(effectUI, pieceStatusEffect.transform, true);
-            }
-            else if (already > needed)
-            {
-                var index = already - 1;
-                for (var i = 1; i <= already - needed; i++)
-                {
-                    Destroy(pieceStatusEffect.transform.GetChild(index).gameObject);
-                    index--;
-                }
-            }
+            _boardViewer.OnSelectingPieceChanged += SelectingPieceHandler;
+        }
 
-            for (var i = 0; i < needed; i++)
-                pieceStatusEffect.transform.GetChild(i).GetComponent<EffectUI>().Set(piece.Effects[i]);
+        private void OnDisable()
+        {
+            _boardViewer.OnSelectingPieceChanged -= SelectingPieceHandler;
+        }
+
+        private void SelectingPieceHandler(PieceLogic pieceLogic)
+        {
+            _effectBar.Clear();
+            if (pieceLogic == null) return;
+
+            foreach (var effect in pieceLogic.Effects)
+            {
+                var newIcon = effectIcon.Instantiate();
+                SetupIcon(newIcon, effect);
+                _effectBar.Add(newIcon);
+            }
+        }
+
+        private void SetupIcon(VisualElement instance, Effect effect)
+        {
+            var root = instance.Q<VisualElement>("Root");
+            var data = AssetManager.Ins.EffectData[effect.EffectName];
+            var icon = data.icon;
+            root.style.backgroundImage = icon ? icon : missing;
+            root.AddTooltip(Localizer.GetText("effect_name", data.key, null),
+                effect.Duration > 0 ? effect.Duration.ToString() : "∞", 
+                effect.Description());
         }
     }
 }

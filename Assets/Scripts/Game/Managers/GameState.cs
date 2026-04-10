@@ -216,49 +216,10 @@ namespace Game.Managers
             if (SideToMove)
             {
                 CurrentTurn++;
-                if (CurrentTurn == 151)
-                {
-                    UIManager.Ins.Load(CanvasID.EndGameMessage);
-                    EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Draw);
-                }
 
                 if (CurrentTurn % 10 == 0)
                 {
                     IsDay = !IsDay;
-                }
-            }
-
-            switch (SideToMove)
-            {
-                case true when Commanders.Item1 != null && !IsAlive(Commanders.Item1):
-                {
-                    if (Commanders.Item1 != null && !IsAlive(Commanders.Item1))
-                    {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
-                    }
-                    else if (Commanders.Item2 != null && !IsAlive(Commanders.Item2))
-                    {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                    }
-
-                    break;
-                }
-                case false when Commanders.Item2 != null && !IsAlive(Commanders.Item2):
-                {
-                    if (Commanders.Item2 != null && !IsAlive(Commanders.Item2))
-                    {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Win);
-                    }
-                    else if (Commanders.Item1 != null && !IsAlive(Commanders.Item1))
-                    {
-                        UIManager.Ins.Load(CanvasID.EndGameMessage);
-                        EndGameUI.Ins.SetMessage(EndGameUI.MessageID.Lose);
-                    }
-
-                    break;
                 }
             }
 

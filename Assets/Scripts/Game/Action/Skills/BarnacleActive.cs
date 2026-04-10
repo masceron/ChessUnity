@@ -27,25 +27,25 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            var allPieces = PieceBoard();
-            var listPieces = allPieces.Where(p => p != null && p.Color != GetMakerAsPiece().Color &&
-                                                  p.Effects.Any(e =>
-                                                      e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();
-
-            if (listPieces.Count == 0) return;
-            var maxValue = listPieces.Max(p => p.GetValueForAI());
-            var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
-            if (bestPieces.Count == 0) return;
-            var random = new Random();
-            var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-
-            SetCooldown(GetMakerAsPiece(), -1);
-            foreach (var effect in selectedPiece.Effects
-                         .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
-                if (effect.Duration > 0)
-                    effect.Duration -= 1;
-                else
-                    BoardViewer.Ins.ExecuteAction(new RemoveEffect(effect));
+            // var allPieces = PieceBoard();
+            // var listPieces = allPieces.Where(p => p != null && p.Color != GetMakerAsPiece().Color &&
+            //                                       p.Effects.Any(e =>
+            //                                           e.EffectName is "effect_shield" or "effect_hardened_shield")).ToList();
+            //
+            // if (listPieces.Count == 0) return;
+            // var maxValue = listPieces.Max(p => p.GetValueForAI());
+            // var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+            // if (bestPieces.Count == 0) return;
+            // var random = new Random();
+            // var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+            //
+            // SetCooldown(GetMakerAsPiece(), -1);
+            // foreach (var effect in selectedPiece.Effects
+            //              .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
+            //     if (effect.Duration > 0)
+            //         effect.Duration -= 1;
+            //     else
+            //         BoardViewer.Ins.ExecuteAction(new RemoveEffect(effect));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

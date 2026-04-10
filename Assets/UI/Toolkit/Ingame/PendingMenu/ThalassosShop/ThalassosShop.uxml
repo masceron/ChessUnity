@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
     <Style src="project://database/Assets/UI/Toolkit/Ingame/PendingMenu/ThalassosShop/ThalassosShop.uss?fileID=7433441132597879392&amp;guid=b8123493ebb65b546b23fc5bd224f5be&amp;type=3#ThalassosShop"/>
-    <UX.UI.Toolkit.Ingame.SubMenus.ThalassosShop style="top: 0; right: 0; bottom: 0; left: 0; justify-content: center; align-items: center; flex-grow: 1; position: absolute;">
+    <UX.UI.Ingame.SubMenus.ThalassosShop style="top: 0; right: 0; bottom: 0; left: 0; justify-content: center; align-items: center; flex-grow: 1; position: absolute;">
         <ui:VisualElement name="ThalassosDialog" style="flex-grow: 0; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; min-width: 600px; max-width: 600px; background-color: rgb(13, 29, 28); padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
             <ui:VisualElement name="ThalassosHeader" style="flex-grow: 0; flex-direction: row; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-bottom-width: 1px; margin-bottom: 4px; align-items: center; justify-content: space-evenly; width: 100%; height: auto; flex-shrink: 0; padding-top: 4px; padding-right: 4px; padding-bottom: 4px; padding-left: 4px;">
                 <ui:Label text="Resurrect" name="Introduction" style="-unity-font-style: bold; color: rgb(255, 255, 255); font-size: 25px; -unity-text-align: middle-left;"/>
@@ -15,5 +15,5 @@
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
-    </UX.UI.Toolkit.Ingame.SubMenus.ThalassosShop>
+    </UX.UI.Ingame.SubMenus.ThalassosShop>
 </ui:UXML>

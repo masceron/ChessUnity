@@ -54,7 +54,7 @@ namespace Game.Relics
             var pos = topGroup[Random.Range(0, topGroup.Count() - 1)];
             var maxArea = BoardUtils.GetPiecesInSize(BoardUtils.RankOf(pos), BoardUtils.FileOf(pos), Size,
                 Corner.BottomRight, p => p != null && p.Color != Color);
-            foreach (var piece in maxArea) BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));
+            // foreach (var piece in maxArea) BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Stunned(2, piece)));
 
             charge.Strength = 0;
         }

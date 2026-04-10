@@ -1,8 +1,5 @@
 using System.Collections.Generic;
-using Game.Action.Relics;
 using Game.Relics.Commons;
-using UX.UI.Ingame;
-using UX.UI.Ingame.LedgerStoneUI;
 
 namespace Game.Relics
 {

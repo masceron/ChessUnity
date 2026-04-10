@@ -26,39 +26,39 @@ namespace Game.Action.Skills
 
         public void CompleteActionForAI()
         {
-            var listPieces = new List<PieceLogic>();
-            var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 4);
-            foreach (var target in targets)
-                if (GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_camouflage") &&
-                    !GetTargetAsPiece().Effects.Any(e => e.EffectName is "effect_blinded" or "effect_extremophile"))
-                    listPieces.Add(target);
-
-
-            if (listPieces.Count == 0)
-            {
-                var targets1 = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 2);
-                foreach (var target in targets1)
-                    if (GetTargetAsPiece().Effects.Any(e =>
-                            e.EffectName == "effect_marked" || e.EffectName == "effect_extremophile"))
-                        listPieces.Add(target);
-            }
-
-            if (listPieces.Count == 0) return;
-            var maxValue = listPieces.Max(p => p.GetValueForAI());
-            var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
-            if (bestPieces.Count == 0) return;
-            var random = new Random();
-            var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
-
-
+            // var listPieces = new List<PieceLogic>();
+            // var targets = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 4);
+            // foreach (var target in targets)
+            //     if (GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_camouflage") &&
+            //         !GetTargetAsPiece().Effects.Any(e => e.EffectName is "effect_blinded" or "effect_extremophile"))
+            //         listPieces.Add(target);
+            //
+            //
+            // if (listPieces.Count == 0)
+            // {
+            //     var targets1 = SkillRangeHelper.GetActiveEnemyPieceInRadius(GetMakerAsPiece(), 2);
+            //     foreach (var target in targets1)
+            //         if (GetTargetAsPiece().Effects.Any(e =>
+            //                 e.EffectName == "effect_marked" || e.EffectName == "effect_extremophile"))
+            //             listPieces.Add(target);
+            // }
+            //
+            // if (listPieces.Count == 0) return;
+            // var maxValue = listPieces.Max(p => p.GetValueForAI());
+            // var bestPieces = listPieces.Where(p => p.GetValueForAI() == maxValue).ToList();
+            // if (bestPieces.Count == 0) return;
+            // var random = new Random();
+            // var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
+            //
+            //
             //ActionManager.EnqueueAction(new ApplyEffect(new Marked(-1, selectedPiece)));
-            BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), GetMakerAsPiece()));
-
-            if (selectedPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
-                //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
-                BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMakerAsPiece()));
-
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            // BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Marked(-1, selectedPiece), GetMakerAsPiece()));
+            //
+            // if (selectedPiece.Effects.Any(e => e.EffectName == "effect_camouflage"))
+            //     //ActionManager.EnqueueAction(new ApplyEffect(new Blinded(2, 100, selectedPiece)));
+            //     BoardViewer.Ins.ExecuteAction(new ApplyEffect(new Blinded(2, 100, selectedPiece), GetMakerAsPiece()));
+            //
+            // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 
         public int AIPenaltyValue(PieceLogic maker)

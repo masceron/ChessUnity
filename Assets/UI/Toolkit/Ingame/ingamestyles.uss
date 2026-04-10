@@ -57,3 +57,16 @@
 .hud-container--hidden {
     opacity: 0;
 }
+
+.popup--hidden {
+    opacity: 0;
+    scale: 0.8 0.8;
+    transition-property: opacity, scale;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out-back;
+}
+
+.popup--visible {
+    opacity: 1;
+    scale: 1 1;
+}

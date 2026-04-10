@@ -55,30 +55,30 @@ namespace Game.AI
 
         public void AIPlayAndExecuteBestAction(bool sideToMove)
         {
-            AIUseRelic(sideToMove);
-
-            var enemySnapshot = GenerateEnemySnapshot(sideToMove);
-
-            var bestAction = AIPlayBestAction(sideToMove, enemySnapshot, out var bestScore);
-
-            if (bestAction == null)
-            {
-                Debug.LogWarning("AI could not find any action to play.");
-                return;
-            }
-
-            // Optionally show score of the chosen action before executing
-            AIShowScoreAction(bestAction, bestScore);
-
-            // Execute action
-            if (bestAction is IAIAction)
-            {
-                //aiAction.CompleteActionForAI();
-            }
-            else
-            {
-                BoardViewer.Ins.ExecuteAction(bestAction);
-            }
+            // AIUseRelic(sideToMove);
+            //
+            // var enemySnapshot = GenerateEnemySnapshot(sideToMove);
+            //
+            // var bestAction = AIPlayBestAction(sideToMove, enemySnapshot, out var bestScore);
+            //
+            // if (bestAction == null)
+            // {
+            //     Debug.LogWarning("AI could not find any action to play.");
+            //     return;
+            // }
+            //
+            // // Optionally show score of the chosen action before executing
+            // AIShowScoreAction(bestAction, bestScore);
+            //
+            // // Execute action
+            // if (bestAction is IAIAction)
+            // {
+            //     //aiAction.CompleteActionForAI();
+            // }
+            // else
+            // {
+            //     BoardViewer.Ins.ExecuteAction(bestAction);
+            // }
         }
 
         /// <summary>
@@ -291,17 +291,17 @@ namespace Game.AI
 
         private void ShowScoreToggle()
         {
-            showScoreOnHover = !showScoreOnHover;
-            if (showScoreOnHover)
-            {
-                showScoreButton.GetComponentInChildren<Text>().text = "Hide Score";
-                if (BoardViewer.Selecting != -1) ShowPieceActionScore(BoardViewer.Selecting);
-            }
-            else
-            {
-                showScoreButton.GetComponentInChildren<Text>().text = "Show Score";
-                ClearTileScores();
-            }
+            // showScoreOnHover = !showScoreOnHover;
+            // if (showScoreOnHover)
+            // {
+            //     showScoreButton.GetComponentInChildren<Text>().text = "Hide Score";
+            //     if (BoardViewer.Selecting != -1) ShowPieceActionScore(BoardViewer.Selecting);
+            // }
+            // else
+            // {
+            //     showScoreButton.GetComponentInChildren<Text>().text = "Show Score";
+            //     ClearTileScores();
+            // }
         }
     }
 }

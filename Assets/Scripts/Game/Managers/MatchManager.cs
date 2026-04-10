@@ -6,7 +6,6 @@ using Game.Common;
 using Game.Piece;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UX.UI.Ingame;
 using ZLinq;
 using static Game.Common.BoardUtils;
 using GameConfig = Game.Save.Stage.GameConfig;
@@ -37,17 +36,6 @@ namespace Game.Managers
         private new void Awake()
         {
             _mainUI = GameObject.Find("MainUI").GetComponent<UIDocument>();
-        }
-
-        private void Start()
-        {
-            // Init(new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)), new LineupConfig(
-            //     Config.PieceConfigWhite.ToArray(),
-            //     Config.PieceConfigBlack.ToArray(),
-            //     Config.relicWhiteConfig,
-            //     Config.relicBlackConfig,
-            //     Config.FieldEffectType
-            // ));
         }
 
         private static void MakeBoard()
@@ -85,7 +73,6 @@ namespace Game.Managers
             StartGame(
                 lineupConfig
             );
-            if (gameMode == GameMode.AIvsAI) gameObject.AddComponent<AIvsAIController>();
         }
 
         private void StartGame(LineupConfig cfg)

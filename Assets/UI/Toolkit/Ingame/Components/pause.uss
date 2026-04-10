@@ -1,0 +1,121 @@
+:root {
+}
+
+.resume-button {
+    flex-grow: 0;
+    width: 100%;
+    background-color: rgba(50, 42, 42, 0);
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    font-size: 25px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 0;
+    border-left-color: rgb(47, 43, 43);
+    border-right-color: rgb(47, 43, 43);
+    border-top-color: rgb(47, 43, 43);
+    border-bottom-color: rgb(47, 43, 43);
+}
+
+.resume-button:hover {
+    background-color: rgba(14, 140, 7, 0.61);
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.main-menu {
+    flex-grow: 0;
+    width: 100%;
+    background-color: rgba(50, 42, 42, 0);
+    margin-bottom: 20px;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
+    -unity-font-definition: url("project://database/Library/unity%20default%20resources?fileID=10102&guid=0000000000000000e000000000000000&type=0#LegacyRuntime");
+    font-size: 25px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-top: 0;
+    border-left-color: rgb(47, 43, 43);
+    border-right-color: rgb(47, 43, 43);
+    border-top-color: rgb(47, 43, 43);
+    border-bottom-color: rgb(47, 43, 43);
+}
+
+.main-menu:hover {
+    background-color: rgba(255, 255, 0, 0.61);
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-right-width: 0;
+    border-left-width: 0;
+    color: rgb(0, 0, 0);
+}
+
+.pause-side-panel--hidden {
+    translate: -120% 0;
+    transition-property: translate;
+    transition-duration: 0.15s;
+    transition-timing-function: ease-out-cubic;
+}
+
+.pause-side-panel--visible {
+    translate: 0 0;
+}
+
+.quit-game {
+    width: 100%;
+    margin-top: 0;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    background-color: rgba(50, 42, 42, 0);
+    -unity-font-style: bold;
+    font-size: 25px;
+    -unity-font-definition: url("project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&guid=e3265ab4bf004d28a9537516768c1c75&type=3#LiberationSans");
+    color: rgb(255, 255, 255);
+    padding-top: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    border-left-color: rgb(47, 43, 43);
+    border-right-color: rgb(47, 43, 43);
+    border-top-color: rgb(47, 43, 43);
+    border-bottom-color: rgb(47, 43, 43);
+}
+
+.quit-game:hover {
+    background-color: rgba(247, 12, 12, 0.61);
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-right-width: 0;
+    border-left-width: 0;
+}

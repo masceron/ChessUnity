@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using Game.Action.Skills;
 using Game.Piece.PieceLogic.Commons;
-using UX.UI.Toolkit.Common;
+using UX.UI.Common;
 
 namespace Game.Action.Internal.Pending.Piece
 {

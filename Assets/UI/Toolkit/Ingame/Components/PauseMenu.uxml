@@ -1,0 +1,11 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/Toolkit/Ingame/pause.uss?fileID=7433441132597879392&amp;guid=e6562693b4706d64da76e1035e5f3f05&amp;type=3#pause"/>
+    <UX.UI.Ingame.SubMenus.PauseMenuVisual style="-unity-material: url(&quot;&quot;); position: absolute; top: 0; right: 0; left: 0; bottom: 0; background-color: rgba(0, 0, 0, 0);">
+        <ui:VisualElement name="MainContainer" class="blur" style="flex-grow: 1; position: absolute; top: 0; left: 0; bottom: 0; right: 0;"/>
+        <ui:VisualElement name="MainPanel" style="flex-grow: 1; background-color: rgba(58, 50, 50, 0.59); position: absolute; top: 0; left: 0; bottom: 0; width: 25%; -unity-material: url(&quot;&quot;); justify-content: center; align-items: center; transition-duration: 0.5s; transition-property: translate;">
+            <ui:Button text="Resume" name="Resume" class="resume-button"/>
+            <ui:Button text="Main Menu" name="MainMenu" class="main-menu"/>
+            <ui:Button text="Quit" name="Quit" class="quit-game"/>
+        </ui:VisualElement>
+    </UX.UI.Ingame.SubMenus.PauseMenuVisual>
+</ui:UXML>

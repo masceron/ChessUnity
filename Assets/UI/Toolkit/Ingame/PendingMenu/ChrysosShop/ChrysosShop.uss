@@ -1,7 +1,7 @@
 :root {
 }
 
-#ThalassosClose {
+#ChrysosClose {
     margin-left: auto;
     aspect-ratio: 1;
     min-width: auto;

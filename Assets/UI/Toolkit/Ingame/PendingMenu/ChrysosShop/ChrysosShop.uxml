@@ -1,6 +1,6 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/Toolkit/Ingame/PendingMenu/ChrysosShop.uss?fileID=7433441132597879392&amp;guid=1d47ebe123051984095ae3bdcdd91ebe&amp;type=3#ChrysosShop"/>
-    <UX.UI.Toolkit.Ingame.SubMenus.ChrysosShop style="background-color: rgba(255, 255, 255, 0); flex-grow: 1; color: rgb(255, 255, 255); max-width: none; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; min-width: auto; justify-content: center; align-items: center; position: absolute; width: 100%; height: 100%;">
+    <Style src="project://database/Assets/UI/Toolkit/Ingame/PendingMenu/ChrysosShop/ChrysosShop.uss?fileID=7433441132597879392&amp;guid=1d47ebe123051984095ae3bdcdd91ebe&amp;type=3#ChrysosShop"/>
+    <UX.UI.Ingame.SubMenus.ChrysosShop style="background-color: rgba(255, 255, 255, 0); flex-grow: 1; color: rgb(255, 255, 255); max-width: none; border-top-width: 0; border-right-width: 0; border-bottom-width: 0; border-left-width: 0; border-top-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-bottom-left-radius: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; min-width: auto; justify-content: center; align-items: center; position: absolute; width: 100%; height: 100%;">
         <ui:VisualElement name="ChrysosDialog" style="flex-grow: 0; justify-content: center; align-items: center; border-left-color: rgba(0, 0, 0, 0); border-right-color: rgba(0, 0, 0, 0); border-top-color: rgba(0, 0, 0, 0); border-bottom-color: rgba(0, 0, 0, 0); border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; min-width: 600px; max-width: 600px; background-color: rgb(13, 29, 28); padding-top: 8px; padding-right: 8px; padding-bottom: 8px; padding-left: 8px;">
             <ui:VisualElement name="ChrysosHeader" style="flex-grow: 0; flex-direction: row; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-bottom-width: 1px; margin-bottom: 4px; align-items: center; justify-content: space-evenly; width: 100%; height: auto; flex-shrink: 0;">
                 <ui:Label text="BALANCE:" name="BalanceLabel" style="-unity-text-align: middle-left; font-size: 16px; -unity-font-style: bold; color: rgb(230, 255, 0);"/>
@@ -20,5 +20,5 @@
                 </ui:Button>
             </ui:VisualElement>
         </ui:VisualElement>
-    </UX.UI.Toolkit.Ingame.SubMenus.ChrysosShop>
+    </UX.UI.Ingame.SubMenus.ChrysosShop>
 </ui:UXML>

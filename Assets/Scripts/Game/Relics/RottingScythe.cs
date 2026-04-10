@@ -96,7 +96,7 @@ namespace Game.Relics
             if (bestPiece == null) return;
 
             var excute = new RottingScytheAction(bestPiece.Pos);
-            BoardViewer.Ins.ExecuteAction(excute);
+            // BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new RottingScythePending(this, bestPiece.Pos);
             // if (pending is PendingAction p)

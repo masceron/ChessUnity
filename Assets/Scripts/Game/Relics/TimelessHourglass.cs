@@ -57,7 +57,7 @@ namespace Game.Relics
             var chosen = top.Count == 1 ? top[0] : top[Random.Range(0, top.Count)];
 
             var excute = new TimelessHourglassExecute(Color, chosen.Pos);
-            BoardViewer.Ins.ExecuteAction(excute);
+            // BoardViewer.Ins.ExecuteAction(excute);
 
             // var pending = new TimelessHourglassPending(this, chosen.Pos);
             // if (pending is PendingAction p)
