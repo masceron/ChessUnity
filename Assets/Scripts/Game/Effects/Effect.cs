@@ -57,6 +57,8 @@ namespace Game.Effects
         public PieceLogic Piece;
         public int Strength;
 
+        private bool _accumulation;
+
         protected Effect(int duration, int strength, PieceLogic piece, string name)
         {
             Piece = piece;
@@ -131,5 +133,15 @@ namespace Game.Effects
             _stats[stat][num - 1] = value;
         }
         public virtual int GetNumeral() => Strength;
+
+        public void Countdown()
+        {
+            if (!_accumulation) _accumulation = true;
+            else
+            {
+                _accumulation = false;
+                Duration -= 1;
+            }
+        }
     }
 }

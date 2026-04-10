@@ -17,8 +17,7 @@ namespace Game.Action.Skills
         private ArcticBrittleStarActive()
         {
         }
-
-        private int _hoveringPos = -1;
+        
         private int _gridSize = 2;
         private int _castRange = 3;
 

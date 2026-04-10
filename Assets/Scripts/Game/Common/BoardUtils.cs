@@ -13,8 +13,6 @@ using Game.Relics.Commons;
 using Game.Tile;
 using Game.Triggers;
 using UnityEngine;
-using UX.UI;
-using UX.UI.Ingame;
 using ZLinq;
 
 namespace Game.Common
@@ -143,6 +141,12 @@ namespace Game.Common
         public static void SetCooldown(PieceLogic piece, int cd)
         {
             piece.SkillCooldown = cd;
+        }
+
+        [Mutator]
+        public static void SetRelicCooldown(RelicLogic relicLogic)
+        {
+            MatchManager.Ins.GameState.SetRelicCooldown(relicLogic);
         }
 
         public static PieceLogic[] PieceBoard()
@@ -538,9 +542,16 @@ namespace Game.Common
         {
             if (!color)
             {
-                MatchManager.Ins.GameState.Relics.Item1 = relic;
+                var tuple = MatchManager.Ins.GameState.Relics;
+                tuple.Item1 = relic;
+                MatchManager.Ins.GameState.Relics = tuple;
             }
-            else MatchManager.Ins.GameState.Relics.Item2 = relic;
+            else
+            {
+                var tuple = MatchManager.Ins.GameState.Relics;
+                tuple.Item2 = relic;
+                MatchManager.Ins.GameState.Relics = tuple;
+            }
         }
 
         [Mutator]

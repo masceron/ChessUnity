@@ -53,12 +53,21 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly string Type;
         private int _attackRange;
         private int _moveRange;
-        public CapturesDelegate Captures;
         public bool Color;
-        public bool IsVisible = true;
-
         public QuietsDelegate Quiets;
-        public int SkillCooldown;
+        public CapturesDelegate Captures;
+
+        private int _skillCooldown;
+        private bool _accumulation;
+        public int SkillCooldown
+        {
+            get => _skillCooldown;
+            set
+            {
+                _skillCooldown = value;
+                _accumulation = false;
+            }
+        }
 
         /// <summary>State hiện tại của quân cờ. Mặc định là <see cref="StateType.None"/>.</summary>
         public StateType CurrentState { get; private set; } = StateType.None;
@@ -183,7 +192,14 @@ namespace Game.Piece.PieceLogic.Commons
 
         public void PassTurn()
         {
-            if (SkillCooldown > 0) SkillCooldown--;
+            if (SkillCooldown <= 0) return;
+
+            if (!_accumulation) _accumulation = true;
+            else
+            {
+                _accumulation = false;
+                SkillCooldown -= 1;
+            }
         }
 
         /// <summary>
@@ -221,7 +237,7 @@ namespace Game.Piece.PieceLogic.Commons
                     list.Add(CreateCaptureAction(targetPos)); // AI zone of control
             }
 
-            if (_hasSkill)
+            if (_hasSkill && SkillCooldown == 0)
             {
                 if (Effects.Any(e =>
                         e.EffectName is "effect_illusion" or "effect_silenced" or "effect_crown_of_silence_passive"))

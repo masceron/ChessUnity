@@ -1189,9 +1189,10 @@ GameObject:
   - component: {fileID: 2083513923}
   - component: {fileID: 2083513924}
   - component: {fileID: 2083513925}
+  - component: {fileID: 2083513929}
   - component: {fileID: 2083513927}
-  - component: {fileID: 2083513926}
   - component: {fileID: 2083513928}
+  - component: {fileID: 2083513926}
   m_Layer: 5
   m_Name: MainUI
   m_TagString: Untagged
@@ -1298,6 +1299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Toolkit.Common.Tooltip.TooltipManager
   tooltipAsset: {fileID: 9197481963319205126, guid: 08cf2c095ad2dc54fb53de0f0cf3ca39, type: 3}
+  showDelay: 0.4
+  lockDuration: 1.5
 --- !u!114 &2083513925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1369,6 +1372,18 @@ MonoBehaviour:
   downsample: 2
   updateInterval: 3
   onlyUpdateWhenVisible: 1
+--- !u!114 &2083513929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083513917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b7793dc3944b509cd400090847e8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UX.UI.Ingame.EnemyInfoBox
 --- !u!1 &2086704056
 GameObject:
   m_ObjectHideFlags: 0

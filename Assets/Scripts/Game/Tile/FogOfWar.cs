@@ -35,7 +35,6 @@ namespace Game.Tile
 
         private void ToggleVisibility(PieceLogic piece, bool value)
         {
-            piece.IsVisible = value;
             PieceManager.Ins.GetPieceGameObject(piece.Pos).GetComponent<MeshRenderer>().enabled = value;
         }
 

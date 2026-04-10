@@ -22,7 +22,7 @@ public static class Config
     };
 
     public static RelicConfig relicWhiteConfig = new("relic_eye_of_mimic", false, 6);
-    public static RelicConfig relicBlackConfig = new("relic_coral_tome", true, 6);
+    public static RelicConfig relicBlackConfig = new("relic_eye_of_mimic", true, 6);
     public static FieldEffectType FieldEffectType = FieldEffectType.None;
 
     public static void SetBlackPieceConfig(List<PieceConfig> pieceConfigs)

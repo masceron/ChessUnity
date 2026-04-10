@@ -20,8 +20,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
 
                 if (isPlayer)
-                    if (SkillCooldown == 0)
-                        list.Add(new BobtailSquidActive(this));
+                    list.Add(new BobtailSquidActive(this));
                 //query for AI in here
             };
         }

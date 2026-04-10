@@ -21,6 +21,7 @@ namespace Game.Action.Relics
         {
             // apply 1 turn nhưng vì ApplyEffect tự động ++duration nên ở đây để là 0
             ActionManager.EnqueueAction(new ApplyEffect(new CopyCapturesMethod(GetMakerAsPiece(), GetTargetAsPiece(), 0)));
+            ActionManager.EnqueueAction(new RelicCooldown());
         }
     }
 }

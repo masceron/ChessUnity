@@ -11,7 +11,8 @@ namespace Game.Effects.Augmentation
 
         public void OnApply()
         {
-            if (Piece.SkillCooldown > 0) Piece.SkillCooldown--;
+            //Làm lại
+            //if (Piece.SkillCooldown > 0) Piece.SkillCooldown--;
         }
     }
 }

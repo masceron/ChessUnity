@@ -6,18 +6,9 @@ namespace UX.UI.Ingame
 {
     public class TopInfoBox: MonoBehaviour
     {
-        private BoardViewer _boardViewer;
-        private Button _surrender;
-        private Button _callDraw;
-
         private void Awake()
         {
-            _boardViewer = GetComponent<BoardViewer>();
-
             var root = GetComponent<UIDocument>().rootVisualElement;
-
-            _surrender = root.Q<Button>("Surrender");
-            _callDraw = root.Q<Button>("CallDraw");
             
             root.Q<Label>("RoundCounter").SetBinding("text", new DataBinding
             {

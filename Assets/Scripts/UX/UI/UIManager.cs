@@ -68,12 +68,9 @@ namespace UX.UI
             uiInstance.style.justifyContent = Justify.Center;
 
             _mainUIDocument.rootVisualElement.Add(uiInstance);
-            
-            var awaitableUI =
-                uiInstance.Children().FirstOrDefault(e => e is IAwaitableUI<TPayload, TResult>) as
-                    IAwaitableUI<TPayload, TResult>;
 
-            if (awaitableUI == null)
+            if (uiInstance.Children().FirstOrDefault(e => e is IAwaitableUI<TPayload, TResult>) is not
+                IAwaitableUI<TPayload, TResult> awaitableUI)
             {
                 uiInstance.RemoveFromHierarchy();
                 throw new Exception($"Root element of {menuType} does not implement IAwaitableUI!");

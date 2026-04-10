@@ -58,9 +58,8 @@ namespace Game.Relics
             var pos = BoardUtils.IndexOf(bestArea.rank, bestArea.file);
 
             //Làm lại
-            SetCooldown();
-            var execute = new Game.Action.Relics.FrostSigilExecute(CommanderPiece, pos, Color);
-            Game.Action.ActionManager.EnqueueAction(execute);
+            var execute = new FrostSigilExecute(CommanderPiece, pos, Color);
+            Action.ActionManager.EnqueueAction(execute);
         }
     }
 }

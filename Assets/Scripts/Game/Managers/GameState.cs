@@ -14,8 +14,6 @@ using Game.Relics.Commons;
 using Game.Tile;
 using Unity.Properties;
 using UnityEngine;
-using UX.UI;
-using UX.UI.Ingame;
 using ZLinq;
 using static Game.Common.BoardUtils;
 
@@ -44,7 +42,10 @@ namespace Game.Managers
         public readonly PieceLogic[] PieceBoard = new PieceLogic[MaxLength * MaxLength];
         public readonly Formation[] Formations = new Formation[MaxLength * MaxLength];
         public readonly bool OurSide;
-        public (RelicLogic, RelicLogic) Relics;
+        
+        [CreateProperty]
+        public (RelicLogic, RelicLogic) Relics { get; set; }
+        
         public FieldEffect FieldEffect;
         public bool SideToMove;
         public (PieceLogic, PieceLogic) Commanders;
@@ -163,7 +164,7 @@ namespace Game.Managers
 
                 foreach (var effect in piece.Effects.Where(effect => effect.Duration > 0))
                 {
-                    effect.Duration -= 1;
+                    effect.Countdown();
 
                     if (effect.Duration == 0) ActionManager.EnqueueAction(new RemoveEffect(effect));
                 }
@@ -179,6 +180,7 @@ namespace Game.Managers
 
             Relics.Item1.PassTurn();
             Relics.Item2.PassTurn();
+            NotifyPropertyChanged(nameof(Relics));
         }
 
         public void Kill(PieceLogic pieceAffected, bool record)
@@ -200,6 +202,12 @@ namespace Game.Managers
             PieceBoard[t] = piece;
             PieceBoard[piece.Pos] = null;
             piece.Pos = t;
+        }
+
+        public void SetRelicCooldown(RelicLogic relicLogic)
+        {
+            relicLogic.CurrentCooldown = relicLogic.TimeCooldown;
+            NotifyPropertyChanged(nameof(Relics));
         }
 
         public void Swap(PieceLogic a, PieceLogic b)

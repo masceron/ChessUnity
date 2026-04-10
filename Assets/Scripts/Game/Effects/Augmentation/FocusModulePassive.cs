@@ -11,15 +11,16 @@ namespace Game.Effects.Augmentation
 
         public void OnApply()
         {
-            switch (Piece.SkillCooldown)
-            {
-                case > 1:
-                    Piece.SkillCooldown -= 2;
-                    break;
-                case 1:
-                    Piece.SkillCooldown -= 1;
-                    break;
-            }
+            //Làm lại
+            // switch (Piece.SkillCooldown)
+            // {
+            //     case > 1:
+            //         Piece.SkillCooldown -= 2;
+            //         break;
+            //     case 1:
+            //         Piece.SkillCooldown -= 1;
+            //         break;
+            // }
         }
     }
 }

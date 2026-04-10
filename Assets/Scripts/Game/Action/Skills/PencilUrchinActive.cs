@@ -15,8 +15,7 @@ namespace Game.Action.Skills
     {
         [MemoryPackConstructor]
         private PencilUrchinActive() { }
-
-        private int _hoveringPos = -1;
+        
         private int _gridSize    = 1;
         private int _castRange   = 3;
 

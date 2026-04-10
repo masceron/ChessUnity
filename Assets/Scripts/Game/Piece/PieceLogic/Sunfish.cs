@@ -19,17 +19,15 @@ namespace Game.Piece.PieceLogic
             //Làm lại
             Skills = (list, isPlayer, _) =>
             {
-                if (SkillCooldown > 0) return;
-                // if (isPlayer)
-                //     if (SkillCooldown == 0)
-                //         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 4))
-                //         {
-                //             var index = IndexOf(rankOff, fileOff);
-                //             if (!VerifyIndex(index) || !IsActive(index)) continue;
-                //             var pending = new SunfishActive(this, index);
-                //             list.Add(pending);
-                //         }
-                //query for AI in here
+                // if (SkillCooldown > 0) return;
+                //  if (isPlayer)
+                //      foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 4))
+                //      {
+                //          var index = IndexOf(rankOff, fileOff);
+                //          if (!VerifyIndex(index) || !IsActive(index)) continue;
+                //          var pending = new SunfishActive(this, index);
+                //          list.Add(pending);
+                //      }
             };
         }
 

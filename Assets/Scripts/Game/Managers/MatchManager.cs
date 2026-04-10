@@ -31,6 +31,8 @@ namespace Game.Managers
         [NonSerialized] private static Unity.Mathematics.Random _randomizer;
         [NonSerialized] private UIDocument _mainUI;
 
+        public Action<GameState> OnInitComplete;
+
         public Vector2Int StartingSize { get; private set; }
 
         private new void Awake()
@@ -69,16 +71,10 @@ namespace Game.Managers
             StartingSize = cfg.StartingSize;
             MakeGame(cfg, lineupConfig);
             MakeBoard();
-
-            StartGame(
-                lineupConfig
-            );
-        }
-
-        private void StartGame(LineupConfig cfg)
-        {
-            MakePieces(cfg);
+            MakePieces(lineupConfig);
             ActionManager.ExecuteWhenStart();
+            
+            OnInitComplete?.Invoke(GameState);
         }
 
         public static bool Roll(int chance)

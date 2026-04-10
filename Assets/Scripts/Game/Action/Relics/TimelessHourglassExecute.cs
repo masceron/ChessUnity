@@ -23,11 +23,12 @@ namespace Game.Action.Relics
 
         protected override void ModifyGameState()
         {
-            var target = GetTargetAsPiece();
-            if (_targetColor == _relicColor)
-                target.SkillCooldown = Mathf.Max(0, target.SkillCooldown);
-            else
-                target.SkillCooldown += 2;
+            //Làm lại
+            // var target = GetTargetAsPiece();
+            // if (_targetColor == _relicColor)
+            //     target.SkillCooldown = Mathf.Max(0, target.SkillCooldown);
+            // else
+            //     target.SkillCooldown += 2;
         }
     }
 }
