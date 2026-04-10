@@ -76,7 +76,7 @@ namespace Game.Piece.PieceLogic
                         ? candidatesB[0]
                         : candidatesB[Random.Range(0, candidatesB.Count)];
                     // Execute effect now
-                    list.Add(new TemperantiaSwap(this, chosenAlly.Pos, chosenEnemy.Pos));
+                    list.Add(new TemperantiaSwap(this, chosenAlly.ID, chosenEnemy.ID));
                 }
             };
         }

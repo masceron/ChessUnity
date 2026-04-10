@@ -21,6 +21,8 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this, 3)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new ArchelonDraw(this)));
+            SetStat(SkillStat.Target, 1);
+            SetStat(SkillStat.Range, 3);
             //ActionManager.ExecuteImmediately(new ApplyEffect(new Parasite(this)));
         
 
@@ -41,14 +43,14 @@ namespace Game.Piece.PieceLogic
                     //         list.Add(new ArchelonShield(Pos, index));
                     //     }
                     // }
-                    var targets = SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, 3);
+                    var targets = SkillRangeHelper.GetActiveAllyPieceInRadius(Pos, GetStat(SkillStat.Range));
                     foreach (var target in targets) list.Add(new ArchelonShield(this, PieceOn(target)));
                 }
                 else
                 {
                     //query for AI in here
                     if (!excludeEmptyTile)
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                         {
                             var index = IndexOf(rankOff, fileOff);
                             var pOn = PieceOn(index);
@@ -61,8 +63,9 @@ namespace Game.Piece.PieceLogic
 
                     // Gather allies within radius 3
                     var candidates = new List<Commons.PieceLogic>();
-                    for (var dr = -3; dr <= 3; dr++)
-                    for (var df = -3; df <= 3; df++)
+                    var range = GetStat(SkillStat.Range);
+                    for (var dr = -range; dr <= range; dr++)
+                    for (var df = -range; df <= range; df++)
                     {
                         var r = rank + dr;
                         var f = file + df;

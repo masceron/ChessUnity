@@ -2,6 +2,7 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using MemoryPack;
+using Game.Action.Internal;
 using static Game.Common.BoardUtils;
 
 namespace Game.Action.Skills
@@ -34,7 +35,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var maker = GetMakerAsPiece();
-            SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
             var color = maker.Color;
             var direction = color ? -1 : +1;
             var steps = 0;
@@ -50,7 +51,7 @@ namespace Game.Action.Skills
                 {
                     Formation fogOfWar = new FogOfWar(color);
                     fogOfWar.SetDuration(3);
-                    SetFormation(IndexOf(x, y), fogOfWar);
+                    ActionManager.EnqueueAction(new SetFormation(IndexOf(x, y), fogOfWar));
                 }
         }
     }

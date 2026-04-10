@@ -3,6 +3,7 @@ using Game.Action.Skills;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UX.UI.Ingame;
 using static Game.Common.BoardUtils;
 
@@ -12,8 +13,8 @@ namespace Game.Action.Internal.Pending.Piece
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class MegalodonActivePending : PendingAction, IDisposable, ISkills
     {
-        private static PieceLogic _firstTarget;
-        private static PieceLogic _secondTarget;
+        private static int _firstTargetId = -1;
+        private static int _secondTargetId = -1;
 
         public MegalodonActivePending(PieceLogic maker, PieceLogic target) : base(maker, target)
         {
@@ -35,18 +36,28 @@ namespace Game.Action.Internal.Pending.Piece
 
         protected override void CompleteAction()
         {
-            var hovering = PieceOn(BoardViewer.HoveringPos);
-            if (_firstTarget == null)
+
+            if (_firstTargetId == -1)
             {
-                _firstTarget = hovering;
+                _firstTargetId = Target;
+
+                var firstTarget = GetEntityByID(_firstTargetId) as PieceLogic;
+                if (firstTarget == null)
+                {
+                    ResetTargets();
+                    return;
+                }
+
+                _secondTargetId = -1;
                 TileManager.Ins.UnmarkAll();
                 BoardViewer.ListOf.Clear();
+
                 foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()),
                              GetMakerAsPiece().AttackRange()))
                 {
                     var index = IndexOf(rankOff, fileOff);
                     var piece = PieceOn(index);
-                    if (piece == null || piece.Color == _firstTarget.Color) continue;
+                    if (piece == null || piece.Color == firstTarget.Color) continue;
                     var newAction = new MegalodonActivePending(GetMakerAsPiece(), piece);
                     BoardViewer.ListOf.Add(newAction);
                     TileManager.Ins.MarkAsMoveable(index);
@@ -55,10 +66,10 @@ namespace Game.Action.Internal.Pending.Piece
                 return;
             }
 
-            _secondTarget = hovering;
-            if (_firstTarget == null || _secondTarget == null) return;
-            if (_firstTarget == _secondTarget) return;
-            CommitResult(new MegalodonActive(GetMakerAsPiece(), _firstTarget.Pos, _secondTarget.Pos));
+            _secondTargetId = Target;
+            if (_firstTargetId == -1 || _secondTargetId == -1) return;
+            if (_firstTargetId == _secondTargetId) return;
+            CommitResult(new MegalodonActive(GetMakerAsPiece(), _firstTargetId, _secondTargetId));
         }
 
         public void CompleteActionForAI()
@@ -68,8 +79,8 @@ namespace Game.Action.Internal.Pending.Piece
 
         private static void ResetTargets()
         {
-            _firstTarget = null;
-            _secondTarget = null;
+            _firstTargetId = -1;
+            _secondTargetId = -1;
         }
     }
 }

@@ -18,19 +18,23 @@ namespace Game.Piece.PieceLogic
         public Stingray(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Slow(-1, 3, this)));
+            SetStat(SkillStat.Range, 2);
+            SetStat(SkillStat.Duration, 1);
+            SetStat(SkillStat.Stack, 1);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
                 var (rank, file) = RankFileOf(Pos);
+                var range = GetStat(SkillStat.Range);
                 if (isPlayer)
                 {
                     var board = PieceBoard();
                     var active = ActiveBoard();
 
-                    for (var rankTo = rank - 2; rankTo <= rank + 2; rankTo += 2)
+                    for (var rankTo = rank - range; rankTo <= rank + range; rankTo += range)
                     {
                         if (!VerifyBounds(rankTo)) continue;
-                        for (var fileTo = file - 2; fileTo <= file + 2; fileTo += 2)
+                        for (var fileTo = file - range; fileTo <= file + range; fileTo += range)
                         {
                             if (!VerifyBounds(fileTo)) continue;
                             if (rankTo == rank && fileTo == file) continue;
@@ -48,10 +52,10 @@ namespace Game.Piece.PieceLogic
                         PieceBoard();
                         var active = ActiveBoard();
 
-                        for (var rankTo = rank - 2; rankTo <= rank + 2; rankTo += 2)
+                        for (var rankTo = rank - range; rankTo <= rank + range; rankTo += range)
                         {
                             if (!VerifyBounds(rankTo)) continue;
-                            for (var fileTo = file - 2; fileTo <= file + 2; fileTo += 2)
+                            for (var fileTo = file - range; fileTo <= file + range; fileTo += range)
                             {
                                 if (!VerifyBounds(fileTo)) continue;
                                 if (rankTo == rank && fileTo == file) continue;
@@ -64,8 +68,8 @@ namespace Game.Piece.PieceLogic
                     // candidates: tuple (finalIndex, bestEnemyValue)
                     var candidates = new List<(int finalIdx, int bestValue)>();
 
-                    for (var dr = -2; dr <= 2; dr += 2)
-                    for (var df = -2; df <= 2; df += 2)
+                    for (var dr = -range; dr <= range; dr += range)
+                    for (var df = -range; df <= range; df += range)
                     {
                         if (dr == 0 && df == 0) continue;
                         var rankTo = rank + dr;

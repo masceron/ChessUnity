@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Common;
 using Game.Effects.Others;
 using Game.Effects.Traits;
@@ -22,18 +23,18 @@ namespace Game.Piece.PieceLogic
             ActionManager.ExecuteImmediately(new ApplyEffect(new PureMinded(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Relentless(this, deathDefianceCount)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new DeathDefiance(this, deathDefianceCount)));
-
+            SetStat(SkillStat.Range, 5);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 5))
+                    foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                     {
                         var idx = IndexOf(rank, file);
                         var pOn = PieceOn(idx);
                         //Làm lại
-                        //if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
+                        if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
                     }
                 }
                 else
@@ -45,7 +46,7 @@ namespace Game.Piece.PieceLogic
                             var idx = IndexOf(rank, file);
                             var pOn = PieceOn(idx);
                             //Làm lại
-                            //if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
+                            if (pOn != null && pOn.Color != Color) list.Add(new HumilitasPending(Pos, idx));
                         }
 
                         return;

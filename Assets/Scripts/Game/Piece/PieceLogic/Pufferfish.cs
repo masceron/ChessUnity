@@ -14,6 +14,7 @@ namespace Game.Piece.PieceLogic
         public Pufferfish(PieceConfig cfg) : base(cfg, PufferfishMoves.Quiets, PufferfishMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Dominator(this)));
+            SetStat(SkillStat.Stack, 1);
 
             Skills = (list, isPlayer, _) =>
             {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
@@ -19,7 +20,8 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SnappingStrike(this)));
-
+            SetStat(SkillStat.Target, 1);
+            SetStat(SkillStat.Range, 5);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -27,7 +29,7 @@ namespace Game.Piece.PieceLogic
                 {
                     var (rank, file) = RankFileOf(Pos);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.Around(rank, file, 5))
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.Around(rank, file, GetStat(SkillStat.Range)))
                         MakeSkill(list, IndexOf(rankOff, fileOff));
                 }
                 //query for AI in here

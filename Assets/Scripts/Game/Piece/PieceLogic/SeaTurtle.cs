@@ -10,6 +10,7 @@ namespace Game.Piece.PieceLogic
     {
         public SeaTurtle(PieceConfig cfg) : base(cfg, KingMoves.Quiets, FrontDefenderMoves.Captures)
         {
+            SetStat(SkillStat.Duration, 2);
             Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;

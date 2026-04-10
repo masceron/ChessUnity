@@ -32,8 +32,8 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(2, GetMakerAsPiece())));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new SeaTurtleCountdown(GetMakerAsPiece().GetStat(SkillStat.Duration), GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

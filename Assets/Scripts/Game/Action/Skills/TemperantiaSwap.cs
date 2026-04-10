@@ -1,10 +1,9 @@
 using Game.Action.Internal;
 using Game.Effects;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
-
-// <-- thêm để dùng LINQ
 
 namespace Game.Action.Skills
 {
@@ -13,18 +12,18 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class TemperantiaSwap : Action, ISkills
     {
-        public int allyIndex = -1;
-        public int enemyIndex = -1; // -1 nếu chưa chọn enemy
+        [MemoryPackInclude] private int _allyTargetId = -1;
+        [MemoryPackInclude] private int _enemyTargetId = -1; // -1 nếu chưa chọn enemy
 
         [MemoryPackConstructor]
         private TemperantiaSwap()
         {
         }
 
-        public TemperantiaSwap(PieceLogic maker, int allyIndex, int enemyIndex) : base(maker)
+        public TemperantiaSwap(PieceLogic maker, int allyTargetId, int enemyTargetId) : base(maker)
         {
-            this.allyIndex = allyIndex;
-            this.enemyIndex = enemyIndex;
+            _allyTargetId = allyTargetId;
+            _enemyTargetId = enemyTargetId;
         }
         
         public int AIPenaltyValue(PieceLogic p)
@@ -35,9 +34,9 @@ namespace Game.Action.Skills
         // Chọn 1 quân đồng minh và 1 quân địch, hoán đổi đồng minh với kẻ địch
         protected override void ModifyGameState()
         {
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
-            var ally = PieceOn(allyIndex);
-            var enemy = PieceOn(enemyIndex);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
+            var ally = GetEntityByID(_allyTargetId) as PieceLogic;
+            var enemy = GetEntityByID(_enemyTargetId) as PieceLogic;
             if (ally == null || enemy == null) return;
 
             // Copy danh sách buff và debuff trước khi bị xóa

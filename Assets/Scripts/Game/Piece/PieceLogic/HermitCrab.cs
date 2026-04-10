@@ -14,6 +14,7 @@ namespace Game.Piece.PieceLogic
     {
         public HermitCrab(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, BishopMoves.Captures)
         {
+            SetStat(SkillStat.Range, 3);
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
@@ -21,8 +22,9 @@ namespace Game.Piece.PieceLogic
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
+                    var range = GetStat(SkillStat.Range);
 
-                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
+                    foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, range))
                         MakeSkill(list, IndexOf(rankOff, fileOff));
                 }
                 else
@@ -30,7 +32,7 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (!excludeEmptyTile)
                     {
-                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), 3))
+                        foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(Pos), FileOf(Pos), GetStat(SkillStat.Range)))
                         {
                             var index = IndexOf(rankOff, fileOff);
                             if (index != Pos) list.Add(new HermitCrabSwap(this, PieceOn(index)));
@@ -41,9 +43,10 @@ namespace Game.Piece.PieceLogic
 
                     var rank = RankOf(Pos);
                     var file = FileOf(Pos);
+                    var range = GetStat(SkillStat.Range);
                     List<int> candidates = new();
-                    for (var i = rank - 3; i < rank + 3; ++i)
-                    for (var j = file - 3; j < file + 3; ++j)
+                    for (var i = rank - range; i < rank + range; ++i)
+                    for (var j = file - range; j < file + range; ++j)
                     {
                         if (!VerifyBounds(file) || !VerifyBounds(rank)) continue;
                         if (PieceOn(IndexOf(i, j)) != null) candidates.Add(IndexOf(i, j));

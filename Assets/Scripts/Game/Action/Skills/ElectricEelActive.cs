@@ -31,23 +31,25 @@ namespace Game.Action.Skills
         {
             var (rank, file) = RankFileOf(GetFrom());
             var caller = GetMakerAsPiece();
+            var range = caller.GetStat(SkillStat.Range);
+            var duration = caller.GetStat(SkillStat.Duration);
 
-            for (var rankOff = rank - 1; rankOff <= rank + 1; rankOff++)
+            for (var rankOff = rank - range; rankOff <= rank + range; rankOff++)
             {
                 if (!VerifyBounds(rankOff)) continue;
 
-                for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
+                for (var fileOff = file - range; fileOff <= file + range; fileOff++)
                 {
                     if (rankOff == rank && fileOff == file) continue;
                     var target = IndexOf(rankOff, fileOff);
                     var pieceTarget = PieceOn(target);
                     if (pieceTarget == null || pieceTarget.Color == caller.Color) continue;
 
-                    ActionManager.EnqueueAction(new ElectricEelActiveImpact(Maker, IndexOf(rankOff, fileOff)));
+                    ActionManager.EnqueueAction(new ElectricEelActiveImpact(Maker, IndexOf(rankOff, fileOff), duration));
                 }
             }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

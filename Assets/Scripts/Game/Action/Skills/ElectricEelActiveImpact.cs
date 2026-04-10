@@ -7,9 +7,12 @@ namespace Game.Action.Skills
 {
     public class ElectricEelActiveImpact : Action, IAOE
     {
-        public ElectricEelActiveImpact(int maker, int target) : base(Game.Common.BoardUtils.GetEntityByID(maker), target)
+        private readonly int _duration;
+
+        public ElectricEelActiveImpact(int maker, int target, int duration) : base(Game.Common.BoardUtils.GetEntityByID(maker), target)
         {
             Maker = maker;
+            _duration = duration;
         }
 
         protected override void ModifyGameState()
@@ -18,7 +21,7 @@ namespace Game.Action.Skills
             var pieceMaker = GetMakerAsPiece();
             if (pieceTarget == null || pieceMaker == null) return;
 
-            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, pieceTarget), pieceMaker));
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(_duration, pieceTarget), pieceMaker));
         }
     }
 

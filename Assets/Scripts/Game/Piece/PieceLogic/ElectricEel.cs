@@ -14,6 +14,8 @@ namespace Game.Piece.PieceLogic
         public ElectricEel(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, SmallPredatorMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new ElectricEelVengeful(this)));
+            SetStat(SkillStat.Range, 1);
+            SetStat(SkillStat.Duration, 1);
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

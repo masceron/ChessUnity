@@ -16,6 +16,7 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Piercing(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new SwordfishAttack(this)));
+            SetStat(SkillStat.Duration, 2);
             Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;

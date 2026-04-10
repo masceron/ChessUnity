@@ -9,19 +9,19 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class MegalodonActive : Action, ISkills
     {
-        [MemoryPackInclude] private int _firstTargetPos;
+        [MemoryPackInclude] private int _firstTargetId;
 
-        [MemoryPackInclude] private int _secondTargetPos;
+        [MemoryPackInclude] private int _secondTargetId;
 
         [MemoryPackConstructor]
         private MegalodonActive()
         {
         }
 
-        public MegalodonActive(PieceLogic maker, int firstTargetPos, int secondTargetPos) : base(maker)
+        public MegalodonActive(PieceLogic maker, int firstTargetId, int secondTargetId) : base(maker)
         {
-            _firstTargetPos = firstTargetPos;
-            _secondTargetPos = secondTargetPos;
+            _firstTargetId = firstTargetId;
+            _secondTargetId = secondTargetId;
         }
 
         public int AIPenaltyValue(PieceLogic maker)
@@ -31,9 +31,13 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetMaker(), PieceOn(_firstTargetPos)));
-            ActionManager.EnqueueAction(new KillPiece(GetMaker(), PieceOn(_secondTargetPos)));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            var firstTarget = GetEntityByID(_firstTargetId) as PieceLogic;
+            var secondTarget = GetEntityByID(_secondTargetId) as PieceLogic;
+            if (firstTarget == null || secondTarget == null) return;
+
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), firstTarget));
+            ActionManager.EnqueueAction(new KillPiece(GetMaker(), secondTarget));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

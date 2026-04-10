@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -37,8 +38,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new SirenForceMove(GetTargetAsPiece(), _moveTo));
-            
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
     
@@ -50,7 +50,7 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            Move(GetMakerAsPiece(), GetTargetPos());
+            ActionManager.EnqueueAction(new Move(GetMakerAsPiece(), GetTargetPos()));
             FlipPieceColor(GetMakerAsPiece());
         }
     }

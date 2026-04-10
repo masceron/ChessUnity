@@ -34,6 +34,8 @@ namespace Game.Action.Skills
             var (rankTo, fileTo) = RankFileOf(GetTargetPos());
             var board = PieceBoard();
             var caller = GetMakerAsPiece();
+            var duration = caller.GetStat(SkillStat.Duration);
+            var stack = caller.GetStat(SkillStat.Stack);
 
             var rankDir = rankTo == rankFrom ? 0 : rankTo > rankFrom ? 1 : -1;
             var fileDir = fileTo == fileFrom ? 0 : fileTo > fileFrom ? 1 : -1;
@@ -46,12 +48,12 @@ namespace Game.Action.Skills
                 var p = board[IndexOf(rankFrom, fileFrom)];
                 if (p == null || p.Color == caller.Color) continue;
 
-                ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 1, p), caller));
-                ActionManager.EnqueueAction(new ApplyEffect(new Poison(1, p), caller));
+                ActionManager.EnqueueAction(new ApplyEffect(new Slow(duration, 1, p), caller));
+                ActionManager.EnqueueAction(new ApplyEffect(new Poison(stack, p), caller));
             }
 
             Move(caller, GetTargetPos());
-            SetCooldown(caller, ((IPieceWithSkill)caller).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(caller));
         }
     }
 }

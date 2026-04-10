@@ -50,7 +50,7 @@ namespace Game.Action.Skills
                 else
                 {
                     var idx = Random.Range(0, b.Count - 1);
-                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMakerAsPiece()));
+                    ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos), GetMakerAsPiece().GetStat(SkillStat.Duration)), GetMakerAsPiece()));
                 }
             }
             else if (a.Count > 0)
@@ -61,10 +61,10 @@ namespace Game.Action.Skills
             else if (b.Count > 0)
             {
                 var idx = Random.Range(0, b.Count - 1);
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos)), GetMakerAsPiece()));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(PieceOn(b[idx].pos), GetMakerAsPiece().GetStat(SkillStat.Duration)), GetMakerAsPiece()));
             }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -75,10 +75,10 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             if (GetTargetAsPiece().Color != GetMakerAsPiece().Color)
-                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTargetAsPiece()), GetMakerAsPiece()));
+                ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTargetAsPiece(), GetMakerAsPiece().GetStat(SkillStat.Duration)), GetMakerAsPiece()));
             else
                 SetCooldown(GetTargetAsPiece(), 0);
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

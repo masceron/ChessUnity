@@ -16,6 +16,7 @@ namespace Game.Piece.PieceLogic
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new Consume(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new Extremophile(this)));
+            SetStat(SkillStat.Range, 3);
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
@@ -33,7 +34,7 @@ namespace Game.Piece.PieceLogic
                     //         list.Add(new AnglerfishTaunt(Pos, idx));
                     //     }
                     // }
-                    var targets = SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, 3);
+                    var targets = SkillRangeHelper.GetActiveEnemyPieceInDirectionUp(Pos, GetStat(SkillStat.Range));
                     foreach (var target in targets) list.Add(new AnglerfishTaunt(this, BoardUtils.PieceOn(target)));
 
                     // }

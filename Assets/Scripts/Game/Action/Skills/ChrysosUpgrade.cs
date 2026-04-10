@@ -38,7 +38,7 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(new DestroyPiece(GetTargetAsPiece()));
             ActionManager.EnqueueAction(new SpawnPiece(_swapTo));
             ((Chrysos)pieceOn).Coin -= _cost;
-            SetCooldown(pieceOn, ((IPieceWithSkill)pieceOn).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

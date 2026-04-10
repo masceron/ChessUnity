@@ -4,7 +4,7 @@ using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using UX.UI.Ingame;
 using ZLinq;
-
+using static Game.Common.BoardUtils;
 // <-- thêm để dùng LINQ
 
 namespace Game.Action.Internal.Pending.Piece
@@ -47,7 +47,7 @@ namespace Game.Action.Internal.Pending.Piece
 
             if (_ally == -1 || _enemy == -1) return;
             //Làm lại
-            // CommitResult(new TemperantiaSwap(GetMakerAsPiece(), _ally, _enemy));
+            CommitResult(new TemperantiaSwap(GetMakerAsPiece(), PieceOn(_ally).ID, PieceOn(_enemy).ID));
             _ally = -1;
             _enemy = -1;
         }

@@ -14,6 +14,8 @@ namespace Game.Piece.PieceLogic
         public Lionfish(PieceConfig cfg) : base(cfg, BishopMoves.Quiets, KingMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new LionfishVengeful(this)));
+            SetStat(SkillStat.Range, 1);
+            SetStat(SkillStat.Stack, 1);
 
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {

@@ -25,7 +25,10 @@ namespace Game.Piece.PieceLogic
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown != 0) return;
-
+                // Điều kiện: không thể sử dụng skill nếu không có quân chết
+                if (this.Color && BlackCaptured().Count == 0) return;
+                else if (!Color && WhiteCaptured().Count == 0) return;
+                
                 if (isPlayer)
                 {
                     for (var rankOff = -1; rankOff <= 1; rankOff++)
