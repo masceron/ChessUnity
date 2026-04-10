@@ -1,6 +1,5 @@
 using Game.Common;
 using Game.Tile;
-using ScrutableObjects;
 using UnityEngine;
 
 namespace Game.ScriptableObjects.Collections
@@ -10,7 +9,7 @@ namespace Game.ScriptableObjects.Collections
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FormationsData : ScriptableObject
     {
-        [ShowProperties(LockObjectAtRuntime = true)] [SerializeField]
+        [SerializeField]
         public UDictionary<FormationType, FormationInfo> formationsData;
     }
 }

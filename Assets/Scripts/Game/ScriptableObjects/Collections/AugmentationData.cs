@@ -1,6 +1,5 @@
 using Game.Augmentation;
 using Game.Common;
-using ScrutableObjects;
 using UnityEngine;
 
 namespace Game.ScriptableObjects.Collections
@@ -8,7 +7,7 @@ namespace Game.ScriptableObjects.Collections
     [CreateAssetMenu(fileName = "AugmentationData", menuName = "ScriptableObjects/AugmentationData")]
     public class AugmentationData : ScriptableObject
     {
-        [ShowProperties(LockObjectAtRuntime = true)] [SerializeField]
+        [SerializeField]
         public UDictionary<AugmentationName, AugmentationInfo> augmentationsData;
     }
 }

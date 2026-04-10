@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using ScrutableObjects;
 using UnityEngine;
 
 namespace Game.ScriptableObjects.Collections
@@ -9,7 +8,7 @@ namespace Game.ScriptableObjects.Collections
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class PiecesData : ScriptableObject
     {
-        [ShowProperties(LockObjectAtRuntime = true)] [SerializeField]
+        [SerializeField]
         public List<PieceInfo> piecesData;
     }
 }
