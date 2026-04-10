@@ -27,6 +27,7 @@ namespace Game.Piece.PieceLogic
 
                 if (isPlayer)
                 {
+                    if (GetCapturedOf(Color).Count == 0) return;
                     for (var rankOff = -1; rankOff <= 1; rankOff++)
                     {
                         var rank = RankOf(Pos) + rankOff;

@@ -11,6 +11,8 @@ using static UnityEngine.SceneManagement.SceneManager;
 
 namespace UX.UI.Loader
 {
+    //A persistent component to manage the process of changing between scenes, and also the loading screen that appears.
+    //Use the ChangeScene() method to switch scene, the loading UI will automatically display.
     public class SceneLoader : Singleton<SceneLoader>
     {
         [NonSerialized] private UIDocument _loadingDoc;
@@ -77,7 +79,7 @@ namespace UX.UI.Loader
             
             while (visualProgress < 1f)
             {
-                visualProgress = Mathf.MoveTowards(visualProgress, 1f, Time.deltaTime * 2f);
+                visualProgress = Mathf.MoveTowards(visualProgress, 1f, Time.deltaTime * 2.5f);
                 _loadingProgress.Progress = 1f - visualProgress;
                 yield return null;
             }

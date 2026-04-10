@@ -18,9 +18,6 @@ namespace UX.UI.Common
 
         public RadialProgress()
         {
-            style.position = Position.Absolute;
-            style.top = 0; style.left = 0; style.right = 0; style.bottom = 0;
-            
             style.overflow = Overflow.Visible;
         
             generateVisualContent += OnGenerateVisualContent;

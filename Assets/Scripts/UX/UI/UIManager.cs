@@ -13,6 +13,11 @@ namespace UX.UI
     {
     }
 
+    //A persistent component that manages the ordering, spawning and destruction of UI menu components.
+    //Rule of thumb: Only put the components that always have to be in the scene inside the main UI Document.
+    //Else, just extract them to a UXML file, throw it in the UIHolder, then spawn it in as needed.
+    //For this to work, every scene that needs spawning additional UIs must have a UIHolder Script somewhere inside it.
+    //Only put components that are actually required inside the holder to save memory.
     public class UIManager : Singleton<UIManager>
     {
         [NonSerialized] private UIDocument _mainUIDocument;
@@ -46,6 +51,8 @@ namespace UX.UI
             AssignMainDocument();
         }
 
+        //Receives data and returns result
+        //E.g. For using in in-game popups of PendingActions.
         public async UniTask<TResult> OpenMenu<TPayload, TResult>(InGameMenuType menuType, TPayload payload)
         {
             UIHolder.Ins.Get(menuType, out var uiAsset);
@@ -57,6 +64,8 @@ namespace UX.UI
             uiInstance.style.bottom = 0;
             uiInstance.style.left = 0;
             uiInstance.style.right = 0;
+            uiInstance.style.alignItems = Align.Center;
+            uiInstance.style.justifyContent = Justify.Center;
 
             _mainUIDocument.rootVisualElement.Add(uiInstance);
             
@@ -83,16 +92,22 @@ namespace UX.UI
             }
         }
 
+        //Receives data but returns nothing
+        //E.g. For a simple menu just to display some information
         public async UniTask OpenMenu<TPayload>(InGameMenuType menuType, TPayload payload)
         {
             await OpenMenu<TPayload, Empty>(menuType, payload);
         }
 
+        //Receives nothing but return result
+        //E.g. A Yes/No confirming dialog
         public UniTask<TResult> OpenMenu<TResult>(InGameMenuType menuType)
         {
             return OpenMenu<Empty, TResult>(menuType, new Empty());
         }
 
+        //Receives nothing and returns nothing
+        //E.g. For things that just needs to show up and doesn't interact with the rest.
         public async UniTask OpenMenu(InGameMenuType menuType)
         {
             await OpenMenu<Empty, Empty>(menuType, new Empty());

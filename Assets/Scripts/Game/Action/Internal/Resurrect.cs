@@ -20,8 +20,10 @@ namespace Game.Action.Internal
 
         protected override void ModifyGameState()
         {
-            var allActions = _onSpawned.Prepend(logic => {
-                ((List<PieceConfig>)BoardUtils.GetCapturedOf(logic.Color)).Remove(_toResurrect);
+            var allActions = _onSpawned.Prepend(logic =>
+            {
+                var capList = BoardUtils.GetCapturedOf(logic.Color);
+                ((List<PieceConfig>)capList).Remove(capList.First(p => p.Type == _toResurrect.Type));
             }).ToArray();
 
             ActionManager.EnqueueAction(new SpawnPiece(_toResurrect, allActions));

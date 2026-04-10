@@ -7,7 +7,6 @@ namespace UX.UI.Common.Tooltip
         private readonly string _headerLeft;
         private readonly string _headerRight;
         private readonly string _content;
-        private IVisualElementScheduledItem _delayTask;
 
         public TooltipManipulator(string left, string right, string cnt)
         {
@@ -30,16 +29,12 @@ namespace UX.UI.Common.Tooltip
 
         private void OnPointerEnter(PointerEnterEvent evt)
         {
-            _delayTask = target.schedule.Execute(() =>
-            {
-                TooltipManager.Ins.Show(_headerLeft, _headerRight, _content);
-            }).StartingIn(1000);
+            TooltipManager.Ins.HandlePointerEnter(target, _headerLeft, _headerRight, _content);
         }
 
         private void OnPointerLeave(PointerLeaveEvent evt)
         {
-            _delayTask?.Pause(); 
-            TooltipManager.Ins.Hide();
+            TooltipManager.Ins.HandlePointerLeave(target); 
         }
     }
 }

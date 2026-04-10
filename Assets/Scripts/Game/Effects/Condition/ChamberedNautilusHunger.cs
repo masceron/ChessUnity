@@ -14,7 +14,7 @@ namespace Game.Effects.Condition
         {
         }
 
-        override protected void OnHungerTriggered()
+        protected override void OnHungerTriggered()
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Shield(Piece), Piece));
         }

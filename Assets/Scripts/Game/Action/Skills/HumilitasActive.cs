@@ -40,7 +40,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), GetMakerAsPiece()));
             if (second != null)
                 ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, second), GetMakerAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

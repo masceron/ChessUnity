@@ -1,0 +1,33 @@
+:root {
+}
+
+.tooltip-root {
+    flex-grow: 0;
+    border-left-color: rgb(13, 29, 28);
+    border-right-color: rgb(13, 29, 28);
+    border-top-color: rgb(13, 29, 28);
+    border-bottom-color: rgb(13, 29, 28);
+    background-color: rgb(13, 29, 28);
+    padding-top: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    border-bottom-left-radius: 18px;
+    max-width: 340px;
+    height: auto;
+    align-items: stretch;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+}
+
+.tooltip-root-lock {
+    border-left-color: rgb(241, 255, 0);
+    border-right-color: rgb(241, 255, 0);
+    border-top-color: rgb(241, 255, 0);
+    border-bottom-color: rgb(241, 255, 0);
+}

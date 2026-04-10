@@ -7,6 +7,7 @@ namespace Game.Save.Player
     [MemoryPackable]
     public partial struct Player
     {
+        public Settings Settings;
         public Dictionary<string, Army.Army> SavedArmies;
         public Dictionary<string, FPPreset> SavedPresets;
         public int Money;

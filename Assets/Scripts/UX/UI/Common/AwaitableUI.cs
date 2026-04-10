@@ -9,6 +9,7 @@ namespace UX.UI.Common
         ChrysosShopItem,
         ThalassosShop,
         ThalassosItem,
+        FreePlayTest
     }
     
     public interface IAwaitableUI<in TPayload, TResult>: ICloseableUI

@@ -30,7 +30,7 @@ namespace Game.Action.Skills
             //Làm lại
             // var config = new PieceConfig(GetMakerAsPiece().Type, GetMakerAsPiece().Color, GetTargetPos());
             // ActionManager.EnqueueAction(new SpawnPieceWithEffect(config, new Illusion(GetTargetAsPiece())));
-            // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            // ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

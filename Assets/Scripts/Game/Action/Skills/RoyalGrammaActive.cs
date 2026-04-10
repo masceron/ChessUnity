@@ -46,7 +46,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new DestroyPiece(pieceOn));
                 ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig(_chosenType, GetMakerAsPiece().Color, pos, names)));
             }
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

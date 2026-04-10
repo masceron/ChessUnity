@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
 using MemoryPack;
@@ -33,7 +34,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             MoveFormation(_formationPos, _moveTo);
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

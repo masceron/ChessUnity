@@ -1,7 +1,7 @@
 :root {
 }
 
-.unity-button {
+.main-menu-button {
     align-items: flex-start;
     background-color: rgba(0, 0, 0, 0);
     -unity-font-definition: resource("FlatSkin/Font/Roboto-Regular");
@@ -19,8 +19,36 @@
     padding-bottom: 15px;
 }
 
-.unity-button:hover {
+.main-menu-button:hover {
     background-color: rgb(176, 176, 176);
     font-size: 30px;
     color: rgb(18, 18, 17);
+}
+
+.main-menu-test {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    aspect-ratio: 1;
+    top: 947px;
+    left: 1778px;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/UI/Icons/testing.png?fileID=2800000&guid=3e43ff78033a79546a86b3ba25bc15eb&type=3#testing");
+    background-size: 75% 75%;
+    border-left-color: rgb(255, 255, 255);
+    border-right-color: rgb(255, 255, 255);
+    border-top-color: rgb(255, 255, 255);
+    border-bottom-color: rgb(255, 255, 255);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+}
+
+.main-menu-test:hover {
+    background-color: rgb(151, 140, 11);
 }

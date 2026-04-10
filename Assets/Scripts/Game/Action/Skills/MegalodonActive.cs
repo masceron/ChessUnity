@@ -33,7 +33,7 @@ namespace Game.Action.Skills
         {
             ActionManager.EnqueueAction(new KillPiece(GetMaker(), PieceOn(_firstTargetPos)));
             ActionManager.EnqueueAction(new KillPiece(GetMaker(), PieceOn(_secondTargetPos)));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

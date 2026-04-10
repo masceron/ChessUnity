@@ -1,4 +1,5 @@
 using System;
+using Game.Action.Internal;
 using Game.Common;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
@@ -32,7 +33,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             Swap(GetMakerAsPiece(), GetTargetAsPiece());
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

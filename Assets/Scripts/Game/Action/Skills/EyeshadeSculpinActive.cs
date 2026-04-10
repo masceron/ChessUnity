@@ -34,7 +34,7 @@ namespace Game.Action.Skills
                 GetMakerAsPiece()));
             ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(4, 1, GetEntityByID(secondTarget) as PieceLogic),
                 GetMakerAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

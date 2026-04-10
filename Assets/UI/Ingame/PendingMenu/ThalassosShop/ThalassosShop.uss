@@ -21,7 +21,7 @@
     border-right-width: 1px;
     border-bottom-width: 1px;
     border-left-width: 1px;
-    background-image: url("project://database/Assets/UI/Toolkit/Common/close.png?fileID=2800000&guid=5243a95c5cbce034fbd13d57d1efc46c&type=3#close");
+    background-image: url("project://database/Assets/UI/Icons/close.png?fileID=2800000&guid=5243a95c5cbce034fbd13d57d1efc46c&type=3#close");
 }
 
 #ThalassosClose:hover {
@@ -104,4 +104,25 @@
 
 #ThalassosChoiceList .unity-base-slider__dragger:hover {
     background-color: rgb(255, 215, 0);
+}
+
+.thalassos-shop {
+    flex-grow: 0;
+    justify-content: center;
+    align-items: center;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    min-width: 600px;
+    max-width: 600px;
+    background-color: rgb(13, 29, 28);
+    padding-top: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
 }

@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
+using UX.UI.Common;
 using SceneLoader = UX.UI.Loader.SceneLoader;
 
 namespace UX.UI.MainMenu
@@ -12,6 +14,8 @@ namespace UX.UI.MainMenu
 
             root.Q<Button>("Play").clicked += LoadMatch;
             root.Q<Button>("Quit").clicked += () => Application.Quit(0);
+            root.Q<Button>("FreePlayTest").clicked +=
+                () => UIManager.Ins.OpenMenu(InGameMenuType.FreePlayTest).Forget();
         }
 
         private static void LoadMatch()

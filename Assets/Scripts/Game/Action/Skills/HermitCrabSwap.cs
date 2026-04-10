@@ -42,7 +42,7 @@ namespace Game.Action.Skills
             // if (pieceB != null) pieceB.Pos = a;
             // board[b] = pieceA;
             // if (pieceA != null) pieceA.Pos = b;
-            // SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            // ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
 
             Swap(GetMakerAsPiece(), GetTargetAsPiece());
             SetCooldown(GetTargetAsPiece(), ((IPieceWithSkill)GetTargetAsPiece()).TimeToCooldown);

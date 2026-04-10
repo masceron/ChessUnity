@@ -54,7 +54,7 @@ namespace UX.UI.Ingame
             var icon = data.icon;
             root.style.backgroundImage = icon ? icon : missing;
             root.AddTooltip(Localizer.GetText("effect_name", data.key, null),
-                effect.Duration > 0 ? effect.Duration.ToString() : "∞", 
+                effect.Duration > 0 ? $"{effect.Duration.ToString()} turn(s) left" : "∞",
                 effect.Description());
         }
     }
