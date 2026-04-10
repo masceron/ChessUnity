@@ -13,6 +13,7 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class Snaggletooths : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 2;
         public Snaggletooths(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
@@ -20,7 +21,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown != 0) return;
                 if (isPlayer)
                 {
-                    var targets = SkillRangeHelper.GetActiveCellInRadius(Pos, 2);
+                    var targets = SkillRangeHelper.GetActiveCellInRadius(Pos, Range);
                     foreach (var target in targets)
                     {
                         var piece = PieceOn(target);

@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -26,7 +27,7 @@ namespace Game.Action.Skills
         {
             TileManager.Ins.DestroyTile(GetTargetPos());
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
 
         // public void CompleteActionForAI()

@@ -9,6 +9,8 @@ namespace Game.Piece.PieceLogic
 {
     public class Phronima : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Range = 3;
+        
         public Phronima(PieceConfig cfg) : base(cfg, KingMoves.Quiets, KingMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
@@ -17,8 +19,8 @@ namespace Game.Piece.PieceLogic
                 var (rank, file) = RankFileOf(Pos);
                 if (isPlayer)
                 {
-                    for (var x = rank - 3; x <= rank + 3; ++x)
-                    for (var y = file - 3; y <= file + 3; ++y)
+                    for (var x = rank - Range; x <= rank + Range; ++x)
+                    for (var y = file - Range; y <= file + Range; ++y)
                     {
                         if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
                         var targetPiece = PieceOn(IndexOf(x, y));
@@ -31,7 +33,7 @@ namespace Game.Piece.PieceLogic
                     //query for AI in here
                     if (excludeEmptyTile)
                     {
-                        var listPieces = GetPiecesInRadius(rank, file, 3, p => p != null && p.Color != Color);
+                        var listPieces = GetPiecesInRadius(rank, file, Range, p => p != null && p.Color != Color);
                         if (listPieces.Count == 0) return;
 
                         listPieces.Sort((a, b) =>
@@ -54,8 +56,8 @@ namespace Game.Piece.PieceLogic
                     }
                     else
                     {
-                        for (var x = rank - 3; x <= rank + 3; x++)
-                        for (var y = file - 3; y <= file + 3; y++)
+                        for (var x = rank - Range; x <= rank + Range; x++)
+                        for (var y = file - Range; y <= file + Range; y++)
                         {
                             if (x == rank && y == file) continue;
                             list.Add(new PhronimaActive(this, PieceOn(IndexOf(x, y))));

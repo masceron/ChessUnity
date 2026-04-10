@@ -3,6 +3,7 @@ using Game.Action;
 using Game.Action.Internal;
 using Game.Action.Skills;
 using Game.Common;
+using Game.Effects.Debuffs;
 using Game.Effects.Others;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -15,7 +16,7 @@ namespace Game.Piece.PieceLogic
     {
         public BlueDragon(PieceConfig cfg) : base(cfg, SpinningMoves.Quiets, SpinningMoves.Captures)
         {
-            // ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Silenced(this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new BlueDragonPassive(this)));
 
             Skills = (list, isPlayer, excludeEmptyTile) =>

@@ -1,4 +1,5 @@
 using Game.Action.Internal;
+using Game.Common;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 using static Game.Common.BoardUtils;
@@ -27,8 +28,9 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new KillPiece(GetMaker(), GetTargetAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            var maker = GetMakerAsPiece();
+            ActionManager.EnqueueAction(new KillPiece(maker, GetTargetAsPiece()));
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
     }
 }

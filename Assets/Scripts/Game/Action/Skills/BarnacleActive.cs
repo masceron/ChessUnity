@@ -61,13 +61,12 @@ namespace Game.Action.Skills
         {
             foreach (var effect in GetTargetAsPiece().Effects
                          .Where(effect => effect.EffectName is "effect_shield" or "effect_hardened_shield"))
-                if (effect.Duration > 0)
-                    effect.Duration -= 1;
+                if (effect.Strength > 0)
+                    effect.Strength -= 1;
                 else
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
 
-            SetCooldown(GetMakerAsPiece(), -1);
-            //SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

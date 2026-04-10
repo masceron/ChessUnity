@@ -28,10 +28,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color != Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    
-                    //Làm lại
-                    //var pending = new SeafoamPhialPending(this, piece);
-                    // BoardViewer.ListOf.Add(pending);
+                    BoardViewer.ListOf.Add(new SeafoamPhialAction(piece));
                 }
 
                 BoardViewer.Selecting = -2;

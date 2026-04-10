@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using Game.Action.Internal.Pending;
+using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
 using PrimeTween;
+using Unity.Properties;
 using UnityEngine;
 
 namespace UX.UI.Ingame.CoralTome
@@ -53,9 +55,8 @@ namespace UX.UI.Ingame.CoralTome
                 TileManager.Ins.MarkAsMoveable(pos);
                 var relic = BoardUtils.GetRelicOf(color);
                 if (relic is not Game.Relics.CoralTome coralTome) continue;
-                //Làm lại
-                // var pending = new CoralTomePending(coralTome, type, pos);
-                // BoardViewer.ListOf.Add(pending);
+
+                BoardViewer.ListOf.Add(new CoralTomeAction(color, type, pos));
             }
 
             BoardViewer.Selecting = -2;
