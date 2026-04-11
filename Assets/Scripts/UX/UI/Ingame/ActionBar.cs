@@ -159,9 +159,8 @@ namespace UX.UI.Ingame
                     _skillCooldownTime.text = "";
                     break;
                 case ControlState.TargetingPending:
-                    break;
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+                    break;
             }
         }
 
@@ -206,7 +205,7 @@ namespace UX.UI.Ingame
                         _boardViewer.SelectingPiece.MoveList(_boardViewer.AllMoves);
                         _boardViewer.ClearHighlights();
                         _boardViewer.CurrentAvailableMoves.Clear();
-                        foreach (var move in Enumerable.OfType<IQuiets>(_boardViewer.AllMoves))
+                        foreach (var move in _boardViewer.AllMoves.OfType<IQuiets>())
                         {
                             _boardViewer.CurrentAvailableMoves.Add((Action)move);
                         }
@@ -245,7 +244,7 @@ namespace UX.UI.Ingame
                         _boardViewer.SelectingPiece.MoveList(_boardViewer.AllMoves);
                         _boardViewer.CurrentAvailableMoves.Clear();
                         _boardViewer.ClearHighlights();
-                        foreach (var move in Enumerable.OfType<ICaptures>(_boardViewer.AllMoves))
+                        foreach (var move in _boardViewer.AllMoves.OfType<ICaptures>())
                         {
                             _boardViewer.CurrentAvailableMoves.Add((Action)move);
                         }
@@ -284,7 +283,7 @@ namespace UX.UI.Ingame
                         _boardViewer.SelectingPiece.MoveList(_boardViewer.AllMoves);
                         _boardViewer.CurrentAvailableMoves.Clear();
                         _boardViewer.ClearHighlights();
-                        foreach (var move in Enumerable.OfType<ISkills>(_boardViewer.AllMoves))
+                        foreach (var move in _boardViewer.AllMoves.OfType<ISkills>())
                         {
                             _boardViewer.CurrentAvailableMoves.Add((Action)move);
                         }

@@ -117,7 +117,7 @@ namespace Game.Effects.Condition
 
 		private static bool HasBlinded(PieceLogic target)
 		{
-			return target != null && Enumerable.Any(Enumerable.OfType<Blinded>(target.Effects));
+			return target != null && target.Effects.Any(e => e is Blinded);
 		}
 
     }

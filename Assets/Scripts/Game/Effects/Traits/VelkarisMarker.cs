@@ -12,11 +12,10 @@ namespace Game.Effects.Traits
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class VelkarisMarker : Effect, IEndTurnTrigger
     {
-        private readonly int[] _rows;
+        private readonly int[] _rows = new int[2];
 
         public VelkarisMarker(PieceLogic p) : base(-1, 1, p, "effect_velkaris_marker")
         {
-            _rows = new int[2];
             TriggerRows(p.Pos, p.Color);
             EndTurnEffectType = EndTurnEffectType.EndOfAllyTurn;
         }

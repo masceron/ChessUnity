@@ -65,9 +65,10 @@ namespace Game.Managers
             var formation = GetFormation(pos);
             var pieceInPos = PieceBoard()[pos];
             if (pieceInPos == null) return false;
-            var haveAbyssalTapetum = Enumerable.Any(PieceBoard(),
-                pieceLogic => pieceLogic != null && pieceLogic.Color == sideToMove &&
-                              pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum));
+            var haveAbyssalTapetum = PieceBoard().Any(pieceLogic =>
+                pieceLogic != null && pieceLogic.Color == sideToMove &&
+                pieceLogic.HasAugmentation(AugmentationName.AbyssalTapetum));
+
             return formation != null && formation.GetFormationType() == FormationType.FogOfWar
                                      && formation.GetColor() != sideToMove && !haveAbyssalTapetum
                                      && pieceInPos.Effects.All(e => e.EffectName != "effect_marked");

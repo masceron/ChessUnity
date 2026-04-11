@@ -19,19 +19,13 @@ namespace Game.AI
 
         private void Awake()
         {
-            if (Ins != null && Ins != this)
+            if (Ins && Ins != this)
             {
                 Destroy(this);
                 return;
             }
 
             Ins = this;
-        }
-
-        private void Start()
-        {
-            // playActionButton.onClick.AddListener(UIMethod_PlayBestAction);
-            // showScoreButton.onClick.AddListener(ShowScoreToggle);
         }
 
         /// <summary>

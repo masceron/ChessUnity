@@ -8,6 +8,9 @@ namespace Game.Movesets
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public static class PhantomJellyMoves //Tentacle moves
     {
+        private static readonly int[] Dr = { -1, -2, -2, -1, 1, 2, 2, 1 };
+        private static readonly int[] Dc = { -2, -1, 1, 2, 2, 1, -1, -2 };
+
         public static int Quiets(List<int> list, int pos)
         {
             var file = FileOf(pos);
@@ -18,11 +21,8 @@ namespace Game.Movesets
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
                 MakeMove(rankOff, fileOff);
 
-            int[] dr = { -1, -2, -2, -1, 1, 2, 2, 1 };
-            int[] dc = { -2, -1, 1, 2, 2, 1, -1, -2 };
-
-            foreach (var rankOffset in dr)
-            foreach (var fileOffset in dc)
+            foreach (var rankOffset in Dr)
+            foreach (var fileOffset in Dc)
             {
                 var rankOff = rank + rankOffset;
                 var fileOff = file + fileOffset;
@@ -50,11 +50,8 @@ namespace Game.Movesets
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 1))
                 MakeCapture(rankOff, fileOff);
 
-            int[] dr = { -1, -2, -2, -1, 1, 2, 2, 1 };
-            int[] dc = { -2, -1, 1, 2, 2, 1, -1, -2 };
-
-            foreach (var rankOffset in dr)
-            foreach (var fileOffset in dc)
+            foreach (var rankOffset in Dr)
+            foreach (var fileOffset in Dc)
             {
                 var rankOff = rank + rankOffset;
                 var fileOff = file + fileOffset;

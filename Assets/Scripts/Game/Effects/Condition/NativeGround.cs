@@ -30,7 +30,6 @@ namespace Game.Effects.Condition
             var e = GetRandomBuffEffect();
 
             ActionManager.EnqueueAction(new ApplyEffect(e, Piece));
-            Debug.Log($"Receive effect {e.EffectName} duration = {e.Duration}");
         }
 
         private Effect GetRandomBuffEffect()

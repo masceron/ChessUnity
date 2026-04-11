@@ -35,8 +35,7 @@ namespace Game.Piece.PieceLogic
                             if (!VerifyBounds(x) || !VerifyBounds(y)) continue;
                             var targetPiece = PieceOn(IndexOf(x, y));
                             if (targetPiece != null) continue;
-
-                            Debug.Log($"Adding skill from {Pos} to {IndexOf(x, y)}");
+                            
                             //list.Add(new BlackPrinceCopepodPending(this, IndexOf(x, y)));
                             //Làm lại
                         }

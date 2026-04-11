@@ -348,17 +348,15 @@ namespace Game.Common
         {
             get
             {
-                if (cache == null)
+                if (cache != null) return cache;
+                cache = new Dictionary<TKey, TValue>();
+
+                for (var i = 0; i < keys.Count; i++)
                 {
-                    cache = new Dictionary<TKey, TValue>();
+                    if (keys[i] == null) continue;
+                    if (cache.ContainsKey(keys[i])) continue;
 
-                    for (var i = 0; i < keys.Count; i++)
-                    {
-                        if (keys[i] == null) continue;
-                        if (cache.ContainsKey(keys[i])) continue;
-
-                        cache.Add(keys[i], values[i]);
-                    }
+                    cache.Add(keys[i], values[i]);
                 }
 
                 return cache;

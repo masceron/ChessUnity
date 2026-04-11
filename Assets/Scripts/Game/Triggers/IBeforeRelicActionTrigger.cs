@@ -9,7 +9,7 @@ namespace Game.Triggers
 
         int IComparable<IBeforeRelicActionTrigger>.CompareTo(IBeforeRelicActionTrigger other)
         {
-            return other.Priority.CompareTo(Priority);
+            return ((int)other.Priority).CompareTo((int)Priority);
         }
 
         public void OnCallBeforeRelicAction(IRelicAction relicAction);

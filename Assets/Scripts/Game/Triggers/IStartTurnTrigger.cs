@@ -34,7 +34,7 @@ namespace Game.Triggers
 
         int IComparable<IStartTurnTrigger>.CompareTo(IStartTurnTrigger other)
         {
-            return other.Priority.CompareTo(Priority);
+            return ((int)other.Priority).CompareTo((int)Priority);
         }
 
         public void OnCallStart(Action.Action lastMainAction);

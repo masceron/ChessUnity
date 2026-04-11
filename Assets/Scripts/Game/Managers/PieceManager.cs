@@ -21,8 +21,7 @@ namespace Game.Managers
         /// <summary>
         ///     Map (formation position → adhesive Piece) cho trường hợp Adhesive bám vào Formation.
         /// </summary>
-        private readonly Dictionary<int, Piece.Piece> _adhesiveFormationMap =
-            new Dictionary<int, Piece.Piece>();
+        private readonly Dictionary<int, Piece.Piece> _adhesiveFormationMap = new();
 
         public void SpawnPiece(PieceConfig config)
         {

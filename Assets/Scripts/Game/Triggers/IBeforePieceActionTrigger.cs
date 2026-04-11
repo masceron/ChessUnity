@@ -16,7 +16,7 @@ namespace Game.Triggers
 
         int IComparable<IBeforePieceActionTrigger>.CompareTo(IBeforePieceActionTrigger other)
         {
-            return other.Priority.CompareTo(Priority);
+            return ((int)other.Priority).CompareTo((int)Priority);
         }
 
         public void OnCallBeforePieceAction(Action.Action action);

@@ -16,7 +16,7 @@ namespace Game.Triggers
 
         int IComparable<IBeforeApplyEffectTrigger>.CompareTo(IBeforeApplyEffectTrigger other)
         {
-            return other.Priority.CompareTo(Priority);
+            return ((int)other.Priority).CompareTo((int)Priority);
         }
 
         void OnCallApplyEffect(ApplyEffect applyEffect);

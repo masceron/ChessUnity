@@ -18,7 +18,6 @@ namespace Game.Effects.Others
         public BrineShrimpSummon(PieceLogic piece, int duration) : base(-1, 1, piece, "effect_brine_shrimp_summon")
         {
             _duration = duration;
-            Debug.Log($"Duration: {_duration}");
         }
 
         EndTurnTriggerPriority IEndTurnTrigger.Priority => EndTurnTriggerPriority.Other;

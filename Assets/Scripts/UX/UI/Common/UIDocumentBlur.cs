@@ -262,7 +262,7 @@ namespace UX.UI.Common
 
         private void UpdateBlur()
         {
-            var anyVisible = Enumerable.Any(_panels, panelData => IsPanelVisible(panelData.Panel));
+            var anyVisible = _panels.Any(panelData => IsPanelVisible(panelData.Panel));
 
             if (onlyUpdateWhenVisible && !anyVisible) return;
 

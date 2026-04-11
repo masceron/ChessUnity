@@ -29,8 +29,6 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var caller = GetMakerAsPiece();
-            var collection = GetCapturedOf(caller.Color);
-
             ActionManager.EnqueueAction(new Resurrect(caller, new PieceConfig("piece_sea_star", caller.Color, GetTargetPos()),
                 logic =>
                 {

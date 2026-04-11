@@ -23,12 +23,10 @@ namespace Game.Effects.Traits
         {
             var listPieces = SkillRangeHelper.GetActiveEnemyPieceInRadius(Piece, 1);
 
-            var pieceAround = Enumerable.ToList(listPieces);
-
-            if (pieceAround.Count == 0) return;
+            if (listPieces.Count == 0) return;
 
             var random = new Random();
-            var randomPiece = pieceAround[random.Next(0, pieceAround.Count)];
+            var randomPiece = listPieces[random.Next(0, listPieces.Count)];
 
             if (randomPiece == null) return;
             

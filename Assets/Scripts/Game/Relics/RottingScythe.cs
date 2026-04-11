@@ -34,9 +34,8 @@ namespace Game.Relics
             var enemyPiecesInfected = FindPiecesWithEffectName(!OurSide(), "effect_infected");
             piecesInfected.AddRange(enemyPiecesInfected);
 
-            var bestPiece = Enumerable.FirstOrDefault(piecesInfected,
-                piece => piece is { PieceRank: PieceRank.Commander } &&
-                         piece.Color == !OurSide());
+            var bestPiece = piecesInfected.FirstOrDefault(piece => piece is { PieceRank: PieceRank.Commander } &&
+                                                                   piece.Color == !OurSide());
 
             // If no enemy commander found, evaluate based on surrounding pieces
             if (bestPiece == null)
