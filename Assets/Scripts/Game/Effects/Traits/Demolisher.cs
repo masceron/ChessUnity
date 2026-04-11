@@ -20,10 +20,10 @@ namespace Game.Effects.Traits
 
         public void OnCallAfterPieceAction(Action.Action action)
         {
-            if (action is DestroyConstruct && action.GetMakerAsPiece() == Piece &&
-                action.GetMakerAsPiece().Type != "piece_rusty_parrotfish" && action.Result == ResultFlag.Success)
+            var maker = action.GetMakerAsPiece();
+            if (action is DestroyConstruct && maker == Piece && action.Result == ResultFlag.Success)
             {
-                if (Piece is RedtailParrotfish && action.GetTargetAsPiece() is StoneWall) return;
+                if ((Piece is RedtailParrotfish || Piece is RustyParrotfish) && action.GetTargetAsPiece() is StoneWall) return;
                 // Giết chính mình
                 ActionManager.EnqueueAction(new KillPiece(null, Piece));
             }

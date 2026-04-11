@@ -25,7 +25,7 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic p)
         {
-            return 0;
+            return 35;
         }
 
         protected override void ModifyGameState()

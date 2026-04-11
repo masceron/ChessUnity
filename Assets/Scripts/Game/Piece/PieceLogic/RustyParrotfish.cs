@@ -1,6 +1,7 @@
 ﻿using Game.Action;
 using Game.Action.Internal;
 using Game.Common;
+using Game.Effects.SpecialAbility;
 using Game.Effects.Traits;
 using Game.Movesets;
 using Game.Piece.PieceLogic.Commons;
@@ -12,6 +13,7 @@ namespace Game.Piece.PieceLogic
         public RustyParrotfish(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, None.Captures)
         {
             ActionManager.EnqueueAction(new ApplyEffect(new Demolisher(this)));
+            ActionManager.EnqueueAction(new ApplyEffect(new RustyParrotfishPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;
