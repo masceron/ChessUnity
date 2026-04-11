@@ -42,6 +42,8 @@ namespace Game.Action.Skills
                     }
                     PushPiece(pieceOn, direction);
 
+                    ActionManager.EnqueueAction(new CooldownSkill(maker));
+
                     return;
                 }
             }
@@ -65,7 +67,10 @@ namespace Game.Action.Skills
                 rank += direction;
             }
 
-            ActionManager.EnqueueAction(new NormalMove(piece, IndexOf(rank, file)));
+            if (piece.Pos != IndexOf(rank, file))
+                ActionManager.EnqueueAction(new NormalMove(piece, IndexOf(rank, file)));
+
+            ActionManager.EnqueueAction(new ApplyEffect(new Stunned(1, piece)));
         }
 
     }

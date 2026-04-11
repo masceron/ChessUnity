@@ -22,22 +22,15 @@ namespace Game.Piece.PieceLogic
                         {
                             if (!IsActive(IndexOf(rank, FileOf(Pos)))) return;
                             var target = IndexOf(rank, FileOf(Pos));
-                            var pieceOn = PieceOn(target);
-                            if (pieceOn == null)
-                            {
-                                list.Add(new FlowerhornCichlidActive(this, target));
-                            }
+                            list.Add(new FlowerhornCichlidActive(this, target));
                         }
                     else
                         for (var rank = RankOf(Pos) - 1; rank >= Math.Max(0, RankOf(Pos) - Range); --rank)
                         {
                             if (!IsActive(IndexOf(rank, FileOf(Pos)))) return;
                             var target = IndexOf(rank, FileOf(Pos));
-                            var pieceOn = PieceOn(target);
-                            if (pieceOn == null)
-                            {
-                                list.Add(new FlowerhornCichlidActive(this, target));
-                            }
+                            list.Add(new FlowerhornCichlidActive(this, target));
+                            
                         }
                 }
             };
