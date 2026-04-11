@@ -12,6 +12,11 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class MaskedPufferActive : Action, ISkills
     {
+        private const int Strength = 1;
+        private const int Duration = 3;
+        private const int Strength2 = 1;
+        private const int Duration2 = 3;
+        private const int Duration3 = 3;
         [MemoryPackConstructor]
         private MaskedPufferActive()
         {
@@ -28,9 +33,11 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(1, GetMakerAsPiece())));
-            ActionManager.EnqueueAction(new ApplyEffect(new Slow(1, 3, GetMakerAsPiece())));
-            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(1, 3, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Carapace(Duration, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Slow(Duration, Strength, GetMakerAsPiece())));
+            ActionManager.EnqueueAction(new ApplyEffect(new Shortreach(Duration2, Strength2, GetMakerAsPiece())));
+
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
