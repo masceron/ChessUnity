@@ -2,6 +2,7 @@
 using Game.Action;
 using Game.Action.Internal;
 using Game.Effects.Buffs;
+using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Triggers;
 using ZLinq;
@@ -55,7 +56,7 @@ namespace Game.Effects.Traits
 
             foreach (var pieceEntered in newInRange.Except(inRange))
             {
-                if (pieceEntered.Effects.Any(e => e.EffectName == "effect_shield") || !Roll(50)) continue;
+                if (pieceEntered.Effects.Any(e => e.EffectName == "effect_shield") || !MatchManager.Ins.Roll(50)) continue;
 
                 shielding.Add(pieceEntered);
                 ActionManager.EnqueueAction(new ApplyEffect(new Shield(pieceEntered), Piece));

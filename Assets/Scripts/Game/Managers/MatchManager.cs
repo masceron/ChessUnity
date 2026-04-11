@@ -27,8 +27,8 @@ namespace Game.Managers
     {
         [NonSerialized] public GameState GameState;
 
-        [NonSerialized] private static uint _seed;
-        [NonSerialized] private static Unity.Mathematics.Random _randomizer;
+        [NonSerialized] private uint _seed;
+        [NonSerialized] private Unity.Mathematics.Random _randomizer;
         [NonSerialized] private UIDocument _mainUI;
 
         public Action<GameState> OnInitComplete;
@@ -77,7 +77,7 @@ namespace Game.Managers
             OnInitComplete?.Invoke(GameState);
         }
 
-        public static bool Roll(int chance)
+        public bool Roll(int chance)
         {
             var a = _randomizer.NextUInt(100);
             return a <= chance;

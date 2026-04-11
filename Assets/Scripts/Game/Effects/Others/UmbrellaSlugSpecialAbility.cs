@@ -28,7 +28,7 @@ namespace Game.Effects.Others
             foreach (var (rankof, fileof) in MoveEnumerators.AroundUntil(rank, file, 1))
             {
                 var piece = BoardUtils.PieceOn(BoardUtils.IndexOf(rankof, fileof));
-                if (piece == null || piece.Color != Piece.Color || !MatchManager.Roll(Strength)) continue;
+                if (piece == null || piece.Color != Piece.Color || !MatchManager.Ins.Roll(Strength)) continue;
                 var poison = piece.Effects.Find(effect => effect.EffectName == "effect_poison");
                 if (poison == null) continue;
                 poison.Strength -= 1;

@@ -28,25 +28,36 @@ namespace UX.UI.Loader
 
         private void Start()
         {
-            sceneLoaded += (sceneCount, _) =>
-            {
-                switch (sceneCount.name)
-                {
-                    case "Game":
-                        MatchManager.Ins.Init(
-                            new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)),
-                            new LineupConfig(
-                                Config.PieceConfigWhite.ToArray(),
-                                Config.PieceConfigBlack.ToArray(),
-                                Config.relicWhiteConfig,
-                                Config.relicBlackConfig,
-                                Config.FieldEffectType
-                            ));
-                        break;
-                }
-            };
             _loadingRoot = _loadingDoc.rootVisualElement.Q<VisualElement>("Root");
             _loadingProgress = _loadingRoot.Q<RadialProgress>("RadialProgress");
+        }
+
+        private static void SceneLoadCallbacks(Scene scene, LoadSceneMode loadSceneMode)
+        {
+            switch (scene.name)
+            {
+                case "Game":
+                    MatchManager.Ins.Init(
+                        new GameConfig(false, false, new Vector2Int(Config.BoardSize, Config.BoardSize)),
+                        new LineupConfig(
+                            Config.PieceConfigWhite.ToArray(),
+                            Config.PieceConfigBlack.ToArray(),
+                            Config.relicWhiteConfig,
+                            Config.relicBlackConfig,
+                            Config.FieldEffectType
+                        ));
+                    break;
+            }
+        }
+
+        private void OnEnable()
+        {
+            sceneLoaded += SceneLoadCallbacks;
+        }
+
+        private void OnDisable()
+        {
+            sceneLoaded -= SceneLoadCallbacks;
         }
 
         public void ChangeScene(string sceneName)

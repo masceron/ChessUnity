@@ -45,10 +45,10 @@ namespace Game.Effects.Traits
             int stack = GetStat(EffectStat.Unit);
 
             int removeShieldChance = 5 + counter;
-            if (MatchManager.Roll(removeShieldChance)) RemoveShieldEffects(target);
+            if (MatchManager.Ins.Roll(removeShieldChance)) RemoveShieldEffects(target);
 
             int poisonChance = 3 + counter;
-            if (MatchManager.Roll(poisonChance))
+            if (MatchManager.Ins.Roll(poisonChance))
             {
                 ActionManager.EnqueueAction(new ApplyEffect(new Poison(stack, target), Piece));
             }

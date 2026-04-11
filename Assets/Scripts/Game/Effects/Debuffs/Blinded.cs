@@ -21,7 +21,7 @@ namespace Game.Effects.Debuffs
         {
             if (action is not ICaptures || action.GetMakerAsPiece() != Piece) return;
 
-            if (MatchManager.Roll(Strength)) action.Result = ResultFlag.Miss;
+            if (MatchManager.Ins.Roll(Strength)) action.Result = ResultFlag.Miss;
         }
 
         public override int GetValueForAI()

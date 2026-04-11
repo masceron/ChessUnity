@@ -12,8 +12,8 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class HumilitasActive : Action, ISkills
     {
-        public static int FirstTarget;
-        public static int SecondTarget;
+        private readonly int _firstTarget;
+        private readonly int _secondTarget;
 
         [MemoryPackConstructor]
         private HumilitasActive()
@@ -22,8 +22,8 @@ namespace Game.Action.Skills
 
         public HumilitasActive(PieceLogic maker, int firstTarget, int secondTarget) : base(maker)
         {
-            FirstTarget = firstTarget;
-            SecondTarget = secondTarget;
+            _firstTarget = firstTarget;
+            _secondTarget = secondTarget;
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)
@@ -34,8 +34,8 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             Debug.Log("Executing HumilitasActive");
-            var first = PieceOn(FirstTarget);
-            var second = PieceOn(SecondTarget);
+            var first = PieceOn(_firstTarget);
+            var second = PieceOn(_secondTarget);
             if (first != null)
                 ActionManager.EnqueueAction(new ApplyEffect(new Taunted(2, first), GetMakerAsPiece()));
             if (second != null)

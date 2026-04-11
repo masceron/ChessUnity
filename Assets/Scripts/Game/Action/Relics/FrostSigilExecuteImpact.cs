@@ -23,7 +23,7 @@ namespace Game.Action.Relics
             var pieceMaker = GetMakerAsPiece();
             ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, pieceTarget), pieceMaker));
 
-            if (MatchManager.Roll(ProbabilityBound))
+            if (MatchManager.Ins.Roll(ProbabilityBound))
                 ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, pieceTarget), pieceMaker));
         }
     }

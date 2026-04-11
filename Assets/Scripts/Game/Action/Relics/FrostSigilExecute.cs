@@ -38,7 +38,7 @@ namespace Game.Action.Relics
 
                 // ActionManager.EnqueueAction(new ApplyEffect(new Slow(3, 1, piece)));
 
-                // if (MatchManager.Roll(ProbabilityBound))
+                // if (MatchManager.Ins.Roll(ProbabilityBound))
                 //     ActionManager.EnqueueAction(new ApplyEffect(new Bound(3, piece)));
             }
         }

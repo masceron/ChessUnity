@@ -24,7 +24,7 @@ namespace Game.Effects.Traits
         {
             if (action is not ICaptures || action.GetTargetAsPiece() != Piece || action.Result != ResultFlag.Success) return;
             if (Distance(action.GetFrom(), action.GetTargetPos()) < 3) return;
-            if (!MatchManager.Roll(Strength)) return;
+            if (!MatchManager.Ins.Roll(Strength)) return;
 
             if (action.GetTargetAsPiece().Effects.Any(e => e.EffectName == "effect_bound"))
             {
@@ -39,11 +39,11 @@ namespace Game.Effects.Traits
             var pieceTarget = action.GetMakerAsPiece();
             if (pieceTarget != null && pieceTarget.HasAugmentation(AugmentationName.ArcherfishAccuracy))
             {
-                if (!MatchManager.Roll(Strength - 15)) return;
+                if (!MatchManager.Ins.Roll(Strength - 15)) return;
             }
             else
             {
-                if (!MatchManager.Roll(Strength)) return;
+                if (!MatchManager.Ins.Roll(Strength)) return;
             }
 
             action.Result = ResultFlag.Evade;

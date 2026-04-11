@@ -28,7 +28,7 @@ namespace Game.Effects.Others
             if (target != Piece)
                 return;
 
-            if (maker == null || !MatchManager.Roll(Chance))
+            if (maker == null || !MatchManager.Ins.Roll(Chance))
                 return;
             
             action.ChangeTarget(maker);
