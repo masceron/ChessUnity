@@ -8,8 +8,12 @@ namespace Game.Piece.PieceLogic
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class FlyingGurnard : Commons.PieceLogic, IPieceWithSkill
     {
+        private const int Duration = 3;
+        private const int Duration2 = 3;
         public FlyingGurnard(PieceConfig cfg) : base(cfg, FlyingFishMoves.Quiets, FlyingFishMoves.Captures)
         {
+            SetStat(SkillStat.Duration, Duration);
+            SetStat(SkillStat.Duration, Duration2, 2);
             Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown > 0) return;

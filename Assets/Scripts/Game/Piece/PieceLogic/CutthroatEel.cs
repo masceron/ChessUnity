@@ -33,7 +33,7 @@ namespace Game.Piece.PieceLogic
                         if (pieceBehindTarget != null) continue;
 
                         var targetPos = IndexOf(rank, file);
-                        if (!IsActive(targetPos)) return;
+                        if (!IsActive(targetPos)) continue;
                         var pieceOn = PieceOn(targetPos);
 
                         if (pieceOn != null && pieceOn.Color != Color && pieceOn.Effects.Any(e => e.EffectName == "effect_bleeding"))

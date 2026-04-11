@@ -12,8 +12,8 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class FlyingGurnardActive : Action, ISkills
     {
-        private const int Duration1 = 3;
-        private const int Duration2 = 3;
+        private readonly int Duration1;
+        private readonly int Duration2;
         [MemoryPackConstructor]
         private FlyingGurnardActive()
         {
@@ -21,6 +21,8 @@ namespace Game.Action.Skills
 
         public FlyingGurnardActive(PieceLogic maker) : base(maker)
         {
+            Duration1 = maker.GetStat(SkillStat.Duration);
+            Duration2 = maker.GetStat(SkillStat.Duration, 2);
         }
 
         public int AIPenaltyValue(PieceLogic pieceAI)

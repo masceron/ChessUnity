@@ -40,7 +40,8 @@ namespace Game.Action.Skills
             else
             {
                 ActionManager.EnqueueAction(new KillPiece(GetMakerAsPiece(), GetTargetAsPiece()));
-                SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
+                // Cần sửa sang dùng Action Set Formation
+                // SetFormation(makerPiece.Pos, new FogOfWar(makerPiece.Color));
             }
 
             ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
