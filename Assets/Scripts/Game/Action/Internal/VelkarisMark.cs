@@ -21,7 +21,7 @@ namespace Game.Action.Internal
         {
             ActionManager.EnqueueAction(new ApplyEffect(new VelkarisMarked(GetTargetAsPiece()), GetMakerAsPiece()));
 
-            SetCooldown(GetMakerAsPiece(), 0);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece(), 0));
             ((Velkaris)GetMakerAsPiece()).Marked = GetTargetAsPiece();
         }
     }

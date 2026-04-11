@@ -1,5 +1,6 @@
 using Game.Action.Internal;
 using Game.Effects.Debuffs;
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -15,7 +16,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public RayStingerExecute(int target) : base(null, target)
+        public RayStingerExecute(PieceLogic target) : base(null, target)
         {
         }
 

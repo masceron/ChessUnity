@@ -1,3 +1,4 @@
+using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
 
 namespace Game.Action.Relics
@@ -10,7 +11,7 @@ namespace Game.Action.Relics
         {
         }
 
-        public AdrenalineRadiatorExecute(int maker) : base(null, maker)
+        public AdrenalineRadiatorExecute(PieceLogic maker) : base(null, maker)
         {
         }
 

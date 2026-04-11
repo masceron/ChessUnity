@@ -45,7 +45,7 @@ namespace Game.Action.Skills
                 if (type == 0)
                 {
                     var idx = Random.Range(0, a.Count - 1);
-                    SetCooldown(PieceOn(a[idx].pos), 0);
+                    ActionManager.EnqueueAction(new CooldownSkill(PieceOn(a[idx].pos), 0));;
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace Game.Action.Skills
             else if (a.Count > 0)
             {
                 var idx = Random.Range(0, a.Count - 1);
-                SetCooldown(PieceOn(a[idx].pos), 0);
+                ActionManager.EnqueueAction(new CooldownSkill(PieceOn(a[idx].pos), 0));;
             }
             else if (b.Count > 0)
             {
@@ -77,7 +77,7 @@ namespace Game.Action.Skills
             if (GetTargetAsPiece().Color != GetMakerAsPiece().Color)
                 ActionManager.EnqueueAction(new ApplyEffect(new Silenced(GetTargetAsPiece(), GetMakerAsPiece().GetStat(SkillStat.Duration)), GetMakerAsPiece()));
             else
-                SetCooldown(GetTargetAsPiece(), 0);
+                ActionManager.EnqueueAction(new CooldownSkill(GetTargetAsPiece(), 0));
             ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }

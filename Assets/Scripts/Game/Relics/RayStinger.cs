@@ -1,3 +1,4 @@
+using Game.Action.Relics;
 using Game.Common;
 using Game.Managers;
 using Game.Relics.Commons;
@@ -22,9 +23,7 @@ namespace Game.Relics
                 {
                     if (piece == null || piece.Color == Color) continue;
                     TileManager.Ins.MarkAsMoveable(piece.Pos);
-                    //Làm lại
-                    // var pending = new RayStingerPending(this, piece);
-                    // BoardViewer.ListOf.Add(pending);
+                    BoardViewer.ListOf.Add(new RayStingerExecute(piece));
                 }
 
                 BoardViewer.Selecting = -2;
