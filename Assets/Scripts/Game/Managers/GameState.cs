@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Game.Action;
@@ -12,6 +13,7 @@ using Game.Piece;
 using Game.Piece.PieceLogic.Commons;
 using Game.Relics.Commons;
 using Game.Tile;
+using ObservableCollections;
 using Unity.Properties;
 using UnityEngine;
 using ZLinq;
@@ -31,26 +33,26 @@ namespace Game.Managers
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     [GeneratePropertyBag]
     [Friend(typeof(BoardUtils), typeof(MatchManager), typeof(ActionManager))]
-    public class GameState: INotifyPropertyChanged
+    public class GameState : INotifyPropertyChanged
     {
         public readonly BitArray ActiveBoard = new(MaxLength * MaxLength);
 
-        public readonly Tuple<List<PieceConfig>, List<PieceConfig>> Captured =
-            new(new List<PieceConfig>(), new List<PieceConfig>());
+        public readonly Tuple<ObservableCollection<PieceConfig>, ObservableCollection<PieceConfig>> Captured =
+            new(new ObservableCollection<PieceConfig>(), new ObservableCollection<PieceConfig>());
 
         public readonly BitArray SquareColor = new(MaxLength * MaxLength);
         public readonly PieceLogic[] PieceBoard = new PieceLogic[MaxLength * MaxLength];
         public readonly Formation[] Formations = new Formation[MaxLength * MaxLength];
         public readonly bool OurSide;
-        
-        [CreateProperty]
-        public (RelicLogic, RelicLogic) Relics { get; set; }
-        
+
+        [CreateProperty] public (RelicLogic, RelicLogic) Relics { get; set; }
+
         public FieldEffect FieldEffect;
         public bool SideToMove;
         public (PieceLogic, PieceLogic) Commanders;
 
         private bool _isDay;
+
         [CreateProperty]
         public bool IsDay
         {
@@ -60,9 +62,9 @@ namespace Game.Managers
                 if (_isDay == value) return;
                 _isDay = value;
                 NotifyPropertyChanged();
-            } 
+            }
         }
-        
+
         [CreateProperty]
         public int CurrentTurn
         {
@@ -74,18 +76,22 @@ namespace Game.Managers
                 NotifyPropertyChanged();
             }
         }
+
         private int _currentTurn;
-        
+
         public readonly TriggerHooks TriggerHooks = new();
         private int _pieceID = 1;
-        public readonly Dictionary<int, Entity> EntityDict = new();
         
+        [CreateProperty]
+        public readonly ObservableDictionary<int, Entity> EntityDict = new();
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+
         public GameState(Vector2Int startingSize, bool side, bool ourSide,
             (RelicConfig, RelicConfig) relics, FieldEffectType fieldEffectType)
         {
@@ -131,7 +137,7 @@ namespace Game.Managers
             var bc = PieceManager.Ins.GetPieceGameObject(piece.Index).gameObject.AddComponent<BrainComponent>();
             bc.Maker = PieceBoard[piece.Index];
 
-            EntityDict.Add(pieceLogic.ID, pieceLogic);
+           AddToEntityList(pieceLogic);
             return pieceLogic;
         }
 
@@ -243,11 +249,6 @@ namespace Game.Managers
         {
             FieldEffect = e;
             TriggerHooks.AddObserver(e);
-        }
-
-        public void AddToEntityList(Entity entity)
-        {
-            EntityDict.Add(entity.ID, entity);
         }
 
         public void PruneEntityList()

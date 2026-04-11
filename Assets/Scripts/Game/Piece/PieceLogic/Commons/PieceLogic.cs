@@ -53,7 +53,6 @@ namespace Game.Piece.PieceLogic.Commons
         public readonly string Type;
         private int _attackRange;
         private int _moveRange;
-        public bool Color;
         public QuietsDelegate Quiets;
         public CapturesDelegate Captures;
 

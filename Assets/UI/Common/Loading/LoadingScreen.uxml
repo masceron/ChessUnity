@@ -1,6 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:Template name="RadialLoading" src="project://database/Assets/UI/Toolkit/Loading/RadialLoading.uxml?fileID=9197481963319205126&amp;guid=d6d893fccc7c12b4d8e9cf92941476e5&amp;type=3#RadialLoading"/>
-    <ui:VisualElement name="Root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Toolkit/Loading/loading.jpg?fileID=2800000&amp;guid=f19a4dab48cbbea4bb2239585cbf9891&amp;type=3#loading&quot;); flex-direction: column-reverse; display: none; background-color: rgba(0, 0, 0, 0); overflow: visible;">
-        <ui:Instance template="RadialLoading" name="LoadingRadial" style="overflow: visible; position: absolute; right: 220px; bottom: 200px;"/>
+    <ui:Template name="RadialLoading" src="project://database/Assets/UI/Common/Loading/RadialLoading.uxml?fileID=9197481963319205126&amp;guid=d6d893fccc7c12b4d8e9cf92941476e5&amp;type=3#RadialLoading"/>
+    <ui:VisualElement name="Root" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/UI/Common/Loading/loading.jpg?fileID=2800000&amp;guid=f19a4dab48cbbea4bb2239585cbf9891&amp;type=3#loading&quot;); flex-direction: column-reverse; display: none; background-color: rgba(0, 0, 0, 0); overflow: visible;">
+        <ui:Instance template="RadialLoading" name="LoadingRadial" style="overflow: visible; position: absolute; right: 9%; bottom: 23%;"/>
+        <ui:Label text="Loading..." name="LoadingLabel" style="position: absolute; -unity-font-style: bold; -unity-font-definition: url(&quot;project://database/Assets/TextMesh%20Pro/Fonts/LiberationSans.ttf?fileID=12800000&amp;guid=e3265ab4bf004d28a9537516768c1c75&amp;type=3#LiberationSans&quot;); color: rgb(255, 255, 255); font-size: 40px; left: auto; bottom: 10%; right: 6.5%;"/>
     </ui:VisualElement>
 </ui:UXML>

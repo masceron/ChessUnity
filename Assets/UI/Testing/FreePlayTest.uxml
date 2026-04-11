@@ -1,9 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI/MainMenu/MenuButtons.uss?fileID=7433441132597879392&amp;guid=71b61b36a9c6f20419fa9e2af86308c0&amp;type=3#MenuButtons"/>
-    <UX.UI.Testing.FreePlayTest style="height: 480px; width: 560px; align-items: stretch; justify-content: center; background-color: rgb(27, 13, 13); border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px;">
-        <ui:Button text="" name="FPTClose" class="main-menu-test" style="right: 5px; top: 5px; background-image: url(&quot;project://database/Assets/UI/Icons/close.png?fileID=2800000&amp;guid=5243a95c5cbce034fbd13d57d1efc46c&amp;type=3#close&quot;); width: 60px; height: 60px; background-size: 100% 100%;"/>
-        <ui:Button text="AI vs AI" name="AvA" class="main-menu-button"/>
-        <ui:Button text="Player vs AI" name="PvA" class="main-menu-button"/>
-        <ui:Button text="Player vs Player" name="PvP" class="main-menu-button"/>
+    <Style src="project://database/Assets/UI/Testing/FreePlayTest.uss?fileID=7433441132597879392&amp;guid=79de59c8a0cc37c4cb85e430f931634c&amp;type=3#FreePlayTest"/>
+    <UX.UI.Testing.FreePlayTest style="height: auto; width: 560px; align-items: stretch; justify-content: flex-start; background-color: rgb(27, 13, 13); border-top-left-radius: 25px; border-top-right-radius: 25px; border-bottom-right-radius: 25px; border-bottom-left-radius: 25px; padding-top: 15px; padding-right: 15px; padding-bottom: 15px; padding-left: 15px;">
+        <ui:Button text="" name="FPTClose" class="free-play-test-button" style="right: auto; top: auto; background-image: url(&quot;project://database/Assets/UI/Icons/close.png?fileID=2800000&amp;guid=5243a95c5cbce034fbd13d57d1efc46c&amp;type=3#close&quot;); width: 45px; height: 45px; background-size: 100% 100%; position: relative; margin-left: auto;"/>
+        <ui:Button text="AI vs AI" name="AvA" class="free-play-test-button"/>
+        <ui:Button text="Player vs AI" name="PvA" class="free-play-test-button"/>
+        <ui:Button text="Player vs Player" name="PvP" class="free-play-test-button"/>
     </UX.UI.Testing.FreePlayTest>
 </ui:UXML>

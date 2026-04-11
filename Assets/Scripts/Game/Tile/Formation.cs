@@ -39,9 +39,7 @@ namespace Game.Tile
     public abstract class Formation : Entity, IAfterPieceActionTrigger, IOnPieceSpawnedTrigger
     {
         // ── Fields ───────────────────────────────────────────────────────────────
-
         public readonly FormationCategory Category;
-        public readonly bool Color;
 
         /// <summary>Callback được gọi khi Formation bị xóa khỏi board.</summary>
         public System.Action<Formation> OnRemoveFormation;

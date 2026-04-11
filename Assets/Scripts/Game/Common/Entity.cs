@@ -8,5 +8,6 @@ namespace Game.Common
         public readonly int ID = BoardUtils.NextEntityID();
         public int Pos = -1;
         public readonly List<Effect> Effects = new();
+        public bool Color;
     }
 }

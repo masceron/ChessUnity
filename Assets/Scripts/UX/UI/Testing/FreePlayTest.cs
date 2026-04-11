@@ -14,13 +14,14 @@ namespace UX.UI.Testing
             Cancel();
         }
 
-        public UniTask<Empty> WaitForSelection(Empty payload)
+        public async UniTask<Empty> WaitForSelection(Empty payload)
         {
             _tcs = new UniTaskCompletionSource<Empty>();
             this.Q<Button>("FPTClose").clicked += ForceClose;
 
 
-            return _tcs.Task;
+            await this.AnimateIn("popup--hidden", "popup--visible", 180);
+            return await _tcs.Task;
         }
 
         public void Confirm(Empty result)
@@ -28,8 +29,9 @@ namespace UX.UI.Testing
             _tcs.TrySetResult(new Empty());
         }
 
-        public void Cancel()
+        public async void Cancel()
         {
+            await this.AnimateOut("popup--visible", 180);
             _tcs.TrySetResult(new Empty());
         }
     }

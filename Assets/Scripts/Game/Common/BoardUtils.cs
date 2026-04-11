@@ -513,7 +513,7 @@ namespace Game.Common
 
         public static void AddToEntityList(Entity entity)
         {
-            MatchManager.Ins.GameState.AddToEntityList(entity);
+            MatchManager.Ins.GameState.EntityDict.Add(entity.ID, entity);
         }
 
         [Mutator]
