@@ -10,7 +10,6 @@ namespace UX.UI.Ingame
         [NonSerialized] private InputManager _inputManager;
         [NonSerialized] private VisualElement _inGameHUD;
         [NonSerialized] private UIDocument _mainDoc;
-        private const int FadeTime = 180;
 
         private void Awake()
         {
@@ -31,7 +30,7 @@ namespace UX.UI.Ingame
 
         private async void MenuClick()
         {
-            await _inGameHUD.AnimateIn("hud-container--hidden", FadeTime);
+            await _inGameHUD.AnimateIn("hud-container--hidden");
             try
             {
                 await UIManager.Ins.OpenMenu(InGameMenuType.PauseMenu, _mainDoc);
@@ -42,7 +41,7 @@ namespace UX.UI.Ingame
             }
             finally
             {
-                await _inGameHUD.AnimateOut("hud-container--hidden", FadeTime);
+                await _inGameHUD.AnimateOut("hud-container--hidden");
             }
         }
     }

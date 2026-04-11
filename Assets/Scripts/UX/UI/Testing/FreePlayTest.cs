@@ -20,7 +20,7 @@ namespace UX.UI.Testing
             this.Q<Button>("FPTClose").clicked += ForceClose;
 
 
-            await this.AnimateIn("popup--hidden", "popup--visible", 180);
+            await this.AnimateIn("popup--hidden", "popup--visible");
             return await _tcs.Task;
         }
 
@@ -31,7 +31,7 @@ namespace UX.UI.Testing
 
         public async void Cancel()
         {
-            await this.AnimateOut("popup--visible", 180);
+            await this.AnimateOut("popup--visible");
             _tcs.TrySetResult(new Empty());
         }
     }

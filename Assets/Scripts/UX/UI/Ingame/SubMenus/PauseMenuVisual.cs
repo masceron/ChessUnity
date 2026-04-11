@@ -41,7 +41,7 @@ namespace UX.UI.Ingame.SubMenus
             _quit.clicked += () => Application.Quit(0);
             _mainPanel = this.Q<VisualElement>("MainPanel");
 
-            await _mainPanel.AnimateIn("pause-side-panel--hidden", "pause-side-panel--visible", 180,
+            await _mainPanel.AnimateIn("pause-side-panel--hidden", "pause-side-panel--visible",
                 () =>
                 {
                     _resume.SetEnabled(true);
@@ -55,7 +55,7 @@ namespace UX.UI.Ingame.SubMenus
         private async UniTaskVoid CloseMenuSequence()
         {
             this.Q<VisualElement>("MainContainer").style.display = DisplayStyle.None;
-            await _mainPanel.AnimateOut("pause-side-panel--visible", 180);
+            await _mainPanel.AnimateOut("pause-side-panel--visible");
 
             _tcs.TrySetResult(new Empty());
         }

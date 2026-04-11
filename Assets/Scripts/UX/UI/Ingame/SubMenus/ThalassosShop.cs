@@ -51,7 +51,7 @@ namespace UX.UI.Ingame.SubMenus
 
             _confirm.clicked += Resurrect;
             
-            await this.AnimateIn("popup--hidden", "popup--visible", 180);
+            await this.AnimateIn("popup--hidden", "popup--visible");
 
             return await _tcs.Task;
         }
@@ -86,13 +86,13 @@ namespace UX.UI.Ingame.SubMenus
 
         public async void Confirm(string result)
         {
-            await this.AnimateOut("popup--visible", 180);
+            await this.AnimateOut("popup--visible");
             _tcs.TrySetResult(result);
         }
 
         public async void Cancel()
         {
-            await this.AnimateOut("popup--visible", 180);
+            await this.AnimateOut("popup--visible");
             _tcs.TrySetResult(null);
         }
 

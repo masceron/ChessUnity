@@ -65,14 +65,14 @@ namespace UX.UI.Ingame.SubMenus
 
             _confirm.clicked += Upgrade;
 
-            await this.AnimateIn("popup--hidden", "popup--visible", 180);
+            await this.AnimateIn("popup--hidden", "popup--visible");
 
             return await _tcs.Task;
         }
 
         public async void Confirm(string result)
         {
-            await this.AnimateOut("popup--visible", 180);
+            await this.AnimateOut("popup--visible");
             _tcs.TrySetResult(result);
         }
 
@@ -109,7 +109,7 @@ namespace UX.UI.Ingame.SubMenus
 
         public async void Cancel()
         {
-            await this.AnimateOut("popup--visible", 180);
+            await this.AnimateOut("popup--visible");
             _tcs.TrySetResult(null);
         }
 
