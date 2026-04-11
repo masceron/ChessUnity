@@ -16,13 +16,16 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class BarnacleActive : Action, ISkills, IAIAction
     {
+        private int skillCharges = -1;
+        
         [MemoryPackConstructor]
         private BarnacleActive()
         {
         }
 
-        public BarnacleActive(PieceLogic maker, PieceLogic target) : base(maker, target)
+        public BarnacleActive(PieceLogic maker, PieceLogic target, ref int skillCharges) : base(maker, target)
         {
+            this.skillCharges = skillCharges;
         }
 
         public void CompleteActionForAI()
@@ -67,6 +70,7 @@ namespace Game.Action.Skills
                     ActionManager.EnqueueAction(new RemoveEffect(effect));
 
             ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
+            if (skillCharges > 0) skillCharges--;
         }
     }
 }

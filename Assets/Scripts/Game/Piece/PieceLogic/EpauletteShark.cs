@@ -86,8 +86,10 @@ namespace Game.Piece.PieceLogic
                         foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(rank, file, 3))
                         {
                             var index = IndexOf(rankOff, fileOff);
+                            var pOn = PieceOn(index);
                             if (!IsActive(IndexOf(rankOff, fileOff))) continue;
-                            list.Add(new EpauletteSharkActive(this, PieceOn(index)));
+                            if (pOn == null || pOn == this) continue;
+                            list.Add(new EpauletteSharkActive(this, pOn));
                         }
                     }
                 }
