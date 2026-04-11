@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Effects.Condition;
 using Game.Managers;
 using Game.Piece.PieceLogic.Commons;
 using Game.Tile;
@@ -7,15 +8,15 @@ using Game.Triggers;
 
 namespace Game.Effects.SpecialAbility
 {
-    public class BlueChromisPassive : Effect, IDeadTrigger
+    public class BlueChromisPassive : Vengeful, IDeadTrigger
     {
-        public BlueChromisPassive(PieceLogic piece) : base(-1, 1, piece, "effect_blue_chromis_passive")
+        public BlueChromisPassive(PieceLogic piece) : base(piece, VengefulType.OnDeath, "effect_blue_chromis_passive")
         {
 
         }
-        public void OnCallDead(PieceLogic pieceToDie)
+        protected override void OnVengefulTrigger()
         {
-            int pos = pieceToDie.Pos;
+            int pos = Piece.Pos;
             var dict = AssetManager.Ins.FormationData;
             var rand = new Random();
             int index = rand.Next(dict.Count);
