@@ -12,6 +12,8 @@ namespace Game.Action.Skills
     [MemoryPackable]
     public partial class SurgeWrasseActive : Action, ISkills
     {
+        private const int Strength = 2;
+        private const int Duration = 2;
         [MemoryPackConstructor]
         private SurgeWrasseActive()
         {
@@ -28,14 +30,13 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
-            foreach (var (rank, file) in MoveEnumerators.AroundUntil(RankOf(GetFrom()), FileOf(GetFrom()), 1))
+            var listAllyPieces = SkillRangeHelper.GetActiveAllyPieceInRadius(GetFrom(), 1);
+            foreach (var piece in listAllyPieces)
             {
-                var pieceOn = PieceOn(IndexOf(rank, file));
-                if (pieceOn != null && pieceOn.Color == GetMakerAsPiece().Color)
-                    ActionManager.EnqueueAction(new ApplyEffect(new LongReach(pieceOn, 2, 2)));
+                ActionManager.EnqueueAction(new ApplyEffect(new LongReach(PieceOn(piece), Strength, Duration)));
             }
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Game.Effects.SpecialAbility
 {
     public class SurgeWrassePassive : Effect, IAfterPieceActionTrigger
     {
+        private const int strength = 2;
+        private const int duration = 4;
         public SurgeWrassePassive(PieceLogic piece) : base(-1, 1, piece, "effect_surge_wrasse_passive")
         {
         }
@@ -23,7 +25,7 @@ namespace Game.Effects.SpecialAbility
             if (action is not IQuiets) return;
             var fmt = BoardUtils.GetFormation(Piece.Pos);
             if (fmt != null && AssetManager.Ins.FormationData[fmt.GetFormationType()].formationCategory ==
-                FormationCategory.Negative) ActionManager.EnqueueAction(new ApplyEffect(new Haste(2, 4, Piece)));
+                FormationCategory.Negative) ActionManager.EnqueueAction(new ApplyEffect(new Haste(strength, duration, Piece)));
         }
     }
 }
