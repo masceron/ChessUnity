@@ -15,9 +15,9 @@ namespace Game.Tile
     {
         private bool _pieceHaveCamouflage;
 
-        public Kelp(bool haveDuration, bool color) : base(color)
+        public Kelp(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
+
         }
 
         public override FormationType GetFormationType()

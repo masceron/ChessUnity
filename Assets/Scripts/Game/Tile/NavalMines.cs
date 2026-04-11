@@ -13,9 +13,9 @@ namespace Game.Tile
     /// </summary>
     public class NavalMines : Formation
     {
-        public NavalMines(bool haveDuration, bool color) : base(color)
+        public NavalMines(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
+
         }
 
         public override FormationType GetFormationType()

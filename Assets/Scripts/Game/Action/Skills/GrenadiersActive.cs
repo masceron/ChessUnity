@@ -39,7 +39,7 @@ namespace Game.Action.Skills
             var random = new Random();
             var selectedPiece = bestPieces[random.Next(bestPieces.Count)];
 
-            SetFormation(selectedPiece.Pos, new NavalMines(true, selectedPiece.Color));
+            SetFormation(selectedPiece.Pos, new NavalMines(selectedPiece.Color));
             SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
         }
 

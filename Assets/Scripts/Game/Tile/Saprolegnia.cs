@@ -11,9 +11,9 @@ namespace Game.Tile
     /// </summary>
     public class Saprolegnia : Formation
     {
-        public Saprolegnia(bool haveDuration, bool color) : base(color)
+        public Saprolegnia(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
+
         }
 
         public override FormationType GetFormationType()

@@ -28,7 +28,7 @@ namespace Game.Action.Relics
                 for (var fileOff = file - 1; fileOff <= file + 1; fileOff++)
                 {
                     var kelpPos = IndexOf(rankOff, fileOff);
-                    SetFormation(kelpPos, new Kelp(false, formation.GetColor()));
+                    SetFormation(kelpPos, new Kelp(formation.GetColor()));
                 }
             }
         }

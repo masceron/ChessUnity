@@ -10,9 +10,9 @@ namespace Game.Tile
     /// </summary>
     public class SiltCloud : Formation
     {
-        public SiltCloud(bool haveDuration)
+        public SiltCloud(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
+
         }
 
         public override FormationType GetFormationType()

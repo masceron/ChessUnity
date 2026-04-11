@@ -24,7 +24,7 @@ namespace Game.Action.Relics
             BoardUtils.SetFormation(fowPos, fogOfWar);
 
             var saposPos = GetRandomPos();
-            var saprolegnia = new Saprolegnia(false, true);
+            var saprolegnia = new Saprolegnia(true);
             saprolegnia.SetPosition(saposPos);
             BoardUtils.SetFormation(saposPos, saprolegnia);
         }

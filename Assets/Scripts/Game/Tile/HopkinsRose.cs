@@ -12,9 +12,9 @@ namespace Game.Tile
     [Il2CppSetOption(Option.ArrayBoundsChecks, false)]
     public class HopkinsRose : Formation
     {
-        public HopkinsRose(bool haveDuration, bool color) : base(color)
+        public HopkinsRose(bool color) : base(color)
         {
-            HaveDuration = haveDuration;
+            
         }
 
         public override FormationType GetFormationType()
