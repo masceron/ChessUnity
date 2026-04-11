@@ -40,19 +40,20 @@ namespace Game.Action.Skills
 
         protected override void ModifyGameState()
         {
+            var maker = GetMakerAsPiece();
             var rank = RankOf(GetFrom());
             var file = FileOf(GetFrom());
-            for (var i = 0; i < 4; ++i)
+            for (var i = 0; i < maker.GetStat(SkillStat.Range) - 1; ++i)
             {
                 rank += drank;
                 file += dfile;
                 var pieceOn = PieceOn(IndexOf(rank, file));
-                if (pieceOn != null && pieceOn.Color != GetMakerAsPiece().Color)
-                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(Duration, pieceOn), GetMakerAsPiece()));
+                if (pieceOn != null && pieceOn.Color != maker.Color)
+                    ActionManager.EnqueueAction(new ApplyEffect(new Fear(Duration, pieceOn), maker));
             }
 
-            ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
-            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
+            ActionManager.EnqueueAction(new NormalMove(maker, GetTargetPos()));
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
     }
 }

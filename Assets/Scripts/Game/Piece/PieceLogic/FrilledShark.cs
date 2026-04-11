@@ -19,6 +19,7 @@ namespace Game.Piece.PieceLogic
 
         public FrilledShark(PieceConfig cfg) : base(cfg, KnightMoves.Quiets, KnightMoves.Captures)
         {
+            SetStat(SkillStat.Range, step);
             ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this)));
             ActionManager.ExecuteImmediately(new ApplyEffect(new FrilledSharkPassive(this)));
             Skills = (list, isPlayer, excludeEmptyTile) =>
