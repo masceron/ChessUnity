@@ -1,3 +1,4 @@
+using Game.Action.Internal;
 using Game.Action.Quiets;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -30,6 +31,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new NormalMove(GetMakerAsPiece(), GetTargetPos()));
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
