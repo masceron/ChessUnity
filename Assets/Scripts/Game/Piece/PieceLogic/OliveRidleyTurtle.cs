@@ -16,7 +16,7 @@ namespace Game.Piece.PieceLogic
         public OliveRidleyTurtle(PieceConfig cfg) : base(cfg, VersatileDefenderMove.Quiets, VersatileDefenderMove.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new HardenedShield(this)));
-            ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this)));
+            ActionManager.ExecuteImmediately(new ApplyEffect(new Sanity(-1, this))) ;
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
                 if (SkillCooldown > 0) return;

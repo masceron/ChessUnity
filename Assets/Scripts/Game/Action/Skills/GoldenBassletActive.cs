@@ -22,7 +22,7 @@ namespace Game.Action.Skills
             ActionManager.EnqueueAction(
                 new ApplyEffect(new Blinded(maker.GetStat(SkillStat.Duration), 100, GetTargetAsPiece()),
                     maker)); // TODO: Check probability.
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)maker).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

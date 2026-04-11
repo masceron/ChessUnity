@@ -29,7 +29,7 @@ namespace Game.Piece.PieceLogic
                 if (SkillCooldown > 0) return;
                 
                 var listPieces = SkillRangeHelper.GetActiveCellInRadius(Pos, GetStat(SkillStat.Range));
-
+                if (!listPieces.Contains(Pos)) listPieces.Add(Pos);
                 foreach (var piece in listPieces)
                 {
                     var p = PieceOn(piece);

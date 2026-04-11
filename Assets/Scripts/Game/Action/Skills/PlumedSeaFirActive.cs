@@ -23,7 +23,10 @@ namespace Game.Action.Skills
 
         public int AIPenaltyValue(PieceLogic p)
         {
-            return 0;
+            var skillCaster = GetMakerAsPiece();
+            if (skillCaster == null || p == null) return 0;
+
+            return skillCaster.Color == p.Color ? 10 : -10;
         }
 
         protected override void Animate()

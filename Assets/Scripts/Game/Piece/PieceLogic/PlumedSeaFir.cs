@@ -15,11 +15,10 @@ namespace Game.Piece.PieceLogic
     {
         int IPieceWithSkill.TimeToCooldown { get; set; }
         public SkillsDelegate Skills { get; set; }
-        public PlumedSeaFir(PieceConfig cfg) : base(cfg, RangerMove.Quiets, PawnPushMoves.Captures)
+        public PlumedSeaFir(PieceConfig cfg) : base(cfg, RangerMove.Quiets, RangerMove.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new PlumedSeaFirPassive(this)));
             SetStat(SkillStat.Range, 4);
-            SetStat(SkillStat.Counter, 0);
             Skills = (list, isPlayer, _) =>
             {
                 if (SkillCooldown != 0) { return; }
@@ -30,10 +29,7 @@ namespace Game.Piece.PieceLogic
                         var target = IndexOf(rankOff, fileOff);
                         var pieceOn = PieceOn(target);
                         if (pieceOn == null) continue;
-                        if (pieceOn.Color == Color || GetStat(SkillStat.Counter) > 0)
-                        {
-                            list.Add(new PlumedSeaFirActive(this, pieceOn));
-                        }
+                        list.Add(new PlumedSeaFirActive(this, pieceOn));
                     }
                 }
                 else

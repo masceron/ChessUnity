@@ -1,5 +1,6 @@
 using MemoryPack;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Piece.PieceLogic.Commons;
 using static Game.Common.BoardUtils;
 
@@ -18,7 +19,7 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             ActionManager.EnqueueAction(new KillPiece(GetMaker(), GetTargetAsPiece()));
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

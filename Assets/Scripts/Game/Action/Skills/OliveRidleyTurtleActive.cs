@@ -28,13 +28,14 @@ namespace Game.Action.Skills
         protected override void ModifyGameState()
         {
             var caller = GetMakerAsPiece();
+            var target = GetTargetAsPiece();
             if (caller == null) return;
 
-            if (!VerifyIndex(GetTargetPos()) || !IsActive(GetTargetPos())) return;
-            if (GetTargetAsPiece() != null) return;
+            if (!VerifyIndex(target.Pos) || !IsActive(target.Pos)) return;
+            if (target != null) return;
 
             ActionManager.EnqueueAction(new SpawnPiece(
-                new PieceConfig("piece_olive_ridley_eggs", caller.Color, GetTargetPos())
+                new PieceConfig("piece_olive_ridley_eggs", caller.Color, target.Pos)
             ));
 
             ActionManager.EnqueueAction(new CooldownSkill(caller));

@@ -14,8 +14,9 @@ namespace Game.Piece.PieceLogic
     {
         private int timeToCooldown;
         private const int EvasionChance = 10;
+
         private const string Stunned = "effect_stunned";
-        
+        private const int Range = 1;
         public DwarfCuttlefish(PieceConfig cfg) : base(cfg, SquidMoves.Quiets, SquidMoves.Captures)
         {
             ActionManager.ExecuteImmediately(new ApplyEffect(new QuickReflex(this)));
@@ -31,7 +32,7 @@ namespace Game.Piece.PieceLogic
                     switch (Color)
                     {
                         case false:
-                            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, 1))
+                            foreach (var (rankOff, fileOff) in MoveEnumerators.Up(rank, file, Range))
                             {
                                 var targetPos = IndexOf(rankOff, fileOff);
                                 if (!IsActive(targetPos)) continue;
@@ -42,7 +43,7 @@ namespace Game.Piece.PieceLogic
                             }
                             break;
                         case true:
-                            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, 1))
+                            foreach (var (rankOff, fileOff) in MoveEnumerators.Down(rank, file, Range))
                             {
                                 var targetPos = IndexOf(rankOff, fileOff);
                                 if (!IsActive(targetPos)) continue;

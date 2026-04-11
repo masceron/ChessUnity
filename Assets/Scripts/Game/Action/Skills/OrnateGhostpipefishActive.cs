@@ -33,20 +33,13 @@ namespace Game.Action.Skills
         {
             var caller = GetMakerAsPiece();
             var pOnTarget = GetTargetAsPiece();
-            if (caller == null) return;
+            if (caller == null || pOnTarget == null) return;
 
-            if (GetMakerAsPiece() == GetTargetAsPiece())
-            {
-                ActionManager.EnqueueAction(caller.HasState(StateType.None)
-                    ? new ApplyEffect(new Ethereal(Duration * 2, caller))
-                    : new ApplyEffect(new Ethereal(Duration * 2, pOnTarget)));
-            }
-            else
-            {
-                ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(Duration, pOnTarget)));
-            }
+            var isSelfTarget = caller == pOnTarget;
+            var effectDuration = isSelfTarget ? Duration * 2 : Duration;
 
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)caller).TimeToCooldown);
+            ActionManager.EnqueueAction(new ApplyEffect(new Ethereal(effectDuration, pOnTarget)));
+            ActionManager.EnqueueAction(new CooldownSkill(caller));
         }
     }
 }

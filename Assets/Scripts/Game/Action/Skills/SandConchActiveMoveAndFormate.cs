@@ -29,7 +29,7 @@ namespace Game.Action.Skills
             
             FormationManager.Ins.SetFormation(GetTargetPos(), new SiltCloud(false));
             if (burrowed != null) ActionManager.EnqueueAction(new ApplyEffect(new NoneState(maker)));
-            SetCooldown(maker, ((IPieceWithSkill)maker).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(maker));
         }
 
         public int AIPenaltyValue(PieceLogic maker)

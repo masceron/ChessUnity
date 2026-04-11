@@ -9,17 +9,18 @@ namespace Game.Action.Internal.Pending.Piece
 {
     public class BlackcapBassletPending : PendingAction, ISkills
     {
-        
+        private const int Range = 1;
         public BlackcapBassletPending(PieceLogic maker, int target) : base(maker, target)
         {
         }
+
 
         protected override void CompleteAction()
         {
             TileManager.Ins.UnmarkAll();
             BoardViewer.ListOf.Clear();
             foreach (var (rankOff, fileOff) in MoveEnumerators.AroundUntil(RankOf(GetTargetPos()),
-                         FileOf(GetTargetPos()), 1))
+                         FileOf(GetTargetPos()), Range))
             {
                 var index = IndexOf(rankOff, fileOff);
                 var pOn = PieceOn(index);

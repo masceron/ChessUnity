@@ -8,12 +8,13 @@ namespace Game.Piece.PieceLogic
     public class ChinookSalmon : Commons.PieceLogic, IPieceWithSkill
     {
         private int timeToCooldown;
+        private bool isActive = true;
 
         public ChinookSalmon(PieceConfig cfg) : base(cfg, ElectricEelMoves.Quiets, ElectricEelMoves.Captures)
         {
             Skills = (list, isPlayer, excludeEmptyTile) =>
             {
-                if (SkillCooldown != 0) return;
+                if (SkillCooldown != 0 || !isActive) return;
                 if (isPlayer)
                 {
                     var (rank, file) = RankFileOf(Pos);
@@ -23,6 +24,7 @@ namespace Game.Piece.PieceLogic
                         var index = IndexOf(rankOff, fileOff);
                         if (!IsActive(index)) continue;
                         list.Add(new ChinookSalmonActive(this, index));
+                        isActive = false;
                     }
                 }
                 else

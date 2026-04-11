@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Action.Internal;
+using Game.Action.Internal.Pending.Piece;
 using Game.Augmentation;
 using Game.Piece.PieceLogic.Commons;
 using MemoryPack;
@@ -46,7 +47,7 @@ namespace Game.Action.Skills
                 ActionManager.EnqueueAction(new DestroyPiece(pieceOn));
                 ActionManager.EnqueueAction(new SpawnPiece(new Piece.PieceConfig(_chosenType, GetMakerAsPiece().Color, pos, names)));
             }
-            SetCooldown(GetMakerAsPiece(), ((IPieceWithSkill)GetMakerAsPiece()).TimeToCooldown);
+            ActionManager.EnqueueAction(new CooldownSkill(GetMakerAsPiece()));
         }
     }
 }
